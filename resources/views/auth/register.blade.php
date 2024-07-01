@@ -8,7 +8,7 @@
                 <div>
                     <div>
                         <a class="logo" href="{{ url('/') }}">
-                            <img class="img-fluid for-dark" src="{{ asset('assets/images/logo/logomain.png') }}" alt="registerpage" style="width:200px;">
+                            <img class="img-fluid for-light" src="{{ asset('assets/images/logo/logomain.png') }}" alt="registerpage" style="width:200px;">
                         </a>
                     </div>
                     <div class="login-main">
@@ -38,9 +38,6 @@
                                 <label class="col-form-label">Password</label>
                                 <div class="form-input position-relative">
                                     <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autocomplete="new-password" placeholder="*********">
-                                    <div class="show-hide">
-                                        <span class="show"></span>
-                                    </div>
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -56,6 +53,11 @@
                                 <div class="text-end mt-3">
                                     <button class="btn btn-primary btn-block w-100" type="submit">Sign up</button>
                                 </div>
+                            </div>
+                            <div class=" mt-3">
+                                <a href="{{ route('login') }}">
+                                Already have an account?
+                                </a>
                             </div>
                         </form>
                     </div>

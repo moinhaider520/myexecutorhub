@@ -45,13 +45,11 @@
                                     <button class="btn btn-primary btn-block w-100" type="submit">Sign in</button>
                                 </div>
                             </div>
-                            @if (Route::has('password.request'))
                             <div class=" mt-3">
-                                <a href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
+                                <a href="{{ route('register') }}">
+                                Sign up
                                 </a>
                             </div>
-                            @endif
                         </form>
                     </div>
                 </div>
