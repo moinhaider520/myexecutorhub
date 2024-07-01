@@ -50,16 +50,18 @@
                                 <span>
                                     Alex Smith
                                 </span>
-                                <p class="mb-0 font-outfit">Administrator <i
-                                        class="fa fa-angle-down"></i></p>
+                                <p class="mb-0 font-outfit">Administrator <i class="fa fa-angle-down"></i></p>
                             </div>
                         </div>
                         <ul class="profile-dropdown onhover-show-div">
                             <li><a href="#"><i data-feather="settings"></i><span>Settings
                                     </span></a>
                             </li>
-                            <li><a href="#"><i data-feather="log-out"></i><span>Log out</span></a>
-                            </li>
+                            <a onclick="document.getElementById('logout_form').submit();">
+                                <i data-feather="log-in"></i>
+                                <span>Log Out</span>
+                            </a>
+                            <form action="{{route('logout')}}" method="POST" id="logout_form"> @csrf </form>
                         </ul>
                     </li>
                 </ul>

@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="logo-icon-wrapper">
-            <a href="#>
+            <a href="#">
                 <img class="img-fluid" src="{{ asset('assets/images/favicon.ico') }}" style="width:20px;" alt="">
             </a>
         </div>
