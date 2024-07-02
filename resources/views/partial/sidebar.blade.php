@@ -71,16 +71,16 @@
                             <span>Assets </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Bank</a></li>
-                            <li><a href="{{ route('customers') }}">Savings</a></li>
-                            <li><a href="{{ route('customers') }}">Investments</a></li>
-                            <li><a href="{{ route('customers') }}">Shares</a></li>
-                            <li><a href="{{ route('customers') }}">Life Insurance</a></li>
-                            <li><a href="{{ route('customers') }}">Funeral Plan</a></li>
-                            <li><a href="{{ route('customers') }}">Properties</a></li>
-                            <li><a href="{{ route('customers') }}">National Savings</a></li>
-                            <li><a href="{{ route('customers') }}">Pensions</a></li>
-                            <li><a href="{{ route('customers') }}">Trusts</a></li>
+                            <li><a href="#">Bank</a></li>
+                            <li><a href="#">Savings</a></li>
+                            <li><a href="#">Investments</a></li>
+                            <li><a href="#">Shares</a></li>
+                            <li><a href="#">Life Insurance</a></li>
+                            <li><a href="#">Funeral Plan</a></li>
+                            <li><a href="#">Properties</a></li>
+                            <li><a href="#">National Savings</a></li>
+                            <li><a href="#">Pensions</a></li>
+                            <li><a href="#">Trusts</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -94,10 +94,10 @@
                             <span>Liabilities </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Mortgages</a></li>
-                            <li><a href="{{ route('customers') }}">Credit Cards</a></li>
-                            <li><a href="{{ route('customers') }}">Car Loans</a></li>
-                            <li><a href="{{ route('customers') }}">Bank Loans</a></li>
+                            <li><a href="#">Mortgages</a></li>
+                            <li><a href="#">Credit Cards</a></li>
+                            <li><a href="#">Car Loans</a></li>
+                            <li><a href="#">Bank Loans</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -111,8 +111,8 @@
                             <span>Executors </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Add Executor</a></li>
-                            <li><a href="{{ route('customers') }}">View Executors</a></li>
+                            <li><a href="#">Add Executor</a></li>
+                            <li><a href="#">View Executors</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -126,11 +126,11 @@
                             <span>Advisors </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Solicitors</a></li>
-                            <li><a href="{{ route('customers') }}">Will Writers</a></li>
-                            <li><a href="{{ route('customers') }}">Accountants</a></li>
-                            <li><a href="{{ route('customers') }}">Financial Advisers</a></li>
-                            <li><a href="{{ route('customers') }}">Stock Brokers</a></li>
+                            <li><a href="#">Solicitors</a></li>
+                            <li><a href="#">Will Writers</a></li>
+                            <li><a href="#">Accountants</a></li>
+                            <li><a href="#">Financial Advisers</a></li>
+                            <li><a href="#">Stock Brokers</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -144,8 +144,8 @@
                             <span>Documents </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Add Document</a></li>
-                            <li><a href="{{ route('customers') }}">View Documents</a></li>
+                            <li><a href="#">Add Document</a></li>
+                            <li><a href="#">View Documents</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -159,7 +159,7 @@
                             <span>Wishes </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Manage Wishes</a></li>
+                            <li><a href="#">Manage Wishes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -173,7 +173,7 @@
                             <span>Life Remebered </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">Manage Notes</a></li>
+                            <li><a href="#">Manage Notes</a></li>
                         </ul>
                     </li>
                 </ul>

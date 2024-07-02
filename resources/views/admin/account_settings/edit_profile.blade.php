@@ -2,189 +2,100 @@
 
 @section('content')
 <div class="page-body">
-    <!-- Container-fluid starts-->
-    <div class="container-fluid default-dashboard">
-        <div class="row widget-grid">
-            <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('edit_profile') }}">Profile </a></li>
-                                <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
-                                <li class="breadcrumb-item active">Update Profiles Details</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card-box">
-                            <h4 class="card-title">Profile Details</h4>
-                            <form action="{{ route('edit_profile') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-
-                                <div class="row">
-                                    <div class="form-group col-xl-6 mb-4">
-                                        <label class="label">Name</label>
-                                        <input type="text" class="form-control" name="first_name"
-                                            placeholder="Enter First Name" value="{{ Auth::user()->name }}" required>
-                                        @error('first_name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-xl-6 mb-4">
-                                        <label class="label">Phone Number</label>
-                                        <input type="text" class="form-control" name="phone_number"
-                                            placeholder="Enter Phone Number" value="{{ Auth::user()->phone_number }}"
-                                            required>
-                                        @error('phone_number')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group col-xl-6 mb-4">
-                                        <label class="label">Email Address</label>
-                                        <input type="email" class="form-control" name="email"
-                                            placeholder="Enter Email Address" value="{{ Auth::user()->email }}"
-                                            disabled>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-group col-xl-6 mb-4">
-                                        <label class="label">Upload Picture</label>
-                                        <input type="file" class="form-control" name="photo">
-                                        @error('photo')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <label class="label">Bio</label>
-                                        <textarea class="form-control" name="bio">{{ Auth::user()->bio }}</textarea>
-                                        @error('bio')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group mb-4">
-                                        <label class="label">Address</label>
-                                        <textarea class="form-control"
-                                            name="address">{{ Auth::user()->address }}</textarea>
-                                        @error('address')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                </div>
-                                <div class="text-right">
-                                    <button type="submit" class="btn btn-primary">Update Profile</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Container-fluid Ends-->
-</div>
-<div class="page-wrapper">
-    <div class="content">
-        <div class="page-header">
+    <div class="container-fluid">
+        <div class="edit-profile">
             <div class="row">
-                <div class="col-sm-12">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('edit_profile') }}">Profile </a></li>
-                        <li class="breadcrumb-item"><i class="feather-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Update Profiles Details</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card-box">
-                    <h4 class="card-title">Profile Details</h4>
-                    <form action="{{ route('edit_profile') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-
-                        <div class="row">
-                            <div class="form-group col-xl-6 mb-4">
-                                <label class="label">Name</label>
-                                <input type="text" class="form-control" name="first_name" placeholder="Enter First Name"
-                                    value="{{ Auth::user()->name }}" required>
-                                @error('first_name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-xl-6 mb-4">
-                                <label class="label">Phone Number</label>
-                                <input type="text" class="form-control" name="phone_number"
-                                    placeholder="Enter Phone Number" value="{{ Auth::user()->phone_number }}" required>
-                                @error('phone_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group col-xl-6 mb-4">
-                                <label class="label">Email Address</label>
-                                <input type="email" class="form-control" name="email" placeholder="Enter Email Address"
-                                    value="{{ Auth::user()->email }}" disabled>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
-                            <div class="form-group col-xl-6 mb-4">
-                                <label class="label">Upload Picture</label>
-                                <input type="file" class="form-control" name="photo">
-                                @error('photo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-4">
-                                <label class="label">Bio</label>
-                                <textarea class="form-control" name="bio">{{ Auth::user()->bio }}</textarea>
-                                @error('bio')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="form-group mb-4">
-                                <label class="label">Address</label>
-                                <textarea class="form-control" name="address">{{ Auth::user()->address }}</textarea>
-                                @error('address')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-
+                <div class="col-xl-12">
+                    <form class="card" id="edit-profile">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">Edit Profile</h4>
                         </div>
-                        <div class="text-right">
-                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Full Name</label>
+                                        <input class="form-control" type="text" placeholder="Full Name"
+                                            name="company_name" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Email address</label>
+                                        <input class="form-control" type="email" placeholder="Email"
+                                            name="email_address" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Address</label>
+                                        <input class="form-control" type="text" placeholder="Address" name="address"
+                                            value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">City</label>
+                                        <input class="form-control" type="text" placeholder="City" name="city" value=""
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Postal Code</label>
+                                        <input class="form-control" type="number" placeholder="ZIP Code"
+                                            name="postal_code" value="" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Contact Number</label>
+                                        <input class="form-control" type="text" placeholder="Contact Number"
+                                            name="contact_number" value="" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button class="btn btn-primary" type="submit">Edit Profile</button>
+                        </div>
+                    </form>
+                    <form class="card" id="edit-image" enctype="multipart/form-data">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">Update Profile Image</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Choose Image</label>
+                                        <input class="form-control" type="file" accept="image/jpeg, image/png"
+                                            name="profile_image" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button class="btn btn-primary" type="submit">Update Profile Image</button>
+                        </div>
+                    </form>
+                    <form class="card" id="edit-password">
+                        <div class="card-header">
+                            <h4 class="card-title mb-0">Update Password</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label class="form-label">Enter New Password</label>
+                                        <input class="form-control" type="password" name="password" required>
+                                    </div>
+                                    <input type="hidden" name="user_id" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button class="btn btn-primary" type="submit">Update Password</button>
                         </div>
                     </form>
                 </div>
