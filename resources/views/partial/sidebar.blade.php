@@ -54,11 +54,126 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
                             </svg>
-                            <span>Module </span>
+                            <span>Customers </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Create</a></li>
-                            <li><a href="#">View All</a></li>
+                            <li><a href="{{ route('customers') }}">View All</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Assets </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Bank</a></li>
+                            <li><a href="{{ route('customers') }}">Savings</a></li>
+                            <li><a href="{{ route('customers') }}">Investments</a></li>
+                            <li><a href="{{ route('customers') }}">Shares</a></li>
+                            <li><a href="{{ route('customers') }}">Life Insurance</a></li>
+                            <li><a href="{{ route('customers') }}">Funeral Plan</a></li>
+                            <li><a href="{{ route('customers') }}">Properties</a></li>
+                            <li><a href="{{ route('customers') }}">National Savings</a></li>
+                            <li><a href="{{ route('customers') }}">Pensions</a></li>
+                            <li><a href="{{ route('customers') }}">Trusts</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Liabilities </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Mortgages</a></li>
+                            <li><a href="{{ route('customers') }}">Credit Cards</a></li>
+                            <li><a href="{{ route('customers') }}">Car Loans</a></li>
+                            <li><a href="{{ route('customers') }}">Bank Loans</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Executors </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Add Executor</a></li>
+                            <li><a href="{{ route('customers') }}">View Executors</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Advisors </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Solicitors</a></li>
+                            <li><a href="{{ route('customers') }}">Will Writers</a></li>
+                            <li><a href="{{ route('customers') }}">Accountants</a></li>
+                            <li><a href="{{ route('customers') }}">Financial Advisers</a></li>
+                            <li><a href="{{ route('customers') }}">Stock Brokers</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Documents </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Add Document</a></li>
+                            <li><a href="{{ route('customers') }}">View Documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Wishes </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Manage Wishes</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Life Remebered </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customers') }}">Manage Notes</a></li>
                         </ul>
                     </li>
                 </ul>

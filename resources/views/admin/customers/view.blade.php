@@ -10,8 +10,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Users List</h4>
-                                <span>List of all the created Users.</span>
+                                <h4>Customers List</h4>
+                                <span>List of all the Registered Customers.</span>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive theme-scrollbar">
@@ -24,7 +24,6 @@
                                                     <th>Email</th>
                                                     <th>Address</th>
                                                     <th>Contact Number</th>
-                                                    <th>Role</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
