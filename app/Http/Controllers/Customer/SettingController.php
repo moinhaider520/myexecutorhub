@@ -64,6 +64,31 @@ class SettingController extends Controller
         }
     }
 
+
+    public function updateProfileImage(Request $request)
+    {
+        $request->validate([
+            'profile_image' => 'required|image|mimes:jpeg,png|max:2048',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $user = Auth::user();
+
+            if ($request->hasFile('profile_image')) {
+                $imagePath = $this->imageUpload($request->file('profile_image'));
+                $user->update(['profile_image' => $imagePath]);
+            }
+
+            DB::commit();
+            return redirect()->route('admin.dashboard')->with('success', 'Profile image updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
     /**
      * Update the customer profile image.
      *
@@ -75,14 +100,14 @@ class SettingController extends Controller
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);
-    
+
         try {
             DB::beginTransaction();
-    
+
             $user = Auth::user();
             $user->password = Hash::make($request->password);
             $user->save();
-    
+
             DB::commit();
             return redirect()->route('admin.dashboard')->with('success', 'Password updated successfully!');
         } catch (\Exception $e) {
@@ -90,5 +115,4 @@ class SettingController extends Controller
             return redirect()->back()->with('error', $e->getMessage());
         }
     }
-    
 }

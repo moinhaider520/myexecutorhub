@@ -43,18 +43,16 @@
                     <li class="cart-nav onhover-dropdown"></li>
                     <li class="profile-nav onhover-dropdown px-0 py-0">
                         <div class="d-flex profile-media align-items-center">
-                            <a href="{{ asset('dashboard/profile.php') }}">
-                                <img class="img-30" src="{{ asset('path_to_profile_image') }}" alt="">
-                            </a>
-                            <div class="flex-grow-1">
-                                <span>
-                                    <h5>{{ucwords(str_replace('_', ' ', Auth::user()->name))}}</h5>
-                                </span>
-                                <p class="mb-0 font-outfit">
-                                    <span>{{ ucwords(str_replace('_', ' ', Auth::user()->getRoleNames()[0])) }} </span>
-                                    <i class="fa fa-angle-down"></i>
-                                </p>
-                            </div>
+                            <img class="img-30" src="{{ Auth::user()->profile_image ? asset('assets/upload/' . Auth::user()->profile_image) : asset('assets/images/dashboard/profile.png') }}" alt="">  
+                                <div class="flex-grow-1">
+                                    <span>
+                                        <h5>{{ucwords(str_replace('_', ' ', Auth::user()->name))}}</h5>
+                                    </span>
+                                    <p class="mb-0 font-outfit">
+                                        <span>{{ ucwords(str_replace('_', ' ', Auth::user()->getRoleNames()[0])) }} </span>
+                                        <i class="fa fa-angle-down"></i>
+                                    </p>
+                                </div>
                         </div>
                         <ul class="profile-dropdown onhover-show-div">
                             <li>
