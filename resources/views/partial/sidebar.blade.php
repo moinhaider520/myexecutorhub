@@ -2,7 +2,7 @@
     <div>
         <div class="logo-wrapper">
             <a href="#">
-                <img class="img-fluid" src="{{ asset('assets/images/logo/logo.webp') }}" alt="" style="width:150px;">
+                <img class="img-fluid" src="{{ asset('assets/frontend/images/logo-white.png') }}" alt="" style="width:150px;">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar">
@@ -66,10 +66,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
                             <span>Assets </span>
                         </a>
@@ -89,10 +89,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
                             </svg>
                             <span>Liabilities </span>
                         </a>
@@ -139,10 +139,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
                             </svg>
                             <span>Documents </span>
                         </a>
@@ -154,10 +154,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
                             <span>Wishes </span>
                         </a>
@@ -168,10 +168,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
                             </svg>
                             <span>Life Remebered </span>
                         </a>

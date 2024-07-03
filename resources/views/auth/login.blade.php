@@ -8,7 +8,7 @@
                 <div>
                     <div>
                         <a class="logo" href="{{ url('/') }}">
-                            <img class="img-fluid for-light" src="{{ asset('assets/images/logo/logomain.png') }}" alt="loginpage" style="width:200px;">
+                            <img class="img-fluid for-light" src="{{ asset('assets/frontend/images/logo-skyblue.png') }}" alt="loginpage" style="width:200px;">
                         </a>
                     </div>
                     <div class="login-main">
