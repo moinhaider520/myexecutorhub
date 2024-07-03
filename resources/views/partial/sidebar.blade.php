@@ -46,6 +46,7 @@
                             <h6 class="lan-8">Applications</h6>
                         </div>
                     </li>
+                    @role('admin')
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -57,9 +58,11 @@
                             <span>Customers </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="">View All</a></li>
+                            <li><a href="{{ route('admin.customers.index') }}">View All</a></li>
                         </ul>
                     </li>
+                    @endrole
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">

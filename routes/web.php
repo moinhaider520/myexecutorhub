@@ -6,8 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
-
-
+use App\Http\Controllers\Admin\CustomerController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,6 +36,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/update-profile-image', [SettingController::class, 'updateProfileImage'])->name('update_profile_image');
     Route::post('/update-password', [SettingController::class, 'updatePassword'])->name('update_password');
 
+    // Customers
+    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
+    Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
@@ -47,13 +51,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/update-profile', [CustomerSettingController::class, 'updateProfile'])->name('update_profile');
     Route::post('/update-profile-image', [CustomerSettingController::class, 'updateProfileImage'])->name('update_profile_image');
     Route::post('/update-password', [CustomerSettingController::class, 'updatePassword'])->name('update_password');
-
 });
 
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
 });
-
-// // ADMIN
-// Route::get('/customers', function () {
-//     return view('admin/customers/view');
-// })->name('customers');

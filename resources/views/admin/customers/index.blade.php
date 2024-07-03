@@ -27,6 +27,24 @@
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
+                                            <tbody>
+                                                @foreach ($customers as $customer)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $customer->name }}</td>
+                                                        <td>{{ $customer->email }}</td>
+                                                        <td>{{ $customer->address }}</td>
+                                                        <td>{{ $customer->contact_number }}</td>
+                                                        <td>
+                                                            <a href="{{ route('admin.customers.edit', $customer->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                                            <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST" style="display:inline;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
