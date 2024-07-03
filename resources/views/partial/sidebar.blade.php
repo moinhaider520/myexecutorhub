@@ -57,7 +57,7 @@
                             <span>Customers </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customers') }}">View All</a></li>
+                            <li><a href="">View All</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">

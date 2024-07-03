@@ -123,7 +123,7 @@
                                 </li>
                                 @else
                                 <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('home')}}" class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                    <a href="{{route('dashboard')}}" class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
                                 </li>
                                 @endguest
 

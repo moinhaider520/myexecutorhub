@@ -48,20 +48,35 @@
                             </a>
                             <div class="flex-grow-1">
                                 <span>
-                                    Alex Smith
+                                    <h5>{{ucwords(str_replace('_', ' ', Auth::user()->name))}}</h5>
                                 </span>
-                                <p class="mb-0 font-outfit">Administrator <i class="fa fa-angle-down"></i></p>
+                                <p class="mb-0 font-outfit">
+                                    <span>{{ ucwords(str_replace('_', ' ', Auth::user()->getRoleNames()[0])) }} </span>
+                                    <i class="fa fa-angle-down"></i>
+                                </p>
                             </div>
                         </div>
                         <ul class="profile-dropdown onhover-show-div">
-                            <li><a href="{{route('edit_profile')}}"><i data-feather="settings"></i><span>Settings
-                                    </span></a>
-                            </li>
                             <li>
-                            <a onclick="document.getElementById('logout_form').submit();">
-                                <i data-feather="log-in"></i>
-                                <span>Log Out</span>
-                            </a>
+                                @role('admin')
+                                <a href="{{ route('admin.edit_profile') }}">
+                                    <i data-feather="settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                                @endrole
+                                @role('customer')
+                                <a href="{{ route('customer.edit_profile') }}">
+                                    <i data-feather="settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                                @endrole
+                            </li>
+
+                            <li>
+                                <a onclick="document.getElementById('logout_form').submit();">
+                                    <i data-feather="log-in"></i>
+                                    <span>Log Out</span>
+                                </a>
                             </li>
                             <form action="{{route('logout')}}" method="POST" id="logout_form"> @csrf </form>
                         </ul>

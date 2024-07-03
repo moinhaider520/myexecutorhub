@@ -6,7 +6,7 @@
         <div class="edit-profile">
             <div class="row">
                 <div class="col-xl-12">
-                    <form action="{{ route('admin.update_profile') }}" method="POST" class="card" id="edit-profile">
+                    <form action="{{ route('customer.update_profile') }}" method="POST" class="card" id="edit-profile">
                         @csrf
                         <div class="card-header">
                             <h4 class="card-title mb-0">Edit Profile</h4>
@@ -79,7 +79,7 @@
                             <button class="btn btn-primary" type="submit">Edit Profile</button>
                         </div>
                     </form>
-                    <form action="{{ route('admin.update_profile_image') }}" method="POST" class="card" id="edit-image" enctype="multipart/form-data">
+                    <form action="{{ route('customer.update_profile_image') }}" method="POST" class="card" id="edit-image" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
                             <h4 class="card-title mb-0">Update Profile Image</h4>
@@ -102,7 +102,7 @@
                             <button class="btn btn-primary" type="submit">Update Profile Image</button>
                         </div>
                     </form>
-                    <form action="{{ route('admin.update_password') }}" method="POST" class="card" id="edit-password">
+                    <form action="{{ route('customer.update_password') }}" method="POST" class="card" id="edit-password">
                         @csrf
                         <div class="card-header">
                             <h4 class="card-title mb-0">Update Password</h4>
