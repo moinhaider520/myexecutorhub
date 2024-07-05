@@ -47,7 +47,10 @@
                             </div>
                             <div class=" mt-3">
                                 <a href="{{ route('register') }}">
-                                Sign up
+                                    Sign up
+                                </a>
+                                <a href="{{ route('password.request') }}" class="float-end mb-1">
+                                    <span>Forgot Password?</span>
                                 </a>
                             </div>
                         </form>

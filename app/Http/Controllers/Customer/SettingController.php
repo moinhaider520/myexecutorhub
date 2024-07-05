@@ -82,7 +82,7 @@ class SettingController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('admin.dashboard')->with('success', 'Profile image updated successfully.');
+            return redirect()->route('customer.dashboard')->with('success', 'Profile image updated successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
