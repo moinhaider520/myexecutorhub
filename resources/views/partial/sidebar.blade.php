@@ -2,7 +2,7 @@
     <div>
         <div class="logo-wrapper">
             <a href="#">
-                <img class="img-fluid" src="{{ asset('assets/frontend/images/logo-white.png') }}" alt="" style="width:150px;">
+                <img class="img-fluid" src="{{ asset('assets/frontend/images/logo-white.png') }}" alt="" style="width:100px;">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
             <div class="toggle-sidebar">

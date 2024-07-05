@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- SITE TITLE -->
-    <title>My Executor Hub</title>
+    <title>Executor Hub</title>
 
     <!-- FAVICON AND TOUCH ICONS -->
     <link rel="shortcut icon" href="{{ asset('assets/frontend/images/favicon.ico') }}" type="image/x-icon" />
@@ -102,6 +102,8 @@
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#features-11" class="h-link">Features</a></li>
 
+                                <li class="nl-simple" aria-haspopup="true"><a href="#benefits-11" class="h-link">Benefits</a></li>
+
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#pricing-1" class="h-link">Pricing</a></li>
 
@@ -144,7 +146,7 @@
                     <div class="col-md-6">
                         <div class="hero-3-txt color--white wow fadeInRight">
                             <!-- Title -->
-                            <h2 class="s-60 w-700">Executor Hub - Secure Your Legacy</h2>
+                            <h2 class="s-60 w-700">Executor Hub - Empowering executors, ensuring legacies</h2>
 
                             <!-- Text -->
                             <p class="p-lg">Executor Hub is a secure web application designed to help individuals organize and store important financial documents, social media passwords, and asset information in one central, encrypted location.</p>
@@ -183,27 +185,13 @@
                     <div class="col-md-6">
                         <div class="txt-block right-column wow fadeInLeft">
                             <!-- Section ID -->
-                            <span class="section-id">Automatic Workflows</span>
+                            <span class="section-id">Executor Hub</span>
 
                             <!-- Title -->
-                            <h2 class="s-46 w-700">Optimizing your website for success</h2>
+                            <h2 class="s-46 w-700">Empowering executors, ensuring legacies</h2>
 
                             <!-- Text -->
-                            <p>Sodales tempor sapien quaerat ipsum undo congue laoreet turpis neque auctor turpis vitae dolor luctus placerat magna and ligula cursus purus vitae purus an ipsum suscipit</p>
-
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700">Get more done in less time</h5>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-                                <li class="list-item">
-                                    <p>Sapien quaerat tempor an ipsum laoreet purus and sapien dolor an ultrice ipsum aliquam undo congue cursus dolor</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p class="mb-0">Purus suscipit cursus vitae cubilia magnis volute egestas vitae sapien turpis ultrice auctor congue magna placerat</p>
-                                </li>
-                            </ul>
+                            <p>Executor Hub is a secure web application designed to streamline the estate execution process. Our platform allows you to organize and store important financial documents, social media passwords, and asset information all in one central, encrypted location. Executors can access this information from any location, enabling them to work remotely with ease. This digital solution is much safer than keeping information on paper, as it reduces the risk of loss, damage, or unauthorized access. With Executor Hub, you can ensure your executors have everything they need, securely and conveniently, making the process as simple and stress-free as possible during a difficult time.</p>
                         </div>
                     </div>
                     <!-- END TEXT BLOCK -->
@@ -226,7 +214,7 @@
                             <span class="section-id">Secure Your Legacy</span>
 
                             <!-- Title -->
-                            <h2 class="s-50 w-700">Digital Storage Vault Which is Accessible Anywhere!</h2>
+                            <h2 class="s-50 w-700">Features of Executor Hub</h2>
 
                             <!-- Text -->
                             <p class="s-21 color--grey">An Online Platform Which Secures Your Information.</p>
@@ -258,8 +246,8 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Secure Document Storage</h6>
-                                    <p>Safely store important financial and legal documents with end-to-end encryption.</p>
+                                    <h6 class="s-22 w-700">Centralized Storage</h6>
+                                    <p>Organize and store all important financial documents, social media passwords, and asset information in one secure location.</p>
                                 </div>
                             </div>
                         </div>
@@ -286,8 +274,8 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Password Vault</h6>
-                                    <p>Safeguard social media passwords and other sensitive login information securely.</p>
+                                    <h6 class="s-22 w-700">Enhanced Security</h6>
+                                    <p>Keep your information safe with top-level encryption, reducing the risk of loss, damage, or unauthorized access compared to paper storage.</p>
                                 </div>
                             </div>
                         </div>
@@ -314,8 +302,8 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Asset Management</h6>
-                                    <p>Keep track of your assets, including real estate, investments, and digital assets, in one place.</p>
+                                    <h6 class="s-22 w-700">Remote Access</h6>
+                                    <p>Executors can access the information from any location, allowing them to work remotely and efficiently.</p>
                                 </div>
                             </div>
                         </div>
@@ -342,8 +330,8 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Emergency Access</h6>
-                                    <p>Designate trusted contacts who can access your information in case of emergency or incapacity.</p>
+                                    <h6 class="s-22 w-700">Simplified Process</h6>
+                                    <p>Streamline the estate execution process, making it easier and less stressful for your executors during a difficult time.</p>
                                 </div>
                             </div>
                         </div>
@@ -370,8 +358,8 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Audit Trail</h6>
-                                    <p>Track who accesses your information and when for added security and peace of mind.</p>
+                                    <h6 class="s-22 w-700">Memorandum of Wishes</h6>
+                                    <p>Leave detailed instructions and wishes to guide your executors in fulfilling your final requests.</p>
                                 </div>
                             </div>
                         </div>
@@ -398,8 +386,8 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Free Trial</h6>
-                                    <p>Access the Portal With Our Free Trial and then trust us enough to stay on long-term.</p>
+                                    <h6 class="s-22 w-700">Messages to Loved Ones</h6>
+                                    <p>Include personal messages to be delivered to your loved ones, providing comfort and closure.</p>
                                 </div>
                             </div>
                         </div>
@@ -413,89 +401,6 @@
         </section>
         <!-- END FEATURES-11 -->
 
-
-        
-        <!-- FEATURES-2
-			============================================= -->
-            <section id="features-2" class="pt-100 features-section division">
-            <div class="container">
-                <!-- SECTION TITLE -->
-                <div class="row justify-content-center">
-                    <div class="col-md-10 col-lg-9">
-                        <div class="section-title mb-80">
-                            <!-- Title -->
-                            <h2 class="s-50 w-700">The Complete Solutions</h2>
-
-                            <!-- Text -->
-                            <p class="s-21 color--grey">All Your Storage in One Place.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- FEATURES-2 WRAPPER -->
-                <div class="fbox-wrapper text-center">
-                    <div class="row row-cols-1 row-cols-md-3">
-                        <!-- FEATURE BOX #1 -->
-                        <div class="col">
-                            <div class="fbox-2 fb-1 wow fadeInUp">
-                                <!-- Image -->
-                                <div class="fbox-img gr--whitesmoke h-175">
-                                    <img class="img-fluid light-theme-img" src="{{asset('assets/frontend/images/f_04.png')}}" alt="feature-image" />
-                                    <img class="img-fluid dark-theme-img" src="{{asset('assets/frontend/images/f_04_dark.png')}}" alt="feature-image" />
-                                </div>
-
-                                <!-- Text -->
-                                <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Easy to Use</h6>
-                                    <p>A very user-friendly interface and easy to use portal.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END FEATURE BOX #1 -->
-
-                        <!-- FEATURE BOX #2 -->
-                        <div class="col">
-                            <div class="fbox-2 fb-2 wow fadeInUp">
-                                <!-- Image -->
-                                <div class="fbox-img gr--whitesmoke h-175">
-                                    <img class="img-fluid light-theme-img" src="{{asset('assets/frontend/images/f_05.png')}}" alt="feature-image" />
-                                    <img class="img-fluid dark-theme-img" src="{{asset('assets/frontend/images/f_05_dark.png')}}" alt="feature-image" />
-                                </div>
-
-                                <!-- Text -->
-                                <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Secure</h6>
-                                    <p>All of your data is Secure & Encrypted.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END FEATURE BOX #2 -->
-
-                        <!-- FEATURE BOX #3 -->
-                        <div class="col">
-                            <div class="fbox-2 fb-3 wow fadeInUp">
-                                <!-- Image -->
-                                <div class="fbox-img gr--whitesmoke h-175">
-                                    <img class="img-fluid light-theme-img" src="{{asset('assets/frontend/images/f_02.png')}}" alt="feature-image" />
-                                    <img class="img-fluid dark-theme-img" src="{{asset('assets/frontend/images/f_02_dark.png')}}" alt="feature-image" />
-                                </div>
-
-                                <!-- Text -->
-                                <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">Advanced Analytics</h6>
-                                    <p>Detailed Analytics regarding your assets.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END FEATURE BOX #3 -->
-                    </div>
-                    <!-- End row -->
-                </div>
-                <!-- END FEATURES-2 WRAPPER -->
-            </div>
-            <!-- End container -->
-        </section>
-        <!-- END FEATURES-2 -->
 
         <section id="pricing-1" style="margin-top:50px;" class="gr--whitesmoke pb-40 inner-page-hero pricing-section">
             <div class="container">
@@ -723,10 +628,10 @@
                             <div class="col-md-11 col-lg-9">
                                 <div class="section-title wow fadeInUp mb-60">
                                     <!-- Title -->
-                                    <h2 class="s-50 w-700">Secure & User Friendly Application</h2>
+                                    <h2 class="s-50 w-700">Mission statement</h2>
 
                                     <!-- Text -->
-                                    <p class="p-xl">Executor Hub was founded with the mission to provide individuals with a secure and reliable platform to manage their digital and financial legacies.</p>
+                                    <p class="p-xl">Executor Hub was founded with the mission to empower individuals to seamlessly manage their digital and financial legacies through a secure, reliable, and user-friendly platform. In today’s world, where digital solutions are the emerging trend, we ensure your legacy is preserved and accessible for future generations.</p>
                                 </div>
                             </div>
                         </div>
@@ -758,7 +663,7 @@
 
         <!-- STATISTIC-1
 			============================================= -->
-        <div id="statistic-1" class="py-100 statistic-section division">
+        <div id="benefits-11" class="py-100 statistic-section division">
             <div class="container">
                 <!-- STATISTIC-1 WRAPPER -->
                 <div class="statistic-1-wrapper">
@@ -838,6 +743,7 @@
                     <!-- TEXT BLOCK -->
                     <div class="col-md-6 order-last order-md-2">
                         <div class="txt-block left-column wow fadeInRight">
+                            <h2>Benefits of Executor Hub</h2>
                             <!-- CONTENT BOX #1 -->
                             <div class="cbox-2 process-step">
                                 <!-- Icon -->
@@ -848,8 +754,8 @@
 
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">Enhanced Security Features</h5>
-                                    <p>Ligula risus auctor tempus feugiat dolor lacinia nemo purus in lipsum purus sapien quaerat a primis viverra tellus vitae luctus dolor ipsum neque ligula quaerat</p>
+                                    <h5 class="s-22 w-700">Digital Legacy Planning</h5>
+                                    <p>Manage your digital legacy by including instructions for online accounts and digital assets.</p>
                                 </div>
                             </div>
                             <!-- END CONTENT BOX #1 -->
@@ -864,8 +770,8 @@
 
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">No Personal Data Collected</h5>
-                                    <p>Ligula risus auctor tempus feugiat dolor lacinia nemo purus in lipsum purus sapien quaerat a primis viverra tellus vitae luctus dolor ipsum neque ligula quaerat</p>
+                                    <h5 class="s-22 w-700">24/7 Availability</h5>
+                                    <p>Access your stored information anytime, ensuring your executors can retrieve necessary details whenever needed.</p>
                                 </div>
                             </div>
                             <!-- END CONTENT BOX #2 -->
@@ -879,8 +785,47 @@
 
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">Weekly Email Reports</h5>
-                                    <p class="mb-0">Ligula risus auctor tempus feugiat dolor lacinia nemo purus in lipsum purus sapien quaerat a primis viverra tellus vitae luctus dolor ipsum n eque ligula quaerat</p>
+                                    <h5 class="s-22 w-700">Audit Trail</h5>
+                                    <p class="mb-0">Maintain a record of all updates and access activities, providing transparency and accountability.</p>
+                                </div>
+                            </div>
+
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">4</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">Cost Efficiency</h5>
+                                    <p class="mb-0">Save money by avoiding the need for physical document storage solutions and minimizing the potential for lost paperwork.</p>
+                                </div>
+                            </div>
+
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">5</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">Environmental Impact</h5>
+                                    <p class="mb-0">Reduce your environmental footprint by eliminating the need for paper documents.</p>
+                                </div>
+                            </div>
+
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">6</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">User-Friendly Interface</h5>
+                                    <p class="mb-0">Enjoy an intuitive and easy-to-navigate platform, making it simple to manage your information.</p>
                                 </div>
                             </div>
                             <!-- END CONTENT BOX #3 -->
@@ -1070,8 +1015,7 @@
 
                             <!-- Text -->
                             <p>
-                                Nemo ipsam egestas volute turpis egestas ipsum and purus sapien ultrice an aliquam quaerat ipsum augue turpis sapien cursus congue magna purus quaerat at ligula purus egestas magna cursus undo varius
-                                purus magnis sapien quaerat
+                                Executor Hub allows a user-friendly interface for managing your documents, executors and assets. You can easily login to the portal at any time and get your work done with ease.
                             </p>
 
                             <!-- Small Title -->
@@ -1080,11 +1024,11 @@
                             <!-- List -->
                             <ul class="simple-list">
                                 <li class="list-item">
-                                    <p>Sapien quaerat tempor an ipsum laoreet purus and sapien dolor an ultrice ipsum aliquam undo congue cursus dolor</p>
+                                    <p>Easy to use portal with runtime configurations./p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p class="mb-0">Purus suscipit cursus vitae cubilia magnis volute egestas vitae sapien turpis ultrice auctor congue magna placerat</p>
+                                    <p class="mb-0">Easily accessible at anywhere.</p>
                                 </li>
                             </ul>
                         </div>
@@ -1106,58 +1050,7 @@
 
         <!-- TEXT CONTENT
 			============================================= -->
-        <section class="pt-100 ct-02 content-section division">
-            <div class="container">
-                <!-- SECTION CONTENT (ROW) -->
-                <div class="row d-flex align-items-center">
-                    <!-- IMAGE BLOCK -->
-                    <div class="col-md-6">
-                        <div class="img-block left-column wow fadeInRight">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-08.png')}}" alt="content-image" />
-                        </div>
-                    </div>
-
-                    <!-- TEXT BLOCK -->
-                    <div class="col-md-6">
-                        <div class="txt-block right-column wow fadeInLeft">
-                            <!-- TEXT BOX -->
-                            <div class="txt-box">
-                                <!-- Title -->
-                                <h5 class="s-24 w-700">Advanced Analytics Review</h5>
-
-                                <!-- Text -->
-                                <p>Sodales tempor sapien quaerat ipsum undo congue laoreet turpis neque auctor turpis vitae dolor luctus placerat magna and ligula cursus purus vitae purus an ipsum suscipit</p>
-                            </div>
-                            <!-- END TEXT BOX -->
-
-                            <!-- TEXT BOX -->
-                            <div class="txt-box mb-0">
-                                <!-- Title -->
-                                <h5 class="s-24 w-700">Email Marketing Campaigns</h5>
-
-                                <!-- Text -->
-                                <p>Tempor sapien sodales quaerat ipsum undo congue laoreet turpis neque auctor turpis vitae dolor luctus placerat magna and ligula cursus purus an ipsum vitae suscipit purus</p>
-
-                                <!-- List -->
-                                <ul class="simple-list">
-                                    <li class="list-item">
-                                        <p>Tempor sapien quaerat an ipsum laoreet purus and sapien dolor an ultrice ipsum aliquam undo congue dolor cursus</p>
-                                    </li>
-
-                                    <li class="list-item">
-                                        <p class="mb-0">Cursus purus suscipit vitae cubilia magnis volute egestas vitae sapien turpis ultrice auctor congue magna placerat</p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- END TEXT BOX -->
-                        </div>
-                    </div>
-                    <!-- END TEXT BLOCK -->
-                </div>
-                <!-- END SECTION CONTENT (ROW) -->
-            </div>
-            <!-- End container -->
-        </section>
+        
         <!-- END TEXT CONTENT -->
 
         <!-- FAQs-3
@@ -1172,7 +1065,7 @@
                             <h2 class="s-50 w-700">Questions & Answers</h2>
 
                             <!-- Text -->
-                            <p class="s-21 color--grey">Frequently asked questions about My Executor Hub.</p>
+                            <p class="s-21 color--grey">Frequently asked questions about Executor Hub.</p>
                         </div>
                     </div>
                 </div>
@@ -1189,7 +1082,7 @@
                                     <h5 class="s-22 w-700"><span>1.</span> What is Executor Hub?</h5>
 
                                     <!-- Answer -->
-                                    <p class="color--grey">Executor Hub is a secure web application designed to help individuals organize and store important financial documents, social media passwords, and asset information in one central, encrypted location.</p>
+                                    <p class="color--grey">Executor Hub is a secure web application designed to help individuals organize and store important financial documents, social media passwords, and asset information in one central, encrypted location. It ensures that all your essential information is readily accessible for your executors.</p>
                                 </div>
 
                                 <!-- QUESTION #2 -->
@@ -1198,7 +1091,7 @@
                                     <h5 class="s-22 w-700"><span>2.</span> How can Executor Hub benefit me?</h5>
 
                                     <!-- Answer -->
-                                    <p class="color--grey">Executor Hub simplifies the process of managing your digital and financial legacy. By securely storing your sensitive information, Executor Hub ensures that your loved ones can easily access and manage your affairs in the event of incapacity or after your passing.</p>
+                                    <p class="color--grey">Executor Hub simplifies the process of managing your digital and financial legacy. By securely storing your sensitive information, Executor Hub ensures that your loved ones can easily access and manage your affairs in the event of incapacity or after your passing, reducing stress and confusion during difficult times.</p>
                                 </div>
 
                                 <!-- QUESTION #3 -->
@@ -1207,8 +1100,46 @@
                                     <h5 class="s-22 w-700"><span>3.</span> Is Executor Hub secure?</h5>
 
                                     <!-- Answer -->
-                                    <p>Yes, security is our top priority. Executor Hub uses state-of-the-art encryption and security measures to protect your data from unauthorized access.</p>
+                                    <p>Yes, security is our top priority. Executor Hub uses state-of-the-art encryption and advanced security measures to protect your data from unauthorized access, ensuring your information remains private and secure.</p>
                                 </div>
+
+                                
+                                <!-- QUESTION #4 -->
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>4.</span> Can I share access with family members or trusted individuals?</h5>
+
+                                    <!-- Answer -->
+                                    <p>Yes, Executor Hub allows you to designate trusted contacts who can access your information in case of emergency or incapacity. This ensures that the right people have access when it’s needed most.</p>
+                                </div>
+
+                                <!-- QUESTION#5 -->
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>5.</span> What types of documents and information can I store on Executor Hub?</h5>
+                                    <p>You can store a wide range of documents, including wills, trusts, insurance policies, investment accounts, social media account details, digital asset information, personal messages to loved ones, and more.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>6.</span> How often can I update my information on Executor Hub?</h5>
+                                    <p>You can update your information as often as needed. Executor Hub makes it easy to keep your documents and details current, reflecting any changes in your circumstances.</p>
+                                </div>
+
+                                
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>7.</span> How does Executor Hub handle privacy and confidentiality?</h5>
+                                    <p>Executor Hub is committed to maintaining your privacy and confidentiality. We adhere to strict privacy policies and utilize robust security measures to safeguard your information at all times.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>8.</span> Can Executor Hub assist with organizing non-financial aspects of my estate?</h5>
+                                    <p>Yes, in addition to financial documents, Executor Hub allows you to store and organize non-financial aspects such as personal letters, family traditions, and other important details you wish to pass on.</p>
+                                </div>
+
+
 
                             </div>
                         </div>
@@ -1218,20 +1149,41 @@
                         <div class="col-lg-6">
                             <div class="questions-holder">
 
-                                <!-- QUESTION #4 -->
+
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>4.</span> Can I share access with family members or trusted individuals?</h5>
-
-                                    <!-- Answer -->
-                                    <p>Yes, Executor Hub allows you to designate trusted contacts who can access your information in case of emergency or incapacity.</p>
+                                    <h5 class="s-22 w-700"><span>9.</span> What happens to my data if Executor Hub ceases operations?</h5>
+                                    <p>In the unlikely event that Executor Hub ceases operations, your data remains secure and accessible to you. We have contingency plans in place to ensure continuity and access to your information.</p>
                                 </div>
 
-                                <!-- QUESTION#5 -->
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>5.</span> What types of documents and information can I store on Executor Hub?</h5>
-                                    <p>You can store a wide range of documents, including wills, trusts, insurance policies, investment accounts, social media account details, digital asset information, and more.</p>
+                                    <h5 class="s-22 w-700"><span>10.</span> How can I get support if I have questions or issues using Executor Hub?</h5>
+                                    <p>We provide dedicated customer support to assist you with any questions or issues. You can reach out to our support team via email or through our helpdesk for prompt assistance.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>11.</span> Can Executor Hub integrate with other estate planning services or platforms?</h5>
+                                    <p>Yes, Executor Hub is designed to complement other estate planning services and platforms. We offer integration options to streamline your overall estate planning process.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>12.</span> Is there a cost associated with using Executor Hub?</h5>
+                                    <p>Executor Hub offers different subscription plans tailored to meet your needs. We provide transparent pricing information on our website, including any additional fees for premium features or storage capacities.</p>
+                                </div>
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>13.</span> How is my data secure?</h5>
+                                    <p>Yes, your data security is of utmost importance to us at Executor Hub. We employ several layers of security measures to protect your information:</p>
+                                    <ul>
+                                        <li><b>Encryption: </b>All sensitive data, including passwords and stored documents, are encrypted using advanced encryption algorithms. This means that your data is transformed into unreadable ciphertext, which can only be decrypted with a specific key held only by authorized parties.</li>
+                                        <li><b>Password Security: </b> User passwords are hashed before being stored in our database. Hashing is a one-way cryptographic process that converts passwords into a fixed-length string of characters. This ensures that even if our database were compromised, passwords cannot be easily reversed or deciphered.</li>
+                                        <li><b>Secure Authentication:</b> When you log into Executor Hub, we use secure protocols and hashing techniques to verify your identity. This prevents unauthorized access by ensuring that only you or your designated contacts can access your account.</li>
+                                        <li><b>Data Access Controls:</b> We implement strict access controls and authentication mechanisms to limit who can access your stored information. This includes multi-factor authentication options for added security.</li>
+                                        <li><b></b></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -1271,13 +1223,13 @@
                             <div class="col-md-7">
                                 <div class="banner-13-txt color--white">
                                     <!-- Title -->
-                                    <h2 class="s-45 w-700">Getting started with My Executor Hub today!</h2>
+                                    <h2 class="s-45 w-700">Getting started with Executor Hub today!</h2>
 
                                     <!-- Text -->
                                     <p class="p-lg">Register Your Account with a Free Trial and then purchase the account after use.</p>
 
                                     <!-- Button -->
-                                    <a  href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white" data-bs-toggle="modal" data-bs-target="#modal-3">Get srarted - it's free</a>
+                                    <a  href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white" data-bs-toggle="modal" data-bs-target="#modal-3">Get started - it's free</a>
                                 </div>
                             </div>
                             <!-- END BANNER-13 TEXT -->
@@ -1373,7 +1325,7 @@
                             <h2 class="s-52 w-700">Questions? Let's Talk</h2>
 
                             <!-- Text -->
-                            <p class="p-lg">Want to learn more about My Executor Hub, get a quote, or speak with an expert? Let us know what you are looking for and we’ll get back to you right away</p>
+                            <p class="p-lg">Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know what you are looking for and we’ll get back to you right away</p>
                         </div>
                     </div>
                 </div>
@@ -1423,7 +1375,7 @@
 
                                 <div class="contact-form-notice">
                                     <p class="p-sm">
-                                        We are committed to your privacy. My Executor Hub uses the information you provide us to contact you about our relevant content, products, and services. You may unsubscribe from these communications at any
+                                        We are committed to your privacy. Executor Hub uses the information you provide us to contact you about our relevant content, products, and services. You may unsubscribe from these communications at any
                                         time. For more information, check out our <a href="privacy.html">Privacy Policy</a>.
                                     </p>
                                 </div>
@@ -1543,7 +1495,7 @@
                         <!-- FOOTER COPYRIGHT -->
                         <div class="col">
                             <div class="footer-copyright">
-                                <p class="p-sm">&copy; 2024 My Executor Box. <span>All Rights Reserved</span></p>
+                                <p class="p-sm">&copy; 2024 Executor Box. <span>All Rights Reserved</span></p>
                             </div>
                         </div>
 
