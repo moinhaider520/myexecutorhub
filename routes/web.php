@@ -7,6 +7,10 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Customer\BankController;
+use App\Http\Controllers\Customer\SavingController;
+use App\Http\Controllers\Customer\InvestmentController;
+use App\Http\Controllers\Customer\PropertyController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -51,6 +55,15 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/update-profile', [CustomerSettingController::class, 'updateProfile'])->name('update_profile');
     Route::post('/update-profile-image', [CustomerSettingController::class, 'updateProfileImage'])->name('update_profile_image');
     Route::post('/update-password', [CustomerSettingController::class, 'updatePassword'])->name('update_password');
+
+    // Customer Bank
+    Route::get('/bank', [BankController::class, 'index'])->name('bank');
+    // Customer Savings
+    Route::get('/savings', [SavingController::class, 'index'])->name('savings');
+    // Customer Investments
+    Route::get('/investments', [InvestmentController::class, 'index'])->name('investments');
+    // Customer Properties
+    Route::get('/properties', [PropertyController::class, 'index'])->name('properties');
 });
 
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {

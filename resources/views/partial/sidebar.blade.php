@@ -74,13 +74,13 @@
                             <span>Assets </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Bank</a></li>
-                            <li><a href="#">Savings</a></li>
-                            <li><a href="#">Investments</a></li>
+                            <li><a href="{{ route('customer.bank') }}">Bank</a></li>
+                            <li><a href="{{ route('customer.savings') }}">Savings</a></li>
+                            <li><a href="{{ route('customer.investments') }}">Investments</a></li>
                             <li><a href="#">Shares</a></li>
                             <li><a href="#">Life Insurance</a></li>
                             <li><a href="#">Funeral Plan</a></li>
-                            <li><a href="#">Properties</a></li>
+                            <li><a href="{{ route('customer.properties') }}">Properties</a></li>
                             <li><a href="#">National Savings</a></li>
                             <li><a href="#">Pensions</a></li>
                             <li><a href="#">Trusts</a></li>
