@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
-              Add Savings Account
+              Add Digital Asset
             </button>
           </div>
         </div>
@@ -17,8 +17,8 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4>Savings Accounts</h4>
-                <span>List of Savings Account.</span>
+                <h4>Digital Assets</h4>
+                <span>List of Digital Assets.</span>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
@@ -27,11 +27,12 @@
                       <thead>
                         <tr role="row">
                           <th>Sr</th>
-                          <th>Bank Name</th>
-                          <th>Sort Code</th>
-                          <th>Account Name</th>
-                          <th>Account Number</th>
-                          <th>Balance</th>
+                          <th>Asset Type</th>
+                          <th>Asset Name</th>
+                          <th>Username</th>
+                          <th>Password</th>
+                          <th>Email Used to create Account</th>
+                          <th>Value</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -55,33 +56,39 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addBankAccountModalLabel">Add Saving's Account</h5>
+        <h5 class="modal-title" id="addBankAccountModalLabel">Add Digital Asset</h5>
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="accountName">Bank Name</label>
-            <input type="text" class="form-control" id="bankName" placeholder="Enter Bank name">
+          <div class="form-group mb-4">
+            <label for="businessType">Type of Asset</label>
+            <select class="form-control">
+              <option value="Online Banking Account">Online Banking Account</option>
+              <option value="Investment Account">Investment Account</option>
+              <option value="Digital Wallet">Digital Wallet</option>
+              <option value="Social Media Account">Social Media Account</option>
+              <option value="Digital Media">Digital Media</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="accountName">Sort Code</label>
-            <input type="text" class="form-control" id="sortCode" placeholder="Enter Sort Code">
+          <div class="form-group mb-4">
+            <label for="businessName">Asset Name</label>
+            <input type="text" class="form-control" id="businessName" placeholder="Enter Asset Name">
           </div>
-          <div class="form-group">
-            <label for="accountNumber">Account Number</label>
-            <input type="text" class="form-control" id="accountNumber" placeholder="Enter account number">
+          <div class="form-group mb-4">
+            <label for="shares">Username</label>
+            <input type="text" class="form-control" id="shares" placeholder="Enter Username">
           </div>
-          <div class="form-group">
-            <label for="accountNumber">Name(s) on the account</label>
-            <input type="text" class="form-control" id="accountName" placeholder="Name(s) on the account">
+          <div class="form-group mb-4">
+            <label for="businessValue">Password</label>
+            <input type="text" class="form-control" id="businessValue" placeholder="Enter Password">
           </div>
-          <div class="form-group">
-            <label for="balance">Balance In Hand</label>
-            <input type="number" class="form-control" id="balance" placeholder="Enter balance">
+          <div class="form-group mb-4">
+            <label for="shareValue">Email Used?</label>
+            <input type="text" class="form-control" id="shareValue" placeholder="Email Used to Create Account?">
           </div>
-          <div class="form-group">
-            <label for="balance">Valuation Date</label>
-            <input type="date" class="form-control" id="valuationdate">
+          <div class="form-group mb-4">
+            <label for="shareValue">Value in GBP</label>
+            <input type="text" class="form-control" id="shareValue" placeholder="Value in GBP">
           </div>
         </form>
       </div>

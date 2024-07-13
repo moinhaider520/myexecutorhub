@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
-              Add Investment
+              Add Real Estate
             </button>
           </div>
         </div>
@@ -17,8 +17,8 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4>Investments</h4>
-                <span>List of Investments.</span>
+                <h4>Real Estate</h4>
+                <span>List of Real Estate.</span>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
@@ -27,12 +27,11 @@
                       <thead>
                         <tr role="row">
                           <th>Sr</th>
-                          <th>Product Provider</th>
-                          <th>Investment Type</th>
-                          <th>Account Number</th>
-                          <th>Account Reference</th>
-                          <th>Valuation</th>
-                          <th>Valuation Date</th>
+                          <th>Property Type</th>
+                          <th>Property Address</th>
+                          <th>Owner Name(s)</th>
+                          <th>How Owned?</th>
+                          <th>Value</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -56,40 +55,38 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addBankAccountModalLabel">Add Investment</h5>
+        <h5 class="modal-title" id="addBankAccountModalLabel">Add Real Estate</h5>
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="productProvider">Product Provider</label>
-            <input type="text" class="form-control" id="productProvider" placeholder="Enter Product Provider">
-          </div>
-          <div class="form-group">
-            <label for="investmentType">Investment Type</label>
-            <select class="form-control" id="investmentType">
-              <option value="OEIC">OEIC</option>
-              <option value="Unit Thrust">Unit Thrust</option>
-              <option value="ISA">ISA</option>
-              <option value="Bond">Bond</option>
-              <option value="VCT's">VCT's</option>
-              <option value="Others">Others</option>
+          <div class="form-group mb-4">
+            <label>Property Type</label>
+            <select class="form-control">
+              <option value="Primary Residence">Primary Residence</option>
+              <option value="Secondary Homes (Holiday Homes)">Secondary Homes (Holiday Homes)</option>
+              <option value="Buy-to-let Property">Buy-to-let Property</option>
+              <option value="Land & Other Property Interests">Land & Other Property Interests</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="accountNumber">Account Number</label>
-            <input type="text" class="form-control" id="accountNumber" placeholder="Enter account number">
+          <div class="form-group mb-4">
+            <label for="propertyAddress">Property Address</label>
+            <input type="text" class="form-control" id="propertyAddress" placeholder="Enter Property Address">
           </div>
-          <div class="form-group">
-            <label for="accountNumber">Account Reference</label>
-            <input type="text" class="form-control" id="accountReference" placeholder="Account Reference">
+          <div class="form-group mb-4">
+            <label for="ownerName">Owner Name(s)</label>
+            <input type="text" class="form-control" id="ownerName" placeholder="Owner Name(s)">
           </div>
-          <div class="form-group">
-            <label for="valuation">Valuation $</label>
-            <input type="number" class="form-control" id="valuation" placeholder="Enter Valuation">
+          <div class="form-group mb-4">
+            <label>How Owned?</label>
+            <select class="form-control">
+              <option value="Solely">Solely</option>
+              <option value="Joint Tenants">Joint Tenants</option>
+              <option value="Tenants in Common">Tenants in Common</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="balance">Valuation Date</label>
-            <input type="date" class="form-control" id="valuationdate">
+          <div class="form-group mb-4">
+            <label for="valuation">Value (GBP)</label>
+            <input type="number" class="form-control" id="valuation" placeholder="Enter Value">
           </div>
         </form>
       </div>

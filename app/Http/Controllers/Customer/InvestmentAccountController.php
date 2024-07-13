@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class InvestmentController extends Controller
+class InvestmentAccountController extends Controller
 {
     public function index()
     {
-        return view('customer.assets.investments');
+        return view('customer.assets.investment_accounts');
     }
 }

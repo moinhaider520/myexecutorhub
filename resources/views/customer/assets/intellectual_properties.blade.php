@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
-              Add Property
+              Add Intellectual Property
             </button>
           </div>
         </div>
@@ -17,8 +17,8 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4>Properties</h4>
-                <span>List of Properties.</span>
+                <h4>Intellectual Properties</h4>
+                <span>List of Intellectual Properties.</span>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
@@ -27,9 +27,8 @@
                       <thead>
                         <tr role="row">
                           <th>Sr</th>
-                          <th>Property Address</th>
-                          <th>Property Value</th>
-                          <th>Valuation Date</th>
+                          <th>Property Type</th>
+                          <th>Description</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -53,21 +52,22 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addBankAccountModalLabel">Add Property</h5>
+        <h5 class="modal-title" id="addBankAccountModalLabel">Add Intellectual Property</h5>
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="propertyAddress">Property Address</label>
-            <input type="text" class="form-control" id="propertyAddress" placeholder="Enter Property Address">
+          <div class="form-group mb-4">
+            <label for="accountType">Property Type</label>
+            <select class="form-control">
+              <option value="Copyrights">Copyrights</option>
+              <option value="Trademarks">Trademarks</option>
+              <option value="Patents">Patents</option>
+              <option value="Royalties">Royalties</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="propertyValue">Property Value</label>
-            <input type="text" class="form-control" id="propertyValue" placeholder="Enter Property Value">
-          </div>
-          <div class="form-group">
-            <label for="balance">Valuation Date</label>
-            <input type="date" class="form-control" id="valuationdate">
+          <div class="form-group mb-4">
+            <label for="accountName">Description</label>
+            <textarea class="form-control"></textarea>
           </div>
         </form>
       </div>

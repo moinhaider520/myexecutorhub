@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
-              Add Bank Account
+              Add Adviser
             </button>
           </div>
         </div>
@@ -17,8 +17,8 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4>Bank Accounts</h4>
-                <span>List of Bank Accounts.</span>
+                <h4>Advisers</h4>
+                <span>List of Advisers.</span>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
@@ -27,11 +27,12 @@
                       <thead>
                         <tr role="row">
                           <th>Sr</th>
-                          <th>Bank Name</th>
-                          <th>Sort Code</th>
-                          <th>Account Name</th>
-                          <th>Account Number</th>
-                          <th>Balance</th>
+                          <th>Adviser Type</th>
+                          <th>Name</th>
+                          <th>Practice Name</th>
+                          <th>Practice Address</th>
+                          <th>Email Address</th>
+                          <th>Phone Number</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -55,33 +56,39 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addBankAccountModalLabel">Add Bank Account</h5>
+        <h5 class="modal-title" id="addBankAccountModalLabel">Add Adviser</h5>
       </div>
       <div class="modal-body">
         <form>
-          <div class="form-group">
-            <label for="accountName">Bank Name</label>
-            <input type="text" class="form-control" id="bankName" placeholder="Enter Bank name">
+          <div class="form-group mb-4">
+            <label for="accountType">Adviser Type</label>
+            <select class="form-control">
+              <option value="Solicitors">Solicitors</option>
+              <option value="Accountants">Accountants</option>
+              <option value="Stock Brokers">Stock Brokers</option>
+              <option value="Will Writers">Will Writers</option>
+              <option value="Financial Advisers">Financial Advisers</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="accountName">Sort Code</label>
-            <input type="text" class="form-control" id="sortCode" placeholder="Enter Sort Code">
+          <div class="form-group mb-4">
+            <label for="accountName">Name</label>
+            <input type="text" class="form-control" id="bankName" placeholder="Enter Name">
           </div>
-          <div class="form-group">
-            <label for="accountNumber">Account Number</label>
-            <input type="text" class="form-control" id="accountNumber" placeholder="Enter account number">
+          <div class="form-group mb-4">
+            <label for="accountName">Practice Name</label>
+            <input type="text" class="form-control" id="sortCode" placeholder="Enter Practice Name">
           </div>
-          <div class="form-group">
-            <label for="accountNumber">Name(s) on the account</label>
-            <input type="text" class="form-control" id="accountName" placeholder="Name(s) on the account">
+          <div class="form-group mb-4">
+            <label for="accountNumber">Practice Address</label>
+            <input type="text" class="form-control" id="accountNumber" placeholder="Enter Practice Address">
           </div>
-          <div class="form-group">
-            <label for="balance">Balance In Hand</label>
-            <input type="number" class="form-control" id="balance" placeholder="Enter balance">
+          <div class="form-group mb-4">
+            <label for="accountNumber">Email Address</label>
+            <input type="text" class="form-control" id="accountName" placeholder="Email Address">
           </div>
-          <div class="form-group">
-            <label for="balance">Valuation Date</label>
-            <input type="date" class="form-control" id="valuationdate">
+          <div class="form-group mb-4">
+            <label for="balance">Phone Number</label>
+            <input type="text" class="form-control" id="balance" placeholder="Enter Phone Number">
           </div>
         </form>
       </div>

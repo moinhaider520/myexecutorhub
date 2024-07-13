@@ -71,36 +71,19 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Assets </span>
+                            <span>Assets & Liabilities </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.bank') }}">Bank</a></li>
-                            <li><a href="{{ route('customer.savings') }}">Savings</a></li>
-                            <li><a href="{{ route('customer.investments') }}">Investments</a></li>
-                            <li><a href="#">Shares</a></li>
-                            <li><a href="#">Life Insurance</a></li>
-                            <li><a href="#">Funeral Plan</a></li>
-                            <li><a href="{{ route('customer.properties') }}">Properties</a></li>
-                            <li><a href="#">National Savings</a></li>
-                            <li><a href="#">Pensions</a></li>
-                            <li><a href="#">Trusts</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
-                            </svg>
-                            <span>Liabilities </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="#">Mortgages</a></li>
-                            <li><a href="#">Credit Cards</a></li>
-                            <li><a href="#">Car Loans</a></li>
-                            <li><a href="#">Bank Loans</a></li>
+                            <li><a href="{{ route('customer.bank_accounts') }}">Bank Accounts</a></li>
+                            <li><a href="{{ route('customer.investment_accounts') }}">Investment Accounts</a></li>
+                            <li><a href="{{ route('customer.real_estate') }}">Real Estate</a></li>
+                            <li><a href="{{ route('customer.personal_property') }}">Personal Properties</a></li>
+                            <li><a href="{{ route('customer.business_interest') }}">Business Interests</a></li>
+                            <li><a href="{{ route('customer.insurance_policies') }}">Insurance Policies</a></li>
+                            <li><a href="{{ route('customer.debt_and_liabilities') }}">Debt & Liabilities</a></li>
+                            <li><a href="{{ route('customer.digital_assets') }}">Digital Assets</a></li>
+                            <li><a href="{{ route('customer.intellectual_properties') }}">Intellectual Properties</a></li>
+                            <li><a href="{{ route('customer.other_assets') }}">Other Assets</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -114,8 +97,7 @@
                             <span>Executors </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Add Executor</a></li>
-                            <li><a href="#">View Executors</a></li>
+                            <li><a href="{{ route('customer.executors') }}">Manage Executors</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -129,11 +111,7 @@
                             <span>Advisors </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Solicitors</a></li>
-                            <li><a href="#">Will Writers</a></li>
-                            <li><a href="#">Accountants</a></li>
-                            <li><a href="#">Financial Advisers</a></li>
-                            <li><a href="#">Stock Brokers</a></li>
+                            <li><a href="{{ route('customer.advisors') }}">Manage Advisers</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -147,8 +125,7 @@
                             <span>Documents </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Add Document</a></li>
-                            <li><a href="#">View Documents</a></li>
+                            <li><a href="{{ route('customer.documents') }}">Manage Documents</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -162,7 +139,7 @@
                             <span>Wishes </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Manage Wishes</a></li>
+                            <li><a href="{{ route('customer.wishes') }}">Manage Wishes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -176,7 +153,7 @@
                             <span>Life Remebered </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="#">Manage Notes</a></li>
+                            <li><a href="{{ route('customer.life_remembered') }}">Manage Notes</a></li>
                         </ul>
                     </li>
                     @endrole
