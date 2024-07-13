@@ -19,42 +19,42 @@
                                     @method('PUT')
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Full Name</label>
-                                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $customer->name) }}" required>
+                                        <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $customer->name) }}" placeholder="Enter full name" required>
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $customer->email) }}" required>
+                                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email', $customer->email) }}" placeholder="Enter email address" required>
                                         @error('email')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="address" class="form-label">Address</label>
-                                        <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $customer->address) }}" required>
+                                        <input type="text" name="address" id="address" class="form-control" value="{{ old('address', $customer->address) }}" placeholder="Enter address" required>
                                         @error('address')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="city" class="form-label">City</label>
-                                        <input type="text" name="city" id="city" class="form-control" value="{{ old('city', $customer->city) }}" required>
+                                        <input type="text" name="city" id="city" class="form-control" value="{{ old('city', $customer->city) }}" placeholder="Enter city" required>
                                         @error('city')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="postal_code" class="form-label">Postal Code</label>
-                                        <input type="text" name="postal_code" id="postal_code" class="form-control" value="{{ old('postal_code', $customer->postal_code) }}" required>
+                                        <input type="text" name="postal_code" id="postal_code" class="form-control" value="{{ old('postal_code', $customer->postal_code) }}" placeholder="Enter postal code" required>
                                         @error('postal_code')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="contact_number" class="form-label">Contact Number</label>
-                                        <input type="text" name="contact_number" id="contact_number" class="form-control" value="{{ old('contact_number', $customer->contact_number) }}" required>
+                                        <input type="text" name="contact_number" id="contact_number" class="form-control" value="{{ old('contact_number', $customer->contact_number) }}" placeholder="Enter contact number" required>
                                         @error('contact_number')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror

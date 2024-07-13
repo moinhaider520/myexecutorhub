@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper" data-layout="stroke-svg">
     <div>
         <div class="logo-wrapper">
-            <a href="#">
+            <a href="{{route('dashboard')}}">
                 <img class="img-fluid" src="{{ asset('assets/frontend/images/logo-white.png') }}" alt="" style="width:100px;">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="logo-icon-wrapper">
-            <a href="#">
+            <a href="{{route('dashboard')}}">
                 <img class="img-fluid" src="{{ asset('assets/images/favicon.ico') }}" style="width:20px;" alt="">
             </a>
         </div>
@@ -31,7 +31,7 @@
                         </div>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link" href="#">
+                        <a class="sidebar-link" href="{{route('dashboard')}}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>

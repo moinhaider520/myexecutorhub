@@ -31,10 +31,10 @@
                                                 @foreach ($customers as $customer)
                                                     <tr>
                                                         <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $customer->name }}</td>
-                                                        <td>{{ $customer->email }}</td>
-                                                        <td>{{ $customer->address }}</td>
-                                                        <td>{{ $customer->contact_number }}</td>
+                                                        <td>{{ $customer->name ?? 'N/A' }}</td>
+                                                        <td>{{ $customer->email ?? 'N/A' }}</td>
+                                                        <td>{{ $customer->address ?? 'N/A' }}</td>
+                                                        <td>{{ $customer->contact_number ?? 'N/A' }}</td>
                                                         <td>
                                                             <a href="{{ route('admin.customers.edit', $customer->id) }}" class="btn btn-primary btn-sm">Edit</a>
                                                             <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST" style="display:inline;">
