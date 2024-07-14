@@ -67,6 +67,22 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/update-profile-image', [CustomerSettingController::class, 'updateProfileImage'])->name('update_profile_image');
     Route::post('/update-password', [CustomerSettingController::class, 'updatePassword'])->name('update_password');
 
+    // Customer Life Remembered
+    Route::get('/life_remembered/view', [LifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/update', [LifeRememberedController::class, 'update'])->name('life_remembered.update');
+
+    // Customer Wishes
+    Route::get('/wishes/view', [WishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/update', [WishesController::class, 'update'])->name('wishes.update');
+
+    // Customer Documents
+    Route::get('/documents/view', [DocumentsController::class, 'view'])->name('documents.view');
+    Route::post('/documents/store', [DocumentsController::class, 'store'])->name('documents.store');
+    Route::post('/documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
+    Route::delete('/documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
+    
+
+
     // Customer Bank
     Route::get('/bank_accounts', [BankAccountController::class, 'index'])->name('bank_accounts');
     // Customer Savings
@@ -87,12 +103,6 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/intellectual_properties', [IntellectualPropertyController::class, 'index'])->name('intellectual_properties');
     // Customer Other Assets
     Route::get('/other_assets', [OtherAssetsController::class, 'index'])->name('other_assets');
-    // Customer Documents
-    Route::get('/documents', [DocumentsController::class, 'index'])->name('documents');
-    // Customer Wishes
-    Route::get('/wishes', [WishesController::class, 'index'])->name('wishes');
-    // Customer Life Remembered
-    Route::get('/life_remembered', [LifeRememberedController::class, 'index'])->name('life_remembered');
     // Customer Advisors
     Route::get('/advisors', [AdvisorsController::class, 'index'])->name('advisors');
     // Customer Executors

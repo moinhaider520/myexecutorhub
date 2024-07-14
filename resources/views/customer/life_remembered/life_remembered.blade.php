@@ -20,8 +20,14 @@
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
                   <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                    <textarea name="editor" id="editor"></textarea>
-                    <button class="btn btn-primary mt-4" style="float:right;">Update Changes</button>
+                    <form action="{{ route('customer.life_remembered.update') }}" method="POST">
+                      @csrf
+                      <textarea name="content" id="editor">{{ old('content', $lifeRemembered->content ?? '') }}</textarea>
+                      @error('content')
+                        <div class="text-danger">{{ $message }}</div>
+                      @enderror
+                      <button type="submit" class="btn btn-primary mt-4" style="float:right;">Update Changes</button>
+                    </form>
                   </div>
                 </div>
               </div>

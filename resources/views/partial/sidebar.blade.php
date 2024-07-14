@@ -125,7 +125,7 @@
                             <span>Documents </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.documents') }}">Manage Documents</a></li>
+                            <li><a href="{{ route('customer.documents.view') }}">Manage Documents</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -139,7 +139,7 @@
                             <span>Wishes </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.wishes') }}">Manage Wishes</a></li>
+                            <li><a href="{{ route('customer.wishes.view') }}">Manage Wishes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -153,7 +153,7 @@
                             <span>Life Remebered </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.life_remembered') }}">Manage Notes</a></li>
+                            <li><a href="{{ route('customer.life_remembered.view') }}">Manage Notes</a></li>
                         </ul>
                     </li>
                     @endrole
