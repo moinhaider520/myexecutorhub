@@ -23,7 +23,7 @@ class DocumentsController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file',
+            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
         ]);
 
         try {
@@ -50,8 +50,8 @@ class DocumentsController extends Controller
     {
         $request->validate([
             'document_type' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png|max:2048',
+            'description' => 'required',
+            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
         ]);
     
         try {

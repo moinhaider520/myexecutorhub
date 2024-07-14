@@ -39,7 +39,7 @@
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $document->document_type }}</td>
                           <td>{{ $document->description }}</td>
-                          <td><a href="{{ Storage::url($document->file_path) }}" target="_blank">Download</a></td>
+                          <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}" target="_blank">Download</a></td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDocumentModal" data-id="{{ $document->id }}" data-document_type="{{ $document->document_type }}" data-description="{{ $document->description }}">Edit</button>
                             <form action="{{ route('customer.documents.destroy', $document->id) }}" method="POST" style="display:inline;">
