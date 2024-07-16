@@ -80,8 +80,18 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/documents/store', [DocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
-    
 
+    // Customer Advisors
+    Route::get('/advisors/view', [AdvisorsController::class, 'view'])->name('advisors.view');
+    Route::post('/advisors/store', [AdvisorsController::class, 'store'])->name('advisors.store');
+    Route::post('/advisors/update/{id}', [AdvisorsController::class, 'update'])->name('advisors.update');
+    Route::delete('/advisors/destroy/{id}', [AdvisorsController::class, 'destroy'])->name('advisors.destroy');
+
+    // Customer Executors
+    Route::get('/executors/view', [ExecutorsController::class, 'view'])->name('executors.view');
+    Route::post('/executors/store', [ExecutorsController::class, 'store'])->name('executors.store');
+    Route::post('/executors/update/{id}', [ExecutorsController::class, 'update'])->name('executors.update');
+    Route::delete('/executors/destroy/{id}', [ExecutorsController::class, 'destroy'])->name('executors.destroy');
 
     // Customer Bank
     Route::get('/bank_accounts', [BankAccountController::class, 'index'])->name('bank_accounts');
@@ -103,10 +113,6 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/intellectual_properties', [IntellectualPropertyController::class, 'index'])->name('intellectual_properties');
     // Customer Other Assets
     Route::get('/other_assets', [OtherAssetsController::class, 'index'])->name('other_assets');
-    // Customer Advisors
-    Route::get('/advisors', [AdvisorsController::class, 'index'])->name('advisors');
-    // Customer Executors
-    Route::get('/executors', [ExecutorsController::class, 'index'])->name('executors');
 });
 
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {

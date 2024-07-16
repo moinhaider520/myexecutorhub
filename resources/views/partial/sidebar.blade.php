@@ -97,7 +97,7 @@
                             <span>Executors </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.executors') }}">Manage Executors</a></li>
+                            <li><a href="{{ route('customer.executors.view') }}">Manage Executors</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -111,7 +111,7 @@
                             <span>Advisors </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.advisors') }}">Manage Advisers</a></li>
+                            <li><a href="{{ route('customer.advisors.view') }}">Manage Advisers</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
