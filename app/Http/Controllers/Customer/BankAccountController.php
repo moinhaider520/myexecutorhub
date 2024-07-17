@@ -2,13 +2,99 @@
 
 namespace App\Http\Controllers\Customer;
 
+use Illuminate\Support\Facades\Auth;
+use App\Models\BankAccount;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BankAccountController extends Controller
 {
-    public function index()
+    public function view()
     {
-        return view('customer.assets.bank_accounts');
+        $bankAccounts = BankAccount::where('created_by', Auth::id())->get();
+        return view('customer.assets.bank_accounts', compact('bankAccounts'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'account_type' => 'required|string|max:255',
+            'bank_name' => 'required|string|max:255',
+            'sort_code' => 'required|string|max:255',
+            'account_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:255',
+            'balance' => 'required|numeric',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            BankAccount::create([
+                'account_type' => $request->account_type,
+                'bank_name' => $request->bank_name,
+                'sort_code' => $request->sort_code,
+                'account_name' => $request->account_name,
+                'account_number' => $request->account_number,
+                'balance' => $request->balance,
+                'created_by' => Auth::id()
+            ]);
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Bank account added successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'account_type' => 'required|string|max:255',
+            'bank_name' => 'required|numeric',
+            'sort_code' => 'required|string|max:255',
+            'account_name' => 'required|string|max:255',
+            'account_number' => 'required|string|max:255',
+            'balance' => 'required|numeric',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $bankAccount = BankAccount::findOrFail($id);
+
+            $bankAccount->account_type = $request->account_type;
+            $bankAccount->bank_name = $request->bank_name;
+            $bankAccount->sort_code = $request->sort_code;
+            $bankAccount->account_name = $request->account_name;
+            $bankAccount->account_number = $request->account_number;
+            $bankAccount->balance = $request->balance;
+            $bankAccount->created_by = Auth::id();
+
+            $bankAccount->save();
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Bank account updated successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $bankAccount = BankAccount::findOrFail($id);
+            $bankAccount->delete();
+
+            DB::commit();
+            return redirect()->route('customer.bank_accounts.view')->with('success', 'Bank account deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

@@ -4,36 +4,36 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\IntellectualProperty;
+use App\Models\OtherAsset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class IntellectualPropertyController extends Controller
+class OtherAssetController extends Controller
 {
     public function view()
     {
-        $intellectualProperties = IntellectualProperty::where('created_by', Auth::id())->get();
-        return view('customer.assets.intellectual_properties', compact('intellectualProperties'));
+        $otherAssets = OtherAsset::where('created_by', Auth::id())->get();
+        return view('customer.assets.other_assets', compact('otherAssets'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'property_type' => 'required|string|max:255',
+            'asset_type' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
 
         try {
             DB::beginTransaction();
 
-            IntellectualProperty::create([
-                'property_type' => $request->property_type,
+            OtherAsset::create([
+                'asset_type' => $request->asset_type,
                 'description' => $request->description,
                 'created_by' => Auth::id(),
             ]);
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Intellectual Property added successfully.']);
+            return response()->json(['success' => true, 'message' => 'Other Asset added successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -43,21 +43,21 @@ class IntellectualPropertyController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'property_type' => 'required|string|max:255',
+            'asset_type' => 'required|string|max:255',
             'description' => 'required|string',
         ]);
 
         try {
             DB::beginTransaction();
 
-            $intellectualProperty = IntellectualProperty::findOrFail($id);
-            $intellectualProperty->update([
-                'property_type' => $request->property_type,
+            $otherAsset = OtherAsset::findOrFail($id);
+            $otherAsset->update([
+                'asset_type' => $request->asset_type,
                 'description' => $request->description,
             ]);
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Intellectual Property updated successfully.']);
+            return response()->json(['success' => true, 'message' => 'Other Asset updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -68,10 +68,10 @@ class IntellectualPropertyController extends Controller
     {
         try {
             DB::beginTransaction();
-            $intellectualProperty = IntellectualProperty::findOrFail($id);
-            $intellectualProperty->delete();
+            $otherAsset = OtherAsset::findOrFail($id);
+            $otherAsset->delete();
             DB::commit();
-            return redirect()->route('customer.intellectual_properties.view')->with('success', 'Intellectual Property deleted successfully.');
+            return redirect()->route('customer.other_assets.view')->with('success', 'Other Asset deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

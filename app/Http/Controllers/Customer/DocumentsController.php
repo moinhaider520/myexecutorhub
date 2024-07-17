@@ -14,7 +14,7 @@ class DocumentsController extends Controller
     use ImageUpload; 
     public function view()
     {
-        $documents = Document::all();
+        $documents = Document::where('created_by', Auth::id())->get();
         return view('customer.documents.documents', compact('documents'));
     }
 

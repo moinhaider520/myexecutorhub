@@ -4,11 +4,97 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\BusinessInterest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BusinessInterestController extends Controller
 {
-    public function index()
+    public function view()
     {
-        return view('customer.assets.business_interest');
+        $businessInterests = BusinessInterest::where('created_by', Auth::id())->get();
+        return view('customer.assets.business_interest', compact('businessInterests'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'business_type' => 'required|string|max:255',
+            'business_name' => 'required|string|max:255',
+            'shares' => 'required|numeric|min:0',
+            'business_value' => 'required|numeric|min:0',
+            'share_value' => 'required|numeric|min:0',
+            'contact' => 'required|string|max:255',
+            'plan_for_shares' => 'required|string|max:255',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            BusinessInterest::create([
+                'business_type' => $request->business_type,
+                'business_name' => $request->business_name,
+                'shares' => $request->shares,
+                'business_value' => $request->business_value,
+                'share_value' => $request->share_value,
+                'contact' => $request->contact,
+                'plan_for_shares' => $request->plan_for_shares,
+                'created_by' => Auth::id(),
+            ]);
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Business interest added successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'business_type' => 'required|string|max:255',
+            'business_name' => 'required|string|max:255',
+            'shares' => 'required|numeric|min:0',
+            'business_value' => 'required|numeric|min:0',
+            'share_value' => 'required|numeric|min:0',
+            'contact' => 'required|string|max:255',
+            'plan_for_shares' => 'required|string|max:255',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $businessInterest = BusinessInterest::findOrFail($id);
+            $businessInterest->update([
+                'business_type' => $request->business_type,
+                'business_name' => $request->business_name,
+                'shares' => $request->shares,
+                'business_value' => $request->business_value,
+                'share_value' => $request->share_value,
+                'contact' => $request->contact,
+                'plan_for_shares' => $request->plan_for_shares,
+            ]);
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Business interest updated successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+            $businessInterest = BusinessInterest::findOrFail($id);
+            $businessInterest->delete();
+            DB::commit();
+            return redirect()->route('customer.business_interest.view')->with('success', 'Business interest deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

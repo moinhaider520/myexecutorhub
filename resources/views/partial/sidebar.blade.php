@@ -74,16 +74,16 @@
                             <span>Assets & Liabilities </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.bank_accounts') }}">Bank Accounts</a></li>
-                            <li><a href="{{ route('customer.investment_accounts') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('customer.real_estate') }}">Real Estate</a></li>
-                            <li><a href="{{ route('customer.personal_property') }}">Personal Properties</a></li>
-                            <li><a href="{{ route('customer.business_interest') }}">Business Interests</a></li>
-                            <li><a href="{{ route('customer.insurance_policies') }}">Insurance Policies</a></li>
-                            <li><a href="{{ route('customer.debt_and_liabilities') }}">Debt & Liabilities</a></li>
-                            <li><a href="{{ route('customer.digital_assets') }}">Digital Assets</a></li>
-                            <li><a href="{{ route('customer.intellectual_properties') }}">Intellectual Properties</a></li>
-                            <li><a href="{{ route('customer.other_assets') }}">Other Assets</a></li>
+                            <li><a href="{{ route('customer.bank_accounts.view') }}">Bank Accounts</a></li>
+                            <li><a href="{{ route('customer.investment_accounts.view') }}">Investment Accounts</a></li>
+                            <li><a href="{{ route('customer.real_estate') }}">Property (ies) Owned</a></li>
+                            <li><a href="{{ route('customer.personal_chattels.view') }}">Personal Chattels</a></li>
+                            <li><a href="{{ route('customer.business_interests.view') }}">Business Interests</a></li>
+                            <li><a href="{{ route('customer.insurance_policies.view') }}">Insurance Policies</a></li>
+                            <li><a href="{{ route('customer.debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
+                            <li><a href="{{ route('customer.digital_assets.view') }}">Digital Assets</a></li>
+                            <li><a href="{{ route('customer.intellectual_properties.view') }}">Intellectual Properties</a></li>
+                            <li><a href="{{ route('customer.other_assets.view') }}">Other Assets</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
