@@ -156,6 +156,20 @@
                             <li><a href="{{ route('customer.life_remembered.view') }}">Manage Notes</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                            </svg>
+                            <span>Donations </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.organs_donation.view') }}">Organ Donations</a></li>
+                        </ul>
+                    </li>
                     @endrole
                 </ul>
             </div>

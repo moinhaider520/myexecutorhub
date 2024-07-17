@@ -22,6 +22,7 @@ use App\Http\Controllers\Customer\WishesController;
 use App\Http\Controllers\Customer\LifeRememberedController;
 use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
+use App\Http\Controllers\Customer\OrgansDonationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -176,6 +177,14 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/other_assets/store', [OtherAssetController::class, 'store'])->name('other_assets.store');
     Route::post('/other_assets/update/{id}', [OtherAssetController::class, 'update'])->name('other_assets.update');
     Route::delete('/other_assets/destroy/{id}', [OtherAssetController::class, 'destroy'])->name('other_assets.destroy');
+
+    // Organs Donation
+    Route::get('/organs_donation/view', [OrgansDonationController::class, 'view'])->name('organs_donation.view');
+    Route::post('/organs_donation/store', [OrgansDonationController::class, 'store'])->name('organs_donation.store');
+    Route::post('/organs_donation/update/{id}', [OrgansDonationController::class, 'update'])->name('organs_donation.update');
+    Route::delete('/organs_donation/destroy/{id}', [OrgansDonationController::class, 'destroy'])->name('organs_donation.destroy');
+
+ 
 });
 
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
