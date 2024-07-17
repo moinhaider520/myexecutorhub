@@ -82,7 +82,7 @@
       <div class="modal-body">
         <form id="addBusinessInterestForm">
           @csrf
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="businessType">Business Type</label>
             <select class="form-control" name="business_type" id="businessType" required>
               <option value="" selected disabled>--Select Business Type--</option>
@@ -92,32 +92,32 @@
             </select>
             <span class="text-danger" id="business_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="businessName">Business Name</label>
             <input type="text" class="form-control" name="business_name" id="businessName" placeholder="Enter Business name" required>
             <span class="text-danger" id="business_name_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="sharesPercentage">Amount of Shares (%)</label>
             <input type="number" class="form-control" name="shares" id="sharesPercentage" placeholder="Enter Amount of Shares in %" required>
             <span class="text-danger" id="shares_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="businessValue">Business Value (GBP)</label>
             <input type="number" class="form-control" name="business_value" id="businessValue" placeholder="Enter Business Value" required>
             <span class="text-danger" id="business_value_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="sharesValue">Value of Shares (GBP)</label>
             <input type="number" class="form-control" name="share_value" id="sharesValue" placeholder="Enter Value of Shares" required>
             <span class="text-danger" id="share_value_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="contact">Who to Contact?</label>
             <input type="text" class="form-control" name="contact" id="contact" placeholder="Who to Contact?" required>
             <span class="text-danger" id="contact_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="planForShares">Plan For Shares</label>
             <input type="text" class="form-control" name="plan_for_shares" id="planForShares" placeholder="Plan For Shares?" required>
             <span class="text-danger" id="plan_for_shares_error"></span>
@@ -144,7 +144,7 @@
           @csrf
           @method('POST')
           <input type="hidden" name="id" id="editBusinessInterestId">
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editBusinessType">Business Type</label>
             <select class="form-control" name="business_type" id="editBusinessType" required>
               <option value="" selected disabled>--Select Business Type--</option>
@@ -154,33 +154,33 @@
             </select>
             <span class="text-danger" id="edit_business_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editBusinessName">Business Name</label>
             <input type="text" class="form-control" name="business_name" id="editBusinessName" placeholder="Enter Business name" required>
             <span class="text-danger" id="edit_business_name_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editSharesPercentage">Amount of Shares (%)</label>
             <input type="number" class="form-control" name="shares" id="editSharesPercentage" placeholder="Enter Amount of Shares in %" required>
             <span class="text-danger" id="edit_shares_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editBusinessValue">Business Value (GBP)</label>
             <input type="number" class="form-control" name="business_value" id="editBusinessValue" placeholder="Enter Business Value" required>
            
             <span class="text-danger" id="edit_business_value_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editSharesValue">Value of Shares (GBP)</label>
             <input type="number" class="form-control" name="share_value" id="editSharesValue" placeholder="Enter Value of Shares" required>
             <span class="text-danger" id="edit_share_value_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editContact">Who to Contact?</label>
             <input type="text" class="form-control" name="contact" id="editContact" placeholder="Who to Contact?" required>
             <span class="text-danger" id="edit_contact_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editPlanForShares">Plan For Shares</label>
             <input type="text" class="form-control" name="plan_for_shares" id="editPlanForShares" placeholder="Plan For Shares?" required>
             <span class="text-danger" id="edit_plan_for_shares_error"></span>

@@ -76,7 +76,7 @@
       <div class="modal-body">
         <form id="addInvestmentAccountForm">
           @csrf
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="investmentType">Investment Type</label>
             <select class="form-control" name="investment_type" id="investmentType" required>
               <option value="" selected disabled>--Select Investment Type--</option>
@@ -86,17 +86,17 @@
             </select>
             <span class="text-danger" id="investment_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="companyName">Company Name</label>
             <input type="text" class="form-control" name="company_name" id="companyName" placeholder="Enter Company name" required>
             <span class="text-danger" id="company_name_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="accountReferenceNumber">Account/Reference Number</label>
             <input type="text" class="form-control" name="account_number" id="accountReferenceNumber" placeholder="Enter Account/Reference Number" required>
             <span class="text-danger" id="account_number_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="balance">Balance (GBP)</label>
             <input type="number" class="form-control" name="balance" id="balance" placeholder="Enter Balance" required>
             <span class="text-danger" id="balance_error"></span>
@@ -123,7 +123,7 @@
           @csrf
           @method('POST')
           <input type="hidden" name="id" id="editInvestmentAccountId">
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editInvestmentType">Investment Type</label>
             <select class="form-control" name="investment_type" id="editInvestmentType" required>
               <option value="" selected disabled>--Select Investment Type--</option>
@@ -133,17 +133,17 @@
             </select>
             <span class="text-danger" id="edit_investment_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editCompanyName">Company Name</label>
             <input type="text" class="form-control" name="company_name" id="editCompanyName" placeholder="Enter Company name" required>
             <span class="text-danger" id="edit_company_name_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editAccountReferenceNumber">Account/Reference Number</label>
             <input type="text" class="form-control" name="account_number" id="editAccountReferenceNumber" placeholder="Enter Account/Reference Number" required>
             <span class="text-danger" id="edit_account_number_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editBalance">Balance (GBP)</label>
             <input type="number" class="form-control" name="balance" id="editBalance" placeholder="Enter Balance" required>
             <span class="text-danger" id="edit_balance_error"></span>

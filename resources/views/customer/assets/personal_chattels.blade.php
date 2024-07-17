@@ -92,28 +92,35 @@
       <div class="modal-body">
         <form id="addChattelForm">
           @csrf
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="chattelType">Chattel Type</label>
             <select class="form-control" name="chattel_type" id="chattelType" required>
               <option value="" selected disabled>--Select Chattel Type--</option>
-              <option value="Vehicle">Vehicle</option>
-              <option value="Jewellery">Jewellery</option>
-              <option value="Artworks & Antiques">Artworks & Antiques</option>
-              <option value="Household Contents">Household Contents</option>
+              @foreach($chattelTypes as $type)
+              <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
+
             <span class="text-danger" id="chattel_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2" id="customChattelTypeInput" style="display: none;">
+            <label for="custom_chattel_type">Custom Chattel Type</label>
+            <input type="text" class="form-control" name="custom_chattel_type" id="custom_chattel_type" placeholder="Enter Custom Chattel Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomChattelType">Save Custom Type</button>
+            <span class="text-danger" id="custom_chattel_type_error"></span>
+          </div>
+          <div class="form-group mb-2">
             <label for="description">Description</label>
             <textarea class="form-control" name="description" id="description" required></textarea>
             <span class="text-danger" id="description_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="photos">Upload Photos</label>
             <input type="file" class="form-control" name="photos[]" id="photos" multiple required>
             <span class="text-danger" id="photos_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="value">Value (GBP)</label>
             <input type="text" class="form-control" name="value" id="value" placeholder="Enter Value in GBP" required>
             <span class="text-danger" id="value_error"></span>
@@ -140,28 +147,34 @@
           @csrf
           @method('POST')
           <input type="hidden" name="id" id="editChattelId">
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editChattelType">Chattel Type</label>
             <select class="form-control" name="chattel_type" id="editChattelType" required>
               <option value="" selected disabled>--Select Chattel Type--</option>
-              <option value="Vehicle">Vehicle</option>
-              <option value="Jewellery">Jewellery</option>
-              <option value="Artworks & Antiques">Artworks & Antiques</option>
-              <option value="Household Contents">Household Contents</option>
+              @foreach($chattelTypes as $type)
+              <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_chattel_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2" id="editCustomChattelTypeInput" style="display: none;">
+            <label for="edit_custom_chattel_type">Custom Chattel Type</label>
+            <input type="text" class="form-control" name="custom_chattel_type" id="edit_custom_chattel_type" placeholder="Enter Custom Chattel Type">
+            <button type="button" class="btn btn-primary mt-2" id="editSaveCustomChattelType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_chattel_type_error"></span>
+          </div>
+          <div class="form-group mb-2">
             <label for="editDescription">Description</label>
             <textarea class="form-control" name="description" id="editDescription" required></textarea>
             <span class="text-danger" id="edit_description_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editPhotos">Upload Photos</label>
             <input type="file" class="form-control" name="photos[]" id="editPhotos" multiple>
             <span class="text-danger" id="edit_photos_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editValue">Value (GBP)</label>
             <input type="text" class="form-control" name="value" id="editValue" placeholder="Enter Value in GBP" required>
             <span class="text-danger" id="edit_value_error"></span>
@@ -208,6 +221,12 @@
       $('#editChattelType').val($(this).data('chattel_type'));
       $('#editDescription').val($(this).data('description'));
       $('#editValue').val($(this).data('value'));
+      
+      if ($('#editChattelType').val() === 'Others') {
+        $('#editCustomChattelTypeInput').show();
+      } else {
+        $('#editCustomChattelTypeInput').hide();
+      }
     });
 
     $('#updateChattel').on('click', function() {
@@ -231,5 +250,78 @@
       });
     });
   });
+
+  $('#chattelType').change(function() {
+    if ($(this).val() === 'Others') {
+      $('#customChattelTypeInput').show();
+    } else {
+      $('#customChattelTypeInput').hide();
+    }
+  });
+
+  $('#editChattelType').change(function() {
+    if ($(this).val() === 'Others') {
+      $('#editCustomChattelTypeInput').show();
+    } else {
+      $('#editCustomChattelTypeInput').hide();
+    }
+  });
+
+  $('#saveCustomChattelType').on('click', function() {
+    const customChattelType = $('#custom_chattel_type').val();
+    if (customChattelType) {
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('customer.personal_chattels.save_custom_type') }}",
+        data: {
+          _token: "{{ csrf_token() }}",
+          custom_chattel_type: customChattelType
+        },
+        success: function(response) {
+          if (response.success) {
+            $('#chattelType').append(new Option(customChattelType, customChattelType));
+            $('#chattelType').val(customChattelType);
+            $('#customChattelTypeInput').hide();
+          } else {
+            $('#custom_chattel_type_error').text(response.message);
+          }
+        },
+        error: function(response) {
+          $('#custom_chattel_type_error').text('An error occurred while saving the custom chattel type.');
+        }
+      });
+    } else {
+      $('#custom_chattel_type_error').text('Custom chattel type cannot be empty.');
+    }
+  });
+
+  $('#editSaveCustomChattelType').on('click', function() {
+    const customChattelType = $('#edit_custom_chattel_type').val();
+    if (customChattelType) {
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('customer.personal_chattels.save_custom_type') }}",
+        data: {
+          _token: "{{ csrf_token() }}",
+          custom_chattel_type: customChattelType
+        },
+        success: function(response) {
+          if (response.success) {
+            $('#editChattelType').append(new Option(customChattelType, customChattelType));
+            $('#editChattelType').val(customChattelType);
+            $('#editCustomChattelTypeInput').hide();
+          } else {
+            $('#edit_custom_chattel_type_error').text(response.message);
+          }
+        },
+        error: function(response) {
+          $('#edit_custom_chattel_type_error').text('An error occurred while saving the custom chattel type.');
+        }
+      });
+    } else {
+      $('#edit_custom_chattel_type_error').text('Custom chattel type cannot be empty.');
+    }
+  });
 </script>
+
 @endsection

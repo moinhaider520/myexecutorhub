@@ -72,7 +72,7 @@
       <div class="modal-body">
         <form id="addOtherAssetForm">
           @csrf
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="assetType">Asset Type</label>
             <select class="form-control" name="asset_type" id="assetType" required>
               <option value="" selected disabled>--Select Asset Type--</option>
@@ -83,7 +83,7 @@
             </select>
             <span class="text-danger" id="asset_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="description">Description</label>
             <textarea class="form-control" name="description" id="description" required></textarea>
             <span class="text-danger" id="description_error"></span>
@@ -110,7 +110,7 @@
           @csrf
           @method('POST')
           <input type="hidden" name="id" id="editOtherAssetId">
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editAssetType">Asset Type</label>
             <select class="form-control" name="asset_type" id="editAssetType" required>
               <option value="" selected disabled>--Select Asset Type--</option>
@@ -121,7 +121,7 @@
             </select>
             <span class="text-danger" id="edit_asset_type_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editDescription">Description</label>
             <textarea class="form-control" name="description" id="editDescription" required></textarea>
             <span class="text-danger" id="edit_description_error"></span>

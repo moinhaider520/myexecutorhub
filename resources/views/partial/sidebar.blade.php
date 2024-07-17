@@ -76,7 +76,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('customer.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('customer.real_estate') }}">Property (ies) Owned</a></li>
+                            <li><a href="{{ route('customer.properties.view') }}">Property (ies) Owned</a></li>
                             <li><a href="{{ route('customer.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('customer.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('customer.insurance_policies.view') }}">Insurance Policies</a></li>

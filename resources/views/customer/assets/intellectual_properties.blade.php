@@ -75,7 +75,7 @@
       <div class="modal-body">
         <form id="addIntellectualPropertyForm">
           @csrf
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="propertyType">Property Type</label>
             <select class="form-control" name="property_type" id="propertyType" required>
               <option value="" selected disabled>--Select Property Type--</option>
@@ -86,7 +86,7 @@
             </select>
             <span class="text-danger" id="propertyType_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="description">Description</label>
             <textarea class="form-control" name="description" id="description" placeholder="Enter Description" required></textarea>
             <span class="text-danger" id="description_error"></span>
@@ -114,7 +114,7 @@
           @csrf
           @method('POST')
           <input type="hidden" name="id" id="editIntellectualPropertyId">
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editPropertyType">Property Type</label>
             <select class="form-control" name="property_type" id="editPropertyType" required>
               <option value="" selected disabled>--Select Property Type--</option>
@@ -125,7 +125,7 @@
             </select>
             <span class="text-danger" id="edit_propertyType_error"></span>
           </div>
-          <div class="form-group mb-4">
+          <div class="form-group mb-2">
             <label for="editDescription">Description</label>
             <textarea class="form-control" name="description" id="editDescription" placeholder="Enter Description" required></textarea>
             <span class="text-danger" id="edit_description_error"></span>

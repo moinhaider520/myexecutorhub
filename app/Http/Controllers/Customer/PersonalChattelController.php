@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
+use App\Models\ChattelType;
 
 class PersonalChattelController extends Controller
 {
@@ -15,9 +16,11 @@ class PersonalChattelController extends Controller
 
     public function view()
     {
+        $chattelTypes = ChattelType::where('created_by', Auth::id())->get();
         $personalChattels = PersonalChattel::where('created_by', Auth::id())->get();
-        return view('customer.assets.personal_chattels', compact('personalChattels'));
+        return view('customer.assets.personal_chattels', compact('personalChattels', 'chattelTypes'));
     }
+
 
     public function store(Request $request)
     {
@@ -123,5 +126,19 @@ class PersonalChattelController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_chattel_type' => 'required|string|max:255|unique:chattel_types,name'
+        ]);
+
+        ChattelType::create([
+            'name' => $request->custom_chattel_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

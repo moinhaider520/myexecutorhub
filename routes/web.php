@@ -9,7 +9,7 @@ use App\Http\Controllers\Customer\SettingController as CustomerSettingController
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Customer\BankAccountController;
 use App\Http\Controllers\Customer\InvestmentAccountController;
-use App\Http\Controllers\Customer\RealEstateController;
+use App\Http\Controllers\Customer\PropertyController;
 use App\Http\Controllers\Customer\PersonalChattelController;
 use App\Http\Controllers\Customer\BusinessInterestController;
 use App\Http\Controllers\Customer\InsurancePolicyController;
@@ -105,8 +105,14 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/investment_accounts/update/{id}', [InvestmentAccountController::class, 'update'])->name('investment_accounts.update');
     Route::delete('/investment_accounts/destroy/{id}', [InvestmentAccountController::class, 'destroy'])->name('investment_accounts.destroy');
 
-    // Customer Real Estate
-    Route::get('/real_estate', [RealEstateController::class, 'index'])->name('real_estate');
+    // Customer Property (ies) Owned
+    Route::get('/properties/view', [PropertyController::class, 'view'])->name('properties.view');
+    Route::post('/properties/store', [PropertyController::class, 'store'])->name('properties.store');
+    Route::put('/properties/update/{id}', [PropertyController::class, 'update'])->name('properties.update');
+    Route::delete('/properties/{id}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+
+    //Customer Custom Chattels
+    Route::post('/personal_chattels/save_custom_type', [PersonalChattelController::class, 'saveCustomType'])->name('personal_chattels.save_custom_type');
 
     // Customer Chattels
     Route::get('/personal_chattels/view', [PersonalChattelController::class, 'view'])->name('personal_chattels.view');

@@ -80,7 +80,7 @@
       <div class="modal-body">
         <form id="addBankAccountForm">
           @csrf
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="accountType">Account Type</label>
             <select class="form-control" name="account_type" id="accountType" required>
               <option value="" selected disabled>--Select Account Type--</option>
@@ -90,27 +90,27 @@
             </select>
             <span class="text-danger" id="account_type_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="bankName">Bank Name</label>
             <input type="text" class="form-control" name="bank_name" id="bankName" placeholder="Enter Bank name" required>
             <span class="text-danger" id="bank_name_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="sortCode">Sort Code</label>
             <input type="text" class="form-control" name="sort_code" id="sortCode" placeholder="Enter Sort Code" required>
             <span class="text-danger" id="sort_code_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="accountNumber">Account Number</label>
             <input type="text" class="form-control" name="account_number" id="accountNumber" placeholder="Enter account number" required>
             <span class="text-danger" id="account_number_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="accountName">Name(s) on the account</label>
             <input type="text" class="form-control" name="account_name" id="accountName" placeholder="Name(s) on the account" required>
             <span class="text-danger" id="account_name_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="balance">Balance (GBP)</label>
             <input type="number" class="form-control" name="balance" id="balance" placeholder="Enter balance" required>
             <span class="text-danger" id="balance_error"></span>
@@ -137,7 +137,7 @@
           @csrf
           @method('POST')
           <input type="hidden" name="id" id="editBankAccountId">
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="editAccountType">Account Type</label>
             <select class="form-control" name="account_type" id="editAccountType" required>
               <option value="" selected disabled>--Select Account Type--</option>
@@ -147,27 +147,27 @@
             </select>
             <span class="text-danger" id="edit_account_type_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="editBankName">Bank Name</label>
             <input type="text" class="form-control" name="bank_name" id="editBankName" placeholder="Enter Bank name" required>
             <span class="text-danger" id="edit_bank_name_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="editSortCode">Sort Code</label>
             <input type="text" class="form-control" name="sort_code" id="editSortCode" placeholder="Enter Sort Code" required>
             <span class="text-danger" id="edit_sort_code_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="editAccountNumber">Account Number</label>
             <input type="text" class="form-control" name="account_number" id="editAccountNumber" placeholder="Enter account number" required>
             <span class="text-danger" id="edit_account_number_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="editAccountName">Name(s) on the account</label>
             <input type="text" class="form-control" name="account_name" id="editAccountName" placeholder="Name(s) on the account" required>
             <span class="text-danger" id="edit_account_name_error"></span>
           </div>
-          <div class="form-group mb-3">
+          <div class="form-group mb-2">
             <label for="editBalance">Balance (GBP)</label>
             <input type="number" class="form-control" name="balance" id="editBalance" placeholder="Enter balance" required>
             <span class="text-danger" id="edit_balance_error"></span>
