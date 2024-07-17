@@ -90,8 +90,19 @@
               <option value="Digital Wallet">Digital Wallet</option>
               <option value="Social Media Account">Social Media Account</option>
               <option value="Digital Media">Digital Media</option>
+              @foreach($digitalAssetsTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="asset_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="customAssetTypeInput" style="display: none;">
+            <label for="custom_asset_type">Custom Digital Asset Type</label>
+            <input type="text" class="form-control" name="custom_asset_type" id="custom_asset_type"
+              placeholder="Enter Custom Digital Asset Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomAssetType">Save Custom Type</button>
+            <span class="text-danger" id="custom_asset_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="assetName">Asset Name</label>
@@ -150,8 +161,18 @@
               <option value="Digital Wallet">Digital Wallet</option>
               <option value="Social Media Account">Social Media Account</option>
               <option value="Digital Media">Digital Media</option>
+              @foreach($digitalAssetsTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_asset_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="editcustomAssetTypeInput" style="display: none;">
+            <label for="edit_custom_asset_type">Custom Insurance Type</label>
+            <input type="text" class="form-control" name="custom_asset_type" id="edit_custom_asset_type" placeholder="Enter Custom Insurance Type">
+            <button type="button" class="btn btn-primary mt-2" id="editsaveCustomAssetType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_asset_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editAssetName">Asset Name</label>
@@ -272,5 +293,78 @@
       }
     });
   });
+
+  $('#assetType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#customAssetTypeInput').show();
+      } else {
+        $('#customAssetTypeInput').hide();
+      }
+    });
+
+    $('#editAssetType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editcustomAssetTypeInput').show();
+      } else {
+        $('#editcustomAssetTypeInput').hide();
+      }
+    });
+
+    $('#saveCustomAssetType').on('click', function () {
+      const customAssetType = $('#custom_asset_type').val();
+      if (customAssetType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.digital_assets.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_digital_assets_type: customAssetType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#assetType').append(new Option(customAssetType, customAssetType));
+              $('#assetType').val(customAssetType);
+              $('#customAssetTypeInput').hide();
+            } else {
+              $('#custom_asset_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_asset_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_asset_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editsaveCustomAssetType').on('click', function () {
+      const customAssetType = $('#edit_custom_asset_type').val();
+      if (customAssetType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.digital_assets.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_digital_assets_type: customAssetType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editAssetType').append(new Option(customAssetType, customAssetType));
+              $('#editAssetType').val(customAssetType);
+              $('#editcustomAssetTypeInput').hide();
+            } else {
+              $('#edit_custom_asset_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_asset_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_asset_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
 </script>
 @endsection

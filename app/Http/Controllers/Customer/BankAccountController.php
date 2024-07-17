@@ -7,13 +7,15 @@ use App\Models\BankAccount;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\BankType;
 
 class BankAccountController extends Controller
 {
     public function view()
     {
+        $bankTypes = BankType::where('created_by', Auth::id())->get();
         $bankAccounts = BankAccount::where('created_by', Auth::id())->get();
-        return view('customer.assets.bank_accounts', compact('bankAccounts'));
+        return view('customer.assets.bank_accounts', compact('bankAccounts', 'bankTypes'));
     }
 
     public function store(Request $request)
@@ -96,5 +98,19 @@ class BankAccountController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_bank_type' => 'required|string|max:255|unique:bank_types,name'
+        ]);
+
+        BankType::create([
+            'name' => $request->custom_bank_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

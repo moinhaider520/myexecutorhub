@@ -86,8 +86,19 @@
               <option value="Personal loans">Personal loans</option>
               <option value="Credit card debt">Credit card debt</option>
               <option value="Outstanding bills and utilities">Outstanding bills and utilities</option>
+              @foreach($debtandliabilitiesTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="debt_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="customDebtTypeInput" style="display: none;">
+            <label for="custom_debt_type">Custom Debt & Liabilities Type</label>
+            <input type="text" class="form-control" name="custom_debt_type" id="custom_debt_type"
+              placeholder="Enter Custom Debt & Liabilities Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveDebtInsuranceType">Save Custom Type</button>
+            <span class="text-danger" id="custom_debt_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="referenceNumber">Reference Number</label>
@@ -139,8 +150,18 @@
               <option value="Personal loans">Personal loans</option>
               <option value="Credit card debt">Credit card debt</option>
               <option value="Outstanding bills and utilities">Outstanding bills and utilities</option>
+              @foreach($debtandliabilitiesTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_debt_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="editcustomDebtTypeInput" style="display: none;">
+            <label for="edit_custom_debt_type">Custom Debt & Liabilities Type</label>
+            <input type="text" class="form-control" name="custom_debt_type" id="edit_custom_debt_type" placeholder="Enter Custom Debt & Liabilities Type">
+            <button type="button" class="btn btn-primary mt-2" id="editsaveDebtInsuranceType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_debt_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editReferenceNumber">Reference Number</label>
@@ -252,5 +273,79 @@
       }
     });
   });
+
+  
+  $('#debtType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#customDebtTypeInput').show();
+      } else {
+        $('#customDebtTypeInput').hide();
+      }
+    });
+
+    $('#editDebtType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editcustomDebtTypeInput').show();
+      } else {
+        $('#editcustomDebtTypeInput').hide();
+      }
+    });
+
+    $('#saveDebtInsuranceType').on('click', function () {
+      const customDebtType = $('#custom_debt_type').val();
+      if (customDebtType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.debt_and_liabilities.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_debt_and_liabilities_type: customDebtType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#debtType').append(new Option(customDebtType, customDebtType));
+              $('#debtType').val(customDebtType);
+              $('#customDebtTypeInput').hide();
+            } else {
+              $('#custom_debt_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_debt_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_debt_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editsaveDebtInsuranceType').on('click', function () {
+      const customDebtType = $('#edit_custom_debt_type').val();
+      if (customDebtType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.debt_and_liabilities.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_debt_and_liabilities_type: customDebtType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editDebtType').append(new Option(customDebtType, customDebtType));
+              $('#editDebtType').val(customDebtType);
+              $('#editcustomDebtTypeInput').hide();
+            } else {
+              $('#edit_custom_debt_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_debt_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_debt_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
 </script>
 @endsection

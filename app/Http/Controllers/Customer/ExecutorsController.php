@@ -32,8 +32,10 @@ class ExecutorsController extends Controller
             DB::beginTransaction();
 
             $executor = User::create([
+                'title' => $request->title,
                 'name' => $request->name,
                 'lastname' => $request->lastname,
+                'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,
                 'status' => $request->status,
@@ -67,8 +69,10 @@ class ExecutorsController extends Controller
 
             $executor = User::findOrFail($id);
             $executor->update([
+                'title' => $request->title,                
                 'name' => $request->name,
                 'lastname' => $request->lastname,
+                'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,
                 'status' => $request->status,

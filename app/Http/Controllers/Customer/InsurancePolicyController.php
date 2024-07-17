@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\InsurancePolicy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\InsuranceTypes;
 
 class InsurancePolicyController extends Controller
 {
     public function view()
     {
+        $insuranceTypes = InsuranceTypes::where('created_by', Auth::id())->get();
         $insurancePolicies = InsurancePolicy::where('created_by', Auth::id())->get();
-        return view('customer.assets.insurance_policies', compact('insurancePolicies'));
+        return view('customer.assets.insurance_policies', compact('insurancePolicies', 'insuranceTypes'));
     }
 
     public function store(Request $request)
@@ -97,5 +99,19 @@ class InsurancePolicyController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_insurance_type' => 'required|string|max:255|unique:insurance_types,name'
+        ]);
+
+        InsuranceTypes::create([
+            'name' => $request->custom_insurance_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

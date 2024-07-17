@@ -85,8 +85,31 @@
               <option value="DEEDS">DEEDS</option>
               <option value="Life insurance">Life insurance</option>
               <option value="Mortgage">Mortgage</option>
+              <option value="Will">Will</option>
+              <option value="Will register certificate">Will register certificate</option>
+              <option value="Will commentary">Will commentary</option>
+              <option value="Glossary">Glossary</option>
+              <option value="Will clarity statement">Will clarity statement</option>
+              <option value="Trust">Trust</option>
+              <option value="Lasting power of attorney property & finance">Lasting power of attorney property & finance</option>
+              <option value="Lasting power of attorney health & welfare">Lasting power of attorney health & welfare</option>
+              <option value="Advanced directive property & finance">Advanced directive property & finance</option>
+              <option value="Advance directive health & welfare">Advance directive health & welfare</option>
+              <option value="Letter of exclusion">Letter of exclusion</option>
+              <option value="Memorandum of wishes">Memorandum of wishes</option>
+              @foreach($documentTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="document_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="customDocumentTypeInput" style="display: none;">
+            <label for="custom_document_type">Custom Document Type</label>
+            <input type="text" class="form-control" name="custom_document_type" id="custom_document_type"
+              placeholder="Enter Custom Document Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomDocumentType">Save Custom Type</button>
+            <span class="text-danger" id="custom_document_type_error"></span>
           </div>
           <div class="form-group mb-4">
             <label for="description">Description</label>
@@ -131,8 +154,30 @@
               <option value="DEEDS">DEEDS</option>
               <option value="Life insurance">Life insurance</option>
               <option value="Mortgage">Mortgage</option>
+              <option value="Will">Will</option>
+              <option value="Will register certificate">Will register certificate</option>
+              <option value="Will commentary">Will commentary</option>
+              <option value="Glossary">Glossary</option>
+              <option value="Will clarity statement">Will clarity statement</option>
+              <option value="Trust">Trust</option>
+              <option value="Lasting power of attorney property & finance">Lasting power of attorney property & finance</option>
+              <option value="Lasting power of attorney health & welfare">Lasting power of attorney health & welfare</option>
+              <option value="Advanced directive property & finance">Advanced directive property & finance</option>
+              <option value="Advance directive health & welfare">Advance directive health & welfare</option>
+              <option value="Letter of exclusion">Letter of exclusion</option>
+              <option value="Memorandum of wishes">Memorandum of wishes</option>
+              @foreach($documentTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_document_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="editcustomDocumentTypeInput" style="display: none;">
+            <label for="edit_custom_document_type">Custom Insurance Type</label>
+            <input type="text" class="form-control" name="custom_document_type" id="edit_custom_document_type" placeholder="Enter Custom Document Type">
+            <button type="button" class="btn btn-primary mt-2" id="editsaveCustomDocumentType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_document_type_error"></span>
           </div>
           <div class="form-group mb-4">
             <label for="editDescription">Description</label>
@@ -273,5 +318,79 @@
       }
     }
   });
+
+  $('#documentType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#customDocumentTypeInput').show();
+      } else {
+        $('#customDocumentTypeInput').hide();
+      }
+    });
+
+    $('#editDocumentType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editcustomDocumentTypeInput').show();
+      } else {
+        $('#editcustomDocumentTypeInput').hide();
+      }
+    });
+
+    $('#saveCustomDocumentType').on('click', function () {
+      const customDocumentType = $('#custom_document_type').val();
+      if (customDocumentType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.documents.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_document_type: customDocumentType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#documentType').append(new Option(customDocumentType, customDocumentType));
+              $('#documentType').val(customDocumentType);
+              $('#customDocumentTypeInput').hide();
+            } else {
+              $('#custom_document_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_document_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_document_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editsaveCustomDocumentType').on('click', function () {
+      const customDocumentType = $('#edit_custom_document_type').val();
+      if (customDocumentType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.documents.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_document_type: customDocumentType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editDocumentType').append(new Option(customDocumentType, customDocumentType));
+              $('#editDocumentType').val(customDocumentType);
+              $('#editcustomDocumentTypeInput').hide();
+            } else {
+              $('#edit_custom_document_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_document_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_document_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+
 </script>
 @endsection

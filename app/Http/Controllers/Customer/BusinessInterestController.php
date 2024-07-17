@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\BusinessInterest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\BusinessTypes;
 class BusinessInterestController extends Controller
 {
     public function view()
     {
+        $businessTypes = BusinessTypes::where('created_by', Auth::id())->get();
         $businessInterests = BusinessInterest::where('created_by', Auth::id())->get();
-        return view('customer.assets.business_interest', compact('businessInterests'));
+        return view('customer.assets.business_interest', compact('businessInterests', 'businessTypes'));
     }
 
     public function store(Request $request)
@@ -96,5 +97,19 @@ class BusinessInterestController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_business_type' => 'required|string|max:255|unique:business_types,name'
+        ]);
+
+        BusinessTypes::create([
+            'name' => $request->custom_business_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

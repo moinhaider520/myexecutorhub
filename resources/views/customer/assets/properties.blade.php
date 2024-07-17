@@ -86,8 +86,19 @@
               <option value="Secondary Homes (Holiday Homes)">Secondary Homes (Holiday Homes)</option>
               <option value="Buy-to-let Property">Buy-to-let Property</option>
               <option value="Land & Other Property Interests">Land & Other Property Interests</option>
+              @foreach($propertyTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="property_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="customPropertyTypeInput" style="display: none;">
+            <label for="custom_property_type">Custom Investment Type</label>
+            <input type="text" class="form-control" name="custom_property_type" id="custom_property_type"
+              placeholder="Enter Custom Property Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomPropertyType">Save Custom Type</button>
+            <span class="text-danger" id="custom_property_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="propertyAddress">Property Address</label>
@@ -144,8 +155,18 @@
               <option value="Secondary Homes (Holiday Homes)">Secondary Homes (Holiday Homes)</option>
               <option value="Buy-to-let Property">Buy-to-let Property</option>
               <option value="Land & Other Property Interests">Land & Other Property Interests</option>
+              @foreach($propertyTypes as $type)
+              <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_property_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="editCustomPropertyTypeInput" style="display: none;">
+            <label for="edit_custom_property_type">Custom Property Type</label>
+            <input type="text" class="form-control" name="custom_property_type" id="edit_custom_property_type" placeholder="Enter Custom Property Type">
+            <button type="button" class="btn btn-primary mt-2" id="editsaveCustomPropertyType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_property_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editPropertyAddress">Property Address</label>
@@ -235,6 +256,79 @@
         }
       });
     });
+
+    $('#propertyType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#customPropertyTypeInput').show();
+      } else {
+        $('#customPropertyTypeInput').hide();
+      }
+    });
+
+    $('#editPropertyType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editCustomPropertyTypeInput').show();
+      } else {
+        $('#editCustomPropertyTypeInput').hide();
+      }
+    });
+
+    $('#saveCustomPropertyType').on('click', function () {
+      const customInvestmentType = $('#custom_property_type').val();
+      if (customInvestmentType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.properties.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_property_type: customInvestmentType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#propertyType').append(new Option(customInvestmentType, customInvestmentType));
+              $('#propertyType').val(customBankType);
+              $('#customPropertyTypeInput').hide();
+            } else {
+              $('#custom_property_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_property_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_property_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editsaveCustomPropertyType').on('click', function () {
+      const customInvestmentType = $('#edit_custom_property_type').val();
+      if (customInvestmentType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.properties.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_property_type: customInvestmentType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editPropertyType').append(new Option(customInvestmentType, customInvestmentType));
+              $('#editPropertyType').val(customInvestmentType);
+              $('#editCustomPropertyTypeInput').hide();
+            } else {
+              $('#edit_custom_property_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_property_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_property_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
   });
 </script>
 @endsection

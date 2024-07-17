@@ -88,8 +88,22 @@
               <option value="Health Insurance">Health Insurance</option>
               <option value="Home Insurance">Home Insurance</option>
               <option value="Car Insurance">Car Insurance</option>
+              <option value="While of life cover">While of life cover</option>
+              <option value="Pet insurance">Pet insurance</option>
+              <option value="Funeral plan">Funeral plan</option>
+              @foreach($insuranceTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="insuranceTypeError"></span>
+          </div>
+          <div class="form-group mb-2" id="customInsuranceTypeInput" style="display: none;">
+            <label for="custom_insurance_type">Custom Insurance Type</label>
+            <input type="text" class="form-control" name="custom_insurance_type" id="custom_insurance_type"
+              placeholder="Enter Custom Insurance Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomInsuranceType">Save Custom Type</button>
+            <span class="text-danger" id="custom_insurance_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="providerName">Name of Provider</label>
@@ -151,8 +165,21 @@
               <option value="Health Insurance">Health Insurance</option>
               <option value="Home Insurance">Home Insurance</option>
               <option value="Car Insurance">Car Insurance</option>
+              <option value="While of life cover">While of life cover</option>
+              <option value="Pet insurance">Pet insurance</option>
+              <option value="Funeral plan">Funeral plan</option>
+              @foreach($insuranceTypes as $type)
+              <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="editInsuranceTypeError"></span>
+          </div>
+          <div class="form-group mb-2" id="editcustomInsuranceTypeInput" style="display: none;">
+            <label for="edit_custom_insurance_type">Custom Insurance Type</label>
+            <input type="text" class="form-control" name="custom_insurance_type" id="edit_custom_insurance_type" placeholder="Enter Custom Insurance Type">
+            <button type="button" class="btn btn-primary mt-2" id="editsaveCustomInsuranceType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_insurance_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editProviderName">Name of Provider</label>
@@ -283,6 +310,79 @@
       }
     });
   });
+
+  $('#insuranceType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#customInsuranceTypeInput').show();
+      } else {
+        $('#customInsuranceTypeInput').hide();
+      }
+    });
+
+    $('#editInsuranceType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editcustomInsuranceTypeInput').show();
+      } else {
+        $('#editcustomInsuranceTypeInput').hide();
+      }
+    });
+
+    $('#saveCustomInsuranceType').on('click', function () {
+      const customInsuranceType = $('#custom_insurance_type').val();
+      if (customInsuranceType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.insurance_policies.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_insurance_type: customInsuranceType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#insuranceType').append(new Option(customInsuranceType, customInsuranceType));
+              $('#insuranceType').val(customInsuranceType);
+              $('#customInsuranceTypeInput').hide();
+            } else {
+              $('#custom_insurance_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_insurance_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_insurance_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editsaveCustomInsuranceType').on('click', function () {
+      const customInsuranceType = $('#edit_custom_insurance_type').val();
+      if (customInsuranceType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.insurance_policies.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_insurance_type: customInsuranceType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editInsuranceType').append(new Option(customInsuranceType, customInsuranceType));
+              $('#editInsuranceType').val(customInsuranceType);
+              $('#editcustomInsuranceTypeInput').hide();
+            } else {
+              $('#edit_custom_insurance_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_insurance_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_insurance_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
 </script>
 
 @endsection

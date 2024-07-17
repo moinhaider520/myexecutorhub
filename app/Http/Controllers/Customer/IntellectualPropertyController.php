@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\IntellectualProperty;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\IntellectualPropertiesTypes;
 
 class IntellectualPropertyController extends Controller
 {
     public function view()
     {
+        $intellectualPropertyTypes = IntellectualPropertiesTypes::where('created_by', Auth::id())->get();
         $intellectualProperties = IntellectualProperty::where('created_by', Auth::id())->get();
-        return view('customer.assets.intellectual_properties', compact('intellectualProperties'));
+        return view('customer.assets.intellectual_properties', compact('intellectualProperties', 'intellectualPropertyTypes'));
     }
 
     public function store(Request $request)
@@ -76,5 +78,19 @@ class IntellectualPropertyController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_intellectual_property_type' => 'required|string|max:255|unique:intellectual_properties_types,name'
+        ]);
+
+        IntellectualPropertiesTypes::create([
+            'name' => $request->custom_intellectual_property_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

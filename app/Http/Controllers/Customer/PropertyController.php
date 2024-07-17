@@ -7,13 +7,14 @@ use App\Models\Property;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\PropertyType;
 class PropertyController extends Controller
 {
     public function view()
     {
+        $propertyTypes = PropertyType::where('created_by', Auth::id())->get();
         $properties = Property::where('created_by', Auth::id())->get();
-        return view('customer.assets.properties', compact('properties'));
+        return view('customer.assets.properties', compact('properties', 'propertyTypes'));
     }
 
     public function store(Request $request)
@@ -89,5 +90,19 @@ class PropertyController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_property_type' => 'required|string|max:255|unique:property_types,name'
+        ]);
+
+        PropertyType::create([
+            'name' => $request->custom_property_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\InvestmentAccount;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\InvestmentTypes;
 
 class InvestmentAccountController extends Controller
 {
     public function index()
     {
+        $investmentTypes = InvestmentTypes::where('created_by', Auth::id())->get();
         $investmentAccounts = InvestmentAccount::where('created_by', Auth::id())->get();
-        return view('customer.assets.investment_accounts', compact('investmentAccounts'));
+        return view('customer.assets.investment_accounts', compact('investmentAccounts', 'investmentTypes'));
     }
 
     public function store(Request $request)
@@ -84,5 +86,19 @@ class InvestmentAccountController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_investment_type' => 'required|string|max:255|unique:investment_types,name'
+        ]);
+
+        InvestmentTypes::create([
+            'name' => $request->custom_investment_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

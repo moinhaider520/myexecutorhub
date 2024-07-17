@@ -26,9 +26,11 @@
                       <thead>
                         <tr role="row">
                           <th>Sr</th>
+                          <th>Title</th>
                           <th>First Name</th>
                           <th>Last Name</th>
                           <th>Email Address</th>
+                          <th>Contact Number(s)</th>
                           <th>Relationship</th>
                           <th>Access Type</th>
                           <th>Action</th>
@@ -38,9 +40,11 @@
                         @foreach($executors as $executor)
                         <tr>
                           <td>{{ $loop->iteration }}</td>
+                          <td>{{ $executor->title }}</td>
                           <td>{{ $executor->name }}</td>
                           <td>{{ $executor->lastname }}</td>
                           <td>{{ $executor->email }}</td>
+                          <td>{{ $executor->phone_number }}</td>
                           <td>{{ $executor->relationship }}</td>
                           <td>{{ $executor->status }}</td>
                           <td>
@@ -77,6 +81,11 @@
         <form id="addExecutorForm">
           @csrf
           <div class="form-group mb-3">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" id="title" placeholder="Enter Title" required>
+            <div class="text-danger" id="error-title"></div>
+          </div>
+          <div class="form-group mb-3">
             <label for="name">First Name</label>
             <input type="text" class="form-control" name="name" id="name" placeholder="Enter First Name" required>
             <div class="text-danger" id="error-name"></div>
@@ -85,6 +94,11 @@
             <label for="lastname">Last Name</label>
             <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" required>
             <div class="text-danger" id="error-lastname"></div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="phone_number">Contact Number(s)</label>
+            <input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="Enter Contact Number" required>
+            <div class="text-danger" id="error-title"></div>
           </div>
           <div class="form-group mb-3">
             <label for="email">Email Address</label>
@@ -140,6 +154,11 @@
           @csrf
           <input type="hidden" name="id" id="editExecutorId">
           <div class="form-group mb-3">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" name="title" id="edit_title" placeholder="Enter Title" required>
+            <div class="text-danger" id="error-title"></div>
+          </div>
+          <div class="form-group mb-3">
             <label for="edit_name">First Name</label>
             <input type="text" class="form-control" name="name" id="edit_name" placeholder="Enter First Name" required>
             <div class="text-danger" id="edit-error-name"></div>
@@ -148,6 +167,11 @@
             <label for="edit_lastname">Last Name</label>
             <input type="text" class="form-control" name="lastname" id="edit_lastname" placeholder="Enter Last Name" required>
             <div class="text-danger" id="edit-error-lastname"></div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="phone_number">Contact Number(s)</label>
+            <input type="text" class="form-control" name="phone_number" id="edit_phone_number" placeholder="Enter Contact Number" required>
+            <div class="text-danger" id="error-title"></div>
           </div>
           <div class="form-group mb-3">
             <label for="edit_email">Email Address</label>
@@ -198,8 +222,10 @@
   $(document).ready(function() {
     // Clear previous error messages
     function clearAddErrors() {
+      $('#error-title').text('');
       $('#error-name').text('');
       $('#error-lastname').text('');
+      $('#error-phone_number').text('');
       $('#error-email').text('');
       $('#error-relationship').text('');
       $('#error-status').text('');
@@ -208,8 +234,10 @@
     }
 
     function clearEditErrors() {
+      $('#error-title').text('');
       $('#edit-error-name').text('');
       $('#edit-error-lastname').text('');
+      $('#error-phone_number').text('');
       $('#edit-error-email').text('');
       $('#edit-error-relationship').text('');
       $('#edit-error-status').text('');
@@ -235,6 +263,7 @@
         },
         error: function(response) {
           var errors = response.responseJSON.errors;
+          $('#error-title').text(errors.title);
           $('#error-name').text(errors.name);
           $('#error-lastname').text(errors.lastname);
           $('#error-email').text(errors.email);
@@ -249,15 +278,19 @@
     // Handle click on edit button for executor
     $('.edit-button').on('click', function() {
       var id = $(this).data('id');
+      var title = $(this).data('title');
       var name = $(this).data('name');
       var lastname = $(this).data('lastname');
+      var phone_number = $(this).data('phone_number');
       var email = $(this).data('email');
       var relationship = $(this).data('relationship');
       var status = $(this).data('status');
 
       $('#editExecutorId').val(id);
+      $('#edit_title').val(title);
       $('#edit_name').val(name);
       $('#edit_lastname').val(lastname);
+      $('#edit_phone_number').val(phone_number);
       $('#edit_email').val(email);
       $('#edit_relationship').val(relationship);
       $('#edit_status').val(status);

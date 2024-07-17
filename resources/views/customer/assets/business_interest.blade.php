@@ -89,8 +89,19 @@
               <option value="Ownership in privately held businesses">Ownership in privately held businesses</option>
               <option value="Partnership interests">Partnership interests</option>
               <option value="Shares in family businesses">Shares in family businesses</option>
+              @foreach($businessTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="business_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="customBusinessTypeInput" style="display: none;">
+            <label for="custom_business_type">Custom Business Type</label>
+            <input type="text" class="form-control" name="custom_business_type" id="custom_business_type"
+              placeholder="Enter Custom Business Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomBusinessType">Save Custom Type</button>
+            <span class="text-danger" id="custom_business_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="businessName">Business Name</label>
@@ -151,8 +162,18 @@
               <option value="Ownership in privately held businesses">Ownership in privately held businesses</option>
               <option value="Partnership interests">Partnership interests</option>
               <option value="Shares in family businesses">Shares in family businesses</option>
+              @foreach($businessTypes as $type)
+              <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_business_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="editcustomBusinessTypeInput" style="display: none;">
+            <label for="edit_custom_business_type">Custom Business Type</label>
+            <input type="text" class="form-control" name="custom_business_type" id="edit_custom_business_type" placeholder="Enter Custom Business Type">
+            <button type="button" class="btn btn-primary mt-2" id="editsaveCustomBusinessType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_business_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editBusinessName">Business Name</label>
@@ -283,6 +304,80 @@
       }
     });
   });
+
+  
+  $('#businessType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#customBusinessTypeInput').show();
+      } else {
+        $('#customBusinessTypeInput').hide();
+      }
+    });
+
+    $('#editBusinessType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editcustomBusinessTypeInput').show();
+      } else {
+        $('#editcustomBusinessTypeInput').hide();
+      }
+    });
+
+    $('#saveCustomBusinessType').on('click', function () {
+      const customBusinessType = $('#custom_business_type').val();
+      if (customBusinessType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.business_interests.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_business_type: customBusinessType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editBusinessType').append(new Option(customBusinessType, customBusinessType));
+              $('#editBusinessType').val(customBusinessType);
+              $('#customBusinessTypeInput').hide();
+            } else {
+              $('#custom_business_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_business_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_business_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editsaveCustomBusinessType').on('click', function () {
+      const customBusinessType = $('#edit_custom_business_type').val();
+      if (customBusinessType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.business_interests.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_business_type: customBusinessType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editInvestmentType').append(new Option(customBusinessType, customBusinessType));
+              $('#editInvestmentType').val(customBusinessType);
+              $('#editcustomBusinessTypeInput').hide();
+            } else {
+              $('#edit_custom_business_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_business_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_business_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
 
 </script>
 @endsection

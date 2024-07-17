@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\OtherAsset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\OtherAssetsTypes;
 class OtherAssetController extends Controller
 {
     public function view()
     {
+        $otherAssetTypes = OtherAssetsTypes::where('created_by', Auth::id())->get();
         $otherAssets = OtherAsset::where('created_by', Auth::id())->get();
-        return view('customer.assets.other_assets', compact('otherAssets'));
+        return view('customer.assets.other_assets', compact('otherAssets', 'otherAssetTypes'));
     }
 
     public function store(Request $request)
@@ -76,5 +77,19 @@ class OtherAssetController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_asset_type' => 'required|string|max:255|unique:other_assets_types,name'
+        ]);
+
+        OtherAssetsTypes::create([
+            'name' => $request->custom_asset_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

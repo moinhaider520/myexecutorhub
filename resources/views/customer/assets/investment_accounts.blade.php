@@ -79,12 +79,20 @@
           <div class="form-group mb-2">
             <label for="investmentType">Investment Type</label>
             <select class="form-control" name="investment_type" id="investmentType" required>
-              <option value="" selected disabled>--Select Investment Type--</option>
-              <option value="Brokerage Account">Brokerage Account</option>
-              <option value="Stocks, Shares & Bonds">Stocks, Shares & Bonds</option>
-              <option value="Pensions & Retirement Funds">Pensions & Retirement Funds</option>
+            <option value="" selected disabled>--Select Investment Type--</option>
+              @foreach($investmentTypes as $type)
+                <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="investment_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="custominvestmentTypeInput" style="display: none;">
+            <label for="custom_investment_type">Custom Investment Type</label>
+            <input type="text" class="form-control" name="custom_investment_type" id="custom_investment_type"
+              placeholder="Enter Custom Investment Type">
+            <button type="button" class="btn btn-primary mt-2" id="saveCustomInvestmentType">Save Custom Type</button>
+            <span class="text-danger" id="custom_investment_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="companyName">Company Name</label>
@@ -127,11 +135,18 @@
             <label for="editInvestmentType">Investment Type</label>
             <select class="form-control" name="investment_type" id="editInvestmentType" required>
               <option value="" selected disabled>--Select Investment Type--</option>
-              <option value="Brokerage Account">Brokerage Account</option>
-              <option value="Stocks, Shares & Bonds">Stocks, Shares & Bonds</option>
-              <option value="Pensions & Retirement Funds">Pensions & Retirement Funds</option>
+              @foreach($investmentTypes as $type)
+              <option value="{{ $type->name }}">{{ $type->name }}</option>
+              @endforeach
+              <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_investment_type_error"></span>
+          </div>
+          <div class="form-group mb-2" id="editCustomInvestmentTypeInput" style="display: none;">
+            <label for="edit_custom_investment_type">Custom Investment Type</label>
+            <input type="text" class="form-control" name="custom_investment_type" id="edit_custom_investment_type" placeholder="Enter Custom Investment Type">
+            <button type="button" class="btn btn-primary mt-2" id="editSaveCustomInvestmentType">Save Custom Type</button>
+            <span class="text-danger" id="edit_custom_investment_type_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editCompanyName">Company Name</label>
@@ -200,7 +215,7 @@
       var id = $('#editInvestmentAccountId').val();
       $.ajax({
         type: 'POST',
-        url: '/customer/investment_accounts/' + id,
+        url: '/customer/investment_accounts/update/' + id,
         data: $('#editInvestmentAccountForm').serialize(),
         success: function(response) {
           location.reload();
@@ -214,6 +229,79 @@
         }
       });
     });
+
+    $('#investmentType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#custominvestmentTypeInput').show();
+      } else {
+        $('#custominvestmentTypeInput').hide();
+      }
+    });
+
+    $('#editInvestmentType').change(function () {
+      if ($(this).val() === 'Others') {
+        $('#editCustomInvestmentTypeInput').show();
+      } else {
+        $('#editCustomInvestmentTypeInput').hide();
+      }
+    });
+
+    $('#saveCustomInvestmentType').on('click', function () {
+      const customInvestmentType = $('#custom_investment_type').val();
+      if (customInvestmentType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.investment_accounts.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_investment_type: customInvestmentType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#investmentType').append(new Option(customInvestmentType, customInvestmentType));
+              $('#investmentType').val(customBankType);
+              $('#custominvestmentTypeInput').hide();
+            } else {
+              $('#custom_investment_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#custom_investment_type_error').text('An error occurred while saving the custom bank type.');
+          }
+        });
+      } else {
+        $('#custom_investment_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
+    $('#editSaveCustomInvestmentType').on('click', function () {
+      const customInvestmentType = $('#edit_custom_investment_type').val();
+      if (customInvestmentType) {
+        $.ajax({
+          type: 'POST',
+          url: "{{ route('customer.investment_accounts.save_custom_type') }}",
+          data: {
+            _token: "{{ csrf_token() }}",
+            custom_investment_type: customInvestmentType
+          },
+          success: function (response) {
+            if (response.success) {
+              $('#editInvestmentType').append(new Option(customInvestmentType, customInvestmentType));
+              $('#editInvestmentType').val(customInvestmentType);
+              $('#editCustomInvestmentTypeInput').hide();
+            } else {
+              $('#edit_custom_investment_type_error').text(response.message);
+            }
+          },
+          error: function (response) {
+            $('#edit_custom_investment_type_error').text('An error occurred while saving the custom Investment type.');
+          }
+        });
+      } else {
+        $('#edit_custom_investment_type_error').text('Custom Investment type cannot be empty.');
+      }
+    });
+
   });
 </script>
 @endsection

@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 use App\Models\DebtAndLiability;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\DebtAndLiabilitiesTypes;
 class DebtAndLiabilityController extends Controller
 {
     public function view()
     {
+        $debtandliabilitiesTypes = DebtAndLiabilitiesTypes::where('created_by', Auth::id())->get();
         $debtsLiabilities = DebtAndLiability::where('created_by', Auth::id())->get();
-        return view('customer.assets.debt_and_liabilities', compact('debtsLiabilities'));
+        return view('customer.assets.debt_and_liabilities', compact('debtsLiabilities', 'debtandliabilitiesTypes'));
     }
 
     public function store(Request $request)
@@ -88,5 +89,19 @@ class DebtAndLiabilityController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_debt_and_liabilities_type' => 'required|string|max:255|unique:debt_and_liabilities_types,name'
+        ]);
+
+        DebtAndLiabilitiesTypes::create([
+            'name' => $request->custom_debt_and_liabilities_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

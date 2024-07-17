@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\DigitalAsset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\DigitalAssetsTypes;
 
 class DigitalAssetController extends Controller
 {
     public function view()
     {
+        $digitalAssetsTypes = DigitalAssetsTypes::where('created_by', Auth::id())->get();
         $digitalAssets = DigitalAsset::where('created_by', Auth::id())->get();
-        return view('customer.assets.digital_assets', compact('digitalAssets'));
+        return view('customer.assets.digital_assets', compact('digitalAssets', 'digitalAssetsTypes'));
     }
 
     public function store(Request $request)
@@ -93,6 +95,20 @@ class DigitalAssetController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_digital_assets_type' => 'required|string|max:255|unique:digital_assets_types,name'
+        ]);
+
+        DigitalAssetsTypes::create([
+            'name' => $request->custom_digital_assets_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }
 

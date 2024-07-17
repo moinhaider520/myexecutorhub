@@ -8,14 +8,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
-
+use App\Models\DocumentTypes;
 class DocumentsController extends Controller
 {
     use ImageUpload; 
     public function view()
     {
+        $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
         $documents = Document::where('created_by', Auth::id())->get();
-        return view('customer.documents.documents', compact('documents'));
+        return view('customer.documents.documents', compact('documents', 'documentTypes'));
     }
 
     public function store(Request $request)
@@ -105,5 +106,19 @@ class DocumentsController extends Controller
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
+    }
+
+    public function saveCustomType(Request $request)
+    {
+        $request->validate([
+            'custom_document_type' => 'required|string|max:255|unique:document_types,name'
+        ]);
+
+        DocumentTypes::create([
+            'name' => $request->custom_document_type,
+            'created_by' => Auth::id(),
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }
