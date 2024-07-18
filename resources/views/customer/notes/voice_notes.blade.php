@@ -31,8 +31,7 @@
 </div>
 
 <!-- ADD VOICE NOTE MODAL -->
-<div class="modal fade" id="voiceNoteModal" tabindex="-1" role="dialog" aria-labelledby="voiceNoteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="voiceNoteModal" tabindex="-1" role="dialog" aria-labelledby="voiceNoteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -41,8 +40,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="voiceNoteForm" action="{{ route('customer.voice_notes.store') }}" method="POST"
-        enctype="multipart/form-data">
+      <form id="voiceNoteForm" action="{{ route('customer.voice_notes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
           <div class="form-group">
@@ -70,8 +68,7 @@
 
 <!-- PLAY VOICE NOTE MODAL -->
 <!-- Modal -->
-<div class="modal fade" id="playVoiceNoteModal" tabindex="-1" role="dialog" aria-labelledby="playVoiceNoteModalLabel"
-  aria-hidden="true">
+<div class="modal fade" id="playVoiceNoteModal" tabindex="-1" role="dialog" aria-labelledby="playVoiceNoteModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,7 +103,9 @@
   let audioChunks = [];
 
   document.getElementById('start-recording').addEventListener('click', async () => {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const stream = await navigator.mediaDevices.getUserMedia({
+      audio: true
+    });
     mediaRecorder = new MediaRecorder(stream);
     mediaRecorder.start();
     audioChunks = [];
@@ -116,7 +115,9 @@
     });
 
     mediaRecorder.addEventListener('stop', () => {
-      const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      const audioBlob = new Blob(audioChunks, {
+        type: 'audio/wav'
+      });
       const audioUrl = URL.createObjectURL(audioBlob);
       const audio = document.getElementById('audio-playback');
       audio.src = audioUrl;
@@ -137,11 +138,10 @@
     document.getElementById('start-recording').disabled = false;
     document.getElementById('stop-recording').disabled = true;
   });
-
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
 
     var events = @json($voiceNotes);
@@ -156,13 +156,14 @@
           filePath: note.voice_note
         }
       })),
-      eventClick: function (info) {
-        info.jsEvent.preventDefault(); // prevent browser from following the link
+      eventClick: function(info) {
+        info.jsEvent.preventDefault();
         var event = info.event.extendedProps;
         document.getElementById('modal-audio-play').src = '/storage/' + event.filePath;
-        document.getElementById('delete-voice-note-form').action = `customer.voice_notes.destroy/${event.id}`;
+        document.getElementById('delete-voice-note-form').action = `{{ route('customer.voice_notes.destroy', '') }}/${event.id}`;
         $('#playVoiceNoteModal').modal('show');
       }
+
     });
 
     calendar.render();

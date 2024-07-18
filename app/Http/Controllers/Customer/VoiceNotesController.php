@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Http\Controllers\Customer;
+
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -46,11 +46,11 @@ class VoiceNotesController extends Controller
         $voiceNote = VoiceNotes::findOrFail($id);
 
         // Delete the file from storage
-        Storage::disk('public')->delete($voiceNote->file_path);
+        Storage::disk('public')->delete($voiceNote->voice_note);
 
         // Delete the record from the database
         $voiceNote->delete();
 
-        return response()->json(['success' => true]);
+        return redirect()->back()->with('success', 'Voice note added successfully.');
     }
 }
