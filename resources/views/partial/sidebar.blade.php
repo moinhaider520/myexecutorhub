@@ -154,6 +154,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.life_remembered.view') }}">Manage Notes</a></li>
+                            <li><a href="{{ route('customer.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">

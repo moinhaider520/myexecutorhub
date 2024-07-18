@@ -23,6 +23,7 @@ use App\Http\Controllers\Customer\LifeRememberedController;
 use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
 use App\Http\Controllers\Customer\OrgansDonationController;
+use App\Http\Controllers\Customer\VoiceNotesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -184,6 +185,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/organs_donation/update/{id}', [OrgansDonationController::class, 'update'])->name('organs_donation.update');
     Route::delete('/organs_donation/destroy/{id}', [OrgansDonationController::class, 'destroy'])->name('organs_donation.destroy');
 
+    // Voice Notes
+    Route::get('/voice_notes/view', [VoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::post('/voice_notes/store', [VoiceNotesController::class, 'store'])->name('voice_notes.store');
+    Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
  
 });
 

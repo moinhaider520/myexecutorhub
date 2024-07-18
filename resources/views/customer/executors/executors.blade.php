@@ -48,7 +48,7 @@
                           <td>{{ $executor->relationship }}</td>
                           <td>{{ $executor->status }}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}">Edit</button>
+                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
                             <form action="{{ route('customer.executors.destroy', $executor->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
@@ -156,7 +156,7 @@
           <div class="form-group mb-3">
             <label for="title">Title</label>
             <input type="text" class="form-control" name="title" id="edit_title" placeholder="Enter Title" required>
-            <div class="text-danger" id="error-title"></div>
+            <div class="text-danger" id="edit-error-title"></div>
           </div>
           <div class="form-group mb-3">
             <label for="edit_name">First Name</label>

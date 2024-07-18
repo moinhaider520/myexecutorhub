@@ -93,6 +93,9 @@
             <label for="accountType">Account Type</label>
             <select class="form-control" name="account_type" id="accountType" required>
               <option value="" selected disabled>--Select Account Type--</option>
+              <option value="Current Account">Current Account</option>
+              <option value="Savings Account">Savings Account</option>
+              <option value="Fixed-Term Deposits">Fixed-Term Deposits</option>
               @foreach($bankTypes as $type)
                 <option value="{{ $type->name }}">{{ $type->name }}</option>
               @endforeach
@@ -163,6 +166,9 @@
             <label for="editAccountType">Account Type</label>
             <select class="form-control" name="account_type" id="editAccountType" required>
               <option value="" selected disabled>--Select Account Type--</option>
+              <option value="Current Account">Current Account</option>
+              <option value="Savings Account">Savings Account</option>
+              <option value="Fixed-Term Deposits">Fixed-Term Deposits</option>
               @foreach($bankTypes as $type)
               <option value="{{ $type->name }}">{{ $type->name }}</option>
               @endforeach

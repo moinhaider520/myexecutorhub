@@ -80,6 +80,9 @@
             <label for="investmentType">Investment Type</label>
             <select class="form-control" name="investment_type" id="investmentType" required>
             <option value="" selected disabled>--Select Investment Type--</option>
+              <option value="Brokerage Account">Brokerage Account</option>
+              <option value="Stocks, Shares & Bonds">Stocks, Shares & Bonds</option>
+              <option value="Pensions & Retirement Funds">Pensions & Retirement Funds</option>
               @foreach($investmentTypes as $type)
                 <option value="{{ $type->name }}">{{ $type->name }}</option>
               @endforeach
@@ -135,6 +138,9 @@
             <label for="editInvestmentType">Investment Type</label>
             <select class="form-control" name="investment_type" id="editInvestmentType" required>
               <option value="" selected disabled>--Select Investment Type--</option>
+              <option value="Brokerage Account">Brokerage Account</option>
+              <option value="Stocks, Shares & Bonds">Stocks, Shares & Bonds</option>
+              <option value="Pensions & Retirement Funds">Pensions & Retirement Funds</option>
               @foreach($investmentTypes as $type)
               <option value="{{ $type->name }}">{{ $type->name }}</option>
               @endforeach
