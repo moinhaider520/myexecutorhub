@@ -19,6 +19,7 @@ use App\Http\Controllers\Customer\IntellectualPropertyController;
 use App\Http\Controllers\Customer\OtherAssetController;
 use App\Http\Controllers\Customer\DocumentsController;
 use App\Http\Controllers\Customer\WishesController;
+use App\Http\Controllers\Customer\GuidanceController;
 use App\Http\Controllers\Customer\LifeRememberedController;
 use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
@@ -76,6 +77,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Customer Wishes
     Route::get('/wishes/view', [WishesController::class, 'view'])->name('wishes.view');
     Route::post('/wishes/update', [WishesController::class, 'update'])->name('wishes.update');
+
+    // Customer Guidance
+    Route::get('/guidance/view', [GuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/update', [GuidanceController::class, 'update'])->name('guidance.update');
 
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [DocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
@@ -189,7 +194,6 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/voice_notes/view', [VoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice_notes/store', [VoiceNotesController::class, 'store'])->name('voice_notes.store');
     Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
- 
 });
 
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {

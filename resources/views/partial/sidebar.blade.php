@@ -142,6 +142,21 @@
                             <li><a href="{{ route('customer.wishes.view') }}">Manage Wishes</a></li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
+                            <span>Guidance </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                        <li><a href="{{ route('customer.guidance.view') }}">Guidance For Guardians</a></li>
+                        </ul>
+                    </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
