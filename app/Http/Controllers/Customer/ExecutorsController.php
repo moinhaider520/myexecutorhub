@@ -24,6 +24,7 @@ class ExecutorsController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'relationship' => 'required|string',
+            'how_acting' => 'required|string',
             'status' => 'required|string',
             'password' => 'required|confirmed',
         ]);
@@ -35,6 +36,7 @@ class ExecutorsController extends Controller
                 'title' => $request->title,
                 'name' => $request->name,
                 'lastname' => $request->lastname,
+                'how_acting' => $request->how_acting,
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,
@@ -58,6 +60,7 @@ class ExecutorsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
+            'how_acting' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $id,
             'relationship' => 'required|string',
             'status' => 'required|string',
@@ -72,6 +75,7 @@ class ExecutorsController extends Controller
                 'title' => $request->title,                
                 'name' => $request->name,
                 'lastname' => $request->lastname,
+                'how_acting' => $request->how_acting,
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,

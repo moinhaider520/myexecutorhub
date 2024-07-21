@@ -165,7 +165,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
                             </svg>
-                            <span>Life Remebered </span>
+                            <span>Life Remembered  </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.life_remembered.view') }}">Manage Notes</a></li>

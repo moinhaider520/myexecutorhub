@@ -29,6 +29,7 @@
                           <th>Sr</th>
                           <th>Business Type</th>
                           <th>Business Name</th>
+                          <th>Company Number</th>
                           <th>Shares %</th>
                           <th>Business Value (GBP)</th>
                           <th>Shares Value (GBP)</th>
@@ -43,13 +44,14 @@
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $businessInterest->business_type }}</td>
                           <td>{{ $businessInterest->business_name }}</td>
+                          <td>{{ $businessInterest->company_number }}</td>
                           <td>{{ $businessInterest->shares }}</td>
                           <td>{{ $businessInterest->business_value }}</td>
                           <td>{{ $businessInterest->share_value }}</td>
                           <td>{{ $businessInterest->contact }}</td>
                           <td>{{ $businessInterest->plan_for_shares }}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editBusinessInterestModal" data-id="{{ $businessInterest->id }}" data-business_type="{{ $businessInterest->business_type }}" data-business_name="{{ $businessInterest->business_name }}" data-shares="{{ $businessInterest->shares }}" data-business_value="{{ $businessInterest->business_value }}" data-share_value="{{ $businessInterest->share_value }}" data-contact="{{ $businessInterest->contact }}" data-plan_for_shares="{{ $businessInterest->plan_for_shares }}">Edit</button>
+                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editBusinessInterestModal" data-id="{{ $businessInterest->id }}" data-business_type="{{ $businessInterest->business_type }}" data-company_number="{{ $businessInterest->company_number }}" data-business_name="{{ $businessInterest->business_name }}" data-shares="{{ $businessInterest->shares }}" data-business_value="{{ $businessInterest->business_value }}" data-share_value="{{ $businessInterest->share_value }}" data-contact="{{ $businessInterest->contact }}" data-plan_for_shares="{{ $businessInterest->plan_for_shares }}">Edit</button>
                             <form action="{{ route('customer.business_interests.destroy', $businessInterest->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
@@ -107,6 +109,11 @@
             <label for="businessName">Business Name</label>
             <input type="text" class="form-control" name="business_name" id="businessName" placeholder="Enter Business name" required>
             <span class="text-danger" id="business_name_error"></span>
+          </div>
+          <div class="form-group mb-2">
+            <label for="companyNumber">Company Number</label>
+            <input type="text" class="form-control" name="company_number" id="companyNumber" placeholder="Enter Company Number" required>
+            <span class="text-danger" id="company_number_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="sharesPercentage">Amount of Shares (%)</label>
@@ -179,6 +186,11 @@
             <label for="editBusinessName">Business Name</label>
             <input type="text" class="form-control" name="business_name" id="editBusinessName" placeholder="Enter Business name" required>
             <span class="text-danger" id="edit_business_name_error"></span>
+          </div>
+          <div class="form-group mb-2">
+            <label for="editCompanyNumber">Company Number</label>
+            <input type="text" class="form-control" name="company_number" id="editCompanyNumber" placeholder="Enter Company Number" required>
+            <span class="text-danger" id="edit_company_number_error"></span>
           </div>
           <div class="form-group mb-2">
             <label for="editSharesPercentage">Amount of Shares (%)</label>
@@ -261,6 +273,7 @@
     var share_value = button.data('share_value');
     var contact = button.data('contact');
     var plan_for_shares = button.data('plan_for_shares');
+    var company_number = button.data('company_number');
 
     var modal = $(this);
     modal.find('.modal-title').text('Edit Business Interest');
@@ -272,6 +285,7 @@
     modal.find('#editSharesValue').val(share_value);
     modal.find('#editContact').val(contact);
     modal.find('#editPlanForShares').val(plan_for_shares);
+    modal.find('#editCompanyNumber').val(company_number);
   });
 
   // Update Business Interest Form Submission
@@ -300,6 +314,7 @@
           $('#edit_share_value_error').text(err.errors.share_value ? err.errors.share_value[0] : '');
           $('#edit_contact_error').text(err.errors.contact ? err.errors.contact[0] : '');
           $('#edit_plan_for_shares_error').text(err.errors.plan_for_shares ? err.errors.plan_for_shares[0] : '');
+          $('#edit_company_number_error').text(err.errors.company_number ? err.errors.company_number[0] : '');
         }
       }
     });

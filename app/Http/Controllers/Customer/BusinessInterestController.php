@@ -27,6 +27,7 @@ class BusinessInterestController extends Controller
             'share_value' => 'required|numeric|min:0',
             'contact' => 'required|string|max:255',
             'plan_for_shares' => 'required|string|max:255',
+            'company_number' => 'required|string|max:255',
         ]);
 
         try {
@@ -40,6 +41,7 @@ class BusinessInterestController extends Controller
                 'share_value' => $request->share_value,
                 'contact' => $request->contact,
                 'plan_for_shares' => $request->plan_for_shares,
+                'company_number' => $request->company_number,
                 'created_by' => Auth::id(),
             ]);
 
@@ -61,6 +63,7 @@ class BusinessInterestController extends Controller
             'share_value' => 'required|numeric|min:0',
             'contact' => 'required|string|max:255',
             'plan_for_shares' => 'required|string|max:255',
+            'company_number' => 'required|string|max:255',
         ]);
 
         try {
@@ -75,6 +78,7 @@ class BusinessInterestController extends Controller
                 'share_value' => $request->share_value,
                 'contact' => $request->contact,
                 'plan_for_shares' => $request->plan_for_shares,
+                'company_number' => $request->company_number,
             ]);
 
             DB::commit();

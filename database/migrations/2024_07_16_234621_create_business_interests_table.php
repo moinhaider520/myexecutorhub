@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('business_type');
             $table->string('business_name');
+            $table->string('company_number');
             $table->decimal('shares', 5, 2);
             $table->decimal('business_value', 15, 2);
             $table->decimal('share_value', 15, 2);

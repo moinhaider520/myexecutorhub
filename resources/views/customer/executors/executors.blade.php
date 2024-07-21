@@ -29,6 +29,7 @@
                           <th>Title</th>
                           <th>First Name</th>
                           <th>Last Name</th>
+                          <th>How Acting?</th>
                           <th>Email Address</th>
                           <th>Contact Number(s)</th>
                           <th>Relationship</th>
@@ -43,12 +44,13 @@
                           <td>{{ $executor->title }}</td>
                           <td>{{ $executor->name }}</td>
                           <td>{{ $executor->lastname }}</td>
+                          <td>{{ $executor->how_acting }}</td>
                           <td>{{ $executor->email }}</td>
                           <td>{{ $executor->phone_number }}</td>
                           <td>{{ $executor->relationship }}</td>
                           <td>{{ $executor->status }}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
+                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-how_acting="{{ $executor->how_acting }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
                             <form action="{{ route('customer.executors.destroy', $executor->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
@@ -94,6 +96,18 @@
             <label for="lastname">Last Name</label>
             <input type="text" class="form-control" name="lastname" id="lastname" placeholder="Enter Last Name" required>
             <div class="text-danger" id="error-lastname"></div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="how_acting">How Acting?</label>
+            <select class="form-control" name="how_acting" id="how_acting" required>
+            <option value="" disabled>-- Select --</option>
+              <option value="Solely">Solely</option>
+              <option value="Jointly">Jointly</option>
+              <option value="Jointly and severally">Jointly and severally</option>
+              <option value="Main">Main</option>
+              <option value="Reserve">Reserve</option>
+            </select>
+            <div class="text-danger" id="error-how_acting"></div>
           </div>
           <div class="form-group mb-3">
             <label for="phone_number">Contact Number(s)</label>
@@ -169,6 +183,18 @@
             <div class="text-danger" id="edit-error-lastname"></div>
           </div>
           <div class="form-group mb-3">
+            <label for="edit_how_acting">How Acting?</label>
+            <select class="form-control" name="how_acting" id="edit_how_acting" required>
+              <option value="" disabled>-- Select --</option>
+              <option value="Solely">Solely</option>
+              <option value="Jointly">Jointly</option>
+              <option value="Jointly and severally">Jointly and severally</option>
+              <option value="Main">Main</option>
+              <option value="Reserve">Reserve</option>
+            </select>
+            <div class="text-danger" id="error-edit_how_acting"></div>
+          </div>
+          <div class="form-group mb-3">
             <label for="phone_number">Contact Number(s)</label>
             <input type="text" class="form-control" name="phone_number" id="edit_phone_number" placeholder="Enter Contact Number" required>
             <div class="text-danger" id="error-title"></div>
@@ -231,6 +257,7 @@
       $('#error-status').text('');
       $('#error-password').text('');
       $('#error-password_confirmation').text('');
+      $('#error-how_acting').text('');
     }
 
     function clearEditErrors() {
@@ -243,6 +270,7 @@
       $('#edit-error-status').text('');
       $('#edit-error-password').text('');
       $('#edit-error-password_confirmation').text('');
+      $('#edit-error-how_acting').text('');
     }
 
     // Handle submission of add executor form
@@ -271,6 +299,7 @@
           $('#error-status').text(errors.status);
           $('#error-password').text(errors.password);
           $('#error-password_confirmation').text(errors.password_confirmation);
+          $('#error-how_acting').text(errors.how_acting);
         }
       });
     });
@@ -285,6 +314,7 @@
       var email = $(this).data('email');
       var relationship = $(this).data('relationship');
       var status = $(this).data('status');
+      var how_acting = $(this).data('how_acting');
 
       $('#editExecutorId').val(id);
       $('#edit_title').val(title);
@@ -294,6 +324,7 @@
       $('#edit_email').val(email);
       $('#edit_relationship').val(relationship);
       $('#edit_status').val(status);
+      $('#edit_how_acting').val(how_acting);
       clearEditErrors(); // Clear previous error messages
     });
 

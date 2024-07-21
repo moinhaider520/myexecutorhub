@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('profile_image')->nullable();  
             $table->string('title')->nullable();  
             $table->string('phone_number')->nullable();  
+            $table->string('how_acting')->nullable();  
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('status', ['A', 'N', 'E'])->default('A'); 
