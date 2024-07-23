@@ -11,6 +11,7 @@ use App\Http\Controllers\Customer\BankAccountController;
 use App\Http\Controllers\Customer\InvestmentAccountController;
 use App\Http\Controllers\Customer\PropertyController;
 use App\Http\Controllers\Customer\PersonalChattelController;
+use App\Http\Controllers\Customer\PermissionController;
 use App\Http\Controllers\Customer\BusinessInterestController;
 use App\Http\Controllers\Customer\InsurancePolicyController;
 use App\Http\Controllers\Customer\DebtAndLiabilityController;
@@ -25,6 +26,26 @@ use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
 use App\Http\Controllers\Customer\OrgansDonationController;
 use App\Http\Controllers\Customer\VoiceNotesController;
+// Executor Routes ExecutorDashboardController
+use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
+use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
+use App\Http\Controllers\Executor\WishesController as ExecutorWishesController;
+use App\Http\Controllers\Executor\GuidanceController as ExecutorGuidanceController;
+use App\Http\Controllers\Executor\DocumentsController as ExecutorDocumentsController;
+use App\Http\Controllers\Executor\AdvisorsController as ExecutorAdvisorsController;
+use App\Http\Controllers\Executor\ExecutorsController as ExecutorExecutorsController;
+use App\Http\Controllers\Executor\BankAccountController as ExecutorBankAccountController;
+use App\Http\Controllers\Executor\InvestmentAccountController as ExecutorInvestmentAccountController;
+use App\Http\Controllers\Executor\PropertyController as ExecutorPropertyController;
+use App\Http\Controllers\Executor\PersonalChattelController as ExecutorPersonalChattelController;
+use App\Http\Controllers\Executor\BusinessInterestController as ExecutorBusinessInterestController;
+use App\Http\Controllers\Executor\InsurancePolicyController as ExecutorInsurancePolicyController;
+use App\Http\Controllers\Executor\DebtAndLiabilityController as ExecutorDebtAndLiabilityController;
+use App\Http\Controllers\Executor\DigitalAssetController as ExecutorDigitalAssetController;
+use App\Http\Controllers\Executor\IntellectualPropertyController as ExecutorIntellectualPropertyController;
+use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetController;
+use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
+use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -63,6 +84,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+
+    // Assign Permission 
+    Route::get('/assign-permissions', [PermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');
+    Route::post('/assign-permissions', [PermissionController::class, 'assignPermissions'])->name('assign_permissions');
 
     // Customer Profile 
     Route::get('/edit-profile', [CustomerSettingController::class, 'editProfile'])->name('edit_profile');
@@ -197,4 +222,25 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 });
 
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
+
+    Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
+    // Executors View Routes
+    Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::get('/wishes/view', [ExecutorWishesController::class, 'view'])->name('wishes.view');
+    Route::get('/guidance/view', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
+    Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+    Route::get('/advisors/view', [ExecutorAdvisorsController::class, 'view'])->name('advisors.view');
+    Route::get('/executors/view', [ExecutorExecutorsController::class, 'view'])->name('executors.view');
+    Route::get('/bank_accounts/view', [ExecutorBankAccountController::class, 'view'])->name('bank_accounts.view');
+    Route::get('/investment_accounts/view', [ExecutorInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
+    Route::get('/properties/view', [ExecutorPropertyController::class, 'view'])->name('properties.view');
+    Route::get('/personal_chattels/view', [ExecutorPersonalChattelController::class, 'view'])->name('personal_chattels.view');
+    Route::get('/business_interests/view', [ExecutorBusinessInterestController::class, 'view'])->name('business_interests.view');
+    Route::get('/insurance_policies/view', [ExecutorInsurancePolicyController::class, 'view'])->name('insurance_policies.view');
+    Route::get('/debt_and_liabilities/view', [ExecutorDebtAndLiabilityController::class, 'view'])->name('debt_and_liabilities.view');
+    Route::get('/digital_assets/view', [ExecutorDigitalAssetController::class, 'view'])->name('digital_assets.view');
+    Route::get('/intellectual_properties/view', [ExecutorIntellectualPropertyController::class, 'view'])->name('intellectual_properties.view');
+    Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
+    Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
+    Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
 });
