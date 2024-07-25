@@ -35,24 +35,26 @@ class LoginController extends Controller
      * @return void
      */
 
-     protected function authenticated(Request $request, $user)
-     {
-         if ($user->hasRole('admin')) {
-             return redirect()->route('admin.dashboard');
-         } elseif ($user->hasRole('executor')) {
-             return redirect()->route('executor.dashboard');
-         } elseif ($user->hasRole('customer')) {
-             return redirect()->route('customer.dashboard');
-         } 
-     }
- 
-     public function logout(Request $request)
-     {
-         Auth::logout();
-         $request->session()->invalidate();
-         $request->session()->regenerateToken();
-         return redirect('/');
-     }
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->hasRole('admin')) {
+            return redirect()->route('admin.dashboard');
+        } elseif ($user->hasRole('executor')) {
+            return redirect()->route('executor.dashboard');
+        } elseif ($user->hasRole('customer')) {
+            return redirect()->route('customer.dashboard');
+        } else {
+            return redirect()->route('dashboard');
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
+    }
 
     public function __construct()
     {

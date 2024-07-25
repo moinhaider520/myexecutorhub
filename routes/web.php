@@ -47,6 +47,26 @@ use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetCont
 use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 
+use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
+use App\Http\Controllers\Others\ProfileController as OthersProfileController;
+use App\Http\Controllers\Others\BankAccountController as OthersBankAccountController;
+use App\Http\Controllers\Others\InvestmentAccountController as OthersInvestmentAccountController;
+use App\Http\Controllers\Others\PropertyController as OthersPropertyController;
+use App\Http\Controllers\Others\PersonalChattelController as OthersPersonalChattelController;
+use App\Http\Controllers\Others\BusinessInterestController as OthersBusinessInterestController;
+use App\Http\Controllers\Others\InsurancePolicyController as OthersInsurancePolicyController;
+use App\Http\Controllers\Others\DebtAndLiabilityController as OthersDebtAndLiabilityController;
+use App\Http\Controllers\Others\DigitalAssetController as OthersDigitalAssetController;
+use App\Http\Controllers\Others\IntellectualPropertyController as OthersIntellectualPropertyController;
+use App\Http\Controllers\Others\OtherAssetController as OthersOtherAssetController;
+use App\Http\Controllers\Others\WishesController as OthersWishesController;
+use App\Http\Controllers\Others\GuidanceController as OthersGuidanceController;
+use App\Http\Controllers\Others\LifeRememberedController as OthersLifeRememberedController;
+use App\Http\Controllers\Others\AdvisorsController as OthersAdvisorsController;
+use App\Http\Controllers\Others\ExecutorsController as OthersExecutorsController;
+use App\Http\Controllers\Others\OrgansDonationController as OthersOrgansDonationController;
+use App\Http\Controllers\Others\VoiceNotesController as OthersVoiceNotesController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -62,6 +82,8 @@ Route::get('/dashboard', function () {
         return redirect()->route('executor.dashboard');
     } elseif (Auth::user()->hasRole('customer')) {
         return redirect()->route('customer.dashboard');
+    } else {
+        return redirect()->route('dashboard');
     }
 })->name('dashboard');
 
@@ -243,4 +265,76 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [OthersDashboardController::class, 'index'])->name('dashboard');
+
+    Route::middleware("permission:view bank accounts")->group(function () {
+        Route::get('/bank-accounts', [OthersBankAccountController::class, 'view'])->name('bank_accounts.view');
+    });
+
+    Route::middleware("permission:view investment accounts")->group(function () {
+        Route::get('/investment-accounts', [OthersInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
+    });
+
+    Route::middleware("permission:view properties")->group(function () {
+        Route::get('/properties', [OthersPropertyController::class, 'view'])->name('properties.view');
+    });
+
+    Route::middleware("permission:view personal chattels")->group(function () {
+        Route::get('/personal-chattels', [OthersPersonalChattelController::class, 'view'])->name('personal_chattels.view');
+    });
+
+    Route::middleware("permission:view business interests")->group(function () {
+        Route::get('/business-interests', [OthersBusinessInterestController::class, 'view'])->name('business_interests.view');
+    });
+
+    Route::middleware("permission:view insurance policies")->group(function () {
+        Route::get('/insurance-policies', [OthersInsurancePolicyController::class, 'view'])->name('insurance_policies.view');
+    });
+
+    Route::middleware("permission:view debt and liabilities")->group(function () {
+        Route::get('/debt-and-liabilities', [OthersDebtAndLiabilityController::class, 'view'])->name('debt_and_liabilities.view');
+    });
+
+    Route::middleware("permission:view digital assets")->group(function () {
+        Route::get('/digital-assets', [OthersDigitalAssetController::class, 'view'])->name('digital_assets.view');
+    });
+
+    Route::middleware("permission:view intellectual properties")->group(function () {
+        Route::get('/intellectual-properties', [OthersIntellectualPropertyController::class, 'view'])->name('intellectual_properties.view');
+    });
+
+    Route::middleware("permission:view other assets")->group(function () {
+        Route::get('/other-assets', [OthersOtherAssetController::class, 'view'])->name('other_assets.view');
+    });
+
+    Route::middleware("permission:view wishes")->group(function () {
+        Route::get('/wishes', [OthersWishesController::class, 'view'])->name('wishes.view');
+    });
+
+    Route::middleware("permission:view guidance")->group(function () {
+        Route::get('/guidance', [OthersGuidanceController::class, 'view'])->name('guidance.view');
+    });
+
+    Route::middleware("permission:view life remembered")->group(function () {
+        Route::get('/life-remembered', [OthersLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    });
+
+    Route::middleware("permission:view advisors")->group(function () {
+        Route::get('/advisors', [OthersAdvisorsController::class, 'view'])->name('advisors.view');
+    });
+
+    Route::middleware("permission:view executors")->group(function () {
+        Route::get('/executors', [OthersExecutorsController::class, 'view'])->name('executors.view');
+    });
+
+    Route::middleware("permission:view organs donation")->group(function () {
+        Route::get('/organs-donation', [OthersOrgansDonationController::class, 'view'])->name('organs_donation.view');
+    });
+
+    Route::middleware("permission:view voice notes")->group(function () {
+        Route::get('/voice-notes', [OthersVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    });
 });

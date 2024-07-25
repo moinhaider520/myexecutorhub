@@ -13,7 +13,6 @@ class PermissionsSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'view customer profiles',
             'view bank accounts',
             'view investment accounts',
             'view properties',

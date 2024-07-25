@@ -326,6 +326,174 @@
                         </ul>
                     </li>
                     @endrole
+                    
+                    @canany(['view bank accounts', 'view investment accounts', 'view properties', 'view personal chattels', 'view business interests', 'view insurance policies', 'view debt and liabilities', 'view digital assets', 'view intellectual properties', 'view other assets'])
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Assets & Liabilities</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            @can('view bank accounts')
+                            <li><a href="{{ route('bank_accounts.view') }}">Bank Accounts</a></li>
+                            @endcan
+                            @can('view investment accounts')
+                            <li><a href="{{ route('investment_accounts.view') }}">Investment Accounts</a></li>
+                            @endcan
+                            @can('view properties')
+                            <li><a href="{{ route('properties.view') }}">Property (ies) Owned</a></li>
+                            @endcan
+                            @can('view personal chattels')
+                            <li><a href="{{ route('personal_chattels.view') }}">Personal Chattels</a></li>
+                            @endcan
+                            @can('view business interests')
+                            <li><a href="{{ route('business_interests.view') }}">Business Interests</a></li>
+                            @endcan
+                            @can('view insurance policies')
+                            <li><a href="{{ route('insurance_policies.view') }}">Insurance Policies</a></li>
+                            @endcan
+                            @can('view debt and liabilities')
+                            <li><a href="{{ route('debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
+                            @endcan
+                            @can('view digital assets')
+                            <li><a href="{{ route('digital_assets.view') }}">Digital Assets</a></li>
+                            @endcan
+                            @can('view intellectual properties')
+                            <li><a href="{{ route('intellectual_properties.view') }}">Intellectual Properties</a></li>
+                            @endcan
+                            @can('view other assets')
+                            <li><a href="{{ route('other_assets.view') }}">Other Assets</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view otherss')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>otherss</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('otherss.view') }}">Manage otherss</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view advisors')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Advisors</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('advisors.view') }}">Manage Advisers</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view documents')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Documents</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('documents.view') }}">Manage Documents</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view wishes')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
+                            <span>Wishes</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('wishes.view') }}">Manage Wishes</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view guidance')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
+                            <span>Guidance</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('guidance.view') }}">Guidance For Guardians</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view life remembered')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                            </svg>
+                            <span>Life Remembered</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('life_remembered.view') }}">Manage Notes</a></li>
+                            @can('view voice notes')
+                            <li><a href="{{ route('voice_notes.view') }}">Manage Voice Notes</a></li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view organs donation')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                            </svg>
+                            <span>Donations</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('organs_donation.view') }}">Organ Donations</a></li>
+                        </ul>
+                    </li>
+                    @endcan
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>
