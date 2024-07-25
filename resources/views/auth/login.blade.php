@@ -39,6 +39,11 @@
                                     @enderror
                                 </div>
                             </div>
+                            @if (session('status'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('status') }}
+                            </div>
+                            @endif
 
                             <div class="form-group mb-0">
                                 <div class="text-end mt-3">

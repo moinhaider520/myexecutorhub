@@ -37,6 +37,12 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+
+        if ($user->status !== 'A') {
+            Auth::logout(); // Logout the user
+            return redirect()->route('login')->with('status', 'Your account has not been activated yet..');
+        }
+
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('executor')) {
