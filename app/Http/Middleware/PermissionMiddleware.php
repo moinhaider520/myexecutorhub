@@ -17,6 +17,7 @@ class PermissionMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::check() || !Auth::user()->can($permission)) {
+            Auth::logout();
             return redirect('login');
         }
         return $next($request);

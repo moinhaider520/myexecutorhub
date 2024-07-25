@@ -38,7 +38,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
                             </svg>
-                            <span class="lan-3">Dashboard </span>
+                            <span class="">Dashboard </span>
                         </a>
                     </li>
                     <li class="sidebar-main-title">
@@ -326,7 +326,7 @@
                         </ul>
                     </li>
                     @endrole
-                    
+                
                     @canany(['view bank accounts', 'view investment accounts', 'view properties', 'view personal chattels', 'view business interests', 'view insurance policies', 'view debt and liabilities', 'view digital assets', 'view intellectual properties', 'view other assets'])
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">

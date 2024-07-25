@@ -26,7 +26,7 @@ use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
 use App\Http\Controllers\Customer\OrgansDonationController;
 use App\Http\Controllers\Customer\VoiceNotesController;
-// Executor Routes ExecutorDashboardController
+// Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
 use App\Http\Controllers\Executor\WishesController as ExecutorWishesController;
@@ -46,9 +46,8 @@ use App\Http\Controllers\Executor\IntellectualPropertyController as ExecutorInte
 use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetController;
 use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
-
+// Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
-use App\Http\Controllers\Others\ProfileController as OthersProfileController;
 use App\Http\Controllers\Others\BankAccountController as OthersBankAccountController;
 use App\Http\Controllers\Others\InvestmentAccountController as OthersInvestmentAccountController;
 use App\Http\Controllers\Others\PropertyController as OthersPropertyController;
@@ -243,6 +242,8 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
 });
 
+
+// Executors  Routes
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
 
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
@@ -267,6 +268,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
 });
 
+// Others Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [OthersDashboardController::class, 'index'])->name('dashboard');
 
