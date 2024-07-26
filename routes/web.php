@@ -26,6 +26,7 @@ use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
 use App\Http\Controllers\Customer\OrgansDonationController;
 use App\Http\Controllers\Customer\VoiceNotesController;
+use App\Http\Controllers\Customer\MessagesController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -240,6 +241,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/voice_notes/view', [VoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice_notes/store', [VoiceNotesController::class, 'store'])->name('voice_notes.store');
     Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
+
+    // Messages
+    Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
 });
 
 
