@@ -27,6 +27,7 @@ use App\Http\Controllers\Customer\ExecutorsController;
 use App\Http\Controllers\Customer\OrgansDonationController;
 use App\Http\Controllers\Customer\VoiceNotesController;
 use App\Http\Controllers\Customer\MessagesController;
+use App\Http\Controllers\Customer\OpenAIController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -244,6 +245,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // Messages
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
+
+    // OPENAI
+    Route::get('/openai/view', [OpenAIController::class, 'index'])->name('openai.view');
+    Route::post('/openai/chat', [OpenAIController::class, 'chat'])->name('openai.chat');
 });
 
 
