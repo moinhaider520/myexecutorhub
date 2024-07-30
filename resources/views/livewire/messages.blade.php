@@ -16,13 +16,12 @@
                         </ul>
                         <div class="tab-content" id="chat-options-tabContent">
                             <div class="tab-pane fade show active" id="chats" role="tabpanel" aria-labelledby="chats-tab">
-                                <ul class="chats-user">
+                                <ul class="chats-user" style="align-items:flex-start;">
                                     @foreach ($users as $user)
                                     @if ($user->id !== auth()->id())
-                                    <a wire:click="getUser({{ $user->id }})" class="text-dark link">
-                                        <li class="common-space">
+                                        <li class="common-space" wire:click="getUser({{ $user->id }})">
                                             <div class="chat-time">
-                                                <div class="active-profile"><img class="img-fluid rounded-circle" src="{{ asset('assets/upload/'.$user->profile_image) }}" alt="user">
+                                                <div class="active-profile"><img class="img-fluid rounded-circle" src="{{ $user->profile_image ? asset('assets/upload/'.$user->profile_image) : asset('assets/images/dashboard/profile.png') }}" alt="user">
                                                     @if ($user->is_online)
                                                     <div class="status bg-success"></div>
                                                     @else
@@ -49,12 +48,10 @@
                                             </div>
                                             @endif
                                         </li>
-                                    </a>
                                     @endif
                                     @endforeach
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -65,7 +62,7 @@
                         <div class="common-space">
                             <div class="chat-time">
                                 @if ($this->sender)
-                                <div class="active-profile"><img class="img-fluid rounded-circle" src="{{ asset('assets/upload/'.$sender->profile_image) }}" alt="user">
+                                <div class="active-profile"><img class="img-fluid rounded-circle" src="{{ $sender->profile_image ? asset('assets/upload/'.$sender->profile_image) : asset('assets/images/dashboard/profile.png')}}" alt="user">
                                     @if ($this->sender->is_online)
                                     <div class="status bg-success"></div>
                                     @else

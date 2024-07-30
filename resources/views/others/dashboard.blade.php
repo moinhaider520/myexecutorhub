@@ -72,34 +72,6 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4>Bank Accounts</h4>
-                <span>List of Bank Accounts.</span>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive theme-scrollbar">
-                  <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                    <table class="display dataTable no-footer" id="basic-1" role="grid" aria-describedby="basic-1_info">
-                      <thead>
-                        <tr role="row">
-                          <th>Sr</th>
-                          <th>Account Name</th>
-                          <th>Account Number</th>
-                          <th>Balance In Hand</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
