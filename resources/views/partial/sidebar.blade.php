@@ -1,7 +1,7 @@
 <div class="sidebar-wrapper" data-layout="stroke-svg">
     <div>
         <div class="logo-wrapper">
-            <a href="{{route('dashboard')}}">
+            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard'))) }}">
                 <img class="img-fluid" src="{{ asset('assets/frontend/images/logo-white.png') }}" alt="" style="width:100px;">
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="logo-icon-wrapper">
-            <a href="{{route('dashboard')}}">
+            <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard'))) }}">
                 <img class="img-fluid" src="{{ asset('assets/images/favicon.ico') }}" style="width:20px;" alt="">
             </a>
         </div>
@@ -31,7 +31,7 @@
                         </div>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link" href="{{route('dashboard')}}">
+                        <a class="sidebar-link" href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard'))) }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>
@@ -257,6 +257,20 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                            </svg>
+                            <span>Inbox </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('executor.messages.view') }}">Manage Inbox</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -354,7 +368,24 @@
                         </ul>
                     </li>
                     @endrole
-                
+
+                    @if (Auth::user()->hasAnyRole(['Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers']))
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                            </svg>
+                            <span>Inbox </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('messages.view') }}">Manage Inbox</a></li>
+                        </ul>
+                    </li>
+                    @endif
+
                     @canany(['view bank accounts', 'view investment accounts', 'view properties', 'view personal chattels', 'view business interests', 'view insurance policies', 'view debt and liabilities', 'view digital assets', 'view intellectual properties', 'view other assets'])
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">

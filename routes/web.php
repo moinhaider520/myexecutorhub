@@ -48,6 +48,8 @@ use App\Http\Controllers\Executor\IntellectualPropertyController as ExecutorInte
 use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetController;
 use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
+use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesController;
+
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
 use App\Http\Controllers\Others\BankAccountController as OthersBankAccountController;
@@ -67,6 +69,8 @@ use App\Http\Controllers\Others\AdvisorsController as OthersAdvisorsController;
 use App\Http\Controllers\Others\ExecutorsController as OthersExecutorsController;
 use App\Http\Controllers\Others\OrgansDonationController as OthersOrgansDonationController;
 use App\Http\Controllers\Others\VoiceNotesController as OthersVoiceNotesController;
+use App\Http\Controllers\Others\MessagesController as OthersMessagesController;
+use App\Models\OtherAsset;
 
 Route::get('/', function () {
     return view('welcome');
@@ -275,6 +279,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
 });
 
 // Others Routes
@@ -348,4 +353,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware("permission:view voice notes")->group(function () {
         Route::get('/voice-notes', [OthersVoiceNotesController::class, 'view'])->name('voice_notes.view');
     });
+
+    // message
+    Route::get('/messages/view', [OthersMessagesController::class, 'index'])->name('messages.view');
 });
