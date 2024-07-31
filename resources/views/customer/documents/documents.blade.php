@@ -36,23 +36,30 @@
                       </thead>
                       <tbody>
                         @foreach($documents as $document)
-                        <tr>
-                          <td>{{ $loop->iteration }}</td>
-                          <td>{{ $document->document_type }}</td>
-                          <td>{{ $document->description }}</td>
-                          <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}" target="_blank">Download</a></td>
-                          <td><button type="button" class="btn btn-secondary btn-sm edit-button" data-toggle="modal" data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm edit-button" data-toggle="modal" data-target="#AddReviewModal" data-id="{{ $document->id }}">Add Reviews</button>
-                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDocumentModal" data-id="{{ $document->id }}" data-document_type="{{ $document->document_type }}" data-description="{{ $document->description }}">Edit</button>
-                            <form action="{{ route('customer.documents.destroy', $document->id) }}" method="POST" style="display:inline;">
-                              @csrf
-                              @method('DELETE')
-                              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
-                          </td>
-                        </tr>
-                        @endforeach
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $document->document_type }}</td>
+                <td>{{ $document->description }}</td>
+                <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}"
+                  target="_blank">Download</a></td>
+                <td><button type="button" class="btn btn-secondary btn-sm edit-button" data-toggle="modal"
+                  data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
+                <td>
+                <button type="button" class="btn btn-primary btn-sm edit-button" data-toggle="modal"
+                  data-target="#AddReviewModal" data-id="{{ $document->id }}">Add Reviews</button>
+                <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
+                  data-target="#editDocumentModal" data-id="{{ $document->id }}"
+                  data-document_type="{{ $document->document_type }}"
+                  data-description="{{ $document->description }}">Edit</button>
+                <form action="{{ route('customer.documents.destroy', $document->id) }}" method="POST"
+                  style="display:inline;">
+                  @csrf
+                  @method('DELETE')
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+                </td>
+              </tr>
+            @endforeach
                       </tbody>
                     </table>
                   </div>
@@ -68,7 +75,8 @@
 </div>
 
 <!-- ADD DOCUMENT MODAL -->
-<div class="modal fade" id="addDocumentModal" tabindex="-1" role="dialog" aria-labelledby="addDocumentModalLabel" aria-hidden="true">
+<div class="modal fade" id="addDocumentModal" tabindex="-1" role="dialog" aria-labelledby="addDocumentModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -96,15 +104,17 @@
               <option value="Glossary">Glossary</option>
               <option value="Will clarity statement">Will clarity statement</option>
               <option value="Trust">Trust</option>
-              <option value="Lasting power of attorney property & finance">Lasting power of attorney property & finance</option>
-              <option value="Lasting power of attorney health & welfare">Lasting power of attorney health & welfare</option>
+              <option value="Lasting power of attorney property & finance">Lasting power of attorney property & finance
+              </option>
+              <option value="Lasting power of attorney health & welfare">Lasting power of attorney health & welfare
+              </option>
               <option value="Advanced directive property & finance">Advanced directive property & finance</option>
               <option value="Advance directive health & welfare">Advance directive health & welfare</option>
               <option value="Letter of exclusion">Letter of exclusion</option>
               <option value="Memorandum of wishes">Memorandum of wishes</option>
               @foreach($documentTypes as $type)
-                <option value="{{ $type->name }}">{{ $type->name }}</option>
-              @endforeach
+          <option value="{{ $type->name }}">{{ $type->name }}</option>
+        @endforeach
               <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="document_type_error"></span>
@@ -137,7 +147,8 @@
 </div>
 
 <!-- EDIT DOCUMENT MODAL -->
-<div class="modal fade" id="editDocumentModal" tabindex="-1" role="dialog" aria-labelledby="editDocumentModalLabel" aria-hidden="true">
+<div class="modal fade" id="editDocumentModal" tabindex="-1" role="dialog" aria-labelledby="editDocumentModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -167,22 +178,25 @@
               <option value="Glossary">Glossary</option>
               <option value="Will clarity statement">Will clarity statement</option>
               <option value="Trust">Trust</option>
-              <option value="Lasting power of attorney property & finance">Lasting power of attorney property & finance</option>
-              <option value="Lasting power of attorney health & welfare">Lasting power of attorney health & welfare</option>
+              <option value="Lasting power of attorney property & finance">Lasting power of attorney property & finance
+              </option>
+              <option value="Lasting power of attorney health & welfare">Lasting power of attorney health & welfare
+              </option>
               <option value="Advanced directive property & finance">Advanced directive property & finance</option>
               <option value="Advance directive health & welfare">Advance directive health & welfare</option>
               <option value="Letter of exclusion">Letter of exclusion</option>
               <option value="Memorandum of wishes">Memorandum of wishes</option>
               @foreach($documentTypes as $type)
-                <option value="{{ $type->name }}">{{ $type->name }}</option>
-              @endforeach
+          <option value="{{ $type->name }}">{{ $type->name }}</option>
+        @endforeach
               <option value="Others">Others</option>
             </select>
             <span class="text-danger" id="edit_document_type_error"></span>
           </div>
           <div class="form-group mb-2" id="editcustomDocumentTypeInput" style="display: none;">
             <label for="edit_custom_document_type">Custom Insurance Type</label>
-            <input type="text" class="form-control" name="custom_document_type" id="edit_custom_document_type" placeholder="Enter Custom Document Type">
+            <input type="text" class="form-control" name="custom_document_type" id="edit_custom_document_type"
+              placeholder="Enter Custom Document Type">
             <button type="button" class="btn btn-primary mt-2" id="editsaveCustomDocumentType">Save Custom Type</button>
             <span class="text-danger" id="edit_custom_document_type_error"></span>
           </div>
@@ -207,7 +221,8 @@
 </div>
 
 <!-- ADD Reviews -->
-<div class="modal fade" id="AddReviewModal" tabindex="-1" role="dialog" aria-labelledby="AddReviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="AddReviewModal" tabindex="-1" role="dialog" aria-labelledby="AddReviewModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -234,7 +249,8 @@
 </div>
 
 <!-- Review Modal -->
-<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="ReviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="ReviewModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -254,11 +270,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Handle Add Document form submission
-    $('#addDocumentForm').on('submit', function(e) {
+    $('#addDocumentForm').on('submit', function (e) {
       e.preventDefault();
-      
+
       clearErrors(); // Clear previous error messages
 
       var formData = new FormData(this);
@@ -269,14 +285,14 @@
         data: formData,
         contentType: false,
         processData: false,
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             location.reload();
           } else {
             alert('An error occurred while adding the document.');
           }
         },
-        error: function(xhr) {
+        error: function (xhr) {
           if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
             displayErrors(errors);
@@ -288,20 +304,20 @@
     });
 
     // Handle Edit Document button click
-    $('.edit-button').on('click', function() {
+    $('.edit-button').on('click', function () {
       const id = $(this).data('id');
       const documentType = $(this).data('document_type');
       const description = $(this).data('description');
-      
+
       $('#editDocumentId').val(id);
       $('#editDocumentType').val(documentType);
       $('#editDescription').val(description);
     });
 
     // Handle Edit Document form submission
-    $('#editDocumentForm').on('submit', function(e) {
+    $('#editDocumentForm').on('submit', function (e) {
       e.preventDefault();
-      
+
       clearEditErrors(); // Clear previous error messages
 
       var formData = new FormData(this);
@@ -313,14 +329,14 @@
         data: formData,
         contentType: false,
         processData: false,
-        success: function(response) {
+        success: function (response) {
           if (response.success) {
             location.reload();
           } else {
             alert('An error occurred while editing the document.');
           }
         },
-        error: function(xhr) {
+        error: function (xhr) {
           if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
             displayEditErrors(errors);
@@ -371,117 +387,117 @@
   });
 
   $('#documentType').change(function () {
-      if ($(this).val() === 'Others') {
-        $('#customDocumentTypeInput').show();
-      } else {
-        $('#customDocumentTypeInput').hide();
-      }
-    });
+    if ($(this).val() === 'Others') {
+      $('#customDocumentTypeInput').show();
+    } else {
+      $('#customDocumentTypeInput').hide();
+    }
+  });
 
-    $('#editDocumentType').change(function () {
-      if ($(this).val() === 'Others') {
-        $('#editcustomDocumentTypeInput').show();
-      } else {
-        $('#editcustomDocumentTypeInput').hide();
-      }
-    });
+  $('#editDocumentType').change(function () {
+    if ($(this).val() === 'Others') {
+      $('#editcustomDocumentTypeInput').show();
+    } else {
+      $('#editcustomDocumentTypeInput').hide();
+    }
+  });
 
-    $('#saveCustomDocumentType').on('click', function () {
-      const customDocumentType = $('#custom_document_type').val();
-      if (customDocumentType) {
-        $.ajax({
-          type: 'POST',
-          url: "{{ route('customer.documents.save_custom_type') }}",
-          data: {
-            _token: "{{ csrf_token() }}",
-            custom_document_type: customDocumentType
-          },
-          success: function (response) {
-            if (response.success) {
-              $('#documentType').append(new Option(customDocumentType, customDocumentType));
-              $('#documentType').val(customDocumentType);
-              $('#customDocumentTypeInput').hide();
-            } else {
-              $('#custom_document_type_error').text(response.message);
-            }
-          },
-          error: function (response) {
-            $('#custom_document_type_error').text('An error occurred while saving the custom bank type.');
-          }
-        });
-      } else {
-        $('#custom_document_type_error').text('Custom Investment type cannot be empty.');
-      }
-    });
-
-    $('#editsaveCustomDocumentType').on('click', function () {
-      const customDocumentType = $('#edit_custom_document_type').val();
-      if (customDocumentType) {
-        $.ajax({
-          type: 'POST',
-          url: "{{ route('customer.documents.save_custom_type') }}",
-          data: {
-            _token: "{{ csrf_token() }}",
-            custom_document_type: customDocumentType
-          },
-          success: function (response) {
-            if (response.success) {
-              $('#editDocumentType').append(new Option(customDocumentType, customDocumentType));
-              $('#editDocumentType').val(customDocumentType);
-              $('#editcustomDocumentTypeInput').hide();
-            } else {
-              $('#edit_custom_document_type_error').text(response.message);
-            }
-          },
-          error: function (response) {
-            $('#edit_custom_document_type_error').text('An error occurred while saving the custom Investment type.');
-          }
-        });
-      } else {
-        $('#edit_custom_document_type_error').text('Custom Investment type cannot be empty.');
-      }
-    });
-    
-    $('#ReviewModal').on('show.bs.modal', function(e) {
-      var documentId = $(e.relatedTarget).data('id');
-      $('#reviewsContainer').html(''); // Clear previous reviews
-
+  $('#saveCustomDocumentType').on('click', function () {
+    const customDocumentType = $('#custom_document_type').val();
+    if (customDocumentType) {
       $.ajax({
-  url: "{{ route('customer.reviews.show', '') }}/" + documentId,
-  type: "GET",
-  success: function(response) {
-    let reviews = response.reviews;
-    if (reviews.length > 0) {
-      reviews.forEach(function(review) {
-        var reviewHtml = `
+        type: 'POST',
+        url: "{{ route('customer.documents.save_custom_type') }}",
+        data: {
+          _token: "{{ csrf_token() }}",
+          custom_document_type: customDocumentType
+        },
+        success: function (response) {
+          if (response.success) {
+            $('#documentType').append(new Option(customDocumentType, customDocumentType));
+            $('#documentType').val(customDocumentType);
+            $('#customDocumentTypeInput').hide();
+          } else {
+            $('#custom_document_type_error').text(response.message);
+          }
+        },
+        error: function (response) {
+          $('#custom_document_type_error').text('An error occurred while saving the custom bank type.');
+        }
+      });
+    } else {
+      $('#custom_document_type_error').text('Custom Investment type cannot be empty.');
+    }
+  });
+
+  $('#editsaveCustomDocumentType').on('click', function () {
+    const customDocumentType = $('#edit_custom_document_type').val();
+    if (customDocumentType) {
+      $.ajax({
+        type: 'POST',
+        url: "{{ route('customer.documents.save_custom_type') }}",
+        data: {
+          _token: "{{ csrf_token() }}",
+          custom_document_type: customDocumentType
+        },
+        success: function (response) {
+          if (response.success) {
+            $('#editDocumentType').append(new Option(customDocumentType, customDocumentType));
+            $('#editDocumentType').val(customDocumentType);
+            $('#editcustomDocumentTypeInput').hide();
+          } else {
+            $('#edit_custom_document_type_error').text(response.message);
+          }
+        },
+        error: function (response) {
+          $('#edit_custom_document_type_error').text('An error occurred while saving the custom Investment type.');
+        }
+      });
+    } else {
+      $('#edit_custom_document_type_error').text('Custom Investment type cannot be empty.');
+    }
+  });
+
+  $('#ReviewModal').on('show.bs.modal', function (e) {
+    var documentId = $(e.relatedTarget).data('id');
+    $('#reviewsContainer').html(''); // Clear previous reviews
+
+    $.ajax({
+      url: "{{ route('customer.reviews.show', '') }}/" + documentId,
+      type: "GET",
+      success: function (response) {
+        let reviews = response.reviews;
+        if (reviews.length > 0) {
+          reviews.forEach(function (review) {
+            var reviewHtml = `
           <div class="form-group mb-4">
             <b>${review.user.name} - ${new Date(review.created_at).toLocaleString()}</b>
             <p>${review.description}</p>
-            ${review.user_id === {{ Auth::id() }} ? 
-              `<form action="{{ route('reviews.destroy', '') }}/${review.id}" method="POST" style="display:inline;">
+            ${review.user_id === {{ Auth::id() }} ?
+                `<form action="{{ route('reviews.destroy', '') }}/${review.id}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger btn-sm">Delete Review</button>
               </form>` : ''}
           </div>`;
-        $('#reviewsContainer').append(reviewHtml);
-      });
-    } else {
-      $('#reviewsContainer').html('<p>No reviews available for this document.</p>');
-    }
-  },
-  error: function() {
-    $('#reviewsContainer').html('<p>An error occurred while fetching reviews.</p>');
-  }
-});
-
+            $('#reviewsContainer').append(reviewHtml);
+          });
+        } else {
+          $('#reviewsContainer').html('<p>No reviews available for this document.</p>');
+        }
+      },
+      error: function () {
+        $('#reviewsContainer').html('<p>An error occurred while fetching reviews.</p>');
+      }
     });
 
-    // Handle Add Review button click
-    $('#AddReviewModal').on('show.bs.modal', function(e) {
-      var documentId = $(e.relatedTarget).data('id');
-      $('#reviewDocumentId').val(documentId);
-    });
-  
+  });
+
+  // Handle Add Review button click
+  $('#AddReviewModal').on('show.bs.modal', function (e) {
+    var documentId = $(e.relatedTarget).data('id');
+    $('#reviewDocumentId').val(documentId);
+  });
+
 </script>
 @endsection

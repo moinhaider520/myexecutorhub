@@ -33,17 +33,21 @@
                       </thead>
                       <tbody>
                         @foreach($documents as $document)
-                        <tr>
-                          <td>{{ $loop->iteration }}</td>
-                          <td>{{ $document->document_type }}</td>
-                          <td>{{ $document->description }}</td>
-                          <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}" target="_blank">Download</a></td>
-                          <td><button type="button" class="btn btn-secondary btn-sm edit-button" data-toggle="modal" data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm edit-button" data-toggle="modal" data-target="#AddReviewModal" data-id="{{ $document->id }}">Add Reviews</button>
-                          </td>
-                        </tr>
-                        @endforeach
+              <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $document->document_type }}</td>
+                <td>{{ $document->description }}</td>
+                <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}"
+                  target="_blank">Download</a></td>
+                <td><button type="button" class="btn btn-secondary btn-sm edit-button" id="viewReviewsButton"
+                data-toggle="modal" data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
+                <td>
+                <button type="button" class="btn btn-primary btn-sm edit-button" id="launchModalButton"
+                  data-toggle="modal" data-target="#AddReviewModal" data-id="{{ $document->id }}">Add
+                  Reviews</button>
+                </td>
+              </tr>
+            @endforeach
                       </tbody>
                     </table>
                   </div>
@@ -59,7 +63,8 @@
 </div>
 
 <!-- ADD Reviews -->
-<div class="modal fade" id="AddReviewModal" tabindex="-1" role="dialog" aria-labelledby="AddReviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="AddReviewModal" tabindex="-1" role="dialog" aria-labelledby="AddReviewModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -86,7 +91,8 @@
 </div>
 
 <!-- Review Modal -->
-<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="ReviewModalLabel" aria-hidden="true">
+<div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="ReviewModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,50 +112,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-  $(document).ready(function() {
-
-    
-    $('#ReviewModal').on('show.bs.modal', function(e) {
-      var documentId = $(e.relatedTarget).data('id');
+    document.getElementById('viewReviewsButton').onclick = function () {
+      var documentId = this.getAttribute('data-id');
       $('#reviewsContainer').html(''); // Clear previous reviews
-
+      console.log(documentId);
       $.ajax({
-  url: "{{ route('customer.reviews.show', '') }}/" + documentId,
-  type: "GET",
-  success: function(response) {
-    let reviews = response.reviews;
-    if (reviews.length > 0) {
-      reviews.forEach(function(review) {
-        var reviewHtml = `
+      url: "{{ route('executor.reviews.show', '') }}/" + documentId,
+      type: "GET",
+      success: function (response) {
+        let reviews = response.reviews;
+        if (reviews.length > 0) {
+          reviews.forEach(function (review) {
+            var reviewHtml = `
           <div class="form-group mb-4">
             <b>${review.user.name} - ${new Date(review.created_at).toLocaleString()}</b>
             <p>${review.description}</p>
-            ${review.user_id === {{ Auth::id() }} ? 
-              `<form action="{{ route('reviews.destroy', '') }}/${review.id}" method="POST" style="display:inline;">
+            ${review.user_id === {{ Auth::id() }} ?
+                `<form action="{{ route('reviews.destroy', '') }}/${review.id}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger btn-sm">Delete Review</button>
               </form>` : ''}
           </div>`;
-        $('#reviewsContainer').append(reviewHtml);
-      });
-    } else {
-      $('#reviewsContainer').html('<p>No reviews available for this document.</p>');
-    }
-  },
-  error: function() {
-    $('#reviewsContainer').html('<p>An error occurred while fetching reviews.</p>');
-  }
-});
-
+            $('#reviewsContainer').append(reviewHtml);
+          });
+        } else {
+          $('#reviewsContainer').html('<p>No reviews available for this document.</p>');
+        }
+      },
+      error: function () {
+        $('#reviewsContainer').html('<p>An error occurred while fetching reviews.</p>');
+      }
     });
+    };
+  </script>
 
-    // Handle Add Review button click
-    $('#AddReviewModal').on('show.bs.modal', function(e) {
-      var documentId = $(e.relatedTarget).data('id');
-      $('#reviewDocumentId').val(documentId);
-    });
-});
-
+<script>
+  document.getElementById('launchModalButton').onclick = function () {
+    var documentId = this.getAttribute('data-id');
+    document.getElementById('reviewDocumentId').value = documentId;
+  };
 </script>
 @endsection
