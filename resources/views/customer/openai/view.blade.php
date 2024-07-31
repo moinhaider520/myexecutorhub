@@ -84,7 +84,10 @@
             '<div class="msg-text">' + res.message + '</div>' +
             '</div></div>');
         } else {
-          alert(res.message);
+          $(".messages").append('<div class="msg left-msg">' +
+            '<div class="msg-bubble"><div class="msg-info"><div class="msg-info-name">Executor Hub AI</div></div>' +
+            '<div class="msg-text">' + res.message + '</div>' +
+            '</div></div>');
         }
 
         // Cleanup
@@ -96,7 +99,10 @@
         $("#chatbutton").prop('disabled', false);
       }).fail(function (xhr, status, error) {
         console.error(error);
-        alert('An error occurred. Please try again later.');
+        $(".messages").append('<div class="msg left-msg">' +
+            '<div class="msg-bubble"><div class="msg-info"><div class="msg-info-name">Executor Hub AI</div></div>' +
+            '<div class="msg-text">Chat GPT Limit Reached. This means too many people have used this demo this month and hit the FREE limit available. You will need to wait, sorry about that.</div>' +
+            '</div></div>');
 
         // Enable form
         $("#message").prop('disabled', false);

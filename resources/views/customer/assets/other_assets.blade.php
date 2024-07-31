@@ -80,6 +80,7 @@
               <option value="Annuities">Annuities</option>
               <option value="Pension benefits and lump sum payments">Pension benefits and lump sum payments</option>
               <option value="Trust interests">Trust interests</option>
+              <option value="Foriegn Assets">Foriegn Assets</option>
               @foreach($otherAssetTypes as $type)
                 <option value="{{ $type->name }}">{{ $type->name }}</option>
               @endforeach
@@ -129,6 +130,7 @@
               <option value="Annuities">Annuities</option>
               <option value="Pension benefits and lump sum payments">Pension benefits and lump sum payments</option>
               <option value="Trust interests">Trust interests</option>
+              <option value="Foriegn Assets">Foriegn Assets</option>
               @foreach($otherAssetTypes as $type)
                 <option value="{{ $type->name }}">{{ $type->name }}</option>
               @endforeach
