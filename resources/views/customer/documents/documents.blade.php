@@ -214,8 +214,9 @@
         <h5 class="modal-title" id="AddReviewModalLabel">Add Review</h5>
       </div>
       <div class="modal-body">
-        <form id="addDocumentForm" enctype="multipart/form-data">
+        <form id="addReviewForm" action="{{ route('customer.reviews.store') }}" method="POST">
           @csrf
+          <input type="hidden" name="document_id" id="reviewDocumentId">
 
           <div class="form-group mb-4">
             <label for="description">Write Your Review/Notes</label>
@@ -232,26 +233,18 @@
   </div>
 </div>
 
-<!-- View Reviews -->
+<!-- Review Modal -->
 <div class="modal fade" id="ReviewModal" tabindex="-1" role="dialog" aria-labelledby="ReviewModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="ReviewModalLabel">Document Reviews</h5>
       </div>
-      <div class="modal-body">
-          <div class="form-group mb-4">
-            <b>Moin Haider - 12:05 PM</b>
-            <p>Save This Text In Database.</p>
-          </div>
-          <div class="form-group mb-4">
-            <b>Moin Haider - 12:05 PM</b>
-            <p>The Person Who Left the Review Will Be Able to Delete The Review Only.</p>
-            <button type="submit" class="btn btn-danger btn-sm">Delete Review</button>
-          </div>
-          <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+      <div class="modal-body" id="reviewsContainer">
+        <!-- Reviews will be dynamically loaded here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -448,7 +441,47 @@
         $('#edit_custom_document_type_error').text('Custom Investment type cannot be empty.');
       }
     });
+    
+    $('#ReviewModal').on('show.bs.modal', function(e) {
+      var documentId = $(e.relatedTarget).data('id');
+      $('#reviewsContainer').html(''); // Clear previous reviews
 
+      $.ajax({
+  url: "{{ route('customer.reviews.show', '') }}/" + documentId,
+  type: "GET",
+  success: function(response) {
+    let reviews = response.reviews;
+    if (reviews.length > 0) {
+      reviews.forEach(function(review) {
+        var reviewHtml = `
+          <div class="form-group mb-4">
+            <b>${review.user.name} - ${new Date(review.created_at).toLocaleString()}</b>
+            <p>${review.description}</p>
+            ${review.user_id === {{ Auth::id() }} ? 
+              `<form action="{{ route('reviews.destroy', '') }}/${review.id}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm">Delete Review</button>
+              </form>` : ''}
+          </div>`;
+        $('#reviewsContainer').append(reviewHtml);
+      });
+    } else {
+      $('#reviewsContainer').html('<p>No reviews available for this document.</p>');
+    }
+  },
+  error: function() {
+    $('#reviewsContainer').html('<p>An error occurred while fetching reviews.</p>');
+  }
+});
 
+    });
+
+    // Handle Add Review button click
+    $('#AddReviewModal').on('show.bs.modal', function(e) {
+      var documentId = $(e.relatedTarget).data('id');
+      $('#reviewDocumentId').val(documentId);
+    });
+  
 </script>
 @endsection

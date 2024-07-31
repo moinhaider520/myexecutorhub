@@ -28,6 +28,7 @@ use App\Http\Controllers\Customer\OrgansDonationController;
 use App\Http\Controllers\Customer\VoiceNotesController;
 use App\Http\Controllers\Customer\MessagesController;
 use App\Http\Controllers\Customer\OpenAIController;
+use App\Http\Controllers\Customer\ReviewController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -49,6 +50,7 @@ use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetCont
 use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesController;
+use App\Http\Controllers\Executor\ReviewController as ExecutorReviewController;
 
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
@@ -70,7 +72,7 @@ use App\Http\Controllers\Others\ExecutorsController as OthersExecutorsController
 use App\Http\Controllers\Others\OrgansDonationController as OthersOrgansDonationController;
 use App\Http\Controllers\Others\VoiceNotesController as OthersVoiceNotesController;
 use App\Http\Controllers\Others\MessagesController as OthersMessagesController;
-use App\Models\OtherAsset;
+use App\Http\Controllers\Others\ReviewController as OthersReviewController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -250,6 +252,12 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Messages
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
 
+    // Reviews
+    Route::post('reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{id}', [ReviewController::class, 'show'])->name('reviews.show');
+    Route::delete('reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+
     // OPENAI
     Route::get('/openai/view', [OpenAIController::class, 'index'])->name('openai.view');
     Route::post('/openai/chat', [OpenAIController::class, 'chat'])->name('openai.chat');
@@ -258,6 +266,12 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
 // Executors  Routes
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
+
+    
+    // Reviews
+    Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
+    Route::delete('reviews/{id}', [ExecutorReviewController::class, 'destroy'])->name('reviews.destroy');
 
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
     // Executors View Routes
@@ -280,6 +294,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
+
 });
 
 // Others Routes
@@ -356,4 +371,9 @@ Route::middleware(['auth'])->group(function () {
 
     // message
     Route::get('/messages/view', [OthersMessagesController::class, 'index'])->name('messages.view');
+
+    // Reviews
+    Route::post('reviews', [OthersReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
+    Route::delete('reviews/{id}', [OthersReviewController::class, 'destroy'])->name('reviews.destroy');
 });
