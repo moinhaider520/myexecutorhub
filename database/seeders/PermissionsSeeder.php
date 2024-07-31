@@ -29,6 +29,7 @@ class PermissionsSeeder extends Seeder
             'view advisors',
             'view executors',
             'view organs donation',
+            'view documents',
             'view voice notes',
         ];
 

@@ -66,6 +66,7 @@ use App\Http\Controllers\Others\IntellectualPropertyController as OthersIntellec
 use App\Http\Controllers\Others\OtherAssetController as OthersOtherAssetController;
 use App\Http\Controllers\Others\WishesController as OthersWishesController;
 use App\Http\Controllers\Others\GuidanceController as OthersGuidanceController;
+use App\Http\Controllers\Others\DocumentsController as OthersDocumentsController;
 use App\Http\Controllers\Others\LifeRememberedController as OthersLifeRememberedController;
 use App\Http\Controllers\Others\AdvisorsController as OthersAdvisorsController;
 use App\Http\Controllers\Others\ExecutorsController as OthersExecutorsController;
@@ -367,6 +368,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware("permission:view voice notes")->group(function () {
         Route::get('/voice-notes', [OthersVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    });
+
+    Route::middleware("permission:view documents")->group(function () {
+        Route::get('/documents', [OthersDocumentsController::class, 'view'])->name('documents.view');
     });
 
     // message
