@@ -12,16 +12,22 @@
     <!-- FAVICON AND TOUCH ICONS -->
     <link rel="shortcut icon" href="{{ asset('assets/frontend/images/favicon.ico') }}" type="image/x-icon" />
     <link rel="icon" href="{{ asset('assets/frontend/images/favicon.ico') }}" type="image/x-icon" />
-    <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('assets/frontend/images/apple-touch-icon-152x152.png') }}" />
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/frontend/images/apple-touch-icon-120x120.png') }}" />
-    <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/frontend/images/apple-touch-icon-76x76.png') }}" />
+    <link rel="apple-touch-icon" sizes="152x152"
+        href="{{ asset('assets/frontend/images/apple-touch-icon-152x152.png') }}" />
+    <link rel="apple-touch-icon" sizes="120x120"
+        href="{{ asset('assets/frontend/images/apple-touch-icon-120x120.png') }}" />
+    <link rel="apple-touch-icon" sizes="76x76"
+        href="{{ asset('assets/frontend/images/apple-touch-icon-76x76.png') }}" />
     <link rel="apple-touch-icon" href="{{ asset('assets/frontend/images/apple-touch-icon.png') }}" />
     <link rel="icon" href="{{ asset('assets/frontend/images/apple-touch-icon.png') }}" type="image/x-icon" />
 
     <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
 
     <!-- BOOTSTRAP CSS -->
     <link href="{{ asset('assets/frontend/css/bootstrap.min.css') }}" rel="stylesheet" />
@@ -31,7 +37,8 @@
 
     <!-- PLUGINS STYLESHEET -->
     <link href="{{ asset('assets/frontend/css/menu.css') }}" rel="stylesheet" />
-    <link id="effect" href="{{ asset('assets/frontend/css/dropdown-effects/fade-down.css') }}" media="all" rel="stylesheet" />
+    <link id="effect" href="{{ asset('assets/frontend/css/dropdown-effects/fade-down.css') }}" media="all"
+        rel="stylesheet" />
     <link href="{{ asset('assets/frontend/css/magnific-popup.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/frontend/css/owl.carousel.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/frontend/css/owl.theme.default.min.css') }}" rel="stylesheet" />
@@ -47,7 +54,8 @@
     <link href="{{ asset('assets/frontend/css/blue-theme.css') }}" rel="alternate stylesheet" title="blue-theme" />
     <link href="{{ asset('assets/frontend/css/crocus-theme.css') }}" rel="alternate stylesheet" title="crocus-theme" />
     <link href="{{ asset('assets/frontend/css/green-theme.css') }}" rel="alternate stylesheet" title="green-theme" />
-    <link href="{{ asset('assets/frontend/css/magenta-theme.css') }}" rel="alternate stylesheet" title="magenta-theme" />
+    <link href="{{ asset('assets/frontend/css/magenta-theme.css') }}" rel="alternate stylesheet"
+        title="magenta-theme" />
     <link href="{{ asset('assets/frontend/css/pink-theme.css') }}" rel="alternate stylesheet" title="pink-theme" />
     <link href="{{ asset('assets/frontend/css/purple-theme.css') }}" rel="alternate stylesheet" title="purple-theme" />
     <link href="{{ asset('assets/frontend/css/red-theme.css') }}" rel="alternate stylesheet" title="red-theme" />
@@ -73,7 +81,8 @@
             <div class="header-wrapper">
                 <!-- MOBILE HEADER -->
                 <div class="wsmobileheader clearfix">
-                    <span class="smllogo"><img src="{{asset('assets/frontend/images/logo-skyblue.png')}}" alt="mobile-logo" /></span>
+                    <span class="smllogo"><img src="{{asset('assets/frontend/images/logo-skyblue.png')}}"
+                            alt="mobile-logo" /></span>
                     <a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
                 </div>
 
@@ -83,14 +92,17 @@
                         <!-- HEADER BLACK LOGO -->
                         <div class="desktoplogo">
                             <a href="#hero-3" class="logo-black">
-                                <img class="light-theme-img" src="{{asset('assets/frontend/images/logo-skyblue.png')}}" alt="logo" />
-                                <img class="dark-theme-img" src="{{asset('assets/frontend/images/logo-skyblue-white.png')}}" alt="logo" />
+                                <img class="light-theme-img" src="{{asset('assets/frontend/images/logo-skyblue.png')}}"
+                                    alt="logo" />
+                                <img class="dark-theme-img"
+                                    src="{{asset('assets/frontend/images/logo-skyblue-white.png')}}" alt="logo" />
                             </a>
                         </div>
 
                         <!-- HEADER WHITE LOGO -->
                         <div class="desktoplogo">
-                            <a href="#hero-3" class="logo-white"><img src="{{asset('assets/frontend/images/logo-white.png')}}" alt="logo" /></a>
+                            <a href="#hero-3" class="logo-white"><img
+                                    src="{{asset('assets/frontend/images/logo-white.png')}}" alt="logo" /></a>
                         </div>
 
                         <!-- MAIN MENU -->
@@ -100,30 +112,37 @@
                                 <li aria-haspopup="true"><a href="#hero-3" class="h-link">Home</a></li>
 
                                 <!-- SIMPLE NAVIGATION LINK -->
-                                <li class="nl-simple" aria-haspopup="true"><a href="#features-11" class="h-link">Features</a></li>
+                                <li class="nl-simple" aria-haspopup="true"><a href="#features-11"
+                                        class="h-link">Features</a></li>
 
-                                <li class="nl-simple" aria-haspopup="true"><a href="#benefits-11" class="h-link">Benefits</a></li>
-
-                                <!-- SIMPLE NAVIGATION LINK -->
-                                <li class="nl-simple" aria-haspopup="true"><a href="#pricing-1" class="h-link">Pricing</a></li>
-
-                                <!-- SIMPLE NAVIGATION LINK -->
-                                <li class="nl-simple" aria-haspopup="true"><a href="#faqs-3" class="h-link">FAQs</a></li>
+                                <li class="nl-simple" aria-haspopup="true"><a href="#benefits-11"
+                                        class="h-link">Benefits</a></li>
 
                                 <!-- SIMPLE NAVIGATION LINK -->
-                                <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact Us</a></li>
-                                
+                                <li class="nl-simple" aria-haspopup="true"><a href="#pricing-1"
+                                        class="h-link">Pricing</a></li>
+
+                                <!-- SIMPLE NAVIGATION LINK -->
+                                <li class="nl-simple" aria-haspopup="true"><a href="#faqs-3" class="h-link">FAQs</a>
+                                </li>
+
+                                <!-- SIMPLE NAVIGATION LINK -->
+                                <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact
+                                        Us</a></li>
+
                                 @guest
-                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                </li>
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white last-link">Sign up</a>
-                                </li>
+                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                    </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{route('register')}}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Sign up</a>
+                                    </li>
                                 @else
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('dashboard')}}" class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{route('dashboard')}}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                    </li>
                                 @endguest
 
                             </ul>
@@ -149,7 +168,9 @@
                             <h2 class="s-60 w-700">Executor Hub - Empowering executors, ensuring legacies</h2>
 
                             <!-- Text -->
-                            <p class="p-lg">Executor Hub is a secure web application designed to help individuals organize and store important financial documents, social media passwords, and asset information in one central, encrypted location.</p>
+                            <p class="p-lg">Executor Hub is a secure web application designed to help individuals
+                                organize and store important financial documents, social media passwords, and asset
+                                information in one central, encrypted location.</p>
                         </div>
                     </div>
                     <!-- END HERO TEXT -->
@@ -157,7 +178,8 @@
                     <!-- HERO IMAGE -->
                     <div class="col-md-6">
                         <div class="hero-3-img wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-01.png')}}" alt="hero-image" />
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-01.png')}}"
+                                alt="hero-image" />
                         </div>
                     </div>
                 </div>
@@ -168,16 +190,17 @@
         <!-- END HERO-3 -->
 
 
-                <!-- TEXT CONTENT
+        <!-- TEXT CONTENT
 			============================================= -->
-            <section class="pt-100 ct-02 content-section division">
+        <section class="pt-100 ct-02 content-section division">
             <div class="container">
                 <!-- SECTION CONTENT (ROW) -->
                 <div class="row d-flex align-items-center">
                     <!-- IMAGE BLOCK -->
                     <div class="col-md-6">
                         <div class="img-block left-column wow fadeInRight">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-09.png')}}" alt="content-image" />
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-09.png')}}"
+                                alt="content-image" />
                         </div>
                     </div>
 
@@ -191,7 +214,16 @@
                             <h2 class="s-46 w-700">Empowering executors, ensuring legacies</h2>
 
                             <!-- Text -->
-                            <p>Executor Hub is a secure web application designed to streamline the estate execution process. Our platform allows you to organize and store important financial documents, social media passwords, and asset information all in one central, encrypted location. Executors can access this information from any location, enabling them to work remotely with ease. This digital solution is much safer than keeping information on paper, as it reduces the risk of loss, damage, or unauthorized access. You have the flexibility to grant access to your executors at the time of your death or any time prior, should you wish to. With Executor Hub, you can ensure your executors have everything they need, securely and conveniently, making the process as simple and stress-free as possible during a difficult time.</p>
+                            <p>Executor Hub is a secure web application designed to streamline the estate execution
+                                process. Our platform allows you to organize and store important financial documents,
+                                social media passwords, and asset information all in one central, encrypted location.
+                                Executors can access this information from any location, enabling them to work remotely
+                                with ease. This digital solution is much safer than keeping information on paper, as it
+                                reduces the risk of loss, damage, or unauthorized access. You have the flexibility to
+                                grant access to your executors at the time of your death or any time prior, should you
+                                wish to. With Executor Hub, you can ensure your executors have everything they need,
+                                securely and conveniently, making the process as simple and stress-free as possible
+                                during a difficult time.</p>
                         </div>
                     </div>
                     <!-- END TEXT BLOCK -->
@@ -237,7 +269,9 @@
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z" transform="translate(100 100)" />
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
                                             </svg>
                                         </div>
                                     </div>
@@ -247,7 +281,8 @@
                                 <!-- Text -->
                                 <div class="fbox-txt">
                                     <h6 class="s-22 w-700">Centralized Storage</h6>
-                                    <p>Organize and store all important financial documents, social media passwords, and asset information in one secure location.</p>
+                                    <p>Organize and store all important financial documents, social media passwords, and
+                                        asset information in one secure location.</p>
                                 </div>
                             </div>
                         </div>
@@ -265,7 +300,9 @@
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z" transform="translate(100 100)" />
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
                                             </svg>
                                         </div>
                                     </div>
@@ -275,7 +312,8 @@
                                 <!-- Text -->
                                 <div class="fbox-txt">
                                     <h6 class="s-22 w-700">Enhanced Security</h6>
-                                    <p>Keep your information safe with top-level encryption, reducing the risk of loss, damage, or unauthorized access compared to paper storage.</p>
+                                    <p>Keep your information safe with top-level encryption, reducing the risk of loss,
+                                        damage, or unauthorized access compared to paper storage.</p>
                                 </div>
                             </div>
                         </div>
@@ -293,7 +331,9 @@
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z" transform="translate(100 100)" />
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
                                             </svg>
                                         </div>
                                     </div>
@@ -303,7 +343,8 @@
                                 <!-- Text -->
                                 <div class="fbox-txt">
                                     <h6 class="s-22 w-700">Remote Access</h6>
-                                    <p>Executors can access the information from any location, allowing them to work remotely and efficiently.</p>
+                                    <p>Executors can access the information from any location, allowing them to work
+                                        remotely and efficiently.</p>
                                 </div>
                             </div>
                         </div>
@@ -321,7 +362,9 @@
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z" transform="translate(100 100)" />
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
                                             </svg>
                                         </div>
                                     </div>
@@ -331,7 +374,8 @@
                                 <!-- Text -->
                                 <div class="fbox-txt">
                                     <h6 class="s-22 w-700">Simplified Process</h6>
-                                    <p>Streamline the estate execution process, making it easier and less stressful for your executors during a difficult time.</p>
+                                    <p>Streamline the estate execution process, making it easier and less stressful for
+                                        your executors during a difficult time.</p>
                                 </div>
                             </div>
                         </div>
@@ -349,7 +393,9 @@
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z" transform="translate(100 100)" />
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
                                             </svg>
                                         </div>
                                     </div>
@@ -359,7 +405,8 @@
                                 <!-- Text -->
                                 <div class="fbox-txt">
                                     <h6 class="s-22 w-700">Memorandum of Wishes</h6>
-                                    <p>Leave detailed instructions and wishes to guide your executors in fulfilling your final requests.</p>
+                                    <p>Leave detailed instructions and wishes to guide your executors in fulfilling your
+                                        final requests.</p>
                                 </div>
                             </div>
                         </div>
@@ -377,7 +424,9 @@
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z" transform="translate(100 100)" />
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
                                             </svg>
                                         </div>
                                     </div>
@@ -387,7 +436,8 @@
                                 <!-- Text -->
                                 <div class="fbox-txt">
                                     <h6 class="s-22 w-700">Messages to Loved Ones</h6>
-                                    <p>Include personal messages to be delivered to your loved ones, providing comfort and closure.</p>
+                                    <p>Include personal messages to be delivered to your loved ones, providing comfort
+                                        and closure.</p>
                                 </div>
                             </div>
                         </div>
@@ -410,22 +460,6 @@
                         <div class="section-title mb-70">
                             <!-- Title -->
                             <h2 class="s-52 w-700">Simple, Flexible Pricing</h2>
-
-                            <!-- TOGGLE BUTTON -->
-                            <div class="toggle-btn ext-toggle-btn toggle-btn-md mt-30">
-                                <span class="toggler-txt">Billed monthly</span>
-                                <label class="switch-wrap">
-                                    <input type="checkbox" id="checbox" onclick="check()" />
-                                    <span class="switcher bg--grey switcher--theme">
-                                        <span class="show-annual"></span>
-                                        <span class="show-monthly"></span>
-                                    </span>
-                                </label>
-                                <span class="toggler-txt">Billed yearly</span>
-
-                                <!-- Text -->
-                                <p class="color--theme">Save up to 35% with yearly billing</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -436,183 +470,132 @@
                     <div class="row row-cols-1 row-cols-md-3">
                         <!-- STARTER PLAN -->
                         <div class="col">
-                            <div id="pt-1-1" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                            <div id="pt-1-1"
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <!-- TABLE HEADER -->
                                 <div class="pricing-table-header">
-                                    <!-- Title -->
-                                    <h5 class="s-24 w-700">Starter</h5>
-
-                                    <!-- Price -->
+                                    <h5 class="s-24 w-700">Basic</h5>
                                     <div class="price">
-                                        <sup class="color--black">$</sup>
-                                        <span class="color--black">0</span>
-                                        <sup class="validity color--grey">&nbsp;/ forever</sup>
-                                        <p class="color--grey">For professionals getting started with smaller projects.</p>
+                                        <sup class="color--black">£</sup>
+                                        <span class="color--black">8</span>
+                                        <sup class="validity color--grey">&nbsp;/mo</sup>
+                                        <p class="color--grey">
+                                            <ol>
+                                            <li>Assign Executors</li>
+                          <li>Document Uploads</li>
+                          <li>Record Assets & Liabilities</li>
+                                            </ol>
+                                        </p>
                                     </div>
-
-                                    <!-- Button -->
-                                    <a href="#" class="pt-btn btn r-04 btn--theme hover--theme">Get srarted - it's free</a>
-                                    <p class="p-sm btn-txt text-center color--grey">No credit card required</p>
+                                    <button class="pt-btn btn r-04 btn--theme hover--theme"
+                                        onclick="showCheckout('8')">Get Started</button>
                                 </div>
-                                <!-- END TABLE HEADER -->
-
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
-                                    <li>
-                                        <p><span class="flaticon-check"></span> 2 free projects</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> 1 GB of cloud storage</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> For personal use</p>
-                                    </li>
-                                    <li class="disabled-option">
-                                        <p><span class="flaticon-check"></span> Weekly data backup</p>
-                                    </li>
-                                    <li class="disabled-option">
-                                        <p><span class="flaticon-check"></span> No Ads. No trackers</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> 12/5 email support</p>
-                                    </li>
+                                    <!-- Features here -->
                                 </ul>
                             </div>
                         </div>
-                        <!-- END STARTER PLAN -->
-
                         <!-- BASIC PLAN -->
                         <div class="col">
-                            <div id="pt-1-2" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                <!-- TABLE HEADER -->
+                            <div id="pt-1-2"
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
-                                    <!-- Title -->
-                                    <h5 class="s-24">Basic</h5>
-
-                                    <!-- Price -->
+                                    <h5 class="s-24">Standard</h5>
                                     <div class="price">
-                                        <!-- Monthly Price -->
                                         <div class="price2" style="display: block;">
-                                            <sup class="color--black">$</sup>
-                                            <span class="color--black">16.99</span>
+                                            <sup class="color--black">£</sup>
+                                            <span class="color--black">20.00</span>
                                             <sup class="validity color--grey">&nbsp;/ mo</sup>
                                         </div>
-
-                                        <!-- Yearly Price -->
-                                        <div class="price1" style="display: none;">
-                                            <sup class="color--black">$</sup>
-                                            <span class="color--black">142.75</span>
-                                            <sup class="validity color--grey">&nbsp;/ yr</sup>
-
-                                            <!-- Discount Badge -->
-                                            <div class="pricing-discount bg--yellow-400 color--black r-36">
-                                                <h6 class="s-17">Save 30%</h6>
-                                            </div>
-                                        </div>
-
-                                        <!-- Text -->
-                                        <p class="color--grey">For personal use or small teams with simple workflows.</p>
+                                        <p class="color--grey">
+                                        <ol>
+                                        <li>Assign Executors</li>
+                          <li>Assign Advisers</li>
+                          <li>Document Uploads</li>
+                          <li>Record Assets & Liabilities</li>
+                          <li>Access to Secure Messaging System</li>
+                                            </ol>
+                                        </p>
                                     </div>
-                                    <!-- End Price -->
-
-                                    <!-- Button -->
-                                    <a href="#" class="pt-btn btn r-04 btn--theme hover--theme">Start 14-day trial</a>
-                                    <p class="p-sm btn-txt text-center color--grey">7-Day Money Back Guarantee</p>
+                                    <button class="pt-btn btn r-04 btn--theme hover--theme"
+                                        onclick="showCheckout('20.00')">Get Started</button>
                                 </div>
-                                <!-- END TABLE HEADER -->
-
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Up to 250 projects</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> 15 GB of Cloud Storage</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Shared team workspace</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Daily data backup</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> No Ads. No trackers</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> 12/7 email support</p>
-                                    </li>
+                                    <!-- Features here -->
                                 </ul>
                             </div>
                         </div>
-                        <!-- END BASIC PLAN -->
-
                         <!-- ADVANCED PLAN -->
                         <div class="col">
-                            <div id="pt-1-3" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
-                                <!-- TABLE HEADER -->
+                            <div id="pt-1-3"
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
-                                    <!-- Title -->
-                                    <h5 class="s-24">Advanced</h5>
-
-                                    <!-- Price -->
+                                    <h5 class="s-24">Premium</h5>
                                     <div class="price">
-                                        <!-- Monthly Price -->
                                         <div class="price2" style="display: block;">
-                                            <sup class="color--black">$</sup>
-                                            <span class="color--black">24.99</span>
+                                            <sup class="color--black">£</sup>
+                                            <span class="color--black">40.00</span>
                                             <sup class="validity color--grey">&nbsp;/ mo</sup>
                                         </div>
-
-                                        <!-- Yearly Price -->
-                                        <div class="price1" style="display: none;">
-                                            <sup class="color--black">$</sup>
-                                            <span class="color--black">194.99</span>
-                                            <sup class="validity color--grey">&nbsp;/ yr</sup>
-
-                                            <!-- Discount Badge -->
-                                            <div class="pricing-discount bg--yellow-400 color--black r-36">
-                                                <h6 class="s-17">Save 35%</h6>
-                                            </div>
-                                        </div>
-
-                                        <!-- Text -->
-                                        <p class="color--grey">For growing teams that need more services and flexibility.</p>
+                                        <p class="color--grey">
+                                        <ol>
+                                        <li>Assign Executors</li>
+                          <li>Assign Advisers</li>
+                          <li>Document Uploads</li>
+                          <li>Record Assets & Liabilities</li>
+                          <li>Access to Secure Messaging System</li>
+                          <li>Record Donations</li>
+                          <li>Record Life Notes</li>
+                          <li>Access to Executor Hub AI</li>
+                          <li>Permissions to Control Access to Advisers & Executors</li>
+                                            </ol>
+                                        </p>
                                     </div>
-                                    <!-- End Price -->
-
-                                    <!-- Button -->
-                                    <a href="#" class="pt-btn btn r-04 btn--theme hover--theme">Upgrade your plan</a>
-                                    <p class="p-sm btn-txt text-center color--grey">7-Day Money Back Guarantee</p>
+                                    <button class="pt-btn btn r-04 btn--theme hover--theme"
+                                        onclick="showCheckout('40.00')">Get Started</button>
                                 </div>
-                                <!-- END TABLE HEADER -->
-
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Everything in Basic</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Private cloud hosting</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Custom security</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Advanced user permissions</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> Multi-team management</p>
-                                    </li>
-                                    <li>
-                                        <p><span class="flaticon-check"></span> 24/7 Email Support</p>
-                                    </li>
+                                    <!-- Features here -->
                                 </ul>
                             </div>
                         </div>
-                        <!-- END ADVANCED PLAN -->
                     </div>
                 </div>
-                <!-- PRICING TABLES -->
+
+                <div id="checkout-form" style="display: none; margin-top: 20px;">
+                    <form action="/create-checkout-session" method="POST">
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control"
+                                    placeholder="Email Address Used For Registration">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label>Name on Card</label>
+                                <input type="text" class="form-control" placeholder="Name on Card">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label>Price</label>
+                                <input type="text" id="amount" name="amount" value="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div id="card-element" class="form-group">
+                                <!-- Stripe Element will be inserted here -->
+                            </div>
+                        </div>
+
+                        <button type="submit" class="pt-btn btn r-04 btn--theme hover--theme">Proceed to
+                            Checkout</button>
+                    </form>
+                </div>
             </div>
             <!-- End container -->
         </section>
@@ -631,7 +614,11 @@
                                     <h2 class="s-50 w-700">Mission statement</h2>
 
                                     <!-- Text -->
-                                    <p class="p-xl">Executor Hub was founded with the mission to empower individuals to seamlessly manage their digital and financial legacies through a secure, reliable, and user-friendly platform. In today’s world, where digital solutions are the emerging trend, we ensure your legacy is preserved and accessible for future generations.</p>
+                                    <p class="p-xl">Executor Hub was founded with the mission to empower individuals to
+                                        seamlessly manage their digital and financial legacies through a secure,
+                                        reliable, and user-friendly platform. In today’s world, where digital solutions
+                                        are the emerging trend, we ensure your legacy is preserved and accessible for
+                                        future generations.</p>
                                 </div>
                             </div>
                         </div>
@@ -643,12 +630,14 @@
                                     <!-- Play Icon -->
                                     <a class="video-popup1" href="#">
                                         <div class="video-btn video-btn-xl bg--theme">
-                                            <div class="video-block-wrapper"><span class="flaticon-play-button"></span></div>
+                                            <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
+                                            </div>
                                         </div>
                                     </a>
 
                                     <!-- Preview Image -->
-                                    <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-02.png')}}" alt="content-image" />
+                                    <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-02.png')}}"
+                                        alt="content-image" />
                                 </div>
                             </div>
                         </div>
@@ -710,7 +699,8 @@
                                 <div class="statistic-block">
                                     <!-- Digit -->
                                     <div class="statistic-block-digit text-center">
-                                        <h2 class="s-46 statistic-number"><span class="count-element">4</span>.<span class="count-element">93</span></h2>
+                                        <h2 class="s-46 statistic-number"><span class="count-element">4</span>.<span
+                                                class="count-element">93</span></h2>
                                     </div>
 
                                     <!-- Text -->
@@ -755,7 +745,8 @@
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
                                     <h5 class="s-22 w-700">Digital Legacy Planning</h5>
-                                    <p>Manage your digital legacy by including instructions for online accounts and digital assets.</p>
+                                    <p>Manage your digital legacy by including instructions for online accounts and
+                                        digital assets.</p>
                                 </div>
                             </div>
                             <!-- END CONTENT BOX #1 -->
@@ -771,7 +762,8 @@
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
                                     <h5 class="s-22 w-700">24/7 Availability</h5>
-                                    <p>Access your stored information anytime, ensuring your executors can retrieve necessary details whenever needed.</p>
+                                    <p>Access your stored information anytime, ensuring your executors can retrieve
+                                        necessary details whenever needed.</p>
                                 </div>
                             </div>
                             <!-- END CONTENT BOX #2 -->
@@ -786,7 +778,8 @@
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
                                     <h5 class="s-22 w-700">Audit Trail</h5>
-                                    <p class="mb-0">Maintain a record of all updates and access activities, providing transparency and accountability.</p>
+                                    <p class="mb-0">Maintain a record of all updates and access activities, providing
+                                        transparency and accountability.</p>
                                 </div>
                             </div>
 
@@ -799,7 +792,8 @@
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
                                     <h5 class="s-22 w-700">Cost Efficiency</h5>
-                                    <p class="mb-0">Save money by avoiding the need for physical document storage solutions and minimizing the potential for lost paperwork.</p>
+                                    <p class="mb-0">Save money by avoiding the need for physical document storage
+                                        solutions and minimizing the potential for lost paperwork.</p>
                                 </div>
                             </div>
 
@@ -812,7 +806,8 @@
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
                                     <h5 class="s-22 w-700">Environmental Impact</h5>
-                                    <p class="mb-0">Reduce your environmental footprint by eliminating the need for paper documents.</p>
+                                    <p class="mb-0">Reduce your environmental footprint by eliminating the need for
+                                        paper documents.</p>
                                 </div>
                             </div>
 
@@ -825,7 +820,8 @@
                                 <!-- Text -->
                                 <div class="cbox-2-txt">
                                     <h5 class="s-22 w-700">User-Friendly Interface</h5>
-                                    <p class="mb-0">Enjoy an intuitive and easy-to-navigate platform, making it simple to manage your information.</p>
+                                    <p class="mb-0">Enjoy an intuitive and easy-to-navigate platform, making it simple
+                                        to manage your information.</p>
                                 </div>
                             </div>
                             <!-- END CONTENT BOX #3 -->
@@ -836,7 +832,8 @@
                     <!-- IMAGE BLOCK -->
                     <div class="col-md-6 order-first order-md-2">
                         <div class="img-block wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-02.png')}}" alt="content-image" />
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-02.png')}}"
+                                alt="content-image" />
                         </div>
                     </div>
                 </div>
@@ -875,13 +872,15 @@
                                 <!-- Text -->
                                 <div class="review-txt">
                                     <!-- Text -->
-                                    <p>Quaerat sodales sapien euismod blandit aliquet ipsum primis undo and cubilia laoreet augue and luctus magna dolor luctus egestas sapien vitae</p>
+                                    <p>Quaerat sodales sapien euismod blandit aliquet ipsum primis undo and cubilia
+                                        laoreet augue and luctus magna dolor luctus egestas sapien vitae</p>
 
                                     <!-- Author -->
                                     <div class="author-data clearfix">
                                         <!-- Avatar -->
                                         <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-1.jpg')}}" alt="review-avatar" />
+                                            <img src="{{asset('assets/frontend/images/review-author-1.jpg')}}"
+                                                alt="review-avatar" />
                                         </div>
 
                                         <!-- Data -->
@@ -906,13 +905,16 @@
                                 <!-- Text -->
                                 <div class="review-txt">
                                     <!-- Text -->
-                                    <p>At sagittis congue augue and magna ipsum vitae a purus ipsum primis diam a cubilia laoreet augue egestas luctus a donec vitae ultrice ligula magna suscipit lectus gestas augue into cubilia</p>
+                                    <p>At sagittis congue augue and magna ipsum vitae a purus ipsum primis diam a
+                                        cubilia laoreet augue egestas luctus a donec vitae ultrice ligula magna suscipit
+                                        lectus gestas augue into cubilia</p>
 
                                     <!-- Author -->
                                     <div class="author-data clearfix">
                                         <!-- Avatar -->
                                         <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-2.jpg')}}" alt="review-avatar" />
+                                            <img src="{{asset('assets/frontend/images/review-author-2.jpg')}}"
+                                                alt="review-avatar" />
                                         </div>
 
                                         <!-- Data -->
@@ -937,13 +939,16 @@
                                 <!-- Text -->
                                 <div class="review-txt">
                                     <!-- Text -->
-                                    <p>An augue cubilia laoreet magna suscipit egestas and ipsum a lectus purus ipsum primis and augue ultrice ligula and egestas a suscipit lectus gestas undo auctor tempus feugiat impedit quaerat</p>
+                                    <p>An augue cubilia laoreet magna suscipit egestas and ipsum a lectus purus ipsum
+                                        primis and augue ultrice ligula and egestas a suscipit lectus gestas undo auctor
+                                        tempus feugiat impedit quaerat</p>
 
                                     <!-- Author -->
                                     <div class="author-data clearfix">
                                         <!-- Avatar -->
                                         <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-5.jpg')}}" alt="review-avatar" />
+                                            <img src="{{asset('assets/frontend/images/review-author-5.jpg')}}"
+                                                alt="review-avatar" />
                                         </div>
 
                                         <!-- Data -->
@@ -968,13 +973,15 @@
                                 <!-- Text -->
                                 <div class="review-txt">
                                     <!-- Text -->
-                                    <p>Augue at vitae purus tempus egestas volutpat augue undo cubilia laoreet magna suscipit luctus dolor blandit at purus tempus feugiat impedit</p>
+                                    <p>Augue at vitae purus tempus egestas volutpat augue undo cubilia laoreet magna
+                                        suscipit luctus dolor blandit at purus tempus feugiat impedit</p>
 
                                     <!-- Author -->
                                     <div class="author-data clearfix">
                                         <!-- Avatar -->
                                         <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-8.jpg')}}" alt="review-avatar" />
+                                            <img src="{{asset('assets/frontend/images/review-author-8.jpg')}}"
+                                                alt="review-avatar" />
                                         </div>
 
                                         <!-- Data -->
@@ -1015,7 +1022,8 @@
 
                             <!-- Text -->
                             <p>
-                                Executor Hub allows a user-friendly interface for managing your documents, executors and assets. You can easily login to the portal at any time and get your work done with ease.
+                                Executor Hub allows a user-friendly interface for managing your documents, executors and
+                                assets. You can easily login to the portal at any time and get your work done with ease.
                             </p>
 
                             <!-- Small Title -->
@@ -1038,7 +1046,8 @@
                     <!-- IMAGE BLOCK -->
                     <div class="col-md-6 order-first order-md-2">
                         <div class="img-block right-column wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-05.png')}}" alt="content-image" />
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-05.png')}}"
+                                alt="content-image" />
                         </div>
                     </div>
                 </div>
@@ -1050,7 +1059,7 @@
 
         <!-- TEXT CONTENT
 			============================================= -->
-        
+
         <!-- END TEXT CONTENT -->
 
         <!-- FAQs-3
@@ -1082,7 +1091,11 @@
                                     <h5 class="s-22 w-700"><span>1.</span> What is Executor Hub?</h5>
 
                                     <!-- Answer -->
-                                    <p class="color--grey">Executor Hub is a secure web application designed to help individuals organize and store important financial documents, social media passwords, and asset information in one central, encrypted location. It ensures that all your essential information is readily accessible for your executors.</p>
+                                    <p class="color--grey">Executor Hub is a secure web application designed to help
+                                        individuals organize and store important financial documents, social media
+                                        passwords, and asset information in one central, encrypted location. It ensures
+                                        that all your essential information is readily accessible for your executors.
+                                    </p>
                                 </div>
 
                                 <!-- QUESTION #2 -->
@@ -1091,7 +1104,11 @@
                                     <h5 class="s-22 w-700"><span>2.</span> How can Executor Hub benefit me?</h5>
 
                                     <!-- Answer -->
-                                    <p class="color--grey">Executor Hub simplifies the process of managing your digital and financial legacy. By securely storing your sensitive information, Executor Hub ensures that your loved ones can easily access and manage your affairs in the event of incapacity or after your passing, reducing stress and confusion during difficult times.</p>
+                                    <p class="color--grey">Executor Hub simplifies the process of managing your digital
+                                        and financial legacy. By securely storing your sensitive information, Executor
+                                        Hub ensures that your loved ones can easily access and manage your affairs in
+                                        the event of incapacity or after your passing, reducing stress and confusion
+                                        during difficult times.</p>
                                 </div>
 
                                 <!-- QUESTION #3 -->
@@ -1100,43 +1117,60 @@
                                     <h5 class="s-22 w-700"><span>3.</span> Is Executor Hub secure?</h5>
 
                                     <!-- Answer -->
-                                    <p>Yes, security is our top priority. Executor Hub uses state-of-the-art encryption and advanced security measures to protect your data from unauthorized access, ensuring your information remains private and secure.</p>
+                                    <p>Yes, security is our top priority. Executor Hub uses state-of-the-art encryption
+                                        and advanced security measures to protect your data from unauthorized access,
+                                        ensuring your information remains private and secure.</p>
                                 </div>
 
-                                
+
                                 <!-- QUESTION #4 -->
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>4.</span> Can I share access with family members or trusted individuals?</h5>
+                                    <h5 class="s-22 w-700"><span>4.</span> Can I share access with family members or
+                                        trusted individuals?</h5>
 
                                     <!-- Answer -->
-                                    <p>Yes, Executor Hub allows you to designate trusted contacts who can access your information in case of emergency or incapacity. This ensures that the right people have access when it’s needed most.</p>
+                                    <p>Yes, Executor Hub allows you to designate trusted contacts who can access your
+                                        information in case of emergency or incapacity. This ensures that the right
+                                        people have access when it’s needed most.</p>
                                 </div>
 
                                 <!-- QUESTION#5 -->
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>5.</span> What types of documents and information can I store on Executor Hub?</h5>
-                                    <p>You can store a wide range of documents, including wills, trusts, insurance policies, investment accounts, social media account details, digital asset information, personal messages to loved ones, and more.</p>
+                                    <h5 class="s-22 w-700"><span>5.</span> What types of documents and information can I
+                                        store on Executor Hub?</h5>
+                                    <p>You can store a wide range of documents, including wills, trusts, insurance
+                                        policies, investment accounts, social media account details, digital asset
+                                        information, personal messages to loved ones, and more.</p>
                                 </div>
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>6.</span> How often can I update my information on Executor Hub?</h5>
-                                    <p>You can update your information as often as needed. Executor Hub makes it easy to keep your documents and details current, reflecting any changes in your circumstances.</p>
+                                    <h5 class="s-22 w-700"><span>6.</span> How often can I update my information on
+                                        Executor Hub?</h5>
+                                    <p>You can update your information as often as needed. Executor Hub makes it easy to
+                                        keep your documents and details current, reflecting any changes in your
+                                        circumstances.</p>
                                 </div>
 
-                                
-                                <div class="question mb-35 wow fadeInUp">
-                                    <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>7.</span> How does Executor Hub handle privacy and confidentiality?</h5>
-                                    <p>Executor Hub is committed to maintaining your privacy and confidentiality. We adhere to strict privacy policies and utilize robust security measures to safeguard your information at all times.</p>
-                                </div>
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>8.</span> Can Executor Hub assist with organizing non-financial aspects of my estate?</h5>
-                                    <p>Yes, in addition to financial documents, Executor Hub allows you to store and organize non-financial aspects such as personal letters, family traditions, and other important details you wish to pass on.</p>
+                                    <h5 class="s-22 w-700"><span>7.</span> How does Executor Hub handle privacy and
+                                        confidentiality?</h5>
+                                    <p>Executor Hub is committed to maintaining your privacy and confidentiality. We
+                                        adhere to strict privacy policies and utilize robust security measures to
+                                        safeguard your information at all times.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>8.</span> Can Executor Hub assist with organizing
+                                        non-financial aspects of my estate?</h5>
+                                    <p>Yes, in addition to financial documents, Executor Hub allows you to store and
+                                        organize non-financial aspects such as personal letters, family traditions, and
+                                        other important details you wish to pass on.</p>
                                 </div>
 
 
@@ -1152,36 +1186,61 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>9.</span> What happens to my data if Executor Hub ceases operations?</h5>
-                                    <p>In the unlikely event that Executor Hub ceases operations, your data remains secure and accessible to you. We have contingency plans in place to ensure continuity and access to your information.</p>
+                                    <h5 class="s-22 w-700"><span>9.</span> What happens to my data if Executor Hub
+                                        ceases operations?</h5>
+                                    <p>In the unlikely event that Executor Hub ceases operations, your data remains
+                                        secure and accessible to you. We have contingency plans in place to ensure
+                                        continuity and access to your information.</p>
                                 </div>
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>10.</span> How can I get support if I have questions or issues using Executor Hub?</h5>
-                                    <p>We provide dedicated customer support to assist you with any questions or issues. You can reach out to our support team via email or through our helpdesk for prompt assistance.</p>
+                                    <h5 class="s-22 w-700"><span>10.</span> How can I get support if I have questions or
+                                        issues using Executor Hub?</h5>
+                                    <p>We provide dedicated customer support to assist you with any questions or issues.
+                                        You can reach out to our support team via email or through our helpdesk for
+                                        prompt assistance.</p>
                                 </div>
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>11.</span> Can Executor Hub integrate with other estate planning services or platforms?</h5>
-                                    <p>Yes, Executor Hub is designed to complement other estate planning services and platforms. We offer integration options to streamline your overall estate planning process.</p>
+                                    <h5 class="s-22 w-700"><span>11.</span> Can Executor Hub integrate with other estate
+                                        planning services or platforms?</h5>
+                                    <p>Yes, Executor Hub is designed to complement other estate planning services and
+                                        platforms. We offer integration options to streamline your overall estate
+                                        planning process.</p>
                                 </div>
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>12.</span> Is there a cost associated with using Executor Hub?</h5>
-                                    <p>Executor Hub offers different subscription plans tailored to meet your needs. We provide transparent pricing information on our website, including any additional fees for premium features or storage capacities.</p>
+                                    <h5 class="s-22 w-700"><span>12.</span> Is there a cost associated with using
+                                        Executor Hub?</h5>
+                                    <p>Executor Hub offers different subscription plans tailored to meet your needs. We
+                                        provide transparent pricing information on our website, including any additional
+                                        fees for premium features or storage capacities.</p>
                                 </div>
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
                                     <h5 class="s-22 w-700"><span>13.</span> How is my data secure?</h5>
-                                    <p>Yes, your data security is of utmost importance to us at Executor Hub. We employ several layers of security measures to protect your information:</p>
+                                    <p>Yes, your data security is of utmost importance to us at Executor Hub. We employ
+                                        several layers of security measures to protect your information:</p>
                                     <ul>
-                                        <li><b>Encryption: </b>All sensitive data, including passwords and stored documents, are encrypted using advanced encryption algorithms. This means that your data is transformed into unreadable ciphertext, which can only be decrypted with a specific key held only by authorized parties.</li>
-                                        <li><b>Password Security: </b> User passwords are hashed before being stored in our database. Hashing is a one-way cryptographic process that converts passwords into a fixed-length string of characters. This ensures that even if our database were compromised, passwords cannot be easily reversed or deciphered.</li>
-                                        <li><b>Secure Authentication:</b> When you log into Executor Hub, we use secure protocols and hashing techniques to verify your identity. This prevents unauthorized access by ensuring that only you or your designated contacts can access your account.</li>
-                                        <li><b>Data Access Controls:</b> We implement strict access controls and authentication mechanisms to limit who can access your stored information. This includes multi-factor authentication options for added security.</li>
+                                        <li><b>Encryption: </b>All sensitive data, including passwords and stored
+                                            documents, are encrypted using advanced encryption algorithms. This means
+                                            that your data is transformed into unreadable ciphertext, which can only be
+                                            decrypted with a specific key held only by authorized parties.</li>
+                                        <li><b>Password Security: </b> User passwords are hashed before being stored in
+                                            our database. Hashing is a one-way cryptographic process that converts
+                                            passwords into a fixed-length string of characters. This ensures that even
+                                            if our database were compromised, passwords cannot be easily reversed or
+                                            deciphered.</li>
+                                        <li><b>Secure Authentication:</b> When you log into Executor Hub, we use secure
+                                            protocols and hashing techniques to verify your identity. This prevents
+                                            unauthorized access by ensuring that only you or your designated contacts
+                                            can access your account.</li>
+                                        <li><b>Data Access Controls:</b> We implement strict access controls and
+                                            authentication mechanisms to limit who can access your stored information.
+                                            This includes multi-factor authentication options for added security.</li>
                                         <li><b></b></li>
                                     </ul>
                                 </div>
@@ -1226,10 +1285,12 @@
                                     <h2 class="s-45 w-700">Getting started with Executor Hub today!</h2>
 
                                     <!-- Text -->
-                                    <p class="p-lg">Register Your Account with a Free Trial and then purchase the account after use.</p>
+                                    <p class="p-lg">Register Your Account with a Free Trial and then purchase the
+                                        account after use.</p>
 
                                     <!-- Button -->
-                                    <a  href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white" data-bs-toggle="modal" data-bs-target="#modal-3">Get started - it's free</a>
+                                    <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white"
+                                        data-bs-toggle="modal" data-bs-target="#modal-3">Get started - it's free</a>
                                 </div>
                             </div>
                             <!-- END BANNER-13 TEXT -->
@@ -1237,7 +1298,8 @@
                             <!-- BANNER-13 IMAGE -->
                             <div class="col-md-5">
                                 <div class="banner-13-img text-center">
-                                    <img class="img-fluid" src="{{asset('assets/frontend/images/img-04.png')}}" alt="banner-image" />
+                                    <img class="img-fluid" src="{{asset('assets/frontend/images/img-04.png')}}"
+                                        alt="banner-image" />
                                 </div>
                             </div>
                         </div>
@@ -1257,7 +1319,8 @@
             <div class="modal-dialog modal-xl modal-dialog-centered">
                 <div class="modal-content">
                     <!-- CLOSE BUTTON -->
-                    <button type="button" class="btn-close ico-10 white-color" data-bs-dismiss="modal" aria-label="Close">
+                    <button type="button" class="btn-close ico-10 white-color" data-bs-dismiss="modal"
+                        aria-label="Close">
                         <span class="flaticon-cancel"></span>
                     </button>
 
@@ -1277,24 +1340,28 @@
                                             <h3 class="s-28 w-700">Get started for Free!</h3>
 
                                             <!-- Text -->
-                                            <p class="color--grey">Aliquam augue suscipit, luctus neque purus ipsum neque dolor primis libero</p>
+                                            <p class="color--grey">Aliquam augue suscipit, luctus neque purus ipsum
+                                                neque dolor primis libero</p>
                                         </div>
 
                                         <!-- FORM -->
                                         <form name="requestForm" class="row request-form">
                                             <!-- Form Input -->
                                             <div class="col-md-12">
-                                                <input type="text" name="name" class="form-control name" placeholder="Enter Your Name*" autocomplete="off" required />
+                                                <input type="text" name="name" class="form-control name"
+                                                    placeholder="Enter Your Name*" autocomplete="off" required />
                                             </div>
 
                                             <!-- Form Input -->
                                             <div class="col-md-12">
-                                                <input type="email" name="email" class="form-control email" placeholder="Enter Your Email*" autocomplete="off" required />
+                                                <input type="email" name="email" class="form-control email"
+                                                    placeholder="Enter Your Email*" autocomplete="off" required />
                                             </div>
 
                                             <!-- Form Button -->
                                             <div class="col-md-12 form-btn">
-                                                <button type="submit" class="btn btn--theme hover--theme submit">Get Started Now</button>
+                                                <button type="submit" class="btn btn--theme hover--theme submit">Get
+                                                    Started Now</button>
                                             </div>
 
                                             <!-- Form Message -->
@@ -1325,7 +1392,8 @@
                             <h2 class="s-52 w-700">Questions? Let's Talk</h2>
 
                             <!-- Text -->
-                            <p class="p-lg">Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know what you are looking for and we’ll get back to you right away</p>
+                            <p class="p-lg">Want to learn more about Executor Hub, get a quote, or speak with an expert?
+                                Let us know what you are looking for and we’ll get back to you right away</p>
                         </div>
                     </div>
                 </div>
@@ -1359,24 +1427,30 @@
                                 <div class="col-md-12">
                                     <p class="p-lg">Your Email Address:</p>
                                     <span>Please carefully check your email address for accuracy</span>
-                                    <input type="text" name="email" class="form-control email" placeholder="Email Address*" />
+                                    <input type="text" name="email" class="form-control email"
+                                        placeholder="Email Address*" />
                                 </div>
 
                                 <div class="col-md-12">
                                     <p class="p-lg">Explain your question in details:</p>
                                     <span>Your Issue/Concern</span>
-                                    <textarea class="form-control message" name="message" rows="6" placeholder="I have a problem with..."></textarea>
+                                    <textarea class="form-control message" name="message" rows="6"
+                                        placeholder="I have a problem with..."></textarea>
                                 </div>
 
                                 <!-- Contact Form Button -->
                                 <div class="col-md-12 mt-15 form-btn text-right">
-                                    <button type="submit" class="btn btn--theme hover--theme submit">Submit Request</button>
+                                    <button type="submit" class="btn btn--theme hover--theme submit">Submit
+                                        Request</button>
                                 </div>
 
                                 <div class="contact-form-notice">
                                     <p class="p-sm">
-                                        We are committed to your privacy. Executor Hub uses the information you provide us to contact you about our relevant content, products, and services. You may unsubscribe from these communications at any
-                                        time. For more information, check out our <a href="privacy.html">Privacy Policy</a>.
+                                        We are committed to your privacy. Executor Hub uses the information you provide
+                                        us to contact you about our relevant content, products, and services. You may
+                                        unsubscribe from these communications at any
+                                        time. For more information, check out our <a href="privacy.html">Privacy
+                                            Policy</a>.
                                     </p>
                                 </div>
 
@@ -1402,14 +1476,16 @@
                     <!-- FOOTER LOGO -->
                     <div class="col-xl-3">
                         <div class="footer-info">
-                            <img class="footer-logo" src="{{asset('assets/frontend/images/logo-skyblue.png')}}" alt="footer-logo" />
-                            <img class="footer-logo-dark" src="{{asset('assets/frontend/images/logo-skyblue-white.png')}}" alt="footer-logo" />
+                            <img class="footer-logo" src="{{asset('assets/frontend/images/logo-skyblue.png')}}"
+                                alt="footer-logo" />
+                            <img class="footer-logo-dark"
+                                src="{{asset('assets/frontend/images/logo-skyblue-white.png')}}" alt="footer-logo" />
                         </div>
                     </div>
 
                     <!-- FOOTER LINKS -->
                     <div class="col-sm-4 col-lg-3 col-xl-2">
-                       
+
                     </div>
                     <!-- END FOOTER LINKS -->
 
@@ -1469,7 +1545,8 @@
                             <!-- Newsletter Form Input -->
                             <form class="newsletter-form">
                                 <div class="input-group r-06">
-                                    <input type="email" class="form-control" placeholder="Email Address" required id="s-email" />
+                                    <input type="email" class="form-control" placeholder="Email Address" required
+                                        id="s-email" />
                                     <span class="input-group-btn ico-15">
                                         <button type="submit" class="btn color--theme">
                                             <span class="flaticon-right-arrow-1"></span>
@@ -1551,24 +1628,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function(e) {
+            contextmenu: function (e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function(e) {
+            mousedown: function (e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function(e) {
+            mouseup: function (e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function() {
-            $(".switch").click(function() {
+        $(function () {
+            $(".switch").click(function () {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1580,11 +1657,82 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {
                 $(".switch").text("Dark Mode");
+            }
+        });
+    </script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        function showCheckout(amount) {
+            // Show the hidden checkout form
+            document.getElementById('checkout-form').style.display = 'block';
+            // Set the amount for the checkout session
+            document.getElementById('amount').value = amount;
+        }
+    </script>
+    <script>
+        // SECRET KEY is sk_test_51K8pJ0SBn09iuv4x9qgJ99iObq56RHWqziRS8cgYainXSlhy2p3PhcqEH4e8LttkpG3hA6iKQUZDLDBk6Jha2ahM00kFDrouyi
+        document.addEventListener("DOMContentLoaded", function () {
+            var stripe = Stripe("pk_test_51K8pJ0SBn09iuv4xdBWLGPvi97osXn58uixzt9nAbaE99FXOpo3OlSpOOVOrUEhIft0q2xZKwYZq8uy9SfTs37bp00AgF5o5oo");
+            var elements = stripe.elements();
+            var style = {
+                base: {
+                    color: "#32325d",
+                    fontFamily: 'Arial, sans-serif',
+                    fontSmoothing: "antialiased",
+                    fontSize: "16px",
+                    "::placeholder": {
+                        color: "#aab7c4"
+                    }
+                },
+                invalid: {
+                    color: "#fa755a",
+                    iconColor: "#fa755a"
+                }
+            };
+            var card = elements.create("card", {
+                style: style
+            });
+            card.mount("#card-element");
+            var form = document.getElementById("checkout-form");
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+                        var errorElement = document.getElementById("error-message");
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            });
+
+            function stripeTokenHandler(token) {
+                var formData = new FormData(form);
+                formData.append("stripeToken", token.id);
+                fetch("../functions/stripe/checkout.php", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            document.getElementById("error-message").textContent = data.error;
+                        } else {
+                            if (data.redirect_to_checkout) {
+                                window.location.href = 'checkout.php';
+                            } else {
+                                alert("Payment successful!");
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        document.getElementById("error-message").textContent = error.message;
+                    });
             }
         });
     </script>
