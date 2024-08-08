@@ -29,6 +29,7 @@ use App\Http\Controllers\Customer\VoiceNotesController;
 use App\Http\Controllers\Customer\MessagesController;
 use App\Http\Controllers\Customer\OpenAIController;
 use App\Http\Controllers\Customer\ReviewController;
+use App\Http\Controllers\Customer\MembershipController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -262,6 +263,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // OPENAI
     Route::get('/openai/view', [OpenAIController::class, 'index'])->name('openai.view');
     Route::post('/openai/chat', [OpenAIController::class, 'chat'])->name('openai.chat');
+
+    // Membership
+    Route::get('/membership/membership', [MembershipController::class, 'index'])->name('membership.view');
+    Route::get('/membership/checkout', [MembershipController::class, 'checkout_page'])->name('checkout.view');
 });
 
 
