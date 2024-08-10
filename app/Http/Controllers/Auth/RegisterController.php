@@ -67,6 +67,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'trial_ends_at' => now()->addDays(7), // Set trial end date to 7 days from now
+            'subscribed_package' => "free_trial", // Set trial end date to 7 days from now
         ])->assignRole('customer');
     }
 }

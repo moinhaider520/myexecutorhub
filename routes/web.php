@@ -76,6 +76,13 @@ use App\Http\Controllers\Others\VoiceNotesController as OthersVoiceNotesControll
 use App\Http\Controllers\Others\MessagesController as OthersMessagesController;
 use App\Http\Controllers\Others\ReviewController as OthersReviewController;
 
+use App\Http\Controllers\StripePaymentController;
+  
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe')->name('stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+});
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');

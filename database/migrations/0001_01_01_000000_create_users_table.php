@@ -32,6 +32,8 @@ return new class extends Migration
             $table->enum('status', ['A', 'N', 'E'])->default('A'); 
             $table->boolean('is_online')->default(0);
             $table->string('last_activity')->nullable();
+            $table->date('trial_ends_at')->nullable(); 
+            $table->string('subscribed_package')->nullable(); // To check if the user is subscribed
             $table->unsignedBigInteger('created_by')->nullable();;
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->rememberToken();

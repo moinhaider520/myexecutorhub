@@ -43,6 +43,12 @@ class LoginController extends Controller
             return redirect()->route('login')->with('status', 'Your account has not been activated yet..');
         }
 
+        // Check if the trial period has ended
+        if (now()->greaterThan($user->trial_ends_at)) {
+            Auth::logout();
+            return redirect()->route('login')->with('status', 'Please subscribe to continue.');
+        }
+
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('executor')) {

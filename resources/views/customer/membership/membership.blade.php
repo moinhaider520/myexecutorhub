@@ -21,7 +21,7 @@
                 <div class="row g-sm-4 g-3">
                   <div class="col-lg-4 col-sm-6 box-col-3">
                     <div class="card text-center pricing-simple">
-                      <div class="card-body" style="height:300px;">
+                      <div class="card-body" style="height:400px;">
                         <h4>Basic</h4>
                         <h5>£8</h5>
                         <h6 class="mb-0">Per Month</h6>
@@ -35,7 +35,7 @@
                   </div>
                   <div class="col-lg-4 col-sm-6 box-col-3">
                     <div class="card text-center pricing-simple">
-                      <div class="card-body" style="height:300px;">
+                      <div class="card-body" style="height:400px;">
                         <h4>Standard</h4>
                         <h5>£20</h5>
                         <h6 class="mb-0">Per Month</h6>
@@ -51,7 +51,7 @@
                   </div>
                   <div class="col-lg-4 col-sm-6 box-col-3">
                     <div class="card text-center pricing-simple">
-                      <div class="card-body" style="height:300px;">
+                      <div class="card-body" style="height: 400px;">
                         <h4>Premium </h4>
                         <h5>£40</h5>
                         <h6 class="mb-0">Per Month</h6>

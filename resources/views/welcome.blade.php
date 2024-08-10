@@ -131,18 +131,18 @@
                                         Us</a></li>
 
                                 @guest
-                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                    </li>
-                                    <li class="nl-simple" aria-haspopup="true">
-                                        <a href="{{route('register')}}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Sign up</a>
-                                    </li>
+                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                </li>
+                                <li class="nl-simple" aria-haspopup="true">
+                                    <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Sign up</a>
+                                </li>
                                 @else
-                                    <li class="nl-simple" aria-haspopup="true">
-                                        <a href="{{route('dashboard')}}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                    </li>
+                                <li class="nl-simple" aria-haspopup="true">
+                                    <a href="{{route('dashboard')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                </li>
                                 @endguest
 
                             </ul>
@@ -470,8 +470,7 @@
                     <div class="row row-cols-1 row-cols-md-3">
                         <!-- STARTER PLAN -->
                         <div class="col">
-                            <div id="pt-1-1"
-                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div id="pt-1-1" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <!-- TABLE HEADER -->
                                 <div class="pricing-table-header">
                                     <h5 class="s-24 w-700">Basic</h5>
@@ -480,15 +479,14 @@
                                         <span class="color--black">8</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
                                         <p class="color--grey">
-                                            <ol>
+                                        <ol>
                                             <li>Assign Executors</li>
-                          <li>Document Uploads</li>
-                          <li>Record Assets & Liabilities</li>
-                                            </ol>
+                                            <li>Document Uploads</li>
+                                            <li>Record Assets & Liabilities</li>
+                                        </ol>
                                         </p>
                                     </div>
-                                    <button class="pt-btn btn r-04 btn--theme hover--theme"
-                                        onclick="showCheckout('8')">Get Started</button>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -498,28 +496,26 @@
                         </div>
                         <!-- BASIC PLAN -->
                         <div class="col">
-                            <div id="pt-1-2"
-                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div id="pt-1-2" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
                                     <h5 class="s-24">Standard</h5>
                                     <div class="price">
                                         <div class="price2" style="display: block;">
                                             <sup class="color--black">£</sup>
                                             <span class="color--black">20.00</span>
-                                            <sup class="validity color--grey">&nbsp;/ mo</sup>
+                                            <sup class="validity color--grey">&nbsp;/mo</sup>
                                         </div>
                                         <p class="color--grey">
                                         <ol>
-                                        <li>Assign Executors</li>
-                          <li>Assign Advisers</li>
-                          <li>Document Uploads</li>
-                          <li>Record Assets & Liabilities</li>
-                          <li>Access to Secure Messaging System</li>
-                                            </ol>
+                                            <li>Assign Executors</li>
+                                            <li>Assign Advisers</li>
+                                            <li>Document Uploads</li>
+                                            <li>Record Assets & Liabilities</li>
+                                            <li>Access to Secure Messaging System</li>
+                                        </ol>
                                         </p>
                                     </div>
-                                    <button class="pt-btn btn r-04 btn--theme hover--theme"
-                                        onclick="showCheckout('20.00')">Get Started</button>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -529,32 +525,30 @@
                         </div>
                         <!-- ADVANCED PLAN -->
                         <div class="col">
-                            <div id="pt-1-3"
-                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div id="pt-1-3" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
                                     <h5 class="s-24">Premium</h5>
                                     <div class="price">
                                         <div class="price2" style="display: block;">
                                             <sup class="color--black">£</sup>
                                             <span class="color--black">40.00</span>
-                                            <sup class="validity color--grey">&nbsp;/ mo</sup>
+                                            <sup class="validity color--grey">&nbsp;/mo</sup>
                                         </div>
                                         <p class="color--grey">
                                         <ol>
-                                        <li>Assign Executors</li>
-                          <li>Assign Advisers</li>
-                          <li>Document Uploads</li>
-                          <li>Record Assets & Liabilities</li>
-                          <li>Access to Secure Messaging System</li>
-                          <li>Record Donations</li>
-                          <li>Record Life Notes</li>
-                          <li>Access to Executor Hub AI</li>
-                          <li>Permissions to Control Access to Advisers & Executors</li>
-                                            </ol>
+                                            <li>Assign Executors</li>
+                                            <li>Assign Advisers</li>
+                                            <li>Document Uploads</li>
+                                            <li>Record Assets & Liabilities</li>
+                                            <li>Access to Secure Messaging System</li>
+                                            <li>Record Donations</li>
+                                            <li>Record Life Notes</li>
+                                            <li>Access to Executor Hub AI</li>
+                                            <li>Permissions to Control Access to Advisers & Executors</li>
+                                        </ol>
                                         </p>
                                     </div>
-                                    <button class="pt-btn btn r-04 btn--theme hover--theme"
-                                        onclick="showCheckout('40.00')">Get Started</button>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -563,38 +557,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div id="checkout-form" style="display: none; margin-top: 20px;">
-                    <form action="/create-checkout-session" method="POST">
-                        <div class="mb-3">
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" class="form-control"
-                                    placeholder="Email Address Used For Registration">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-group">
-                                <label>Name on Card</label>
-                                <input type="text" class="form-control" placeholder="Name on Card">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-group">
-                                <label>Price</label>
-                                <input type="text" id="amount" name="amount" value="" class="form-control">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div id="card-element" class="form-group">
-                                <!-- Stripe Element will be inserted here -->
-                            </div>
-                        </div>
-
-                        <button type="submit" class="pt-btn btn r-04 btn--theme hover--theme">Proceed to
-                            Checkout</button>
-                    </form>
                 </div>
             </div>
             <!-- End container -->
@@ -1628,24 +1590,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function (e) {
+            contextmenu: function(e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function (e) {
+            mousedown: function(e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function (e) {
+            mouseup: function(e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function () {
-            $(".switch").click(function () {
+        $(function() {
+            $(".switch").click(function() {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1657,82 +1619,11 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {
                 $(".switch").text("Dark Mode");
-            }
-        });
-    </script>
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        function showCheckout(amount) {
-            // Show the hidden checkout form
-            document.getElementById('checkout-form').style.display = 'block';
-            // Set the amount for the checkout session
-            document.getElementById('amount').value = amount;
-        }
-    </script>
-    <script>
-        // SECRET KEY is sk_test_51K8pJ0SBn09iuv4x9qgJ99iObq56RHWqziRS8cgYainXSlhy2p3PhcqEH4e8LttkpG3hA6iKQUZDLDBk6Jha2ahM00kFDrouyi
-        document.addEventListener("DOMContentLoaded", function () {
-            var stripe = Stripe("pk_test_51K8pJ0SBn09iuv4xdBWLGPvi97osXn58uixzt9nAbaE99FXOpo3OlSpOOVOrUEhIft0q2xZKwYZq8uy9SfTs37bp00AgF5o5oo");
-            var elements = stripe.elements();
-            var style = {
-                base: {
-                    color: "#32325d",
-                    fontFamily: 'Arial, sans-serif',
-                    fontSmoothing: "antialiased",
-                    fontSize: "16px",
-                    "::placeholder": {
-                        color: "#aab7c4"
-                    }
-                },
-                invalid: {
-                    color: "#fa755a",
-                    iconColor: "#fa755a"
-                }
-            };
-            var card = elements.create("card", {
-                style: style
-            });
-            card.mount("#card-element");
-            var form = document.getElementById("checkout-form");
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
-                stripe.createToken(card).then(function (result) {
-                    if (result.error) {
-                        var errorElement = document.getElementById("error-message");
-                        errorElement.textContent = result.error.message;
-                    } else {
-                        stripeTokenHandler(result.token);
-                    }
-                });
-            });
-
-            function stripeTokenHandler(token) {
-                var formData = new FormData(form);
-                formData.append("stripeToken", token.id);
-                fetch("../functions/stripe/checkout.php", {
-                    method: "POST",
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            document.getElementById("error-message").textContent = data.error;
-                        } else {
-                            if (data.redirect_to_checkout) {
-                                window.location.href = 'checkout.php';
-                            } else {
-                                alert("Payment successful!");
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        document.getElementById("error-message").textContent = error.message;
-                    });
             }
         });
     </script>

@@ -62,7 +62,13 @@
                         </ul>
                     </li>
                     @endrole
+
+                    @php
+                    $package = Auth::user()->subscribed_package; // Retrieve the subscribed package of the logged-in user
+                    @endphp
                     @role('customer')
+                    @if (in_array($package, ['Basic', 'Standard', 'Premium','free_trial']))
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -86,6 +92,9 @@
                             <li><a href="{{ route('customer.other_assets.view') }}">Other Assets</a></li>
                         </ul>
                     </li>
+                    @endif
+
+                    @if (in_array($package, ['Basic', 'Standard', 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -100,6 +109,9 @@
                             <li><a href="{{ route('customer.executors.view') }}">Manage Executors</a></li>
                         </ul>
                     </li>
+                    @endif
+
+                    @if (in_array($package, ['Standard', 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -114,6 +126,9 @@
                             <li><a href="{{ route('customer.messages.view') }}">Manage Inbox</a></li>
                         </ul>
                     </li>
+                    @endif
+
+                    @if (in_array($package, [ 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -142,6 +157,9 @@
                             <li><a href="{{ route('customer.membership.view') }}">Pricing Plans</a></li>
                         </ul>
                     </li>
+                    @endif
+
+                    @if (in_array($package, ['Standard', 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -156,6 +174,9 @@
                             <li><a href="{{ route('customer.advisors.view') }}">Manage Advisers</a></li>
                         </ul>
                     </li>
+                    @endif
+
+                    @if (in_array($package, [ 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -228,6 +249,8 @@
                             <li><a href="{{ route('customer.organs_donation.view') }}">Organ Donations</a></li>
                         </ul>
                     </li>
+                    @endif
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
