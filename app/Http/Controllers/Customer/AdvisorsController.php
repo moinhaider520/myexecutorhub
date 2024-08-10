@@ -46,6 +46,8 @@ class AdvisorsController extends Controller
                 'contact_number' => $request->phone_number,
                 'password' => bcrypt('1234'),
                 'created_by' => Auth::id(),
+                'trial_ends_at' => Auth::user()->trial_ends_at,
+                'subscribed_package' => Auth::user()->subscribed_package,
             ]);
 
             if ($advisor) {

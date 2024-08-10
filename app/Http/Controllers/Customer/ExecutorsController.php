@@ -43,6 +43,8 @@ class ExecutorsController extends Controller
                 'status' => $request->status,
                 'password' => Hash::make($request->password),
                 'created_by' => Auth::id(),
+                'trial_ends_at' => Auth::user()->trial_ends_at,
+                'subscribed_package' => Auth::user()->subscribed_package,
             ]);
 
             $executor->assignRole('executor');

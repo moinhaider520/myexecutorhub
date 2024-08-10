@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -44,7 +45,7 @@ class StripePaymentController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'trial_ends_at' => now()->addDays(7), // Set trial end date to 7 days from now
-                'subscribed_package' => "free_trial", 
+                'subscribed_package' => "free_trial",
             ])->assignRole('customer');
         } else {
             // Check if the email exists in the database
@@ -88,6 +89,13 @@ class StripePaymentController extends Controller
                 'subscribed_package' => $packageName,
                 'trial_ends_at' => now()->addMonth(),
             ]);
+
+            // Update all users created by the same user
+            User::where('created_by', $user->id)
+                ->update([
+                    'subscribed_package' => $packageName,
+                    'trial_ends_at' => now()->addMonth(),
+                ]);
 
             return back()->with('success', 'Payment successful! Your subscription has been updated.');
         } catch (CardException $e) {
