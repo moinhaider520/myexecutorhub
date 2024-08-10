@@ -26,11 +26,11 @@
                         <h5>£8</h5>
                         <h6 class="mb-0">Per Month</h6>
                         <ul>
-                          <li>Assign Executors</li>
-                          <li>Document Uploads</li>
-                          <li>Record Assets & Liabilities</li>
+                        <li>Assign Executors</li>
+                        <li>Record Assets & Liabilities</li>
                         </ul>
-                      </div><a class="btn btn-lg btn-primary btn-block" href="{{ route('customer.checkout.view') }}">Purchase</a>
+                      </div><a class="btn btn-lg btn-primary btn-block"
+                        href="{{ route('customer.checkout.view') }}">Purchase</a>
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6 box-col-3">
@@ -46,7 +46,8 @@
                           <li>Record Assets & Liabilities</li>
                           <li>Access to Secure Messaging System</li>
                         </ul>
-                      </div><a class="btn btn-lg btn-primary btn-block" href="{{ route('customer.checkout.view') }}">Purchase</a>
+                      </div><a class="btn btn-lg btn-primary btn-block"
+                        href="{{ route('customer.checkout.view') }}">Purchase</a>
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6 box-col-3">
@@ -63,10 +64,11 @@
                           <li>Access to Secure Messaging System</li>
                           <li>Record Donations</li>
                           <li>Record Life Notes</li>
+                          <li>Record Wishes</li>
                           <li>Access to Executor Hub AI</li>
-                          <li>Permissions to Control Access to Advisers & Executors</li>
                         </ul>
-                      </div><a class="btn btn-lg btn-primary btn-block" href="{{ route('customer.checkout.view') }}">Purchase</a>
+                      </div><a class="btn btn-lg btn-primary btn-block"
+                        href="{{ route('customer.checkout.view') }}">Purchase</a>
                     </div>
                   </div>
                 </div>

@@ -49,7 +49,7 @@
 
                       <div class="mb-3">
                         <div class="form-group">
-                          <label for="amount">Amount (in USD)</label>
+                          <label for="amount">Amount (in GBP)</label>
                           <input class="form-control" type="number" id="amount" name="amount" value="00.00" required readonly>
                         </div>
                       </div>

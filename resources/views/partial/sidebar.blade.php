@@ -176,7 +176,7 @@
                     </li>
                     @endif
 
-                    @if (in_array($package, [ 'Premium','free_trial']))
+                    @if (in_array($package, [ 'Standard', 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -191,6 +191,8 @@
                             <li><a href="{{ route('customer.documents.view') }}">Manage Documents</a></li>
                         </ul>
                     </li>
+                    @endif
+                    @if (in_array($package, ['Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -205,7 +207,6 @@
                             <li><a href="{{ route('customer.wishes.view') }}">Manage Wishes</a></li>
                         </ul>
                     </li>
-
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -250,7 +251,7 @@
                         </ul>
                     </li>
                     @endif
-
+                    @if (in_array($package, ['Standard', 'Premium','free_trial']))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -265,6 +266,7 @@
                             <li><a href="{{ route('customer.assign_permissions') }}">Assign Permissions</a></li>
                         </ul>
                     </li>
+                    @endif
                     @endrole
 
                     @role('executor')
@@ -333,6 +335,7 @@
                             <li><a href="{{ route('executor.advisors.view') }}">Manage Advisers</a></li>
                         </ul>
                     </li>
+                    
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">

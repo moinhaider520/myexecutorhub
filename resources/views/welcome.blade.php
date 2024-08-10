@@ -136,7 +136,7 @@
                                 </li>
                                 <li class="nl-simple" aria-haspopup="true">
                                     <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Sign up</a>
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
                                 </li>
                                 @else
                                 <li class="nl-simple" aria-haspopup="true">
@@ -481,12 +481,11 @@
                                         <p class="color--grey">
                                         <ol>
                                             <li>Assign Executors</li>
-                                            <li>Document Uploads</li>
                                             <li>Record Assets & Liabilities</li>
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('register') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -515,7 +514,7 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('register') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -543,12 +542,12 @@
                                             <li>Access to Secure Messaging System</li>
                                             <li>Record Donations</li>
                                             <li>Record Life Notes</li>
+                                            <li>Record Wishes</li>
                                             <li>Access to Executor Hub AI</li>
-                                            <li>Permissions to Control Access to Advisers & Executors</li>
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('register') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
