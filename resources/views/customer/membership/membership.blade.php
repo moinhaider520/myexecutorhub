@@ -30,7 +30,7 @@
                         <li>Record Assets & Liabilities</li>
                         </ul>
                       </div><a class="btn btn-lg btn-primary btn-block"
-                        href="{{ route('customer.checkout.view') }}">Purchase</a>
+                        href="{{ route('stripe') }}">Purchase</a>
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6 box-col-3">
@@ -47,7 +47,7 @@
                           <li>Access to Secure Messaging System</li>
                         </ul>
                       </div><a class="btn btn-lg btn-primary btn-block"
-                        href="{{ route('customer.checkout.view') }}">Purchase</a>
+                        href="{{ route('stripe') }}">Purchase</a>
                     </div>
                   </div>
                   <div class="col-lg-4 col-sm-6 box-col-3">
@@ -68,7 +68,7 @@
                           <li>Access to Executor Hub AI</li>
                         </ul>
                       </div><a class="btn btn-lg btn-primary btn-block"
-                        href="{{ route('customer.checkout.view') }}">Purchase</a>
+                        href="{{ route('stripe') }}">Purchase</a>
                     </div>
                   </div>
                 </div>
