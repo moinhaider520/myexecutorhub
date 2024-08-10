@@ -7,7 +7,7 @@ use Stripe;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Stripe\Exception\CardException;
-use App\Models\User; // Assuming you have a User model
+use App\Models\User;
 
 class StripePaymentController extends Controller
 {
@@ -34,7 +34,7 @@ class StripePaymentController extends Controller
             'city' => 'required|string|max:255',
             'postal_code' => 'required|string|max:10',
             'country' => 'required|string|max:255',
-            'plan' => 'required|numeric|min:8', // Ensuring a valid plan is selected
+            'plan' => 'required|numeric|min:8',
         ]);
 
         // Check if the email exists in the database
@@ -57,7 +57,7 @@ class StripePaymentController extends Controller
             // Create the charge with customer details
             Stripe\Charge::create([
                 "amount" => $request->plan * 100, // Amount based on selected plan
-                "currency" => "usd",
+                "currency" => "gbp", 
                 "source" => $request->stripeToken,
                 "description" => "Payment for {$packageName} membership plan.",
                 "receipt_email" => $request->email, // Send receipt to the provided email
