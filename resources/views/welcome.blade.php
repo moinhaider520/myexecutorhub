@@ -485,7 +485,7 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('register') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -514,7 +514,7 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('register') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -547,7 +547,7 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('register') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">

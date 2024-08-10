@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -35,13 +34,25 @@ class StripePaymentController extends Controller
             'postal_code' => 'required|string|max:10',
             'country' => 'required|string|max:255',
             'plan' => 'required|numeric|min:8',
+            'password' => 'required_if:user_type,new|nullable|string|min:8', // Allow nullable for existing users
         ]);
 
-        // Check if the email exists in the database
-        $user = User::where('email', $request->email)->first();
+        if ($request->user_type === 'new') {
+            // Register the user
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password),
+                'trial_ends_at' => now()->addDays(7), // Set trial end date to 7 days from now
+                'subscribed_package' => "free_trial", 
+            ])->assignRole('customer');
+        } else {
+            // Check if the email exists in the database
+            $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            return back()->with('stripe_error', 'Email not found in the system.');
+            if (!$user) {
+                return back()->with('stripe_error', 'Email not found in the system.');
+            }
         }
 
         // Map the plan amount to the package name
@@ -57,7 +68,7 @@ class StripePaymentController extends Controller
             // Create the charge with customer details
             Stripe\Charge::create([
                 "amount" => $request->plan * 100, // Amount based on selected plan
-                "currency" => "gbp", 
+                "currency" => "gbp",
                 "source" => $request->stripeToken,
                 "description" => "Payment for {$packageName} membership plan.",
                 "receipt_email" => $request->email, // Send receipt to the provided email
