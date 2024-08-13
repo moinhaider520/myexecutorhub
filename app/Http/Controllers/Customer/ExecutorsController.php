@@ -29,6 +29,8 @@ class ExecutorsController extends Controller
             'password' => 'required|confirmed',
         ]);
 
+        $couponCode = 'COUPON-' . strtoupper(uniqid());
+
         try {
             DB::beginTransaction();
 
@@ -43,6 +45,7 @@ class ExecutorsController extends Controller
                 'status' => $request->status,
                 'password' => Hash::make($request->password),
                 'created_by' => Auth::id(),
+                'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => Auth::user()->trial_ends_at,
                 'subscribed_package' => Auth::user()->subscribed_package,
             ]);
@@ -74,7 +77,7 @@ class ExecutorsController extends Controller
 
             $executor = User::findOrFail($id);
             $executor->update([
-                'title' => $request->title,                
+                'title' => $request->title,
                 'name' => $request->name,
                 'lastname' => $request->lastname,
                 'how_acting' => $request->how_acting,

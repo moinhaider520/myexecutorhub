@@ -59,44 +59,66 @@
                                 </label>
                             </div>
 
-                            <strong>Name:</strong>
-                            <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
-
-                            <strong>Email:</strong>
-                            <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <strong>Name:</strong>
+                                    <input type="text" class="form-control" name="name" placeholder="Enter Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Email:</strong>
+                                    <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
+                                </div>
+                            </div>
 
                             <!-- Password Field (Initially Hidden) -->
-                            <div id="passwordField" style="display:none;">
+                            <div id="passwordField" style="display:none;" class="mt-3">
                                 <strong>Password:</strong>
                                 <input type="password" class="form-control" name="password" placeholder="Enter Password">
                             </div>
 
-                            <strong>Address Line 1:</strong>
-                            <input type="text" class="form-control" name="address_line1" placeholder="Enter Address Line 1" required>
-
-                            <strong>City:</strong>
-                            <input type="text" class="form-control" name="city" placeholder="Enter City" required>
-
-                            <strong>Postal Code:</strong>
-                            <input type="text" class="form-control" name="postal_code" placeholder="Enter Postal Code" required>
-
-                            <strong>Country:</strong>
-                            <input type="text" class="form-control" name="country" placeholder="Enter Country" required>
-
-                            <!-- Membership Dropdown -->
-                            <div class="mb-3">
-                                <label for="inputState"><strong>Membership</strong></label>
-                                <select class="form-control" id="inputState" name="plan" onchange="updateAmount()">
-                                    <option selected="" disabled>Choose...</option>
-                                    <option value="8">Basic</option>
-                                    <option value="20">Standard</option>
-                                    <option value="40">Premium</option>
-                                </select>
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <strong>Address Line 1:</strong>
+                                    <input type="text" class="form-control" name="address_line1" placeholder="Enter Address Line 1" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>City:</strong>
+                                    <input type="text" class="form-control" name="city" placeholder="Enter City" required>
+                                </div>
                             </div>
 
-                            <!-- Amount Field -->
-                            <strong>Amount:</strong>
-                            <input type="text" class="form-control" name="amount" id="amount" readonly value="10.00">
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <strong>Postal Code:</strong>
+                                    <input type="text" class="form-control" name="postal_code" placeholder="Enter Postal Code" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Country:</strong>
+                                    <input type="text" class="form-control" name="country" placeholder="Enter Country" required>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <strong>Membership:</strong>
+                                    <select class="form-control" id="inputState" name="plan" onchange="updateAmount()">
+                                        <option selected="" disabled>Choose...</option>
+                                        <option value="8">Basic</option>
+                                        <option value="20">Standard</option>
+                                        <option value="40">Premium</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>Amount:</strong>
+                                    <input type="text" class="form-control" name="amount" id="amount" readonly value="10.00">
+                                </div>
+                            </div>
+
+                            <!-- Coupon Code Field -->
+                            <div class="mb-3 mt-3">
+                                <strong>Use Coupon Code (Optional):</strong>
+                                <input type="text" class="form-control" name="coupon_code" placeholder="Enter Coupon Code">
+                            </div>
 
                             <input type='hidden' name='stripeToken' id='stripe-token-id'>
                             <br>

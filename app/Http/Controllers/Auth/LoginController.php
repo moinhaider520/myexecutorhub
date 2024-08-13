@@ -44,9 +44,11 @@ class LoginController extends Controller
         }
 
         // Check if the trial period has ended
-        if (now()->greaterThan($user->trial_ends_at)) {
-            Auth::logout();
-            return redirect()->route('login')->with('status', 'Please subscribe to continue.');
+        if ($user->trial_ends_at) {
+            if (now()->greaterThan($user->trial_ends_at)) {
+                Auth::logout();
+                return redirect()->route('login')->with('status', 'Please subscribe to continue.');
+            }
         }
 
         if ($user->hasRole('admin')) {

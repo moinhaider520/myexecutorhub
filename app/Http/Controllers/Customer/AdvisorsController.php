@@ -35,6 +35,8 @@ class AdvisorsController extends Controller
             'phone_number' => 'required|unique:users,contact_number',
         ]);
 
+        $couponCode = 'COUPON-' . strtoupper(uniqid());
+
         try {
             DB::beginTransaction();
 
@@ -46,6 +48,7 @@ class AdvisorsController extends Controller
                 'contact_number' => $request->phone_number,
                 'password' => bcrypt('1234'),
                 'created_by' => Auth::id(),
+                'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => Auth::user()->trial_ends_at,
                 'subscribed_package' => Auth::user()->subscribed_package,
             ]);

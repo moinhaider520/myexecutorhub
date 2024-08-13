@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController; 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
 use App\Http\Controllers\Admin\CustomerController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\Customer\MessagesController;
 use App\Http\Controllers\Customer\OpenAIController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\MembershipController;
+use App\Http\Controllers\Customer\WithdrawalController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -77,8 +79,8 @@ use App\Http\Controllers\Others\MessagesController as OthersMessagesController;
 use App\Http\Controllers\Others\ReviewController as OthersReviewController;
 
 use App\Http\Controllers\StripePaymentController;
-  
-Route::controller(StripePaymentController::class)->group(function(){
+
+Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
@@ -118,6 +120,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+    // Admin Withdrawal Management
+    Route::get('/withdraw', [AdminWithdrawalController::class, 'index'])->name('withdraw.index');
+    Route::patch('/withdraw/{id}', [AdminWithdrawalController::class, 'update'])->name('withdraw.update');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
@@ -140,6 +146,11 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Customer Wishes
     Route::get('/wishes/view', [WishesController::class, 'view'])->name('wishes.view');
     Route::post('/wishes/update', [WishesController::class, 'update'])->name('wishes.update');
+    Route::get('/withdraw/history', [WithdrawalController::class, 'history'])->name('withdraw.history');
+
+    // Customer Withdraw
+    Route::get('/withdraw', [WithdrawalController::class, 'view'])->name('withdraw.view');
+    Route::post('/withdraw/process', [WithdrawalController::class, 'process'])->name('withdraw.process');
 
     // Customer Guidance
     Route::get('/guidance/view', [GuidanceController::class, 'view'])->name('guidance.view');
@@ -280,7 +291,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 // Executors  Routes
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
 
-    
+
     // Reviews
     Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
     Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
@@ -307,7 +318,6 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
-
 });
 
 // Others Routes

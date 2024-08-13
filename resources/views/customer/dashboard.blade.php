@@ -2,15 +2,29 @@
 
 @section('content')
 <div class="page-body">
+    <!-- Coupon Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <h5>Your Coupon Code:</h5>
+                <p class="lead">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
+            </div>
+            <div class="col text-center">
+                <h5>Your Commission Amount:</h5>
+                <p class="lead">£{{ number_format(auth()->user()->commission_amount, 2) }}</p>
+            </div>
+        </div>
+    </div>
+    <!-- Coupon Section end-->
     <!-- Container-fluid starts-->
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
-                <div class="row"> 
-                    <div class="col-xl-6 col-sm-6"> 
+                <div class="row">
+                    <div class="col-xl-6 col-sm-6">
                         <div class="card">
                             <div class="card-body student">
-                                <div class="d-flex gap-2 align-items-end"> 
+                                <div class="d-flex gap-2 align-items-end">
                                     <div class="flex-grow-1">
                                         <h2>£{{ number_format($totalBankBalance, 2) }}</h2>
                                         <p class="mb-0 text-truncate"> Total Assets Networth</p>
@@ -24,10 +38,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-sm-6"> 
+                    <div class="col-xl-6 col-sm-6">
                         <div class="card">
                             <div class="card-body student-2">
-                                <div class="d-flex gap-2 align-items-end"> 
+                                <div class="d-flex gap-2 align-items-end">
                                     <div class="flex-grow-1">
                                         <h2>£{{ number_format($totalDebt, 2) }}</h2>
                                         <p class="mb-0 text-truncate"> Liabilities Net Worth</p>
@@ -41,10 +55,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-sm-6"> 
+                    <div class="col-xl-6 col-sm-6">
                         <div class="card">
                             <div class="card-body student-3">
-                                <div class="d-flex gap-2 align-items-end"> 
+                                <div class="d-flex gap-2 align-items-end">
                                     <div class="flex-grow-1">
                                         <h2>{{ $totalDocuments }}</h2>
                                         <p class="mb-0 text-truncate"> Documents Uploaded</p>
@@ -58,10 +72,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-sm-6"> 
+                    <div class="col-xl-6 col-sm-6">
                         <div class="card">
                             <div class="card-body student-4">
-                                <div class="d-flex gap-2 align-items-end"> 
+                                <div class="d-flex gap-2 align-items-end">
                                     <div class="flex-grow-1">
                                         <h2>{{ $totalExecutors }}</h2>
                                         <p class="mb-0 text-truncate"> Executors </p>

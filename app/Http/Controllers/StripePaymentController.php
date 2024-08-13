@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Stripe\Exception\CardException;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class StripePaymentController extends Controller
 {
@@ -25,7 +26,7 @@ class StripePaymentController extends Controller
     public function stripePost(Request $request): RedirectResponse
     {
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
+    
         // Validate the required fields
         $request->validate([
             'name' => 'required|string|max:255',
@@ -35,10 +36,32 @@ class StripePaymentController extends Controller
             'postal_code' => 'required|string|max:10',
             'country' => 'required|string|max:255',
             'plan' => 'required|numeric|min:8',
-            'password' => 'required_if:user_type,new|nullable|string|min:8', // Allow nullable for existing users
+            'password' => 'required_if:user_type,new|nullable|string|min:8',
+            'coupon_code' => 'nullable|string', // Optional coupon code
         ]);
-
+    
+        $user = null;
+    
+        // Check if the user is an existing user
+        if ($request->user_type === 'existing') {
+            // Check if the email exists in the database
+            $user = User::where('email', $request->email)->first();
+    
+            if (!$user) {
+                return back()->with('stripe_error', 'Email not found in the system.');
+            }
+    
+            // Check if the coupon code has been used by this user
+            if ($request->filled('coupon_code') && $user->coupon_code === $request->input('coupon_code')) {
+                return back()->with('stripe_error', 'You cannot use your own coupon code.');
+            }
+        }
+    
+        // Handle new user registration
         if ($request->user_type === 'new') {
+            // Generate a unique coupon code
+            $couponCode = 'COUPON-' . strtoupper(uniqid());
+    
             // Register the user
             $user = User::create([
                 'name' => $request->name,
@@ -46,33 +69,42 @@ class StripePaymentController extends Controller
                 'password' => bcrypt($request->password),
                 'trial_ends_at' => now()->addDays(7), // Set trial end date to 7 days from now
                 'subscribed_package' => "free_trial",
+                'coupon_code' => $couponCode, // Store the generated coupon code
             ])->assignRole('customer');
-        } else {
-            // Check if the email exists in the database
-            $user = User::where('email', $request->email)->first();
-
-            if (!$user) {
-                return back()->with('stripe_error', 'Email not found in the system.');
+        }
+    
+        // Check if a valid coupon code is provided
+        if ($request->filled('coupon_code')) {
+            $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
+    
+            if ($couponOwner) {
+                // Calculate the commission amount (20% of the plan amount)
+                $planAmount = $request->input('plan');
+                $commissionAmount = ($planAmount * 0.20);
+    
+                // Update the commission amount for the coupon code owner
+                $couponOwner->increment('commission_amount', $commissionAmount);
+            } else {
+                return back()->with('stripe_error', 'Invalid Coupon.');
             }
         }
-
+    
         // Map the plan amount to the package name
         $packageNames = [
             '8' => 'Basic',
             '20' => 'Standard',
             '40' => 'Premium'
         ];
-
         $packageName = $packageNames[$request->plan] ?? 'Unknown Package';
-
+    
         try {
-            // Create the charge with customer details
+            // Process the payment
             Stripe\Charge::create([
-                "amount" => $request->plan * 100, // Amount based on selected plan
+                "amount" => $request->plan * 100, // Amount in cents
                 "currency" => "gbp",
                 "source" => $request->stripeToken,
                 "description" => "Payment for {$packageName} membership plan.",
-                "receipt_email" => $request->email, // Send receipt to the provided email
+                "receipt_email" => $request->email,
                 "shipping" => [
                     "name" => $request->name,
                     "address" => [
@@ -83,24 +115,25 @@ class StripePaymentController extends Controller
                     ],
                 ],
             ]);
-
-            // Update the user record with the subscribed package and trial end date
+    
+            // Update the user's subscription details
             $user->update([
                 'subscribed_package' => $packageName,
                 'trial_ends_at' => now()->addMonth(),
             ]);
-
-            // Update all users created by the same user
+    
+            // Update all users created by this user
             User::where('created_by', $user->id)
                 ->update([
                     'subscribed_package' => $packageName,
                     'trial_ends_at' => now()->addMonth(),
                 ]);
-
+    
             return back()->with('success', 'Payment successful! Your subscription has been updated.');
         } catch (CardException $e) {
-            // Handle the error and pass it to the view
+            // Handle Stripe errors
             return back()->with('stripe_error', $e->getMessage());
         }
     }
+    
 }

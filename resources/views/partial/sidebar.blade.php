@@ -61,6 +61,21 @@
                             <li><a href="{{ route('admin.customers.index') }}">View All</a></li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Withdrawals</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('admin.withdraw.index') }}">Manage Withdrawals</a></li>
+                        </ul>
+                    </li>
                     @endrole
 
                     @php
@@ -256,6 +271,22 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Withdraw </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.withdraw.view') }}">Withdrawal</a></li>
+                            <li><a href="{{ route('customer.withdraw.history') }}">Withdrawal History</a></li>
+
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -335,7 +366,7 @@
                             <li><a href="{{ route('executor.advisors.view') }}">Manage Advisers</a></li>
                         </ul>
                     </li>
-                    
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
