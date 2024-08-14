@@ -57,6 +57,8 @@ class LoginController extends Controller
             return redirect()->route('executor.dashboard');
         } elseif ($user->hasRole('customer')) {
             return redirect()->route('customer.dashboard');
+        } elseif (Auth::user()->hasRole('partner')) {
+            return redirect()->route('partner.dashboard');
         } else {
             return redirect()->route('dashboard');
         }

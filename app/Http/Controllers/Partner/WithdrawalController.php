@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +14,7 @@ class WithdrawalController extends Controller
      */
     public function view()
     {
-        return view('customer.withdraw.withdraw');
+        return view('partner.withdraw.withdraw');
     }
 
     /**
@@ -59,6 +59,6 @@ class WithdrawalController extends Controller
         // Fetch all withdrawals for the logged-in user
         $withdrawals = Withdrawal::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
 
-        return view('customer.withdraw.history', compact('withdrawals'));
+        return view('partner.withdraw.history', compact('withdrawals'));
     }
 }

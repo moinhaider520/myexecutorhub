@@ -15,7 +15,7 @@
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
                   <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                    <form action="{{ route('customer.withdraw.process') }}" method="POST">
+                    <form action="{{ route('executor.withdraw.process') }}" method="POST">
                       @csrf
                       <div class="form-group">
                         <label for="amount">Enter Amount</label>

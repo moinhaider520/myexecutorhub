@@ -26,7 +26,7 @@ class StripePaymentController extends Controller
     public function stripePost(Request $request): RedirectResponse
     {
         Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-    
+
         // Validate the required fields
         $request->validate([
             'name' => 'required|string|max:255',
@@ -39,29 +39,29 @@ class StripePaymentController extends Controller
             'password' => 'required_if:user_type,new|nullable|string|min:8',
             'coupon_code' => 'nullable|string', // Optional coupon code
         ]);
-    
+
         $user = null;
-    
+
         // Check if the user is an existing user
         if ($request->user_type === 'existing') {
             // Check if the email exists in the database
             $user = User::where('email', $request->email)->first();
-    
+
             if (!$user) {
                 return back()->with('stripe_error', 'Email not found in the system.');
             }
-    
+
             // Check if the coupon code has been used by this user
             if ($request->filled('coupon_code') && $user->coupon_code === $request->input('coupon_code')) {
                 return back()->with('stripe_error', 'You cannot use your own coupon code.');
             }
         }
-    
+
         // Handle new user registration
         if ($request->user_type === 'new') {
             // Generate a unique coupon code
             $couponCode = 'COUPON-' . strtoupper(uniqid());
-    
+
             // Register the user
             $user = User::create([
                 'name' => $request->name,
@@ -72,23 +72,31 @@ class StripePaymentController extends Controller
                 'coupon_code' => $couponCode, // Store the generated coupon code
             ])->assignRole('customer');
         }
-    
+
         // Check if a valid coupon code is provided
         if ($request->filled('coupon_code')) {
             $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
-    
+
             if ($couponOwner) {
+                // Check if the coupon has already been used
+                if ($couponOwner->coupon_used) {
+                    return back()->with('stripe_error', 'Coupon has already been used.');
+                }
                 // Calculate the commission amount (20% of the plan amount)
-                $planAmount = $request->input('plan');
-                $commissionAmount = ($planAmount * 0.20);
-    
+                // $planAmount = $request->input('plan');
+                // $commissionAmount = ($planAmount * 0.20);
+                $commissionAmount = '5'; // Or calculate based on the plan amount
+
                 // Update the commission amount for the coupon code owner
                 $couponOwner->increment('commission_amount', $commissionAmount);
+
+                // Mark the coupon as used
+                $couponOwner->update(['coupon_used' => true]);
             } else {
                 return back()->with('stripe_error', 'Invalid Coupon.');
             }
         }
-    
+
         // Map the plan amount to the package name
         $packageNames = [
             '8' => 'Basic',
@@ -96,7 +104,7 @@ class StripePaymentController extends Controller
             '40' => 'Premium'
         ];
         $packageName = $packageNames[$request->plan] ?? 'Unknown Package';
-    
+
         try {
             // Process the payment
             Stripe\Charge::create([
@@ -115,25 +123,24 @@ class StripePaymentController extends Controller
                     ],
                 ],
             ]);
-    
+
             // Update the user's subscription details
             $user->update([
                 'subscribed_package' => $packageName,
                 'trial_ends_at' => now()->addMonth(),
             ]);
-    
+
             // Update all users created by this user
             User::where('created_by', $user->id)
                 ->update([
                     'subscribed_package' => $packageName,
                     'trial_ends_at' => now()->addMonth(),
                 ]);
-    
+
             return back()->with('success', 'Payment successful! Your subscription has been updated.');
         } catch (CardException $e) {
             // Handle Stripe errors
             return back()->with('stripe_error', $e->getMessage());
         }
     }
-    
 }
