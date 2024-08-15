@@ -42,7 +42,7 @@ class GuidanceController extends Controller
             );
 
             DB::commit();
-            return redirect()->route('guidance.view')->with('success', 'Guidance updated successfully.');
+            return redirect()->route('customer.guidance.view')->with('success', 'Guidance updated successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

@@ -13,11 +13,6 @@
                         <form method="GET" action="{{ route('customer.assign_permissions_form') }}">
                             <div class="form theme-form">
                                 <div class="row">
-                                    @if(session('success'))
-                                    <div class="alert alert-success mt-3" role="alert">
-                                        {{ session('success') }}
-                                    </div>
-                                    @endif
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <h5 class="mb-3">Select Role</h5>

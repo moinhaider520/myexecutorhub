@@ -105,7 +105,7 @@ class ExecutorsController extends Controller
             $executor->delete();
 
             DB::commit();
-            return redirect()->route('customer.executor.view')->with('success', 'Executor deleted successfully.');
+            return redirect()->route('customer.executors.view')->with('success', 'Executor deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

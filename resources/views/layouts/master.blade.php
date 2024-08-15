@@ -9,6 +9,8 @@
 <div class="tap-top"><i data-feather="chevrons-up"></i></div>
 <div class="page-wrapper compact-wrapper" id="pageWrapper">
 @include('partial.nav')
+@include('partial.toastr')
+
 <div class="page-body-wrapper">
 @include('partial.sidebar')
 @yield('content')

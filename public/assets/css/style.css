@@ -6569,6 +6569,9 @@ strong~p {
 .toast-danger {
     color: #E44141 !important;
 }
+.toast-message{
+    color: #FFFFFF !important; /* white color */
+}
 
 .list-group-horizontal-sm .list-group-item.border-left-danger,
 .list-group-horizontal-md .list-group-item.border-left-danger,

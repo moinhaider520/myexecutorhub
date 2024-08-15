@@ -682,6 +682,8 @@
                     @endif
 
                     @canany(['view bank accounts', 'view investment accounts', 'view properties', 'view personal chattels', 'view business interests', 'view insurance policies', 'view debt and liabilities', 'view digital assets', 'view intellectual properties', 'view other assets'])
+
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -723,6 +725,21 @@
                             @can('view other assets')
                             <li><a href="{{ route('other_assets.view') }}">Other Assets</a></li>
                             @endcan
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Withdraw </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('withdraw.view') }}">Withdrawal</a></li>
+                            <li><a href="{{ route('withdraw.history') }}">Withdrawal History</a></li>
                         </ul>
                     </li>
                     @endcan
@@ -849,21 +866,6 @@
                     </li>
                     @endcan
 
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg>
-                            <span>Withdraw </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('withdraw.view') }}">Withdrawal</a></li>
-                            <li><a href="{{ route('withdraw.history') }}">Withdrawal History</a></li>
-                        </ul>
-                    </li>
 
                 </ul>
             </div>

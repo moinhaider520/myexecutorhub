@@ -26,12 +26,7 @@
                       </div>
                       <button type="submit" class="btn btn-primary mt-4" style="float:right;">Submit Withdrawal</button>
                     </form>
-                    @if (session('error'))
-                      <div class="alert alert-danger mt-4">{{ session('error') }}</div>
-                    @endif
-                    @if (session('success'))
-                      <div class="alert alert-success mt-4">{{ session('success') }}</div>
-                    @endif
+                  
                   </div>
                 </div>
               </div>
