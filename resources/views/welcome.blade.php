@@ -140,7 +140,7 @@
                                 </li>
                                 @else
                                 <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('dashboard')}}"
+                                    <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' :  (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
                                         class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
                                 </li>
                                 @endguest

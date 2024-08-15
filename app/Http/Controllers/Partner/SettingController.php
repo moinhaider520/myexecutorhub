@@ -15,7 +15,7 @@ class SettingController extends Controller
     use ImageUpload;
 
     /**
-     * Show the form for editing the customer profile.
+     * Show the form for editing the Partner profile.
      *
      * @return \Illuminate\View\View
      */
@@ -26,7 +26,7 @@ class SettingController extends Controller
     }
 
     /**
-     * Update the customer profile.
+     * Update the Partner profile.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -90,7 +90,7 @@ class SettingController extends Controller
     }
 
     /**
-     * Update the customer profile image.
+     * Update the Partner profile image.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse

@@ -106,6 +106,7 @@ use App\Http\Controllers\Others\OrgansDonationController as OthersOrgansDonation
 use App\Http\Controllers\Others\VoiceNotesController as OthersVoiceNotesController;
 use App\Http\Controllers\Others\MessagesController as OthersMessagesController;
 use App\Http\Controllers\Others\ReviewController as OthersReviewController;
+use App\Http\Controllers\Others\WithdrawalController as OthersWithdrawalController;
 
 use App\Http\Controllers\StripePaymentController;
 
@@ -605,6 +606,11 @@ Route::middleware(['auth'])->group(function () {
     // message
     Route::get('/messages/view', [OthersMessagesController::class, 'index'])->name('messages.view');
 
+    // Customer Withdraw
+    Route::get('/withdraw', [OthersWithdrawalController::class, 'view'])->name('withdraw.view');
+    Route::post('/withdraw/process', [OthersWithdrawalController::class, 'process'])->name('withdraw.process');
+    Route::get('/withdraw/history', [OthersWithdrawalController::class, 'history'])->name('withdraw.history');
+    
     // Reviews
     Route::post('reviews', [OthersReviewController::class, 'store'])->name('reviews.store');
     Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');

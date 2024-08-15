@@ -2,6 +2,20 @@
 
 @section('content')
 <div class="page-body">
+  <!-- Coupon Section -->
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <h5>Your Coupon Code:</h5>
+        <p class="lead">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
+      </div>
+      <div class="col text-center">
+        <h5>Your Commission Amount:</h5>
+        <p class="lead">£{{ number_format(auth()->user()->commission_amount, 2) }}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Coupon Section end-->
   <!-- Container-fluid starts-->
   <div class="container-fluid default-dashboard">
     <div class="row widget-grid">

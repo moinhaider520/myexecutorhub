@@ -29,6 +29,14 @@ class Messages extends Component
                     $query->whereIn('name', $roles);
                 })
                 ->get();
+        } elseif (Auth::user()->hasRole('partner')) {
+            $user = Auth::user();
+            $users = User::with('roles')
+                ->where('created_by', $user->id)
+                ->whereHas('roles', function ($query) use ($roles) {
+                    $query->whereIn('name', $roles);
+                })
+                ->get();
         } else if (Auth::user()->hasAnyRole($roles)) {
             // For users with any of the specified roles
             $user = Auth::user();

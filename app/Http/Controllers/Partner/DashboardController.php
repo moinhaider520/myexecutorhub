@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     /**
-     * Display the customer dashboard.
+     * Display the Partner dashboard.
      *
      * @return \Illuminate\View\View
      */

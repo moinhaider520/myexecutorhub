@@ -145,7 +145,8 @@ class StripePaymentController extends Controller
                     'trial_ends_at' => now()->addMonth(),
                 ]);
 
-            return back()->with('success', 'Payment successful! Your subscription has been updated.');
+            // Redirect to login page after successful payment
+            return redirect()->route('login')->with('success', 'Payment successful! Your subscription has been updated.');
         } catch (CardException $e) {
             // Handle Stripe errors
             return back()->with('stripe_error', $e->getMessage());

@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/dashboard';
+    protected $redirectTo = '/customer/dashboard'; 
 
     /**
      * Create a new controller instance.
@@ -63,7 +63,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-
         $couponCode = 'COUPON-' . strtoupper(uniqid());
 
         return User::create([
