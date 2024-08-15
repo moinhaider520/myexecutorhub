@@ -46,7 +46,7 @@
                           <td>{{ $debtLiability->amount_outstanding }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDebtLiabilityModal" data-id="{{ $debtLiability->id }}" data-debt_type="{{ $debtLiability->debt_type }}" data-reference_number="{{ $debtLiability->reference_number }}" data-loan_provider="{{ $debtLiability->loan_provider }}" data-contact_details="{{ $debtLiability->contact_details }}" data-amount_outstanding="{{ $debtLiability->amount_outstanding }}">Edit</button>
-                            <form action="{{ route('customer.debt_and_liabilities.destroy', $debtLiability->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.debt_and_liabilities.destroy', $debtLiability->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -202,7 +202,7 @@
     var formData = $('#addDebtLiabilityForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '{{ route("customer.debt_and_liabilities.store") }}',
+      url: '{{ route("partner.debt_and_liabilities.store") }}',
       data: formData,
       success: function(response) {
         // Reset form fields if needed
@@ -251,7 +251,7 @@
     var formData = $('#editDebtLiabilityForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '/customer/debt_and_liabilities/update/' + id,
+      url: '/partner/debt_and_liabilities/update/' + id,
       data: formData,
       success: function(response) {
         // Reset form fields if needed
@@ -296,7 +296,7 @@
       if (customDebtType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.debt_and_liabilities.save_custom_type') }}",
+          url: "{{ route('partner.debt_and_liabilities.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_debt_and_liabilities_type: customDebtType
@@ -324,7 +324,7 @@
       if (customDebtType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.debt_and_liabilities.save_custom_type') }}",
+          url: "{{ route('partner.debt_and_liabilities.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_debt_and_liabilities_type: customDebtType

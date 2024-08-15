@@ -44,7 +44,7 @@
                           <td>{{ $investmentAccount->balance }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editInvestmentAccountModal" data-id="{{ $investmentAccount->id }}" data-investment_type="{{ $investmentAccount->investment_type }}" data-company_name="{{ $investmentAccount->company_name }}" data-account_number="{{ $investmentAccount->account_number }}" data-balance="{{ $investmentAccount->balance }}">Edit</button>
-                            <form action="{{ route('customer.investment_accounts.destroy', $investmentAccount->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.investment_accounts.destroy', $investmentAccount->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -188,7 +188,7 @@
     $('#saveInvestmentAccount').on('click', function() {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.investment_accounts.store') }}",
+        url: "{{ route('partner.investment_accounts.store') }}",
         data: $('#addInvestmentAccountForm').serialize(),
         success: function(response) {
           location.reload();
@@ -221,7 +221,7 @@
       var id = $('#editInvestmentAccountId').val();
       $.ajax({
         type: 'POST',
-        url: '/customer/investment_accounts/update/' + id,
+        url: '/partner/investment_accounts/update/' + id,
         data: $('#editInvestmentAccountForm').serialize(),
         success: function(response) {
           location.reload();
@@ -257,7 +257,7 @@
       if (customInvestmentType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.investment_accounts.save_custom_type') }}",
+          url: "{{ route('partner.investment_accounts.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_investment_type: customInvestmentType
@@ -285,7 +285,7 @@
       if (customInvestmentType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.investment_accounts.save_custom_type') }}",
+          url: "{{ route('partner.investment_accounts.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_investment_type: customInvestmentType

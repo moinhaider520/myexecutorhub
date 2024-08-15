@@ -51,7 +51,7 @@
                           <td>{{ $executor->status }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-how_acting="{{ $executor->how_acting }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
-                            <form action="{{ route('customer.executors.destroy', $executor->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.executors.destroy', $executor->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -279,7 +279,7 @@
       clearAddErrors(); // Clear previous error messages
 
       $.ajax({
-        url: "{{ route('customer.executors.store') }}",
+        url: "{{ route('partner.executors.store') }}",
         method: 'POST',
         data: $(this).serialize(),
         success: function(response) {
@@ -335,7 +335,7 @@
       clearEditErrors(); // Clear previous error messages
 
       $.ajax({
-        url: "/customer/executors/update/" + id,
+        url: "/partner/executors/update/" + id,
         method: 'POST',
         data: $(this).serialize(),
         success: function(response) {

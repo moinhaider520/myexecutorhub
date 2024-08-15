@@ -48,7 +48,7 @@
                           <td>{{ $digitalAsset->value }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDigitalAssetModal" data-id="{{ $digitalAsset->id }}" data-asset_type="{{ $digitalAsset->asset_type }}" data-asset_name="{{ $digitalAsset->asset_name }}" data-username="{{ $digitalAsset->username }}" data-password="{{ $digitalAsset->password }}" data-email_used="{{ $digitalAsset->email_used }}" data-value="{{ $digitalAsset->value }}">Edit</button>
-                            <form action="{{ route('customer.digital_assets.destroy', $digitalAsset->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.digital_assets.destroy', $digitalAsset->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -218,7 +218,7 @@
     var formData = $('#addDigitalAssetForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '{{ route("customer.digital_assets.store") }}',
+      url: '{{ route("partner.digital_assets.store") }}',
       data: formData,
       success: function (response) {
         // Reset form fields
@@ -270,7 +270,7 @@
     var formData = $('#editDigitalAssetForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '/customer/digital_assets/update/' + id,
+      url: '/partner/digital_assets/update/' + id,
       data: formData,
       success: function (response) {
         // Reset form fields
@@ -315,7 +315,7 @@
       if (customAssetType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.digital_assets.save_custom_type') }}",
+          url: "{{ route('partner.digital_assets.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_digital_assets_type: customAssetType
@@ -343,7 +343,7 @@
       if (customAssetType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.digital_assets.save_custom_type') }}",
+          url: "{{ route('partner.digital_assets.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_digital_assets_type: customAssetType

@@ -40,7 +40,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form id="voiceNoteForm" action="{{ route('customer.voice_notes.store') }}" method="POST" enctype="multipart/form-data">
+      <form id="voiceNoteForm" action="{{ route('partner.voice_notes.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="modal-body">
           <div class="form-group">
@@ -160,7 +160,7 @@
         info.jsEvent.preventDefault();
         var event = info.event.extendedProps;
         document.getElementById('modal-audio-play').src = '/storage/' + event.filePath;
-        document.getElementById('delete-voice-note-form').action = `{{ route('customer.voice_notes.destroy', '') }}/${event.id}`;
+        document.getElementById('delete-voice-note-form').action = `{{ route('partner.voice_notes.destroy', '') }}/${event.id}`;
         $('#playVoiceNoteModal').modal('show');
       }
 

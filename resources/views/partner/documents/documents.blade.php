@@ -51,7 +51,7 @@
                   data-target="#editDocumentModal" data-id="{{ $document->id }}"
                   data-document_type="{{ $document->document_type }}"
                   data-description="{{ $document->description }}">Edit</button>
-                <form action="{{ route('customer.documents.destroy', $document->id) }}" method="POST"
+                <form action="{{ route('partner.documents.destroy', $document->id) }}" method="POST"
                   style="display:inline;">
                   @csrf
                   @method('DELETE')
@@ -229,7 +229,7 @@
         <h5 class="modal-title" id="AddReviewModalLabel">Add Review</h5>
       </div>
       <div class="modal-body">
-        <form id="addReviewForm" action="{{ route('customer.reviews.store') }}" method="POST">
+        <form id="addReviewForm" action="{{ route('partner.reviews.store') }}" method="POST">
           @csrf
           <input type="hidden" name="document_id" id="reviewDocumentId">
 
@@ -280,7 +280,7 @@
       var formData = new FormData(this);
 
       $.ajax({
-        url: "{{ route('customer.documents.store') }}",
+        url: "{{ route('partner.documents.store') }}",
         type: "POST",
         data: formData,
         contentType: false,
@@ -407,7 +407,7 @@
     if (customDocumentType) {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.documents.save_custom_type') }}",
+        url: "{{ route('partner.documents.save_custom_type') }}",
         data: {
           _token: "{{ csrf_token() }}",
           custom_document_type: customDocumentType
@@ -435,7 +435,7 @@
     if (customDocumentType) {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.documents.save_custom_type') }}",
+        url: "{{ route('partner.documents.save_custom_type') }}",
         data: {
           _token: "{{ csrf_token() }}",
           custom_document_type: customDocumentType
@@ -463,7 +463,7 @@
     $('#reviewsContainer').html(''); // Clear previous reviews
 
     $.ajax({
-      url: "{{ route('customer.reviews.show', '') }}/" + documentId,
+      url: "{{ route('partner.reviews.show', '') }}/" + documentId,
       type: "GET",
       success: function (response) {
         let reviews = response.reviews;

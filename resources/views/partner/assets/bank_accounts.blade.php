@@ -55,7 +55,7 @@
                   data-account_name="{{ $bankAccount->account_name }}"
                   data-account_number="{{ $bankAccount->account_number }}"
                   data-balance="{{ $bankAccount->balance }}">Edit</button>
-                <form action="{{ route('customer.bank_accounts.destroy', $bankAccount->id) }}" method="POST"
+                <form action="{{ route('partner.bank_accounts.destroy', $bankAccount->id) }}" method="POST"
                   style="display:inline;">
                   @csrf
                   @method('DELETE')
@@ -229,7 +229,7 @@
     $('#saveBankAccount').on('click', function () {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.bank_accounts.store') }}",
+        url: "{{ route('partner.bank_accounts.store') }}",
         data: $('#addBankAccountForm').serialize(),
         success: function (response) {
           location.reload();
@@ -268,7 +268,7 @@
       var id = $('#editBankAccountId').val();
       $.ajax({
         type: 'POST',
-        url: '/customer/bank_accounts/update/' + id,
+        url: '/partner/bank_accounts/update/' + id,
         data: $('#editBankAccountForm').serialize(),
         success: function (response) {
           location.reload();
@@ -306,7 +306,7 @@
       if (customBankType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.bank_accounts.save_custom_type') }}",
+          url: "{{ route('partner.bank_accounts.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_bank_type: customBankType
@@ -335,7 +335,7 @@
       if (customBankType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.bank_accounts.save_custom_type') }}",
+          url: "{{ route('partner.bank_accounts.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_bank_type: customBankType

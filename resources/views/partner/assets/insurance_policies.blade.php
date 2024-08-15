@@ -49,7 +49,7 @@
                           <td>{{ $insurancePolicy->policy_end_date }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editInsurancePolicyModal" data-id="{{ $insurancePolicy->id }}" data-insurance_type="{{ $insurancePolicy->insurance_type }}" data-provider_name="{{ $insurancePolicy->provider_name }}" data-policy_number="{{ $insurancePolicy->policy_number }}" data-sum_insured="{{ $insurancePolicy->sum_insured }}" data-contact_details="{{ $insurancePolicy->contact_details }}" data-beneficiaries="{{ $insurancePolicy->beneficiaries }}" data-policy_end_date="{{ $insurancePolicy->policy_end_date }}">Edit</button>
-                            <form action="{{ route('customer.insurance_policies.destroy', $insurancePolicy->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.insurance_policies.destroy', $insurancePolicy->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -231,7 +231,7 @@
     var formData = $('#addInsurancePolicyForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '{{ route("customer.insurance_policies.store") }}',
+      url: '{{ route("partner.insurance_policies.store") }}',
       data: formData,
       success: function(response) {
         // Reset form fields if needed
@@ -286,7 +286,7 @@
     var formData = $('#editInsurancePolicyForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '{{ route("customer.insurance_policies.update", "") }}/' + id,
+      url: '{{ route("partner.insurance_policies.update", "") }}/' + id,
       data: formData,
       success: function(response) {
         // Reset form fields if needed
@@ -332,7 +332,7 @@
       if (customInsuranceType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.insurance_policies.save_custom_type') }}",
+          url: "{{ route('partner.insurance_policies.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_insurance_type: customInsuranceType
@@ -360,7 +360,7 @@
       if (customInsuranceType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.insurance_policies.save_custom_type') }}",
+          url: "{{ route('partner.insurance_policies.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_insurance_type: customInsuranceType

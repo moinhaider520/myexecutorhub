@@ -52,7 +52,7 @@
                           <td>{{ $businessInterest->plan_for_shares }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editBusinessInterestModal" data-id="{{ $businessInterest->id }}" data-business_type="{{ $businessInterest->business_type }}" data-company_number="{{ $businessInterest->company_number }}" data-business_name="{{ $businessInterest->business_name }}" data-shares="{{ $businessInterest->shares }}" data-business_value="{{ $businessInterest->business_value }}" data-share_value="{{ $businessInterest->share_value }}" data-contact="{{ $businessInterest->contact }}" data-plan_for_shares="{{ $businessInterest->plan_for_shares }}">Edit</button>
-                            <form action="{{ route('customer.business_interests.destroy', $businessInterest->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.business_interests.destroy', $businessInterest->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -237,7 +237,7 @@
     var formData = $('#addBusinessInterestForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '{{ route("customer.business_interests.store") }}',
+      url: '{{ route("partner.business_interests.store") }}',
       data: formData,
       success: function (response) {
         // Reset form fields if needed
@@ -294,7 +294,7 @@
     var formData = $('#editBusinessInterestForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '/customer/business_interests/update/' + id,
+      url: '/partner/business_interests/update/' + id,
       data: formData,
       success: function (response) {
         // Reset form fields if needed
@@ -342,7 +342,7 @@
       if (customBusinessType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.business_interests.save_custom_type') }}",
+          url: "{{ route('partner.business_interests.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_business_type: customBusinessType
@@ -370,7 +370,7 @@
       if (customBusinessType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.business_interests.save_custom_type') }}",
+          url: "{{ route('partner.business_interests.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_business_type: customBusinessType

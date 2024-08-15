@@ -60,7 +60,7 @@
       $("#chatbutton").prop('disabled', true);
 
       $.ajax({
-        url: '{{ route("customer.openai.chat") }}',
+        url: '{{ route("partner.openai.chat") }}',
         method: 'POST',
         headers: {
           'X-CSRF-TOKEN': "{{ csrf_token() }}"

@@ -10,7 +10,7 @@
                 <div class="card">
 
                     <div class="card-body">
-                        <form method="GET" action="{{ route('customer.assign_permissions_form') }}">
+                        <form method="GET" action="{{ route('partner.assign_permissions_form') }}">
                             <div class="form theme-form">
                                 <div class="row">
                                     @if(session('success'))
@@ -37,7 +37,7 @@
                         </form>
 
                         @if(request('role'))
-                        <form method="POST" action="{{ route('customer.assign_permissions') }}">
+                        <form method="POST" action="{{ route('partner.assign_permissions') }}">
                             @csrf
                             <input type="hidden" name="role" value="{{ request('role') }}">
                             <div class="form theme-form">

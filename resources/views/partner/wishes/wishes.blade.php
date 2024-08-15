@@ -20,7 +20,7 @@
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
                   <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                    <form action="{{ route('customer.wishes.update') }}" method="POST">
+                    <form action="{{ route('partner.wishes.update') }}" method="POST">
                       @csrf
                       <textarea name="content" id="editor">{{ old('content', $wish->content ?? '') }}</textarea>
                       @error('content')

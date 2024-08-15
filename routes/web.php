@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
 // Role Partner Controller 
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
@@ -150,6 +151,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+    // Partner Management
+    Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
+    Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
+    Route::post('/partners', [PartnerController::class, 'store'])->name('partners.store');
+    Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
+    Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
+    Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');
 
     // Admin Withdrawal Management
     Route::get('/withdraw', [AdminWithdrawalController::class, 'index'])->name('withdraw.index');

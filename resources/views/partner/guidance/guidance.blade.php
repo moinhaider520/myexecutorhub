@@ -20,7 +20,7 @@
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
                   <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                    <form action="{{ route('customer.guidance.update') }}" method="POST">
+                    <form action="{{ route('partner.guidance.update') }}" method="POST">
                       @csrf
                       <textarea name="content" id="editor">{{ old('content', $guidance->content ?? '') }}</textarea>
                       @error('content')

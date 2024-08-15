@@ -42,7 +42,7 @@
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editIntellectualPropertyModal"
                               data-id="{{ $property->id }}" data-property_type="{{ $property->property_type }}" data-description="{{ $property->description }}">Edit</button>
-                            <form action="{{ route('customer.intellectual_properties.destroy', $property->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.intellectual_properties.destroy', $property->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -170,7 +170,7 @@
     var formData = $('#addIntellectualPropertyForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '{{ route("customer.intellectual_properties.store") }}',
+      url: '{{ route("partner.intellectual_properties.store") }}',
       data: formData,
       success: function (response) {
         // Reset form fields
@@ -210,7 +210,7 @@
     var formData = $('#editIntellectualPropertyForm').serialize();
     $.ajax({
       type: 'POST',
-      url: '/customer/intellectual_properties/update/' + id,
+      url: '/partner/intellectual_properties/update/' + id,
       data: formData,
       success: function (response) {
         // Reset form fields
@@ -251,7 +251,7 @@
       if (customPropertyType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.intellectual_properties.save_custom_type') }}",
+          url: "{{ route('partner.intellectual_properties.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_intellectual_property_type: customPropertyType
@@ -279,7 +279,7 @@
       if (customPropertyType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.intellectual_properties.save_custom_type') }}",
+          url: "{{ route('partner.intellectual_properties.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_intellectual_property_type: customPropertyType

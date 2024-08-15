@@ -40,7 +40,7 @@
                           <td>{{ $otherAsset->description }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editOtherAssetModal" data-id="{{ $otherAsset->id }}" data-asset_type="{{ $otherAsset->asset_type }}" data-description="{{ $otherAsset->description }}">Edit</button>
-                            <form action="{{ route('customer.other_assets.destroy', $otherAsset->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.other_assets.destroy', $otherAsset->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -168,7 +168,7 @@
     $('#saveOtherAsset').on('click', function() {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.other_assets.store') }}",
+        url: "{{ route('partner.other_assets.store') }}",
         data: $('#addOtherAssetForm').serialize(),
         success: function(response) {
           location.reload();
@@ -195,7 +195,7 @@
       var id = $('#editOtherAssetId').val();
       $.ajax({
         type: 'POST',
-        url: '/customer/other_assets/update/' + id,
+        url: '/partner/other_assets/update/' + id,
         data: $('#editOtherAssetForm').serialize(),
         success: function(response) {
           location.reload();
@@ -230,7 +230,7 @@
       if (customAssetType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.other_assets.save_custom_type') }}",
+          url: "{{ route('partner.other_assets.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_asset_type: customAssetType
@@ -258,7 +258,7 @@
       if (customAssetType) {
         $.ajax({
           type: 'POST',
-          url: "{{ route('customer.other_assets.save_custom_type') }}",
+          url: "{{ route('partner.other_assets.save_custom_type') }}",
           data: {
             _token: "{{ csrf_token() }}",
             custom_asset_type: customAssetType

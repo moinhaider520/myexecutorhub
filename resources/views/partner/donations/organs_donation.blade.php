@@ -46,7 +46,7 @@
                   data-donation="{{ $donation->donation }}"
                   data-organs_to_donate="{{ $donation->organs_to_donate }}"
                   data-organs_to_not_donate="{{ $donation->organs_to_not_donate }}">Edit</button>
-                <form action="{{ route('customer.organs_donation.destroy', $donation->id) }}" method="POST"
+                <form action="{{ route('partner.organs_donation.destroy', $donation->id) }}" method="POST"
                   style="display:inline;">
                   @csrf
                   @method('DELETE')
@@ -162,7 +162,7 @@
     $('#saveBankAccount').on('click', function () {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.organs_donation.store') }}",
+        url: "{{ route('partner.organs_donation.store') }}",
         data: $('#addDonationForm').serialize(),
         success: function (response) {
           location.reload();
@@ -192,7 +192,7 @@
       var id = $('#editDonationId').val();
       $.ajax({
         type: 'POST',
-        url: '/customer/organs_donation/update/' + id,
+        url: '/partner/organs_donation/update/' + id,
         data: $('#editDonationForm').serialize(),
         success: function (response) {
           location.reload();

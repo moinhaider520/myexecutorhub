@@ -60,7 +60,7 @@
                           <td>{{ $chattel->value }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editChattelModal" data-id="{{ $chattel->id }}" data-chattel_type="{{ $chattel->chattel_type }}" data-description="{{ $chattel->description }}" data-value="{{ $chattel->value }}">Edit</button>
-                            <form action="{{ route('customer.personal_chattels.destroy', $chattel->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.personal_chattels.destroy', $chattel->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -198,7 +198,7 @@
     $('#saveChattel').on('click', function() {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.personal_chattels.store') }}",
+        url: "{{ route('partner.personal_chattels.store') }}",
         data: new FormData($('#addChattelForm')[0]),
         contentType: false,
         processData: false,
@@ -272,7 +272,7 @@
     if (customChattelType) {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.personal_chattels.save_custom_type') }}",
+        url: "{{ route('partner.personal_chattels.save_custom_type') }}",
         data: {
           _token: "{{ csrf_token() }}",
           custom_chattel_type: customChattelType
@@ -300,7 +300,7 @@
     if (customChattelType) {
       $.ajax({
         type: 'POST',
-        url: "{{ route('customer.personal_chattels.save_custom_type') }}",
+        url: "{{ route('partner.personal_chattels.save_custom_type') }}",
         data: {
           _token: "{{ csrf_token() }}",
           custom_chattel_type: customChattelType

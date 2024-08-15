@@ -48,7 +48,7 @@
                           <td>{{ $advisor->contact_number }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editAdvisorModal" data-id="{{ $advisor->id }}" data-adviser_type="{{ $advisor->getRoleNames()->first() }}" data-name="{{ $advisor->name }}" data-practice_name="{{ $advisor->practice_name }}" data-practice_address="{{ $advisor->practice_address }}" data-email="{{ $advisor->email }}" data-contact_number="{{ $advisor->contact_number }}">Edit</button>
-                            <form action="{{ route('customer.advisors.destroy', $advisor->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('partner.advisors.destroy', $advisor->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -220,7 +220,7 @@
       clearAddAdvisorErrors(); // Clear previous error messages
 
       $.ajax({
-        url: "{{ route('customer.advisors.store') }}",
+        url: "{{ route('partner.advisors.store') }}",
         method: 'POST',
         data: $(this).serialize(),
         success: function(response) {
@@ -269,7 +269,7 @@
       clearEditAdvisorErrors(); // Clear previous error messages
 
       $.ajax({
-        url: "/customer/advisors/update/" + id,
+        url: "/partner/advisors/update/" + id,
         method: 'POST',
         data: $(this).serialize(),
         success: function(response) {
