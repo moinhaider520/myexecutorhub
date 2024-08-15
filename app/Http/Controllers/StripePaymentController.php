@@ -82,16 +82,24 @@ class StripePaymentController extends Controller
                 if ($couponOwner->coupon_used) {
                     return back()->with('stripe_error', 'Coupon has already been used.');
                 }
-                // Calculate the commission amount (20% of the plan amount)
-                // $planAmount = $request->input('plan');
-                // $commissionAmount = ($planAmount * 0.20);
-                $commissionAmount = '5'; // Or calculate based on the plan amount
+
+                $commissionAmount = '';
+                // Calculate the commission amount based on the coupon owner role
+                if ($couponOwner->hasRole('partner')) {
+                    // Calculate the commission amount (20% of the plan amount)
+                    $planAmount = $request->input('plan');
+                    $commissionAmount = ($planAmount * 0.20);
+
+                    // Do not mark the coupon as used if the coupon owner has the 'partner' role
+                } else {
+                    $commissionAmount = '5'; // Or calculate based on the plan amount
+
+                    // Mark the coupon as used if the coupon owner does not have the 'partner' role
+                    $couponOwner->update(['coupon_used' => true]);
+                }
 
                 // Update the commission amount for the coupon code owner
                 $couponOwner->increment('commission_amount', $commissionAmount);
-
-                // Mark the coupon as used
-                $couponOwner->update(['coupon_used' => true]);
             } else {
                 return back()->with('stripe_error', 'Invalid Coupon.');
             }
