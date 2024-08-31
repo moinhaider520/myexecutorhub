@@ -36,7 +36,7 @@
                                                         <td>{{ $customer->address ?? 'N/A' }}</td>
                                                         <td>{{ $customer->contact_number ?? 'N/A' }}</td>
                                                         <td>
-                                                            <a href="{{ route('admin.customers.edit', $customer->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                                            <a href="{{ route('admin.customers.edit', \App\Helpers\EncryptionHelper::encryptId($customer->id)) }}" class="btn btn-primary btn-sm">Edit</a>
                                                             <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST" style="display:inline;">
                                                                 @csrf
                                                                 @method('DELETE')

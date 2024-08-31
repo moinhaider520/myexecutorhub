@@ -14,7 +14,7 @@
                                 <span>Edit the details of the customer.</span>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.customers.update', $customer->id) }}" method="POST">
+                                <form action="{{ route('admin.customers.update', \App\Helpers\EncryptionHelper::encryptId($customer->id)) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="mb-3">

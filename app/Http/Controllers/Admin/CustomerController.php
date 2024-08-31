@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Helpers\EncryptionHelper;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -26,8 +27,9 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($encryptedId)
     {
+        $id = EncryptionHelper::decryptId($encryptedId);
         $customer = User::findOrFail($id);
         return view('admin.customers.edit', compact('customer'));
     }
@@ -39,8 +41,10 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $encryptedId)
     {
+        $id = EncryptionHelper::decryptId($encryptedId);
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
