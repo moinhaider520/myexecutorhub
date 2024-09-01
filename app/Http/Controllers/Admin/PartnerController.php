@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Helpers\EncryptionHelper;
 use Illuminate\Support\Facades\DB;
 
 class PartnerController extends Controller
@@ -82,8 +83,9 @@ class PartnerController extends Controller
      * @param  int  $id
      * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit($encryptedId)
     {
+        $id = EncryptionHelper::decryptId($encryptedId);
         $partner = User::findOrFail($id);
         return view('admin.partners.edit', compact('partner'));
     }

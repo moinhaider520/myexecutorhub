@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Helpers\EncryptionHelper;
 use Illuminate\Validation\Rule;
 
 class AdvisorsController extends Controller

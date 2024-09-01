@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\Partner;
 
 use Illuminate\Support\Facades\Auth;
-use App\Models\Document;
+use App\Models\PicturesAndVideos;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
-use App\Models\DocumentTypes;
-class DocumentsController extends Controller
+
+class PicturesAndVideosController extends Controller
 {
-    use ImageUpload; 
+        use ImageUpload; 
     public function view()
     {
-        $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
-        $documents = Document::where('created_by', Auth::id())->get();
-        return view('customer.documents.documents', compact('documents', 'documentTypes'));
+        $pictures_and_videos = PicturesAndVideos::where('created_by', Auth::id())->get();
+        return view('partner.pictures_and_videos.pictures_and_videos', compact('pictures_and_videos'));
     }
 
     public function store(Request $request)
@@ -32,8 +31,8 @@ class DocumentsController extends Controller
 
             $path = $this->imageUpload($request->file('file'), 'documents');
 
-            Document::create([
-                'document_type' => $request->document_type,
+            PicturesAndVideos::create([
+                'name' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
                 'created_by' => Auth::id()
@@ -58,9 +57,9 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
     
-            $document = Document::findOrFail($id);
+            $document = PicturesAndVideos::findOrFail($id);
     
-            $document->document_type = $request->document_type;
+            $document->name = $request->document_type;
             $document->description = $request->description;
             $document->created_by = Auth::id();
     
@@ -78,7 +77,7 @@ class DocumentsController extends Controller
             $document->save();
     
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
+            return response()->json(['success' => true, 'message' => 'File updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -89,7 +88,7 @@ class DocumentsController extends Controller
     {
         try {
             DB::beginTransaction();
-            $document = Document::findOrFail($id);
+            $document = PicturesAndVideos::findOrFail($id);
             // Delete the file from the public/assets/upload directory
             $filePath = public_path('assets/upload/' . basename($document->file_path));
             if (file_exists($filePath)) {
@@ -99,25 +98,11 @@ class DocumentsController extends Controller
             // Delete the document record
             $document->delete();
             DB::commit();
-            return redirect()->route('customer.documents.view')->with('success', 'Document deleted successfully.');
+            return redirect()->route('partner.pictures_and_videos.view')->with('success', 'File deleted successfully.');
         } catch (\Exception $e)
         {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
-    }
-
-    public function saveCustomType(Request $request)
-    {
-        $request->validate([
-            'custom_document_type' => 'required|string|max:255|unique:document_types,name'
-        ]);
-
-        DocumentTypes::create([
-            'name' => $request->custom_document_type,
-            'created_by' => Auth::id(),
-        ]);
-
-        return response()->json(['success' => true]);
     }
 }

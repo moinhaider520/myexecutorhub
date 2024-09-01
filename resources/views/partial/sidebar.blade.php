@@ -196,6 +196,21 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Pictures & Videos </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.pictures_and_videos.view') }}">Manage Files</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -400,6 +415,20 @@
                             <li><a href="{{ route('customer.documents.view') }}">Manage Documents</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Pictures & Videos </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.pictures_and_videos.view') }}">Manage Files</a></li>
+                        </ul>
+                    </li>
                     @endif
                     @if (in_array($package, ['Premium','free_trial']))
                     <li class="sidebar-list">
@@ -587,6 +616,20 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.documents.view') }}">Manage Documents</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Pictures & Videos </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('executor.pictures_and_videos.view') }}">Manage Files</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">

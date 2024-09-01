@@ -34,6 +34,7 @@ use App\Http\Controllers\Partner\OpenAIController as PartnerOpenAIController;
 use App\Http\Controllers\Partner\ReviewController as PartnerReviewController;
 use App\Http\Controllers\Partner\MembershipController as PartnerMembershipController;
 use App\Http\Controllers\Partner\WithdrawalController as PartnerWithdrawalController;
+use App\Http\Controllers\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
 // Role Customer Controller 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
@@ -61,6 +62,7 @@ use App\Http\Controllers\Customer\OpenAIController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\MembershipController;
 use App\Http\Controllers\Customer\WithdrawalController;
+use App\Http\Controllers\Customer\PicturesAndVideosController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -84,6 +86,7 @@ use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesCont
 use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesController;
 use App\Http\Controllers\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Executor\WithdrawalController as ExecutorWithdrawalController;
+use App\Http\Controllers\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
 use App\Http\Controllers\Others\BankAccountController as OthersBankAccountController;
@@ -203,6 +206,11 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/documents/store', [DocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
+    // PICTURES & VIDEOS CONTROLLER
+    Route::get('/pictures_and_videos/view', [PicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::post('/pictures_and_videos/store', [PicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
+    Route::post('/pictures_and_videos/update/{id}', [PicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
+    Route::delete('/pictures_and_videos/destroy/{id}', [PicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
 
     // Customer Advisors
     Route::get('/advisors/view', [AdvisorsController::class, 'view'])->name('advisors.view');
@@ -366,6 +374,11 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/documents/store', [PartnerDocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [PartnerDocumentsController::class, 'destroy'])->name('documents.destroy');
+    // Partner Pictures AND VIDEOS
+    Route::get('/pictures_and_videos/view', [PartnerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::post('/pictures_and_videos/store', [PartnerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
+    Route::post('/pictures_and_videos/update/{id}', [PartnerPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
+    Route::delete('/pictures_and_videos/destroy/{id}', [PartnerPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
 
     // Customer Advisors
     Route::get('/advisors/view', [PartnerAdvisorsController::class, 'view'])->name('advisors.view');
@@ -510,6 +523,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/wishes/view', [ExecutorWishesController::class, 'view'])->name('wishes.view');
     Route::get('/guidance/view', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+    Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
     Route::get('/advisors/view', [ExecutorAdvisorsController::class, 'view'])->name('advisors.view');
     Route::get('/executors/view', [ExecutorExecutorsController::class, 'view'])->name('executors.view');
     Route::get('/bank_accounts/view', [ExecutorBankAccountController::class, 'view'])->name('bank_accounts.view');
