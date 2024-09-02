@@ -23,8 +23,9 @@ class PicturesAndVideosController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,mkv|max:51200',
         ]);
+        
 
         try {
             DB::beginTransaction();
@@ -51,8 +52,9 @@ class PicturesAndVideosController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif,mp4,mov,avi,mkv|max:51200',
         ]);
+        
     
         try {
             DB::beginTransaction();

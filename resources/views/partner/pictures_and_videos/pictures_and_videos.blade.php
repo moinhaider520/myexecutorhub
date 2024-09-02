@@ -93,7 +93,7 @@
           </div>
           <div class="form-group mb-4">
             <label for="file">Upload File</label>
-            <input type="file" class="form-control" name="file" id="file">
+            <input type="file" class="form-control" name="file" id="file" accept="image/*,video/*">
             <span class="text-danger" id="file_error"></span>
           </div>
           <div class="modal-footer">
@@ -132,7 +132,7 @@
           </div>
           <div class="form-group mb-4">
             <label for="editFile">Upload File</label>
-            <input type="file" class="form-control" name="file" id="editFile">
+            <input type="file" class="form-control" name="file" id="editFile" accept="image/*,video/*">
             <span class="text-danger" id="edit_file_error"></span>
           </div>
           <div class="modal-footer">
@@ -148,6 +148,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script>
   $(document).ready(function () {
     // Handle Add Document form submission
@@ -158,6 +159,18 @@
 
       var formData = new FormData(this);
 
+      // Show the "Please Wait" alert
+      Swal.fire({
+        title: 'Please Wait',
+        text: 'Your request is being processed...',
+        icon: 'info',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       $.ajax({
         url: "{{ route('partner.pictures_and_videos.store') }}",
         type: "POST",
@@ -165,22 +178,29 @@
         contentType: false,
         processData: false,
         success: function (response) {
+          // Close the "Please Wait" alert
+          Swal.close();
+
           if (response.success) {
             location.reload();
           } else {
-            alert('An error occurred while adding the document.');
+            Swal.fire('Error', 'An error occurred while adding the document.', 'error');
           }
         },
         error: function (xhr) {
+          // Close the "Please Wait" alert
+          Swal.close();
+
           if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
             displayErrors(errors);
           } else {
-            alert('An error occurred. Please try again.');
+            Swal.fire('Error', 'An error occurred. Please try again.', 'error');
           }
         }
       });
     });
+
 
     // Handle Edit Document button click
     $('.edit-button').on('click', function () {
@@ -202,6 +222,18 @@
       var formData = new FormData(this);
       var documentId = $('#editDocumentId').val(); // Get the document ID
 
+      // Show the "Please Wait" alert
+      Swal.fire({
+        title: 'Please Wait',
+        text: 'Your request is being processed...',
+        icon: 'info',
+        allowOutsideClick: false,
+        showConfirmButton: false,
+        onBeforeOpen: () => {
+          Swal.showLoading();
+        }
+      });
+
       $.ajax({
         url: "{{ url('partner/pictures_and_videos/update') }}" + '/' + documentId, // Include the ID in the URL
         type: "POST",
@@ -209,22 +241,29 @@
         contentType: false,
         processData: false,
         success: function (response) {
+          // Close the "Please Wait" alert
+          Swal.close();
+
           if (response.success) {
             location.reload();
           } else {
-            alert('An error occurred while editing the document.');
+            Swal.fire('Error', 'An error occurred while editing the document.', 'error');
           }
         },
         error: function (xhr) {
+          // Close the "Please Wait" alert
+          Swal.close();
+
           if (xhr.status === 422) {
             var errors = xhr.responseJSON.errors;
             displayEditErrors(errors);
           } else {
-            alert('An error occurred. Please try again.');
+            Swal.fire('Error', 'An error occurred. Please try again.', 'error');
           }
         }
       });
     });
+
 
     // Clear error messages
     function clearErrors() {
