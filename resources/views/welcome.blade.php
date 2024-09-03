@@ -572,7 +572,7 @@
                             <div class="col-md-11 col-lg-9">
                                 <div class="section-title wow fadeInUp mb-60">
                                     <!-- Title -->
-                                    <h2 class="s-50 w-700">Mission statement</h2>
+                                    <h2 class="s-50 w-700">What is Executor Hub?</h2>
 
                                     <!-- Text -->
                                     <p class="p-xl">Executor Hub was founded with the mission to empower individuals to
@@ -589,7 +589,7 @@
                             <div class="col">
                                 <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
                                     <!-- Play Icon -->
-                                    <a class="video-popup1" href="#">
+                                    <a class="video-popup1" href="{{ asset('assets/frontend/intro.mp4') }}">
                                         <div class="video-btn video-btn-xl bg--theme">
                                             <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
                                             </div>
@@ -597,7 +597,7 @@
                                     </a>
 
                                     <!-- Preview Image -->
-                                    <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-02.png')}}"
+                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card.webp')}}"
                                         alt="content-image" />
                                 </div>
                             </div>
