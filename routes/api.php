@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\Partner\DashboardController as PartnerDashboardCont
 use App\Http\Controllers\Api\Partner\GuidanceController as PartnerGuidanceController;
 use App\Http\Controllers\Api\Partner\WishesController as PartnerWishesController;
 use App\Http\Controllers\Api\Partner\LifeRememberedController as PartnerLifeRememberedController;
+use App\Http\Controllers\Api\Partner\VoiceNotesController as PartnerVoiceNotesController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardCo
 use App\Http\Controllers\Api\Customer\GuidanceController as CustomerGuidanceController;
 use App\Http\Controllers\Api\Customer\WishesController as CustomerWishesController;
 use App\Http\Controllers\Api\Customer\LifeRememberedController as CustomerLifeRememberedController;
+use App\Http\Controllers\Api\Customer\VoiceNotesController as CustomerVoiceNotesController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -30,6 +32,7 @@ use App\Http\Controllers\Api\Executor\DashboardController as ExecutorDashboardCo
 use App\Http\Controllers\Api\Executor\GuidanceController as ExecutorGuidanceController;
 use App\Http\Controllers\Api\Executor\WishesController as ExecutorWishesController;
 use App\Http\Controllers\Api\Executor\LifeRememberedController as ExecutorLifeRememberedController;
+use App\Http\Controllers\Api\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 
 use App\Http\Controllers\Api\ProfileController;
 
@@ -76,6 +79,10 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
 
     Route::get('/life-remembered', [PartnerLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::post('/life-remembered', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+
+    Route::get('/voice-notes', [PartnerVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::post('/voice-notes', [PartnerVoiceNotesController::class, 'store'])->name('voice_notes.store');
+    Route::delete('/voice-notes/{id}', [PartnerVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
 });
 
 // Customer-specific routes
@@ -94,6 +101,10 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     Route::get('/life-remembered', [CustomerLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::post('/life-remembered', [CustomerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+
+    Route::get('/voice-notes', [CustomerLifeRememberedController::class, 'view'])->name('voice_notes.view');
+    Route::post('/voice-notes', [CustomerLifeRememberedController::class, 'store'])->name('voice_notes.store');
+    Route::delete('/voice-notes/{id}', [CustomerLifeRememberedController::class, 'destroy'])->name('voice_notes.destroy');
 });
 
 // Executor-specific routes
@@ -108,5 +119,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/wishes', [ExecutorWishesController::class, 'view'])->name('wishes.view');
 
     Route::get('/life-remembered', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+
+    Route::get('/voice-notes', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
 
 });
