@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Partner\GuidanceController as PartnerGuidanceContro
 use App\Http\Controllers\Api\Partner\WishesController as PartnerWishesController;
 use App\Http\Controllers\Api\Partner\LifeRememberedController as PartnerLifeRememberedController;
 use App\Http\Controllers\Api\Partner\VoiceNotesController as PartnerVoiceNotesController;
+use App\Http\Controllers\Api\Partner\OrgansDonationController as PartnerOrgansDonationController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -25,6 +26,7 @@ use App\Http\Controllers\Api\Customer\GuidanceController as CustomerGuidanceCont
 use App\Http\Controllers\Api\Customer\WishesController as CustomerWishesController;
 use App\Http\Controllers\Api\Customer\LifeRememberedController as CustomerLifeRememberedController;
 use App\Http\Controllers\Api\Customer\VoiceNotesController as CustomerVoiceNotesController;
+use App\Http\Controllers\Api\Customer\OrgansDonationController as CustomerOrgansDonationController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -33,6 +35,7 @@ use App\Http\Controllers\Api\Executor\GuidanceController as ExecutorGuidanceCont
 use App\Http\Controllers\Api\Executor\WishesController as ExecutorWishesController;
 use App\Http\Controllers\Api\Executor\LifeRememberedController as ExecutorLifeRememberedController;
 use App\Http\Controllers\Api\Executor\VoiceNotesController as ExecutorVoiceNotesController;
+use App\Http\Controllers\Api\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 
 use App\Http\Controllers\Api\ProfileController;
 
@@ -83,6 +86,11 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::get('/voice-notes', [PartnerVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice-notes', [PartnerVoiceNotesController::class, 'store'])->name('voice_notes.store');
     Route::delete('/voice-notes/{id}', [PartnerVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
+
+    Route::get('/organs-donations', [PartnerOrgansDonationController::class, 'view'])->name('organs_donations.view');
+    Route::post('/organs-donations', [PartnerOrgansDonationController::class, 'store'])->name('organs_donations.store');
+    Route::put('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'update'])->name('organs_donations.update');
+    Route::delete('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
 });
 
 // Customer-specific routes
@@ -105,6 +113,11 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::get('/voice-notes', [CustomerVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice-notes', [CustomerVoiceNotesController::class, 'store'])->name('voice_notes.store');
     Route::delete('/voice-notes/{id}', [CustomerVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
+
+    Route::get('/organs-donations', [CustomerOrgansDonationController::class, 'view'])->name('organs_donations.view');
+    Route::post('/organs-donations', [CustomerOrgansDonationController::class, 'store'])->name('organs_donations.store');
+    Route::put('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'update'])->name('organs_donations.update');
+    Route::delete('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
 });
 
 // Executor-specific routes
@@ -122,4 +135,5 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
 
     Route::get('/voice-notes', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
 
+    Route::get('/organs-donations', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
 });
