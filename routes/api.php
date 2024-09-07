@@ -102,9 +102,9 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::get('/life-remembered', [CustomerLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::post('/life-remembered', [CustomerLifeRememberedController::class, 'update'])->name('life_remembered.update');
 
-    Route::get('/voice-notes', [CustomerLifeRememberedController::class, 'view'])->name('voice_notes.view');
-    Route::post('/voice-notes', [CustomerLifeRememberedController::class, 'store'])->name('voice_notes.store');
-    Route::delete('/voice-notes/{id}', [CustomerLifeRememberedController::class, 'destroy'])->name('voice_notes.destroy');
+    Route::get('/voice-notes', [CustomerVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::post('/voice-notes', [CustomerVoiceNotesController::class, 'store'])->name('voice_notes.store');
+    Route::delete('/voice-notes/{id}', [CustomerVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
 });
 
 // Executor-specific routes
