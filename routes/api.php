@@ -22,12 +22,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/{id}', [ProfileController::class, 'user_details'])->name('profile');
     Route::post('/profile/update/{id}', [ProfileController::class, 'update_profile'])->name('profile.update');
     Route::post('/profile/picture/{id}', [ProfileController::class, 'picture_update'])->name('profile.picture');
+    Route::post('/profile/password/update/{id}', [ProfileController::class, 'update_password'])->name('profile.password.update');
 });
 
 // Admin-specific routes (requires admin role)
 Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminProfileController::class, 'user_details'])->name('admin.dashboard');
-    Route::post('/profile/update', [AdminProfileController::class, 'update_profile'])->name('admin.profile.update');
+    Route::get('/dashboard', [AdminProfileController::class, 'user_details'])->name('dashboard');
+    Route::post('/profile/update', [AdminProfileController::class, 'update_profile'])->name('profile.update');
+    Route::post('/profile/picture', [AdminProfileController::class, 'picture_update'])->name('profile.picture');
+    Route::post('/profile/change/password', [AdminProfileController::class, 'update_password'])->name('profile.update.password');
 });
 
 // Partner-specific routes

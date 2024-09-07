@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Traits\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -75,5 +76,39 @@ class ProfileController extends Controller
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
         }
-    }    
+    }   
+
+    public function update_password(Request $request, $id)
+    {
+        // Validation
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed|min:8',
+        ]);
+
+        try {
+            $user = User::find($id);
+
+            if (!$user) {
+                return response()->json(['status' => false, 'message' => 'User not found'], 404);
+            }
+
+            // Check if the current password matches
+            if (!Hash::check($request->current_password, $user->password)) {
+                return response()->json(['status' => false, 'message' => 'Current password is incorrect'], 400);
+            }
+
+            DB::beginTransaction();
+            $user->update([
+                'password' => Hash::make($request->new_password),
+            ]);
+
+            DB::commit();
+
+            return response()->json(['status' => true, 'message' => 'Password updated successfully'], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
 }
