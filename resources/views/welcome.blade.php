@@ -171,6 +171,9 @@
                             <p class="p-lg">Executor Hub is a secure web application designed to help individuals
                                 organize and store important financial documents, social media passwords, and asset
                                 information in one central, encrypted location.</p>
+                                <br/>
+                                <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
                         </div>
                     </div>
                     <!-- END HERO TEXT -->
@@ -460,6 +463,9 @@
                         <div class="section-title mb-70">
                             <!-- Title -->
                             <h2 class="s-52 w-700">Simple, Flexible Pricing</h2>
+                            <br/>
+                            <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
                         </div>
                     </div>
                 </div>
@@ -580,6 +586,9 @@
                                         reliable, and user-friendly platform. In today’s world, where digital solutions
                                         are the emerging trend, we ensure your legacy is preserved and accessible for
                                         future generations.</p>
+                                        <br/>
+                                        <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
                                 </div>
                             </div>
                         </div>
@@ -1180,6 +1189,7 @@
                                         provide transparent pricing information on our website, including any additional
                                         fees for premium features or storage capacities.</p>
                                 </div>
+
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
                                     <h5 class="s-22 w-700"><span>13.</span> How is my data secure?</h5>
@@ -1205,6 +1215,13 @@
                                         <li><b></b></li>
                                     </ul>
                                 </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>14.</span> How many Documents can I upload?</h5>
+                                    <p>You can upload unlimited documents. However, there is a limitation of document size. Each document, picture or video should not exceed the maximum size limit of 100 MB.</p>
+                                </div>
+                                
                             </div>
                         </div>
                         <!-- END QUESTIONS HOLDER -->

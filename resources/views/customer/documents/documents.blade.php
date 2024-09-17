@@ -229,7 +229,8 @@
         <h5 class="modal-title" id="AddReviewModalLabel">Add Review</h5>
       </div>
       <div class="modal-body">
-        <form id="addReviewForm" action="{{ route('customer.reviews.store') }}" method="POST">
+        <form id="addReviewForm" action="{{ route('customer.reviews.store') }}" method="POST"
+          enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="document_id" id="reviewDocumentId">
 
@@ -238,8 +239,17 @@
             <textarea class="form-control" name="description" id="description" required></textarea>
             <span class="text-danger" id="description_error"></span>
           </div>
+
+          <div class="wrapper" style="border:1px solid #000;">
+            <canvas id="signature-pad" class="signature-pad" width="400" height="200"></canvas>
+          </div>
+
+          <input type="text" id="signature-result" name="signature_image">
+          <!-- Hidden field to store the signature -->
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="clear" class="btn btn-sm btn-secondary">Clear</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
           </div>
         </form>
@@ -269,6 +279,37 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+<script>
+  $(function () {
+    var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
+      backgroundColor: 'rgba(255, 255, 255, 0)',
+      penColor: 'rgb(0, 0, 0)'
+    });
+
+    function getSignatureData() {
+      if (!signaturePad.isEmpty()) {
+        var imageData = signaturePad.toDataURL('image/png'); // Get image data as Base64
+        $('#signature-result').val(imageData); // Store Base64 image in hidden input
+        $('#signature-img-result').attr('src', imageData).show(); // Optional: Show image preview
+      } else {
+        alert("Please provide a signature.");
+      }
+    }
+
+    // Clear the signature pad when "Clear" button is clicked
+    $('#clear').click(function (e) {
+      e.preventDefault();
+      signaturePad.clear();
+    });
+
+    $('#addReviewForm').on('submit', function (e) {
+      getSignatureData(); // Capture the signature as Base64
+    });
+
+  });
+</script>
 <script>
   $(document).ready(function () {
     // Handle Add Document form submission
