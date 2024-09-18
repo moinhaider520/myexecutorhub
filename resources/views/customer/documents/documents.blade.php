@@ -244,7 +244,7 @@
             <canvas id="signature-pad" class="signature-pad" width="400" height="200"></canvas>
           </div>
 
-          <input type="text" id="signature-result" name="signature_image">
+          <input type="hidden" id="signature-result" name="signature_image">
           <!-- Hidden field to store the signature -->
 
           <div class="modal-footer">
@@ -510,10 +510,13 @@
         let reviews = response.reviews;
         if (reviews.length > 0) {
           reviews.forEach(function (review) {
+            var signatureImageUrl = review.signature_image ? `/assets/upload/${review.signature_image}` : '';
+
             var reviewHtml = `
           <div class="form-group mb-4">
             <b>${review.user.name} - ${new Date(review.created_at).toLocaleString()}</b>
             <p>${review.description}</p>
+            ${signatureImageUrl ? `<div class="mb-2"><img src="${signatureImageUrl}" alt="Signature" style="max-width: 100%; height: auto;" /></div>` : ''}
             ${review.user_id === {{ Auth::id() }} ?
                 `<form action="{{ route('reviews.destroy', '') }}/${review.id}" method="POST" style="display:inline;">
                 @csrf
