@@ -27,6 +27,16 @@ use App\Http\Controllers\Api\Customer\WishesController as CustomerWishesControll
 use App\Http\Controllers\Api\Customer\LifeRememberedController as CustomerLifeRememberedController;
 use App\Http\Controllers\Api\Customer\VoiceNotesController as CustomerVoiceNotesController;
 use App\Http\Controllers\Api\Customer\OrgansDonationController as CustomerOrgansDonationController;
+use App\Http\Controllers\Api\Customer\BankAccountController as CustomerBankAccountController;
+use App\Http\Controllers\Api\Customer\InvestmentAccountController as CustomerInvestmentAccountController;
+use App\Http\Controllers\Api\Customer\PropertyController as CustomerPropertyController;
+use App\Http\Controllers\Api\Customer\PersonalChattelController as CustomerPersonalChattelController;
+use App\Http\Controllers\Api\Customer\BusinessInterestController as CustomerBusinessInterestController;
+use App\Http\Controllers\Api\Customer\InsurancePolicyController as CustomerInsurancePolicyController;
+use App\Http\Controllers\Api\Customer\DebtAndLiabilityController as CustomerDebtAndLiabilityController;
+use App\Http\Controllers\Api\Customer\DigitalAssetController as CustomerDigitalAssetController;
+use App\Http\Controllers\Api\Customer\IntellectualPropertyController as CustomerIntellectualPropertyController;
+use App\Http\Controllers\Api\Customer\OtherAssetController as CustomerOtherAssetController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -36,6 +46,16 @@ use App\Http\Controllers\Api\Executor\WishesController as ExecutorWishesControll
 use App\Http\Controllers\Api\Executor\LifeRememberedController as ExecutorLifeRememberedController;
 use App\Http\Controllers\Api\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 use App\Http\Controllers\Api\Executor\OrgansDonationController as ExecutorOrgansDonationController;
+use App\Http\Controllers\Api\Executor\BankAccountController as ExecutorBankAccountController;
+use App\Http\Controllers\Api\Executor\InvestmentAccountController as ExecutorInvestmentAccountController;
+use App\Http\Controllers\Api\Executor\PropertyController as ExecutorPropertyController;
+use App\Http\Controllers\Api\Executor\PersonalChattelController as ExecutorPersonalChattelController;
+use App\Http\Controllers\Api\Executor\BusinessInterestController as ExecutorBusinessInterestController;
+use App\Http\Controllers\Api\Executor\InsurancePolicyController as ExecutorInsurancePolicyController;
+use App\Http\Controllers\Api\Executor\DebtAndLiabilityController as ExecutorDebtAndLiabilityController;
+use App\Http\Controllers\Api\Executor\DigitalAssetController as ExecutorDigitalAssetController;
+use App\Http\Controllers\Api\Executor\IntellectualPropertyController as ExecutorIntellectualPropertyController;
+use App\Http\Controllers\Api\Executor\OtherAssetController as ExecutorOtherAssetController;
 
 use App\Http\Controllers\Api\ProfileController;
 
@@ -130,10 +150,18 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/guidance', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
 
     Route::get('/wishes', [ExecutorWishesController::class, 'view'])->name('wishes.view');
-
     Route::get('/life-remembered', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
-
     Route::get('/voice-notes', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
-
     Route::get('/organs-donations', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
+
+    Route::get('/bank_accounts', [ExecutorBankAccountController::class, 'index'])->name('bank_accounts.index');
+    Route::get('/investment_accounts', [ExecutorInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
+    Route::get('/properties', [ExecutorPropertyController::class, 'index'])->name('properties.view');
+    Route::get('/personal_chattels', [ExecutorPersonalChattelController::class, 'index'])->name('personal_chattels.view');
+    Route::get('/business_interests', [ExecutorBusinessInterestController::class, 'index'])->name('business_interests.view');
+    Route::get('/insurance_policies', [ExecutorInsurancePolicyController::class, 'index'])->name('insurance_policies.view');
+    Route::get('/debt_and_liabilities', [ExecutorDebtAndLiabilityController::class, 'index'])->name('debt_and_liabilities.view');
+    Route::get('/digital_assets', [ExecutorDigitalAssetController::class, 'index'])->name('digital_assets.view');
+    Route::get('/intellectual_properties', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
+    Route::get('/other_assets', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
 });
