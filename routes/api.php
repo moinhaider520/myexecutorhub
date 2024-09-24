@@ -37,6 +37,9 @@ use App\Http\Controllers\Api\Customer\DebtAndLiabilityController as CustomerDebt
 use App\Http\Controllers\Api\Customer\DigitalAssetController as CustomerDigitalAssetController;
 use App\Http\Controllers\Api\Customer\IntellectualPropertyController as CustomerIntellectualPropertyController;
 use App\Http\Controllers\Api\Customer\OtherAssetController as CustomerOtherAssetController;
+use App\Http\Controllers\Api\Customer\AdvisorsController as CustomerAdvisorsController;
+use App\Http\Controllers\Api\Customer\ExecutorsController as CustomerExecutorsController;
+
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -120,6 +123,97 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/profile/picture', [CustomerProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [CustomerProfileController::class, 'update_password'])->name('profile.update.password');
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+
+    // Customer Advisors
+    Route::get('/advisors/view', [CustomerAdvisorsController::class, 'view'])->name('advisors.view');
+    Route::post('/advisors/store', [CustomerAdvisorsController::class, 'store'])->name('advisors.store');
+    Route::post('/advisors/update/{id}', [CustomerAdvisorsController::class, 'update'])->name('advisors.update');
+    Route::delete('/advisors/destroy/{id}', [CustomerAdvisorsController::class, 'destroy'])->name('advisors.destroy');
+
+    // Customer Executors
+    Route::get('/executors/view', [CustomerExecutorsController::class, 'view'])->name('executors.view');
+    Route::post('/executors/store', [CustomerExecutorsController::class, 'store'])->name('executors.store');
+    Route::post('/executors/update/{id}', [CustomerExecutorsController::class, 'update'])->name('executors.update');
+    Route::delete('/executors/destroy/{id}', [CustomerExecutorsController::class, 'destroy'])->name('executors.destroy');
+
+      // Customer Bank
+    Route::get('/bank_accounts/view', [CustomerBankAccountController::class, 'view'])->name('bank_accounts.view');
+    Route::post('/bank_accounts/store', [CustomerBankAccountController::class, 'store'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/update/{id}', [CustomerBankAccountController::class, 'update'])->name('bank_accounts.update');
+    Route::delete('/bank_accounts/destroy/{id}', [CustomerBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
+
+    // Custom Investment Types
+    Route::post('/investment_accounts/save_custom_type', [CustomerInvestmentAccountController::class, 'saveCustomType'])->name('investment_accounts.save_custom_type');
+    // Customer Savings
+    Route::get('/investment_accounts/view', [CustomerInvestmentAccountController::class, 'view'])->name('investment_accounts.view');
+    Route::post('/investment_accounts/store', [CustomerInvestmentAccountController::class, 'store'])->name('investment_accounts.store');
+    Route::post('/investment_accounts/update/{id}', [CustomerInvestmentAccountController::class, 'update'])->name('investment_accounts.update');
+    Route::delete('/investment_accounts/destroy/{id}', [CustomerInvestmentAccountController::class, 'destroy'])->name('investment_accounts.destroy');
+
+    // Custom Property Type
+    Route::post('/properties/save_custom_type', [CustomerPropertyController::class, 'saveCustomType'])->name('properties.save_custom_type');
+    // Customer Property (ies) Owned
+    Route::get('/properties/view', [CustomerPropertyController::class, 'view'])->name('properties.view');
+    Route::post('/properties/store', [CustomerPropertyController::class, 'store'])->name('properties.store');
+    Route::put('/properties/update/{id}', [CustomerPropertyController::class, 'update'])->name('properties.update');
+    Route::delete('/properties/{id}', [CustomerPropertyController::class, 'destroy'])->name('properties.destroy');
+
+    //Customer Custom Chattels
+    Route::post('/personal_chattels/save_custom_type', [CustomerPersonalChattelController::class, 'saveCustomType'])->name('personal_chattels.save_custom_type');
+
+    // Customer Chattels
+    Route::get('/personal_chattels/view', [CustomerPersonalChattelController::class, 'view'])->name('personal_chattels.view');
+    Route::post('/personal_chattels/store', [CustomerPersonalChattelController::class, 'store'])->name('personal_chattels.store');
+    Route::post('/personal_chattels/update/{id}', [CustomerPersonalChattelController::class, 'update'])->name('personal_chattels.update');
+    Route::delete('/personal_chattels/destroy/{id}', [CustomerPersonalChattelController::class, 'destroy'])->name('personal_chattels.destroy');
+
+    // Custom Business Types
+    Route::post('/business_interests/save_custom_type', [CustomerBusinessInterestController::class, 'saveCustomType'])->name('business_interests.save_custom_type');
+    // Customer Business interests
+    Route::get('/business_interests/view', [CustomerBusinessInterestController::class, 'view'])->name('business_interests.view');
+    Route::post('/business_interests/store', [CustomerBusinessInterestController::class, 'store'])->name('business_interests.store');
+    Route::post('/business_interests/update/{id}', [CustomerBusinessInterestController::class, 'update'])->name('business_interests.update');
+    Route::delete('/business_interests/destroy/{id}', [CustomerBusinessInterestController::class, 'destroy'])->name('business_interests.destroy');
+
+    // Custom Insurance Type
+    Route::post('/insurance_policies/save_custom_type', [CustomerInsurancePolicyController::class, 'saveCustomType'])->name('insurance_policies.save_custom_type');
+    // Customer Insurance Policies
+    Route::get('/insurance_policies/view', [CustomerInsurancePolicyController::class, 'view'])->name('insurance_policies.view');
+    Route::post('/insurance_policies/store', [CustomerInsurancePolicyController::class, 'store'])->name('insurance_policies.store');
+    Route::post('/insurance_policies/update/{id}', [CustomerInsurancePolicyController::class, 'update'])->name('insurance_policies.update');
+    Route::delete('/insurance_policies/destroy/{id}', [CustomerInsurancePolicyController::class, 'destroy'])->name('insurance_policies.destroy');
+
+    // Custom Debt Type
+    Route::post('/debt_and_liabilities/save_custom_type', [CustomerDebtAndLiabilityController::class, 'saveCustomType'])->name('debt_and_liabilities.save_custom_type');
+    // Customer Debt & Liability
+    Route::get('/debt_and_liabilities/view', [CustomerDebtAndLiabilityController::class, 'view'])->name('debt_and_liabilities.view');
+    Route::post('/debt_and_liabilities/store', [CustomerDebtAndLiabilityController::class, 'store'])->name('debt_and_liabilities.store');
+    Route::post('/debt_and_liabilities/update/{id}', [CustomerDebtAndLiabilityController::class, 'update'])->name('debt_and_liabilities.update');
+    Route::delete('/debt_and_liabilities/destroy/{id}', [CustomerDebtAndLiabilityController::class, 'destroy'])->name('debt_and_liabilities.destroy');
+
+    // Custom Digital Assets Type
+    Route::post('/digital_assets/save_custom_type', [CustomerDigitalAssetController::class, 'saveCustomType'])->name('digital_assets.save_custom_type');
+    // Customer Digital Assets
+    Route::get('/digital_assets/view', [CustomerDigitalAssetController::class, 'view'])->name('digital_assets.view');
+    Route::post('/digital_assets/store', [CustomerDigitalAssetController::class, 'store'])->name('digital_assets.store');
+    Route::post('/digital_assets/update/{id}', [CustomerDigitalAssetController::class, 'update'])->name('digital_assets.update');
+    Route::delete('/digital_assets/destroy/{id}', [CustomerDigitalAssetController::class, 'destroy'])->name('digital_assets.destroy');
+
+    // Custom Intellectual Property Types
+    Route::post('/intellectual_properties/save_custom_type', [CustomerIntellectualPropertyController::class, 'saveCustomType'])->name('intellectual_properties.save_custom_type');
+    // Customer Intellectual Property
+    Route::get('/intellectual_properties/view', [CustomerIntellectualPropertyController::class, 'view'])->name('intellectual_properties.view');
+    Route::post('/intellectual_properties/store', [CustomerIntellectualPropertyController::class, 'store'])->name('intellectual_properties.store');
+    Route::post('/intellectual_properties/update/{id}', [CustomerIntellectualPropertyController::class, 'update'])->name('intellectual_properties.update');
+    Route::delete('/intellectual_properties/destroy/{id}', [CustomerIntellectualPropertyController::class, 'destroy'])->name('intellectual_properties.destroy');
+
+    // Custom Other Asset Type
+    Route::post('/other_assets/save_custom_type', [CustomerOtherAssetController::class, 'saveCustomType'])->name('other_assets.save_custom_type');
+    // Customer Other Assets
+    Route::get('/other_assets/view', [CustomerOtherAssetController::class, 'view'])->name('other_assets.view');
+    Route::post('/other_assets/store', [CustomerOtherAssetController::class, 'store'])->name('other_assets.store');
+    Route::post('/other_assets/update/{id}', [CustomerOtherAssetController::class, 'update'])->name('other_assets.update');
+    Route::delete('/other_assets/destroy/{id}', [CustomerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
 
     Route::get('/guidance', [CustomerGuidanceController::class, 'view'])->name('guidance.view');
     Route::post('/guidance/update', [CustomerGuidanceController::class, 'update'])->name('guidance.update');
