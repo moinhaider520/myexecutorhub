@@ -39,7 +39,8 @@ use App\Http\Controllers\Api\Customer\IntellectualPropertyController as Customer
 use App\Http\Controllers\Api\Customer\OtherAssetController as CustomerOtherAssetController;
 use App\Http\Controllers\Api\Customer\AdvisorsController as CustomerAdvisorsController;
 use App\Http\Controllers\Api\Customer\ExecutorsController as CustomerExecutorsController;
-
+use App\Http\Controllers\Api\Customer\DocumentsController as CustomerDocumentsController;
+use App\Http\Controllers\Api\Customer\ReviewController as CustomerReviewController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -61,6 +62,7 @@ use App\Http\Controllers\Api\Executor\IntellectualPropertyController as Executor
 use App\Http\Controllers\Api\Executor\OtherAssetController as ExecutorOtherAssetController;
 
 use App\Http\Controllers\Api\ProfileController;
+use Stripe\Customer;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -136,7 +138,20 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/executors/update/{id}', [CustomerExecutorsController::class, 'update'])->name('executors.update');
     Route::delete('/executors/destroy/{id}', [CustomerExecutorsController::class, 'destroy'])->name('executors.destroy');
 
-      // Customer Bank
+    // Custom Documents Type
+    Route::post('/documents/save_custom_type', [CustomerDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
+    // Customer Documents
+    Route::get('/documents/view', [CustomerDocumentsController::class, 'view'])->name('documents.view');
+    Route::post('/documents/store', [CustomerDocumentsController::class, 'store'])->name('documents.store');
+    Route::post('/documents/update/{id}', [CustomerDocumentsController::class, 'update'])->name('documents.update');
+    Route::delete('/documents/destroy/{id}', [CustomerDocumentsController::class, 'destroy'])->name('documents.destroy');
+
+    // Reviews
+    Route::post('reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{id}', [CustomerReviewController::class, 'show'])->name('reviews.show');
+    Route::delete('reviews/{id}', [CustomerReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    // Customer Bank
     Route::get('/bank_accounts/view', [CustomerBankAccountController::class, 'view'])->name('bank_accounts.view');
     Route::post('/bank_accounts/store', [CustomerBankAccountController::class, 'store'])->name('bank_accounts.store');
     Route::post('/bank_accounts/update/{id}', [CustomerBankAccountController::class, 'update'])->name('bank_accounts.update');
