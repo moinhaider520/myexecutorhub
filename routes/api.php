@@ -60,6 +60,8 @@ use App\Http\Controllers\Api\Executor\DebtAndLiabilityController as ExecutorDebt
 use App\Http\Controllers\Api\Executor\DigitalAssetController as ExecutorDigitalAssetController;
 use App\Http\Controllers\Api\Executor\IntellectualPropertyController as ExecutorIntellectualPropertyController;
 use App\Http\Controllers\Api\Executor\OtherAssetController as ExecutorOtherAssetController;
+use App\Http\Controllers\Api\Executor\DocumentsController as ExecutorDocumentsController;
+use App\Http\Controllers\Api\Executor\ReviewController as ExecutorReviewController;
 
 use App\Http\Controllers\Api\ProfileController;
 use Stripe\Customer;
@@ -255,8 +257,15 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/profile/update', [ExecutorProfileController::class, 'update_profile'])->name('profile.update');
     Route::post('/profile/picture', [ExecutorProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [ExecutorProfileController::class, 'update_password'])->name('profile.update.password');
+    Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/guidance', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
+    Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+
+    // Reviews
+    Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
+    Route::delete('reviews/{id}', [ExecutorReviewController::class, 'destroy'])->name('reviews.destroy');
 
     Route::get('/wishes', [ExecutorWishesController::class, 'view'])->name('wishes.view');
     Route::get('/life-remembered', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');

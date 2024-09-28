@@ -627,6 +627,6 @@ Route::middleware(['auth'])->group(function () {
     
     // Reviews
     Route::post('reviews', [OthersReviewController::class, 'store'])->name('reviews.store');
-    Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
+    Route::get('reviews/{id}', [OthersReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [OthersReviewController::class, 'destroy'])->name('reviews.destroy');
 });
