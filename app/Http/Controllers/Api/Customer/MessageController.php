@@ -57,18 +57,12 @@ class MessageController extends Controller
         $request->validate([
             'message' => 'required|string',
             'receiver_id' => 'required|integer|exists:users,id',
-            'file' => 'nullable|file|max:2048' // Optional file validation
         ]);
 
         $message = new Message;
         $message->message = $request->message;
         $message->user_id = Auth::id();
-        $message->receiver_id = $request->receiver_id;
-
-        if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('public/files');
-            $message->attachment = url(Storage::url($filePath));
-        }
+        $message->receiver_id = $request->receiver_id;   
 
         $message->save();
 
