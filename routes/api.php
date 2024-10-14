@@ -65,6 +65,7 @@ use App\Http\Controllers\Api\Executor\IntellectualPropertyController as Executor
 use App\Http\Controllers\Api\Executor\OtherAssetController as ExecutorOtherAssetController;
 use App\Http\Controllers\Api\Executor\DocumentsController as ExecutorDocumentsController;
 use App\Http\Controllers\Api\Executor\ReviewController as ExecutorReviewController;
+use App\Http\Controllers\Api\Executor\MessageController as ExecutorMessageController;
 
 use App\Http\Controllers\Api\ProfileController;
 use Stripe\Customer;
@@ -293,4 +294,8 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/digital_assets', [ExecutorDigitalAssetController::class, 'index'])->name('digital_assets.view');
     Route::get('/intellectual_properties', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
     Route::get('/other_assets', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
+
+    Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']); 
+    Route::get('/messages/{userId}', [ExecutorMessageController::class, 'getMessages']);
+    Route::get('/users', [ExecutorMessageController::class, 'getUsers']); 
 });
