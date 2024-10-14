@@ -41,6 +41,7 @@ use App\Http\Controllers\Api\Customer\AdvisorsController as CustomerAdvisorsCont
 use App\Http\Controllers\Api\Customer\ExecutorsController as CustomerExecutorsController;
 use App\Http\Controllers\Api\Customer\DocumentsController as CustomerDocumentsController;
 use App\Http\Controllers\Api\Customer\ReviewController as CustomerReviewController;
+use App\Http\Controllers\Api\Customer\OpenAIController  as CustomerOpenAIController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -249,6 +250,10 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/organs-donations', [CustomerOrgansDonationController::class, 'store'])->name('organs_donations.store');
     Route::put('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
+
+    // OPENAI
+    Route::get('/openai/view', [CustomerOpenAIController::class, 'view'])->name('openai.view');
+    Route::post('/openai/chat', [CustomerOpenAIController::class, 'chat'])->name('openai.chat');
 });
 
 // Executor-specific routes
