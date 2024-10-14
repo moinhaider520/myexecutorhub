@@ -42,6 +42,8 @@ use App\Http\Controllers\Api\Customer\ExecutorsController as CustomerExecutorsCo
 use App\Http\Controllers\Api\Customer\DocumentsController as CustomerDocumentsController;
 use App\Http\Controllers\Api\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Api\Customer\OpenAIController  as CustomerOpenAIController;
+use App\Http\Controllers\Api\Customer\MessageController as CustomerMessageController;
+
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -254,6 +256,10 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     // OPENAI
     Route::get('/openai/view', [CustomerOpenAIController::class, 'view'])->name('openai.view');
     Route::post('/openai/chat', [CustomerOpenAIController::class, 'chat'])->name('openai.chat');
+
+    Route::post('/messages/send', [CustomerMessageController::class, 'sendMessage']); 
+    Route::get('/messages/{userId}', [CustomerMessageController::class, 'getMessages']);
+    Route::get('/users', [CustomerMessageController::class, 'getUsers']); 
 });
 
 // Executor-specific routes
