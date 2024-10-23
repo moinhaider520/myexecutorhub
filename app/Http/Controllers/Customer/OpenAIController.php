@@ -42,18 +42,18 @@ class OpenAIController extends Controller
                 'created_by' => Auth::id()
             ]);
 
-            if (isset($response)) {
+            if (isset($response['choices'][0]['message']['content'])) {
+                // Save assistant's message
                 OpenAI::create([
                     'role' => 'assistant',
-                    'content' => $response,
+                    'content' => $response['choices'][0]['message']['content'],
                     'created_by' => Auth::id()
                 ]);
 
                 return response()->json([
                     'status' => 'success',
-                    'message' => "Invalid API Request. Please Try Again."
-                ]);
-
+                    'message' => $response['choices'][0]['message']['content']
+                ], 200);
             } else {
                 return response()->json([
                     'status' => 'error',
