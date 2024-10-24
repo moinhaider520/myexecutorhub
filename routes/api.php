@@ -43,6 +43,7 @@ use App\Http\Controllers\Api\Customer\DocumentsController as CustomerDocumentsCo
 use App\Http\Controllers\Api\Customer\ReviewController as CustomerReviewController;
 use App\Http\Controllers\Api\Customer\OpenAIController  as CustomerOpenAIController;
 use App\Http\Controllers\Api\Customer\MessageController as CustomerMessageController;
+use App\Http\Controllers\Api\Customer\PermissionController as CustomerPermissionController;
 
 
 // Executor 
@@ -66,6 +67,7 @@ use App\Http\Controllers\Api\Executor\OtherAssetController as ExecutorOtherAsset
 use App\Http\Controllers\Api\Executor\DocumentsController as ExecutorDocumentsController;
 use App\Http\Controllers\Api\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Api\Executor\MessageController as ExecutorMessageController;
+use App\Http\Controllers\Api\Executor\OpenAIController  as ExecutorOpenAIController;
 
 use App\Http\Controllers\Api\ProfileController;
 use Stripe\Customer;
@@ -258,9 +260,13 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::get('/openai/view', [CustomerOpenAIController::class, 'view'])->name('openai.view');
     Route::post('/openai/chat', [CustomerOpenAIController::class, 'chat'])->name('openai.chat');
 
-    Route::post('/messages/send', [CustomerMessageController::class, 'sendMessage']); 
+    Route::post('/messages/send', [CustomerMessageController::class, 'sendMessage']);
     Route::get('/messages/{userId}', [CustomerMessageController::class, 'getMessages']);
-    Route::get('/users', [CustomerMessageController::class, 'getUsers']); 
+    Route::get('/users', [CustomerMessageController::class, 'getUsers']);
+
+    // Assign Permission 
+    Route::get('/assign-permissions', [CustomerPermissionController::class, 'getRolesAndPermissions'])->name('assign_permissions_form');
+    Route::post('/assign-permissions', [CustomerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
 });
 
 // Executor-specific routes
@@ -295,7 +301,12 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/intellectual_properties', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
     Route::get('/other_assets', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
 
-    Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']); 
+    Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']);
     Route::get('/messages/{userId}', [ExecutorMessageController::class, 'getMessages']);
-    Route::get('/users', [ExecutorMessageController::class, 'getUsers']); 
+    Route::get('/users', [ExecutorMessageController::class, 'getUsers']);
+
+
+    // OPENAI
+    Route::get('/openai/view', [ExecutorOpenAIController::class, 'view'])->name('openai.view');
+    Route::post('/openai/chat', [ExecutorOpenAIController::class, 'chat'])->name('openai.chat');
 });
