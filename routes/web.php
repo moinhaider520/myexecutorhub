@@ -516,7 +516,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     // Customer Withdraw
     Route::get('/withdraw', [ExecutorWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
-    Route::get('/withdraw/history', [WithdrawalController::class, 'history'])->name('withdraw.history');
+    Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
 
     // Executors View Routes
     Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');

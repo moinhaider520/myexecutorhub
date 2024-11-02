@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\ForgetPasswordController;
 // Admin
 use App\Http\Controllers\Api\Admin\ProfileController as AdminProfileController;
 use App\Http\Controllers\Api\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Api\Admin\WithdrawalController as AdminWithdrawalController;
 
 // Partner
 use App\Http\Controllers\Api\Partner\ProfileController as PartnerProfileController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\Api\Partner\WishesController as PartnerWishesController
 use App\Http\Controllers\Api\Partner\LifeRememberedController as PartnerLifeRememberedController;
 use App\Http\Controllers\Api\Partner\VoiceNotesController as PartnerVoiceNotesController;
 use App\Http\Controllers\Api\Partner\OrgansDonationController as PartnerOrgansDonationController;
+use App\Http\Controllers\Api\Partner\WithdrawalController as PartnerWithdrawalController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -44,6 +46,7 @@ use App\Http\Controllers\Api\Customer\ReviewController as CustomerReviewControll
 use App\Http\Controllers\Api\Customer\OpenAIController  as CustomerOpenAIController;
 use App\Http\Controllers\Api\Customer\MessageController as CustomerMessageController;
 use App\Http\Controllers\Api\Customer\PermissionController as CustomerPermissionController;
+use App\Http\Controllers\Api\Customer\WithdrawalController as CustomerWithdrawalController;
 
 
 // Executor 
@@ -68,6 +71,7 @@ use App\Http\Controllers\Api\Executor\DocumentsController as ExecutorDocumentsCo
 use App\Http\Controllers\Api\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Api\Executor\MessageController as ExecutorMessageController;
 use App\Http\Controllers\Api\Executor\OpenAIController  as ExecutorOpenAIController;
+use App\Http\Controllers\Api\Executor\WithdrawalController as ExecutorWithdrawalController;
 
 use App\Http\Controllers\Api\ProfileController;
 use Stripe\Customer;
@@ -96,6 +100,10 @@ Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(functi
     Route::post('/profile/picture', [AdminProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [AdminProfileController::class, 'update_password'])->name('profile.update.password');
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
+    // Admin Withdrawal Management
+    Route::get('/withdraw', [AdminWithdrawalController::class, 'index'])->name('withdraw.index');
+    Route::patch('/withdraw/{id}', [AdminWithdrawalController::class, 'update'])->name('withdraw.update');
 });
 
 // Partner-specific routes
@@ -104,8 +112,13 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/profile/update', [PartnerProfileController::class, 'update_profile'])->name('profile.update');
     Route::post('/profile/picture', [PartnerProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [PartnerProfileController::class, 'update_password'])->name('profile.update.password');
-
     Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+
+
+    // Partner Withdraw
+    Route::get('/withdraw', [PartnerWithdrawalController::class, 'view'])->name('withdraw.view');
+    Route::post('/withdraw/process', [PartnerWithdrawalController::class, 'process'])->name('withdraw.process');
+    Route::get('/withdraw/history', [PartnerWithdrawalController::class, 'history'])->name('withdraw.history');
 
     Route::get('/guidance', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
     Route::post('/guidance/update', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
@@ -133,6 +146,11 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/profile/picture', [CustomerProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [CustomerProfileController::class, 'update_password'])->name('profile.update.password');
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+
+    // Customer Withdraw
+    Route::get('/withdraw', [CustomerWithdrawalController::class, 'view'])->name('withdraw.view');
+    Route::post('/withdraw/process', [CustomerWithdrawalController::class, 'process'])->name('withdraw.process');
+    Route::get('/withdraw/history', [CustomerWithdrawalController::class, 'history'])->name('withdraw.history');
 
     // Customer Advisors
     Route::get('/advisors/view', [CustomerAdvisorsController::class, 'view'])->name('advisors.view');
@@ -276,6 +294,11 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/profile/picture', [ExecutorProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [ExecutorProfileController::class, 'update_password'])->name('profile.update.password');
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
+
+    // Customer Withdraw
+    Route::get('/withdraw', [ExecutorWithdrawalController::class, 'view'])->name('withdraw.view');
+    Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
+    Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
 
     Route::get('/guidance', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
