@@ -91,6 +91,20 @@
                             <li><a href="{{ route('admin.withdraw.index') }}">Manage Withdrawals</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                            </svg>
+                            <span>Notifications </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('admin.notifications.create') }}">Send Notification</a></li>
+                        </ul>
+                    </li>
                     @endrole
 
                     @role('partner')
@@ -115,6 +129,21 @@
                             <li><a href="{{ route('partner.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('partner.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="{{ route('partner.other_assets.view') }}">Other Assets</a></li>
+                        </ul>
+                    </li>
+                    
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                            </svg>
+                            <span>Notifications</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.notifications.index') }}">View Notifications</a></li>
                         </ul>
                     </li>
 
@@ -328,6 +357,21 @@
                             <li><a href="{{ route('customer.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('customer.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="{{ route('customer.other_assets.view') }}">Other Assets</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                            </svg>
+                            <span>Notifications</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.notifications.index') }}">View Notifications</a></li>
                         </ul>
                     </li>
                     @endif

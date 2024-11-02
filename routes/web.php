@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
+use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+
 // Role Partner Controller 
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
 use App\Http\Controllers\Partner\SettingController as PartnerSettingController;
@@ -35,6 +37,8 @@ use App\Http\Controllers\Partner\ReviewController as PartnerReviewController;
 use App\Http\Controllers\Partner\MembershipController as PartnerMembershipController;
 use App\Http\Controllers\Partner\WithdrawalController as PartnerWithdrawalController;
 use App\Http\Controllers\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
+use App\Http\Controllers\Partner\NotificationController as PartnerNotificationController;
+
 // Role Customer Controller 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
@@ -63,6 +67,7 @@ use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\MembershipController;
 use App\Http\Controllers\Customer\WithdrawalController;
 use App\Http\Controllers\Customer\PicturesAndVideosController;
+use App\Http\Controllers\Customer\NotificationController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -167,10 +172,18 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Admin Withdrawal Management
     Route::get('/withdraw', [AdminWithdrawalController::class, 'index'])->name('withdraw.index');
     Route::patch('/withdraw/{id}', [AdminWithdrawalController::class, 'update'])->name('withdraw.update');
+
+    // Notifications
+    Route::get('notifications/create', [AdminNotificationController::class, 'create'])->name('notifications.create');
+    Route::post('notifications/send', [AdminNotificationController::class, 'send'])->name('notifications.send');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+
+    // Notifications 
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
     // Assign Permission 
     Route::get('/assign-permissions', [PermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');
@@ -342,6 +355,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     // Assign Permission 
     Route::get('/assign-permissions', [PartnerPermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');
     Route::post('/assign-permissions', [PartnerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
+
+    // Notifications 
+    Route::get('notifications', [PartnerNotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/read/{id}', [PartnerNotificationController::class, 'markAsRead'])->name('notifications.read');
 
     // Customer Profile 
     Route::get('/edit-profile', [PartnerSettingController::class, 'editProfile'])->name('edit_profile');
@@ -624,7 +641,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/withdraw', [OthersWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [OthersWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [OthersWithdrawalController::class, 'history'])->name('withdraw.history');
-    
+
     // Reviews
     Route::post('reviews', [OthersReviewController::class, 'store'])->name('reviews.store');
     Route::get('reviews/{id}', [OthersReviewController::class, 'show'])->name('reviews.show');
