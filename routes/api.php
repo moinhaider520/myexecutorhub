@@ -73,7 +73,10 @@ use App\Http\Controllers\Api\Executor\MessageController as ExecutorMessageContro
 use App\Http\Controllers\Api\Executor\OpenAIController  as ExecutorOpenAIController;
 use App\Http\Controllers\Api\Executor\WithdrawalController as ExecutorWithdrawalController;
 
+// General Controllers
 use App\Http\Controllers\Api\ProfileController;
+use App\Http\Controllers\Api\ExpoController;
+
 use Stripe\Customer;
 
 Route::get('/user', function (Request $request) {
@@ -84,6 +87,9 @@ Route::get('/user', function (Request $request) {
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/send_reset_password_email', [ForgetPasswordController::class, 'send_reset_password_email']);
+
+// Route to update the expo token
+Route::post('/expo/update-token/{id}', [ExpoController::class, 'updateExpoToken'])->name('expo.update-token');
 
 // Routes for user profile (available for all authenticated users)
 Route::middleware('auth:sanctum')->group(function () {

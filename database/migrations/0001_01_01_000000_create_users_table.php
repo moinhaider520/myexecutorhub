@@ -39,6 +39,7 @@ return new class extends Migration
             $table->decimal('commission_amount', 8, 2)->default(0); // To store the total commission earned
             $table->unsignedBigInteger('created_by')->nullable();;
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->string('expo_token')->nullable(); // expo token
             $table->rememberToken();
             $table->timestamps();
         });
