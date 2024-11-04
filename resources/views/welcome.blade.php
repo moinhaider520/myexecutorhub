@@ -129,20 +129,22 @@
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact
                                         Us</a></li>
-
+                                <li class="nl-simple" aria-haspopup="true"><a href="#contacts-2" class="h-link">Work
+                                        With
+                                        Us</a></li>
                                 @guest
-                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                </li>
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
-                                </li>
+                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                    </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{route('register')}}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                    </li>
                                 @else
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' :  (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                    </li>
                                 @endguest
 
                             </ul>
@@ -171,9 +173,9 @@
                             <p class="p-lg">Executor Hub is a secure web application designed to help individuals
                                 organize and store important financial documents, social media passwords, and asset
                                 information in one central, encrypted location.</p>
-                                <br/>
-                                <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                            <br />
+                            <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white last-link">Start
+                                Free Trial</a>
                         </div>
                     </div>
                     <!-- END HERO TEXT -->
@@ -463,9 +465,9 @@
                         <div class="section-title mb-70">
                             <!-- Title -->
                             <h2 class="s-52 w-700">Simple, Flexible Pricing</h2>
-                            <br/>
-                            <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                            <br />
+                            <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white last-link">Start
+                                Free Trial</a>
                         </div>
                     </div>
                 </div>
@@ -476,7 +478,8 @@
                     <div class="row row-cols-1 row-cols-md-3">
                         <!-- STARTER PLAN -->
                         <div class="col">
-                            <div id="pt-1-1" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div id="pt-1-1"
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <!-- TABLE HEADER -->
                                 <div class="pricing-table-header">
                                     <h5 class="s-24 w-700">Basic</h5>
@@ -491,7 +494,8 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get
+                                        Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -501,7 +505,8 @@
                         </div>
                         <!-- BASIC PLAN -->
                         <div class="col">
-                            <div id="pt-1-2" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div id="pt-1-2"
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
                                     <h5 class="s-24">Standard</h5>
                                     <div class="price">
@@ -520,7 +525,8 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get
+                                        Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -530,7 +536,8 @@
                         </div>
                         <!-- ADVANCED PLAN -->
                         <div class="col">
-                            <div id="pt-1-3" class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div id="pt-1-3"
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
                                     <h5 class="s-24">Premium</h5>
                                     <div class="price">
@@ -553,7 +560,8 @@
                                         </ol>
                                         </p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get Started</a>
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get
+                                        Started</a>
                                 </div>
                                 <!-- PRICING FEATURES -->
                                 <ul class="pricing-features color--black ico-10 ico--green mt-25">
@@ -586,8 +594,8 @@
                                         reliable, and user-friendly platform. In today’s world, where digital solutions
                                         are the emerging trend, we ensure your legacy is preserved and accessible for
                                         future generations.</p>
-                                        <br/>
-                                        <a href="{{route('register')}}"
+                                    <br />
+                                    <a href="{{route('register')}}"
                                         class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
                                 </div>
                             </div>
@@ -1219,9 +1227,11 @@
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
                                     <h5 class="s-22 w-700"><span>14.</span> How many Documents can I upload?</h5>
-                                    <p>You can upload unlimited documents. However, there is a limitation of document size. Each document, picture or video should not exceed the maximum size limit of 100 MB.</p>
+                                    <p>You can upload unlimited documents. However, there is a limitation of document
+                                        size. Each document, picture or video should not exceed the maximum size limit
+                                        of 100 MB.</p>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <!-- END QUESTIONS HOLDER -->
@@ -1445,6 +1455,137 @@
             <!-- End container -->
         </section>
 
+        <!-- WORK WITH US -->
+        <section id="contacts-2" class="pb-50 inner-page-hero contacts-section division">
+            <div class="container">
+                <!-- SECTION TITLE -->
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-9">
+                        <div class="section-title text-center mb-80">
+                            <!-- Title -->
+                            <h2 class="s-52 w-700">Work With Us</h2>
+
+                            <!-- Text -->
+                            <p class="p-lg">At Executor Hub, we’re committed to simplifying estate administration for
+                                everyone involved—from executors to families. Join our affiliate program and unlock new
+                                revenue opportunities for your business while providing clients with a valuable,
+                                streamlined solution for managing their estates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End container -->
+        </section>
+
+        <section id="lnk-3" class="pt-100 ct-02 content-section division">
+            <div class="container">
+
+
+                <!-- SECTION CONTENT (ROW) -->
+                <div class="row d-flex align-items-center">
+
+
+                    <!-- IMAGE BLOCK -->
+                    <div class="col-md-6">
+                        <div class="img-block left-column wow fadeInRight"
+                            style="visibility: visible; animation-name: fadeInRight;">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-02.png')}}" alt="content-image">
+                        </div>
+                    </div>
+
+
+                    <!-- TEXT BLOCK -->
+                    <div class="col-md-6">
+                        <div class="txt-block right-column wow fadeInLeft"
+                            style="visibility: visible; animation-name: fadeInLeft;">
+
+                            <!-- Section ID -->
+                            <span class="section-id">WORK WITH US</span>
+
+                            <!-- Title -->
+                            <h2 class="s-46 w-700">Why Partner with Executor Hub?</h2>
+
+                            <p>Our affiliate program is designed with estate planners, solicitors, and financial
+                                professionals in mind. As an affiliate, you’ll introduce Executor Hub to your clients,
+                                empowering them to manage their estates with ease. In return, your business will benefit
+                                from a generous, ongoing commission with every new subscription you bring in.</p>
+
+                        </div>
+                    </div> <!-- END TEXT BLOCK -->
+
+
+                </div> <!-- END SECTION CONTENT (ROW) -->
+
+
+            </div> <!-- End container -->
+        </section>
+
+        <section class="pt-100 ct-02 content-section division">
+            <div class="container">
+
+
+                <!-- SECTION CONTENT (ROW) -->
+                <div class="row d-flex align-items-center">
+
+
+                    <!-- IMAGE BLOCK -->
+                    <div class="col-md-6">
+                        <div class="img-block left-column wow fadeInRight"
+                            style="visibility: visible; animation-name: fadeInRight;">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-08.png')}}" alt="content-image">
+                        </div>
+                    </div>
+
+
+                    <!-- TEXT BLOCK -->
+                    <div class="col-md-6">
+                        <div class="txt-block right-column wow fadeInLeft"
+                            style="visibility: visible; animation-name: fadeInLeft;">
+
+
+                            <!-- TEXT BOX -->
+                            <div class="txt-box">
+
+                                <!-- Title -->
+                                <h5 class="s-24 w-700">The Benefits of Partnering with Us:</h5>
+
+                                <!-- Text -->
+                                <p>Add Value for Clients: Provide clients with a powerful tool that simplifies estate
+                                    administration and keeps them organized.
+                                </p>
+                                <p>Build Passive Income: Earn continuous commission with each subscription, creating a
+                                    steady revenue stream for your business.</p>
+                                <p>Expand Your Services: Differentiate your offerings by delivering Executor Hub’s
+                                    unique, secure digital platform to your clients.</p>
+
+                            </div> <!-- END TEXT BOX -->
+
+
+                            <!-- TEXT BOX -->
+                            <div class="txt-box mb-0">
+
+                                <!-- Title -->
+                                <h5 class="s-24 w-700">Join Us Today!</h5>
+
+                                <!-- Text -->
+                                <p>Join us today and become part of a growing network of professionals who are helping
+                                    clients take control of their legacy while building income for their own businesses.
+                                    Get in touch to learn more about how we can work together to make estate
+                                    administration simpler and more accessible for everyone.
+                                </p>
+                            </div> <!-- END TEXT BOX -->
+
+
+                        </div>
+                    </div> <!-- END TEXT BLOCK -->
+
+
+                </div> <!-- END SECTION CONTENT (ROW) -->
+
+
+            </div> <!-- End container -->
+        </section>
+
         <!-- FOOTER-3
 			============================================= -->
         <footer id="footer-3" class="pt-100 footer ft-3-ntr">
@@ -1606,24 +1747,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function(e) {
+            contextmenu: function (e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function(e) {
+            mousedown: function (e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function(e) {
+            mouseup: function (e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function() {
-            $(".switch").click(function() {
+        $(function () {
+            $(".switch").click(function () {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1635,7 +1776,7 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {
