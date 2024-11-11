@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\WelcomeEmail;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/customer/dashboard'; 
+    protected $redirectTo = '/customer/dashboard';
 
     /**
      * Create a new controller instance.
@@ -64,15 +65,25 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $couponCode = 'COUPON-' . strtoupper(uniqid());
-
-        return User::create([
+    
+        // Create the user and store it in a variable
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'trial_ends_at' => now()->addDays(7), // Set trial end date to 7 days from now
-            'subscribed_package' => "free_trial", 
-            'coupon_code' => $couponCode, // Store the generated coupon code
-
-        ])->assignRole('customer');
+            'trial_ends_at' => now()->addDays(7),
+            'subscribed_package' => "free_trial",
+            'coupon_code' => $couponCode,
+        ]);
+    
+        // Assign role to the user
+        $user->assignRole('customer');
+    
+        // Send the welcome email notification
+        $user->notify(new WelcomeEmail($user));
+    
+        // Return the user
+        return $user;
     }
+    
 }

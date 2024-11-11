@@ -8,7 +8,7 @@
                 <div>
                     <div>
                         <a class="logo" href="{{ url('/') }}">
-                        <img class="img-fluid for-light" src="{{ asset('assets/frontend/images/logo-skyblue.png') }}" alt="loginpage" style="width:200px;">
+                            <img class="img-fluid for-light" src="{{ asset('assets/frontend/images/logo-skyblue.png') }}" alt="loginpage" style="width:200px;">
                         </a>
                     </div>
                     <div class="login-main">
@@ -20,18 +20,18 @@
                                 <label class="col-form-label">Name</label>
                                 <input id="name" class="form-control @error('name') is-invalid @enderror" type="text" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Your Name">
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Email Address</label>
                                 <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="admin@admin.com">
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                             <div class="form-group">
@@ -39,15 +39,24 @@
                                 <div class="form-input position-relative">
                                     <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autocomplete="new-password" placeholder="*********">
                                     @error('password')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-form-label">Confirm Password</label>
                                 <input id="password-confirm" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="*********">
+                            </div>
+                            <!-- Email notifications checkbox -->
+                            <div class="form-group">
+                                <div>
+                                    <input class="" type="checkbox" name="email_notifications" id="email_notifications" value="1" {{ old('email_notifications') ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="email_notifications">
+                                        Are you opt in to email notifications?
+                                    </label>
+                                </div>
                             </div>
                             <div class="form-group mb-0">
                                 <div class="text-end mt-3">
@@ -56,7 +65,7 @@
                             </div>
                             <div class=" mt-3">
                                 <a href="{{ route('login') }}">
-                                Already have an account?
+                                    Already have an account?
                                 </a>
                             </div>
                         </form>
