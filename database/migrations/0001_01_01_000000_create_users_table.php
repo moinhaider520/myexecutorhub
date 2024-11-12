@@ -40,6 +40,7 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();;
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->string('expo_token')->nullable(); // expo token
+            $table->string('user_role')->nullable(); // This field is for cron job purpose only 
             $table->rememberToken();
             $table->timestamps();
         });

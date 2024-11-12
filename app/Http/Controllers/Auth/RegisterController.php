@@ -73,6 +73,7 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'trial_ends_at' => now()->addDays(7),
             'subscribed_package' => "free_trial",
+            'user_role' => 'customer',
             'coupon_code' => $couponCode,
         ]);
     
