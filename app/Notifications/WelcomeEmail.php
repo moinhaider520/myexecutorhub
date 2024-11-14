@@ -13,6 +13,8 @@ class WelcomeEmail extends Notification
     use Queueable;
 
     protected $user;
+    protected $isAfterFreeTrial;
+
 
     // Constructor to accept user data
     public function __construct($user)
@@ -29,6 +31,14 @@ class WelcomeEmail extends Notification
     // Use a custom Blade template for the email
     public function toMail($notifiable)
     {
+        // Use a different email body if joining after free trial
+        if ($this->isAfterFreeTrial) {
+            return (new MailMessage)
+                ->subject('Welcome Back!')
+                ->markdown('emails.welcome_after_trial', ['user' => $this->user]);
+        }
+
+
         return (new MailMessage)
             ->subject('Welcome to Our Service')
             ->markdown('emails.welcome', ['user' => $this->user]);

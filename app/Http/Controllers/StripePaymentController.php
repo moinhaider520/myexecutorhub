@@ -9,6 +9,8 @@ use Illuminate\Http\RedirectResponse;
 use Stripe\Exception\CardException;
 use App\Models\User;
 use Illuminate\Support\Str;
+use App\Notifications\WelcomeEmail;
+use Carbon\Carbon;
 
 class StripePaymentController extends Controller
 {
@@ -106,6 +108,12 @@ class StripePaymentController extends Controller
             }
         }
 
+
+        // Check if the user is joining after the free trial
+        $joiningAfterFreeTrial = $user->subscribed_package === "free_trial" &&
+            Carbon::parse($user->trial_ends_at)->isPast();
+
+
         // Map the plan amount to the package name
         $packageNames = [
             '8' => 'Basic',
@@ -145,6 +153,13 @@ class StripePaymentController extends Controller
                     'subscribed_package' => $packageName,
                     'trial_ends_at' => now()->addMonth(),
                 ]);
+
+            // If the user is joining after a free trial, send a welcome email
+            if ($joiningAfterFreeTrial) {
+                $user->notify(new WelcomeEmail($user, true));
+            } if ($request->user_type === 'new') {
+                $user->notify(new WelcomeEmail($user));
+            }
 
             // Redirect to login page after successful payment
             return redirect()->route('login')->with('success', 'Payment successful! Your subscription has been updated.');
