@@ -1246,8 +1246,8 @@
                         <div class="more-questions mt-40">
                             <div class="more-questions-txt bg--white-400 r-100">
                                 <p class="p-lg">
-                                    Have any questions?
-                                    <a href="#contacts-1" class="color--theme">Get in Touch</a>
+                                    Download the App on App Store <i class="fa-brands fa-app-store-ios"></i>
+                                    <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank" class="color--theme">Download App</a>
                                 </p>
                             </div>
                         </div>
@@ -1624,6 +1624,9 @@
                                 </li>
                                 <li>
                                     <p><a href="#faqs-3">FAQ's</a></p>
+                                </li>
+                                <li>
+                                    <p><a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank">Download From AppStore</a></p>
                                 </li>
                             </ul>
                         </div>
