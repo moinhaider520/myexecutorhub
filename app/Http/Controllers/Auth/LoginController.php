@@ -37,27 +37,28 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-
         if ($user->status !== 'A') {
             Auth::logout(); // Logout the user
-            return redirect()->route('login')->with('status', 'Your account has not been activated yet..');
+            return redirect()->route('login')->with('status', 'Your account has not been activated yet.');
         }
 
         // Check if the trial period has ended
-        if ($user->trial_ends_at) {
-            if (now()->greaterThan($user->trial_ends_at)) {
-                Auth::logout();
-                return redirect()->route('login')->with('status', 'Please subscribe to continue.');
-            }
+        if ($user->trial_ends_at && now()->greaterThan($user->trial_ends_at)) {
+            Auth::logout();
+            return redirect()->route('login')->with('status', 'Please subscribe to continue.');
         }
 
+        // Update last_login field
+        $user->update(['last_login' => now()]);
+
+        // Redirect based on role
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
         } elseif ($user->hasRole('executor')) {
             return redirect()->route('executor.dashboard');
         } elseif ($user->hasRole('customer')) {
             return redirect()->route('customer.dashboard');
-        } elseif (Auth::user()->hasRole('partner')) {
+        } elseif ($user->hasRole('partner')) {
             return redirect()->route('partner.dashboard');
         } else {
             return redirect()->route('dashboard');
