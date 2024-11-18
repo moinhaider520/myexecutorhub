@@ -41,7 +41,7 @@ return new class extends Migration
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->string('expo_token')->nullable(); // Expo token
             $table->string('user_role')->nullable(); // This field is for cron job purpose only
-            $table->timestamp('last_login')->nullable(); // New nullable field for last login
+            $table->timestamp('last_login')->nullable()->useCurrent(); // Default to current timestamp
             $table->rememberToken();
             $table->timestamps();
         });
