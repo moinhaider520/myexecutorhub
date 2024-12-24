@@ -68,6 +68,7 @@ use App\Http\Controllers\Customer\MembershipController;
 use App\Http\Controllers\Customer\WithdrawalController;
 use App\Http\Controllers\Customer\PicturesAndVideosController;
 use App\Http\Controllers\Customer\NotificationController;
+use App\Http\Controllers\Customer\LPAController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -180,6 +181,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+
+    // LPA
+    Route::get('lpa', [LPAController::class, 'index'])->name('lpa.index');
+    Route::get('lpa/create', [LPAController::class, 'create'])->name('lpa.create');
 
     // Notifications 
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
