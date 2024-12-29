@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\LPAVideos;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class LPAController extends Controller
 {
     public function index()
     {      
-        return view('customer.lpa.index');
+        $lpas = LPAVideos::where('customer_id', Auth::id())->get();
+        return view('customer.lpa.index',compact('lpas'));
     }
 
     public function create()
@@ -25,7 +28,6 @@ class LPAController extends Controller
     {
         // Validate the uploaded file
         $validator = Validator::make($request->all(), [
-            'video' => 'required|file|mimes:mp4|max:102400', // 100MB max size
             'auth_id' => 'required|string',
         ]);
 
@@ -47,13 +49,28 @@ class LPAController extends Controller
 
             // Save the video info in the database
             $video = new LPAVideos();
-            $video->auth_id = $authId;
+            $video->customer_id = $authId;
             $video->url = $videoUrl;
             $video->save();
 
             return response()->json(['message' => 'Video uploaded successfully!', 'url' => $videoUrl]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to upload video: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+            $lpaVideo = LPAVideos::findOrFail($id);
+            $lpaVideo->delete();
+            DB::commit();
+            return redirect()->route('customer.lpa.index')->with('success', 'LPA deleted successfully.');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
         }
     }
 }

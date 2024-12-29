@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LPAVideos extends Model
 {
+    protected $table = 'lpa_videos';
     protected $guarded=[];
     use HasFactory;
 }

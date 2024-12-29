@@ -26,18 +26,20 @@
                         </tr>
                       </thead>
                       <tbody>
+                      @foreach($lpas as $lpa)
                       <tr>
-                          <td>1</td>
-                          <td>2024-12-12</td>
-                          <td>View Video</td>
+                          <td>{{ $loop->iteration }}</td>
+                          <td>{{ $lpa->created_at }}</td>
+                          <td><a target="_blank" href="{{ $lpa->url }}">View Video</a></td>
                           <td>
-                            <form action="{{ route('customer.advisors.destroy', 1) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('customer.lpa.destroy', $lpa->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
                               <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                           </td>
                         </tr>
+                        @endforeach
                       </tbody>
                     </table>
                   </div>

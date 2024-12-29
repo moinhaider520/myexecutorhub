@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('content')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <style>
   #dummy-text {
     margin-bottom: 20px;
@@ -82,8 +83,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <script>
+  console.log("123");
+  console.log(document.querySelector('meta[name="csrf-token"]').getAttribute("content"));
   const startButton = document.getElementById("start-button");
   const canvasContainer = document.getElementById("canvas-container");
   const videoCanvas = document.getElementById("video-canvas");
@@ -227,35 +232,66 @@
   });
 
   saveButton.addEventListener("click", () => {
+    // Stop the recording
     recorder.stop();
-    recorder.onstop = async () => {
+
+    // On recording stop
+    recorder.onstop = () => {
+
+      if (webcamStream) {
+    webcamStream.getTracks().forEach((track) => track.stop());
+  }
+  
       const authId = "{{ $authId }}";
       const blob = new Blob(recordedChunks, { type: "video/mp4" });
       const formData = new FormData();
       formData.append("video", blob);
       formData.append("auth_id", authId); // Replace with actual auth ID if available.
 
-      try {
-        const response = await fetch("/lpa/store", {
-          method: "POST",
-          headers: {
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
-          },
-          body: formData,
-        });
+      // Show SweetAlert while the AJAX request is in progress
+      Swal.fire({
+        title: "Uploading...",
+        text: "Please wait while your video is being uploaded.",
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading(); // Show a loading spinner
+        },
+      });
 
-        if (response.ok) {
-          const data = await response.json();
-          alert("Video uploaded successfully!");
-          console.log("Cloudinary URL:", data.url);
-        } else {
-          alert("Video upload failed!");
-        }
-      } catch (err) {
-        console.error("Error uploading video:", err);
-      }
+      // AJAX call using jQuery
+      $.ajax({
+        url: "/customer/lpa/store",
+        type: "POST",
+        headers: {
+          "X-CSRF-TOKEN": document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content"),
+        },
+        data: formData,
+        processData: false, // Prevent jQuery from automatically transforming the FormData object
+        contentType: false, // Let the browser set the correct Content-Type
+        success: function (response) {
+          // Close the SweetAlert and show a success message
+          Swal.fire({
+            icon: "success",
+            title: "Upload Successful",
+            text: "Your video has been uploaded successfully.",
+          });
+          location.reload();
+        },
+        error: function (xhr, status, error) {
+          // Close the SweetAlert and show an error message
+          Swal.fire({
+            icon: "error",
+            title: "Upload Failed",
+            text: "There was an error uploading your video. Please try again.",
+          });
+          console.error("Video upload failed:", status, error);
+        },
+      });
     };
   });
+
 
   previewVideo.addEventListener("ended", () => {
     repeatButton.style.display = "inline-block";
