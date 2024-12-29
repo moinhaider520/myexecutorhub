@@ -52,7 +52,9 @@
                 <h4>LPA Video</h4>
               </div>
               <div class="card-body">
-                <div id="dummy-text"><b>You are ready to start.</b>It should take 10-20 minutes. You must complete your session in one go. If you pause or cancel your session you will have to start again from Device Check.</div>
+                <div id="dummy-text"><b>You are ready to start.</b>It should take 10-20 minutes. You must complete your
+                  session in one go. If you pause or cancel your session you will have to start again from Device Check.
+                </div>
                 <button id="start-button" class="btn btn-primary">Start</button>
 
                 <div class="canvas-container" id="canvas-container">
@@ -62,7 +64,7 @@
                   <div class="controls">
                     <button id="repeat-button" style="display: none;" class="btn btn-secondary">Repeat Video</button>
                     <button id="next-button" class="btn btn-primary">Next</button>
-                    <button id="save-button"  class="btn btn-primary" style="display: none;">Save Recording</button>
+                    <button id="save-button" class="btn btn-primary" style="display: none;">Save Recording</button>
                   </div>
                 </div>
               </div>
@@ -226,15 +228,32 @@
 
   saveButton.addEventListener("click", () => {
     recorder.stop();
-    recorder.onstop = () => {
+    recorder.onstop = async () => {
+      const authId = "{{ $authId }}";
       const blob = new Blob(recordedChunks, { type: "video/mp4" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "recording.mp4";
-      a.click();
-      URL.revokeObjectURL(url);
-      location.reload();
+      const formData = new FormData();
+      formData.append("video", blob);
+      formData.append("auth_id", authId); // Replace with actual auth ID if available.
+
+      try {
+        const response = await fetch("/lpa/store", {
+          method: "POST",
+          headers: {
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+          },
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          alert("Video uploaded successfully!");
+          console.log("Cloudinary URL:", data.url);
+        } else {
+          alert("Video upload failed!");
+        }
+      } catch (err) {
+        console.error("Error uploading video:", err);
+      }
     };
   });
 

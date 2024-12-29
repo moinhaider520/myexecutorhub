@@ -185,6 +185,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // LPA
     Route::get('lpa', [LPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [LPAController::class, 'create'])->name('lpa.create');
+    Route::post('lpa/store', [LPAController::class, 'store'])->name('lpa.store');
 
     // Notifications 
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
