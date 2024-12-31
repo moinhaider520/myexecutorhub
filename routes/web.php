@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\LPAController as LPAControllerMobile;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 
@@ -38,6 +39,7 @@ use App\Http\Controllers\Partner\MembershipController as PartnerMembershipContro
 use App\Http\Controllers\Partner\WithdrawalController as PartnerWithdrawalController;
 use App\Http\Controllers\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
 use App\Http\Controllers\Partner\NotificationController as PartnerNotificationController;
+use App\Http\Controllers\Partner\LPAController as PartnerLPAController;
 
 // Role Customer Controller 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
@@ -127,6 +129,9 @@ Route::controller(StripePaymentController::class)->group(function () {
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/lpa/create/{id}', [LPAControllerMobile::class, 'create']);
+Route::post('lpa/store', [LPAControllerMobile::class, 'store'])->name('lpa.store');
 
 
 Auth::routes();
@@ -358,6 +363,12 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
 Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')->group(function () {
     Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+
+    // LPA
+    Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
+    Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');
+    Route::post('lpa/store', action: [PartnerLPAController::class, 'store'])->name('lpa.store');
+    Route::delete('/lpa/destroy/{id}', [PartnerLPAController::class, 'destroy'])->name('lpa.destroy');
 
     // Assign Permission 
     Route::get('/assign-permissions', [PartnerPermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');

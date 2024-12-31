@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\Partner\LifeRememberedController as PartnerLifeReme
 use App\Http\Controllers\Api\Partner\VoiceNotesController as PartnerVoiceNotesController;
 use App\Http\Controllers\Api\Partner\OrgansDonationController as PartnerOrgansDonationController;
 use App\Http\Controllers\Api\Partner\WithdrawalController as PartnerWithdrawalController;
+use App\Http\Controllers\Api\Partner\LPAController as PartnerLPAController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -43,10 +44,11 @@ use App\Http\Controllers\Api\Customer\AdvisorsController as CustomerAdvisorsCont
 use App\Http\Controllers\Api\Customer\ExecutorsController as CustomerExecutorsController;
 use App\Http\Controllers\Api\Customer\DocumentsController as CustomerDocumentsController;
 use App\Http\Controllers\Api\Customer\ReviewController as CustomerReviewController;
-use App\Http\Controllers\Api\Customer\OpenAIController  as CustomerOpenAIController;
+use App\Http\Controllers\Api\Customer\OpenAIController as CustomerOpenAIController;
 use App\Http\Controllers\Api\Customer\MessageController as CustomerMessageController;
 use App\Http\Controllers\Api\Customer\PermissionController as CustomerPermissionController;
 use App\Http\Controllers\Api\Customer\WithdrawalController as CustomerWithdrawalController;
+use App\Http\Controllers\Api\Customer\LPAController as CustomerLPAController;
 
 
 // Executor 
@@ -70,8 +72,9 @@ use App\Http\Controllers\Api\Executor\OtherAssetController as ExecutorOtherAsset
 use App\Http\Controllers\Api\Executor\DocumentsController as ExecutorDocumentsController;
 use App\Http\Controllers\Api\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Api\Executor\MessageController as ExecutorMessageController;
-use App\Http\Controllers\Api\Executor\OpenAIController  as ExecutorOpenAIController;
+use App\Http\Controllers\Api\Executor\OpenAIController as ExecutorOpenAIController;
 use App\Http\Controllers\Api\Executor\WithdrawalController as ExecutorWithdrawalController;
+use App\Http\Controllers\Api\Executor\LPAController as ExecutorLPAController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -143,6 +146,9 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/organs-donations', [PartnerOrgansDonationController::class, 'store'])->name('organs_donations.store');
     Route::put('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
+
+    // LPAVIDEOS
+    Route::get('/lpa', [PartnerLPAController::class, 'view'])->name('lpa.view');
 });
 
 // Customer-specific routes
@@ -291,6 +297,9 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     // Assign Permission 
     Route::get('/assign-permissions', [CustomerPermissionController::class, 'getRolesAndPermissions'])->name('assign_permissions_form');
     Route::post('/assign-permissions', [CustomerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
+
+    // LPAVIDEOS
+    Route::get('/lpa', [CustomerLPAController::class, 'view'])->name('lpa.view');
 });
 
 // Executor-specific routes
@@ -338,4 +347,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     // OPENAI
     Route::get('/openai/view', [ExecutorOpenAIController::class, 'view'])->name('openai.view');
     Route::post('/openai/chat', [ExecutorOpenAIController::class, 'chat'])->name('openai.chat');
+
+    // LPAVIDEOS
+    Route::get('/lpa', [ExecutorLPAController::class, 'view'])->name('lpa.view');
 });
