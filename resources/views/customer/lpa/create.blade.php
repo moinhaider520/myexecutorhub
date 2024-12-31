@@ -87,8 +87,6 @@
 
 
 <script>
-  console.log("123");
-  console.log(document.querySelector('meta[name="csrf-token"]').getAttribute("content"));
   const startButton = document.getElementById("start-button");
   const canvasContainer = document.getElementById("canvas-container");
   const videoCanvas = document.getElementById("video-canvas");
@@ -98,112 +96,85 @@
   const saveButton = document.getElementById("save-button");
 
   const canvasContext = videoCanvas.getContext("2d");
-  const dummyVideos = Array.from({ length: 45 }, (_, i) => `{{ asset('assets/lpa_videos/video') }}` + (i + 1) + `.mp4`);
 
+  // Define the number of videos and a function to get video URLs lazily
+  const totalVideos = 23;
+  const getVideoUrl = (index) => `{{ asset('assets/lpa_videos/video') }}` + (index + 1) + `.mp4`;
   let currentVideoIndex = 0;
   let webcamStream;
   let recorder;
   let recordedChunks = [];
 
-
   async function startWebcam() {
     try {
       const constraints = {
         video: {
-          width: { ideal: 1280 }, // Higher resolution for better quality
-          height: { ideal: 720 }, // Higher resolution for better quality
-          facingMode: 'user', // Front-facing camera
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+          facingMode: "user",
         },
-        audio: true // Include audio from the microphone
+        audio: true,
       };
 
-      // Request access to webcam and microphone
       webcamStream = await navigator.mediaDevices.getUserMedia(constraints);
 
-      // Create a video element to play the webcam feed
       const webcamVideoElement = document.createElement("video");
       webcamVideoElement.srcObject = webcamStream;
       webcamVideoElement.play();
 
-      // Extract the microphone audio track
       const micAudioTrack = webcamStream.getAudioTracks()[0];
 
-      // Play the preview video and extract its audio
-      previewVideo.src = dummyVideos[currentVideoIndex];
+      previewVideo.src = getVideoUrl(currentVideoIndex); // Load the first video lazily
+      previewVideo.load();
       previewVideo.play();
 
-      // Use AudioContext to combine audio streams
       const audioContext = new AudioContext();
-
-      // Microphone audio source
       const micSource = audioContext.createMediaStreamSource(new MediaStream([micAudioTrack]));
-
-      // Browser (preview video) audio source
       const previewAudioSource = audioContext.createMediaElementSource(previewVideo);
-
-      // Destination for combined audio
       const combinedAudioDestination = audioContext.createMediaStreamDestination();
 
-      // Connect audio sources
       micSource.connect(combinedAudioDestination);
       previewAudioSource.connect(combinedAudioDestination);
-      previewAudioSource.connect(audioContext.destination); // For live preview audio
+      previewAudioSource.connect(audioContext.destination);
 
-      // Capture the canvas video stream
       const canvasStream = videoCanvas.captureStream();
-
-      // Combine video from canvas and audio
       const combinedStream = new MediaStream([
         canvasStream.getVideoTracks()[0],
-        ...combinedAudioDestination.stream.getAudioTracks()
+        ...combinedAudioDestination.stream.getAudioTracks(),
       ]);
 
-      // Adjust the canvas resolution to match the webcam feed
       const { width, height } = webcamStream.getVideoTracks()[0].getSettings();
       videoCanvas.width = width;
       videoCanvas.height = height;
 
-      // Draw webcam and preview video on the canvas
       webcamVideoElement.addEventListener("play", () => {
         function draw() {
-          // Draw webcam feed at full resolution
           canvasContext.drawImage(webcamVideoElement, 0, 0, videoCanvas.width, videoCanvas.height);
 
-          // Draw preview video in the corner with improved quality
           if (!previewVideo.paused && !previewVideo.ended) {
-            canvasContext.drawImage(
-              previewVideo,
-              0, // X-coordinate
-              0, // Y-coordinate
-              320, // Preview video width
-              180 // Preview video height
-            );
+            canvasContext.drawImage(previewVideo, 0, 0, 320, 180);
           }
 
-          // Repeat drawing for live animation
           requestAnimationFrame(draw);
         }
 
         draw();
       });
 
-      // Create MediaRecorder for recording combined stream
       recorder = new MediaRecorder(combinedStream);
       recorder.ondataavailable = (event) => recordedChunks.push(event.data);
       recorder.start();
-
     } catch (err) {
       alert("Error accessing webcam or microphone. Please check permissions.");
       location.reload();
     }
   }
 
-
-
   function playPreviewVideo() {
-    previewVideo.src = dummyVideos[currentVideoIndex];
+    previewVideo.src = getVideoUrl(currentVideoIndex); // Load the video lazily
+    previewVideo.load();
     previewVideo.play();
-    repeatButton.style.display = "none"; // Hide repeat button when new video starts
+    repeatButton.style.display = "none";
   }
 
   startButton.addEventListener("click", () => {
@@ -221,57 +192,65 @@
 
   nextButton.addEventListener("click", () => {
     currentVideoIndex++;
-    if (currentVideoIndex < dummyVideos.length) {
+    if (currentVideoIndex < totalVideos) {
       playPreviewVideo();
     }
 
-    if (currentVideoIndex === dummyVideos.length - 1) {
+    if (currentVideoIndex === totalVideos - 1) {
       nextButton.style.display = "none";
       saveButton.style.display = "block";
     }
   });
 
   saveButton.addEventListener("click", () => {
-    // Stop the recording
     recorder.stop();
 
-    // On recording stop
     recorder.onstop = () => {
-
       if (webcamStream) {
-    webcamStream.getTracks().forEach((track) => track.stop());
-  }
-  
+        webcamStream.getTracks().forEach((track) => track.stop());
+      }
+
       const authId = "{{ $authId }}";
       const blob = new Blob(recordedChunks, { type: "video/mp4" });
+      console.log(blob);
       const formData = new FormData();
-      formData.append("video", blob);
-      formData.append("auth_id", authId); // Replace with actual auth ID if available.
+      formData.append("video", blob, "recorded-video.mp4");
+      formData.append("auth_id", authId);
 
-      // Show SweetAlert while the AJAX request is in progress
-      Swal.fire({
+      const swalInstance = Swal.fire({
         title: "Uploading...",
         text: "Please wait while your video is being uploaded.",
         allowOutsideClick: false,
         didOpen: () => {
-          Swal.showLoading(); // Show a loading spinner
+          Swal.showLoading();
         },
+        onBeforeOpen: () => {
+          swalInstance.text = "Uploading... 0%";
+        }
       });
 
-      // AJAX call using jQuery
+      // AJAX request to upload the video
       $.ajax({
         url: "/customer/lpa/store",
         type: "POST",
         headers: {
-          "X-CSRF-TOKEN": document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content"),
+          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
         },
         data: formData,
-        processData: false, // Prevent jQuery from automatically transforming the FormData object
-        contentType: false, // Let the browser set the correct Content-Type
-        success: function (response) {
-          // Close the SweetAlert and show a success message
+        processData: false,
+        contentType: false,
+        xhr: function () {
+          const xhr = new XMLHttpRequest();
+          xhr.upload.addEventListener("progress", function (e) {
+            if (e.lengthComputable) {
+              const percent = Math.round((e.loaded / e.total) * 100);
+              swalInstance.text = `Uploading... ${percent}%`;
+              console.log(percent);
+            }
+          });
+          return xhr;
+        },
+        success: function () {
           Swal.fire({
             icon: "success",
             title: "Upload Successful",
@@ -280,7 +259,6 @@
           location.reload();
         },
         error: function (xhr, status, error) {
-          // Close the SweetAlert and show an error message
           Swal.fire({
             icon: "error",
             title: "Upload Failed",
@@ -292,9 +270,11 @@
     };
   });
 
-
   previewVideo.addEventListener("ended", () => {
     repeatButton.style.display = "inline-block";
   });
 </script>
+
+
+
 @endsection
