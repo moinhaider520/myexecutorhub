@@ -133,18 +133,18 @@
                                         With
                                         Us</a></li>
                                 @guest
-                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                    </li>
-                                    <li class="nl-simple" aria-haspopup="true">
-                                        <a href="{{route('register')}}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
-                                    </li>
+                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                </li>
+                                <li class="nl-simple" aria-haspopup="true">
+                                    <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                </li>
                                 @else
-                                    <li class="nl-simple" aria-haspopup="true">
-                                        <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                    </li>
+                                <li class="nl-simple" aria-haspopup="true">
+                                    <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                </li>
                                 @endguest
 
                             </ul>
@@ -1372,31 +1372,45 @@
 
         <section id="contacts-1" class="pb-50 inner-page-hero contacts-section division">
             <div class="container">
-                <!-- SECTION TITLE -->
+                <!-- Section Title -->
                 <div class="row justify-content-center">
                     <div class="col-md-10 col-lg-9">
                         <div class="section-title text-center mb-80">
-                            <!-- Title -->
                             <h2 class="s-52 w-700">Questions? Let's Talk</h2>
-
-                            <!-- Text -->
-                            <p class="p-lg">Want to learn more about Executor Hub, get a quote, or speak with an expert?
-                                Let us know what you are looking for and we’ll get back to you right away</p>
+                            <p class="p-lg">
+                                Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know what
+                                you are looking for, and we’ll get back to you right away.
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- CONTACT FORM -->
+                <!-- Contact Form -->
                 <div class="row justify-content-center">
                     <div class="col-md-11 col-lg-10 col-xl-8">
                         <div class="form-holder">
-                            <form name="contactform" class="row contact-form" novalidate="novalidate">
+                            @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <form id="contact-form" class="row contact-form" action="{{ route('contact.submit') }}" method="POST">
+                                @csrf
                                 <!-- Form Select -->
                                 <div class="col-md-12 input-subject">
                                     <p class="p-lg">This question is about:</p>
                                     <span>Choose a topic, so we know who to send your request to: </span>
-                                    <select class="form-select subject" aria-label="Default select example">
-                                        <option selected="">This question is about...</option>
+                                    <select class="form-select subject" name="subject" required>
+                                        <option value="" selected disabled>This question is about...</option>
                                         <option>Registering/Authorising</option>
                                         <option>Using Application</option>
                                         <option>Troubleshooting</option>
@@ -1405,54 +1419,36 @@
                                     </select>
                                 </div>
 
-                                <!-- Contact Form Input -->
+                                <!-- Name Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Your Name:</p>
-                                    <span>Please enter your real name: </span>
-                                    <input type="text" name="name" class="form-control name" placeholder="Your Name*" />
+                                    <span>Please enter your real name:</span>
+                                    <input type="text" name="name" class="form-control" placeholder="Your Name*" required />
                                 </div>
 
+                                <!-- Email Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Your Email Address:</p>
-                                    <span>Please carefully check your email address for accuracy</span>
-                                    <input type="text" name="email" class="form-control email"
-                                        placeholder="Email Address*" />
+                                    <span>Please carefully check your email address for accuracy:</span>
+                                    <input type="email" name="email" class="form-control" placeholder="Email Address*" required />
                                 </div>
 
+                                <!-- Message Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Explain your question in details:</p>
-                                    <span>Your Issue/Concern</span>
-                                    <textarea class="form-control message" name="message" rows="6"
-                                        placeholder="I have a problem with..."></textarea>
+                                    <span>Your Issue/Concern:</span>
+                                    <textarea name="message" class="form-control" rows="6" placeholder="I have a problem with..." required></textarea>
                                 </div>
 
-                                <!-- Contact Form Button -->
+                                <!-- Submit Button -->
                                 <div class="col-md-12 mt-15 form-btn text-right">
-                                    <button type="submit" class="btn btn--theme hover--theme submit">Submit
-                                        Request</button>
-                                </div>
-
-                                <div class="contact-form-notice">
-                                    <p class="p-sm">
-                                        We are committed to your privacy. Executor Hub uses the information you provide
-                                        us to contact you about our relevant content, products, and services. You may
-                                        unsubscribe from these communications at any
-                                        time. For more information, check out our <a href="privacy.html">Privacy
-                                            Policy</a>.
-                                    </p>
-                                </div>
-
-                                <!-- Contact Form Message -->
-                                <div class="col-lg-12 contact-form-msg">
-                                    <span class="loading"></span>
+                                    <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <!-- END CONTACT FORM -->
             </div>
-            <!-- End container -->
         </section>
 
         <!-- WORK WITH US -->
@@ -1750,24 +1746,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function (e) {
+            contextmenu: function(e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function (e) {
+            mousedown: function(e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function (e) {
+            mouseup: function(e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function () {
-            $(".switch").click(function () {
+        $(function() {
+            $(".switch").click(function() {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1779,7 +1775,7 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {

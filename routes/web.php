@@ -95,6 +95,8 @@ use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesControll
 use App\Http\Controllers\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Executor\WithdrawalController as ExecutorWithdrawalController;
 use App\Http\Controllers\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
+use App\Http\Controllers\Executor\LPAController as ExecutorLPAController;
+
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
 use App\Http\Controllers\Others\BankAccountController as OthersBankAccountController;
@@ -120,11 +122,15 @@ use App\Http\Controllers\Others\ReviewController as OthersReviewController;
 use App\Http\Controllers\Others\WithdrawalController as OthersWithdrawalController;
 
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\ContactController;
 
 Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
+
+Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -552,6 +558,9 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/withdraw', [ExecutorWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
+    
+    // LPA 
+    Route::get('lpa', [ExecutorLPAController::class, 'index'])->name('lpa.index');
 
     // Executors View Routes
     Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
