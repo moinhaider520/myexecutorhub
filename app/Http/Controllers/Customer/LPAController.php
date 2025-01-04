@@ -61,8 +61,6 @@ try {
     ]);
 
     $videoUrl = $uploadResult['secure_url'];
-    \Log::info('Video uploaded to Cloudinary:', ['url' => $videoUrl]);
-
     // Save video details in the database
     $video = new LPAVideos();
     $video->customer_id = $request->auth_id;

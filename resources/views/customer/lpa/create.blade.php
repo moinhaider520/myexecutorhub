@@ -20,7 +20,7 @@
   }
 
   canvas {
-    width: 640px;
+    width: 100%;
     height: 360px;
   }
 
@@ -36,7 +36,7 @@
   .controls {
     display: flex;
     justify-content: space-between;
-    width: 640px;
+    width: 100%;
     margin-top: 10px;
   }
 </style>
@@ -98,7 +98,8 @@
   const canvasContext = videoCanvas.getContext("2d");
 
   // Define the number of videos and a function to get video URLs lazily
-  const totalVideos = 23;
+  const totalVideos = 16;
+
   const getVideoUrl = (index) => `{{ asset('assets/lpa_videos/video') }}` + (index + 1) + `.mp4`;
   let currentVideoIndex = 0;
   let webcamStream;
@@ -107,14 +108,15 @@
 
   async function startWebcam() {
     try {
-      const constraints = {
-        video: {
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          facingMode: "user",
-        },
-        audio: true,
-      };
+const constraints = {
+  video: {
+    width: { ideal: 640 }, // Lower resolution
+    height: { ideal: 360 }, // Lower resolution
+    frameRate: { ideal: 15 }, // Lower frame rate
+    facingMode: "user",
+  },
+  audio: true, // Audio quality is automatically handled by the browser
+};
 
       webcamStream = await navigator.mediaDevices.getUserMedia(constraints);
 
@@ -152,7 +154,7 @@
           canvasContext.drawImage(webcamVideoElement, 0, 0, videoCanvas.width, videoCanvas.height);
 
           if (!previewVideo.paused && !previewVideo.ended) {
-            canvasContext.drawImage(previewVideo, 0, 0, 320, 180);
+            canvasContext.drawImage(previewVideo, 0, 0, 180, 180);
           }
 
           requestAnimationFrame(draw);
@@ -161,12 +163,17 @@
         draw();
       });
 
-      recorder = new MediaRecorder(combinedStream);
+recorder = new MediaRecorder(combinedStream, {
+  mimeType: "video/webm;codecs=vp8", // Use efficient codecs
+  videoBitsPerSecond: 500000, // Reduce video bitrate (500kbps)
+  audioBitsPerSecond: 64000, // Reduce audio bitrate (64kbps)
+});
+
       recorder.ondataavailable = (event) => recordedChunks.push(event.data);
       recorder.start();
     } catch (err) {
       alert("Error accessing webcam or microphone. Please check permissions.");
-      location.reload();
+    //   location.reload();
     }
   }
 
@@ -274,7 +281,5 @@
     repeatButton.style.display = "inline-block";
   });
 </script>
-
-
 
 @endsection
