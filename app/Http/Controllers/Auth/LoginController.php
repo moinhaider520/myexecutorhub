@@ -5,64 +5,54 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
+use App\Mail\TwoFactorCode;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/dashboard';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+        $this->middleware('auth')->only('logout');
+    }
 
     protected function authenticated(Request $request, $user)
     {
         if ($user->status !== 'A') {
-            Auth::logout(); // Logout the user
+            Auth::logout();
             return redirect()->route('login')->with('status', 'Your account has not been activated yet.');
         }
 
-        // Check if the trial period has ended
         if ($user->trial_ends_at && now()->greaterThan($user->trial_ends_at)) {
             Auth::logout();
             return redirect()->route('login')->with('status', 'Please subscribe to continue.');
         }
 
-        // Update last_login field
-        $user->update(['last_login' => now()]);
+        // Generate and send the 2FA code
+        $this->sendTwoFactorCode($user);
 
-        // Redirect based on role
-        if ($user->hasRole('admin')) {
-            return redirect()->route('admin.dashboard');
-        } elseif ($user->hasRole('executor')) {
-            return redirect()->route('executor.dashboard');
-        } elseif ($user->hasRole('customer')) {
-            return redirect()->route('customer.dashboard');
-        } elseif ($user->hasRole('partner')) {
-            return redirect()->route('partner.dashboard');
-        } else {
-            return redirect()->route('dashboard');
-        }
+        // Store user email in session for 2FA verification
+        session(['two_factor_email' => $user->email]);
+
+        // Logout the user temporarily
+        Auth::logout();
+
+        return redirect()->route('two-factor.index');
+    }
+
+    protected function sendTwoFactorCode($user)
+    {
+        $user->update([
+            'two_factor_code' => mt_rand(100000, 999999),
+            'two_factor_expires_at' => now()->addMinutes(10),
+        ]);
+
+        Mail::to($user->email)->send(new TwoFactorCode($user));
     }
 
     public function logout(Request $request)
@@ -71,11 +61,5 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/');
-    }
-
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
     }
 }

@@ -123,6 +123,10 @@ use App\Http\Controllers\Others\WithdrawalController as OthersWithdrawalControll
 
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\TwoFactorController;
+
+Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
+Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
 
 Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
