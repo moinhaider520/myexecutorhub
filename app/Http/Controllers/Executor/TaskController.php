@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Executor;
 
 use App\Http\Controllers\Controller;
-use App\Models\VoiceNotes;
-use Auth;
-use Illuminate\Http\Request;
+use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-    public function view()
+    public function index() // Rename this from view to index
     {
         $user = Auth::user();
-        $Tasks = VoiceNotes::where('created_by', $user->created_by)->get();
-        return view('executor.tasks.index',compact('Tasks'));
+        $Tasks = Task::where('created_by', $user->created_by)->get();
+        return view('executor.tasks.index', compact('Tasks'));
+
     }
 }

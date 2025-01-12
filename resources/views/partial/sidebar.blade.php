@@ -284,7 +284,7 @@
                             <span>Tasks </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.tasks.view') }}">Manage Tasks</a></li>
+                            <li><a href="{{ route('partner.tasks.index') }}">Manage Tasks</a></li>
                         </ul>
                     </li>
 
@@ -569,7 +569,7 @@
                             <span>Tasks </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.tasks.view') }}">Manage Tasks</a></li>
+                            <li><a href="{{ route('customer.tasks.index') }}">Manage Tasks</a></li>
                         </ul>
                     </li>
 
@@ -802,7 +802,7 @@
                             <span>Tasks </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('executor.tasks.view') }}">Manage Tasks</a></li>
+                            <li><a href="{{ route('executor.tasks.index') }}">Manage Tasks</a></li>
                         </ul>
                     </li>
 

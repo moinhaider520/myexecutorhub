@@ -356,7 +356,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
 
     // TASKS
-    Route::get('/tasks/view', [TaskController::class, 'view'])->name('tasks.view');
+    Route::get('tasks', [TaskController::class, 'index'])->name('tasks.index');
+    Route::post('tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::put('tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
     // Messages
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
@@ -545,7 +548,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::delete('reviews/{id}', [PartnerReviewController::class, 'destroy'])->name('reviews.destroy');
 
     // TASK
-    Route::get('/tasks/view', [PartnerTaskController::class, 'view'])->name('tasks.view');
+    Route::get('tasks', [PartnerTaskController::class, 'index'])->name('tasks.index');
+    Route::post('tasks', [PartnerTaskController::class, 'store'])->name('tasks.store');
+    Route::put('tasks/{id}', [PartnerTaskController::class, 'update'])->name('tasks.update');
+    Route::delete('tasks/{id}', [PartnerTaskController::class, 'destroy'])->name('tasks.destroy');
 
     // OPENAI
     Route::get('/openai/view', [PartnerOpenAIController::class, 'index'])->name('openai.view');
@@ -570,7 +576,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/withdraw', [ExecutorWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
-    
+
     // LPA 
     Route::get('lpa', [ExecutorLPAController::class, 'index'])->name('lpa.index');
 
@@ -594,7 +600,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
-    Route::get('/tasks/view', [ExecutorTaskController::class, 'view'])->name('tasks.view');
+    Route::get('tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
 });
 
