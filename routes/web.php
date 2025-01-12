@@ -40,6 +40,7 @@ use App\Http\Controllers\Partner\WithdrawalController as PartnerWithdrawalContro
 use App\Http\Controllers\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
 use App\Http\Controllers\Partner\NotificationController as PartnerNotificationController;
 use App\Http\Controllers\Partner\LPAController as PartnerLPAController;
+use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
 
 // Role Customer Controller 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
@@ -71,6 +72,7 @@ use App\Http\Controllers\Customer\WithdrawalController;
 use App\Http\Controllers\Customer\PicturesAndVideosController;
 use App\Http\Controllers\Customer\NotificationController;
 use App\Http\Controllers\Customer\LPAController;
+use App\Http\Controllers\Customer\TaskController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -96,6 +98,7 @@ use App\Http\Controllers\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Executor\WithdrawalController as ExecutorWithdrawalController;
 use App\Http\Controllers\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
 use App\Http\Controllers\Executor\LPAController as ExecutorLPAController;
+use App\Http\Controllers\Executor\TaskController as ExecutorTaskController;
 
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
@@ -352,6 +355,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/voice_notes/store', [VoiceNotesController::class, 'store'])->name('voice_notes.store');
     Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
 
+    // TASKS
+    Route::get('/tasks/view', [TaskController::class, 'view'])->name('tasks.view');
+
     // Messages
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
 
@@ -538,6 +544,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('reviews/{id}', [PartnerReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [PartnerReviewController::class, 'destroy'])->name('reviews.destroy');
 
+    // TASK
+    Route::get('/tasks/view', [PartnerTaskController::class, 'view'])->name('tasks.view');
 
     // OPENAI
     Route::get('/openai/view', [PartnerOpenAIController::class, 'index'])->name('openai.view');
@@ -586,6 +594,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::get('/tasks/view', [ExecutorTaskController::class, 'view'])->name('tasks.view');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
 });
 

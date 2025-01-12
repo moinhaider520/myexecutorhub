@@ -42,6 +42,8 @@ return new class extends Migration
             $table->string('expo_token')->nullable(); // Expo token
             $table->string('user_role')->nullable(); // This field is for cron job purpose only
             $table->timestamp('last_login')->nullable()->useCurrent(); // Default to current timestamp
+            $table->string('two_factor_code')->nullable(); 
+            $table->string('two_factor_expires_at')->nullable(); 
             $table->rememberToken();
             $table->timestamps();
         });
