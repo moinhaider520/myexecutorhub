@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Customer;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
+use App\Models\OnboardingProgress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
+
 class DocumentsController extends Controller
 {
-    use ImageUpload; 
+    use ImageUpload;
     public function view()
     {
         $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
@@ -39,6 +41,18 @@ class DocumentsController extends Controller
                 'created_by' => Auth::id()
             ]);
 
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['document_uploaded' => true]
+            );
+
+            // If the record exists but document_uploaded is false, update it
+            if (!$progress->document_uploaded) {
+                $progress->document_uploaded = true;
+                $progress->save();
+            }
+
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Document added successfully.']);
         } catch (\Exception $e) {
@@ -54,29 +68,29 @@ class DocumentsController extends Controller
             'description' => 'required',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
         ]);
-    
+
         try {
             DB::beginTransaction();
-    
+
             $document = Document::findOrFail($id);
-    
+
             $document->document_type = $request->document_type;
             $document->description = $request->description;
             $document->created_by = Auth::id();
-    
+
             if ($request->hasFile('file')) {
                 // Delete the file from the public/assets/upload directory
                 $filePath = public_path('assets/upload/' . basename($document->file_path));
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
-    
+
                 $path = $this->imageUpload($request->file('file'), 'documents');
                 $document->file_path = $path;
             }
-    
+
             $document->save();
-    
+
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
         } catch (\Exception $e) {
@@ -84,7 +98,7 @@ class DocumentsController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
-    
+
     public function destroy($id)
     {
         try {
@@ -100,8 +114,7 @@ class DocumentsController extends Controller
             $document->delete();
             DB::commit();
             return redirect()->route('customer.documents.view')->with('success', 'Document deleted successfully.');
-        } catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }

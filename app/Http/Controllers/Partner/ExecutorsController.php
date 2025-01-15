@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\OnboardingProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -51,6 +52,18 @@ class ExecutorsController extends Controller
             ]);
 
             $executor->assignRole('executor');
+
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['executor_added' => true]
+            );
+
+            // If the record exists but executor_added is false, update it
+            if (!$progress->executor_added) {
+                $progress->executor_added = true;
+                $progress->save();
+            }
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Executor added successfully.']);

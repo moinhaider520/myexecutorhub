@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Partner;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Property;
+use App\Models\OnboardingProgress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\PropertyType;
+
 class PropertyController extends Controller
 {
     public function view()
@@ -39,6 +41,18 @@ class PropertyController extends Controller
                 'created_by' => Auth::id(),
             ]);
 
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['property_added' => true]
+            );
+
+            // If the record exists but property_added is false, update it
+            if (!$progress->property_added) {
+                $progress->property_added = true;
+                $progress->save();
+            }
+            
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Property added successfully.']);
         } catch (\Exception $e) {

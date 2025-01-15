@@ -3,23 +3,25 @@
 @section('content')
 <div class="page-body">
     <!-- ONBOARDING SECTION -->
+    @if (!collect($guide)->every(fn($completed) => $completed))
     <div class="container">
         <div class="row">
             <div class="card">
                 <h2 class="p-2">Onboarding Guide</h2>
                 <br />
                 <ol>
-                    <li>Add at Least One Executor [Complete]</li>
-                    <li>Add at Least One Bank Account</li>
-                    <li>Add at Least One Digital Asset [Complete]</li>
-                    <li>Add at Least One Property Owned</li>
-                    <li>Upload at Least One Document</li>
-                    <li>Upload at Least One Picture</li>
+                    @foreach ($guide as $task => $completed)
+                    @if ($completed)
+                    <li style="color: green;">{{ $task }} (Completed)</li>
+                    @else
+                    <li style="color: red;">{{ $task }}</li>
+                    @endif
+                    @endforeach
                 </ol>
             </div>
         </div>
     </div>
-
+    @endif
     <!-- Coupon Section -->
     <div class="container">
         <div class="row">

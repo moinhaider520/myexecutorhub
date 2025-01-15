@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\BankAccount;
+use App\Models\OnboardingProgress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,18 @@ class BankAccountController extends Controller
                 'balance' => $request->balance,
                 'created_by' => Auth::id()
             ]);
+
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['bank_account_added' => true]
+            );
+
+            // If the record exists but bank_account_added is false, update it
+            if (!$progress->bank_account_added) {
+                $progress->bank_account_added = true;
+                $progress->save();
+            }
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Bank account added successfully.']);

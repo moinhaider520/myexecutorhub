@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\OnboardingProgress;
 use App\Models\DigitalAsset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,18 @@ class DigitalAssetController extends Controller
                 'value' => $request->value,
                 'created_by' => Auth::id(),
             ]);
+
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['digital_asset_added' => true]
+            );
+
+            // If the record exists but digital_asset_added is false, update it
+            if (!$progress->digital_asset_added) {
+                $progress->digital_asset_added = true;
+                $progress->save();
+            }
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Digital Asset added successfully.']);
@@ -90,7 +103,6 @@ class DigitalAssetController extends Controller
             $digitalAsset->delete();
             DB::commit();
             return redirect()->route('partner.digital_assets.view')->with('success', 'Digital Asset deleted successfully.');
-
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -111,4 +123,3 @@ class DigitalAssetController extends Controller
         return response()->json(['success' => true]);
     }
 }
-

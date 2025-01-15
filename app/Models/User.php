@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasApiTokens,Notifiable, HasRoles;
+    use HasFactory, HasApiTokens, Notifiable, HasRoles;
 
 
     /**
@@ -19,7 +19,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded=[];
+    protected $guarded = [];
 
 
     /**
@@ -44,9 +44,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
+
     public function tasks()
     {
-        return $this->hasMany(Task::class, 'created_by'); 
+        return $this->hasMany(Task::class, 'created_by');
+    }
+
+    public function onboardingProgress()
+    {
+        return $this->hasOne(OnboardingProgress::class, 'user_id');
     }
 }
