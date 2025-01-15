@@ -156,6 +156,22 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Wills </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.wills.create') }}">Create</a></li>
+                            <li><a href="{{ route('partner.wills.index') }}">View</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -427,6 +443,21 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.lpa.create') }}">Create</a></li>
                             <li><a href="{{ route('customer.lpa.index') }}">View</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Wills </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.wills.create') }}">Create</a></li>
+                            <li><a href="{{ route('customer.wills.index') }}">View</a></li>
                         </ul>
                     </li>
                     @endif
@@ -705,6 +736,22 @@
                             <li><a href="{{ route('executor.lpa.index') }}">View</a></li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Wills </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('executor.wills.index') }}">View</a></li>
+                        </ul>
+                    </li>
+
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">

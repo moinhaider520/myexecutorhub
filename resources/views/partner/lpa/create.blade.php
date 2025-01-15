@@ -98,7 +98,7 @@
   const canvasContext = videoCanvas.getContext("2d");
 
   // Define the number of videos and a function to get video URLs lazily
-  const totalVideos = 23;
+  const totalVideos = 16;
   const getVideoUrl = (index) => `{{ asset('assets/lpa_videos/video') }}` + (index + 1) + `.mp4`;
   let currentVideoIndex = 0;
   let webcamStream;

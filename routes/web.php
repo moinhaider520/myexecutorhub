@@ -40,6 +40,7 @@ use App\Http\Controllers\Partner\WithdrawalController as PartnerWithdrawalContro
 use App\Http\Controllers\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
 use App\Http\Controllers\Partner\NotificationController as PartnerNotificationController;
 use App\Http\Controllers\Partner\LPAController as PartnerLPAController;
+use App\Http\Controllers\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
 
 // Role Customer Controller 
@@ -72,6 +73,7 @@ use App\Http\Controllers\Customer\WithdrawalController;
 use App\Http\Controllers\Customer\PicturesAndVideosController;
 use App\Http\Controllers\Customer\NotificationController;
 use App\Http\Controllers\Customer\LPAController;
+use App\Http\Controllers\Customer\WillController;
 use App\Http\Controllers\Customer\TaskController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
@@ -98,6 +100,7 @@ use App\Http\Controllers\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Executor\WithdrawalController as ExecutorWithdrawalController;
 use App\Http\Controllers\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
 use App\Http\Controllers\Executor\LPAController as ExecutorLPAController;
+use App\Http\Controllers\Executor\WillController as ExecutorWillController;
 use App\Http\Controllers\Executor\TaskController as ExecutorTaskController;
 
 // Others Controllers
@@ -205,6 +208,12 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('lpa/create', [LPAController::class, 'create'])->name('lpa.create');
     Route::post('lpa/store', [LPAController::class, 'store'])->name('lpa.store');
     Route::delete('/lpa/destroy/{id}', [LPAController::class, 'destroy'])->name('lpa.destroy');
+
+    // WILLS
+    Route::get('wills', [WillController::class, 'index'])->name('wills.index');
+    Route::get('wills/create', [WillController::class, 'create'])->name('wills.create');
+    Route::post('wills/store', [WillController::class, 'store'])->name('wills.store');
+    Route::delete('/wills/destroy/{id}', [WillController::class, 'destroy'])->name('wills.destroy');
 
     // Notifications 
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -388,6 +397,12 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');
     Route::post('lpa/store', action: [PartnerLPAController::class, 'store'])->name('lpa.store');
     Route::delete('/lpa/destroy/{id}', [PartnerLPAController::class, 'destroy'])->name('lpa.destroy');
+
+    // WILLS
+    Route::get('wills', [PartnerWillController::class, 'index'])->name('wills.index');
+    Route::get('wills/create', [PartnerWillController::class, 'create'])->name('wills.create');
+    Route::post('wills/store', action: [PartnerWillController::class, 'store'])->name('wills.store');
+    Route::delete('/wills/destroy/{id}', [PartnerWillController::class, 'destroy'])->name('wills.destroy');
 
     // Assign Permission 
     Route::get('/assign-permissions', [PartnerPermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');
@@ -579,6 +594,9 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
 
     // LPA 
     Route::get('lpa', [ExecutorLPAController::class, 'index'])->name('lpa.index');
+
+    // WILLS
+    Route::get('wills', [ExecutorWillController::class, 'index'])->name('wills.index');
 
     // Executors View Routes
     Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');

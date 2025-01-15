@@ -63,7 +63,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>LPA Video</h4>
+              <h4>Will Video</h4>
             </div>
             <div class="card-body">
               <div id="dummy-text">
@@ -109,8 +109,8 @@
   const canvasContext = videoCanvas.getContext("2d");
 
   // Define the number of videos and a function to get video URLs lazily
-  const totalVideos = 16;
-  const getVideoUrl = (index) => `{{ asset('assets/lpa_videos/video') }}` + (index + 1) + `.mp4`;
+  const totalVideos = 22;
+  const getVideoUrl = (index) => `{{ asset('assets/will_videos/video') }}` + (index + 1) + `.mp4`;
   let currentVideoIndex = 0;
   let webcamStream;
   let recorder;
@@ -242,7 +242,7 @@
 
       // AJAX request to upload the video
       $.ajax({
-        url: "/lpa/store",
+        url: "/wills/store",
         type: "POST",
         headers: {
           "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),

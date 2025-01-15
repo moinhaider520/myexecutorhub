@@ -63,7 +63,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>LPA Video</h4>
+              <h4>Will Video</h4>
             </div>
             <div class="card-body">
               <div id="dummy-text">
@@ -72,7 +72,7 @@
               <button id="start-button" class="btn btn-primary w-100 mb-3">Start</button>
 
               <div class="canvas-container" id="canvas-container">
-                <canvas id="video-canvas" class="w-100" styl="width:100%;"></canvas>
+                <canvas id="video-canvas" class="w-100" style="width:100%;"></canvas>
                 <video class="preview" id="preview-video" autoplay></video>
 
                 <div class="controls">
@@ -109,8 +109,8 @@
   const canvasContext = videoCanvas.getContext("2d");
 
   // Define the number of videos and a function to get video URLs lazily
-  const totalVideos = 16;
-  const getVideoUrl = (index) => `{{ asset('assets/lpa_videos/video') }}` + (index + 1) + `.mp4`;
+  const totalVideos = 22;
+  const getVideoUrl = (index) => `{{ asset('assets/will_videos/video') }}` + (index + 1) + `.mp4`;
   let currentVideoIndex = 0;
   let webcamStream;
   let recorder;
@@ -118,14 +118,15 @@
 
   async function startWebcam() {
     try {
-      const constraints = {
-        video: {
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          facingMode: "user",
-        },
-        audio: true,
-      };
+const constraints = {
+  video: {
+    width: { ideal: 640 },
+    height: { ideal: 360 },
+    frameRate: { ideal: 15 },
+    facingMode: "user",
+  },
+  audio: true,
+};
 
       webcamStream = await navigator.mediaDevices.getUserMedia(constraints);
 
@@ -172,7 +173,11 @@
         draw();
       });
 
-      recorder = new MediaRecorder(combinedStream);
+recorder = new MediaRecorder(combinedStream, {
+  mimeType: "video/webm;codecs=vp8",
+  videoBitsPerSecond: 500000,
+  audioBitsPerSecond: 64000,
+});
       recorder.ondataavailable = (event) => recordedChunks.push(event.data);
       recorder.start();
     } catch (err) {
@@ -242,7 +247,7 @@
 
       // AJAX request to upload the video
       $.ajax({
-        url: "/lpa/store",
+        url: "/wills/store",
         type: "POST",
         headers: {
           "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
@@ -267,7 +272,6 @@
             title: "Upload Successful",
             text: "Your video has been uploaded successfully.",
           });
-          location.reload();
         },
         error: function (xhr, status, error) {
           Swal.fire({
