@@ -19,6 +19,23 @@ use App\Http\Controllers\Api\Partner\WishesController as PartnerWishesController
 use App\Http\Controllers\Api\Partner\LifeRememberedController as PartnerLifeRememberedController;
 use App\Http\Controllers\Api\Partner\VoiceNotesController as PartnerVoiceNotesController;
 use App\Http\Controllers\Api\Partner\OrgansDonationController as PartnerOrgansDonationController;
+use App\Http\Controllers\Api\Partner\BankAccountController as PartnerBankAccountController;
+use App\Http\Controllers\Api\Partner\InvestmentAccountController as PartnerInvestmentAccountController;
+use App\Http\Controllers\Api\Partner\PropertyController as PartnerPropertyController;
+use App\Http\Controllers\Api\Partner\PersonalChattelController as PartnerPersonalChattelController;
+use App\Http\Controllers\Api\Partner\AdvisorsController as PartnerAdvisorsController;
+use App\Http\Controllers\Api\Partner\ExecutorsController as PartnerExecutorsController;
+use App\Http\Controllers\Api\Partner\DocumentsController as PartnerDocumentsController;
+use App\Http\Controllers\Api\Partner\BusinessInterestController as PartnerBusinessInterestController;
+use App\Http\Controllers\Api\Partner\InsurancePolicyController as PartnerInsurancePolicyController;
+use App\Http\Controllers\Api\Partner\DebtAndLiabilityController as PartnerDebtAndLiabilityController;
+use App\Http\Controllers\Api\Partner\DigitalAssetController as PartnerDigitalAssetController;
+use App\Http\Controllers\Api\Partner\IntellectualPropertyController as PartnerIntellectualPropertyController;
+use App\Http\Controllers\Api\Partner\OtherAssetController as PartnerOtherAssetController;
+use App\Http\Controllers\Api\Partner\ReviewController as PartnerReviewController;
+use App\Http\Controllers\Api\Partner\OpenAIController as PartnerOpenAIController;
+use App\Http\Controllers\Api\Partner\MessageController as PartnerMessageController;
+use App\Http\Controllers\Api\Partner\PermissionController as PartnerPermissionController;
 use App\Http\Controllers\Api\Partner\WithdrawalController as PartnerWithdrawalController;
 use App\Http\Controllers\Api\Partner\LPAController as PartnerLPAController;
 
@@ -129,6 +146,110 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/withdraw/process', [PartnerWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [PartnerWithdrawalController::class, 'history'])->name('withdraw.history');
 
+    // Partner Advisors
+    Route::get('/advisors/view', [PartnerAdvisorsController::class, 'view'])->name('advisors.view');
+    Route::post('/advisors/store', [PartnerAdvisorsController::class, 'store'])->name('advisors.store');
+    Route::post('/advisors/update/{id}', [PartnerAdvisorsController::class, 'update'])->name('advisors.update');
+    Route::delete('/advisors/destroy/{id}', [PartnerAdvisorsController::class, 'destroy'])->name('advisors.destroy');
+
+    // Partner Executors
+    Route::get('/executors/view', [PartnerExecutorsController::class, 'view'])->name('executors.view');
+    Route::post('/executors/store', [PartnerExecutorsController::class, 'store'])->name('executors.store');
+    Route::post('/executors/update/{id}', [PartnerExecutorsController::class, 'update'])->name('executors.update');
+    Route::delete('/executors/destroy/{id}', [PartnerExecutorsController::class, 'destroy'])->name('executors.destroy');
+
+    // Custom Documents Type
+    Route::post('/documents/save_custom_type', [PartnerDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
+    // Partner Documents
+    Route::get('/documents/view', [PartnerDocumentsController::class, 'view'])->name('documents.view');
+    Route::post('/documents/store', [PartnerDocumentsController::class, 'store'])->name('documents.store');
+    Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');
+    Route::delete('/documents/destroy/{id}', [PartnerDocumentsController::class, 'destroy'])->name('documents.destroy');
+
+    // Reviews
+    Route::post('reviews', [PartnerReviewController::class, 'store'])->name('reviews.store');
+    Route::get('reviews/{id}', [PartnerReviewController::class, 'show'])->name('reviews.show');
+    Route::delete('reviews/{id}', [PartnerReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    // Partner Bank
+    Route::get('/bank_accounts/view', [PartnerBankAccountController::class, 'view'])->name('bank_accounts.view');
+    Route::post('/bank_accounts/store', [PartnerBankAccountController::class, 'store'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/update/{id}', [PartnerBankAccountController::class, 'update'])->name('bank_accounts.update');
+    Route::delete('/bank_accounts/destroy/{id}', [PartnerBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
+
+    // Custom Investment Types
+    Route::post('/investment_accounts/save_custom_type', [PartnerInvestmentAccountController::class, 'saveCustomType'])->name('investment_accounts.save_custom_type');
+    // Partner Savings
+    Route::get('/investment_accounts/view', [PartnerInvestmentAccountController::class, 'view'])->name('investment_accounts.view');
+    Route::post('/investment_accounts/store', [PartnerInvestmentAccountController::class, 'store'])->name('investment_accounts.store');
+    Route::post('/investment_accounts/update/{id}', [PartnerInvestmentAccountController::class, 'update'])->name('investment_accounts.update');
+    Route::delete('/investment_accounts/destroy/{id}', [PartnerInvestmentAccountController::class, 'destroy'])->name('investment_accounts.destroy');
+
+    // Custom Property Type
+    Route::post('/properties/save_custom_type', [PartnerPropertyController::class, 'saveCustomType'])->name('properties.save_custom_type');
+    // Partner Property (ies) Owned
+    Route::get('/properties/view', [PartnerPropertyController::class, 'view'])->name('properties.view');
+    Route::post('/properties/store', [PartnerPropertyController::class, 'store'])->name('properties.store');
+    Route::put('/properties/update/{id}', [PartnerPropertyController::class, 'update'])->name('properties.update');
+    Route::delete('/properties/{id}', [PartnerPropertyController::class, 'destroy'])->name('properties.destroy');
+
+    //Partner Custom Chattels
+    Route::post('/personal_chattels/save_custom_type', [PartnerPersonalChattelController::class, 'saveCustomType'])->name('personal_chattels.save_custom_type');
+
+    // Partner Chattels
+    Route::get('/personal_chattels/view', [PartnerPersonalChattelController::class, 'view'])->name('personal_chattels.view');
+    Route::post('/personal_chattels/store', [PartnerPersonalChattelController::class, 'store'])->name('personal_chattels.store');
+    Route::post('/personal_chattels/update/{id}', [PartnerPersonalChattelController::class, 'update'])->name('personal_chattels.update');
+    Route::delete('/personal_chattels/destroy/{id}', [PartnerPersonalChattelController::class, 'destroy'])->name('personal_chattels.destroy');
+
+    // Custom Business Types
+    Route::post('/business_interests/save_custom_type', [PartnerBusinessInterestController::class, 'saveCustomType'])->name('business_interests.save_custom_type');
+    // Partner Business interests
+    Route::get('/business_interests/view', [PartnerBusinessInterestController::class, 'view'])->name('business_interests.view');
+    Route::post('/business_interests/store', [PartnerBusinessInterestController::class, 'store'])->name('business_interests.store');
+    Route::post('/business_interests/update/{id}', [PartnerBusinessInterestController::class, 'update'])->name('business_interests.update');
+    Route::delete('/business_interests/destroy/{id}', [PartnerBusinessInterestController::class, 'destroy'])->name('business_interests.destroy');
+
+    // Custom Insurance Type
+    Route::post('/insurance_policies/save_custom_type', [PartnerInsurancePolicyController::class, 'saveCustomType'])->name('insurance_policies.save_custom_type');
+    // Partner Insurance Policies
+    Route::get('/insurance_policies/view', [PartnerInsurancePolicyController::class, 'view'])->name('insurance_policies.view');
+    Route::post('/insurance_policies/store', [PartnerInsurancePolicyController::class, 'store'])->name('insurance_policies.store');
+    Route::post('/insurance_policies/update/{id}', [PartnerInsurancePolicyController::class, 'update'])->name('insurance_policies.update');
+    Route::delete('/insurance_policies/destroy/{id}', [PartnerInsurancePolicyController::class, 'destroy'])->name('insurance_policies.destroy');
+
+    // Custom Debt Type
+    Route::post('/debt_and_liabilities/save_custom_type', [PartnerDebtAndLiabilityController::class, 'saveCustomType'])->name('debt_and_liabilities.save_custom_type');
+    // Partner Debt & Liability
+    Route::get('/debt_and_liabilities/view', [PartnerDebtAndLiabilityController::class, 'view'])->name('debt_and_liabilities.view');
+    Route::post('/debt_and_liabilities/store', [PartnerDebtAndLiabilityController::class, 'store'])->name('debt_and_liabilities.store');
+    Route::post('/debt_and_liabilities/update/{id}', [PartnerDebtAndLiabilityController::class, 'update'])->name('debt_and_liabilities.update');
+    Route::delete('/debt_and_liabilities/destroy/{id}', [PartnerDebtAndLiabilityController::class, 'destroy'])->name('debt_and_liabilities.destroy');
+
+    // Custom Digital Assets Type
+    Route::post('/digital_assets/save_custom_type', [PartnerDigitalAssetController::class, 'saveCustomType'])->name('digital_assets.save_custom_type');
+    // Partner Digital Assets
+    Route::get('/digital_assets/view', [PartnerDigitalAssetController::class, 'view'])->name('digital_assets.view');
+    Route::post('/digital_assets/store', [PartnerDigitalAssetController::class, 'store'])->name('digital_assets.store');
+    Route::post('/digital_assets/update/{id}', [PartnerDigitalAssetController::class, 'update'])->name('digital_assets.update');
+    Route::delete('/digital_assets/destroy/{id}', [PartnerDigitalAssetController::class, 'destroy'])->name('digital_assets.destroy');
+
+    // Custom Intellectual Property Types
+    Route::post('/intellectual_properties/save_custom_type', [PartnerIntellectualPropertyController::class, 'saveCustomType'])->name('intellectual_properties.save_custom_type');
+    // Partner Intellectual Property
+    Route::get('/intellectual_properties/view', [PartnerIntellectualPropertyController::class, 'view'])->name('intellectual_properties.view');
+    Route::post('/intellectual_properties/store', [PartnerIntellectualPropertyController::class, 'store'])->name('intellectual_properties.store');
+    Route::post('/intellectual_properties/update/{id}', [PartnerIntellectualPropertyController::class, 'update'])->name('intellectual_properties.update');
+    Route::delete('/intellectual_properties/destroy/{id}', [PartnerIntellectualPropertyController::class, 'destroy'])->name('intellectual_properties.destroy');
+
+    // Custom Other Asset Type
+    Route::post('/other_assets/save_custom_type', [PartnerOtherAssetController::class, 'saveCustomType'])->name('other_assets.save_custom_type');
+    // Partner Other Assets
+    Route::get('/other_assets/view', [PartnerOtherAssetController::class, 'view'])->name('other_assets.view');
+    Route::post('/other_assets/store', [PartnerOtherAssetController::class, 'store'])->name('other_assets.store');
+    Route::post('/other_assets/update/{id}', [PartnerOtherAssetController::class, 'update'])->name('other_assets.update');
+    Route::delete('/other_assets/destroy/{id}', [PartnerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
+
     Route::get('/guidance', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
     Route::post('/guidance/update', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
 
@@ -146,6 +267,18 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/organs-donations', [PartnerOrgansDonationController::class, 'store'])->name('organs_donations.store');
     Route::put('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
+
+    // OPENAI
+    Route::get('/openai/view', [PartnerOpenAIController::class, 'view'])->name('openai.view');
+    Route::post('/openai/chat', [PartnerOpenAIController::class, 'chat'])->name('openai.chat');
+
+    Route::post('/messages/send', [PartnerMessageController::class, 'sendMessage']);
+    Route::get('/messages/{userId}', [PartnerMessageController::class, 'getMessages']);
+    Route::get('/users', [PartnerMessageController::class, 'getUsers']);
+
+    // Assign Permission 
+    Route::get('/assign-permissions', [PartnerPermissionController::class, 'getRolesAndPermissions'])->name('assign_permissions_form');
+    Route::post('/assign-permissions', [PartnerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
 
     // LPAVIDEOS
     Route::get('/lpa', [PartnerLPAController::class, 'view'])->name('lpa.view');
