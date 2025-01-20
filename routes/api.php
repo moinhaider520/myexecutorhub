@@ -105,6 +105,7 @@ Route::get('/user', function (Request $request) {
 
 // Authentication routes
 Route::post('/login', [LoginController::class, 'login']);
+Route::post('verify-two-factor', [LoginController::class, 'verifyTwoFactor']);
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/send_reset_password_email', [ForgetPasswordController::class, 'send_reset_password_email']);
 
