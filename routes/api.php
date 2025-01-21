@@ -99,9 +99,16 @@ use App\Http\Controllers\Api\ExpoController;
 
 use Stripe\Customer;
 
+
+use App\Http\Controllers\Api\StripePaymentController;
+
+Route::post('/stripe-payment', [StripePaymentController::class, 'stripePayment']);
+
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+
 
 // Authentication routes
 Route::post('/login', [LoginController::class, 'login']);
