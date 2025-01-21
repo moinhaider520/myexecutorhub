@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Customer;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
+use App\Models\OnboardingProgress;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -59,6 +60,18 @@ class DocumentsController extends Controller
                 'file_path' => $path,
                 'created_by' => Auth::id()
             ]);
+
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['document_uploaded' => true]
+            );
+
+            // If the record exists but document_uploaded is false, update it
+            if (!$progress->document_uploaded) {
+                $progress->document_uploaded = true;
+                $progress->save();
+            }
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Document added successfully.'], 201);

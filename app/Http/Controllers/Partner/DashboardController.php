@@ -43,7 +43,8 @@ class DashboardController extends Controller
               'totalExecutors',
               'totalDocuments',
               'totalBankBalance',
-              'totalDebt'
+              'totalDebt',
+              'guide'
           ));
     }    
 }

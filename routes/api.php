@@ -38,6 +38,8 @@ use App\Http\Controllers\Api\Partner\MessageController as PartnerMessageControll
 use App\Http\Controllers\Api\Partner\PermissionController as PartnerPermissionController;
 use App\Http\Controllers\Api\Partner\WithdrawalController as PartnerWithdrawalController;
 use App\Http\Controllers\Api\Partner\LPAController as PartnerLPAController;
+use App\Http\Controllers\Api\Partner\TaskController as PartnerTaskController;
+
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -66,7 +68,7 @@ use App\Http\Controllers\Api\Customer\MessageController as CustomerMessageContro
 use App\Http\Controllers\Api\Customer\PermissionController as CustomerPermissionController;
 use App\Http\Controllers\Api\Customer\WithdrawalController as CustomerWithdrawalController;
 use App\Http\Controllers\Api\Customer\LPAController as CustomerLPAController;
-
+use App\Http\Controllers\Api\Customer\TaskController as CustomerTaskController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -92,6 +94,7 @@ use App\Http\Controllers\Api\Executor\MessageController as ExecutorMessageContro
 use App\Http\Controllers\Api\Executor\OpenAIController as ExecutorOpenAIController;
 use App\Http\Controllers\Api\Executor\WithdrawalController as ExecutorWithdrawalController;
 use App\Http\Controllers\Api\Executor\LPAController as ExecutorLPAController;
+use App\Http\Controllers\Api\Executor\TaskController as ExecutorTaskController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -276,6 +279,13 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::put('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
 
+    
+    // TASKS
+    Route::get('/tasks', [PartnerTaskController::class, 'index'])->name('tasks.index');
+    Route::post('/tasks', [PartnerTaskController::class, 'store'])->name('tasks.store');
+    Route::put('/tasks/{id}', [PartnerTaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [PartnerTaskController::class, 'destroy'])->name('tasks.destroy');
+
     // OPENAI
     Route::get('/openai/view', [PartnerOpenAIController::class, 'view'])->name('openai.view');
     Route::post('/openai/chat', [PartnerOpenAIController::class, 'chat'])->name('openai.chat');
@@ -427,6 +437,12 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::put('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
 
+    // Task
+    Route::get('/tasks', [CustomerTaskController::class, 'index'])->name('tasks.index');
+    Route::post('/tasks', [CustomerTaskController::class, 'store'])->name('tasks.store');
+    Route::put('/tasks/{id}', [CustomerTaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [CustomerTaskController::class, 'destroy'])->name('tasks.destroy');
+
     // OPENAI
     Route::get('/openai/view', [CustomerOpenAIController::class, 'view'])->name('openai.view');
     Route::post('/openai/chat', [CustomerOpenAIController::class, 'chat'])->name('openai.chat');
@@ -479,6 +495,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/digital_assets', [ExecutorDigitalAssetController::class, 'index'])->name('digital_assets.view');
     Route::get('/intellectual_properties', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
     Route::get('/other_assets', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
+    Route::get('/tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
 
     Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']);
     Route::get('/messages/{userId}', [ExecutorMessageController::class, 'getMessages']);

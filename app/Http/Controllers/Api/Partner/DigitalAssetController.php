@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Models\DigitalAsset;
+use App\Models\OnboardingProgress;
 use App\Models\DigitalAssetsTypes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,6 +57,18 @@ class DigitalAssetController extends Controller
                 'value' => $request->value,
                 'created_by' => Auth::id(),
             ]);
+
+            // Check if onboarding_progress exists for the user
+            $progress = OnboardingProgress::firstOrCreate(
+                ['user_id' => Auth::id()],
+                ['digital_asset_added' => true]
+            );
+
+            // If the record exists but digital_asset_added is false, update it
+            if (!$progress->digital_asset_added) {
+                $progress->digital_asset_added = true;
+                $progress->save();
+            }
 
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Digital Asset added successfully.'], 200);

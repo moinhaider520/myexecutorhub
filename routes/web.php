@@ -365,10 +365,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::delete('/voice_notes/destroy/{id}', [VoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
 
     // TASKS
-    Route::get('tasks', [TaskController::class, 'index'])->name('tasks.index');
-    Route::post('tasks', [TaskController::class, 'store'])->name('tasks.store');
-    Route::put('tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
-    Route::delete('tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+    Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::put('/tasks/{id}', [TaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
     // Messages
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
