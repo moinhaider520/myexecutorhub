@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\LPAController as LPAControllerMobile;
+use App\Http\Controllers\WillController as WillControllerMobile;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 
@@ -148,6 +149,9 @@ Route::get('/', function () {
 
 Route::get('/lpa/create/{id}', [LPAControllerMobile::class, 'create']);
 Route::post('lpa/store', [LPAControllerMobile::class, 'store'])->name('lpa.store');
+
+Route::get('/wills/create/{id}', [WillControllerMobile::class, 'create']);
+Route::post('wills/store', [WillControllerMobile::class, 'store'])->name('wills.store');
 
 
 Auth::routes();

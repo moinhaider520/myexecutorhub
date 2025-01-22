@@ -40,6 +40,7 @@ use App\Http\Controllers\Api\Partner\WithdrawalController as PartnerWithdrawalCo
 use App\Http\Controllers\Api\Partner\LPAController as PartnerLPAController;
 use App\Http\Controllers\Api\Partner\TaskController as PartnerTaskController;
 
+use App\Http\Controllers\Api\Partner\WillController as PartnerWillController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -69,6 +70,8 @@ use App\Http\Controllers\Api\Customer\PermissionController as CustomerPermission
 use App\Http\Controllers\Api\Customer\WithdrawalController as CustomerWithdrawalController;
 use App\Http\Controllers\Api\Customer\LPAController as CustomerLPAController;
 use App\Http\Controllers\Api\Customer\TaskController as CustomerTaskController;
+use App\Http\Controllers\Api\Customer\WillController as CustomerWillController;
+
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -95,6 +98,7 @@ use App\Http\Controllers\Api\Executor\OpenAIController as ExecutorOpenAIControll
 use App\Http\Controllers\Api\Executor\WithdrawalController as ExecutorWithdrawalController;
 use App\Http\Controllers\Api\Executor\LPAController as ExecutorLPAController;
 use App\Http\Controllers\Api\Executor\TaskController as ExecutorTaskController;
+use App\Http\Controllers\Api\Executor\WillController as ExecutorWillController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -300,6 +304,9 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
 
     // LPAVIDEOS
     Route::get('/lpa', [PartnerLPAController::class, 'view'])->name('lpa.view');
+
+    // WILLS
+    Route::get('/wills', [PartnerWillController::class, 'view'])->name('wills.view');
 });
 
 // Customer-specific routes
@@ -457,6 +464,9 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     // LPAVIDEOS
     Route::get('/lpa', [CustomerLPAController::class, 'view'])->name('lpa.view');
+
+    // WILLS
+    Route::get('/wills', [CustomerWillController::class, 'view'])->name('wills.view');
 });
 
 // Executor-specific routes
@@ -508,4 +518,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
 
     // LPAVIDEOS
     Route::get('/lpa', [ExecutorLPAController::class, 'view'])->name('lpa.view');
+
+    // WILLS
+    Route::get('/wills', [ExecutorWillController::class, 'view'])->name('wills.view');
 });
