@@ -35,6 +35,22 @@ class DocumentsController extends Controller
         }
     }
 
+    public function ViewByDocType($document_type)
+    {
+        try {
+            $documents = Document::where('created_by', Auth::id())
+                ->where('document_type', $document_type) 
+                ->get();
+
+            return response()->json([
+                'success' => true,
+                'documents' => $documents,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
     /**
      * Store a newly created document.
      *

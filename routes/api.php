@@ -119,7 +119,7 @@ Route::get('/user', function (Request $request) {
 
 // Authentication routes
 Route::post('/login', [LoginController::class, 'login']);
-Route::post('verify-two-factor', [LoginController::class, 'verifyTwoFactor']);
+Route::post('/verify-two-factor', [LoginController::class, 'verifyTwoFactor']);
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/send_reset_password_email', [ForgetPasswordController::class, 'send_reset_password_email']);
 
@@ -180,6 +180,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/documents/store', [PartnerDocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [PartnerDocumentsController::class, 'destroy'])->name('documents.destroy');
+    Route::get('/documents/view/{document_type}', [PartnerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
 
     // Reviews
     Route::post('reviews', [PartnerReviewController::class, 'store'])->name('reviews.store');
@@ -341,6 +342,7 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/documents/store', [CustomerDocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [CustomerDocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [CustomerDocumentsController::class, 'destroy'])->name('documents.destroy');
+    Route::get('/documents/view/{document_type}', [CustomerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
 
     // Reviews
     Route::post('reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
