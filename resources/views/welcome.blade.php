@@ -126,6 +126,10 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#faqs-3" class="h-link">FAQs</a>
                                 </li>
 
+                                <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy" class="h-link">D.L.E</a>
+                                </li>
+
+                                
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact
                                         Us</a></li>
@@ -133,18 +137,18 @@
                                         With
                                         Us</a></li>
                                 @guest
-                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                </li>
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
-                                </li>
+                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                    </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{route('register')}}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                    </li>
                                 @else
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                    </li>
                                 @endguest
 
                             </ul>
@@ -1247,7 +1251,8 @@
                             <div class="more-questions-txt bg--white-400 r-100">
                                 <p class="p-lg">
                                     Download the App on App Store <i class="fa-brands fa-app-store-ios"></i>
-                                    <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank" class="color--theme">Download App</a>
+                                    <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
+                                        class="color--theme">Download App</a>
                                 </p>
                             </div>
                         </div>
@@ -1378,7 +1383,8 @@
                         <div class="section-title text-center mb-80">
                             <h2 class="s-52 w-700">Questions? Let's Talk</h2>
                             <p class="p-lg">
-                                Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know what
+                                Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know
+                                what
                                 you are looking for, and we’ll get back to you right away.
                             </p>
                         </div>
@@ -1390,20 +1396,21 @@
                     <div class="col-md-11 col-lg-10 col-xl-8">
                         <div class="form-holder">
                             @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
                             @endif
                             @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             @endif
-                            <form id="contact-form" class="row contact-form" action="{{ route('contact.submit') }}" method="POST">
+                            <form id="contact-form" class="row contact-form" action="{{ route('contact.submit') }}"
+                                method="POST">
                                 @csrf
                                 <!-- Form Select -->
                                 <div class="col-md-12 input-subject">
@@ -1423,21 +1430,24 @@
                                 <div class="col-md-12">
                                     <p class="p-lg">Your Name:</p>
                                     <span>Please enter your real name:</span>
-                                    <input type="text" name="name" class="form-control" placeholder="Your Name*" required />
+                                    <input type="text" name="name" class="form-control" placeholder="Your Name*"
+                                        required />
                                 </div>
 
                                 <!-- Email Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Your Email Address:</p>
                                     <span>Please carefully check your email address for accuracy:</span>
-                                    <input type="email" name="email" class="form-control" placeholder="Email Address*" required />
+                                    <input type="email" name="email" class="form-control" placeholder="Email Address*"
+                                        required />
                                 </div>
 
                                 <!-- Message Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Explain your question in details:</p>
                                     <span>Your Issue/Concern:</span>
-                                    <textarea name="message" class="form-control" rows="6" placeholder="I have a problem with..." required></textarea>
+                                    <textarea name="message" class="form-control" rows="6"
+                                        placeholder="I have a problem with..." required></textarea>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -1485,7 +1495,8 @@
                     <div class="col-md-6">
                         <div class="img-block left-column wow fadeInRight"
                             style="visibility: visible; animation-name: fadeInRight;">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-02.png')}}" alt="content-image">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-02.png')}}"
+                                alt="content-image">
                         </div>
                     </div>
 
@@ -1516,6 +1527,61 @@
             </div> <!-- End container -->
         </section>
 
+        <section class="pt-100 ct-02 content-section division" id="digitallegacy">
+            <div class="container">
+
+
+                <div class="row">
+
+                    <div class="section-title text-center mb-80">
+                        <!-- Title -->
+                        <h2 class="s-52 w-700">
+                            Digital legacy explorer</h2>
+
+                        <!-- Text -->
+                        <p class="p-lg">A guide to estate planning for digital assets</p>
+                    </div>
+                    <!-- Left Column -->
+                    <div class="col-md-6 border-end">
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Google')">
+                            Google
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Facebook')">
+                            Facebook
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Instagram')">
+                            Instagram
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2" onclick="selectItem('Apple')">
+                            Apple
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Linkedin')">
+                            LinkedIn
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2" onclick="selectItem('Avios')">
+                            Avios
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Twitter')">
+                            Twitter
+                        </button>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div id="displayText"
+                        class="col-md-6 d-flex align-items-center justify-content-center text-secondary">
+                        Select an Asset to see details here.
+                    </div>
+                </div>
+
+
+            </div> <!-- End container -->
+        </section>
+
         <section class="pt-100 ct-02 content-section division">
             <div class="container">
 
@@ -1528,7 +1594,8 @@
                     <div class="col-md-6">
                         <div class="img-block left-column wow fadeInRight"
                             style="visibility: visible; animation-name: fadeInRight;">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-08.png')}}" alt="content-image">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-08.png')}}"
+                                alt="content-image">
                         </div>
                     </div>
 
@@ -1622,7 +1689,8 @@
                                     <p><a href="#faqs-3">FAQ's</a></p>
                                 </li>
                                 <li>
-                                    <p><a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank">Download From AppStore</a></p>
+                                    <p><a href="https://apps.apple.com/us/app/executor-hub/id6737507623"
+                                            target="_blank">Download From AppStore</a></p>
                                 </li>
                             </ul>
                         </div>
@@ -1746,24 +1814,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function(e) {
+            contextmenu: function (e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function(e) {
+            mousedown: function (e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function(e) {
+            mouseup: function (e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function() {
-            $(".switch").click(function() {
+        $(function () {
+            $(".switch").click(function () {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1775,7 +1843,7 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {
@@ -1785,6 +1853,28 @@
     </script>
     <script src="{{ asset('assets/frontend/js/changer.js') }}"></script>
     <script defer src="{{ asset('assets/frontend/js/styleswitch.js') }}"></script>
+
+    <script>
+        function selectItem(item) {
+            let text = "";
+            if (item === "Google") {
+                text = "Google has a pre-planning tool called “Inactive account manager” which allows the user to set up a nominated individual to access their Google account if they have not logged in after a set period of time. It is therefore important to set up this service if you wish to allow family members to access the relevant information they may need in your Google account. Google accounts can also be closed down via the Inactive account manager page.";
+            } else if (item === "Facebook") {
+                text = "Facebook provides a legacy contact feature which allows the contact to memorialise and look after the deceased individual’s profile. This includes writing a new pinned post, removing/editing old posts and reading messages. It is therefore essential to only nominate an individual as a legacy contact which someone you would be comfortable sharing this information with after you have passed away. Facebook also has the ability to deactivate a deceased individual’s account in order to prevent fraud and spam. Both of these services can be set up through the Facebook help centre.";
+            } else if (item === "Instagram") {
+                text = "Instagram offers a memorialisation service, which allows a deceased individual’s account to stay online without the risk of fraud or unwanted changes to your account. It is therefore important to make clear in your wishes if you would want this. Alternatively, the account can be closed and your family will need your Instagram handle and request to close it via their help centre.";
+            } else if (item === "Apple") {
+                text = "Apple offers a pre-planning tool called “legacy contact” which allows nominated trusted individuals of your choosing to access your account after you have passed away. The legacy contact feature can be very helpful as without it in place family members will need a court order to gain access to a loved one’s Apple account. Apple accounts can also be deactivated to prevent fraud via the help centre.";
+            } else if (item === "Linkedin") {
+                text = "LinkedIn offers a memorialisation service, which allows a deceased individual’s account to stay online without the risk of fraud or unwanted changes to your account. It is therefore important to make clear in your wishes if you would want this. Alternatively, the account can be closed. Your family will need your LinkedIn URL, death certificate and legal authorisation document to either memorialise or close your account via LinkedIn’s help centre.";
+            } else if (item === "Avios") {
+                text = "Membership will terminate automatically upon the death of a member, Points accumulated but unused at the time of death shall be cancelled together with membership of the Scheme.";
+            } else if (item === "Twitter") {
+                text = "Twitter may automatically close accounts after prolonged periods of inactivity. If you want your account closed before to prevent fraud then your family will need your Twitter handle and request to close it via their help centre.";
+            }
+            document.getElementById('displayText').innerText = text;
+        }
+    </script>
 </body>
 
 </html>
