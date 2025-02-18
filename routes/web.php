@@ -137,6 +137,7 @@ Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-fac
 
 Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
+    Route::get('stripe_mobile', 'stripe_mobile')->name('stripe_mobile');
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
 
@@ -146,6 +147,22 @@ Route::post('/contact-submit', [ContactController::class, 'submit'])->name('cont
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/cookies', function () {
+    return view('cookies');
+})->name('cookies');
+
+Route::get('/terms_of_use', function () {
+    return view('terms_of_use');
+})->name('terms_of_use');
+
+Route::get('/privacy_policy', function () {
+    return view('privacy_policy');
+})->name('privacy_policy');
+
+
+
+
 
 Route::get('/lpa/create/{id}', [LPAControllerMobile::class, 'create']);
 Route::post('lpa/store', [LPAControllerMobile::class, 'store'])->name('lpa.store');

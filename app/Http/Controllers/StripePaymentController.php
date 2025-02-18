@@ -22,6 +22,11 @@ class StripePaymentController extends Controller
         return view('stripe');
     }
 
+    public function stripe_mobile(): View
+    {
+        return view('stripe_mobile');
+    }
+
     /**
      * Handle the Stripe payment.
      */

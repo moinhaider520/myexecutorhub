@@ -3944,10 +3944,12 @@ p.video-txt-sm {
 
 .navbar-dark .wsmenu>.wsmenu-list>li>a.h-link {
     color: #353f4f;
+    font-size: 16px;
 }
 
 .navbar-light .wsmenu>.wsmenu-list>li>a.h-link {
     color: #fff;
+    font-size: 16px;
 }
 
 .wsmenu>.wsmenu-list>li>a.h-link.last-link {
@@ -4545,6 +4547,7 @@ span.sm-info {
 .tra-menu.navbar-dark.white-scroll .scroll .wsmenu>.wsmenu-list>li>a.h-link,
 .tra-menu.navbar-light.white-scroll .scroll .wsmenu>.wsmenu-list>li>a.h-link {
     color: #353f4f;
+    font-size: 16px;
 }
 
 .navbar-light.white-scroll .scroll .wsmenu-list>li>a.h-link:hover {

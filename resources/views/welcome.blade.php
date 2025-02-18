@@ -126,10 +126,11 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#faqs-3" class="h-link">FAQs</a>
                                 </li>
 
-                                <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy" class="h-link">D.L.E</a>
+                                <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy"
+                                        class="h-link">Digital Legacy</a>
                                 </li>
 
-                                
+
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact
                                         Us</a></li>
@@ -208,7 +209,7 @@
                     <!-- IMAGE BLOCK -->
                     <div class="col-md-6">
                         <div class="img-block left-column wow fadeInRight">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-09.png')}}"
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/legacies.jpg')}}"
                                 alt="content-image" />
                         </div>
                     </div>
@@ -451,6 +452,69 @@
                             </div>
                         </div>
                         <!-- END FEATURE BOX #6 -->
+
+                        <!-- FEATURE BOX #7 -->
+                        <div class="col">
+                            <div class="fbox-11 fb-6 wow fadeInUp mt-4">
+                                <!-- Icon -->
+                                <div class="fbox-ico-wrap">
+                                    <div class="fbox-ico ico-50">
+                                        <div class="shape-ico color--theme">
+                                            <!-- Vector Icon -->
+                                            <span class="flaticon-search-engine-1"></span>
+
+                                            <!-- Shape -->
+                                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Icon -->
+
+                                <!-- Text -->
+                                <div class="fbox-txt">
+                                    <h6 class="s-22 w-700">Capacity Proof Videos</h6>
+                                    <p>Record Capcity Proof Videos for your Will and LPA with ease.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END FEATURE BOX #7 -->
+
+                        <!-- FEATURE BOX #7 -->
+                        <div class="col">
+                            <div class="fbox-11 fb-6 wow fadeInUp mt-4">
+                                <!-- Icon -->
+                                <div class="fbox-ico-wrap">
+                                    <div class="fbox-ico ico-50">
+                                        <div class="shape-ico color--theme">
+                                            <!-- Vector Icon -->
+                                            <span class="flaticon-search-engine-1"></span>
+
+                                            <!-- Shape -->
+                                            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M69.8,-23C76.3,-2.7,57.6,25.4,32.9,42.8C8.1,60.3,-22.7,67,-39.1,54.8C-55.5,42.7,-57.5,11.7,-48.6,-11.9C-39.7,-35.5,-19.8,-51.7,5.9,-53.6C31.7,-55.6,63.3,-43.2,69.8,-23Z"
+                                                    transform="translate(100 100)" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Icon -->
+
+                                <!-- Text -->
+                                <div class="fbox-txt">
+                                    <h6 class="s-22 w-700">AI Assisstance</h6>
+                                    <p>Executor Hub AI Provides assistance for using the Portal.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END FEATURE BOX #7 -->
+
+
+
                     </div>
                     <!-- End row -->
                 </div>
@@ -561,6 +625,7 @@
                                             <li>Record Life Notes</li>
                                             <li>Record Wishes</li>
                                             <li>Access to Executor Hub AI</li>
+                                            <li>Capacity Proof Videos</li>
                                         </ol>
                                         </p>
                                     </div>
@@ -825,168 +890,6 @@
         </section>
         <!-- END TEXT CONTENT -->
 
-        <!-- TESTIMONIALS-2
-			============================================= -->
-        <section id="reviews-2" class="pt-100 reviews-section">
-            <div class="container">
-                <!-- SECTION TITLE -->
-                <div class="row justify-content-center">
-                    <div class="col-md-10 col-lg-9">
-                        <div class="section-title mb-70">
-                            <!-- Title -->
-                            <h2 class="s-50 w-700">Our Happy Customers</h2>
-
-                            <!-- Text -->
-                            <p class="s-21 color--grey">Ligula risus auctor tempus magna feugiat lacinia.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TESTIMONIALS-2 WRAPPER -->
-                <div class="reviews-2-wrapper rel shape--02 shape--whitesmoke">
-                    <div class="row align-items-center row-cols-1 row-cols-md-2">
-                        <!-- TESTIMONIAL #1 -->
-                        <div class="col">
-                            <div id="rw-2-1" class="review-2 bg--white-100 block-shadow r-08">
-                                <!-- Quote Icon -->
-                                <div class="review-ico ico-65"><span class="flaticon-quote"></span></div>
-
-                                <!-- Text -->
-                                <div class="review-txt">
-                                    <!-- Text -->
-                                    <p>Quaerat sodales sapien euismod blandit aliquet ipsum primis undo and cubilia
-                                        laoreet augue and luctus magna dolor luctus egestas sapien vitae</p>
-
-                                    <!-- Author -->
-                                    <div class="author-data clearfix">
-                                        <!-- Avatar -->
-                                        <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-1.jpg')}}"
-                                                alt="review-avatar" />
-                                        </div>
-
-                                        <!-- Data -->
-                                        <div class="review-author">
-                                            <h6 class="s-18 w-700">Scott Boxer</h6>
-                                            <p class="p-sm">@scott_boxer</p>
-                                        </div>
-                                    </div>
-                                    <!-- End Author -->
-                                </div>
-                                <!-- End Text -->
-                            </div>
-                        </div>
-                        <!-- END TESTIMONIAL #1 -->
-
-                        <!-- TESTIMONIAL #2 -->
-                        <div class="col">
-                            <div id="rw-2-2" class="review-2 bg--white-100 block-shadow r-08">
-                                <!-- Quote Icon -->
-                                <div class="review-ico ico-65"><span class="flaticon-quote"></span></div>
-
-                                <!-- Text -->
-                                <div class="review-txt">
-                                    <!-- Text -->
-                                    <p>At sagittis congue augue and magna ipsum vitae a purus ipsum primis diam a
-                                        cubilia laoreet augue egestas luctus a donec vitae ultrice ligula magna suscipit
-                                        lectus gestas augue into cubilia</p>
-
-                                    <!-- Author -->
-                                    <div class="author-data clearfix">
-                                        <!-- Avatar -->
-                                        <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-2.jpg')}}"
-                                                alt="review-avatar" />
-                                        </div>
-
-                                        <!-- Data -->
-                                        <div class="review-author">
-                                            <h6 class="s-18 w-700">Joel Peterson</h6>
-                                            <p class="p-sm">Internet Surfer</p>
-                                        </div>
-                                    </div>
-                                    <!-- End Author -->
-                                </div>
-                                <!-- End Text -->
-                            </div>
-                        </div>
-                        <!-- END TESTIMONIAL #2 -->
-
-                        <!-- TESTIMONIAL #3 -->
-                        <div class="col">
-                            <div id="rw-2-3" class="review-2 bg--white-100 block-shadow r-08">
-                                <!-- Quote Icon -->
-                                <div class="review-ico ico-65"><span class="flaticon-quote"></span></div>
-
-                                <!-- Text -->
-                                <div class="review-txt">
-                                    <!-- Text -->
-                                    <p>An augue cubilia laoreet magna suscipit egestas and ipsum a lectus purus ipsum
-                                        primis and augue ultrice ligula and egestas a suscipit lectus gestas undo auctor
-                                        tempus feugiat impedit quaerat</p>
-
-                                    <!-- Author -->
-                                    <div class="author-data clearfix">
-                                        <!-- Avatar -->
-                                        <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-5.jpg')}}"
-                                                alt="review-avatar" />
-                                        </div>
-
-                                        <!-- Data -->
-                                        <div class="review-author">
-                                            <h6 class="s-18 w-700">Jennifer Harper</h6>
-                                            <p class="p-sm">App Developer</p>
-                                        </div>
-                                    </div>
-                                    <!-- End Author -->
-                                </div>
-                                <!-- End Text -->
-                            </div>
-                        </div>
-                        <!-- END TESTIMONIAL #3 -->
-
-                        <!-- TESTIMONIAL #4 -->
-                        <div class="col">
-                            <div id="rw-2-4" class="review-2 bg--white-100 block-shadow r-08">
-                                <!-- Quote Icon -->
-                                <div class="review-ico ico-65"><span class="flaticon-quote"></span></div>
-
-                                <!-- Text -->
-                                <div class="review-txt">
-                                    <!-- Text -->
-                                    <p>Augue at vitae purus tempus egestas volutpat augue undo cubilia laoreet magna
-                                        suscipit luctus dolor blandit at purus tempus feugiat impedit</p>
-
-                                    <!-- Author -->
-                                    <div class="author-data clearfix">
-                                        <!-- Avatar -->
-                                        <div class="review-avatar">
-                                            <img src="{{asset('assets/frontend/images/review-author-8.jpg')}}"
-                                                alt="review-avatar" />
-                                        </div>
-
-                                        <!-- Data -->
-                                        <div class="review-author">
-                                            <h6 class="s-18 w-700">Evelyn Martinez</h6>
-                                            <p class="p-sm">WordPress Consultant</p>
-                                        </div>
-                                    </div>
-                                    <!-- End Author -->
-                                </div>
-                                <!-- End Text -->
-                            </div>
-                        </div>
-                        <!-- END TESTIMONIAL #4 -->
-                    </div>
-                    <!-- End row -->
-                </div>
-                <!-- END TESTIMONIALS-2 WRAPPER -->
-            </div>
-            <!-- End container -->
-        </section>
-        <!-- END TESTIMONIALS-2 -->
-
         <!-- TEXT CONTENT
 			============================================= -->
         <section class="pt-100 ct-01 content-section division">
@@ -1014,11 +917,11 @@
                             <!-- List -->
                             <ul class="simple-list">
                                 <li class="list-item">
-                                    <p>Easy to use portal with runtime configurations./p>
+                                    <p>Easy to use portal with runtime configurations.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p class="mb-0">Easily accessible at anywhere.</p>
+                                    <p class="mb-0">Easily accessible FROM anywhere, anytime.</p>
                                 </li>
                             </ul>
                         </div>
@@ -1444,10 +1347,10 @@
 
                                 <!-- Message Input -->
                                 <div class="col-md-12">
-                                    <p class="p-lg">Explain your question in details:</p>
+                                    <p class="p-lg">Explain your question in detail:</p>
                                     <span>Your Issue/Concern:</span>
                                     <textarea name="message" class="form-control" rows="6"
-                                        placeholder="I have a problem with..." required></textarea>
+                                        placeholder="" required></textarea>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -1706,16 +1609,13 @@
                             <!-- Links -->
                             <ul class="foo-links clearfix">
                                 <li>
-                                    <p><a href="terms.html">Terms of Use</a></p>
+                                    <p><a href="{{route('terms_of_use')}}">Terms of Use</a></p>
                                 </li>
                                 <li>
-                                    <p><a href="privacy.html">Privacy Policy</a></p>
+                                    <p><a href="{{route('privacy_policy')}}">Privacy Policy</a></p>
                                 </li>
                                 <li>
-                                    <p><a href="cookies.html">Cookie Policy</a></p>
-                                </li>
-                                <li>
-                                    <p><a href="#">Site Map</a></p>
+                                    <p><a href="{{route('cookies')}}">Cookie Policy</a></p>
                                 </li>
                             </ul>
                         </div>
@@ -1726,7 +1626,7 @@
                     <div class="col-sm-10 col-md-8 col-lg-4 col-xl-3">
                         <div class="footer-form">
                             <!-- Title -->
-                            <h6 class="s-17 w-700">Follow the Best</h6>
+                            <h6 class="s-17 w-700">Subscribe to our newsletter</h6>
 
                             <!-- Newsletter Form Input -->
                             <form class="newsletter-form">
