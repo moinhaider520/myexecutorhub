@@ -130,7 +130,7 @@
                 <div id="cookie-popup" class="cookie-popup">
                     <div class="cookie-popup-content">
                         <p>We use cookies to improve your experience. By using our website, you agree to our use of
-                            cookies. <a href="/privacy-policy">Learn more</a></p>
+                            cookies. <a href="{{route('cookies')}}">Learn more</a></p>
                         <button id="accept-cookies" class="accept-cookies-btn">Accept</button>
                     </div>
                 </div>
