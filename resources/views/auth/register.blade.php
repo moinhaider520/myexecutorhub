@@ -58,6 +58,14 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div>
+                                    <input class="" type="checkbox" name="privacy_policy" id="privacy_policy" value="1" {{ old('privacy_policy') ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="privacy_policy">
+                                        Do you agree with our terms and privacy policy?
+                                    </label>
+                                </div>
+                            </div>
                             <div class="form-group mb-0">
                                 <div class="text-end mt-3">
                                     <button class="btn btn-primary btn-block w-100" type="submit">Sign up</button>

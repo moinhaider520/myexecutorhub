@@ -65,6 +65,46 @@
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
 </head>
 
+<style>
+    .cookie-popup {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        display: none;
+        z-index: 9999;
+        width: 98%;
+    }
+
+    .cookie-popup-content p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .cookie-popup-content a {
+        color: #ffd700;
+        text-decoration: none;
+    }
+
+    .accept-cookies-btn {
+        background-color: #ffd700;
+        border: none;
+        padding: 5px;
+        color: black;
+        cursor: pointer;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .accept-cookies-btn:hover {
+        background-color: #e6c200;
+    }
+</style>
+
 <body>
     <!-- PRELOADER SPINNER
 		============================================= -->
@@ -85,6 +125,16 @@
                             alt="mobile-logo" /></span>
                     <a id="wsnavtoggle" class="wsanimated-arrow"><span></span></a>
                 </div>
+
+                <!-- COOKIE POP UP -->
+                <div id="cookie-popup" class="cookie-popup">
+                    <div class="cookie-popup-content">
+                        <p>We use cookies to improve your experience. By using our website, you agree to our use of
+                            cookies. <a href="/privacy-policy">Learn more</a></p>
+                        <button id="accept-cookies" class="accept-cookies-btn">Accept</button>
+                    </div>
+                </div>
+
 
                 <!-- NAVIGATION MENU -->
                 <div class="wsmainfull menu clearfix">
@@ -931,7 +981,7 @@
                     <!-- IMAGE BLOCK -->
                     <div class="col-md-6 order-first order-md-2">
                         <div class="img-block right-column wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-05.png')}}"
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/onboarding.png')}}"
                                 alt="content-image" />
                         </div>
                     </div>
@@ -1349,8 +1399,8 @@
                                 <div class="col-md-12">
                                     <p class="p-lg">Explain your question in detail:</p>
                                     <span>Your Issue/Concern:</span>
-                                    <textarea name="message" class="form-control" rows="6"
-                                        placeholder="" required></textarea>
+                                    <textarea name="message" class="form-control" rows="6" placeholder=""
+                                        required></textarea>
                                 </div>
 
                                 <!-- Submit Button -->
@@ -1398,7 +1448,7 @@
                     <div class="col-md-6">
                         <div class="img-block left-column wow fadeInRight"
                             style="visibility: visible; animation-name: fadeInRight;">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/img-02.png')}}"
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/dashboard.png')}}"
                                 alt="content-image">
                         </div>
                     </div>
@@ -1439,7 +1489,7 @@
                     <div class="section-title text-center mb-80">
                         <!-- Title -->
                         <h2 class="s-52 w-700">
-                            Digital legacy explorer</h2>
+                            Digital legacies and their policies</h2>
 
                         <!-- Text -->
                         <p class="p-lg">A guide to estate planning for digital assets</p>
@@ -1617,6 +1667,9 @@
                                 <li>
                                     <p><a href="{{route('cookies')}}">Cookie Policy</a></p>
                                 </li>
+                                <li>
+                                    <p><a href="{{route('cancellation_policy')}}">Cancellation Policy</a></p>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -1774,6 +1827,21 @@
             }
             document.getElementById('displayText').innerText = text;
         }
+    </script>
+    <script>
+        // Show the cookie popup if the user has not already accepted cookies
+        window.onload = function () {
+            if (!localStorage.getItem('cookies-accepted')) {
+                document.getElementById('cookie-popup').style.display = 'block';
+            }
+
+            // When the "Accept" button is clicked, hide the popup and store the preference
+            document.getElementById('accept-cookies').addEventListener('click', function () {
+                localStorage.setItem('cookies-accepted', 'true');
+                document.getElementById('cookie-popup').style.display = 'none';
+            });
+        };
+
     </script>
 </body>
 

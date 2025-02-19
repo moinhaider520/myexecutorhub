@@ -160,6 +160,10 @@ Route::get('/privacy_policy', function () {
     return view('privacy_policy');
 })->name('privacy_policy');
 
+Route::get('/cancellation_policy', function () {
+    return view('cancellation_policy');
+})->name('cancellation_policy');
+
 
 
 

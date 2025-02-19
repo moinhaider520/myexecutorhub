@@ -140,263 +140,128 @@
 
                         <!-- INNER PAGE TITLE -->
                         <div class="inner-page-title">
-                            <h2 class="s-52 w-700">Executor Hub – Terms of Use</h2>
-                            <p class="p-lg">Welcome to Executor Hub (“we,” “us,” or “our”). These Terms of Use (“Terms”)
-                                govern your access to and use of our website (www.executorhub.co.uk) and services. By
-                                using our platform, you agree to comply with these Terms. If you do not agree, please do
-                                not use Executor Hub.</p>
+                            <h2 class="s-52 w-700">Executor Hub Cancellation Policy</h2>
+                            <p class="p-lg">This Cancellation Policy outlines the terms and conditions under which users may cancel their Executor Hub subscription. By subscribing to Executor Hub, you agree to the following terms:</p>
                         </div>
 
 
                         <!-- TEXT BLOCK -->
                         <div class="txt-block legal-info">
 
+
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>1.</span> About Executor Hub</h4>
+                            <h4 class="s-30 w-700"><span>1.</span> Cancellation by the Subscriber</h4>
 
                             <!-- Text -->
-                            <p>Executor Hub is a digital platform designed to assist executors, estate planners, and
-                                individuals in managing estate administration efficiently. Our services include document
-                                storage, step-by-step guidance, AI integration, and other estate-related tools to
-                                streamline estate management.</p>
-                            <p>Executor Hub does not provide legal, financial, or tax advice. You should consult a
-                                qualified professional for specific legal, financial, or estate planning matters.</p>
+                            <p>Subscribers may cancel their Executor Hub subscription at any time via their account settings or by contacting our support team at hello@executorhub.co.uk.</p>
 
-
-                            <!-- Title -->
-                            <h4 class="s-30 w-700"><span>2.</span> Who Can Use Executor Hub?</h4>
-                            <p>By using our services, you confirm that:</p>
-                            <!-- List -->
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>You are at least 18 years old.</p>
+                                    <p>Free Trial Users: If you cancel during your free trial period, you will not be charged, and your access will end immediately.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>You have the legal capacity to enter into a binding contract.</p>
+                                    <p>Monthly Subscribers: If you cancel a monthly subscription, your access will continue until the end of the current billing cycle, but no refunds will be issued.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>You will use Executor Hub only for lawful and authorized purposes.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>If you are acting on behalf of a business or another person, you have the
-                                        authority to do so.</p>
-                                </li>
+                                    <p>Annual Subscribers: If you cancel an annual subscription, your access will continue until the end of the current billing period. Refunds may be available at our discretion, depending on the remaining subscription term.</p>
                             </ul>
 
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>3.</span> Account Registration & Security</h4>
+                            <h4 class="s-30 w-700"><span>2.</span> Cancellation by Executor Hub</h4>
 
                             <!-- Text -->
-                            <p>To access certain features, you may need to create an account. By registering, you agree
-                                to:</p>
+                            <p>Executor Hub reserves the right to suspend or terminate a subscription if:</p>
 
                             <!-- List -->
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>Provide accurate and up-to-date information.</p>
+                                    <p>Payment is not received.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Keep your login credentials secure and confidential.</p>
+                                    <p>There is a violation of our Terms of Service.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Notify us immediately if you suspect unauthorized access to your account.</p>
+                                    <p>The service is discontinued. In such cases, prorated refunds may be issued.</p>
                                 </li>
                             </ul>
 
-                            <p>We reserve the right to suspend or terminate accounts that provide false information,
-                                engage in fraudulent activities, or violate these Terms.</p>
-
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>4.</span> Use of Services & Acceptable Use Policy</h4>
-
-                            <!-- Text -->
-                            <p>Executor Hub is intended for personal and professional estate planning purposes. You must
-                                not:</p>
+                            <h4 class="s-30 w-700"><span>3.</span> Refund Policy</h4>
 
                             <!-- List -->
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>Use the platform for fraudulent, illegal, or deceptive purposes.</p>
+                                    <p>No Refunds for Monthly Subscriptions: Monthly plans are non-refundable once billed.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Share, distribute, or upload harmful content (e.g., viruses, malware, or
-                                        malicious code).</p>
+                                    <p>Partial Refunds for Annual Subscriptions: If you cancel an annual subscription within 14 days of payment, you may receive a partial refund, deducting the cost of used months.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Attempt to hack, modify, or disrupt the platform’s functionality.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Access or attempt to access other users’ data without authorization.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Misuse the platform to impersonate another person or entity.</p>
+                                    <p>Exceptional Circumstances: Refunds may be considered in cases of extenuating circumstances, subject to review.</p>
                                 </li>
                             </ul>
 
-                            <p>Violation of these Terms may result in account suspension, termination, or legal action.
-                            </p>
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>5.</span> Subscription & Payment Terms</h4>
+                            <h4 class="s-30 w-700"><span>4.</span> How to Cancel</h4>
 
                             <!-- Text -->
-                            <p>Executor Hub offers various pricing plans, including free trials and subscription-based
-                                services.</p>
+                            <p>To cancel your subscription:</p>
 
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>Billing: If you subscribe to a paid plan, you authorize us to charge the payment method on file.</p>
+                                    <p>Log in to your Executor Hub account.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Auto-Renewal: Unless canceled before the renewal date, your subscription will automatically renew.</p>
+                                    <p>Navigate to Account Settings > Subscription Management.</p>
+                                </li>
+
+                                <li class="list-item">
+                                    <p>Select Cancel Subscription and follow the on-screen instructions.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Cancellations & Refunds: You may cancel at any time, but refunds are only issued per our Refund Policy.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Non-Payment: Failure to make timely payments may result in restricted access or account suspension.</p>
+                                    <p>You will receive a confirmation email upon successful cancellation.</p>
                                 </li>
                             </ul>
 
-                            <p>For full details, refer to our Pricing & Subscription Terms.</p>
+                            <p>Alternatively, you can contact our customer support team at hello@executorhub.co.uk</p>
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>6.</span> Data Protection & Privacy</h4>
+                            <h4 class="s-30 w-700"><span>5.</span> Effect of Cancellation</h4>
 
                             <!-- Text -->
-                            <p>Executor Hub complies with UK GDPR and other relevant data protection laws.</p>
+                            <p>Once your subscription ends:</p>
 
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>We collect and store personal data to provide and improve our services.</p>
+                                    <p>You will lose access to all premium features and stored documents.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>We do not sell personal data to third parties.</p>
+                                    <p>Your data may be retained for a limited period as per our Data Retention Policy.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>For full details, please review our Privacy Policy.</p>
+                                    <p>You may resubscribe at any time, but previously stored data may not be retrievable.</p>
                                 </li>
-                            </ul>
+                            </ul>                            
 
-                            <p>By using Executor Hub, you consent to the processing of your data as outlined in our policies.</p>
-                            
-
-                            <h4 class="s-30 w-700"><span>7.</span> Intellectual Property Rights</h4>
+                            <h4 class="s-30 w-700"><span>6.</span> Changes to This Policy</h4>
 
                             <!-- Text -->
-                            <p>All content, trademarks, and technology on Executor Hub are owned or licensed by us.</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>You may not copy, modify, distribute, or resell any part of the platform without prior written consent.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>You retain ownership of the documents and data you upload but grant Executor Hub a limited license to store and process this information solely for platform functionality.</p>
-                                </li>
-                            </ul>
-
-                            <h4 class="s-30 w-700"><span>8.</span> Third-Party Services & Links</h4>
-
-                            <!-- Text -->
-                            <p>Executor Hub may contain links to third-party websites or integrations (e.g., payment processors, legal services).</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>We are not responsible for third-party content, services, or privacy practices.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Your interactions with third-party services are at your own risk.</p>
-                                </li>
-                            </ul>
-
-                            <h4 class="s-30 w-700"><span>9.</span> Limitation of Liability</h4>
-                            <p>Executor Hub is provided “as is” and “as available”, without warranties of any kind.</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>We do not guarantee uninterrupted or error-free service.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>We are not responsible for financial or legal losses resulting from reliance on our platform.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>To the fullest extent permitted by law, Executor Hub is not liable for indirect, incidental, or consequential damages.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Our liability, if any, is limited to the fees paid for your use of Executor Hub.</p>
-                                </li>
-                            </ul>
-
-                            <p>If you experience technical issues, please contact us at hello@executorhub.co.uk.</p>
-
-                            <h4 class="s-30 w-700"><span>10.</span> Termination of Use</h4>
-                            <p>We reserve the right to terminate or suspend your account if you:</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>Violate these Terms of Use.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Use Executor Hub in a way that poses a risk to other users or our business.</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Engage in fraudulent or illegal activities.</p>
-                                </li>
-                            </ul>
-                            <p>You may close your account at any time by contacting hello@executorhub.co.uk.</p>
-
-                            <h4 class="s-30 w-700"><span>11.</span> Changes to These Terms</h4>
-                            <p>We may update these Terms from time to time.</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>If changes are significant, we will provide reasonable notice via email or on our website.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Continuing to use Executor Hub after updates constitutes acceptance of the new Terms.</p>
-                                </li>
-                            </ul>
-
-                            <h4 class="s-30 w-700"><span>12.</span> Governing Law & Disputes</h4>
-                            <p>These Terms are governed by the laws of England and Wales.</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>If a dispute arises, we encourage you to contact us to resolve it informally.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>If necessary, disputes will be settled in the courts of England and Wales.</p>
-                                </li>
-                            </ul>
-                            
-                            <h4 class="s-30 w-700"><span>13.</span> Contact Us</h4>
-                            <p>If you have any questions about these Terms, please contact us: hello@executorhub.co.uk</p>
-                            <p>By using Executor Hub, you acknowledge that you have read, understood, and agree to these Terms.</p>
+                            <p>Executor Hub reserves the right to update this Cancellation Policy at any time. We will notify subscribers of significant changes via email or in-platform notifications.</p>
+                            <p>For further inquiries, please contact us at hello@executorhub.co.uk</p>
 
                         </div> <!-- END TEXT BLOCK -->
 

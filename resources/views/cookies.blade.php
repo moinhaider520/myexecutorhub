@@ -385,6 +385,9 @@
                                 <li>
                                     <p><a href="{{route('cookies')}}">Cookie Policy</a></p>
                                 </li>
+                                <li>
+                                    <p><a href="{{route('cancellation_policy')}}">Cancellation Policy</a></p>
+                                </li>
                             </ul>
                         </div>
                     </div>
