@@ -188,18 +188,18 @@
                                         With
                                         Us</a></li>
                                 @guest
-                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                    </li>
-                                    <li class="nl-simple" aria-haspopup="true">
-                                        <a href="{{route('register')}}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
-                                    </li>
+                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                </li>
+                                <li class="nl-simple" aria-haspopup="true">
+                                    <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                </li>
                                 @else
-                                    <li class="nl-simple" aria-haspopup="true">
-                                        <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                    </li>
+                                <li class="nl-simple" aria-haspopup="true">
+                                    <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                </li>
                                 @endguest
 
                             </ul>
@@ -1349,18 +1349,18 @@
                     <div class="col-md-11 col-lg-10 col-xl-8">
                         <div class="form-holder">
                             @if (session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
                             @endif
                             @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                             @endif
                             <form id="contact-form" class="row contact-form" action="{{ route('contact.submit') }}"
                                 method="POST">
@@ -1478,6 +1478,81 @@
 
 
             </div> <!-- End container -->
+        </section>
+
+
+        <section id="contacts-1" class="pb-50 inner-page-hero contacts-section division">
+            <div class="container">
+                <!-- Section Title -->
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-9">
+                        <div class="section-title text-center mb-80">
+                            <h2 class="s-52 w-700">Partner with Us</h2>
+                            <p class="p-lg">
+                                Partner with Us
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Partner With Us Form -->
+                <div class="row justify-content-center">
+                    <div class="col-md-11 col-lg-10 col-xl-8">
+                        <div class="form-holder">
+                            @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                            @endif
+                            @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            @endif
+                            <form id="contact-form" class="row contact-form" action="{{ route('partner.submit') }}" method="POST">
+                                @csrf
+
+                                <!-- Business Name Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Business Name:</p>
+                                    <span>Enter your business name:</span>
+                                    <input type="text" name="business_name" class="form-control" placeholder="Business Name*" required />
+                                </div>
+
+                                <!-- Contact Name Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Contact Name:</p>
+                                    <span>Enter your full name:</span>
+                                    <input type="text" name="contact_name" class="form-control" placeholder="Your Name*" required />
+                                </div>
+
+                                <!-- Contact Email Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Contact Email:</p>
+                                    <span>Please enter a valid email address:</span>
+                                    <input type="email" name="contact_email" class="form-control" placeholder="Email Address*" required />
+                                </div>
+
+                                <!-- Contact Number Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Contact Number:</p>
+                                    <span>Enter your phone number:</span>
+                                    <input type="tel" name="contact_number" class="form-control" placeholder="Contact Number*" required />
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="col-md-12 mt-15 form-btn text-right">
+                                    <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <section class="pt-100 ct-02 content-section division" id="digitallegacy">
@@ -1767,24 +1842,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function (e) {
+            contextmenu: function(e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function (e) {
+            mousedown: function(e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function (e) {
+            mouseup: function(e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function () {
-            $(".switch").click(function () {
+        $(function() {
+            $(".switch").click(function() {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1796,7 +1871,7 @@
     </script>
 
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {
@@ -1830,18 +1905,17 @@
     </script>
     <script>
         // Show the cookie popup if the user has not already accepted cookies
-        window.onload = function () {
+        window.onload = function() {
             if (!localStorage.getItem('cookies-accepted')) {
                 document.getElementById('cookie-popup').style.display = 'block';
             }
 
             // When the "Accept" button is clicked, hide the popup and store the preference
-            document.getElementById('accept-cookies').addEventListener('click', function () {
+            document.getElementById('accept-cookies').addEventListener('click', function() {
                 localStorage.setItem('cookies-accepted', 'true');
                 document.getElementById('cookie-popup').style.display = 'none';
             });
         };
-
     </script>
 </body>
 

@@ -141,7 +141,8 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::post('stripe', 'stripePost')->name('stripe.post');
 });
 
-Route::post('/contact-submit', [ContactController::class, 'submit'])->name('contact.submit');
+Route::post('/contact-submit', [ContactController::class, 'Contactform'])->name('contact.submit');
+Route::post('/partner-submit', [ContactController::class, 'PartnerWithUs'])->name('partner.submit');
 
 
 Route::get('/', function () {
