@@ -176,9 +176,7 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#faqs-3" class="h-link">FAQs</a>
                                 </li>
 
-                                <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy"
-                                        class="h-link">Digital Legacy</a>
-                                </li>
+
 
 
                                 <!-- SIMPLE NAVIGATION LINK -->
@@ -187,19 +185,22 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#contacts-2" class="h-link">Work
                                         With
                                         Us</a></li>
+                                        <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy"
+                                        class="h-link">Digital Legacy</a>
+                                </li>
                                 @guest
-                                <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
-                                    <a href="{{route('login')}}" class="h-link">Sign in</a>
-                                </li>
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
-                                </li>
+                                    <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
+                                        <a href="{{route('login')}}" class="h-link">Sign in</a>
+                                    </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{route('register')}}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                    </li>
                                 @else
-                                <li class="nl-simple" aria-haspopup="true">
-                                    <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
-                                </li>
+                                    <li class="nl-simple" aria-haspopup="true">
+                                        <a href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}"
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Dashboard</a>
+                                    </li>
                                 @endguest
 
                             </ul>
@@ -248,6 +249,59 @@
             <!-- End container -->
         </section>
         <!-- END HERO-3 -->
+
+        <!-- BOX CONTENT
+			============================================= -->
+        <section id="lnk-2" class="pt-100 ws-wrapper content-section">
+            <div class="container">
+                <div class="bc-5-wrapper bg--04 hidd bg--scroll r-16">
+                    <div class="section-overlay">
+                        <!-- SECTION TITLE -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-11 col-lg-9">
+                                <div class="section-title wow fadeInUp mb-60">
+                                    <!-- Title -->
+                                    <h2 class="s-50 w-700">What is Executor Hub?</h2>
+
+                                    <!-- Text -->
+                                    <p class="p-xl">Executor Hub was founded with the mission to empower individuals to
+                                        seamlessly manage their digital and financial legacies through a secure,
+                                        reliable, and user-friendly platform. In today’s world, where digital solutions
+                                        are the emerging trend, we ensure your legacy is preserved and accessible for
+                                        future generations.</p>
+                                    <br />
+                                    <a href="{{route('register')}}"
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IMAGE BLOCK -->
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
+                                    <!-- Play Icon -->
+                                    <a class="video-popup1" href="{{ asset('assets/frontend/intro.mp4') }}">
+                                        <div class="video-btn video-btn-xl bg--theme">
+                                            <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <!-- Preview Image -->
+                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card.webp')}}"
+                                        alt="content-image" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End section overlay -->
+                </div>
+                <!-- End content wrapper -->
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- END BOX CONTENT -->
 
 
         <!-- TEXT CONTENT
@@ -574,6 +628,196 @@
         </section>
         <!-- END FEATURES-11 -->
 
+        
+        <!-- STATISTIC-1
+			============================================= -->
+            <div id="benefits-11" class="py-100 statistic-section division">
+            <div class="container">
+                <!-- STATISTIC-1 WRAPPER -->
+                <div class="statistic-1-wrapper">
+                    <div class="row justify-content-md-center row-cols-1 row-cols-md-3">
+                        <!-- STATISTIC BLOCK #1 -->
+                        <div class="col">
+                            <div id="sb-1-1" class="wow fadeInUp">
+                                <div class="statistic-block">
+                                    <!-- Digit -->
+                                    <div class="statistic-block-digit text-center">
+                                        <h2 class="s-46 statistic-number"><span class="count-element">89</span>k</h2>
+                                    </div>
+
+                                    <!-- Text -->
+                                    <div class="statistic-block-txt color--grey">
+                                        <p class="p-md">Customers</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END STATISTIC BLOCK #1 -->
+
+                        <!-- STATISTIC BLOCK #2 -->
+                        <div class="col">
+                            <div id="sb-1-2" class="wow fadeInUp">
+                                <div class="statistic-block">
+                                    <!-- Digit -->
+                                    <div class="statistic-block-digit text-center">
+                                        <h2 class="s-46 statistic-number"><span class="count-element">276</span>K</h2>
+                                    </div>
+
+                                    <!-- Text -->
+                                    <div class="statistic-block-txt color--grey">
+                                        <p class="p-md">Records</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END STATISTIC BLOCK #2 -->
+
+                        <!-- STATISTIC BLOCK #3 -->
+                        <div class="col">
+                            <div id="sb-1-3" class="wow fadeInUp">
+                                <div class="statistic-block">
+                                    <!-- Digit -->
+                                    <div class="statistic-block-digit text-center">
+                                        <h2 class="s-46 statistic-number"><span class="count-element">4</span>.<span
+                                                class="count-element">93</span></h2>
+                                    </div>
+
+                                    <!-- Text -->
+                                    <div class="statistic-block-txt color--grey">
+                                        <p class="p-md">Rating</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END STATISTIC BLOCK #3 -->
+                    </div>
+                    <!-- End row -->
+                </div>
+                <!-- END STATISTIC-1 WRAPPER -->
+            </div>
+            <!-- End container -->
+        </div>
+        <!-- END STATISTIC-1 -->
+
+                <!-- TEXT CONTENT
+			============================================= -->
+            <section class="bg--white-400 py-100 ct-04 content-section division">
+            <div class="container">
+                <!-- SECTION CONTENT (ROW) -->
+                <div class="row d-flex align-items-center">
+                    <!-- TEXT BLOCK -->
+                    <div class="col-md-6 order-last order-md-2">
+                        <div class="txt-block left-column wow fadeInRight">
+                            <h2>Benefits of Executor Hub</h2>
+                            <!-- CONTENT BOX #1 -->
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">1</div>
+                                    <span class="cbox-2-line"></span>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">Digital Legacy Planning</h5>
+                                    <p>Manage your digital legacy by including instructions for online accounts and
+                                        digital assets.</p>
+                                </div>
+                            </div>
+                            <!-- END CONTENT BOX #1 -->
+
+                            <!-- CONTENT BOX #2 -->
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">2</div>
+                                    <span class="cbox-2-line"></span>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">24/7 Availability</h5>
+                                    <p>Access your stored information anytime, ensuring your executors can retrieve
+                                        necessary details whenever needed.</p>
+                                </div>
+                            </div>
+                            <!-- END CONTENT BOX #2 -->
+
+                            <!-- CONTENT BOX #3 -->
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">3</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">Audit Trail</h5>
+                                    <p class="mb-0">Maintain a record of all updates and access activities, providing
+                                        transparency and accountability.</p>
+                                </div>
+                            </div>
+
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">4</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">Cost Efficiency</h5>
+                                    <p class="mb-0">Save money by avoiding the need for physical document storage
+                                        solutions and minimizing the potential for lost paperwork.</p>
+                                </div>
+                            </div>
+
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">5</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">Environmental Impact</h5>
+                                    <p class="mb-0">Reduce your environmental footprint by eliminating the need for
+                                        paper documents.</p>
+                                </div>
+                            </div>
+
+                            <div class="cbox-2 process-step">
+                                <!-- Icon -->
+                                <div class="ico-wrap">
+                                    <div class="cbox-2-ico bg--theme color--white">6</div>
+                                </div>
+
+                                <!-- Text -->
+                                <div class="cbox-2-txt">
+                                    <h5 class="s-22 w-700">User-Friendly Interface</h5>
+                                    <p class="mb-0">Enjoy an intuitive and easy-to-navigate platform, making it simple
+                                        to manage your information.</p>
+                                </div>
+                            </div>
+                            <!-- END CONTENT BOX #3 -->
+                        </div>
+                    </div>
+                    <!-- END TEXT BLOCK -->
+
+                    <!-- IMAGE BLOCK -->
+                    <div class="col-md-6 order-first order-md-2">
+                        <div class="img-block wow fadeInLeft">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-01.png')}}"
+                                alt="content-image" />
+                        </div>
+                    </div>
+                </div>
+                <!-- END SECTION CONTENT (ROW) -->
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- END TEXT CONTENT -->
+
 
         <section id="pricing-1" style="margin-top:50px;" class="gr--whitesmoke pb-40 inner-page-hero pricing-section">
             <div class="container">
@@ -694,312 +938,9 @@
             <!-- End container -->
         </section>
 
-        <!-- BOX CONTENT
+                <!-- FAQs-3
 			============================================= -->
-        <section id="lnk-2" class="pt-100 ws-wrapper content-section">
-            <div class="container">
-                <div class="bc-5-wrapper bg--04 hidd bg--scroll r-16">
-                    <div class="section-overlay">
-                        <!-- SECTION TITLE -->
-                        <div class="row justify-content-center">
-                            <div class="col-md-11 col-lg-9">
-                                <div class="section-title wow fadeInUp mb-60">
-                                    <!-- Title -->
-                                    <h2 class="s-50 w-700">What is Executor Hub?</h2>
-
-                                    <!-- Text -->
-                                    <p class="p-xl">Executor Hub was founded with the mission to empower individuals to
-                                        seamlessly manage their digital and financial legacies through a secure,
-                                        reliable, and user-friendly platform. In today’s world, where digital solutions
-                                        are the emerging trend, we ensure your legacy is preserved and accessible for
-                                        future generations.</p>
-                                    <br />
-                                    <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- IMAGE BLOCK -->
-                        <div class="row justify-content-center">
-                            <div class="col">
-                                <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
-                                    <!-- Play Icon -->
-                                    <a class="video-popup1" href="{{ asset('assets/frontend/intro.mp4') }}">
-                                        <div class="video-btn video-btn-xl bg--theme">
-                                            <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                    <!-- Preview Image -->
-                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card.webp')}}"
-                                        alt="content-image" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End section overlay -->
-                </div>
-                <!-- End content wrapper -->
-            </div>
-            <!-- End container -->
-        </section>
-        <!-- END BOX CONTENT -->
-
-        <!-- STATISTIC-1
-			============================================= -->
-        <div id="benefits-11" class="py-100 statistic-section division">
-            <div class="container">
-                <!-- STATISTIC-1 WRAPPER -->
-                <div class="statistic-1-wrapper">
-                    <div class="row justify-content-md-center row-cols-1 row-cols-md-3">
-                        <!-- STATISTIC BLOCK #1 -->
-                        <div class="col">
-                            <div id="sb-1-1" class="wow fadeInUp">
-                                <div class="statistic-block">
-                                    <!-- Digit -->
-                                    <div class="statistic-block-digit text-center">
-                                        <h2 class="s-46 statistic-number"><span class="count-element">89</span>k</h2>
-                                    </div>
-
-                                    <!-- Text -->
-                                    <div class="statistic-block-txt color--grey">
-                                        <p class="p-md">Customers</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END STATISTIC BLOCK #1 -->
-
-                        <!-- STATISTIC BLOCK #2 -->
-                        <div class="col">
-                            <div id="sb-1-2" class="wow fadeInUp">
-                                <div class="statistic-block">
-                                    <!-- Digit -->
-                                    <div class="statistic-block-digit text-center">
-                                        <h2 class="s-46 statistic-number"><span class="count-element">276</span>K</h2>
-                                    </div>
-
-                                    <!-- Text -->
-                                    <div class="statistic-block-txt color--grey">
-                                        <p class="p-md">Records</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END STATISTIC BLOCK #2 -->
-
-                        <!-- STATISTIC BLOCK #3 -->
-                        <div class="col">
-                            <div id="sb-1-3" class="wow fadeInUp">
-                                <div class="statistic-block">
-                                    <!-- Digit -->
-                                    <div class="statistic-block-digit text-center">
-                                        <h2 class="s-46 statistic-number"><span class="count-element">4</span>.<span
-                                                class="count-element">93</span></h2>
-                                    </div>
-
-                                    <!-- Text -->
-                                    <div class="statistic-block-txt color--grey">
-                                        <p class="p-md">Rating</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END STATISTIC BLOCK #3 -->
-                    </div>
-                    <!-- End row -->
-                </div>
-                <!-- END STATISTIC-1 WRAPPER -->
-            </div>
-            <!-- End container -->
-        </div>
-        <!-- END STATISTIC-1 -->
-
-        <!-- DIVIDER LINE -->
-        <hr class="divider" />
-
-
-        <!-- TEXT CONTENT
-			============================================= -->
-        <section class="bg--white-400 py-100 ct-04 content-section division">
-            <div class="container">
-                <!-- SECTION CONTENT (ROW) -->
-                <div class="row d-flex align-items-center">
-                    <!-- TEXT BLOCK -->
-                    <div class="col-md-6 order-last order-md-2">
-                        <div class="txt-block left-column wow fadeInRight">
-                            <h2>Benefits of Executor Hub</h2>
-                            <!-- CONTENT BOX #1 -->
-                            <div class="cbox-2 process-step">
-                                <!-- Icon -->
-                                <div class="ico-wrap">
-                                    <div class="cbox-2-ico bg--theme color--white">1</div>
-                                    <span class="cbox-2-line"></span>
-                                </div>
-
-                                <!-- Text -->
-                                <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">Digital Legacy Planning</h5>
-                                    <p>Manage your digital legacy by including instructions for online accounts and
-                                        digital assets.</p>
-                                </div>
-                            </div>
-                            <!-- END CONTENT BOX #1 -->
-
-                            <!-- CONTENT BOX #2 -->
-                            <div class="cbox-2 process-step">
-                                <!-- Icon -->
-                                <div class="ico-wrap">
-                                    <div class="cbox-2-ico bg--theme color--white">2</div>
-                                    <span class="cbox-2-line"></span>
-                                </div>
-
-                                <!-- Text -->
-                                <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">24/7 Availability</h5>
-                                    <p>Access your stored information anytime, ensuring your executors can retrieve
-                                        necessary details whenever needed.</p>
-                                </div>
-                            </div>
-                            <!-- END CONTENT BOX #2 -->
-
-                            <!-- CONTENT BOX #3 -->
-                            <div class="cbox-2 process-step">
-                                <!-- Icon -->
-                                <div class="ico-wrap">
-                                    <div class="cbox-2-ico bg--theme color--white">3</div>
-                                </div>
-
-                                <!-- Text -->
-                                <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">Audit Trail</h5>
-                                    <p class="mb-0">Maintain a record of all updates and access activities, providing
-                                        transparency and accountability.</p>
-                                </div>
-                            </div>
-
-                            <div class="cbox-2 process-step">
-                                <!-- Icon -->
-                                <div class="ico-wrap">
-                                    <div class="cbox-2-ico bg--theme color--white">4</div>
-                                </div>
-
-                                <!-- Text -->
-                                <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">Cost Efficiency</h5>
-                                    <p class="mb-0">Save money by avoiding the need for physical document storage
-                                        solutions and minimizing the potential for lost paperwork.</p>
-                                </div>
-                            </div>
-
-                            <div class="cbox-2 process-step">
-                                <!-- Icon -->
-                                <div class="ico-wrap">
-                                    <div class="cbox-2-ico bg--theme color--white">5</div>
-                                </div>
-
-                                <!-- Text -->
-                                <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">Environmental Impact</h5>
-                                    <p class="mb-0">Reduce your environmental footprint by eliminating the need for
-                                        paper documents.</p>
-                                </div>
-                            </div>
-
-                            <div class="cbox-2 process-step">
-                                <!-- Icon -->
-                                <div class="ico-wrap">
-                                    <div class="cbox-2-ico bg--theme color--white">6</div>
-                                </div>
-
-                                <!-- Text -->
-                                <div class="cbox-2-txt">
-                                    <h5 class="s-22 w-700">User-Friendly Interface</h5>
-                                    <p class="mb-0">Enjoy an intuitive and easy-to-navigate platform, making it simple
-                                        to manage your information.</p>
-                                </div>
-                            </div>
-                            <!-- END CONTENT BOX #3 -->
-                        </div>
-                    </div>
-                    <!-- END TEXT BLOCK -->
-
-                    <!-- IMAGE BLOCK -->
-                    <div class="col-md-6 order-first order-md-2">
-                        <div class="img-block wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-02.png')}}"
-                                alt="content-image" />
-                        </div>
-                    </div>
-                </div>
-                <!-- END SECTION CONTENT (ROW) -->
-            </div>
-            <!-- End container -->
-        </section>
-        <!-- END TEXT CONTENT -->
-
-        <!-- TEXT CONTENT
-			============================================= -->
-        <section class="pt-100 ct-01 content-section division">
-            <div class="container">
-                <!-- SECTION CONTENT (ROW) -->
-                <div class="row d-flex align-items-center">
-                    <!-- TEXT BLOCK -->
-                    <div class="col-md-6 order-last order-md-2">
-                        <div class="txt-block left-column wow fadeInRight">
-                            <!-- Section ID -->
-                            <span class="section-id">Easy Onboarding</span>
-
-                            <!-- Title -->
-                            <h2 class="s-46 w-700">Achieve more with better workflows</h2>
-
-                            <!-- Text -->
-                            <p>
-                                Executor Hub allows a user-friendly interface for managing your documents, executors and
-                                assets. You can easily login to the portal at any time and get your work done with ease.
-                            </p>
-
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700">Get more done in less time</h5>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-                                <li class="list-item">
-                                    <p>Easy to use portal with runtime configurations.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p class="mb-0">Easily accessible FROM anywhere, anytime.</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- END TEXT BLOCK -->
-
-                    <!-- IMAGE BLOCK -->
-                    <div class="col-md-6 order-first order-md-2">
-                        <div class="img-block right-column wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/onboarding.png')}}"
-                                alt="content-image" />
-                        </div>
-                    </div>
-                </div>
-                <!-- END SECTION CONTENT (ROW) -->
-            </div>
-            <!-- End container -->
-        </section>
-        <!-- END TEXT CONTENT -->
-
-        <!-- TEXT CONTENT
-			============================================= -->
-
-        <!-- END TEXT CONTENT -->
-
-        <!-- FAQs-3
-			============================================= -->
-        <section id="faqs-3" class="pt-100 faqs-section">
+            <section id="faqs-3" class="pt-100 faqs-section">
             <div class="container">
                 <!-- SECTION TITLE -->
                 <div class="row justify-content-center">
@@ -1216,48 +1157,162 @@
         </section>
         <!-- END FAQs-3 -->
 
-        <!-- BANNER-13
-			============================================= -->
-        <section id="banner-13" class="pt-100 banner-section">
+        
+
+
+        
+        <section id="contacts-1" class="pb-50 inner-page-hero contacts-section division">
             <div class="container">
-                <!-- BANNER-13 WRAPPER -->
-                <div class="banner-13-wrapper bg--05 bg--scroll r-16 block-shadow">
-                    <div class="banner-overlay">
-                        <div class="row d-flex align-items-center">
-                            <!-- BANNER-5 TEXT -->
-                            <div class="col-md-7">
-                                <div class="banner-13-txt color--white">
-                                    <!-- Title -->
-                                    <h2 class="s-45 w-700">Getting started with Executor Hub today!</h2>
-
-                                    <!-- Text -->
-                                    <p class="p-lg">Register Your Account with a Free Trial and then purchase the
-                                        account after use.</p>
-
-                                    <!-- Button -->
-                                    <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white"
-                                        data-bs-toggle="modal" data-bs-target="#modal-3">Get started - it's free</a>
-                                </div>
-                            </div>
-                            <!-- END BANNER-13 TEXT -->
-
-                            <!-- BANNER-13 IMAGE -->
-                            <div class="col-md-5">
-                                <div class="banner-13-img text-center">
-                                    <img class="img-fluid" src="{{asset('assets/frontend/images/img-04.png')}}"
-                                        alt="banner-image" />
-                                </div>
-                            </div>
+                <!-- Section Title -->
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-9">
+                        <div class="section-title text-center mb-80">
+                            <h2 class="s-52 w-700">Questions? Let's Talk</h2>
+                            <p class="p-lg">
+                                Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know
+                                what
+                                you are looking for, and we’ll get back to you right away.
+                            </p>
                         </div>
-                        <!-- End row -->
                     </div>
-                    <!-- End banner overlay -->
                 </div>
-                <!-- END BANNER-13 WRAPPER -->
+
+                <!-- Contact Form -->
+                <div class="row justify-content-center">
+                    <div class="col-md-11 col-lg-10 col-xl-8">
+                        <div class="form-holder">
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form id="contact-form" class="row contact-form" action="{{ route('contact.submit') }}"
+                                method="POST">
+                                @csrf
+                                <!-- Form Select -->
+                                <div class="col-md-12 input-subject">
+                                    <p class="p-lg">This question is about:</p>
+                                    <span>Choose a topic, so we know who to send your request to: </span>
+                                    <select class="form-select subject" name="subject" required>
+                                        <option value="" selected disabled>This question is about...</option>
+                                        <option>Registering/Authorising</option>
+                                        <option>Using Application</option>
+                                        <option>Troubleshooting</option>
+                                        <option>Backup/Restore</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+
+                                <!-- Name Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Your Name:</p>
+                                    <span>Please enter your real name:</span>
+                                    <input type="text" name="name" class="form-control" placeholder="Your Name*"
+                                        required />
+                                </div>
+
+                                <!-- Email Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Your Email Address:</p>
+                                    <span>Please carefully check your email address for accuracy:</span>
+                                    <input type="email" name="email" class="form-control" placeholder="Email Address*"
+                                        required />
+                                </div>
+
+                                <!-- Message Input -->
+                                <div class="col-md-12">
+                                    <p class="p-lg">Explain your question in detail:</p>
+                                    <span>Your Issue/Concern:</span>
+                                    <textarea name="message" class="form-control" rows="6" placeholder=""
+                                        required></textarea>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="col-md-12 mt-15 form-btn text-right">
+                                    <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+        <!-- DIVIDER LINE -->
+        <hr class="divider" />
+
+
+
+
+        <!-- TEXT CONTENT
+			============================================= -->
+        <section class="pt-100 ct-01 content-section division">
+            <div class="container">
+                <!-- SECTION CONTENT (ROW) -->
+                <div class="row d-flex align-items-center">
+                    <!-- TEXT BLOCK -->
+                    <div class="col-md-6 order-last order-md-2">
+                        <div class="txt-block left-column wow fadeInRight">
+                            <!-- Section ID -->
+                            <span class="section-id">Easy Onboarding</span>
+
+                            <!-- Title -->
+                            <h2 class="s-46 w-700">Achieve more with better workflows</h2>
+
+                            <!-- Text -->
+                            <p>
+                                Executor Hub allows a user-friendly interface for managing your documents, executors and
+                                assets. You can easily login to the portal at any time and get your work done with ease.
+                            </p>
+
+                            <!-- Small Title -->
+                            <h5 class="s-24 w-700">Get more done in less time</h5>
+
+                            <!-- List -->
+                            <ul class="simple-list">
+                                <li class="list-item">
+                                    <p>Easy to use portal with runtime configurations.</p>
+                                </li>
+
+                                <li class="list-item">
+                                    <p class="mb-0">Easily accessible FROM anywhere, anytime.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END TEXT BLOCK -->
+
+                    <!-- IMAGE BLOCK -->
+                    <div class="col-md-6 order-first order-md-2">
+                        <div class="img-block right-column wow fadeInLeft">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/onboarding.png')}}"
+                                alt="content-image" />
+                        </div>
+                    </div>
+                </div>
+                <!-- END SECTION CONTENT (ROW) -->
             </div>
             <!-- End container -->
         </section>
-        <!-- END BANNER-13 -->
+        <!-- END TEXT CONTENT -->
+
+
+
+
+
 
         <!-- MODAL WINDOW (REQUEST FORM)
 			============================================= -->
@@ -1327,92 +1382,6 @@
             </div>
         </div>
         <!-- END MODAL WINDOW (REQUEST FORM) -->
-
-        <section id="contacts-1" class="pb-50 inner-page-hero contacts-section division">
-            <div class="container">
-                <!-- Section Title -->
-                <div class="row justify-content-center">
-                    <div class="col-md-10 col-lg-9">
-                        <div class="section-title text-center mb-80">
-                            <h2 class="s-52 w-700">Questions? Let's Talk</h2>
-                            <p class="p-lg">
-                                Want to learn more about Executor Hub, get a quote, or speak with an expert? Let us know
-                                what
-                                you are looking for, and we’ll get back to you right away.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Contact Form -->
-                <div class="row justify-content-center">
-                    <div class="col-md-11 col-lg-10 col-xl-8">
-                        <div class="form-holder">
-                            @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
-                            @endif
-                            @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif
-                            <form id="contact-form" class="row contact-form" action="{{ route('contact.submit') }}"
-                                method="POST">
-                                @csrf
-                                <!-- Form Select -->
-                                <div class="col-md-12 input-subject">
-                                    <p class="p-lg">This question is about:</p>
-                                    <span>Choose a topic, so we know who to send your request to: </span>
-                                    <select class="form-select subject" name="subject" required>
-                                        <option value="" selected disabled>This question is about...</option>
-                                        <option>Registering/Authorising</option>
-                                        <option>Using Application</option>
-                                        <option>Troubleshooting</option>
-                                        <option>Backup/Restore</option>
-                                        <option>Other</option>
-                                    </select>
-                                </div>
-
-                                <!-- Name Input -->
-                                <div class="col-md-12">
-                                    <p class="p-lg">Your Name:</p>
-                                    <span>Please enter your real name:</span>
-                                    <input type="text" name="name" class="form-control" placeholder="Your Name*"
-                                        required />
-                                </div>
-
-                                <!-- Email Input -->
-                                <div class="col-md-12">
-                                    <p class="p-lg">Your Email Address:</p>
-                                    <span>Please carefully check your email address for accuracy:</span>
-                                    <input type="email" name="email" class="form-control" placeholder="Email Address*"
-                                        required />
-                                </div>
-
-                                <!-- Message Input -->
-                                <div class="col-md-12">
-                                    <p class="p-lg">Explain your question in detail:</p>
-                                    <span>Your Issue/Concern:</span>
-                                    <textarea name="message" class="form-control" rows="6" placeholder=""
-                                        required></textarea>
-                                </div>
-
-                                <!-- Submit Button -->
-                                <div class="col-md-12 mt-15 form-btn text-right">
-                                    <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- WORK WITH US -->
         <section id="contacts-2" class="pb-50 inner-page-hero contacts-section division">
@@ -1500,48 +1469,53 @@
                     <div class="col-md-11 col-lg-10 col-xl-8">
                         <div class="form-holder">
                             @if (session('success'))
-                            <div class="alert alert-success">
-                                {{ session('success') }}
-                            </div>
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
                             @endif
                             @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             @endif
-                            <form id="contact-form" class="row contact-form" action="{{ route('partner.submit') }}" method="POST">
+                            <form id="contact-form" class="row contact-form" action="{{ route('partner.submit') }}"
+                                method="POST">
                                 @csrf
 
                                 <!-- Business Name Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Business Name:</p>
                                     <span>Enter your business name:</span>
-                                    <input type="text" name="business_name" class="form-control" placeholder="Business Name*" required />
+                                    <input type="text" name="business_name" class="form-control"
+                                        placeholder="Business Name*" required />
                                 </div>
 
                                 <!-- Contact Name Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Contact Name:</p>
                                     <span>Enter your full name:</span>
-                                    <input type="text" name="contact_name" class="form-control" placeholder="Your Name*" required />
+                                    <input type="text" name="contact_name" class="form-control" placeholder="Your Name*"
+                                        required />
                                 </div>
 
                                 <!-- Contact Email Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Contact Email:</p>
                                     <span>Please enter a valid email address:</span>
-                                    <input type="email" name="contact_email" class="form-control" placeholder="Email Address*" required />
+                                    <input type="email" name="contact_email" class="form-control"
+                                        placeholder="Email Address*" required />
                                 </div>
 
                                 <!-- Contact Number Input -->
                                 <div class="col-md-12">
                                     <p class="p-lg">Contact Number:</p>
                                     <span>Enter your phone number:</span>
-                                    <input type="tel" name="contact_number" class="form-control" placeholder="Contact Number*" required />
+                                    <input type="tel" name="contact_number" class="form-control"
+                                        placeholder="Contact Number*" required />
                                 </div>
 
                                 <!-- Submit Button -->
@@ -1555,60 +1529,6 @@
             </div>
         </section>
 
-        <section class="pt-100 ct-02 content-section division" id="digitallegacy">
-            <div class="container">
-
-
-                <div class="row">
-
-                    <div class="section-title text-center mb-80">
-                        <!-- Title -->
-                        <h2 class="s-52 w-700">
-                            Digital legacies and their policies</h2>
-
-                        <!-- Text -->
-                        <p class="p-lg">A guide to estate planning for digital assets</p>
-                    </div>
-                    <!-- Left Column -->
-                    <div class="col-md-6 border-end">
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
-                            onclick="selectItem('Google')">
-                            Google
-                        </button>
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
-                            onclick="selectItem('Facebook')">
-                            Facebook
-                        </button>
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
-                            onclick="selectItem('Instagram')">
-                            Instagram
-                        </button>
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2" onclick="selectItem('Apple')">
-                            Apple
-                        </button>
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
-                            onclick="selectItem('Linkedin')">
-                            LinkedIn
-                        </button>
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2" onclick="selectItem('Avios')">
-                            Avios
-                        </button>
-                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
-                            onclick="selectItem('Twitter')">
-                            Twitter
-                        </button>
-                    </div>
-
-                    <!-- Right Column -->
-                    <div id="displayText"
-                        class="col-md-6 d-flex align-items-center justify-content-center text-secondary">
-                        Select an Asset to see details here.
-                    </div>
-                </div>
-
-
-            </div> <!-- End container -->
-        </section>
 
         <section class="pt-100 ct-02 content-section division">
             <div class="container">
@@ -1676,6 +1596,105 @@
 
             </div> <!-- End container -->
         </section>
+
+        <section class="pt-100 ct-02 content-section division" id="digitallegacy">
+            <div class="container">
+
+
+                <div class="row">
+
+                    <div class="section-title text-center mb-80">
+                        <!-- Title -->
+                        <h2 class="s-52 w-700">
+                            Digital legacies and their policies</h2>
+
+                        <!-- Text -->
+                        <p class="p-lg">A guide to estate planning for digital assets</p>
+                    </div>
+                    <!-- Left Column -->
+                    <div class="col-md-6 border-end">
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Google')">
+                            Google
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Facebook')">
+                            Facebook
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Instagram')">
+                            Instagram
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2" onclick="selectItem('Apple')">
+                            Apple
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Linkedin')">
+                            LinkedIn
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2" onclick="selectItem('Avios')">
+                            Avios
+                        </button>
+                        <button class="btn btn--theme hover--theme w-100 text-start mb-2"
+                            onclick="selectItem('Twitter')">
+                            Twitter
+                        </button>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div id="displayText"
+                        class="col-md-6 d-flex align-items-center justify-content-center text-secondary">
+                        Select an Asset to see details here.
+                    </div>
+                </div>
+
+
+            </div> <!-- End container -->
+        </section>
+
+        
+        <!-- BANNER-13
+			============================================= -->
+            <section id="banner-13" class="pt-100 banner-section">
+            <div class="container">
+                <!-- BANNER-13 WRAPPER -->
+                <div class="banner-13-wrapper bg--05 bg--scroll r-16 block-shadow">
+                    <div class="banner-overlay">
+                        <div class="row d-flex align-items-center">
+                            <!-- BANNER-5 TEXT -->
+                            <div class="col-md-7">
+                                <div class="banner-13-txt color--white">
+                                    <!-- Title -->
+                                    <h2 class="s-45 w-700">Getting started with Executor Hub today!</h2>
+
+                                    <!-- Text -->
+                                    <p class="p-lg">Register Your Account with a Free Trial and then purchase the
+                                        account after use.</p>
+
+                                    <!-- Button -->
+                                    <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white"
+                                        data-bs-toggle="modal" data-bs-target="#modal-3">Get started - it's free</a>
+                                </div>
+                            </div>
+                            <!-- END BANNER-13 TEXT -->
+
+                            <!-- BANNER-13 IMAGE -->
+                            <div class="col-md-5">
+                                <div class="banner-13-img text-center">
+                                    <img class="img-fluid" src="{{asset('assets/frontend/images/img-04.png')}}"
+                                        alt="banner-image" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End row -->
+                    </div>
+                    <!-- End banner overlay -->
+                </div>
+                <!-- END BANNER-13 WRAPPER -->
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- END BANNER-13 -->
 
         <!-- FOOTER-3
 			============================================= -->
@@ -1842,24 +1861,24 @@
 
     <script>
         $(document).on({
-            contextmenu: function(e) {
+            contextmenu: function (e) {
                 console.log("ctx menu button:", e.which);
 
                 // Stop the context menu
                 e.preventDefault();
             },
-            mousedown: function(e) {
+            mousedown: function (e) {
                 console.log("normal mouse down:", e.which);
             },
-            mouseup: function(e) {
+            mouseup: function (e) {
                 console.log("normal mouse up:", e.which);
             },
         });
     </script>
 
     <script>
-        $(function() {
-            $(".switch").click(function() {
+        $(function () {
+            $(".switch").click(function () {
                 $("body").toggleClass("theme--dark");
                 if ($("body").hasClass("theme--dark")) {
                     $(".switch").text("Light Mode");
@@ -1871,7 +1890,7 @@
     </script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
             } else {
@@ -1905,13 +1924,13 @@
     </script>
     <script>
         // Show the cookie popup if the user has not already accepted cookies
-        window.onload = function() {
+        window.onload = function () {
             if (!localStorage.getItem('cookies-accepted')) {
                 document.getElementById('cookie-popup').style.display = 'block';
             }
 
             // When the "Accept" button is clicked, hide the popup and store the preference
-            document.getElementById('accept-cookies').addEventListener('click', function() {
+            document.getElementById('accept-cookies').addEventListener('click', function () {
                 localStorage.setItem('cookies-accepted', 'true');
                 document.getElementById('cookie-popup').style.display = 'none';
             });
