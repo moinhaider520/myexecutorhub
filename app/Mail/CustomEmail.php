@@ -11,15 +11,17 @@ class CustomEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $data;
+    public $subject; 
 
-    public function __construct($data)
+    public function __construct($data, $subject) 
     {
         $this->data = $data;
+        $this->subject = $subject; 
     }
 
     public function build()
     {
-        return $this->subject('New Email Notification')
+        return $this->subject($this->subject) 
                     ->view('emails.custom')
                     ->with('data', $this->data);
     }

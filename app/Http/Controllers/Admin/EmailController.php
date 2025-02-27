@@ -38,10 +38,13 @@ class EmailController extends Controller
 
         // Send email to each recipient
         foreach ($users as $user) {
-            Mail::to($user->email)->send(new CustomEmail([
-                'subject' => $request->title,
-                'message' => $request->message,
-            ]));
+            Mail::to($user->email)->send(new CustomEmail(
+                [
+                    'subject' => $request->title, 
+                    'message' => $request->message,
+                ], 
+                $request->title 
+            ));
         }
 
         return redirect()->back()->with('success', 'Emails sent successfully.');
