@@ -29,8 +29,8 @@
                                 <label class="col-form-label">Password</label>
                                 <div class="form-input position-relative">
                                     <input id="password" class="form-control @error('password') is-invalid @enderror" type="password" name="password" required autocomplete="current-password" placeholder="*********">
-                                    <div class="show-hide">
-                                        <span class="show"></span>
+                                    <div class="show-hide" onclick="togglePassword()">
+                                        <span></span>
                                     </div>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -65,4 +65,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("password");
+        var showHideIcon = document.querySelector(".show-hide span");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            showHideIcon.textContent = ""; // Change icon when shown
+        } else {
+            passwordInput.type = "password";
+            showHideIcon.textContent = ""; // Change icon when hidden
+        }
+    }
+</script>
 @endsection

@@ -68,6 +68,12 @@
                                     <span>Settings</span>
                                 </a>
                                 @endrole
+                                @role('partner')
+                                <a href="{{ route('partner.edit_profile') }}">
+                                    <i data-feather="settings"></i>
+                                    <span>Settings</span>
+                                </a>
+                                @endrole
                             </li>
 
                             <li>

@@ -103,6 +103,51 @@
     .accept-cookies-btn:hover {
         background-color: #e6c200;
     }
+
+    .exit-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 9999;
+    }
+
+    .exit-popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 10px;
+        width: 50%;
+    }
+
+    .exit-close {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
 </style>
 
 <body>
@@ -185,7 +230,7 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#contacts-2" class="h-link">Work
                                         With
                                         Us</a></li>
-                                        <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy"
+                                <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy"
                                         class="h-link">Digital Legacy</a>
                                 </li>
                                 @guest
@@ -610,7 +655,7 @@
 
                                 <!-- Text -->
                                 <div class="fbox-txt">
-                                    <h6 class="s-22 w-700">AI Assisstance</h6>
+                                    <h6 class="s-22 w-700">AI Assistance</h6>
                                     <p>Executor Hub AI Provides assistance for using the Portal.</p>
                                 </div>
                             </div>
@@ -628,10 +673,10 @@
         </section>
         <!-- END FEATURES-11 -->
 
-        
+
         <!-- STATISTIC-1
 			============================================= -->
-            <div id="benefits-11" class="py-100 statistic-section division">
+        <div id="benefits-11" class="py-100 statistic-section division">
             <div class="container">
                 <!-- STATISTIC-1 WRAPPER -->
                 <div class="statistic-1-wrapper">
@@ -699,9 +744,9 @@
         </div>
         <!-- END STATISTIC-1 -->
 
-                <!-- TEXT CONTENT
+        <!-- TEXT CONTENT
 			============================================= -->
-            <section class="bg--white-400 py-100 ct-04 content-section division">
+        <section class="bg--white-400 py-100 ct-04 content-section division">
             <div class="container">
                 <!-- SECTION CONTENT (ROW) -->
                 <div class="row d-flex align-items-center">
@@ -807,7 +852,7 @@
                     <!-- IMAGE BLOCK -->
                     <div class="col-md-6 order-first order-md-2">
                         <div class="img-block wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/tablet-01.png')}}"
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/demo.jpg')}}"
                                 alt="content-image" />
                         </div>
                     </div>
@@ -938,9 +983,9 @@
             <!-- End container -->
         </section>
 
-                <!-- FAQs-3
+        <!-- FAQs-3
 			============================================= -->
-            <section id="faqs-3" class="pt-100 faqs-section">
+        <section id="faqs-3" class="pt-100 faqs-section">
             <div class="container">
                 <!-- SECTION TITLE -->
                 <div class="row justify-content-center">
@@ -1157,10 +1202,10 @@
         </section>
         <!-- END FAQs-3 -->
 
-        
 
 
-        
+
+
         <section id="contacts-1" class="pb-50 inner-page-hero contacts-section division">
             <div class="container">
                 <!-- Section Title -->
@@ -1288,7 +1333,7 @@
                                 </li>
 
                                 <li class="list-item">
-                                    <p class="mb-0">Easily accessible FROM anywhere, anytime.</p>
+                                    <p class="mb-0">Easily accessible from anywhere, anytime.</p>
                                 </li>
                             </ul>
                         </div>
@@ -1637,7 +1682,7 @@
                         </button>
                         <button class="btn btn--theme hover--theme w-100 text-start mb-2"
                             onclick="selectItem('Twitter')">
-                            Twitter
+                            X (Twitter)
                         </button>
                     </div>
 
@@ -1652,10 +1697,10 @@
             </div> <!-- End container -->
         </section>
 
-        
+
         <!-- BANNER-13
 			============================================= -->
-            <section id="banner-13" class="pt-100 banner-section">
+        <section id="banner-13" class="pt-100 banner-section">
             <div class="container">
                 <!-- BANNER-13 WRAPPER -->
                 <div class="banner-13-wrapper bg--05 bg--scroll r-16 block-shadow">
@@ -1834,6 +1879,18 @@
             <!-- End container -->
         </footer>
         <!-- END FOOTER-3 -->
+
+        <!-- Exit Intent Popup -->
+        <div id="exitPopup" class="exit-popup">
+            <div class="exit-popup-content">
+                <span class="exit-close">&times;</span>
+                <h2>Wait! Don’t Leave Just Yet…</h2>
+                <p>Executor Hub helps you organize everything your loved ones need in one secure place. 💙</p>
+                <p>Before you go, make sure your important documents and passwords are safely stored!</p>
+                <a href="{{ url('/register') }}" class="btn btn-primary">Get Started for Free</a>
+            </div>
+        </div>
+
     </div>
     <!-- END PAGE CONTENT -->
 
@@ -1917,7 +1974,7 @@
             } else if (item === "Avios") {
                 text = "Membership will terminate automatically upon the death of a member, Points accumulated but unused at the time of death shall be cancelled together with membership of the Scheme.";
             } else if (item === "Twitter") {
-                text = "Twitter may automatically close accounts after prolonged periods of inactivity. If you want your account closed before to prevent fraud then your family will need your Twitter handle and request to close it via their help centre.";
+                text = "X (Twitter) may automatically close accounts after prolonged periods of inactivity. If you want your account closed before to prevent fraud then your family will need your Twitter handle and request to close it via their help centre.";
             }
             document.getElementById('displayText').innerText = text;
         }
@@ -1936,6 +1993,28 @@
             });
         };
     </script>
+
+    <script>
+        $(document).ready(function () {
+            let exitPopupShown = false;
+
+            $(document).on("mouseleave", function (event) {
+                if (event.clientY < 10 && !exitPopupShown) {
+                    $("#exitPopup").fadeIn();
+                    exitPopupShown = true;
+                }
+            });
+
+            $(".exit-close").click(function () {
+                $("#exitPopup").fadeOut();
+            });
+
+            $(".btn-primary").click(function () {
+                $("#exitPopup").fadeOut();
+            });
+        });
+    </script>
+
 </body>
 
 </html>

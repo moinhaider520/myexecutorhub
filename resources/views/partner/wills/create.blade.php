@@ -53,7 +53,7 @@
                 <h4>Will Video</h4>
               </div>
               <div class="card-body">
-                <div id="dummy-text"><b>You are ready to start.</b>It should take 10-20 minutes. You must complete your
+                <div id="dummy-text"><b>You are ready to start.</b> It should take 10-20 minutes. You must complete your
                   session in one go. If you pause or cancel your session you will have to start again from Device Check.
                 </div>
                 <button id="start-button" class="btn btn-primary">Start</button>

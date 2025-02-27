@@ -125,7 +125,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('partner.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('partner.properties.view') }}">Property (ies) Owned</a></li>
+                            <li><a href="{{ route('partner.properties.view') }}">Property <span style="text-transform:lowercase;">(ies)</span> Owned</a></li>
                             <li><a href="{{ route('partner.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('partner.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('partner.insurance_policies.view') }}">Insurance Policies</a></li>
@@ -401,7 +401,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('customer.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('customer.properties.view') }}">Property (ies) Owned</a></li>
+                            <li><a href="{{ route('customer.properties.view') }}">Property <span style="text-transform:lowercase;">(ies)</span> Owned</a></li>
                             <li><a href="{{ route('customer.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('customer.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('customer.insurance_policies.view') }}">Insurance Policies</a></li>
@@ -653,22 +653,6 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg>
-                            <span>Withdraw </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.withdraw.view') }}">Withdrawal</a></li>
-                            <li><a href="{{ route('customer.withdraw.history') }}">Withdrawal History</a></li>
-
-                        </ul>
-                    </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -696,7 +680,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('executor.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('executor.properties.view') }}">Property (ies) Owned</a></li>
+                            <li><a href="{{ route('executor.properties.view') }}">Property <span style="text-transform:lowercase;">(ies)</span> Owned</a></li>
                             <li><a href="{{ route('executor.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('executor.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('executor.insurance_policies.view') }}">Insurance Policies</a></li>
@@ -882,22 +866,6 @@
                             <li><a href="{{ route('executor.organs_donation.view') }}">Organ Donations</a></li>
                         </ul>
                     </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg>
-                            <span>Withdraw </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('executor.withdraw.view') }}">Withdrawal</a></li>
-                            <li><a href="{{ route('executor.withdraw.history') }}">Withdrawal History</a></li>
-
-                        </ul>
-                    </li>
                     @endrole
 
                     @if (Auth::user()->hasAnyRole(['Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers']))
@@ -938,7 +906,7 @@
                             <li><a href="{{ route('investment_accounts.view') }}">Investment Accounts</a></li>
                             @endcan
                             @can('view properties')
-                            <li><a href="{{ route('properties.view') }}">Property (ies) Owned</a></li>
+                            <li><a href="{{ route('properties.view') }}">Property <span style="text-transform:lowercase;">(ies)</span> Owned</a></li>
                             @endcan
                             @can('view personal chattels')
                             <li><a href="{{ route('personal_chattels.view') }}">Personal Chattels</a></li>

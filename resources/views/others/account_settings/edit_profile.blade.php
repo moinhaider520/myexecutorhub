@@ -56,7 +56,7 @@
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label class="form-label">Postal Code</label>
-                                        <input class="form-control" type="number" placeholder="ZIP Code"
+                                        <input class="form-control" type="text" placeholder="ZIP Code"
                                             name="postal_code" value="{{ old('postal_code', $user->postal_code) }}" required>
                                         @error('postal_code')
                                             <div class="text-danger">{{ $message }}</div>
