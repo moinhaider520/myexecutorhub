@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
 @section('content')
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <div class="page-body">
     <!-- Container-fluid starts-->
     <div class="container-fluid default-dashboard">
@@ -10,8 +12,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Send Notification</h4>
-                                <span>Choose the recipient type, enter a title, and message for the notification.</span>
+                                <h4>Send Email</h4>
+                                <span>Choose the recipient type, enter a subject, and body for the email.</span>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('admin.notifications.send') }}" method="POST">
@@ -30,22 +32,25 @@
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="title" class="form-label">Title</label>
-                                        <input type="text" name="title" class="form-control" value="{{ old('title') }}" placeholder="Enter notification title" required>
+                                        <label for="title" class="form-label">Subject</label>
+                                        <input type="text" name="title"  class="form-control" value="{{ old('title') }}" placeholder="Enter Subject" required>
                                         @error('title')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="message" class="form-label">Notification Message</label>
-                                        <textarea name="message" id="message" class="form-control" rows="4" placeholder="Enter your notification message here" required>{{ old('message') }}</textarea>
+                                        <label for="message" class="form-label">Email Body</label>
+                                        <div id="quill-editor" style="height: 200px;"></div>
+
+<!-- Hidden Textarea for Form Submission -->
+<textarea name="message" id="message" class="form-control" rows="4" required hidden>{{ old('message') }}</textarea>
                                         @error('message')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Send Notification</button>
+                                    <button type="submit" class="btn btn-primary">Send Email</button>
                                 </form>
                             </div>
                         </div>
@@ -56,4 +61,17 @@
     </div>
     <!-- Container-fluid Ends-->
 </div>
+<script>
+  var quill = new Quill('#quill-editor', {
+    theme: 'snow'
+  });
+
+  // Set initial content from old value
+  quill.root.innerHTML = document.getElementById('message').value;
+
+  // Sync Quill content to textarea on form submit
+  document.querySelector('form').addEventListener('submit', function() {
+    document.getElementById('message').value = quill.root.innerHTML;
+  });
+</script>
 @endsection

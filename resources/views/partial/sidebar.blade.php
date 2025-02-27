@@ -109,6 +109,20 @@
                             <li><a href="{{ route('admin.notifications.create') }}">Send Notification</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                            </svg>
+                            <span>Emails </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('admin.emails.create') }}">Send Email</a></li>
+                        </ul>
+                    </li>
                     @endrole
 
                     @role('partner')

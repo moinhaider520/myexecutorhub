@@ -10,6 +10,7 @@ use App\Http\Controllers\LPAController as LPAControllerMobile;
 use App\Http\Controllers\WillController as WillControllerMobile;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Admin\EmailController as AdminEmailController;
 
 // Role Partner Controller 
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
@@ -224,6 +225,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Notifications
     Route::get('notifications/create', [AdminNotificationController::class, 'create'])->name('notifications.create');
     Route::post('notifications/send', [AdminNotificationController::class, 'send'])->name('notifications.send');
+
+    // EMAILS
+    Route::get('emails/create', [AdminEmailController::class, 'create'])->name('emails.create');
+    
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
