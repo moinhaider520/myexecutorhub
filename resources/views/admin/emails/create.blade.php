@@ -4,7 +4,6 @@
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <div class="page-body">
-    <!-- Container-fluid starts-->
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
             <div class="col-xl-12 box-col-12">
@@ -16,7 +15,7 @@
                                 <span>Choose the recipient type, enter a subject, and body for the email.</span>
                             </div>
                             <div class="card-body">
-                                <form action="{{ route('admin.notifications.send') }}" method="POST">
+                                <form action="{{ route('admin.emails.send') }}" method="POST" id="email-form">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="recipient_type" class="form-label">Send to</label>
@@ -27,15 +26,15 @@
                                             <option value="customers_and_partners">Customers and Partners</option>
                                         </select>
                                         @error('recipient_type')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    
+
                                     <div class="mb-3">
                                         <label for="title" class="form-label">Subject</label>
-                                        <input type="text" name="title"  class="form-control" value="{{ old('title') }}" placeholder="Enter Subject" required>
+                                        <input type="text" name="title" class="form-control" value="{{ old('title') }}" placeholder="Enter Subject" required>
                                         @error('title')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -43,10 +42,10 @@
                                         <label for="message" class="form-label">Email Body</label>
                                         <div id="quill-editor" style="height: 200px;"></div>
 
-<!-- Hidden Textarea for Form Submission -->
-<textarea name="message" id="message" class="form-control" rows="4" required hidden>{{ old('message') }}</textarea>
+                                        <!-- Hidden Textarea for Form Submission -->
+                                        <textarea name="message" id="message" class="form-control" rows="4" hidden>{{ old('message') }}</textarea>
                                         @error('message')
-                                            <div class="text-danger">{{ $message }}</div>
+                                        <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
 
@@ -59,19 +58,31 @@
             </div>
         </div>
     </div>
-    <!-- Container-fluid Ends-->
 </div>
+
 <script>
-  var quill = new Quill('#quill-editor', {
-    theme: 'snow'
-  });
+    var quill = new Quill('#quill-editor', {
+        theme: 'snow',
+        placeholder: 'Type your email body here...'
+    });
 
-  // Set initial content from old value
-  quill.root.innerHTML = document.getElementById('message').value;
+    // Set initial content from old value, if available
+    var oldMessage = document.getElementById('message').value;
+    if (oldMessage) {
+        quill.root.innerHTML = oldMessage;
+    }
 
-  // Sync Quill content to textarea on form submit
-  document.querySelector('form').addEventListener('submit', function() {
-    document.getElementById('message').value = quill.root.innerHTML;
-  });
+    // Sync Quill content to textarea on form submit
+    document.getElementById('email-form').addEventListener('submit', function(event) {
+        var messageContent = quill.root.innerHTML.trim();
+        
+        // Check if message content is empty
+        if (messageContent === "") {
+            alert('Please enter a message before submitting.');
+            event.preventDefault(); // Stop form submission
+        } else {
+            document.getElementById('message').value = messageContent; // Update hidden textarea
+        }
+    });
 </script>
 @endsection

@@ -228,7 +228,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // EMAILS
     Route::get('emails/create', [AdminEmailController::class, 'create'])->name('emails.create');
-    
+    Route::post('emails/send', [AdminEmailController::class, 'send'])->name('emails.send');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
