@@ -166,6 +166,10 @@ Route::get('/cancellation_policy', function () {
     return view('cancellation_policy');
 })->name('cancellation_policy');
 
+Route::get('/pricing_policy', function () {
+    return view('pricing_policy');
+})->name('pricing_policy');
+
 
 
 

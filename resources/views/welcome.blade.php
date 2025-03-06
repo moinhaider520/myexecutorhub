@@ -239,7 +239,8 @@
                                     </li>
                                     <li class="nl-simple" aria-haspopup="true">
                                         <a href="{{route('register')}}"
-                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                            class="btn r-04 btn--theme hover--tra-white last-link">Start Free 14 Days
+                                            Trial</a>
                                     </li>
                                 @else
                                     <li class="nl-simple" aria-haspopup="true">
@@ -316,7 +317,8 @@
                                         future generations.</p>
                                     <br />
                                     <a href="{{route('register')}}"
-                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free Trial</a>
+                                        class="btn r-04 btn--theme hover--tra-white last-link">Start Free 14 Days
+                                        Trial</a>
                                 </div>
                             </div>
                         </div>
@@ -424,7 +426,7 @@
                                     <div class="fbox-ico ico-50">
                                         <div class="shape-ico color--theme">
                                             <!-- Vector Icon -->
-                                            <span class="flaticon-graphics"></span>
+                                            <span class="flaticon-pdf"></span>
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -455,7 +457,7 @@
                                     <div class="fbox-ico ico-50">
                                         <div class="shape-ico color--theme">
                                             <!-- Vector Icon -->
-                                            <span class="flaticon-idea"></span>
+                                            <span class="flaticon-security"></span>
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -548,7 +550,7 @@
                                     <div class="fbox-ico ico-50">
                                         <div class="shape-ico color--theme">
                                             <!-- Vector Icon -->
-                                            <span class="flaticon-trophy"></span>
+                                            <span class="flaticon-idea"></span>
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -579,7 +581,7 @@
                                     <div class="fbox-ico ico-50">
                                         <div class="shape-ico color--theme">
                                             <!-- Vector Icon -->
-                                            <span class="flaticon-search-engine-1"></span>
+                                            <span class="flaticon-chat"></span>
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -610,7 +612,7 @@
                                     <div class="fbox-ico ico-50">
                                         <div class="shape-ico color--theme">
                                             <!-- Vector Icon -->
-                                            <span class="flaticon-search-engine-1"></span>
+                                            <span class="flaticon-video-player"></span>
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -640,7 +642,7 @@
                                     <div class="fbox-ico ico-50">
                                         <div class="shape-ico color--theme">
                                             <!-- Vector Icon -->
-                                            <span class="flaticon-search-engine-1"></span>
+                                            <span class="flaticon-network"></span>
 
                                             <!-- Shape -->
                                             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -874,7 +876,7 @@
                             <h2 class="s-52 w-700">Simple, Flexible Pricing</h2>
                             <br />
                             <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white last-link">Start
-                                Free Trial</a>
+                                Free 14 Days Trial</a>
                         </div>
                     </div>
                 </div>
@@ -1713,7 +1715,8 @@
                                     <h2 class="s-45 w-700">Getting started with Executor Hub today!</h2>
 
                                     <!-- Text -->
-                                    <p class="p-lg">Register Your Account with a Free Trial and then purchase the
+                                    <p class="p-lg">Register Your Account with a Free 14 Days Trial and then purchase
+                                        the
                                         account after use.</p>
 
                                     <!-- Button -->
@@ -1804,6 +1807,9 @@
                                     <p><a href="{{route('privacy_policy')}}">Privacy Policy</a></p>
                                 </li>
                                 <li>
+                                    <p><a href="{{route('pricing_policy')}}">Pricing Policy</a></p>
+                                </li>
+                                <li>
                                     <p><a href="{{route('cookies')}}">Cookie Policy</a></p>
                                 </li>
                                 <li>
@@ -1850,7 +1856,7 @@
                         <!-- FOOTER COPYRIGHT -->
                         <div class="col">
                             <div class="footer-copyright">
-                                <p class="p-sm">&copy; 2024 Executor Box. <span>All Rights Reserved</span></p>
+                                <p class="p-sm">&copy; 2024 Executor Hub. <span>All Rights Reserved</span></p>
                             </div>
                         </div>
 

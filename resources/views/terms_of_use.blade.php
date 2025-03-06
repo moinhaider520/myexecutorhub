@@ -449,6 +449,9 @@
                                     <p><a href="{{route('privacy_policy')}}">Privacy Policy</a></p>
                                 </li>
                                 <li>
+                                    <p><a href="{{route('pricing_policy')}}">Pricing Policy</a></p>
+                                </li>
+                                <li>
                                     <p><a href="{{route('cookies')}}">Cookie Policy</a></p>
                                 </li>
                                 <li>

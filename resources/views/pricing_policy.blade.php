@@ -140,198 +140,80 @@
 
                         <!-- INNER PAGE TITLE -->
                         <div class="inner-page-title">
-                            <h2 class="s-52 w-700">Executor Hub Cookie Policy</h2>
-                            <p class="p-lg">Last Updated: 19th of February 2025</p>
+                            <h2 class="s-52 w-700">Price Adjustment Policy Clause</h2>
                         </div>
 
 
                         <!-- TEXT BLOCK -->
                         <div class="txt-block legal-info">
 
+
+                            <!-- Title -->
+                            <h4 class="s-30 w-700"><span>1.</span> Annual Subscription Review</h4>
+
                             <!-- Text -->
-                            <p>Executor Hub (“we,” “our,” “us”) uses cookies and similar tracking technologies to
-                                enhance user experience, improve website performance, and analyze how our platform is
-                                used. This Cookie Policy explains what cookies are, how we use them, and how you can
-                                manage your cookie preferences.</p>
+                            <p>Executor Hub reviews its subscription pricing annually to ensure continued platform improvements, security enhancements, and service expansions. However, price adjustments are not guaranteed, and there may be years where no increase occurs.</p>
 
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>1.</span> What Are Cookies?</h4>
+                            <h4 class="s-30 w-700"><span>2.</span> Price Increase Cap</h4>
+                            <p>To maintain affordability for our customers, any potential subscription price adjustments will be subject to the following limits:</p>
+                            <!-- List -->
+                            <ul class="simple-list">
 
-                            <!-- Text -->
-                            <p>Cookies are small text files stored on your device (computer, tablet, or smartphone) when
-                                you visit a website. They help us remember user preferences, track website performance,
-                                and provide a more personalized experience.</p>
+                                <li class="list-item">
+                                    <p>For the first three years: Prices will not increase by more than 5% per year, and increases are not automatic.</p>
+                                </li>
 
-                            <!-- Text -->
-                            <p>Cookies can be:</p>
-                            <ul>
-                                <li>Session cookies – Temporary cookies that expire when you close your browser.</li>
-                                <li>Persistent cookies – Remain on your device until deleted or after a set period.</li>
+                                <li class="list-item">
+                                    <p>After three years: Price adjustments, if necessary, will be limited to a maximum of 7% per year or in line with the UK Consumer Price Index (CPI) + 2%, whichever is lower.</p>
+                                </li>
+
+                                <li class="list-item">
+                                    <p>Maximum Monthly Increase: No single price adjustment will exceed £2 per month for individual subscribers.</p>
+                                </li>
                             </ul>
 
-                            <p>Cookies may be set by us (first-party cookies) or by third-party services integrated into
-                                our website (third-party cookies).</p>
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>2.</span> How We Use Cookies?</h4>
-                            <p>We use cookies for the following purposes:</p>
-
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700"><span>2.1.</span> Essential cookies</h5>
+                            <h4 class="s-30 w-700"><span>3.</span> No Guaranteed Increases</h4>
 
                             <!-- Text -->
-                            <p>These cookies are necessary for the website to function properly and cannot be disabled.
-                                They help with:</p>
+                            <p>Executor Hub is committed to fair pricing, and while we reserve the right to adjust prices, we will only do so when necessary. Some years may see no increase at all, depending on operational costs, inflation, and service improvements.</p>
+
+                            <!-- Title -->
+                            <h4 class="s-30 w-700"><span>4.</span> Advance Notice</h4>
+
+                            <!-- Text -->
+                            <p>Customers will receive at least 60 days’ notice before any price adjustment takes effect. Notifications will include:</p>
 
                             <!-- List -->
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>Security and authentication</p>
+                                    <p>The new subscription rate (if applicable).</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>User session management</p>
+                                    <p>A clear explanation of the reasons for the change.</p>
                                 </li>
-
                                 <li class="list-item">
-                                    <p>Accessibility features</p>
+                                    <p>A summary of new features, improvements, or benefits added to the platform.</p>
                                 </li>
                             </ul>
 
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700"><span>2.2.</span> Performance and Analytics Cookies</h5>
-
-                            <!-- Text -->
-                            <p>These cookies help us understand how users interact with Executor Hub, allowing us to
-                                improve the platform. We use them to:</p>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>Monitor website traffic and user behavior</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Identify technical issues and improve site performance</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Optimize content based on user engagement</p>
-                                </li>
-                            </ul>
-
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700"><span>2.3.</span> Functionality cookies</h5>
-
-                            <!-- Text -->
-                            <p>Functional cookies allow us to remember user preferences and provide a more personalized
-                                experience, such as:</p>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>Remembering login details and preferences</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Storing language and region settings</p>
-                                </li>
-
-                            </ul>
-
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700"><span>2.4.</span> Marketing and Advertising Cookies</h5>
-
-                            <!-- Text -->
-                            <p>These cookies help us deliver relevant advertisements and track the effectiveness of
-                                marketing campaigns. They may be set by third-party advertising networks. We use them
-                                to:</p>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>Display targeted ads based on browsing behavior</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Measure the success of marketing efforts</p>
-                                </li>
-
-                            </ul>
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>3.</span> Third-Party Cookies</h4>
+                            <h4 class="s-30 w-700"><span>5.</span> Customer Loyalty Benefits</h4>
 
                             <!-- Text -->
-                            <p>We may use third-party services, such as analytics tools (e.g., Google Analytics) and
-                                advertising platforms, which set cookies on your device. These third parties have their
-                                own cookie policies, and we encourage you to review them.</p>
+                            <p>Long-term subscribers may qualify for special loyalty discounts or extended rate guarantees, ensuring that early adopters continue to receive the best value.</p>
 
                             <!-- Title -->
-                            <h4 class="s-30 w-700"><span>4.</span> Managing Cookie Preferences</h4>
+                            <h4 class="s-30 w-700"><span>6.</span> Cancellation Option</h4>
 
                             <!-- Text -->
-                            <p>You can control and manage cookies through your browser settings. Most browsers allow you
-                                to:</p>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>Block or delete cookies</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Receive notifications before a cookie is stored</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Disable specific types of cookies</p>
-                                </li>
-
-                            </ul>
-
-                            <p>To adjust your cookie settings, refer to the help section of your browser:</p>
-
-                            <ul class="simple-list">
-
-                                <li class="list-item">
-                                    <p>Google Chrome</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p>Mozilla Firefox</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Microsoft Edge</p>
-                                </li>
-                                <li class="list-item">
-                                    <p>Safari</p>
-                                </li>
-
-                            </ul>
-
-                            <p>You can also manage preferences for third-party cookies through tools such as Your Online Choices or Network Advertising Initiative.</p>
-
-                            <!-- Title -->
-                            <h4 class="s-30 w-700"><span>5.</span> Changes to This Cookie Policy</h4>
-
-                            <!-- Text -->
-                            <p>We may update this Cookie Policy from time to time to reflect changes in technology, legal requirements, or our practices. Any updates will be posted on this page, and we encourage you to review this policy regularly.</p>
-
-                            <!-- Title -->
-                            <h4 class="s-30 w-700"><span>6.</span> How to Contact Us</h4>
-
-                            <!-- Text -->
-                            <p>If you have any questions about our use of cookies, please contact us at:Hello@executorhub.co.uk</p>
-
-                            <!-- Text -->
-                            <p>By continuing to use our website, you consent to the use of cookies as outlined in this policy. </p>
-
+                            <p>If a customer chooses not to continue at the new rate, they may cancel their subscription before the adjustment takes effect without penalty.</p>
                         </div> <!-- END TEXT BLOCK -->
 
 

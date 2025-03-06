@@ -141,7 +141,7 @@
                         <!-- INNER PAGE TITLE -->
                         <div class="inner-page-title">
                             <h2 class="s-52 w-700">Executor Hub Cancellation Policy</h2>
-                            <p class="p-lg">This Cancellation Policy outlines the terms and conditions under which users may cancel their Executor Hub subscription. By subscribing to Executor Hub, you agree to the following terms:</p>
+                            <p class="p-lg">This Cancellation Policy outlines the terms under which subscribers may cancel their Executor Hub subscription and what happens to their data upon cancellation. By subscribing to Executor Hub, you agree to the following terms.</p>
                         </div>
 
 
@@ -162,7 +162,7 @@
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Monthly Subscribers: If you cancel a monthly subscription, your access will continue until the end of the current billing cycle, but no refunds will be issued.</p>
+                                    <p>Monthly Subscribers: If you cancel a monthly subscription, your access will continue until the end of the current billing cycle. No refunds will be issued.</p>
                                 </li>
 
                                 <li class="list-item">
@@ -250,15 +250,39 @@
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Your data may be retained for a limited period as per our Data Retention Policy.</p>
+                                    <p>Grace Period for Document Retrieval: Your uploaded documents will remain accessible for 30 days after cancellation. During this period, you can log in and download any necessary files.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>You may resubscribe at any time, but previously stored data may not be retrievable.</p>
+                                    <p>Permanent Deletion: After 30 days, all uploaded documents and stored data will be permanently deleted from our system and cannot be recovered.</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Early Deletion Requests: If you prefer immediate data deletion, you may request this before the 30-day period ends by contacting hello@executorhub.co.uk.</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>Reactivation Within 30 Days: If you resubscribe within 30 days of cancellation, your documents and account data will be fully restored.</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>After 30 Days: If you resubscribe after the 30-day retention period, your documents will have been permanently deleted, and Executor Hub will be unable to restore any previous data.</p>
                                 </li>
                             </ul>                            
 
-                            <h4 class="s-30 w-700"><span>6.</span> Changes to This Policy</h4>
+                            <h4 class="s-30 w-700"><span>6.</span> Legal Compliance & Data Protection</h4>
+                            <p>Executor Hub ensures compliance with relevant data protection laws:</p>
+                            <ul class="simple-list">
 
+                                <li class="list-item">
+                                    <p>GDPR (EU/UK): Users have the right to request access to their data, deletion, or portability as per GDPR regulations.</p>
+                                </li>
+
+                                <li class="list-item">
+                                    <p>Data Security: All stored data is encrypted and handled with industry-standard security practices.</p>
+                                </li>
+                                <li class="list-item">
+                                    <p>User Rights: Users may request a copy of their data before cancellation by contacting our Data Protection Officer at hello@executorhub.co.uk.</p>
+                                </li>
+                            </ul>      
+
+                            <h4 class="s-30 w-700"><span>7.</span> Changes to This Policy</h4>
                             <!-- Text -->
                             <p>Executor Hub reserves the right to update this Cancellation Policy at any time. We will notify subscribers of significant changes via email or in-platform notifications.</p>
                             <p>For further inquiries, please contact us at hello@executorhub.co.uk</p>
@@ -312,6 +336,9 @@
                                 </li>
                                 <li>
                                     <p><a href="{{route('privacy_policy')}}">Privacy Policy</a></p>
+                                </li>
+                                <li>
+                                    <p><a href="{{route('pricing_policy')}}">Pricing Policy</a></p>
                                 </li>
                                 <li>
                                     <p><a href="{{route('cookies')}}">Cookie Policy</a></p>
