@@ -121,9 +121,9 @@ class StripePaymentController extends Controller
 
         // Map the plan amount to the package name
         $packageNames = [
-            '8' => 'Basic',
-            '20' => 'Standard',
-            '40' => 'Premium'
+            '5.99' => 'Basic',
+            '11.99' => 'Standard',
+            '19.99' => 'Premium'
         ];
         $packageName = $packageNames[$request->plan] ?? 'Unknown Package';
 

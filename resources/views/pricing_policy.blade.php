@@ -64,7 +64,7 @@
     <!-- RESPONSIVE CSS -->
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
 </head>
-
+<script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
 <body>
     <!-- PRELOADER SPINNER
 		============================================= -->
@@ -314,7 +314,7 @@
                         <!-- FOOTER COPYRIGHT -->
                         <div class="col">
                             <div class="footer-copyright">
-                                <p class="p-sm">&copy; 2024 Executor Box. <span>All Rights Reserved</span></p>
+                                <p class="p-sm">&copy; 2024 Executor Hub. <span>All Rights Reserved</span></p>
                             </div>
                         </div>
 

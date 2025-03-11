@@ -101,16 +101,16 @@
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <strong>Membership:</strong>
-                                    <select class="form-control" id="inputState" name="plan" onchange="updateAmount()">
+                                    <select class="form-control" id="inputState" name="plan" onchange="updateAmount()" required>
                                         <option selected="" disabled>Choose...</option>
-                                        <option value="8">Basic</option>
-                                        <option value="20">Standard</option>
-                                        <option value="40">Premium</option>
+                                        <option value="5.99">Basic</option>
+                                        <option value="11.99">Standard</option>
+                                        <option value="19.99">Premium</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <strong>Amount:</strong>
-                                    <input type="text" class="form-control" name="amount" id="amount" readonly value="10.00">
+                                    <input type="text" class="form-control" name="amount" id="amount" readonly value="5.99">
                                 </div>
                             </div>
 

@@ -149,7 +149,7 @@
         background-color: #0056b3;
     }
 </style>
-
+<script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
 <body>
     <!-- PRELOADER SPINNER
 		============================================= -->
@@ -894,7 +894,7 @@
                                     <h5 class="s-24 w-700">Basic</h5>
                                     <div class="price">
                                         <sup class="color--black">£</sup>
-                                        <span class="color--black">8</span>
+                                        <span class="color--black">5.99</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
                                         <p class="color--grey">
                                         <ol>
@@ -921,7 +921,7 @@
                                     <div class="price">
                                         <div class="price2" style="display: block;">
                                             <sup class="color--black">£</sup>
-                                            <span class="color--black">20.00</span>
+                                            <span class="color--black">11.99</span>
                                             <sup class="validity color--grey">&nbsp;/mo</sup>
                                         </div>
                                         <p class="color--grey">
@@ -952,7 +952,7 @@
                                     <div class="price">
                                         <div class="price2" style="display: block;">
                                             <sup class="color--black">£</sup>
-                                            <span class="color--black">40.00</span>
+                                            <span class="color--black">19.99</span>
                                             <sup class="validity color--grey">&nbsp;/mo</sup>
                                         </div>
                                         <p class="color--grey">
