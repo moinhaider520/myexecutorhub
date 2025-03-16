@@ -39,7 +39,7 @@ class SettingController extends Controller
             'email' => 'required|email',
             'address' => 'required',
             'city' => 'required',
-            'postal_code' => 'required|numeric',
+            'postal_code' => 'required',
             'contact_number' => 'required',
         ]);
 
@@ -57,7 +57,7 @@ class SettingController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('partner.dashboard')->with('success', 'Profile updated successfully.');
+            return redirect()->back()->with('success', 'Profile updated successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

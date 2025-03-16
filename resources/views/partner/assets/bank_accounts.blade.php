@@ -45,7 +45,7 @@
                 <td>{{ $bankAccount->sort_code }}</td>
                 <td>{{ $bankAccount->account_name }}</td>
                 <td>{{ $bankAccount->account_number }}</td>
-                <td>{{ $bankAccount->balance }}</td>
+                <td>£{{ number_format($bankAccount->balance, 0, '.', ',') }}</td>
                 <td>
                 <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
                   data-target="#editBankAccountModal" data-id="{{ $bankAccount->id }}"

@@ -57,7 +57,7 @@
                             No photos
                             @endif
                           </td>
-                          <td>{{ $chattel->value }}</td>
+                          <td>£{{ number_format($chattel->value, 0, '.', ',') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editChattelModal" data-id="{{ $chattel->id }}" data-chattel_type="{{ $chattel->chattel_type }}" data-description="{{ $chattel->description }}" data-value="{{ $chattel->value }}">Edit</button>
                             <form action="{{ route('customer.personal_chattels.destroy', $chattel->id) }}" method="POST" style="display:inline;">

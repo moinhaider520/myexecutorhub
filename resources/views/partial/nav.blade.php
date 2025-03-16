@@ -54,7 +54,7 @@
                                     </p>
                                 </div>
                         </div>
-                        <ul class="profile-dropdown onhover-show-div">
+                        <ul class="profile-dropdown onhover-show-div-hidden">
                             <li>
                                 @role('admin')
                                 <a href="{{ route('admin.edit_profile') }}">

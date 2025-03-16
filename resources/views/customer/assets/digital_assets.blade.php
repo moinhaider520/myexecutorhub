@@ -45,8 +45,8 @@
                           <td>{{ $digitalAsset->username }}</td>
                           <td>{{ $digitalAsset->password }}</td>
                           <td>{{ $digitalAsset->email_used }}</td>
-                          <td>{{ $digitalAsset->value }}</td>
-                          <td>
+                          <td>£{{ number_format($digitalAsset->value, 0, '.', ',') }}</td>
+                          <td style="display: flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDigitalAssetModal" data-id="{{ $digitalAsset->id }}" data-asset_type="{{ $digitalAsset->asset_type }}" data-asset_name="{{ $digitalAsset->asset_name }}" data-username="{{ $digitalAsset->username }}" data-password="{{ $digitalAsset->password }}" data-email_used="{{ $digitalAsset->email_used }}" data-value="{{ $digitalAsset->value }}">Edit</button>
                             <form action="{{ route('customer.digital_assets.destroy', $digitalAsset->id) }}" method="POST" style="display:inline;">
                               @csrf

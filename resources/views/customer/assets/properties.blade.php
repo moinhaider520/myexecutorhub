@@ -43,7 +43,7 @@
                           <td>{{ $property->address }}</td>
                           <td>{{ $property->owner_names }}</td>
                           <td>{{ $property->how_owned }}</td>
-                          <td>{{ $property->value }}</td>
+                          <td>£{{ number_format($property->value, 0, '.', ',') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editPropertyModal" data-id="{{ $property->id }}" data-property_type="{{ $property->property_type }}" data-address="{{ $property->address }}" data-owner_names="{{ $property->owner_names }}" data-how_owned="{{ $property->how_owned }}" data-value="{{ $property->value }}">Edit</button>
                             <form action="{{ route('customer.properties.destroy', $property->id) }}" method="POST" style="display:inline;">

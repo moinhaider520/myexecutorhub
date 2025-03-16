@@ -49306,7 +49306,7 @@ table.table-bordered thead tr th p {
     left: 0;
 }
 
-.onhover-dropdown:hover .onhover-show-div {
+.onhover-dropdown .onhover-show-div {
     opacity: 1;
     -webkit-transform: translateY(0px);
     transform: translateY(0px);
@@ -49315,7 +49315,11 @@ table.table-bordered thead tr th p {
     overflow: hidden;
 }
 
-.onhover-dropdown:hover .onhover-show-div:before {
+.onhover-dropdown .onhover-show-div-hidden {
+display: none;
+}
+
+/* .onhover-dropdown:hover .onhover-show-div:before {
     width: 0;
     height: 0;
     border-left: 7px dashed transparent;
@@ -49326,7 +49330,7 @@ table.table-bordered thead tr th p {
     position: absolute;
     left: 10px;
     z-index: 2;
-}
+} */
 
 .onhover-dropdown:hover .onhover-show-div:after {
     width: 0;

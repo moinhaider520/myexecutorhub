@@ -48,8 +48,8 @@
                           <td>{{ $executor->email }}</td>
                           <td>{{ $executor->phone_number }}</td>
                           <td>{{ $executor->relationship }}</td>
-                          <td>{{ $executor->status }}</td>
-                          <td>
+                          <td>{{ $executor->status == 'N' ? 'Upon Death' : 'Immediate Access' }}</td>
+                          <td style="display:flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-how_acting="{{ $executor->how_acting }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
                             <form action="{{ route('customer.executors.destroy', $executor->id) }}" method="POST" style="display:inline;">
                               @csrf
@@ -103,7 +103,6 @@
             <option value="" disabled>-- Select --</option>
               <option value="Solely">Solely</option>
               <option value="Jointly">Jointly</option>
-              <option value="Jointly and severally">Jointly and severally</option>
               <option value="Main">Main</option>
               <option value="Reserve">Reserve</option>
             </select>
@@ -188,7 +187,6 @@
               <option value="" disabled>-- Select --</option>
               <option value="Solely">Solely</option>
               <option value="Jointly">Jointly</option>
-              <option value="Jointly and severally">Jointly and severally</option>
               <option value="Main">Main</option>
               <option value="Reserve">Reserve</option>
             </select>

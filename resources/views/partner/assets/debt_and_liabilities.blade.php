@@ -32,6 +32,7 @@
                           <th>Loan Provider</th>
                           <th>Contact Details</th>
                           <th>Amount Outstanding</th>
+                          <th>Entry Date n Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -43,8 +44,9 @@
                           <td>{{ $debtLiability->reference_number }}</td>
                           <td>{{ $debtLiability->loan_provider }}</td>
                           <td>{{ $debtLiability->contact_details }}</td>
-                          <td>{{ $debtLiability->amount_outstanding }}</td>
-                          <td>
+                          <td>£{{ number_format($debtLiability->amount_outstanding, 0, '.', ',') }}</td>
+                          <td>{{ $debtLiability->created_at }}</td>
+                          <td style="display: flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDebtLiabilityModal" data-id="{{ $debtLiability->id }}" data-debt_type="{{ $debtLiability->debt_type }}" data-reference_number="{{ $debtLiability->reference_number }}" data-loan_provider="{{ $debtLiability->loan_provider }}" data-contact_details="{{ $debtLiability->contact_details }}" data-amount_outstanding="{{ $debtLiability->amount_outstanding }}">Edit</button>
                             <form action="{{ route('partner.debt_and_liabilities.destroy', $debtLiability->id) }}" method="POST" style="display:inline;">
                               @csrf

@@ -41,7 +41,7 @@
                           <td>{{ $investmentAccount->investment_type }}</td>
                           <td>{{ $investmentAccount->company_name }}</td>
                           <td>{{ $investmentAccount->account_number }}</td>
-                          <td>{{ $investmentAccount->balance }}</td>
+                          <td>£{{ number_format($investmentAccount->balance, 0, '.', ',') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editInvestmentAccountModal" data-id="{{ $investmentAccount->id }}" data-investment_type="{{ $investmentAccount->investment_type }}" data-company_name="{{ $investmentAccount->company_name }}" data-account_number="{{ $investmentAccount->account_number }}" data-balance="{{ $investmentAccount->balance }}">Edit</button>
                             <form action="{{ route('partner.investment_accounts.destroy', $investmentAccount->id) }}" method="POST" style="display:inline;">

@@ -43,11 +43,11 @@
                           <td>{{ $insurancePolicy->insurance_type }}</td>
                           <td>{{ $insurancePolicy->provider_name }}</td>
                           <td>{{ $insurancePolicy->policy_number }}</td>
-                          <td>{{ $insurancePolicy->sum_insured }}</td>
+                          <td>£{{ number_format($insurancePolicy->sum_insured, 0, '.', ',') }}</td>
                           <td>{{ $insurancePolicy->contact_details }}</td>
                           <td>{{ $insurancePolicy->beneficiaries }}</td>
                           <td>{{ $insurancePolicy->policy_end_date }}</td>
-                          <td>
+                          <td style="display: flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editInsurancePolicyModal" data-id="{{ $insurancePolicy->id }}" data-insurance_type="{{ $insurancePolicy->insurance_type }}" data-provider_name="{{ $insurancePolicy->provider_name }}" data-policy_number="{{ $insurancePolicy->policy_number }}" data-sum_insured="{{ $insurancePolicy->sum_insured }}" data-contact_details="{{ $insurancePolicy->contact_details }}" data-beneficiaries="{{ $insurancePolicy->beneficiaries }}" data-policy_end_date="{{ $insurancePolicy->policy_end_date }}">Edit</button>
                             <form action="{{ route('customer.insurance_policies.destroy', $insurancePolicy->id) }}" method="POST" style="display:inline;">
                               @csrf
