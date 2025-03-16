@@ -91,9 +91,9 @@ class StripePaymentController extends Controller
             Carbon::parse($user->trial_ends_at)->isPast();
 
         $packageNames = [
-            '8' => 'Basic',
-            '20' => 'Standard',
-            '40' => 'Premium',
+            '5.99' => 'Basic',
+            '11.99' => 'Standard',
+            '19.99' => 'Premium'
         ];
         $packageName = $packageNames[$request->plan] ?? 'Unknown Package';
 
