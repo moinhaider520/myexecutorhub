@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\OnboardingProgress;
 use App\Http\Controllers\Controller;
+use App\Mail\DocumentMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
 
@@ -34,7 +36,7 @@ class DocumentsController extends Controller
 
             $path = $this->imageUpload($request->file('file'), 'documents');
 
-            Document::create([
+            $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
@@ -54,6 +56,16 @@ class DocumentsController extends Controller
             }
 
             DB::commit();
+
+            // Send email
+            $user = Auth::user();
+            $data = [
+                'first_name' => $user->name,
+                'document_name' => $document->document_type,
+            ];
+
+            Mail::to($user->email)->send(new DocumentMail($data));
+
             return response()->json(['success' => true, 'message' => 'Document added successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
