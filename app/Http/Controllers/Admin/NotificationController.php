@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Notifications\SendNotification;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 
@@ -34,11 +33,6 @@ class NotificationController extends Controller
             $users = User::role(['customer', 'partner'])->whereNotNull('expo_token')->get();
         }
     
-        // Send in-app notifications
-        foreach ($users as $user) {
-            $user->notify(new SendNotification($request->title, $request->message));
-        }
-    
         // Prepare Expo push notifications
         $expo = new Expo();
         $messages = [];
@@ -61,5 +55,4 @@ class NotificationController extends Controller
     
         return redirect()->route('admin.notifications.create')->with('success', 'Notification sent successfully!');
     }
-    
 }
