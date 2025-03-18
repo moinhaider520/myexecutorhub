@@ -1,5 +1,7 @@
 <?php
 
+<?php
+
 namespace App\Http\Controllers\Api\Partner;
 
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
+use App\Mail\DocumentMail;
+use Illuminate\Support\Facades\Mail;
+use App\Models\User;
+use ExpoSDK\Expo;
+use ExpoSDK\ExpoMessage;
 
 class DocumentsController extends Controller
 {
@@ -39,7 +46,7 @@ class DocumentsController extends Controller
     {
         try {
             $documents = Document::where('created_by', Auth::id())
-                ->where('document_type', $document_type) 
+                ->where('document_type', $document_type)
                 ->get();
 
             return response()->json([
@@ -70,33 +77,50 @@ class DocumentsController extends Controller
 
             $path = $this->imageUpload($request->file('file'), 'documents');
 
-            Document::create([
+            $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
                 'created_by' => Auth::id()
             ]);
 
-            // Check if onboarding_progress exists for the user
+            // Update onboarding progress
             $progress = OnboardingProgress::firstOrCreate(
                 ['user_id' => Auth::id()],
                 ['document_uploaded' => true]
             );
 
-            // If the record exists but document_uploaded is false, update it
             if (!$progress->document_uploaded) {
                 $progress->document_uploaded = true;
                 $progress->save();
             }
 
             DB::commit();
+
+            // Send email notification
+            $user = Auth::user();
+            $data = [
+                'first_name' => $user->name,
+                'document_name' => $document->document_type,
+            ];
+            Mail::to($user->email)->send(new DocumentMail($data));
+
+            // Send push notification
+            if ($user->expo_token) {
+                $expo = new Expo();
+                $message = new ExpoMessage([
+                    'title' => 'New Document Uploaded',
+                    'body' => "Your document '{$document->document_type}' has been successfully uploaded.",
+                ]);
+                $expo->send($message)->to($user->expo_token)->push();
+            }
+
             return response()->json(['success' => true, 'message' => 'Document added successfully.'], 201);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
-
     /**
      * Update the specified document.
      *

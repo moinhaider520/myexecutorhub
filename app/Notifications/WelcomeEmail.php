@@ -58,8 +58,7 @@ class WelcomeEmail extends Notification
     {
         Mail::raw("A new user has been registered.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
             $message->to('hello@executorhub.co.uk')
-                ->subject('New User Registered')
-                ->from('noreply@executorhub.co.uk');
+                ->subject('New User Registered');
         });
     }
 
@@ -68,8 +67,7 @@ class WelcomeEmail extends Notification
     {
         Mail::raw("A user has joined after the free trial and purchased a package.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nPurchased Date: {$this->user->created_at->format('F j, Y')}\n\nThank you for coming back!", function ($message) {
             $message->to('hello@executorhub.co.uk')
-                ->subject('New User After Free Trial')
-                ->from('noreply@executorhub.co.uk');
+                ->subject('New User After Free Trial');
         });
     }
 }

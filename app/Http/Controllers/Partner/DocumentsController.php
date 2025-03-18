@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
+use ExpoSDK\Expo;
+use ExpoSDK\ExpoMessage;
 
 class DocumentsController extends Controller
 {
@@ -63,6 +65,16 @@ class DocumentsController extends Controller
                 'first_name' => $user->name,
                 'document_name' => $document->document_type,
             ];
+
+            // Send push notification
+            if ($user->expo_token) {
+                $expo = new Expo();
+                $message = new ExpoMessage([
+                    'title' => 'New Document Uploaded',
+                    'body' => "Your document '{$document->document_type}' has been successfully uploaded.",
+                ]);
+                $expo->send($message)->to($user->expo_token)->push();
+            }
 
             Mail::to($user->email)->send(new DocumentMail($data));
 
