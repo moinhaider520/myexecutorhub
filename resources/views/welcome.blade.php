@@ -64,76 +64,65 @@
     <!-- RESPONSIVE CSS -->
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
 </head>
-
 <style>
-    .cookie-popup {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #333;
-        color: white;
-        padding: 15px;
-        border-radius: 5px;
-        display: none;
-        z-index: 9999;
-        width: 98%;
-    }
+/* Cookie Popup Styles */
+.cookie-popup {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #fff;
+    padding: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    z-index: 1000;
+}
+.cookie-popup-content p {
+    margin: 0 0 10px;
+}
+.cookie-buttons {
+    display: flex;
+    gap: 10px;
+}
+.manage-cookies-btn, .decline-cookies-btn, .accept-cookies-btn {
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.accept-cookies-btn {
+    background: #28a745; color: #fff;
+}
+.decline-cookies-btn {
+    background: #dc3545; color: #fff;
+}
+.manage-cookies-btn {
+    background: #007bff; color: #fff;
+}
 
-    .cookie-popup-content p {
-        margin: 0;
-        font-size: 14px;
-    }
-
-    .cookie-popup-content a {
-        color: #ffd700;
-        text-decoration: none;
-    }
-
-    .accept-cookies-btn {
-        background-color: #ffd700;
-        border: none;
-        padding: 5px;
-        color: black;
-        cursor: pointer;
-        border-radius: 5px;
-        width: 100%;
-    }
-
-    .accept-cookies-btn:hover {
-        background-color: #e6c200;
-    }
-
-    .exit-popup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 9999;
-    }
-
-    .exit-popup-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-        width: 50%;
-    }
-
-    .exit-close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-    }
+/* Manage Cookies Modal */
+.cookie-settings {
+    display: none;
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+.cookie-settings-content label {
+    display: block;
+    margin: 10px 0;
+}
+.cookie-settings-buttons {
+    text-align: center;
+    margin-top: 10px;
+}
+</style>
+<style>
 
     .btn-primary {
         display: inline-block;
@@ -148,8 +137,48 @@
     .btn-primary:hover {
         background-color: #0056b3;
     }
+    /* Popup Styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+.popup-content {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.popup-content h2 {
+    margin: 0 0 10px;
+}
+.popup-content p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+.popup-content button {
+    background: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.popup-content button:hover {
+    background: #218838;
+}
 </style>
 <script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
+
 <body>
     <!-- PRELOADER SPINNER
 		============================================= -->
@@ -173,10 +202,37 @@
 
                 <!-- COOKIE POP UP -->
                 <div id="cookie-popup" class="cookie-popup">
-                    <div class="cookie-popup-content">
-                        <p>We use cookies to improve your experience. By using our website, you agree to our use of
-                            cookies. <a href="{{route('cookies')}}">Learn more</a></p>
-                        <button id="accept-cookies" class="accept-cookies-btn">Accept</button>
+    <div class="cookie-popup-content">
+        <p>We use cookies to improve your experience. By using our website, you agree to our use of cookies. <a href="{{route('cookies')}}">Learn more</a></p>
+        <div class="cookie-buttons">
+            <button id="manage-cookies" class="manage-cookies-btn">Manage</button>
+            <button id="decline-cookies" class="decline-cookies-btn">Decline</button>
+            <button id="accept-cookies" class="accept-cookies-btn">Accept</button>
+        </div>
+    </div>
+</div>
+
+<!-- Manage Cookies Modal -->
+<div id="cookie-settings" class="cookie-settings">
+    <div class="cookie-settings-content">
+        <h3>Manage Cookies</h3>
+        <label><input type="checkbox" id="essential-cookies" checked disabled> Essential Cookies (Always Enabled)</label>
+        <label><input type="checkbox" id="analytics-cookies"> Analytics Cookies</label>
+        <label><input type="checkbox" id="marketing-cookies"> Marketing Cookies</label>
+        <div class="cookie-settings-buttons">
+            <button id="save-cookie-settings">Save Preferences</button>
+        </div>
+    </div>
+</div>
+
+                <!-- WELCOME POPUP -->
+                <div id="welcomePopup" class="popup">
+                    <div class="popup-content">
+                        <h2>Welcome to Executor Hub!</h2>
+                        <p>We’re thrilled to have you here! 😊</p>
+                        <p><strong>Important:</strong> Our emails might land in your <b>Spam/Junk</b> folder. Please
+                            check and mark them as **Secure** to receive important updates!</p>
+                        <button onclick="closePopup()">Got it! 👍</button>
                     </div>
                 </div>
 
@@ -1892,7 +1948,7 @@
                 <span class="exit-close">&times;</span>
                 <h2>Wait! Don’t Leave Just Yet…</h2>
                 <p>Executor Hub helps you organize everything your loved ones need in one secure place. 💙</p>
-                <p>Before you go, make sure your important documents and passwords are safely stored!</p>
+                <p style="margin-top:-15px;">Before you go, make sure your important documents and passwords are safely stored!</p>
                 <a href="{{ url('/register') }}" class="btn btn-primary">Get Started for Free</a>
             </div>
         </div>
@@ -1986,18 +2042,45 @@
         }
     </script>
     <script>
-        // Show the cookie popup if the user has not already accepted cookies
-        window.onload = function () {
-            if (!localStorage.getItem('cookies-accepted')) {
-                document.getElementById('cookie-popup').style.display = 'block';
-            }
+document.addEventListener("DOMContentLoaded", function () {
+    let cookiePopup = document.getElementById("cookie-popup");
+    let cookieSettings = document.getElementById("cookie-settings");
 
-            // When the "Accept" button is clicked, hide the popup and store the preference
-            document.getElementById('accept-cookies').addEventListener('click', function () {
-                localStorage.setItem('cookies-accepted', 'true');
-                document.getElementById('cookie-popup').style.display = 'none';
-            });
+    // Check if user has already made a choice
+    if (!localStorage.getItem("cookie-preference")) {
+        cookiePopup.style.display = "block";
+    }
+
+    // Accept Cookies
+    document.getElementById("accept-cookies").addEventListener("click", function () {
+        localStorage.setItem("cookie-preference", "accepted");
+        cookiePopup.style.display = "none";
+    });
+
+    // Decline Cookies
+    document.getElementById("decline-cookies").addEventListener("click", function () {
+        localStorage.setItem("cookie-preference", "declined");
+        cookiePopup.style.display = "none";
+    });
+
+    // Open Manage Cookies
+    document.getElementById("manage-cookies").addEventListener("click", function () {
+        cookieSettings.style.display = "block";
+    });
+
+    // Save Cookie Preferences
+    document.getElementById("save-cookie-settings").addEventListener("click", function () {
+        let preferences = {
+            essential: true,
+            analytics: document.getElementById("analytics-cookies").checked,
+            marketing: document.getElementById("marketing-cookies").checked
         };
+        localStorage.setItem("cookie-preference", JSON.stringify(preferences));
+        cookieSettings.style.display = "none";
+        cookiePopup.style.display = "none";
+    });
+});
+
     </script>
 
     <script>
@@ -2005,7 +2088,7 @@
             let exitPopupShown = false;
 
             $(document).on("mouseleave", function (event) {
-                if (event.clientY < 10 && !exitPopupShown) {
+                if (event.clientY < 5 && !exitPopupShown) {
                     $("#exitPopup").fadeIn();
                     exitPopupShown = true;
                 }
@@ -2020,7 +2103,19 @@
             });
         });
     </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    if (!localStorage.getItem("welcomePopupShown")) {
+        document.getElementById("welcomePopup").style.display = "block";
+    }
+});
 
+function closePopup() {
+    document.getElementById("welcomePopup").style.display = "none";
+    localStorage.setItem("welcomePopupShown", "true");
+}
+
+</script>
 </body>
 
 </html>
