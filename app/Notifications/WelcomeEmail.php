@@ -31,27 +31,45 @@ class WelcomeEmail extends Notification
     // Use a custom Blade template for the email
     public function toMail($notifiable)
     {
-        // Send admin notification about new user registration
-        $this->notifyAdmin();
-
-        // Use a different email body if joining after free trial
+        // Notify the admin about new user registration or after the free trial
         if ($this->isAfterFreeTrial) {
+            $this->notifyAdminForNewlyPurchasedPackageCustomer();
             return (new MailMessage)
-                ->subject('Welcome Back!')
-                ->markdown('emails.welcome_after_trial', ['user' => $this->user]);
+                ->subject('Welcome Back to Our Service!')
+                ->markdown('emails.welcome_after_trial', [
+                    'user' => $this->user,
+                    'date' => $this->user->created_at->format('F j, Y'), // Date of first subscription
+                ]);
         }
 
+        // Notify admin when a new user joins
+        $this->notifyAdminForNewCustomer();
+
         return (new MailMessage)
-            ->subject('Welcome to Our Service')
-            ->markdown('emails.welcome', ['user' => $this->user]);
+            ->subject('Welcome to Our Service!')
+            ->markdown('emails.welcome', [
+                'user' => $this->user,
+                'date' => $this->user->created_at->format('F j, Y'), // Registration date
+            ]);
     }
 
-    // Function to notify admin
-    protected function notifyAdmin()
+    // Function to notify admin about new customer registration
+    protected function notifyAdminForNewCustomer()
     {
-        Mail::raw("A new user has been registered.\n\nName: {$this->user->name}\nEmail: {$this->user->email}", function ($message) {
+        Mail::raw("A new user has been registered.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
             $message->to('hello@executorhub.co.uk')
-                ->subject('New User Registered');
+                ->subject('New User Registered')
+                ->from('noreply@executorhub.co.uk');
+        });
+    }
+
+    // Function to notify admin when a user joins after free trial and purchased a package
+    protected function notifyAdminForNewlyPurchasedPackageCustomer()
+    {
+        Mail::raw("A user has joined after the free trial and purchased a package.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nPurchased Date: {$this->user->created_at->format('F j, Y')}\n\nThank you for coming back!", function ($message) {
+            $message->to('hello@executorhub.co.uk')
+                ->subject('New User After Free Trial')
+                ->from('noreply@executorhub.co.uk');
         });
     }
 }
