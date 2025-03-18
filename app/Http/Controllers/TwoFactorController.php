@@ -46,7 +46,7 @@ class TwoFactorController extends Controller
         } elseif ($user->hasRole('customer')) {
             return redirect()->route('customer.dashboard');
         } elseif ($user->hasRole('partner')) {
-            return redirect()->route('vs.dashboard');
+            return redirect()->route('partner.dashboard');
         } else {
             return redirect()->route('dashboard');
         }
