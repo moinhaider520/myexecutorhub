@@ -140,7 +140,10 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
     Route::get('stripe_mobile', 'stripe_mobile')->name('stripe_mobile');
     Route::post('stripe', 'stripePost')->name('stripe.post');
+    Route::get('stripe/success', 'success')->name('stripe.success'); // Fix: Ensure this is GET
+    Route::post('stripe/webhook', 'handleStripeWebhook'); // Webhook must use POST
 });
+
 
 Route::post('/contact-submit', [ContactController::class, 'Contactform'])->name('contact.submit');
 Route::post('/partner-submit', [ContactController::class, 'PartnerWithUs'])->name('partner.submit');
