@@ -241,10 +241,21 @@ class StripePaymentController extends Controller
         $subscription = $subscriptions->data[0] ?? null;
 
         if ($subscription) {
+            $priceId = $subscription->items->data[0]->price->id;
+
+            // Map Stripe Price ID to plan names
+            $plans = [
+                'price_1R4UE4SBn09iuv4xvH0KeSEJ' => 'Basic',
+                'price_1R4UEjSBn09iuv4xIez1NWXm' => 'Standard',
+                'price_1R4UFCSBn09iuv4xWmFqEjqr' => 'Premium',
+            ];
+
+            $planName = $plans[$priceId] ?? 'Unknown';
+
             $user->update([
                 'stripe_customer_id' => $session->customer,
                 'stripe_subscription_id' => $subscription->id,
-                'subscribed_package' => $subscription->items->data[0]->price->id,
+                'subscribed_package' => $planName, // Store Plan Name Instead of Price ID
             ]);
         }
 
