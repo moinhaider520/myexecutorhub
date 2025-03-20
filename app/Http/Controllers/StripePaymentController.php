@@ -176,7 +176,6 @@ class StripePaymentController extends Controller
     //         return back()->with('stripe_error', $e->getMessage());
     //     }
     // }
-
     public function stripePost(Request $request): RedirectResponse
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -184,17 +183,57 @@ class StripePaymentController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'city' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:10',
+            'country' => 'required|string|max:255',
             'plan' => 'required|string', // Stripe Price ID
+            'password' => 'required|string|min:8',
+            'coupon_code' => 'nullable|string', // Optional coupon code
         ]);
 
-        // Check if the user already exists
+        // Check if the user already exists and create new user
         $user = User::where('email', $request->email)->first();
         if (!$user) {
+            $couponCode = 'COUPON-' . strtoupper(uniqid());
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
-            ]);
+                'user_role' => 'customer',
+                'coupon_code' => $couponCode,
+            ])->assignRole('customer');
+        }
+
+        // Check if a valid coupon code is provided
+        if ($request->filled('coupon_code')) {
+            $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
+
+            if ($couponOwner) {
+                // Check if the coupon has already been used
+                if ($couponOwner->coupon_used) {
+                    return back()->with('stripe_error', 'Coupon has already been used.');
+                }
+
+                $commissionAmount = '';
+                // Calculate the commission amount based on the coupon owner role
+                if ($couponOwner->hasRole('partner')) {
+                    // Calculate the commission amount (20% of the plan amount)
+                    $planAmount = $request->input('plan');
+                    $commissionAmount = ($planAmount * 0.20);
+
+                    // Do not mark the coupon as used if the coupon owner has the 'partner' role
+                } else {
+                    $commissionAmount = '5'; // Or calculate based on the plan amount
+
+                    // Mark the coupon as used if the coupon owner does not have the 'partner' role
+                    $couponOwner->update(['coupon_used' => true]);
+                }
+
+                // Update the commission amount for the coupon code owner
+                $couponOwner->increment('commission_amount', $commissionAmount);
+            } else {
+                return back()->with('stripe_error', 'Invalid Coupon.');
+            }
         }
 
         // Create Stripe Checkout Session
@@ -256,7 +295,17 @@ class StripePaymentController extends Controller
                 'stripe_customer_id' => $session->customer,
                 'stripe_subscription_id' => $subscription->id,
                 'subscribed_package' => $planName, // Store Plan Name Instead of Price ID
+                'trial_ends_at' => now()->addMonth(),
             ]);
+
+            // Update all users created by this user
+            User::where('created_by', $user->id)
+                ->update([
+                    'subscribed_package' => $planName,
+                    'trial_ends_at' => now()->addMonth(),
+                ]);
+
+            $user->notify(new WelcomeEmail($user));
         }
 
         return redirect()->route('dashboard')->with('success', 'Subscription created successfully!');
