@@ -202,6 +202,8 @@ class StripePaymentController extends Controller
                 'user_role' => 'customer',
                 'coupon_code' => $couponCode,
             ])->assignRole('customer');
+        }else{
+            return back()->with('error', 'User with this email already exists.');
         }
 
         // Check if a valid coupon code is provided
@@ -310,4 +312,124 @@ class StripePaymentController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Subscription created successfully!');
     }
+
+    public function cancelSubscription(Request $request)
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $user = auth()->user();
+
+        if (!$user->stripe_subscription_id) {
+            return back()->with('error', 'No active subscription found.');
+        }
+
+        try {
+            // Retrieve the Stripe subscription
+            $subscription = Subscription::retrieve($user->stripe_subscription_id);
+
+            // Cancel at the end of the billing period
+            $subscription->cancel(['invoice_now' => false, 'prorate' => false]);
+
+            // Update user record to reflect canceled subscription
+            $user->update([
+                'stripe_subscription_id' => null, // Clear the subscription ID
+            ]);
+
+            return back()->with('success', 'Your Subscription Has Been canceled.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error canceling subscription: ' . $e->getMessage());
+        }
+    }
+
+    public function resubscribe(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $request->validate([
+            'email' => 'required|email|max:255',
+            'plan' => 'required|string', // Stripe Price ID
+        ]);
+
+        // Check if the user exists
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return back()->with('error', 'User not found.');
+        }
+
+
+        // Create Stripe Checkout Session
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'mode' => 'subscription',
+            'customer_email' => $user->email,
+            'line_items' => [
+                [
+                    'price' => $request->plan, // Stripe Price ID
+                    'quantity' => 1,
+                ]
+            ],
+            'success_url' => route('stripe.resubscribesuccess') . '?session_id={CHECKOUT_SESSION_ID}',
+        ]);
+
+        // Redirect to Stripe Checkout page
+        return redirect()->away($session->url);
+    }
+
+    public function resubscribesuccess(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $session_id = $request->query('session_id'); // Get session ID from URL
+        if (!$session_id) {
+            return redirect()->route('customer.dashboard')->with('error', 'Invalid session.');
+        }
+
+        // Retrieve session details from Stripe
+        $session = Session::retrieve($session_id);
+        if (!$session || !$session->customer) {
+            return redirect()->route('customer.dashboard')->with('error', 'Invalid session.');
+        }
+
+        // Find the user by email
+        $user = User::where('email', $session->customer_email)->first();
+        if (!$user) {
+            return redirect()->route('customer.dashboard')->with('error', 'User not found.');
+        }
+
+        // Retrieve Subscription ID
+        $subscriptions = Subscription::all(['customer' => $session->customer]);
+        $subscription = $subscriptions->data[0] ?? null;
+
+        if ($subscription) {
+            $priceId = $subscription->items->data[0]->price->id;
+
+            // Map Stripe Price ID to plan names
+            $plans = [
+                'price_1R4UE4SBn09iuv4xvH0KeSEJ' => 'Basic',
+                'price_1R4UEjSBn09iuv4xIez1NWXm' => 'Standard',
+                'price_1R4UFCSBn09iuv4xWmFqEjqr' => 'Premium',
+            ];
+
+            $planName = $plans[$priceId] ?? 'Unknown';
+
+            $user->update([
+                'stripe_subscription_id' => $subscription->id,
+                'subscribed_package' => $planName, // Store Plan Name Instead of Price ID
+                'trial_ends_at' => now()->addMonth(),
+            ]);
+
+            // Update all users created by this user
+            User::where('created_by', $user->id)
+                ->update([
+                    'subscribed_package' => $planName,
+                    'trial_ends_at' => now()->addMonth(),
+                ]);
+
+            $user->notify(new WelcomeEmail($user));
+        }
+
+        return redirect()->route('customer.dashboard')->with('success', 'Subscription created successfully!');
+    }
+
+
 }
