@@ -203,7 +203,7 @@ class StripePaymentController extends Controller
                 'coupon_code' => $couponCode,
             ])->assignRole('customer');
         }else{
-            return back()->with('error', 'User with this email already exists.');
+            return back()->with('stripe_error', 'User with this email already exists.');
         }
 
         // Check if a valid coupon code is provided
