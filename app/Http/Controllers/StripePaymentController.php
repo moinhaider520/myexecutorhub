@@ -286,9 +286,9 @@ class StripePaymentController extends Controller
 
             // Map Stripe Price ID to plan names
             $plans = [
-                'price_1R4UE4SBn09iuv4xvH0KeSEJ' => 'Basic',
-                'price_1R4UEjSBn09iuv4xIez1NWXm' => 'Standard',
-                'price_1R4UFCSBn09iuv4xWmFqEjqr' => 'Premium',
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 'Basic',
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 'Standard',
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 'Premium',
             ];
 
             $planName = $plans[$priceId] ?? 'Unknown';
@@ -405,9 +405,9 @@ class StripePaymentController extends Controller
 
             // Map Stripe Price ID to plan names
             $plans = [
-                'price_1R4UE4SBn09iuv4xvH0KeSEJ' => 'Basic',
-                'price_1R4UEjSBn09iuv4xIez1NWXm' => 'Standard',
-                'price_1R4UFCSBn09iuv4xWmFqEjqr' => 'Premium',
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 'Basic',
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 'Standard',
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 'Premium',
             ];
 
             $planName = $plans[$priceId] ?? 'Unknown';
