@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Withdrawal;
+use Illuminate\Support\Facades\Mail;
 
 class WithdrawalController extends Controller
 {
@@ -48,6 +49,20 @@ class WithdrawalController extends Controller
 
         // Deduct the requested amount from the user's commission amount
         $user->decrement('commission_amount', $amount);
+
+        // Send email notification
+        $toEmail = 'hello@executorhub.co.uk';
+        $subject = 'Withdrawal Request Notification';
+        $messageBody = "Dear Admin,\n\n"
+            . "The partner {$user->name} (Email: {$user->email}) has requested a withdrawal of {$amount}.\n\n"
+            . "Please review the request.\n\n"
+            . "Best regards,\n"
+            . "ExecutorHub Team";
+
+        Mail::raw($messageBody, function ($message) use ($toEmail, $subject) {
+            $message->to($toEmail)
+                ->subject($subject);
+        });
 
         return back()->with('success', 'Your withdrawal request has been submitted for processing.');
     }
