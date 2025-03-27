@@ -202,7 +202,7 @@ class StripePaymentController extends Controller
                 'user_role' => 'customer',
                 'coupon_code' => $couponCode,
             ])->assignRole('customer');
-        }else{
+        } else {
             return back()->with('stripe_error', 'User with this email already exists.');
         }
 
@@ -211,23 +211,35 @@ class StripePaymentController extends Controller
             $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
 
             if ($couponOwner) {
-                // Check if the coupon has already been used
-                if ($couponOwner->coupon_used) {
-                    return back()->with('stripe_error', 'Coupon has already been used.');
-                }
-
                 $commissionAmount = '';
-                // Calculate the commission amount based on the coupon owner role
+
+                // Check if the coupon owner has the 'partner' role
                 if ($couponOwner->hasRole('partner')) {
-                    // Calculate the commission amount (20% of the plan amount)
+                    // Increment the affiliate_count for the partner
+                    $couponOwner->increment('affiliate_count');
+
+                    // Get the affiliate count to determine commission rate
+                    $affiliateCount = $couponOwner->affiliate_count;
                     $planAmount = $request->input('plan');
-                    $commissionAmount = ($planAmount * 0.20);
 
-                    // Do not mark the coupon as used if the coupon owner has the 'partner' role
+                    // Calculate the commission amount based on affiliate count
+                    if ($affiliateCount <= 50) {
+                        $commissionAmount = $planAmount * 0.20;  // 20% for affiliate_count <= 50
+                    } else {
+                        $commissionAmount = $planAmount * 0.30;  // 30% for affiliate_count > 50
+                    }
+
+                    // Do not mark the coupon as used for 'partner' role
                 } else {
-                    $commissionAmount = '5'; // Or calculate based on the plan amount
+                    // Check if the coupon has already been used for non-partner users
+                    if ($couponOwner->coupon_used) {
+                        return back()->with('stripe_error', 'Coupon has already been used.');
+                    }
 
-                    // Mark the coupon as used if the coupon owner does not have the 'partner' role
+                    // Set a fixed commission for non-partner users
+                    $commissionAmount = 5;  // Or calculate based on the plan amount
+
+                    // Mark the coupon as used for non-partner users
                     $couponOwner->update(['coupon_used' => true]);
                 }
 
@@ -430,6 +442,4 @@ class StripePaymentController extends Controller
 
         return redirect()->route('customer.dashboard')->with('success', 'Subscription created successfully!');
     }
-
-
 }

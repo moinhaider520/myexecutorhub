@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('subscribed_package')->nullable(); // To check if the user is subscribed
             $table->string('coupon_code')->unique()->nullable(); // Store the coupon code directly
             $table->boolean('coupon_used')->default(false); // Track if the coupon has been used
+            $table->decimal('affiliate_count', 8, 2)->default(0); // Add the affiliate_count field
             $table->decimal('commission_amount', 8, 2)->default(0); // To store the total commission earned
             $table->unsignedBigInteger('created_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
