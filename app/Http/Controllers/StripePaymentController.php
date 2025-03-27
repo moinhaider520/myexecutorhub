@@ -220,14 +220,23 @@ class StripePaymentController extends Controller
 
                     // Get the affiliate count to determine commission rate
                     $affiliateCount = $couponOwner->affiliate_count;
-                    $planAmount = $request->input('plan');
+                    $planKey = $request->input('plan'); // Get the selected plan key
 
+                    $plans = [
+                        'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
+                        'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
+                        'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
+                    ];
+                    
+                    $planAmount = $plans[$planKey] ?? 0; // Map the price or default to 0
+                    
                     // Calculate the commission amount based on affiliate count
                     if ($affiliateCount <= 50) {
-                        $commissionAmount = $planAmount * 0.20;  // 20% for affiliate_count <= 50
+                        $commissionAmount = $planAmount * 0.20;  // 20% commission
                     } else {
-                        $commissionAmount = $planAmount * 0.30;  // 30% for affiliate_count > 50
+                        $commissionAmount = $planAmount * 0.30;  // 30% commission
                     }
+                    
 
                     // Do not mark the coupon as used for 'partner' role
                 } else {
