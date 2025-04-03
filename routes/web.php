@@ -44,6 +44,7 @@ use App\Http\Controllers\Partner\NotificationController as PartnerNotificationCo
 use App\Http\Controllers\Partner\LPAController as PartnerLPAController;
 use App\Http\Controllers\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
+use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeController;
 
 // Role Customer Controller 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
@@ -77,6 +78,7 @@ use App\Http\Controllers\Customer\NotificationController;
 use App\Http\Controllers\Customer\LPAController;
 use App\Http\Controllers\Customer\WillController;
 use App\Http\Controllers\Customer\TaskController;
+use App\Http\Controllers\Customer\FuneralWakeController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -104,6 +106,7 @@ use App\Http\Controllers\Executor\PicturesAndVideosController as ExecutorPicture
 use App\Http\Controllers\Executor\LPAController as ExecutorLPAController;
 use App\Http\Controllers\Executor\WillController as ExecutorWillController;
 use App\Http\Controllers\Executor\TaskController as ExecutorTaskController;
+use App\Http\Controllers\Executor\FuneralWakeController as ExecutorFuneralWakeController;
 
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
@@ -426,6 +429,12 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Membership
     Route::get('/membership/membership', [MembershipController::class, 'index'])->name('membership.view');
     Route::get('/membership/checkout', [MembershipController::class, 'checkout_page'])->name('checkout.view');
+
+    // Funeral Wake
+    Route::get('/funeral_wake/view', [FuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [FuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [FuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [FuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 });
 
 
@@ -494,6 +503,12 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/advisors/store', [PartnerAdvisorsController::class, 'store'])->name('advisors.store');
     Route::post('/advisors/update/{id}', [PartnerAdvisorsController::class, 'update'])->name('advisors.update');
     Route::delete('/advisors/destroy/{id}', [PartnerAdvisorsController::class, 'destroy'])->name('advisors.destroy');
+
+    // Partner Funeral Wake
+    Route::get('/funeral_wake/view', [PartnerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [PartnerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 
     // Customer Executors
     Route::get('/executors/view', [PartnerExecutorsController::class, 'view'])->name('executors.view');
@@ -658,6 +673,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
     Route::get('tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
 });

@@ -388,10 +388,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Membership</span>
+                            <span>Funeral Wake</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.membership.view') }}">Pricing Plans</a></li>
+                            <li><a href="{{ route('partner.funeral_wake.view') }}">Manage</a></li>
                         </ul>
                     </li>
                     @endrole
@@ -672,6 +672,20 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
+                            <span>Funeral Wake</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.funeral_wake.view') }}">Manage</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
                             <span>Membership</span>
                         </a>
                         <ul class="sidebar-submenu">
@@ -878,6 +892,20 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.organs_donation.view') }}">Organ Donations</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Funeral Wake</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('executor.funeral_wake.view') }}">Manage</a></li>
                         </ul>
                     </li>
                     @endrole
