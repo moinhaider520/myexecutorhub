@@ -39,8 +39,9 @@ use App\Http\Controllers\Api\Partner\PermissionController as PartnerPermissionCo
 use App\Http\Controllers\Api\Partner\WithdrawalController as PartnerWithdrawalController;
 use App\Http\Controllers\Api\Partner\LPAController as PartnerLPAController;
 use App\Http\Controllers\Api\Partner\TaskController as PartnerTaskController;
-
 use App\Http\Controllers\Api\Partner\WillController as PartnerWillController;
+use App\Http\Controllers\Api\Partner\FuneralWakeController as PartnerFuneralWakeController;
+
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -71,7 +72,7 @@ use App\Http\Controllers\Api\Customer\WithdrawalController as CustomerWithdrawal
 use App\Http\Controllers\Api\Customer\LPAController as CustomerLPAController;
 use App\Http\Controllers\Api\Customer\TaskController as CustomerTaskController;
 use App\Http\Controllers\Api\Customer\WillController as CustomerWillController;
-
+use App\Http\Controllers\Api\Customer\FuneralWakeController as CustomerFuneralWakeController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -99,6 +100,7 @@ use App\Http\Controllers\Api\Executor\WithdrawalController as ExecutorWithdrawal
 use App\Http\Controllers\Api\Executor\LPAController as ExecutorLPAController;
 use App\Http\Controllers\Api\Executor\TaskController as ExecutorTaskController;
 use App\Http\Controllers\Api\Executor\WillController as ExecutorWillController;
+use App\Http\Controllers\Api\Executor\FuneralWakeController as ExecutorFuneralWakeController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -166,6 +168,12 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/advisors/store', [PartnerAdvisorsController::class, 'store'])->name('advisors.store');
     Route::post('/advisors/update/{id}', [PartnerAdvisorsController::class, 'update'])->name('advisors.update');
     Route::delete('/advisors/destroy/{id}', [PartnerAdvisorsController::class, 'destroy'])->name('advisors.destroy');
+
+    // Partner Funeral Wake
+    Route::get('/funeral_wake/view', [PartnerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [PartnerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 
     // Partner Executors
     Route::get('/executors/view', [PartnerExecutorsController::class, 'view'])->name('executors.view');
@@ -284,7 +292,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::put('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [PartnerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
 
-    
+
     // TASKS
     Route::get('/tasks', [PartnerTaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [PartnerTaskController::class, 'store'])->name('tasks.store');
@@ -452,6 +460,12 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::put('/tasks/{id}', [CustomerTaskController::class, 'update'])->name('tasks.update');
     Route::delete('/tasks/{id}', [CustomerTaskController::class, 'destroy'])->name('tasks.destroy');
 
+    // Funeral Wake
+    Route::get('/funeral_wake/view', [CustomerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [CustomerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [CustomerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [CustomerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+
     // OPENAI
     Route::get('/openai/view', [CustomerOpenAIController::class, 'view'])->name('openai.view');
     Route::post('/openai/chat', [CustomerOpenAIController::class, 'chat'])->name('openai.chat');
@@ -496,7 +510,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/life-remembered', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::get('/voice-notes', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::get('/organs-donations', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
-
+    Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
     Route::get('/bank_accounts', [ExecutorBankAccountController::class, 'index'])->name('bank_accounts.index');
     Route::get('/investment_accounts', [ExecutorInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
     Route::get('/properties', [ExecutorPropertyController::class, 'index'])->name('properties.view');

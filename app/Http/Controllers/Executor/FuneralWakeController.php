@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Executor;
 
 use App\Http\Controllers\Controller;
 use App\Models\FuneralWake;
-use Auth;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FuneralWakeController extends Controller
 {

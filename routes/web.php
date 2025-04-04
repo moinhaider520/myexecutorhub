@@ -498,7 +498,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/pictures_and_videos/update/{id}', [PartnerPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
     Route::delete('/pictures_and_videos/destroy/{id}', [PartnerPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
 
-    // Customer Advisors
+    // Partner Advisors
     Route::get('/advisors/view', [PartnerAdvisorsController::class, 'view'])->name('advisors.view');
     Route::post('/advisors/store', [PartnerAdvisorsController::class, 'store'])->name('advisors.store');
     Route::post('/advisors/update/{id}', [PartnerAdvisorsController::class, 'update'])->name('advisors.update');
@@ -510,7 +510,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/funeral_wake/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
     Route::delete('/funeral_wake/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 
-    // Customer Executors
+    // Partner Executors
     Route::get('/executors/view', [PartnerExecutorsController::class, 'view'])->name('executors.view');
     Route::post('/executors/store', [PartnerExecutorsController::class, 'store'])->name('executors.store');
     Route::post('/executors/update/{id}', [PartnerExecutorsController::class, 'update'])->name('executors.update');

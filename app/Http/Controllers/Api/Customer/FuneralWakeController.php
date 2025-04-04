@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Partner;
+namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\FuneralWake;
@@ -10,20 +10,33 @@ use Illuminate\Http\Request;
 
 class FuneralWakeController extends Controller
 {
+    /**
+     * Display a listing of funeral wakes for the authenticated customer.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function view()
     {
-
-        $funeralwakes = FuneralWake::where('created_by', Auth::id())->get();
-        return view('partner.funeral_wake.funeral_wake', compact('funeralwakes'));
+        try {
+            $funeralwakes = FuneralWake::where('created_by', Auth::id())->get();
+            return response()->json(['success' => true, 'funeral_wakes' => $funeralwakes], 200);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
+    /**
+     * Store a newly created funeral wake in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
             'link' => 'required',
         ]);
-
 
         try {
             DB::beginTransaction();
@@ -35,13 +48,20 @@ class FuneralWakeController extends Controller
             ]);
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Record added successfully.']);
+            return response()->json(['success' => true, 'message' => 'Record added successfully.'], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
+    /**
+     * Update the specified funeral wake in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -59,13 +79,19 @@ class FuneralWakeController extends Controller
             ]);
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Record updated successfully.']);
+            return response()->json(['success' => true, 'message' => 'Record updated successfully.'], 200);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
+    /**
+     * Remove the specified funeral wake from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function destroy($id)
     {
         try {
@@ -75,10 +101,10 @@ class FuneralWakeController extends Controller
             $funeral_wake->delete();
 
             DB::commit();
-            return redirect()->route('partner.funeral_wake.view')->with('success', 'Playlist deleted successfully.');
+            return response()->json(['success' => true, 'message' => 'Funeral wake deleted successfully.'], 200);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }
