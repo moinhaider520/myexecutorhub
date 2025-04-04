@@ -1,7 +1,4 @@
 <?php
-
-<?php
-
 namespace App\Http\Controllers\Api\Partner;
 
 use Illuminate\Support\Facades\Auth;
