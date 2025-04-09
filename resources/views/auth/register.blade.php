@@ -78,6 +78,16 @@
                                         </label>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                                    </div>
+                                    @error('g-recaptcha-response')
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group mb-0">
                                     <div class="text-end mt-3">
                                         <button class="btn btn-primary btn-block w-100" type="submit">Sign up</button>
@@ -95,4 +105,6 @@
             </div>
         </div>
     </div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 @endsection

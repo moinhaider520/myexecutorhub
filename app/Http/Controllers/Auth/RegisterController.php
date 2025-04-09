@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Notifications\WelcomeEmail;
+use Http;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -53,6 +54,19 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'g-recaptcha-response' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                        'secret' => config('services.recaptcha.secret_key'),
+                        'response' => $value,
+                    ]);
+
+                    if (!$response->json('success')) {
+                        $fail('Captcha validation failed.');
+                    }
+                }
+            ],
         ]);
     }
 
@@ -65,7 +79,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $couponCode = 'COUPON-' . strtoupper(uniqid());
-    
+
         // Create the user and store it in a variable
         $user = User::create([
             'name' => $data['name'],
@@ -76,15 +90,15 @@ class RegisterController extends Controller
             'user_role' => 'customer',
             'coupon_code' => $couponCode,
         ]);
-    
+
         // Assign role to the user
         $user->assignRole('customer');
-    
+
         // Send the welcome email notification
         $user->notify(new WelcomeEmail($user));
-    
+
         // Return the user
         return $user;
     }
-    
+
 }

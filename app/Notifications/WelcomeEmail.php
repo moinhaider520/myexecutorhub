@@ -56,7 +56,7 @@ class WelcomeEmail extends Notification
     // Function to notify admin about new customer registration
     protected function notifyAdminForNewCustomer()
     {
-        Mail::raw("A new user has been registered.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
+        Mail::raw("A new user has signed up for a free trial of Executor Hub.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
             $message->to('hello@executorhub.co.uk')
                 ->subject('New User Registered');
         });
@@ -65,7 +65,7 @@ class WelcomeEmail extends Notification
     // Function to notify admin when a user joins after free trial and purchased a package
     protected function notifyAdminForNewlyPurchasedPackageCustomer()
     {
-        Mail::raw("A user has joined after the free trial and purchased a package.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nPurchased Date: {$this->user->created_at->format('F j, Y')}\n\nThank you for coming back!", function ($message) {
+        Mail::raw("A user has joined after the free trial and purchased {$this->user->subscribed_package} package.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nPurchased Date: {$this->user->created_at->format('F j, Y')}\n\nThank you for coming back!", function ($message) {
             $message->to('hello@executorhub.co.uk')
                 ->subject('New User After Free Trial');
         });
