@@ -65,7 +65,7 @@
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
 </head>
 <style>
- .exit-popup {
+    .exit-popup {
         display: none;
         position: fixed;
         top: 0;
@@ -1409,6 +1409,15 @@
                                         required></textarea>
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                                    </div>
+                                    @error('g-recaptcha-response')
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <!-- Submit Button -->
                                 <div class="col-md-12 mt-15 form-btn text-right">
                                     <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
@@ -1690,7 +1699,15 @@
                                     <input type="tel" name="contact_number" class="form-control"
                                         placeholder="Contact Number*" required />
                                 </div>
-
+                                <div class="form-group">
+                                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                                    </div>
+                                    @error('g-recaptcha-response')
+                                        <span class="text-danger d-block">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
                                 <!-- Submit Button -->
                                 <div class="col-md-12 mt-15 form-btn text-right">
                                     <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
@@ -2012,8 +2029,8 @@
         </footer>
         <!-- END FOOTER-3 -->
 
-<!-- Exit Intent Popup -->
-<div id="exitPopup" class="exit-popup">
+        <!-- Exit Intent Popup -->
+        <div id="exitPopup" class="exit-popup">
             <div class="exit-popup-content">
                 <span class="exit-close">&times;</span>
                 <h2>Wait! Don’t Leave Just Yet…</h2>
@@ -2045,7 +2062,7 @@
 
     <!-- Custom Script -->
     <script src="{{ asset('assets/frontend/js/custom.js') }}"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
     <script>
         $(document).ready(function () {
