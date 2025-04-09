@@ -225,7 +225,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Partner Management
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
     Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
+    Route::get('/partners/send_invite', [PartnerController::class, 'send_invite'])->name('partners.send_invite');
     Route::post('/partners', [PartnerController::class, 'store'])->name('partners.store');
+    Route::post('/partners', [PartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
     Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');

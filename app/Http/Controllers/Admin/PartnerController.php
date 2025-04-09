@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CustomEmail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Helpers\EncryptionHelper;
 use Illuminate\Support\Facades\DB;
+use Mail;
+use Str;
 
 class PartnerController extends Controller
 {
@@ -19,6 +22,11 @@ class PartnerController extends Controller
     {
         $partners = User::role('partner')->get();
         return view('admin.partners.index', compact('partners'));
+    }
+
+    public function send_invite()
+    {
+        return view('admin.partners.send_invite');
     }
 
     /**
@@ -71,6 +79,60 @@ class PartnerController extends Controller
 
             DB::commit();
             return redirect()->route('admin.partners.index')->with('success', 'Partner created successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    // SEND INVITE TO FREINDS
+    public function send_invite_email(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+        ]);
+
+        $couponCode = 'COUPON-' . strtoupper(uniqid());
+
+        try {
+            DB::beginTransaction();
+            $tempPassword = Str::random(10);
+            $partner = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'coupon_code' => $couponCode, // Store the generated coupon code
+                'trial_ends_at' => now()->addYears(10),
+                'subscribed_package' => 'Premium',
+                'password' => $tempPassword,
+            ]);
+
+            // Assign 'partner' role to the newly created user
+            $partner->assignRole('partner');
+
+            DB::commit();
+
+            $message = "
+            <h2>Hello {$partner->name},</h2>
+            <p>You’ve been invited to use <strong>Executor Hub</strong>!</p>
+            <p>Your account has been created. Use the following credentials to log in:</p>
+            <ul>
+                <li>Email: {$partner->email}</li>
+                <li>Password: {$tempPassword}</li>
+            </ul>
+            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+            <p>Enjoy free access to the Premium plan, courtesy of your invitation!</p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+            Mail::to($request->email)->send(new CustomEmail(
+                [
+                    'subject' => 'You Have Been Invited to Executor Hub.', 
+                    'message' => $message,
+                ],
+                'You Have Been Invited to Executor Hub.'
+            ));
+            return redirect()->route('admin.partners.index')->with('success', 'Invitation Sent Successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
