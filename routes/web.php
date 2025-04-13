@@ -277,6 +277,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Customer Life Remembered
     Route::get('/life_remembered/view', [LifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::post('/life_remembered/update', [LifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::post('/life-remembered/upload', [LifeRememberedController::class, 'upload'])->name('life_remembered.upload');
 
     // Customer Wishes
     Route::get('/wishes/view', [WishesController::class, 'view'])->name('wishes.view');
@@ -472,6 +473,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     // Customer Life Remembered
     Route::get('/life_remembered/view', [PartnerLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::post('/life_remembered/update', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::post('/life-remembered/upload', [PartnerLifeRememberedController::class, 'upload'])->name('life_remembered.upload');
+
 
     // Customer Wishes
     Route::get('/wishes/view', [PartnerWishesController::class, 'view'])->name('wishes.view');
