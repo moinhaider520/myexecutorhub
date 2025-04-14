@@ -33,6 +33,7 @@
                           <th>Account Name</th>
                           <th>Account Number</th>
                           <th>Balance</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -46,6 +47,7 @@
                 <td>{{ $bankAccount->account_name }}</td>
                 <td>{{ $bankAccount->account_number }}</td>
                 <td>£{{ number_format($bankAccount->balance, 0, '.', ',') }}</td>
+                <td>{{ $bankAccount->created_at->format('d/m/Y \a\t H:i') }}</td>
                 <td>
                 <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
                   data-target="#editBankAccountModal" data-id="{{ $bankAccount->id }}"

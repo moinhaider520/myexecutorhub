@@ -29,6 +29,7 @@
                           <th>Sr</th>
                           <th>Asset Type</th>
                           <th>Description</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -38,6 +39,7 @@
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $otherAsset->asset_type }}</td>
                           <td>{{ $otherAsset->description }}</td>
+                          <td>{{ $otherAsset->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editOtherAssetModal" data-id="{{ $otherAsset->id }}" data-asset_type="{{ $otherAsset->asset_type }}" data-description="{{ $otherAsset->description }}">Edit</button>
                             <form action="{{ route('customer.other_assets.destroy', $otherAsset->id) }}" method="POST" style="display:inline;">

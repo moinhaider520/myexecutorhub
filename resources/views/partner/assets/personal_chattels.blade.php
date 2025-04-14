@@ -31,6 +31,7 @@
                           <th>Chattel Description</th>
                           <th>Photos</th>
                           <th>Value (GBP)</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -58,6 +59,7 @@
                             @endif
                           </td>
                           <td>£{{ number_format($chattel->value, 0, '.', ',') }}</td>
+                          <td>{{ $chattel->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editChattelModal" data-id="{{ $chattel->id }}" data-chattel_type="{{ $chattel->chattel_type }}" data-description="{{ $chattel->description }}" data-value="{{ $chattel->value }}">Edit</button>
                             <form action="{{ route('partner.personal_chattels.destroy', $chattel->id) }}" method="POST" style="display:inline;">

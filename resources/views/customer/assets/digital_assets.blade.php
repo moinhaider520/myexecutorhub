@@ -33,6 +33,7 @@
                           <th>Password</th>
                           <th>Email Used to create Account</th>
                           <th>Value</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -46,6 +47,7 @@
                           <td>{{ $digitalAsset->password }}</td>
                           <td>{{ $digitalAsset->email_used }}</td>
                           <td>£{{ number_format($digitalAsset->value, 0, '.', ',') }}</td>
+                          <td>{{ $digitalAsset->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td style="display: flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editDigitalAssetModal" data-id="{{ $digitalAsset->id }}" data-asset_type="{{ $digitalAsset->asset_type }}" data-asset_name="{{ $digitalAsset->asset_name }}" data-username="{{ $digitalAsset->username }}" data-password="{{ $digitalAsset->password }}" data-email_used="{{ $digitalAsset->email_used }}" data-value="{{ $digitalAsset->value }}">Edit</button>
                             <form action="{{ route('customer.digital_assets.destroy', $digitalAsset->id) }}" method="POST" style="display:inline;">

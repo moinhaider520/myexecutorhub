@@ -33,6 +33,7 @@
                           <th>Contact Details of Provider</th>
                           <th>Named Beneficiaries?</th>
                           <th>Policy End/Renewal Date</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -47,6 +48,7 @@
                           <td>{{ $insurancePolicy->contact_details }}</td>
                           <td>{{ $insurancePolicy->beneficiaries }}</td>
                           <td>{{ $insurancePolicy->policy_end_date }}</td>
+                          <td>{{ $insurancePolicy->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td style="display: flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editInsurancePolicyModal" data-id="{{ $insurancePolicy->id }}" data-insurance_type="{{ $insurancePolicy->insurance_type }}" data-provider_name="{{ $insurancePolicy->provider_name }}" data-policy_number="{{ $insurancePolicy->policy_number }}" data-sum_insured="{{ $insurancePolicy->sum_insured }}" data-contact_details="{{ $insurancePolicy->contact_details }}" data-beneficiaries="{{ $insurancePolicy->beneficiaries }}" data-policy_end_date="{{ $insurancePolicy->policy_end_date }}">Edit</button>
                             <form action="{{ route('customer.insurance_policies.destroy', $insurancePolicy->id) }}" method="POST" style="display:inline;">

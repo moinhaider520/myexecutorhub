@@ -51020,7 +51020,7 @@ display: none;
     overflow: auto;
     color: rgba(0, 0, 0, 0);
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a {

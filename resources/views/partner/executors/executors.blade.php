@@ -103,7 +103,6 @@
             <option value="" disabled>-- Select --</option>
               <option value="Solely">Solely</option>
               <option value="Jointly">Jointly</option>
-              <option value="Jointly and severally">Jointly and severally</option>
               <option value="Main">Main</option>
               <option value="Reserve">Reserve</option>
             </select>
@@ -188,7 +187,6 @@
               <option value="" disabled>-- Select --</option>
               <option value="Solely">Solely</option>
               <option value="Jointly">Jointly</option>
-              <option value="Jointly and severally">Jointly and severally</option>
               <option value="Main">Main</option>
               <option value="Reserve">Reserve</option>
             </select>

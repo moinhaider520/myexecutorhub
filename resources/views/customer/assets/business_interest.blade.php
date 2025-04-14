@@ -35,6 +35,7 @@
                           <th>Shares Value (GBP)</th>
                           <th>Who to Contact?</th>
                           <th>Plan For Shares</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -50,6 +51,7 @@
                           <td>£{{ number_format($businessInterest->share_value, 0, '.', ',') }}</td>
                           <td>{{ $businessInterest->contact }}</td>
                           <td>{{ $businessInterest->plan_for_shares }}</td>
+                          <td>{{ $businessInterest->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td style="display:flex;">
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editBusinessInterestModal" data-id="{{ $businessInterest->id }}" data-business_type="{{ $businessInterest->business_type }}" data-company_number="{{ $businessInterest->company_number }}" data-business_name="{{ $businessInterest->business_name }}" data-shares="{{ $businessInterest->shares }}" data-business_value="{{ $businessInterest->business_value }}" data-share_value="{{ $businessInterest->share_value }}" data-contact="{{ $businessInterest->contact }}" data-plan_for_shares="{{ $businessInterest->plan_for_shares }}">Edit</button>
                             <form action="{{ route('customer.business_interests.destroy', $businessInterest->id) }}" method="POST" style="display:inline;">

@@ -32,6 +32,7 @@
                           <th>Owner Name(s)</th>
                           <th>How Owned?</th>
                           <th>Value</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -44,6 +45,7 @@
                           <td>{{ $property->owner_names }}</td>
                           <td>{{ $property->how_owned }}</td>
                           <td>£{{ number_format($property->value, 0, '.', ',') }}</td>
+                          <td>{{ $property->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editPropertyModal" data-id="{{ $property->id }}" data-property_type="{{ $property->property_type }}" data-address="{{ $property->address }}" data-owner_names="{{ $property->owner_names }}" data-how_owned="{{ $property->how_owned }}" data-value="{{ $property->value }}">Edit</button>
                             <form action="{{ route('partner.properties.destroy', $property->id) }}" method="POST" style="display:inline;">

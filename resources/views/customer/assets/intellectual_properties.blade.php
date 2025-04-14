@@ -29,6 +29,7 @@
                           <th>Sr</th>
                           <th>Property Type</th>
                           <th>Description</th>
+                          <th>Entry Date and Time</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -39,6 +40,7 @@
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $property->property_type }}</td>
                           <td>{{ $property->description }}</td>
+                          <td>{{ $insurancePolicy->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editIntellectualPropertyModal"
                               data-id="{{ $property->id }}" data-property_type="{{ $property->property_type }}" data-description="{{ $property->description }}">Edit</button>
