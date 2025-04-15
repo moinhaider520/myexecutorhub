@@ -32,12 +32,14 @@ class TaskController extends Controller
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'date' => 'required|date',
+                'time' => 'nullable|date_format:H:i',
             ]);
 
             $task = Task::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'date' => $request->date,
+                'time' => $request->time,
                 'created_by' => Auth::id(),
             ]);
 
@@ -64,12 +66,14 @@ class TaskController extends Controller
                 'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'date' => 'required|date',
+                'time' => 'nullable|date_format:H:i',
             ]);
 
             $task->update([
                 'title' => $request->title,
                 'description' => $request->description,
                 'date' => $request->date,
+                'time' => $request->time,
             ]);
 
             DB::commit();

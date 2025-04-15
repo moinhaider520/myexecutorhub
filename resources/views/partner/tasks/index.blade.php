@@ -38,6 +38,10 @@
             <input type="date" class="form-control" id="task_date" name="date" required>
           </div>
           <div class="form-group">
+            <label>Time</label>
+            <input type="time" class="form-control" id="task_time" name="time">
+          </div>
+          <div class="form-group">
             <label>Task Title</label>
             <input type="text" class="form-control" id="task_title" name="title" required>
           </div>
@@ -70,14 +74,23 @@
       events: tasks.map(task => ({
         id: task.id,
         title: task.title,
-        start: task.date,
+        start: task.time ? `${task.date}T${task.time}` : task.date,
         extendedProps: {
-          description: task.description
+          description: task.description,
+          time: task.time
         }
       })),
       eventClick: function(info) {
         $('#task_id').val(info.event.id);
         $('#task_date').val(info.event.start.toISOString().substring(0, 10));
+
+        // Handle time if available
+        if (info.event.extendedProps.time) {
+          $('#task_time').val(info.event.extendedProps.time);
+        } else {
+          $('#task_time').val('');
+        }
+
         $('#task_title').val(info.event.title);
         $('#task_description').val(info.event.extendedProps.description);
         $('#TaskModalLabel').text('Edit Task');
@@ -87,6 +100,14 @@
     });
 
     calendar.render();
+
+    // Reset form when modal is opened for adding new task
+    $('[data-toggle="modal"][data-target="#TaskModal"]').on('click', function() {
+      $('#TaskForm')[0].reset();
+      $('#task_id').val('');
+      $('#TaskModalLabel').text('Add Task');
+      $('#deleteButton').hide();
+    });
 
     // Add/Edit Task
     $('#TaskForm').on('submit', function(e) {
@@ -134,4 +155,9 @@
   });
 </script>
 
+<script>
+  $(document).on('click', '.close-modal', function() {
+    $('#TaskModal').modal('hide');
+  });
+</script>
 @endsection

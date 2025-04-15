@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->date('date');
+            $table->time('time')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
 
