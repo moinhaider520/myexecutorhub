@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Models\LifeRemembered;
 use App\Http\Controllers\Controller;
+use App\Models\LifeRememberedMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,6 @@ use App\Traits\ImageUpload;
 class LifeRememberedController extends Controller
 {
     use ImageUpload;
-
     /**
      * Display the life remembered view.
      *
@@ -20,8 +20,61 @@ class LifeRememberedController extends Controller
      */
     public function view()
     {
-        $lifeRemembered = LifeRemembered::where('created_by', Auth::id())->first();
+        $lifeRemembered = LifeRemembered::where('created_by', Auth::id())->get();
         return view('customer.life_remembered.life_remembered', compact('lifeRemembered'));
+    }
+
+    public function getMedia($id)
+    {
+        return LifeRememberedMedia::where('life_remembered_id', $id)->get();
+    }
+
+    public function deleteMedia($id)
+    {
+        $media = LifeRememberedMedia::findOrFail($id);
+        $filePath = public_path('assets/upload/' . $media->file_path);
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+        $media->delete();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'description' => 'required',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            // Create the lifeRemembered entry first
+            $lifeRemembered = LifeRemembered::create([
+                'description' => $request->description,
+                'created_by' => Auth::id()
+            ]);
+
+            // Loop through and upload each file
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $uploadedFile) {
+                    $path = $this->imageUpload($uploadedFile, 'documents');
+
+                    // If you have a media table, you can save it like:
+                    $lifeRemembered->media()->create([
+                        'file_path' => $path,
+                        'file_type' => $uploadedFile->getClientMimeType()
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Entry added successfully.']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -30,60 +83,55 @@ class LifeRememberedController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'content' => 'required',
+            'description' => 'required|string|max:1000',
+            'file.*' => 'nullable'
         ]);
 
         try {
             DB::beginTransaction();
 
-            LifeRemembered::updateOrCreate(
-                ['created_by' => Auth::id()],
-                ['content' => $request->content]
-            );
+            $lifeRemembered = LifeRemembered::findOrFail($id);
+            $lifeRemembered->description = $request->description;
+            $lifeRemembered->save();
+
+            // Handle file upload (if any)
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $uploadedFile) {
+                    $filename = time() . '_' . uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
+                    $uploadedFile->move(public_path('assets/upload'), $filename);
+
+                    // Save file reference
+                    LifeRememberedMedia::create([
+                        'life_remembered_id' => $lifeRemembered->id,
+                        'file_path' => $filename,
+                        'uploaded_by' => Auth::id(),
+                    ]);
+                }
+            }
 
             DB::commit();
-            return redirect()->route('customer.life_remembered.view')->with('success', 'Life Remembered updated successfully.');
+            return response()->json(['success' => true, 'message' => 'Life Remembered updated successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function destroy($id)
+    {
+        try {
+            DB::beginTransaction();
+            $document = LifeRemembered::findOrFail($id);
+            // Delete the document record
+            $document->delete();
+            DB::commit();
+            return redirect()->route('customer.life_remembered.view')->with('success', 'Entry deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
         }
-    }
-
-    /**
-     * Handle image uploads from CKEditor using ImageUpload trait.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function upload(Request $request)
-    {
-        if ($request->hasFile('upload')) {
-            try {
-                $filename = $this->imageUpload($request->file('upload'));
-                $url = asset('assets/upload/' . $filename);
-
-                return response()->json([
-                    'url' => $url,
-                    'uploaded' => true
-                ]);
-            } catch (\Exception $e) {
-                return response()->json([
-                    'uploaded' => false,
-                    'error' => [
-                        'message' => $e->getMessage()
-                    ]
-                ]);
-            }
-        }
-
-        return response()->json([
-            'uploaded' => false,
-            'error' => [
-                'message' => 'No file uploaded.'
-            ]
-        ]);
     }
 }

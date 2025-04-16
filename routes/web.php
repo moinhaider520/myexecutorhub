@@ -226,7 +226,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
     Route::get('/partners/create', [PartnerController::class, 'create'])->name('partners.create');
     Route::get('/partners/send_invite', [PartnerController::class, 'send_invite'])->name('partners.send_invite');
-    Route::post('/partners', [PartnerController::class, 'store'])->name('partners.store');
+    Route::post('/partners/store', [PartnerController::class, 'store'])->name('partners.store');
     Route::post('/partners', [PartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
     Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
@@ -276,12 +276,21 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // Customer Life Remembered
     Route::get('/life_remembered/view', [LifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/store', [LifeRememberedController::class, 'store'])->name('life_remembered.store');
+    Route::get('/life_remembered/{id}/media', [LifeRememberedController::class, 'getMedia']);
+    Route::delete('/life_remembered/media/{id}', [LifeRememberedController::class, 'deleteMedia']);
     Route::post('/life_remembered/update', [LifeRememberedController::class, 'update'])->name('life_remembered.update');
-    Route::post('/life-remembered/upload', [LifeRememberedController::class, 'upload'])->name('life_remembered.upload');
+    Route::post('/life_remembered/update/{id}', [LifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::delete('/life_remembered/destroy/{id}', [LifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
     // Customer Wishes
     Route::get('/wishes/view', [WishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/store', [WishesController::class, 'store'])->name('wishes.store');
+    Route::get('/wishes/{id}/media', [WishesController::class, 'getMedia']);
+    Route::delete('/wishes/media/{id}', [WishesController::class, 'deleteMedia']);
     Route::post('/wishes/update', [WishesController::class, 'update'])->name('wishes.update');
+    Route::post('/wishes/update/{id}', [WishesController::class, 'update'])->name('wishes.update');
+    Route::delete('/wishes/destroy/{id}', [WishesController::class, 'destroy'])->name('wishes.destroy');
 
     // Customer Withdraw
     Route::get('/withdraw', [WithdrawalController::class, 'view'])->name('withdraw.view');
@@ -290,8 +299,13 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // Customer Guidance
     Route::get('/guidance/view', [GuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/store', [GuidanceController::class, 'store'])->name('guidance.store');
+    Route::get('/guidance/{id}/media', [GuidanceController::class, 'getMedia']);
+    Route::delete('/guidance/media/{id}', [GuidanceController::class, 'deleteMedia']);
     Route::post('/guidance/update', [GuidanceController::class, 'update'])->name('guidance.update');
-
+    Route::post('/guidance/update/{id}', [GuidanceController::class, 'update'])->name('guidance.update');
+    Route::delete('/guidance/destroy/{id}', [GuidanceController::class, 'destroy'])->name('guidance.destroy');
+    
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [DocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
     // Customer Documents
@@ -470,7 +484,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/update-profile-image', [PartnerSettingController::class, 'updateProfileImage'])->name('update_profile_image');
     Route::post('/update-password', [PartnerSettingController::class, 'updatePassword'])->name('update_password');
 
-    // Customer Life Remembered
+    // Partner Life Remembered
     Route::get('/life_remembered/view', [PartnerLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::post('/life_remembered/store', [PartnerLifeRememberedController::class, 'store'])->name('life_remembered.store');
     Route::get('/life_remembered/{id}/media', [PartnerLifeRememberedController::class, 'getMedia']);
@@ -480,7 +494,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::delete('/life_remembered/destroy/{id}', [PartnerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
 
-    // Customer Wishes
+    // Partner Wishes
     Route::get('/wishes/view', [PartnerWishesController::class, 'view'])->name('wishes.view');
     Route::post('/wishes/store', [PartnerWishesController::class, 'store'])->name('wishes.store');
     Route::get('/wishes/{id}/media', [PartnerWishesController::class, 'getMedia']);

@@ -1,11 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-<style>
-  .ck-editor__editable_inline {
-    min-height: 300px;
-  }
-</style>
 <div class="page-body">
   <!-- Container-fluid starts-->
   <div class="container-fluid default-dashboard">
@@ -20,7 +15,44 @@
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
                   <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                    <textarea name="content" id="editor" readonly>{{ old('content', $wish->content ?? '') }}</textarea>
+                    <table class="display dataTable no-footer" id="basic-1" role="grid" aria-describedby="basic-1_info">
+                      <thead>
+                        <tr role="row">
+                          <th>Sr</th>
+                          <th>Description</th>
+                          <th>Files</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach($wish as $document)
+                        <tr>
+                          <td>{{ $loop->iteration }}</td>
+                          <td>{{ $document->description }}</td>
+                          <td>
+                            @if ($document->media->isNotEmpty())
+                              @foreach($document->media as $media)
+                                @if (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                                  <!-- For image -->
+                                  <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
+                                    <img src="{{ asset('assets/upload/' . basename($media->file_path)) }}" alt="Media" style="width: 100px;">
+                                  </a>
+                                @elseif (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['mp4', 'mov', 'avi', 'mkv']))
+                                  <!-- For video -->
+                                  <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
+                                    <button class="btn btn-primary btn-sm">View Video</button>
+                                  </a>
+                                @else
+                                  N/A
+                                @endif
+                              @endforeach
+                            @else
+                              N/A
+                            @endif
+                          </td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -32,12 +64,4 @@
   </div>
   <!-- Container-fluid Ends-->
 </div>
-<script src="https://cdn.ckeditor.com/ckeditor5/35.3.0/classic/ckeditor.js"></script>
-<script>
-  ClassicEditor
-    .create(document.querySelector('#editor'))
-    .catch(error => {
-      console.error(error);
-    });
-</script>
 @endsection

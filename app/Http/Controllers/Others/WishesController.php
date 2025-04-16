@@ -14,7 +14,7 @@ class WishesController extends Controller
         // Get the currently authenticated user
         $user = Auth::user();
         // Retrieve wishes created by the authenticated user
-        $wish = Wish::where('created_by', $user->created_by)->first();
+        $wish = Wish::where('created_by', $user->created_by)->get();
         return view('others.wishes.wishes', compact('wish'));
     }
 }

@@ -15,7 +15,7 @@ class GuidanceController extends Controller
         $user = Auth::user();
         
         // Retrieve the guidance created by the authenticated user
-        $guidance = Guidance::where('created_by', $user->created_by)->first();
+        $guidance = Guidance::where('created_by', $user->created_by)->get();
         
         return view('others.guidance.guidance', compact('guidance'));
     }
