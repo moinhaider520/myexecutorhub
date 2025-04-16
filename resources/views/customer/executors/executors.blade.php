@@ -102,7 +102,6 @@
             <select class="form-control" name="how_acting" id="how_acting" required>
             <option value="" disabled>-- Select --</option>
               <option value="Solely">Solely</option>
-              <option value="Jointly">Jointly</option>
               <option value="Main">Main</option>
               <option value="Reserve">Reserve</option>
             </select>
@@ -186,7 +185,6 @@
             <select class="form-control" name="how_acting" id="edit_how_acting" required>
               <option value="" disabled>-- Select --</option>
               <option value="Solely">Solely</option>
-              <option value="Jointly">Jointly</option>
               <option value="Main">Main</option>
               <option value="Reserve">Reserve</option>
             </select>

@@ -43,7 +43,7 @@
                           <td>{{ $investmentAccount->company_name }}</td>
                           <td>{{ $investmentAccount->account_number }}</td>
                           <td>£{{ number_format($investmentAccount->balance, 0, '.', ',') }}</td>
-                          <td>{{ $insurancePolicy->created_at->format('d/m/Y \a\t H:i') }}</td>
+                          <td>{{ $investmentAccount->created_at->format('d/m/Y \a\t H:i') }}</td>
                           <td>
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editInvestmentAccountModal" data-id="{{ $investmentAccount->id }}" data-investment_type="{{ $investmentAccount->investment_type }}" data-company_name="{{ $investmentAccount->company_name }}" data-account_number="{{ $investmentAccount->account_number }}" data-balance="{{ $investmentAccount->balance }}">Edit</button>
                             <form action="{{ route('customer.investment_accounts.destroy', $investmentAccount->id) }}" method="POST" style="display:inline;">

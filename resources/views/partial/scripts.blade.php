@@ -28,6 +28,28 @@
 <!-- Theme js-->
 <script src="{{ asset('assets/js/script.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    /* Wait until Tidio is fully loaded */
+document.addEventListener("DOMContentLoaded", function () {
+    const interval = setInterval(function () {
+        const tidioChat = document.querySelector("[id^=tidio-chat]");
+
+        if (tidioChat) {
+            // Stop the interval
+            clearInterval(interval);
+
+            // Apply center styling
+            tidioChat.style.position = "fixed";
+            tidioChat.style.top = "50%";
+            tidioChat.style.left = "50%";
+            tidioChat.style.transform = "translate(-50%, -50%)";
+            tidioChat.style.zIndex = "9999";
+        }
+    }, 500);
+});
+
+</script>
 </body>
 
 </html>

@@ -3,6 +3,12 @@
 @section('content')
 <div class="page-body">
   <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <h3>Disclaimer</h3>
+        <p>The responses provided by Executor Hub AI are not 100% correct. The information provided is backed up by other resources. It is always a good idea to verify information from multiple sources before making important decisions.</p>
+      </div>
+    </div>
     <div class="row g-0">
       <div class="card right-sidebar-chat">
         <div class="right-sidebar-title">
