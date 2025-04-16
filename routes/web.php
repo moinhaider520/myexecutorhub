@@ -472,14 +472,22 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Customer Life Remembered
     Route::get('/life_remembered/view', [PartnerLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/store', [PartnerLifeRememberedController::class, 'store'])->name('life_remembered.store');
+    Route::get('/life_remembered/{id}/media', [PartnerLifeRememberedController::class, 'getMedia']);
+    Route::delete('/life_remembered/media/{id}', [PartnerLifeRememberedController::class, 'deleteMedia']);
     Route::post('/life_remembered/update', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
-    Route::post('/life-remembered/upload', [PartnerLifeRememberedController::class, 'upload'])->name('life_remembered.upload');
+    Route::post('/life_remembered/update/{id}', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::delete('/life_remembered/destroy/{id}', [PartnerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
 
     // Customer Wishes
     Route::get('/wishes/view', [PartnerWishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/store', [PartnerWishesController::class, 'store'])->name('wishes.store');
+    Route::get('/wishes/{id}/media', [PartnerWishesController::class, 'getMedia']);
+    Route::delete('/wishes/media/{id}', [PartnerWishesController::class, 'deleteMedia']);
     Route::post('/wishes/update', [PartnerWishesController::class, 'update'])->name('wishes.update');
-
+    Route::post('/wishes/update/{id}', [PartnerWishesController::class, 'update'])->name('wishes.update');
+    Route::delete('/wishes/destroy/{id}', [PartnerWishesController::class, 'destroy'])->name('wishes.destroy');
 
     // Customer Withdraw
     Route::get('/withdraw', [PartnerWithdrawalController::class, 'view'])->name('withdraw.view');
@@ -488,7 +496,12 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Customer Guidance
     Route::get('/guidance/view', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/store', [PartnerGuidanceController::class, 'store'])->name('guidance.store');
+    Route::get('/guidance/{id}/media', [PartnerGuidanceController::class, 'getMedia']);
+    Route::delete('/guidance/media/{id}', [PartnerGuidanceController::class, 'deleteMedia']);
     Route::post('/guidance/update', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
+    Route::post('/guidance/update/{id}', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
+    Route::delete('/guidance/destroy/{id}', [PartnerGuidanceController::class, 'destroy'])->name('guidance.destroy');
 
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [PartnerDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');

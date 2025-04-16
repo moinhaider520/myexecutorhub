@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('life_remembereds', function (Blueprint $table) {
+        Schema::create('wish_media', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
-            $table->unsignedBigInteger('created_by');
+            $table->foreignId('wish_id')->constrained()->onDelete('cascade');
+            $table->string('file_path');
+            $table->string('file_type')->nullable();
             $table->timestamps();
-            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('life_remembereds');
+        Schema::dropIfExists('wish_media');
     }
 };

@@ -9,4 +9,9 @@ class Guidance extends Model
 {
     protected $guarded=[];
     use HasFactory;
+
+    public function media()
+    {
+        return $this->hasMany(GuidanceMedia::class);
+    }
 }
