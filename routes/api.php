@@ -274,14 +274,29 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/other_assets/update/{id}', [PartnerOtherAssetController::class, 'update'])->name('other_assets.update');
     Route::delete('/other_assets/destroy/{id}', [PartnerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
 
-    Route::get('/guidance', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
+    Route::get('/guidance/view', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/store', [PartnerGuidanceController::class, 'store'])->name('guidance.store');
+    Route::get('/guidance/{id}/media', [PartnerGuidanceController::class, 'getMedia']);
+    Route::delete('/guidance/media/{id}', [PartnerGuidanceController::class, 'deleteMedia']);
     Route::post('/guidance/update', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
+    Route::post('/guidance/update/{id}', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
+    Route::delete('/guidance/destroy/{id}', [PartnerGuidanceController::class, 'destroy'])->name('guidance.destroy');
 
-    Route::get('/wishes', [PartnerWishesController::class, 'view'])->name('wishes.view');
+    Route::get('/wishes/view', [PartnerWishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/store', [PartnerWishesController::class, 'store'])->name('wishes.store');
+    Route::get('/wishes/{id}/media', [PartnerWishesController::class, 'getMedia']);
+    Route::delete('/wishes/media/{id}', [PartnerWishesController::class, 'deleteMedia']);
     Route::post('/wishes/update', [PartnerWishesController::class, 'update'])->name('wishes.update');
+    Route::post('/wishes/update/{id}', [PartnerWishesController::class, 'update'])->name('wishes.update');
+    Route::delete('/wishes/destroy/{id}', [PartnerWishesController::class, 'destroy'])->name('wishes.destroy');
 
-    Route::get('/life-remembered', [PartnerLifeRememberedController::class, 'view'])->name('life_remembered.view');
-    Route::post('/life-remembered', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::get('/life_remembered/view', [PartnerLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/store', [PartnerLifeRememberedController::class, 'store'])->name('life_remembered.store');
+    Route::get('/life_remembered/{id}/media', [PartnerLifeRememberedController::class, 'getMedia']);
+    Route::delete('/life_remembered/media/{id}', [PartnerLifeRememberedController::class, 'deleteMedia']);
+    Route::post('/life_remembered/update', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::post('/life_remembered/update/{id}', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::delete('/life_remembered/destroy/{id}', [PartnerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
     Route::get('/voice-notes', [PartnerVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice-notes', [PartnerVoiceNotesController::class, 'store'])->name('voice_notes.store');
@@ -436,14 +451,29 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/other_assets/update/{id}', [CustomerOtherAssetController::class, 'update'])->name('other_assets.update');
     Route::delete('/other_assets/destroy/{id}', [CustomerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
 
-    Route::get('/guidance', [CustomerGuidanceController::class, 'view'])->name('guidance.view');
+    Route::get('/guidance/view', [CustomerGuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/store', [CustomerGuidanceController::class, 'store'])->name('guidance.store');
+    Route::get('/guidance/{id}/media', [CustomerGuidanceController::class, 'getMedia']);
+    Route::delete('/guidance/media/{id}', [CustomerGuidanceController::class, 'deleteMedia']);
     Route::post('/guidance/update', [CustomerGuidanceController::class, 'update'])->name('guidance.update');
+    Route::post('/guidance/update/{id}', [CustomerGuidanceController::class, 'update'])->name('guidance.update');
+    Route::delete('/guidance/destroy/{id}', [CustomerGuidanceController::class, 'destroy'])->name('guidance.destroy');
 
-    Route::get('/wishes', [CustomerWishesController::class, 'view'])->name('wishes.view');
+    Route::get('/wishes/view', [CustomerWishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/store', [CustomerWishesController::class, 'store'])->name('wishes.store');
+    Route::get('/wishes/{id}/media', [CustomerWishesController::class, 'getMedia']);
+    Route::delete('/wishes/media/{id}', [CustomerWishesController::class, 'deleteMedia']);
     Route::post('/wishes/update', [CustomerWishesController::class, 'update'])->name('wishes.update');
+    Route::post('/wishes/update/{id}', [CustomerWishesController::class, 'update'])->name('wishes.update');
+    Route::delete('/wishes/destroy/{id}', [CustomerWishesController::class, 'destroy'])->name('wishes.destroy');
 
-    Route::get('/life-remembered', [CustomerLifeRememberedController::class, 'view'])->name('life_remembered.view');
-    Route::post('/life-remembered', [CustomerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::get('/life_remembered/view', [CustomerLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/store', [CustomerLifeRememberedController::class, 'store'])->name('life_remembered.store');
+    Route::get('/life_remembered/{id}/media', [CustomerLifeRememberedController::class, 'getMedia']);
+    Route::delete('/life_remembered/media/{id}', [CustomerLifeRememberedController::class, 'deleteMedia']);
+    Route::post('/life_remembered/update', [CustomerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::post('/life_remembered/update/{id}', [CustomerLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::delete('/life_remembered/destroy/{id}', [CustomerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
     Route::get('/voice-notes', [CustomerVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice-notes', [CustomerVoiceNotesController::class, 'store'])->name('voice_notes.store');

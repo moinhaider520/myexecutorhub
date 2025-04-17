@@ -22,7 +22,7 @@ class WishesController extends Controller
             $user = Auth::user();
 
             // Retrieve wish created by the user who created the executor
-            $wish = Wish::where('created_by', $user->created_by)->first();
+            $wish = Wish::where('created_by', $user->created_by)->get();
 
             if (!$wish) {
                 return response()->json([

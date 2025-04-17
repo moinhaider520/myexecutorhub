@@ -107,7 +107,6 @@ class GuidanceController extends Controller
                     GuidanceMedia::create([
                         'guidance_id' => $guidance->id,
                         'file_path' => $filename,
-                        'uploaded_by' => Auth::id(),
                     ]);
                 }
             }

@@ -503,12 +503,12 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/wishes/update/{id}', [PartnerWishesController::class, 'update'])->name('wishes.update');
     Route::delete('/wishes/destroy/{id}', [PartnerWishesController::class, 'destroy'])->name('wishes.destroy');
 
-    // Customer Withdraw
+    // Partner Withdraw
     Route::get('/withdraw', [PartnerWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [PartnerWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [PartnerWithdrawalController::class, 'history'])->name('withdraw.history');
 
-    // Customer Guidance
+    // Partner Guidance
     Route::get('/guidance/view', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
     Route::post('/guidance/store', [PartnerGuidanceController::class, 'store'])->name('guidance.store');
     Route::get('/guidance/{id}/media', [PartnerGuidanceController::class, 'getMedia']);
@@ -517,9 +517,9 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/guidance/update/{id}', [PartnerGuidanceController::class, 'update'])->name('guidance.update');
     Route::delete('/guidance/destroy/{id}', [PartnerGuidanceController::class, 'destroy'])->name('guidance.destroy');
 
-    // Custom Documents Type
+    // Partner Documents Type
     Route::post('/documents/save_custom_type', [PartnerDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
-    // Customer Documents
+    // Partner Documents
     Route::get('/documents/view', [PartnerDocumentsController::class, 'view'])->name('documents.view');
     Route::post('/documents/store', [PartnerDocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');

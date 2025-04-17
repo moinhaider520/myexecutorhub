@@ -22,7 +22,7 @@ class LifeRememberedController extends Controller
             $user = Auth::user();
             
             // Retrieve the LifeRemembered entry created by the authenticated user
-            $lifeRemembered = LifeRemembered::where('created_by', $user->created_by)->first();
+            $lifeRemembered = LifeRemembered::where('created_by', $user->created_by)->get();
             
             if (!$lifeRemembered) {
                 return response()->json([

@@ -107,7 +107,6 @@ class LifeRememberedController extends Controller
                     LifeRememberedMedia::create([
                         'life_remembered_id' => $lifeRemembered->id,
                         'file_path' => $filename,
-                        'uploaded_by' => Auth::id(),
                     ]);
                 }
             }

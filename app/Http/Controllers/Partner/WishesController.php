@@ -108,7 +108,7 @@ class WishesController extends Controller
                     WishMedia::create([
                         'wish_id' => $wish->id,
                         'file_path' => $filename,
-                        'uploaded_by' => Auth::id(),
+                        
                     ]);
                 }
             }
