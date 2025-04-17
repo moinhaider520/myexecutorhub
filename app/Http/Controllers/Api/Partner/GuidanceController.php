@@ -23,7 +23,16 @@ class GuidanceController extends Controller
     public function view(): JsonResponse
     {
         try {
-            $guidance = Guidance::where('created_by', Auth::id())->get();
+            $guidance = Guidance::with('media')
+                ->where('created_by', Auth::id())
+                ->get();
+
+            if ($guidance->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Wish not found'
+                ], 404);
+            }
 
             return response()->json([
                 'success' => true,

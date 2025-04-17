@@ -21,8 +21,10 @@ class LifeRememberedController extends Controller
             // Get the currently authenticated user
             $user = Auth::user();
             
-            // Retrieve the LifeRemembered entry created by the authenticated user
-            $lifeRemembered = LifeRemembered::where('created_by', $user->created_by)->get();
+            
+            $lifeRemembered = LifeRemembered::with('media')
+                ->where('created_by', $user->created_by)
+                ->get();
             
             if (!$lifeRemembered) {
                 return response()->json([

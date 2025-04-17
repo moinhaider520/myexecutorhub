@@ -21,9 +21,11 @@ class WishesController extends Controller
     public function view(): JsonResponse
     {
         try {
-            $wish = Wish::where('created_by', Auth::id())->get();
+            $wishes = Wish::with('media')
+                ->where('created_by', Auth::id())
+                ->get();
 
-            if (!$wish) {
+            if ($wishes->isEmpty()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Wish not found'
@@ -32,7 +34,7 @@ class WishesController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $wish
+                'data' => $wishes
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -42,7 +44,8 @@ class WishesController extends Controller
         }
     }
 
-       /**
+
+    /**
      * Get media for a given wish.
      */
     public function getMedia($id): JsonResponse
@@ -76,7 +79,7 @@ class WishesController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
-    
+
     /**
      * Store a new wish with media files.
      */
@@ -144,7 +147,7 @@ class WishesController extends Controller
                     WishMedia::create([
                         'wish_id' => $wish->id,
                         'file_path' => $filename,
-                        
+
                     ]);
                 }
             }

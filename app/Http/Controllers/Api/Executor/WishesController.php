@@ -21,10 +21,11 @@ class WishesController extends Controller
             // Get the currently authenticated executor
             $user = Auth::user();
 
-            // Retrieve wish created by the user who created the executor
-            $wish = Wish::where('created_by', $user->created_by)->get();
+            $wishes = Wish::with('media')
+                ->where('created_by', $user->created_by)
+                ->get();
 
-            if (!$wish) {
+            if ($wishes->isEmpty()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Wish not found'
@@ -33,7 +34,7 @@ class WishesController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $wish
+                'data' => $wishes
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

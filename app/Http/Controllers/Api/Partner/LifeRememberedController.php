@@ -20,7 +20,9 @@ class LifeRememberedController extends Controller
      */
     public function view(): JsonResponse
     {
-        $lifeRemembered = LifeRemembered::where('created_by', Auth::id())->get();
+        $lifeRemembered = LifeRemembered::with('media')
+                ->where('created_by', Auth::id())
+                ->get();
 
         return response()->json([
             'success' => true,

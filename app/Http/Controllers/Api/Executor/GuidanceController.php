@@ -21,7 +21,16 @@ class GuidanceController extends Controller
             $user = Auth::user();
 
             // Retrieve the guidance created by the authenticated user's creator
-            $guidance = Guidance::where('created_by', $user->created_by)->get();
+            $guidance = Guidance::with('media')
+                ->where('created_by', $user->created_by)
+                ->get();
+
+            if ($guidance->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Wish not found'
+                ], 404);
+            }
 
             if (!$guidance) {
                 return response()->json([
