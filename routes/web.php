@@ -448,10 +448,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/membership/checkout', [MembershipController::class, 'checkout_page'])->name('checkout.view');
 
     // Funeral Wake
-    Route::get('/funeral_wake/view', [FuneralWakeController::class, 'view'])->name('funeral_wake.view');
-    Route::post('/funeral_wake/store', [FuneralWakeController::class, 'store'])->name('funeral_wake.store');
-    Route::post('/funeral_wake/update/{id}', [FuneralWakeController::class, 'update'])->name('funeral_wake.update');
-    Route::delete('/funeral_wake/destroy/{id}', [FuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+    Route::get('/funeral/view', [FuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral/store', [FuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral/update/{id}', [FuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral/destroy/{id}', [FuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 });
 
 
@@ -537,10 +537,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::delete('/advisors/destroy/{id}', [PartnerAdvisorsController::class, 'destroy'])->name('advisors.destroy');
 
     // Partner Funeral Wake
-    Route::get('/funeral_wake/view', [PartnerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
-    Route::post('/funeral_wake/store', [PartnerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
-    Route::post('/funeral_wake/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
-    Route::delete('/funeral_wake/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+    Route::get('/funeral/view', [PartnerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral/store', [PartnerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 
     // Partner Executors
     Route::get('/executors/view', [PartnerExecutorsController::class, 'view'])->name('executors.view');
@@ -705,7 +705,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
-    Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::get('/funeral/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
     Route::get('tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
 });

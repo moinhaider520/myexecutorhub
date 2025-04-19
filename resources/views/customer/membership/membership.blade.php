@@ -21,7 +21,7 @@
           @if(Auth::user()->subscribed_package == "free_trial" || Auth::user()->stripe_subscription_id == null)
         <div class="row mb-3">
         <div class="col-md-12">
-        <p>You are Currently on {{ Auth::user()->subscribed_package }} Plan and It will expire on
+        <p>You are currently on {{ str_replace('_', ' ', Auth::user()->subscribed_package) }} plan and it will expire on
           {{ Auth::user()->trial_ends_at }}. Make sure to Upgrade your plan to continue using Executor Hub.
         </p>
         </div>
@@ -31,7 +31,7 @@
         <div class="card text-center pricing-simple">
           <div class="card-body" style="height:400px;">
           <h4>Basic</h4>
-          <h5>£8</h5>
+          <h5>£5.99</h5>
           <h6 class="mb-0">Per Month</h6>
           <ul>
           <li>Assign Executors</li>
@@ -51,7 +51,7 @@
         <div class="card text-center pricing-simple">
           <div class="card-body" style="height:400px;">
           <h4>Standard</h4>
-          <h5>£20</h5>
+          <h5>£11.99</h5>
           <h6 class="mb-0">Per Month</h6>
           <ul>
           <li>Assign Executors</li>
@@ -74,7 +74,7 @@
         <div class="card text-center pricing-simple">
           <div class="card-body" style="height: 400px;">
           <h4>Premium </h4>
-          <h5>£40</h5>
+          <h5>£19.99</h5>
           <h6 class="mb-0">Per Month</h6>
           <ul>
           <li>Assign Executors</li>

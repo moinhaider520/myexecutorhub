@@ -6,7 +6,7 @@
     <div class="row">
       <div class="col-md-12">
         <h3>Disclaimer</h3>
-        <p>The responses provided by Executor Hub AI are not 100% correct. The information provided is backed up by other resources. It is always a good idea to verify information from multiple sources before making important decisions.</p>
+        <p>Executor Hub AI provides general guidance and may not always be 100% accurate. Please check important information with a professional.</p>
       </div>
     </div>
     <div class="row g-0">

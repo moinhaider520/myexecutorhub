@@ -173,7 +173,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>LPAs </span>
+                            <span>Capacity Proof Video (LPA) </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.lpa.create') }}">Create</a></li>
@@ -189,7 +189,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Wills </span>
+                            <span>Capacity Proof Video (Will) </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.wills.create') }}">Create</a></li>
@@ -310,10 +310,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Wishes </span>
+                            <span>Trust Wishes </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.wishes.view') }}">Manage Wishes</a></li>
+                            <li><a href="{{ route('partner.wishes.view') }}">Manage Trust Wishes</a></li>
                         </ul>
                     </li>
 
@@ -325,7 +325,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guidance </span>
+                            <span>Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.guidance.view') }}">Guidance For Guardians</a></li>
@@ -417,7 +417,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Funeral Wake</span>
+                            <span>Funeral</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.funeral_wake.view') }}">Manage</a></li>
@@ -481,7 +481,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>LPAs </span>
+                            <span>Capacity Proof Video (LPA) </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.lpa.create') }}">Create</a></li>
@@ -496,7 +496,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Wills </span>
+                            <span>Capacity Proof Video (Will) </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.wills.create') }}">Create</a></li>
@@ -612,10 +612,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Wishes </span>
+                            <span>Trust Wishes </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.wishes.view') }}">Manage Wishes</a></li>
+                            <li><a href="{{ route('customer.wishes.view') }}">Manage Trust Wishes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -626,7 +626,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guidance </span>
+                            <span>Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.guidance.view') }}">Guidance For Guardians</a></li>
@@ -701,7 +701,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Funeral Wake</span>
+                            <span>Funeral</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.funeral_wake.view') }}">Manage</a></li>
@@ -771,7 +771,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>LPAs </span>
+                            <span>Capacity Proof Video (LPA) </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.lpa.index') }}">View</a></li>
@@ -786,7 +786,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Wills </span>
+                            <span>Capacity Proof Video (Will) </span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.wills.index') }}">View</a></li>
@@ -858,10 +858,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Wishes </span>
+                            <span>Trust Wishes </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('executor.wishes.view') }}">Manage Wishes</a></li>
+                            <li><a href="{{ route('executor.wishes.view') }}">Manage Trust Wishes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -872,7 +872,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guidance </span>
+                            <span>Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.guidance.view') }}">Guidance For Guardians</a></li>
@@ -931,7 +931,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Funeral Wake</span>
+                            <span>Funeral</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.funeral_wake.view') }}">Manage</a></li>
@@ -1079,10 +1079,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Wishes</span>
+                            <span>Trust Wishes</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('wishes.view') }}">Manage Wishes</a></li>
+                            <li><a href="{{ route('wishes.view') }}">Manage Trust Wishes</a></li>
                         </ul>
                     </li>
                     @endcan
@@ -1096,7 +1096,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guidance</span>
+                            <span>Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('guidance.view') }}">Guidance For Guardians</a></li>

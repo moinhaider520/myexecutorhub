@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFuneralWakeModal">
-              Add Funeral Wake
+              Add Funeral
             </button>
           </div>
         </div>
@@ -17,8 +17,8 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4>Funeral Wake</h4>
-                <span>List of Playlists For Funeral / Wake.</span>
+                <h4>Funeral</h4>
+                <span>List of Playlists For Funeral.</span>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
@@ -68,7 +68,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addFuneralWakeModalLabel">Add Funeral Wake</h5>
+        <h5 class="modal-title" id="addFuneralWakeModalLabel">Add Funeral</h5>
       </div>
       <div class="modal-body">
         <form id="addFuneralWakeForm">
@@ -98,7 +98,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editFuneralWakeModalLabel">Edit Funeral Wake</h5>
+        <h5 class="modal-title" id="editFuneralWakeModalLabel">Edit Funeral</h5>
       </div>
       <div class="modal-body">
         <form id="editFuneralWakeForm">

@@ -21,5 +21,6 @@ class RolesSeeder extends Seeder
         Role::create(['name' => 'Stock Brokers']);
         Role::create(['name' => 'Will Writers']);
         Role::create(['name' => 'Financial Advisers']);        
+        Role::create(['name' => 'Advisor']);
     }
 }
