@@ -70,11 +70,23 @@
     var calendarEl = document.getElementById('calendar');
     var tasks = @json($tasks);
 
+  // Helper function to convert 24-hour time to 12-hour format with AM/PM
+  const formatTimeTo12Hour = (time24) => {
+      if (!time24) return '';
+      const [hour, minute] = time24.split(':');
+      let h = parseInt(hour);
+      let ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12;
+      h = h ? h : 12;
+      return `${h}:${minute} ${ampm}`;
+    };
+
     var calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       events: tasks.map(task => ({
         id: task.id,
-        title: task.title,
+        title: task.time ? `${formatTimeTo12Hour(task.time)} - ${task.title}` : task.title,
+        start: task.date,
         start: task.time ? `${task.date}T${task.time}` : task.date,
         extendedProps: {
           description: task.description,

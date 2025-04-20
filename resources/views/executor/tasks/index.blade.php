@@ -41,6 +41,7 @@
         <p><strong>Title: </strong><span id="taskTitle"></span></p>
         <p><strong>Description: </strong><span id="taskDescription"></span></p>
         <p><strong>Date: </strong><span id="taskDate"></span></p>
+        <p><strong>Time: </strong><span id="taskTime"></span></p>
       </div>
     </div>
   </div>
@@ -52,16 +53,28 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
 
+  // Function to format 24-hour time to 12-hour format with AM/PM
+  const formatTimeTo12Hour = (time24) => {
+    if (!time24) return '';
+    const [hour, minute] = time24.split(':');
+    let h = parseInt(hour);
+    let ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12;
+    h = h ? h : 12;
+    return `${h}:${minute} ${ampm}`;
+  };
+
   var events = @json($Tasks).map(note => ({
-    title: note.title, 
-    start: note.date, 
+    title: note.time ? `${formatTimeTo12Hour(note.time)} - ${note.title}` : note.title, // 
+    start: note.date,
     extendedProps: {
       id: note.id,
       description: note.description,
       date: note.date,
+      time: note.time, 
     }
   }));
 
@@ -74,6 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
       $('#taskTitle').text(info.event.title);  
       $('#taskDescription').text(task.description);  
       $('#taskDate').text(task.date);  
+      $('#taskTime').text(task.time ? formatTimeTo12Hour(task.time) : ''); 
 
       // Show the modal
       $('#taskModal').modal('show');
