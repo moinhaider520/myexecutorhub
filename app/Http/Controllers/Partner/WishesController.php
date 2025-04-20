@@ -114,7 +114,7 @@ class WishesController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Wish updated successfully.']);
+            return response()->json(['success' => true, 'message' => 'Trust Wish updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -129,7 +129,7 @@ class WishesController extends Controller
             // Delete the document record
             $document->delete();
             DB::commit();
-            return redirect()->route('partner.wishes.view')->with('success', 'Wish deleted successfully.');
+            return redirect()->route('partner.wishes.view')->with('success', 'Trust Wish deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Wish;
-use App\Models\WishMedia;
+use App\Models\MemorandumWish;
+use App\Models\MemorandumWishMedia;
 use App\Traits\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class WishesController extends Controller
+class MemorandumWishController extends Controller
 {
     use ImageUpload;
     /**
@@ -20,18 +20,18 @@ class WishesController extends Controller
      */
     public function view()
     {
-        $wish = Wish::where('created_by', Auth::id())->get();
-        return view('customer.wishes.wishes', compact('wish'));
+        $wish = MemorandumWish::where('created_by', Auth::id())->get();
+        return view('customer.memorandum_wishes.memorandum_wishes', compact('wish'));
     }
 
     public function getMedia($id)
     {
-        return WishMedia::where('wish_id', $id)->get();
+        return MemorandumWishMedia::where('memorandum_memorandum_wish_id', $id)->get();
     }
 
     public function deleteMedia($id)
     {
-        $media = WishMedia::findOrFail($id);
+        $media = MemorandumWishMedia::findOrFail($id);
         $filePath = public_path('assets/upload/' . $media->file_path);
         if (file_exists($filePath)) {
             unlink($filePath);
@@ -52,7 +52,7 @@ class WishesController extends Controller
             DB::beginTransaction();
 
             // Create the wish entry first
-            $wish = Wish::create([
+            $wish = MemorandumWish::create([
                 'description' => $request->description,
                 'created_by' => Auth::id()
             ]);
@@ -94,7 +94,7 @@ class WishesController extends Controller
         try {
             DB::beginTransaction();
 
-            $wish = Wish::findOrFail($id);
+            $wish = MemorandumWish::findOrFail($id);
             $wish->description = $request->description;
             $wish->save();
 
@@ -105,8 +105,8 @@ class WishesController extends Controller
                     $uploadedFile->move(public_path('assets/upload'), $filename);
 
                     // Save file reference
-                    WishMedia::create([
-                        'wish_id' => $wish->id,
+                    MemorandumWishMedia::create([
+                        'memorandum_wish_id' => $wish->id,
                         'file_path' => $filename,
                         
                     ]);
@@ -114,7 +114,7 @@ class WishesController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Trust Wish updated successfully.']);
+            return response()->json(['success' => true, 'message' => 'Memorandum Wish updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -125,11 +125,11 @@ class WishesController extends Controller
     {
         try {
             DB::beginTransaction();
-            $document = Wish::findOrFail($id);
+            $document = MemorandumWish::findOrFail($id);
             // Delete the document record
             $document->delete();
             DB::commit();
-            return redirect()->route('customer.wishes.view')->with('success', 'Trust Wish deleted successfully.');
+            return redirect()->route('customer.memorandum_wishes.view')->with('success', 'Memorandum Wish deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

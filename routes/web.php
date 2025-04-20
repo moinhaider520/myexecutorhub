@@ -28,6 +28,7 @@ use App\Http\Controllers\Partner\IntellectualPropertyController as PartnerIntell
 use App\Http\Controllers\Partner\OtherAssetController as PartnerOtherAssetController;
 use App\Http\Controllers\Partner\DocumentsController as PartnerDocumentsController;
 use App\Http\Controllers\Partner\WishesController as PartnerWishesController;
+use App\Http\Controllers\Partner\MemorandumWishController as PartnerMemorandumWishController;
 use App\Http\Controllers\Partner\GuidanceController as PartnerGuidanceController;
 use App\Http\Controllers\Partner\LifeRememberedController as PartnerLifeRememberedController;
 use App\Http\Controllers\Partner\AdvisorsController as PartnerAdvisorsController;
@@ -62,6 +63,7 @@ use App\Http\Controllers\Customer\IntellectualPropertyController;
 use App\Http\Controllers\Customer\OtherAssetController;
 use App\Http\Controllers\Customer\DocumentsController;
 use App\Http\Controllers\Customer\WishesController;
+use App\Http\Controllers\Customer\MemorandumWishController;
 use App\Http\Controllers\Customer\GuidanceController;
 use App\Http\Controllers\Customer\LifeRememberedController;
 use App\Http\Controllers\Customer\AdvisorsController;
@@ -83,6 +85,7 @@ use App\Http\Controllers\Customer\FuneralWakeController;
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
 use App\Http\Controllers\Executor\WishesController as ExecutorWishesController;
+use App\Http\Controllers\Executor\MemorandumWishController as ExecutorMemorandumWishController;
 use App\Http\Controllers\Executor\GuidanceController as ExecutorGuidanceController;
 use App\Http\Controllers\Executor\DocumentsController as ExecutorDocumentsController;
 use App\Http\Controllers\Executor\AdvisorsController as ExecutorAdvisorsController;
@@ -121,6 +124,7 @@ use App\Http\Controllers\Others\DigitalAssetController as OthersDigitalAssetCont
 use App\Http\Controllers\Others\IntellectualPropertyController as OthersIntellectualPropertyController;
 use App\Http\Controllers\Others\OtherAssetController as OthersOtherAssetController;
 use App\Http\Controllers\Others\WishesController as OthersWishesController;
+use App\Http\Controllers\Others\MemorandumWishController as OthersMemorandumWishController;
 use App\Http\Controllers\Others\GuidanceController as OthersGuidanceController;
 use App\Http\Controllers\Others\DocumentsController as OthersDocumentsController;
 use App\Http\Controllers\Others\LifeRememberedController as OthersLifeRememberedController;
@@ -292,6 +296,15 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/wishes/update/{id}', [WishesController::class, 'update'])->name('wishes.update');
     Route::delete('/wishes/destroy/{id}', [WishesController::class, 'destroy'])->name('wishes.destroy');
 
+    // Customer Memorandum wishes
+    Route::get('/memorandum_wishes/view', [MemorandumWishController::class, 'view'])->name('memorandum_wishes.view');
+    Route::post('/memorandum_wishes/store', [MemorandumWishController::class, 'store'])->name('memorandum_wishes.store');
+    Route::get('/memorandum_wishes/{id}/media', [MemorandumWishController::class, 'getMedia']);
+    Route::delete('/memorandum_wishes/media/{id}', [MemorandumWishController::class, 'deleteMedia']);
+    Route::post('/memorandum_wishes/update', [MemorandumWishController::class, 'update'])->name('memorandum_wishes.update');
+    Route::post('/memorandum_wishes/update/{id}', [MemorandumWishController::class, 'update'])->name('memorandum_wishes.update');
+    Route::delete('/memorandum_wishes/destroy/{id}', [MemorandumWishController::class, 'destroy'])->name('memorandum_wishes.destroy');
+
     // Customer Withdraw
     Route::get('/withdraw', [WithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [WithdrawalController::class, 'process'])->name('withdraw.process');
@@ -305,7 +318,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/guidance/update', [GuidanceController::class, 'update'])->name('guidance.update');
     Route::post('/guidance/update/{id}', [GuidanceController::class, 'update'])->name('guidance.update');
     Route::delete('/guidance/destroy/{id}', [GuidanceController::class, 'destroy'])->name('guidance.destroy');
-    
+
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [DocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
     // Customer Documents
@@ -448,10 +461,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/membership/checkout', [MembershipController::class, 'checkout_page'])->name('checkout.view');
 
     // Funeral Wake
-    Route::get('/funeral/view', [FuneralWakeController::class, 'view'])->name('funeral_wake.view');
-    Route::post('/funeral/store', [FuneralWakeController::class, 'store'])->name('funeral_wake.store');
-    Route::post('/funeral/update/{id}', [FuneralWakeController::class, 'update'])->name('funeral_wake.update');
-    Route::delete('/funeral/destroy/{id}', [FuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+    Route::get('/funeral_wake/view', [FuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [FuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [FuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [FuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 });
 
 
@@ -503,6 +516,15 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/wishes/update/{id}', [PartnerWishesController::class, 'update'])->name('wishes.update');
     Route::delete('/wishes/destroy/{id}', [PartnerWishesController::class, 'destroy'])->name('wishes.destroy');
 
+    // Partner Memorandum Wishes
+    Route::get('/memorandum_wishes/view', [PartnerMemorandumWishController::class, 'view'])->name('memorandum_wishes.view');
+    Route::post('/memorandum_wishes/store', [PartnerMemorandumWishController::class, 'store'])->name('memorandum_wishes.store');
+    Route::get('/memorandum_wishes/{id}/media', [PartnerMemorandumWishController::class, 'getMedia']);
+    Route::delete('/memorandum_wishes/media/{id}', [PartnerMemorandumWishController::class, 'deleteMedia']);
+    Route::post('/memorandum_wishes/update', [PartnerMemorandumWishController::class, 'update'])->name('memorandum_wishes.update');
+    Route::post('/memorandum_wishes/update/{id}', [PartnerMemorandumWishController::class, 'update'])->name('memorandum_wishes.update');
+    Route::delete('/memorandum_wishes/destroy/{id}', [PartnerMemorandumWishController::class, 'destroy'])->name('memorandum_wishes.destroy');
+
     // Partner Withdraw
     Route::get('/withdraw', [PartnerWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [PartnerWithdrawalController::class, 'process'])->name('withdraw.process');
@@ -537,10 +559,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::delete('/advisors/destroy/{id}', [PartnerAdvisorsController::class, 'destroy'])->name('advisors.destroy');
 
     // Partner Funeral Wake
-    Route::get('/funeral/view', [PartnerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
-    Route::post('/funeral/store', [PartnerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
-    Route::post('/funeral/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
-    Route::delete('/funeral/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+    Route::get('/funeral_wake/view', [PartnerFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [PartnerFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [PartnerFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [PartnerFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 
     // Partner Executors
     Route::get('/executors/view', [PartnerExecutorsController::class, 'view'])->name('executors.view');
@@ -688,6 +710,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     // Executors View Routes
     Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::get('/wishes/view', [ExecutorWishesController::class, 'view'])->name('wishes.view');
+    Route::get('/memorandum_wishes/view', [ExecutorMemorandumWishController::class, 'view'])->name('memorandum_wishes.view');
     Route::get('/guidance/view', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
     Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
@@ -705,7 +728,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
-    Route::get('/funeral/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
     Route::get('tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
 });
@@ -756,6 +779,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware("permission:view wishes")->group(function () {
         Route::get('/wishes', [OthersWishesController::class, 'view'])->name('wishes.view');
+    });
+
+    Route::middleware("permission:view memorandum wishes")->group(function () {
+        Route::get('/memorandum_wishes', [OthersMemorandumWishController::class, 'view'])->name('memorandum_wishes.view');
     });
 
     Route::middleware("permission:view guidance")->group(function () {

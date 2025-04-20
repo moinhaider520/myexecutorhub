@@ -325,6 +325,21 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
+                            <span>Memorandum of Wishes</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.memorandum_wishes.view') }}">Manage Memorandum Wishes</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
                             <span>Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
@@ -626,6 +641,20 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
+                            <span>Memorandum of Wishes</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.memorandum_wishes.view') }}">Manage Memorandum Wishes</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
                             <span>Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
@@ -858,10 +887,24 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Trust Wishes </span>
+                            <span>Trust Wishes</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.wishes.view') }}">Manage Trust Wishes</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
+                            <span>Memorandum of Wishes</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('executor.memorandum_wishes.view') }}">Manage Memorandum Wishes</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -1083,6 +1126,23 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('wishes.view') }}">Manage Trust Wishes</a></li>
+                        </ul>
+                    </li>
+                    @endcan
+
+                    @can('view memorandum wishes')
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
+                            <span>Memorandum Wishes</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('memorandum_wishes.view') }}">Manage Memorandum Wish</a></li>
                         </ul>
                     </li>
                     @endcan

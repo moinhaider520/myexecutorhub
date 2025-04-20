@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Others;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Wish;
 use Illuminate\Support\Facades\Auth;
 

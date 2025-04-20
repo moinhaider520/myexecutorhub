@@ -24,6 +24,7 @@ class PermissionsSeeder extends Seeder
             'view intellectual properties',
             'view other assets',
             'view wishes',
+            'view memorandum wishes',
             'view guidance',
             'view life remembered',
             'view advisors',
