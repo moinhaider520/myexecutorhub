@@ -26,7 +26,7 @@ class MemorandumWishController extends Controller
 
     public function getMedia($id)
     {
-        return MemorandumWishMedia::where('memorandum_memorandum_wish_id', $id)->get();
+        return MemorandumWishMedia::where('memorandum_wish_id', $id)->get();
     }
 
     public function deleteMedia($id)

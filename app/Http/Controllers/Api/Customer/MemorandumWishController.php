@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Partner;
+namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\MemorandumWish;
@@ -9,40 +9,81 @@ use App\Traits\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
 
 class MemorandumWishController extends Controller
 {
     use ImageUpload;
+
     /**
-     * Display the wishes view.
-     *
-     * @return \Illuminate\View\View
+     * Display the wish content for the authenticated customer.
      */
-    public function view()
+    public function view(): JsonResponse
     {
-        $wish = MemorandumWish::where('created_by', Auth::id())->get();
-        return view('partner.memorandum_wishes.memorandum_wishes', compact('wish'));
-    }
+        try {
+            $wishes = MemorandumWish::with('media')
+                ->where('created_by', Auth::id())
+                ->get();
 
-    public function getMedia($id)
-    {
-        return MemorandumWishMedia::where('memorandum_wish_id', $id)->get();
-    }
+            if ($wishes->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Memorandum Wish not found'
+                ], 404);
+            }
 
-    public function deleteMedia($id)
-    {
-        $media = MemorandumWishMedia::findOrFail($id);
-        $filePath = public_path('assets/upload/' . $media->file_path);
-        if (file_exists($filePath)) {
-            unlink($filePath);
+            return response()->json([
+                'success' => true,
+                'data' => $wishes
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
         }
-        $media->delete();
-
-        return response()->json(['success' => true]);
     }
 
 
-    public function store(Request $request)
+    /**
+     * Get media for a given wish.
+     */
+    public function getMedia($id): JsonResponse
+    {
+        try {
+            $media = MemorandumWishMedia::where('memorandum_wish_id', $id)->get();
+
+            return response()->json(['success' => true, 'data' => $media]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Delete a specific media file.
+     */
+    public function deleteMedia($id): JsonResponse
+    {
+        try {
+            $media = MemorandumWishMedia::findOrFail($id);
+            $filePath = public_path('assets/upload/' . $media->file_path);
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+
+            $media->delete();
+
+            return response()->json(['success' => true, 'message' => 'Media deleted successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Store a new wish with media files.
+     */
+    public function store(Request $request): JsonResponse
     {
         $request->validate([
             'description' => 'required',
@@ -71,7 +112,8 @@ class MemorandumWishController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Entry added successfully.']);
+
+            return response()->json(['success' => true, 'message' => 'Memorandum Wish created successfully.']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -79,12 +121,9 @@ class MemorandumWishController extends Controller
     }
 
     /**
-     * Update or create the wishes content.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
+     * Update an existing wish.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $request->validate([
             'description' => 'required|string|max:1000',
@@ -108,12 +147,13 @@ class MemorandumWishController extends Controller
                     MemorandumWishMedia::create([
                         'memorandum_wish_id' => $wish->id,
                         'file_path' => $filename,
-                        
+
                     ]);
                 }
             }
 
             DB::commit();
+
             return response()->json(['success' => true, 'message' => 'Memorandum Wish updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
@@ -121,18 +161,21 @@ class MemorandumWishController extends Controller
         }
     }
 
-    public function destroy($id)
+    /**
+     * Delete a wish and associated media.
+     */
+    public function destroy($id): JsonResponse
     {
         try {
             DB::beginTransaction();
             $document = MemorandumWish::findOrFail($id);
-            // Delete the document record
             $document->delete();
+
             DB::commit();
-            return redirect()->route('partner.memorandum_wishes.view')->with('success', 'Memorandum Wish deleted successfully.');
+            return response()->json(['success' => true, 'message' => 'Memorandum Wish deleted successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', $e->getMessage());
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 }
