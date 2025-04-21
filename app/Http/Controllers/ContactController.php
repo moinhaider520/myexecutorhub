@@ -61,7 +61,7 @@ class ContactController extends Controller
 
         // Send email (optional)
         Mail::to('hello@executorhub.co.uk')->send(new \App\Mail\PartnerMail($validatedData));
-
+        Mail::to($validatedData['contact_email'])->send(new \App\Mail\PartnerMailWelcome($validatedData));
         // Redirect with success message
         return redirect()->back()->with('success', 'Thank you for your interest in partnering with us. We will get back to you soon!');
     }
