@@ -47,7 +47,7 @@
                     </li>
                     <li class="sidebar-main-title">
                         <div>
-                            <h6 class="lan-8">Applications</h6>
+                            <h6 class="lan-8">Menu</h6>
                         </div>
                     </li>
                     @role('admin')
@@ -68,10 +68,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
                             </svg>
                             <span>Partners </span>
                         </a>
@@ -83,10 +83,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
                             </svg>
                             <span>Invite Friends </span>
                         </a>
@@ -98,10 +98,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
                             </svg>
                             <span>Withdrawals</span>
                         </a>
@@ -290,10 +290,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Pictures & Videos </span>
                         </a>
@@ -340,7 +340,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guardians</span>
+                            <span>Guidance For Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.guidance.view') }}">Guidance For Guardians</a></li>
@@ -350,10 +350,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
                             </svg>
                             <span>Tasks </span>
                         </a>
@@ -381,10 +381,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
                             </svg>
                             <span>Donations </span>
                         </a>
@@ -411,10 +411,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
                             </svg>
                             <span>Withdraw </span>
                         </a>
@@ -427,10 +427,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
                             </svg>
                             <span>Funeral</span>
                         </a>
@@ -491,10 +491,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Capacity Proof Video (LPA) </span>
                         </a>
@@ -506,10 +506,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Capacity Proof Video (Will) </span>
                         </a>
@@ -606,10 +606,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Pictures & Videos </span>
                         </a>
@@ -655,7 +655,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guardians</span>
+                            <span>Guidance For Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.guidance.view') }}">Guidance For Guardians</a></li>
@@ -664,10 +664,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
                             </svg>
                             <span>Tasks </span>
                         </a>
@@ -694,10 +694,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
                             </svg>
                             <span>Donations </span>
                         </a>
@@ -725,10 +725,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
                             </svg>
                             <span>Funeral</span>
                         </a>
@@ -795,10 +795,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Capacity Proof Video (LPA) </span>
                         </a>
@@ -810,10 +810,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Capacity Proof Video (Will) </span>
                         </a>
@@ -868,10 +868,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                             </svg>
                             <span>Pictures & Videos </span>
                         </a>
@@ -915,7 +915,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guardians</span>
+                            <span>Guidance For Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.guidance.view') }}">Guidance For Guardians</a></li>
@@ -925,10 +925,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
                             </svg>
                             <span>Tasks </span>
                         </a>
@@ -955,10 +955,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
                             </svg>
                             <span>Donations </span>
                         </a>
@@ -969,10 +969,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
                             </svg>
                             <span>Funeral</span>
                         </a>
@@ -1048,10 +1048,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
                             </svg>
                             <span>Withdraw </span>
                         </a>
@@ -1156,7 +1156,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                             </svg>
-                            <span>Guardians</span>
+                            <span>Guidance For Guardians</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('guidance.view') }}">Guidance For Guardians</a></li>
@@ -1188,10 +1188,10 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
                             </svg>
                             <span>Donations</span>
                         </a>

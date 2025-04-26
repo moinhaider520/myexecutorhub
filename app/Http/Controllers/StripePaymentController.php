@@ -194,7 +194,7 @@ class StripePaymentController extends Controller
         // Check if the user already exists and create new user
         $user = User::where('email', $request->email)->first();
         if (!$user) {
-            $couponCode = 'COUPON-' . strtoupper(uniqid());
+            $couponCode = $request->name . strtoupper(uniqid());
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,

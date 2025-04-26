@@ -51041,6 +51041,7 @@ display: none;
     letter-spacing: 0.7px;
     text-transform: capitalize;
     color: #fff;
+    font-size: 12px;
 }
 
 .page-wrapper.compact-wrapper .page-body-wrapper div.sidebar-wrapper .sidebar-main .sidebar-links li a.link-nav .according-menu {

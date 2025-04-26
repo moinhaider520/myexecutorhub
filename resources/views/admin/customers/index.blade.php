@@ -24,6 +24,9 @@
                                                     <th>Email</th>
                                                     <th>Address</th>
                                                     <th>Contact Number</th>
+                                                    <th>Plan</th>
+                                                    <th>Joining Date and Time</th>
+                                                    <th>Access Until</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -35,6 +38,15 @@
                                                         <td>{{ $customer->email ?? 'N/A' }}</td>
                                                         <td>{{ $customer->address ?? 'N/A' }}</td>
                                                         <td>{{ $customer->contact_number ?? 'N/A' }}</td>
+                                                        <td>
+          @if ($customer->subscribed_package === 'free_trial')
+        Free Trial
+      @else
+      {{ $customer->subscribed_package ?? 'N/A' }}
+    @endif
+          </td>
+          <td>{{ $customer->created_at ?? 'N/A' }}</td>
+          <td>{{ $customer->trial_ends_at ?? 'N/A' }}</td>
                                                         <td>
                                                             <a href="{{ route('admin.customers.edit', \App\Helpers\EncryptionHelper::encryptId($customer->id)) }}" class="btn btn-primary btn-sm">Edit</a>
                                                             <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST" style="display:inline;">

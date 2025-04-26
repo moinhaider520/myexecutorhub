@@ -78,7 +78,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $couponCode = 'COUPON-' . strtoupper(uniqid());
+        $couponCode = $data['name'] . strtoupper(uniqid());
 
         // Create the user and store it in a variable
         $user = User::create([

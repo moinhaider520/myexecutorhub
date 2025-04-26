@@ -35,7 +35,7 @@
                                         <h2>£{{ number_format($totalBankBalance, 2) }}</h2>
                                         <p class="mb-0 text-truncate"> Total Assets Networth</p>
                                     </div>
-                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/student.png"
+                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
                                             alt=""></div>
                                 </div>
                             </div>
@@ -51,8 +51,8 @@
                                         <div class="d-flex student-arrow text-truncate">
                                         </div>
                                     </div>
-                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
-                                            alt=""></div>
+                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
+                                    alt=""></div>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                         <h2>{{ $totalDocuments }}</h2>
                                         <p class="mb-0 text-truncate"> Documents Uploaded</p>
                                     </div>
-                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/calendar.png"
+                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/invoice.png"
                                             alt=""></div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                         <h2>{{ $totalExecutors }}</h2>
                                         <p class="mb-0 text-truncate"> Executors </p>
                                     </div>
-                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/invoice.png"
+                                    <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                             alt=""></div>
                                 </div>
                             </div>

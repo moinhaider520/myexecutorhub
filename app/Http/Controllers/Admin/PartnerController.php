@@ -56,7 +56,7 @@ class PartnerController extends Controller
             'contact_number' => 'required',
         ]);
 
-        $couponCode = 'COUPON-' . strtoupper(uniqid());
+        $couponCode = $request->name . strtoupper(uniqid());
 
         try {
             DB::beginTransaction();
@@ -93,7 +93,7 @@ class PartnerController extends Controller
             'email' => 'required|email|unique:users,email',
         ]);
 
-        $couponCode = 'COUPON-' . strtoupper(uniqid());
+        $couponCode = $request->name . strtoupper(uniqid());
 
         try {
             DB::beginTransaction();

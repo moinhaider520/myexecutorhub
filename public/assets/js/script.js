@@ -334,10 +334,10 @@
             ae: "ÙˆØªØ®Ø·ÙŠØ· Ø§Ù„ØµÙØ­Ø©",
         },
         {
-            en: "Applications",
+            en: "Menu",
             pt: "FormulÃ¡rios",
             es: "Aplikoj",
-            fr: "Applications",
+            fr: "Menu",
             de: "Toepassingen",
             cn: "æ‡‰ç”¨é ˜åŸŸ",
             ae: "ÙˆØ§Ù„ØªØ·Ø¨ÙŠÙ‚Ø§Øª",
