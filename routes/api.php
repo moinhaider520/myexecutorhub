@@ -200,6 +200,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/bank_accounts/store', [PartnerBankAccountController::class, 'store'])->name('bank_accounts.store');
     Route::post('/bank_accounts/update/{id}', [PartnerBankAccountController::class, 'update'])->name('bank_accounts.update');
     Route::delete('/bank_accounts/destroy/{id}', [PartnerBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
+    Route::post('/bank_accounts/save_custom_type', [PartnerBankAccountController::class, 'saveCustomType'])->name('bank_accounts.save_custom_type');
 
     // Custom Investment Types
     Route::post('/investment_accounts/save_custom_type', [PartnerInvestmentAccountController::class, 'saveCustomType'])->name('investment_accounts.save_custom_type');
