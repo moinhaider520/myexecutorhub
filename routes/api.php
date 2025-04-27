@@ -41,7 +41,7 @@ use App\Http\Controllers\Api\Partner\LPAController as PartnerLPAController;
 use App\Http\Controllers\Api\Partner\TaskController as PartnerTaskController;
 use App\Http\Controllers\Api\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Api\Partner\FuneralWakeController as PartnerFuneralWakeController;
-
+use App\Http\Controllers\Api\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -73,6 +73,7 @@ use App\Http\Controllers\Api\Customer\LPAController as CustomerLPAController;
 use App\Http\Controllers\Api\Customer\TaskController as CustomerTaskController;
 use App\Http\Controllers\Api\Customer\WillController as CustomerWillController;
 use App\Http\Controllers\Api\Customer\FuneralWakeController as CustomerFuneralWakeController;
+use App\Http\Controllers\Api\Customer\PicturesAndVideosController as CustomerPicturesAndVideosController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -101,6 +102,7 @@ use App\Http\Controllers\Api\Executor\LPAController as ExecutorLPAController;
 use App\Http\Controllers\Api\Executor\TaskController as ExecutorTaskController;
 use App\Http\Controllers\Api\Executor\WillController as ExecutorWillController;
 use App\Http\Controllers\Api\Executor\FuneralWakeController as ExecutorFuneralWakeController;
+use App\Http\Controllers\Api\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -189,6 +191,12 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [PartnerDocumentsController::class, 'destroy'])->name('documents.destroy');
     Route::get('/documents/view/{document_type}', [PartnerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
+
+    // Partner Pictures AND VIDEOS
+    Route::get('/pictures_and_videos/view', [PartnerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::post('/pictures_and_videos/store', [PartnerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
+    Route::post('/pictures_and_videos/update/{id}', [PartnerPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
+    Route::delete('/pictures_and_videos/destroy/{id}', [PartnerPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
 
     // Reviews
     Route::post('reviews', [PartnerReviewController::class, 'store'])->name('reviews.store');
@@ -367,6 +375,12 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::delete('/documents/destroy/{id}', [CustomerDocumentsController::class, 'destroy'])->name('documents.destroy');
     Route::get('/documents/view/{document_type}', [CustomerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
 
+    // PICTURES & VIDEOS CONTROLLER
+    Route::get('/pictures_and_videos/view', [CustomerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::post('/pictures_and_videos/store', [CustomerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
+    Route::post('/pictures_and_videos/update/{id}', [CustomerPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
+    Route::delete('/pictures_and_videos/destroy/{id}', [CustomerPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
+
     // Reviews
     Route::post('reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
     Route::get('reviews/{id}', [CustomerReviewController::class, 'show'])->name('reviews.show');
@@ -530,6 +544,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
 
     Route::get('/guidance', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+    Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
 
     // Reviews
     Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
