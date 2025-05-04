@@ -153,7 +153,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('partner.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('partner.properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span>  Owned</a></li>
+                            <li><a href="{{ route('partner.properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span> Owned</a></li>
                             <li><a href="{{ route('partner.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('partner.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('partner.insurance_policies.view') }}">Insurance Policies</a></li>
@@ -462,7 +462,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('customer.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('customer.properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span>  Owned</a></li>
+                            <li><a href="{{ route('customer.properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span> Owned</a></li>
                             <li><a href="{{ route('customer.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('customer.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('customer.insurance_policies.view') }}">Insurance Policies</a></li>
@@ -620,7 +620,8 @@
                             <span>Pictures & Videos </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.pictures_and_videos.view') }}">Manage Files</a></li>
+                            <li><a href="{{ route('customer.pictures.view') }}">Manage Pictures</a></li>
+                            <li><a href="{{ route('customer.videos.view') }}">Manage Videos</a></li>
                         </ul>
                     </li>
                     @endif
@@ -772,7 +773,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.bank_accounts.view') }}">Bank Accounts</a></li>
                             <li><a href="{{ route('executor.investment_accounts.view') }}">Investment Accounts</a></li>
-                            <li><a href="{{ route('executor.properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span>  Owned</a></li>
+                            <li><a href="{{ route('executor.properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span> Owned</a></li>
                             <li><a href="{{ route('executor.personal_chattels.view') }}">Personal Chattels</a></li>
                             <li><a href="{{ route('executor.business_interests.view') }}">Business Interests</a></li>
                             <li><a href="{{ route('executor.insurance_policies.view') }}">Insurance Policies</a></li>
@@ -1008,10 +1009,10 @@
                     </li>
                     @endif
 
-                    @canany(['view bank accounts', 'view investment accounts', 'view properties', 
-                    'view personal chattels', 'view business interests', 'view insurance policies', 
+                    @canany(['view bank accounts', 'view investment accounts', 'view properties',
+                    'view personal chattels', 'view business interests', 'view insurance policies',
                     'view debt and liabilities', 'view digital assets', 'view intellectual properties',
-                     'view other assets','view other type of assets','view pension','view funeral plan','view foreign assets'])
+                    'view other assets','view other type of assets','view pension','view funeral plan','view foreign assets'])
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -1031,7 +1032,7 @@
                             <li><a href="{{ route('investment_accounts.view') }}">Investment Accounts</a></li>
                             @endcan
                             @can('view properties')
-                            <li><a href="{{ route('properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span>    Owned</a></li>
+                            <li><a href="{{ route('properties.view') }}">Property <span style="all: unset; text-transform: lowercase;">(ies)</span> Owned</a></li>
                             @endcan
                             @can('view personal chattels')
                             <li><a href="{{ route('personal_chattels.view') }}">Personal Chattels</a></li>

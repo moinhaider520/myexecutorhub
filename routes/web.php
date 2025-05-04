@@ -84,6 +84,8 @@ use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\Customer\MembershipController;
 use App\Http\Controllers\Customer\WithdrawalController;
 use App\Http\Controllers\Customer\PicturesAndVideosController;
+use App\Http\Controllers\Customer\PictureController;
+use App\Http\Controllers\Customer\VideoController;
 use App\Http\Controllers\Customer\NotificationController;
 use App\Http\Controllers\Customer\LPAController;
 use App\Http\Controllers\Customer\WillController;
@@ -347,6 +349,18 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/pictures_and_videos/store', [PicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
     Route::post('/pictures_and_videos/update/{id}', [PicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
     Route::delete('/pictures_and_videos/destroy/{id}', [PicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
+
+    // PICTURES CONTROLLER
+    Route::get('/pictures/view', [PictureController::class, 'view'])->name('pictures.view');
+    Route::post('/pictures/store', [PictureController::class, 'store'])->name('pictures.store');
+    Route::post('/pictures/update/{id}', [PictureController::class, 'update'])->name('pictures.update');
+    Route::delete('/pictures/destroy/{id}', [PictureController::class, 'destroy'])->name('pictures.destroy');
+
+    // VIDEOS CONTROLLER
+    Route::get('/videos/view', [VideoController::class, 'view'])->name('videos.view');
+    Route::post('/videos/store', [VideoController::class, 'store'])->name('videos.store');
+    Route::post('/videos/update/{id}', [VideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/destroy/{id}', [VideoController::class, 'destroy'])->name('videos.destroy');
 
     // Customer Advisors
     Route::get('/advisors/view', [AdvisorsController::class, 'view'])->name('advisors.view');
