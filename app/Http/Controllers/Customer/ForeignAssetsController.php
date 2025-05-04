@@ -4,62 +4,110 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\ForeignAssets;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\CustomDropDown;
 
 class ForeignAssetsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function view()
     {
-        //
+        $assetTypes = CustomDropDown::where('created_by', Auth::id())
+            ->where('category', 'foreign_assets')
+            ->get();
+
+        $foreignAssets = ForeignAssets::where('created_by', Auth::id())->get();
+
+        return view('customer.foreign_assets.view', compact('foreignAssets', 'assetTypes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'foreign_asset' => 'required|string|max:255',
+            'asset_type' => 'required|string|max:255',
+            'asset_location' => 'required|string|max:255',
+            'asset_value' => 'required|string|max:255',
+            'contact_details' => 'required|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            ForeignAssets::create([
+                'foreign_asset' => $request->foreign_asset,
+                'asset_type' => $request->asset_type,
+                'asset_location' => $request->asset_location,
+                'asset_value' => $request->asset_value,
+                'contact_details' => $request->contact_details,
+                'created_by' => Auth::id(),
+            ]);
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Foreign Asset added successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'foreign_asset' => 'required|string|max:255',
+            'asset_type' => 'required|string|max:255',
+            'asset_location' => 'required|string|max:255',
+            'asset_value' => 'required|string|max:255',
+            'contact_details' => 'required|string',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $foreignAsset = ForeignAssets::findOrFail($id);
+            $foreignAsset->update([
+                'foreign_asset' => $request->foreign_asset,
+                'asset_type' => $request->asset_type,
+                'asset_location' => $request->asset_location,
+                'asset_value' => $request->asset_value,
+                'contact_details' => $request->contact_details,
+            ]);
+
+            DB::commit();
+            return response()->json(['success' => true, 'message' => 'Foreign Asset updated successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            $foreignAsset = ForeignAssets::findOrFail($id);
+            $foreignAsset->delete();
+            DB::commit();
+            return redirect()->route('customer.foreign_assets.view')->with('success', 'Foreign Asset deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function saveCustomType(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'custom_asset_type' => 'required|string|max:255|unique:custom_drop_downs,name'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        CustomDropDown::create([
+            'name' => $request->custom_asset_type,
+            'created_by' => Auth::id(),
+            'category' => 'foreign_assets',
+        ]);
+
+        return response()->json(['success' => true]);
     }
 }

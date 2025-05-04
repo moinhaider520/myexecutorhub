@@ -450,6 +450,14 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/other_type_of_assets/update/{id}', [OtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
     Route::delete('/other_type_of_assets/destroy/{id}', [OtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
 
+    // Custom Foreign Asset Type
+    Route::post('/foreign_assets/save_custom_type', [ForeignAssetsController::class, 'saveCustomType'])->name('foreign_assets.save_custom_type');
+    // Customer Foreign Assets
+    Route::get('/foreign_assets/view', [ForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    Route::post('/foreign_assets/store', [ForeignAssetsController::class, 'store'])->name('foreign_assets.store');
+    Route::post('/foreign_assets/update/{id}', [ForeignAssetsController::class, 'update'])->name('foreign_assets.update');
+    Route::delete('/foreign_assets/destroy/{id}', [ForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
+
     // Customer pensions 
     Route::get('/pension/view', [PensionController::class, 'view'])->name('pensions.view');
     Route::post('/pension/store', [PensionController::class, 'store'])->name('pensions.store');
@@ -690,6 +698,14 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/other_type_of_assets/update/{id}', [PartnerOtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
     Route::delete('/other_type_of_assets/destroy/{id}', [PartnerOtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
 
+    // Partner Foreign Asset Type
+    Route::post('/foreign_assets/save_custom_type', [PartnerForeignAssetsController::class, 'saveCustomType'])->name('foreign_assets.save_custom_type');
+    // Partner Foreign Assets
+    Route::get('/foreign_assets/view', [PartnerForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    Route::post('/foreign_assets/store', [PartnerForeignAssetsController::class, 'store'])->name('foreign_assets.store');
+    Route::post('/foreign_assets/update/{id}', [PartnerForeignAssetsController::class, 'update'])->name('foreign_assets.update');
+    Route::delete('/foreign_assets/destroy/{id}', [PartnerForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
+
     // Partner pensions 
     Route::get('/pension/view', [PartnerPensionController::class, 'view'])->name('pensions.view');
     Route::post('/pension/store', [PartnerPensionController::class, 'store'])->name('pensions.store');
@@ -772,6 +788,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/other_type_of_assets/view', [ExecutorOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
     Route::get('/pension/view', [ExecutorPensionController::class, 'view'])->name('pensions.view');
+    Route::get('/foreign_assets/view', [ExecutorForeignAssetsController::class, 'view'])->name('foreign_assets.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
@@ -829,6 +846,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware("permission:view pension")->group(function () {
         Route::get('/pension/view', [OthersPensionController::class, 'view'])->name('pensions.view');
+    });
+
+    Route::middleware("permission:view pension")->group(function () {
+        Route::get('/foreign_assets/view', [OthersForeignAssetsController::class, 'view'])->name('foreign_assets.view');
     });
 
     Route::middleware("permission:view wishes")->group(function () {

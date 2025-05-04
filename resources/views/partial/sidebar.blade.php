@@ -160,7 +160,7 @@
                             <li><a href="{{ route('partner.debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
                             <li><a href="{{ route('partner.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('partner.intellectual_properties.view') }}">Intellectual Properties</a></li>
-                            <li><a href="#">Foreign assets</a></li>
+                            <li><a href="{{ route('partner.foreign_assets.view') }}">Foreign assets</a></li>
                             <li><a href="{{ route('partner.pensions.view') }}">Pensions</a></li>
                             <li><a href="#">Funeral Plans</a></li>
                             <li><a href="{{ route('partner.other_type_of_assets.view') }}">Other Type of Assets</a></li>
@@ -469,7 +469,7 @@
                             <li><a href="{{ route('customer.debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
                             <li><a href="{{ route('customer.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('customer.intellectual_properties.view') }}">Intellectual Properties</a></li>
-                            <li><a href="#">Foreign assets</a></li>
+                            <li><a href="{{ route('customer.foreign_assets.view') }}">Foreign assets</a></li>
                             <li><a href="{{ route('customer.pensions.view') }}">Pensions</a></li>
                             <li><a href="#">Funeral Plans</a></li>
                             <li><a href="{{ route('customer.other_assets.view') }}">Other Assets</a></li>
@@ -779,7 +779,7 @@
                             <li><a href="{{ route('executor.debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
                             <li><a href="{{ route('executor.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('executor.intellectual_properties.view') }}">Intellectual Properties</a></li>
-                            <li><a href="#">Foreign assets</a></li>
+                            <li><a href="{{ route('executor.foreign_assets.view') }}">Foreign assets</a></li>
                             <li><a href="{{ route('executor.pensions.view') }}">Pensions</a></li>
                             <li><a href="#">Funeral Plans</a></li>
                             <li><a href="{{ route('executor.other_type_of_assets.view') }}">Other Type of Assets</a></li>
@@ -1050,6 +1050,9 @@
                             @endcan
                             @can('view intellectual properties')
                             <li><a href="{{ route('intellectual_properties.view') }}">Intellectual Properties</a></li>
+                            @endcan
+                            @can('view foreign assets')
+                            <li><a href="{{ route('foreign_assets.view') }}">Foreign assets</a></li>
                             @endcan
                             @can('view pension')
                             <li><a href="{{ route('view pension') }}">Pensions</a></li>
