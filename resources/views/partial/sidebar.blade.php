@@ -1011,7 +1011,7 @@
                     @canany(['view bank accounts', 'view investment accounts', 'view properties', 
                     'view personal chattels', 'view business interests', 'view insurance policies', 
                     'view debt and liabilities', 'view digital assets', 'view intellectual properties',
-                     'view other assets','view other type of assets','view pension'])
+                     'view other assets','view other type of assets','view pension','view funeral plan','view foreign assets'])
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">

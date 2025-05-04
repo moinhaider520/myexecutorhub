@@ -28,6 +28,8 @@ use App\Http\Controllers\Partner\IntellectualPropertyController as PartnerIntell
 use App\Http\Controllers\Partner\OtherAssetController as PartnerOtherAssetController;
 use App\Http\Controllers\Partner\OtherTypeOfAssetController as PartnerOtherTypeofAssetController;
 use App\Http\Controllers\Partner\PensionController as PartnerPensionController;
+use App\Http\Controllers\Partner\ForeignAssetsController as PartnerForeignAssetsController;
+use App\Http\Controllers\Partner\FuneralPlanController as PartnerFuneralPlanController;
 use App\Http\Controllers\Partner\DocumentsController as PartnerDocumentsController;
 use App\Http\Controllers\Partner\WishesController as PartnerWishesController;
 use App\Http\Controllers\Partner\MemorandumWishController as PartnerMemorandumWishController;
@@ -65,6 +67,8 @@ use App\Http\Controllers\Customer\IntellectualPropertyController;
 use App\Http\Controllers\Customer\OtherAssetController;
 use App\Http\Controllers\Customer\OtherTypeofAssetController;
 use App\Http\Controllers\Customer\PensionController;
+use App\Http\Controllers\Customer\ForeignAssetsController;
+use App\Http\Controllers\Customer\FuneralPlanController;
 use App\Http\Controllers\Customer\DocumentsController;
 use App\Http\Controllers\Customer\WishesController;
 use App\Http\Controllers\Customer\MemorandumWishController;
@@ -106,6 +110,8 @@ use App\Http\Controllers\Executor\IntellectualPropertyController as ExecutorInte
 use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetController;
 use App\Http\Controllers\Executor\OtherTypeOfAssetController as ExecutorOtherTypeOfAssetController;
 use App\Http\Controllers\Executor\PensionController as ExecutorPensionController;
+use App\Http\Controllers\Executor\ForeignAssetsController as ExecutorForeignAssetsController;
+use App\Http\Controllers\Executor\FuneralPlanController as ExecutorFuneralPlanController;
 use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesController;
@@ -131,6 +137,8 @@ use App\Http\Controllers\Others\IntellectualPropertyController as OthersIntellec
 use App\Http\Controllers\Others\OtherAssetController as OthersOtherAssetController;
 use App\Http\Controllers\Others\OtherTypeOfAssetController as OthersOtherTypeOfAssetController;
 use App\Http\Controllers\Others\PensionController as OthersPensionController;
+use App\Http\Controllers\Others\ForeignAssetsController as OthersForeignAssetsController;
+use App\Http\Controllers\Others\FuneralPlanController as OthersFuneralPlanController;
 use App\Http\Controllers\Others\WishesController as OthersWishesController;
 use App\Http\Controllers\Others\MemorandumWishController as OthersMemorandumWishController;
 use App\Http\Controllers\Others\GuidanceController as OthersGuidanceController;
