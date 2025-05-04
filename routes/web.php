@@ -27,6 +27,7 @@ use App\Http\Controllers\Partner\DigitalAssetController as PartnerDigitalAssetCo
 use App\Http\Controllers\Partner\IntellectualPropertyController as PartnerIntellectualPropertyController;
 use App\Http\Controllers\Partner\OtherAssetController as PartnerOtherAssetController;
 use App\Http\Controllers\Partner\OtherTypeOfAssetController as PartnerOtherTypeofAssetController;
+use App\Http\Controllers\Partner\PensionController as PartnerPensionController;
 use App\Http\Controllers\Partner\DocumentsController as PartnerDocumentsController;
 use App\Http\Controllers\Partner\WishesController as PartnerWishesController;
 use App\Http\Controllers\Partner\MemorandumWishController as PartnerMemorandumWishController;
@@ -63,6 +64,7 @@ use App\Http\Controllers\Customer\DigitalAssetController;
 use App\Http\Controllers\Customer\IntellectualPropertyController;
 use App\Http\Controllers\Customer\OtherAssetController;
 use App\Http\Controllers\Customer\OtherTypeofAssetController;
+use App\Http\Controllers\Customer\PensionController;
 use App\Http\Controllers\Customer\DocumentsController;
 use App\Http\Controllers\Customer\WishesController;
 use App\Http\Controllers\Customer\MemorandumWishController;
@@ -103,6 +105,7 @@ use App\Http\Controllers\Executor\DigitalAssetController as ExecutorDigitalAsset
 use App\Http\Controllers\Executor\IntellectualPropertyController as ExecutorIntellectualPropertyController;
 use App\Http\Controllers\Executor\OtherAssetController as ExecutorOtherAssetController;
 use App\Http\Controllers\Executor\OtherTypeOfAssetController as ExecutorOtherTypeOfAssetController;
+use App\Http\Controllers\Executor\PensionController as ExecutorPensionController;
 use App\Http\Controllers\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesController;
@@ -127,6 +130,7 @@ use App\Http\Controllers\Others\DigitalAssetController as OthersDigitalAssetCont
 use App\Http\Controllers\Others\IntellectualPropertyController as OthersIntellectualPropertyController;
 use App\Http\Controllers\Others\OtherAssetController as OthersOtherAssetController;
 use App\Http\Controllers\Others\OtherTypeOfAssetController as OthersOtherTypeOfAssetController;
+use App\Http\Controllers\Others\PensionController as OthersPensionController;
 use App\Http\Controllers\Others\WishesController as OthersWishesController;
 use App\Http\Controllers\Others\MemorandumWishController as OthersMemorandumWishController;
 use App\Http\Controllers\Others\GuidanceController as OthersGuidanceController;
@@ -438,6 +442,12 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/other_type_of_assets/update/{id}', [OtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
     Route::delete('/other_type_of_assets/destroy/{id}', [OtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
 
+    // Customer pensions 
+    Route::get('/pension/view', [PensionController::class, 'view'])->name('pensions.view');
+    Route::post('/pension/store', [PensionController::class, 'store'])->name('pensions.store');
+    Route::post('/pension/update/{id}', [PensionController::class, 'update'])->name('pensions.update');
+    Route::delete('/pension/destroy/{id}', [PensionController::class, 'destroy'])->name('pensions.destroy');
+
     // Organs Donation
     Route::get('/organs_donation/view', [OrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::post('/organs_donation/store', [OrgansDonationController::class, 'store'])->name('organs_donation.store');
@@ -664,13 +674,19 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/other_assets/update/{id}', [PartnerOtherAssetController::class, 'update'])->name('other_assets.update');
     Route::delete('/other_assets/destroy/{id}', [PartnerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
 
-      // Custom Other Type of Asset Type
-      Route::post('/other_type_of_assets/save_custom_type', [PartnerOtherTypeofAssetController::class, 'saveCustomType'])->name('other_type_of_assets.save_custom_type');
-      // Customer Other Type of Assets
-      Route::get('/other_type_of_assets/view', [PartnerOtherTypeofAssetController::class, 'view'])->name('other_type_of_assets.view');
-      Route::post('/other_type_of_assets/store', [PartnerOtherTypeofAssetController::class, 'store'])->name('other_type_of_assets.store');
-      Route::post('/other_type_of_assets/update/{id}', [PartnerOtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
-      Route::delete('/other_type_of_assets/destroy/{id}', [PartnerOtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
+    // Custom Other Type of Asset Type
+    Route::post('/other_type_of_assets/save_custom_type', [PartnerOtherTypeofAssetController::class, 'saveCustomType'])->name('other_type_of_assets.save_custom_type');
+    // Customer Other Type of Assets
+    Route::get('/other_type_of_assets/view', [PartnerOtherTypeofAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::post('/other_type_of_assets/store', [PartnerOtherTypeofAssetController::class, 'store'])->name('other_type_of_assets.store');
+    Route::post('/other_type_of_assets/update/{id}', [PartnerOtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
+    Route::delete('/other_type_of_assets/destroy/{id}', [PartnerOtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
+
+    // Partner pensions 
+    Route::get('/pension/view', [PartnerPensionController::class, 'view'])->name('pensions.view');
+    Route::post('/pension/store', [PartnerPensionController::class, 'store'])->name('pensions.store');
+    Route::post('/pension/update/{id}', [PartnerPensionController::class, 'update'])->name('pensions.update');
+    Route::delete('/pension/destroy/{id}', [PartnerPensionController::class, 'destroy'])->name('pensions.destroy');
 
     // Organs Donation
     Route::get('/organs_donation/view', [PartnerOrgansDonationController::class, 'view'])->name('organs_donation.view');
@@ -747,6 +763,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/intellectual_properties/view', [ExecutorIntellectualPropertyController::class, 'view'])->name('intellectual_properties.view');
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
     Route::get('/other_type_of_assets/view', [ExecutorOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::get('/pension/view', [ExecutorPensionController::class, 'view'])->name('pensions.view');
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
@@ -799,7 +816,11 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware("permission:view other type of assets")->group(function () {
-        Route::get('/other-type-of-assets', [OthersOtherAssetController::class, 'view'])->name('other_type_of_assets.view');
+        Route::get('/other-type-of-assets', [OthersOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
+    });
+
+    Route::middleware("permission:view pension")->group(function () {
+        Route::get('/pension/view', [OthersPensionController::class, 'view'])->name('pensions.view');
     });
 
     Route::middleware("permission:view wishes")->group(function () {

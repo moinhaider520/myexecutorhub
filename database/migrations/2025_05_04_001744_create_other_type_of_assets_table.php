@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('other_type_of_assets', function (Blueprint $table) {
             $table->id();
             $table->string('asset_type');
-            $table->text('description');
-            $table->unsignedBigInteger('created_by');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('custom_drop_downs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('created_by');
-            $table->string('name');
-            $table->string('category')->null();
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->string('name')->nullable();
+            $table->string('category')->nullable();
             $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

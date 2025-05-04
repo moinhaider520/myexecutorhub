@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('memorandum_wishes', function (Blueprint $table) {
+        Schema::create('pensions', function (Blueprint $table) {
             $table->id();
-            $table->text('description');
-            $table->unsignedBigInteger('created_by')->nullable();;
+            $table->unsignedBigInteger('created_by');
+            $table->string('pensions')->nullable();
+            $table->string('pension_provider')->nullable();
+            $table->string('pension_reference_number')->nullable();
             $table->timestamps();
+
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('memorandum_wishes');
+        Schema::dropIfExists('pensions');
     }
 };

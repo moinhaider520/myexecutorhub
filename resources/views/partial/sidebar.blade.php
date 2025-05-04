@@ -161,7 +161,7 @@
                             <li><a href="{{ route('partner.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('partner.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="#">Foreign assets</a></li>
-                            <li><a href="#">Pensions</a></li>
+                            <li><a href="{{ route('partner.pensions.view') }}">Pensions</a></li>
                             <li><a href="#">Funeral Plans</a></li>
                             <li><a href="{{ route('partner.other_type_of_assets.view') }}">Other Type of Assets</a></li>
                             <li><a href="{{ route('partner.other_assets.view') }}">Other Assets</a></li>
@@ -470,7 +470,7 @@
                             <li><a href="{{ route('customer.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('customer.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="#">Foreign assets</a></li>
-                            <li><a href="#">Pensions</a></li>
+                            <li><a href="{{ route('customer.pensions.view') }}">Pensions</a></li>
                             <li><a href="#">Funeral Plans</a></li>
                             <li><a href="{{ route('customer.other_assets.view') }}">Other Assets</a></li>
                             <li><a href="{{ route('customer.other_type_of_assets.view') }}">Other Type of Assets</a></li>
@@ -780,7 +780,7 @@
                             <li><a href="{{ route('executor.digital_assets.view') }}">Digital Assets</a></li>
                             <li><a href="{{ route('executor.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="#">Foreign assets</a></li>
-                            <li><a href="#">Pensions</a></li>
+                            <li><a href="{{ route('executor.pensions.view') }}">Pensions</a></li>
                             <li><a href="#">Funeral Plans</a></li>
                             <li><a href="{{ route('executor.other_type_of_assets.view') }}">Other Type of Assets</a></li>
                             <li><a href="{{ route('executor.other_assets.view') }}">Other Assets</a></li>
@@ -1008,8 +1008,10 @@
                     </li>
                     @endif
 
-                    @canany(['view bank accounts', 'view investment accounts', 'view properties', 'view personal chattels', 'view business interests', 'view insurance policies', 'view debt and liabilities', 'view digital assets', 'view intellectual properties', 'view other assets','view other type of assets'])
-
+                    @canany(['view bank accounts', 'view investment accounts', 'view properties', 
+                    'view personal chattels', 'view business interests', 'view insurance policies', 
+                    'view debt and liabilities', 'view digital assets', 'view intellectual properties',
+                     'view other assets','view other type of assets','view pension'])
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -1048,6 +1050,9 @@
                             @endcan
                             @can('view intellectual properties')
                             <li><a href="{{ route('intellectual_properties.view') }}">Intellectual Properties</a></li>
+                            @endcan
+                            @can('view pension')
+                            <li><a href="{{ route('view pension') }}">Pensions</a></li>
                             @endcan
                             @can('view other type of assets')
                             <li><a href="{{ route('other_type_of_assets.view') }}">Other Type of Assets</a></li>
