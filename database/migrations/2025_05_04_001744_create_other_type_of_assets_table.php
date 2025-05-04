@@ -11,9 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('memorandum_wish_media', function (Blueprint $table) {
+        Schema::create('other_type_of_assets', function (Blueprint $table) {
             $table->id();
+            $table->string('asset_type');
+            $table->text('description');
+            $table->unsignedBigInteger('created_by');
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('memorandum_wish_media');
+        Schema::dropIfExists('other_type_of_assets');
     }
 };

@@ -23,6 +23,7 @@ class PermissionsSeeder extends Seeder
             'view digital assets',
             'view intellectual properties',
             'view other assets',
+            'view other type of assets',
             'view wishes',
             'view memorandum wishes',
             'view guidance',
