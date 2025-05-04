@@ -35,7 +35,7 @@ class FuneralWakeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'link' => 'required',
+            'description' => 'required',
         ]);
 
         try {
@@ -43,7 +43,7 @@ class FuneralWakeController extends Controller
 
             $funeral_wake = FuneralWake::create([
                 'name' => $request->name,
-                'link' => $request->link,
+                'description' => $request->description,
                 'created_by' => Auth::id()
             ]);
 
@@ -66,7 +66,7 @@ class FuneralWakeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'link' => 'required',
+            'description' => 'required',
         ]);
 
         try {
@@ -75,7 +75,7 @@ class FuneralWakeController extends Controller
             $funeral_wake = FuneralWake::findOrFail($id);
             $funeral_wake->update([
                 'name' => $request->name,
-                'link' => $request->link
+                'description' => $request->description
             ]);
 
             DB::commit();

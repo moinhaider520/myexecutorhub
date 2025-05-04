@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('funeral_wake', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('link')->nullable();
+            $table->text('description')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

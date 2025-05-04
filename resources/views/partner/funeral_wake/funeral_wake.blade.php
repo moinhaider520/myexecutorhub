@@ -28,7 +28,7 @@
                         <tr role="row">
                           <th>Sr</th>
                           <th>Playlist Name</th>
-                          <th>Link</th>
+                          <th>Description</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -37,10 +37,9 @@
                         <tr>
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $funeralwake->name }}</td>
-                          <td><a href="{{ $funeralwake->link }}" target="_blank" rel="noopener noreferrer">View Playlist</a></td>
-
+                          <td>{{ $funeralwake->description }}</td>
                           <td>
-                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editFuneralWakeModal" data-id="{{ $funeralwake->id }}" data-name="{{ $funeralwake->name }}" data-link="{{ $funeralwake->link }}">Edit</button>
+                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editFuneralWakeModal" data-id="{{ $funeralwake->id }}" data-name="{{ $funeralwake->name }}" data-description="{{ $funeralwake->description }}">Edit</button>
                             <form action="{{ route('partner.funeral_wake.destroy', $funeralwake->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')
@@ -79,9 +78,9 @@
             <span class="text-danger" id="name_error"></span>
           </div>
           <div class="form-group mb-2">
-            <label for="link">Link</label>
-            <input type="text" class="form-control" name="link" id="link" placeholder="Enter Playlist Link" pattern="https?://.+" title="Please enter a valid URL starting with http:// or https://" required>
-            <span class="text-danger" id="link_error"></span>
+            <label for="description">Description</label>
+            <textarea class="form-control" name="description" id="description" placeholder="Enter Playlist Description" rows="3" required></textarea>
+            <span class="text-danger" id="description_error"></span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -111,9 +110,9 @@
             <span class="text-danger" id="edit_name_error"></span>
           </div>
           <div class="form-group mb-2">
-            <label for="editLink">Link</label>
-            <input type="text" class="form-control" name="link" id="editLink" placeholder="Enter Link" pattern="https?://.+" title="Please enter a valid URL starting with http:// or https://" required>
-            <span class="text-danger" id="edit_link_error"></span>
+            <label for="editDescription">Description</label>
+            <textarea class="form-control" name="description" id="editDescription" placeholder="Enter Playlist Description" rows="3" required></textarea>
+            <span class="text-danger" id="edit_description_error"></span>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -125,29 +124,25 @@
   </div>
 </div>
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
   $(document).ready(function() {
-    // Clear previous error messages for add form
     function clearAddFuneralWakeErrors() {
       $('#name_error').text('');
-      $('#link_error').text('');
+      $('#description_error').text('');
     }
 
-    // Clear previous error messages for edit form
     function clearEditFuneralWakeErrors() {
       $('#edit_name_error').text('');
-      $('#edit_link_error').text('');
+      $('#edit_description_error').text('');
     }
 
-    // Handle submission of add FuneralWake form
     $('#addFuneralWakeForm').on('submit', function(e) {
       e.preventDefault();
-      clearAddFuneralWakeErrors(); // Clear previous error messages
+      clearAddFuneralWakeErrors();
 
       $.ajax({
         url: "{{ route('partner.funeral_wake.store') }}",
@@ -163,28 +158,26 @@
         error: function(response) {
           var errors = response.responseJSON.errors;
           $('#name_error').text(errors.name);
-          $('#link_error').text(errors.link);
+          $('#description_error').text(errors.description);
         }
       });
     });
 
-    // Handle click on edit button for FuneralWake
     $('.edit-button').on('click', function() {
       var id = $(this).data('id');
-      var link = $(this).data('link');
+      var description = $(this).data('description');
       var name = $(this).data('name');
 
       $('#editFuneralWakeId').val(id);
-      $('#editLink').val(link);
+      $('#editDescription').val(description);
       $('#editName').val(name);
-      clearEditFuneralWakeErrors(); // Clear previous error messages
+      clearEditFuneralWakeErrors();
     });
 
-    // Handle submission of edit FuneralWake form
     $('#editFuneralWakeForm').on('submit', function(e) {
       e.preventDefault();
       var id = $('#editFuneralWakeId').val();
-      clearEditFuneralWakeErrors(); // Clear previous error messages
+      clearEditFuneralWakeErrors();
 
       $.ajax({
         url: "/partner/funeral_wake/update/" + id,
@@ -199,12 +192,8 @@
         },
         error: function(response) {
           var errors = response.responseJSON.errors;
-          $('#edit_adviser_type_error').text(errors.adviser_type);
           $('#edit_name_error').text(errors.name);
-          $('#edit_practice_name_error').text(errors.practice_name);
-          $('#edit_practice_address_error').text(errors.practice_address);
-          $('#edit_email_address_error').text(errors.email_address);
-          $('#edit_phone_number_error').text(errors.phone_number);
+          $('#edit_description_error').text(errors.description);
         }
       });
     });
