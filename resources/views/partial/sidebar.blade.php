@@ -162,7 +162,7 @@
                             <li><a href="{{ route('partner.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="{{ route('partner.foreign_assets.view') }}">Foreign assets</a></li>
                             <li><a href="{{ route('partner.pensions.view') }}">Pensions</a></li>
-                            <li><a href="#">Funeral Plans</a></li>
+                            <li><a href="{{ route('partner.funeral_plans.view') }}">Funeral Plans</a></li>
                             <li><a href="{{ route('partner.other_type_of_assets.view') }}">Other Type of Assets</a></li>
                             <li><a href="{{ route('partner.other_assets.view') }}">Other Assets</a></li>
                         </ul>
@@ -472,7 +472,7 @@
                             <li><a href="{{ route('customer.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="{{ route('customer.foreign_assets.view') }}">Foreign assets</a></li>
                             <li><a href="{{ route('customer.pensions.view') }}">Pensions</a></li>
-                            <li><a href="#">Funeral Plans</a></li>
+                            <li><a href="{{ route('customer.funeral_plans.view') }}">Funeral Plans</a></li>
                             <li><a href="{{ route('customer.other_assets.view') }}">Other Assets</a></li>
                             <li><a href="{{ route('customer.other_type_of_assets.view') }}">Other Type of Assets</a></li>
                         </ul>
@@ -783,7 +783,7 @@
                             <li><a href="{{ route('executor.intellectual_properties.view') }}">Intellectual Properties</a></li>
                             <li><a href="{{ route('executor.foreign_assets.view') }}">Foreign assets</a></li>
                             <li><a href="{{ route('executor.pensions.view') }}">Pensions</a></li>
-                            <li><a href="#">Funeral Plans</a></li>
+                            <li><a href="{{ route('executor.funeral_plans.view') }}">Funeral Plans</a></li>
                             <li><a href="{{ route('executor.other_type_of_assets.view') }}">Other Type of Assets</a></li>
                             <li><a href="{{ route('executor.other_assets.view') }}">Other Assets</a></li>
                         </ul>
@@ -1060,7 +1060,10 @@
                             <li><a href="{{ route('foreign_assets.view') }}">Foreign assets</a></li>
                             @endcan
                             @can('view pension')
-                            <li><a href="{{ route('view pension') }}">Pensions</a></li>
+                            <li><a href="{{ route('pensions.view') }}">Pensions</a></li>
+                            @endcan
+                            @can('view funeral plan')
+                            <li><a href="{{ route('funeral_plans.view') }}">Funeral plans</a></li>
                             @endcan
                             @can('view other type of assets')
                             <li><a href="{{ route('other_type_of_assets.view') }}">Other Type of Assets</a></li>
