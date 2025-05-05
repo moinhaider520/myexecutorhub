@@ -301,7 +301,8 @@
                             <span>Pictures & Videos </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.pictures_and_videos.view') }}">Manage Files</a></li>
+                            <li><a href="{{ route('partner.pictures.view') }}">Manage Pictures</a></li>
+                            <li><a href="{{ route('partner.videos.view') }}">Manage Videos</a></li>
                         </ul>
                     </li>
 
@@ -886,7 +887,8 @@
                             <span>Pictures & Videos </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('executor.pictures_and_videos.view') }}">Manage Files</a></li>
+                            <li><a href="{{ route('executor.pictures.view') }}">Manage Pictures</a></li>
+                            <li><a href="{{ route('executor.videos.view') }}">Manage Videos</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -1012,7 +1014,9 @@
                     @canany(['view bank accounts', 'view investment accounts', 'view properties',
                     'view personal chattels', 'view business interests', 'view insurance policies',
                     'view debt and liabilities', 'view digital assets', 'view intellectual properties',
-                    'view other assets','view other type of assets','view pension','view funeral plan','view foreign assets'])
+                    'view other assets','view other type of assets','view pension','view funeral plan','view foreign assets',
+                    'view pictures', 'view videos'
+                    ])
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -1095,7 +1099,7 @@
                             <span>otherss</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('otherss.view') }}">Manage otherss</a></li>
+                            <li><a href="{{ route('otherss.view') }}">Manage others</a></li>
                         </ul>
                     </li>
                     @endcan

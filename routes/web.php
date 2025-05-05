@@ -45,6 +45,8 @@ use App\Http\Controllers\Partner\ReviewController as PartnerReviewController;
 use App\Http\Controllers\Partner\MembershipController as PartnerMembershipController;
 use App\Http\Controllers\Partner\WithdrawalController as PartnerWithdrawalController;
 use App\Http\Controllers\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
+use App\Http\Controllers\Partner\PictureController as PartnerPictureController;
+use App\Http\Controllers\Partner\VideoController as PartnerVideoController;
 use App\Http\Controllers\Partner\NotificationController as PartnerNotificationController;
 use App\Http\Controllers\Partner\LPAController as PartnerLPAController;
 use App\Http\Controllers\Partner\WillController as PartnerWillController;
@@ -120,6 +122,8 @@ use App\Http\Controllers\Executor\MessagesController as ExecutorMessagesControll
 use App\Http\Controllers\Executor\ReviewController as ExecutorReviewController;
 use App\Http\Controllers\Executor\WithdrawalController as ExecutorWithdrawalController;
 use App\Http\Controllers\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
+use App\Http\Controllers\Executor\PictureController as ExecutorPictureController;
+use App\Http\Controllers\Executor\VideoController as ExecutorVideoController;
 use App\Http\Controllers\Executor\LPAController as ExecutorLPAController;
 use App\Http\Controllers\Executor\WillController as ExecutorWillController;
 use App\Http\Controllers\Executor\TaskController as ExecutorTaskController;
@@ -145,6 +149,8 @@ use App\Http\Controllers\Others\WishesController as OthersWishesController;
 use App\Http\Controllers\Others\MemorandumWishController as OthersMemorandumWishController;
 use App\Http\Controllers\Others\GuidanceController as OthersGuidanceController;
 use App\Http\Controllers\Others\DocumentsController as OthersDocumentsController;
+use App\Http\Controllers\Others\PictureController as OthersPictureController;
+use App\Http\Controllers\Others\VideoController as OthersVideoController;
 use App\Http\Controllers\Others\LifeRememberedController as OthersLifeRememberedController;
 use App\Http\Controllers\Others\AdvisorsController as OthersAdvisorsController;
 use App\Http\Controllers\Others\ExecutorsController as OthersExecutorsController;
@@ -788,6 +794,8 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/guidance/view', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
     Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::get('/pictures/view', [ExecutorPictureController::class, 'view'])->name('pictures.view');
+    Route::get('/videos/view', [ExecutorVideoController::class, 'view'])->name('videos.view');
     Route::get('/advisors/view', [ExecutorAdvisorsController::class, 'view'])->name('advisors.view');
     Route::get('/executors/view', [ExecutorExecutorsController::class, 'view'])->name('executors.view');
     Route::get('/bank_accounts/view', [ExecutorBankAccountController::class, 'view'])->name('bank_accounts.view');
@@ -864,6 +872,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware("permission:view pension")->group(function () {
         Route::get('/foreign_assets/view', [OthersForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    });
+
+    Route::middleware("permission:view pictures")->group(function () {
+        Route::get('/pictures/view', [OthersPictureController::class, 'view'])->name('pictures.view');
+    });
+
+    Route::middleware("permission:view videos")->group(function () {
+        Route::get('/videos/view', [OthersVideoController::class, 'view'])->name('videos.view');
     });
 
     Route::middleware("permission:view wishes")->group(function () {

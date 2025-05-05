@@ -27,6 +27,8 @@ class PermissionsSeeder extends Seeder
             'view pension',
             'view funeral plan',
             'view foreign assets',
+            'view pictures',
+            'view videos',
             'view wishes',
             'view memorandum wishes',
             'view guidance',
