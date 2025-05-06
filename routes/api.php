@@ -42,6 +42,12 @@ use App\Http\Controllers\Api\Partner\TaskController as PartnerTaskController;
 use App\Http\Controllers\Api\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Api\Partner\FuneralWakeController as PartnerFuneralWakeController;
 use App\Http\Controllers\Api\Partner\PicturesAndVideosController as PartnerPicturesAndVideosController;
+use App\Http\Controllers\Api\Partner\ForeignAssetsController as PartnerForeignAssetsController;
+use App\Http\Controllers\Api\Partner\FuneralPlanController as PartnerFuneralPlanController;
+use App\Http\Controllers\Api\Partner\PensionController as PartnerPensionController;
+use App\Http\Controllers\Api\Partner\PictureController as PartnerPictureController;
+use App\Http\Controllers\Api\Partner\VideoController as PartnerVideoController;
+use App\Http\Controllers\Api\Partner\OtherTypeofAssetController as PartnerOtherTypeofAssetController;
 
 // Customer 
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -74,6 +80,12 @@ use App\Http\Controllers\Api\Customer\TaskController as CustomerTaskController;
 use App\Http\Controllers\Api\Customer\WillController as CustomerWillController;
 use App\Http\Controllers\Api\Customer\FuneralWakeController as CustomerFuneralWakeController;
 use App\Http\Controllers\Api\Customer\PicturesAndVideosController as CustomerPicturesAndVideosController;
+use App\Http\Controllers\Api\Customer\ForeignAssetsController as CustomerForeignAssetsController;
+use App\Http\Controllers\Api\Customer\FuneralPlanController as CustomerFuneralPlanController;
+use App\Http\Controllers\Api\Customer\PensionController as CustomerPensionController;
+use App\Http\Controllers\Api\Customer\PictureController as CustomerPictureController;
+use App\Http\Controllers\Api\Customer\VideoController as CustomerVideoController;
+use App\Http\Controllers\Api\Customer\OtherTypeofAssetController as CustomerOtherTypeofAssetController;
 
 // Executor 
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
@@ -103,6 +115,12 @@ use App\Http\Controllers\Api\Executor\TaskController as ExecutorTaskController;
 use App\Http\Controllers\Api\Executor\WillController as ExecutorWillController;
 use App\Http\Controllers\Api\Executor\FuneralWakeController as ExecutorFuneralWakeController;
 use App\Http\Controllers\Api\Executor\PicturesAndVideosController as ExecutorPicturesAndVideosController;
+use App\Http\Controllers\Api\Executor\ForeignAssetsController as ExecutorForeignAssetsController;
+use App\Http\Controllers\Api\Executor\FuneralPlanController as ExecutorFuneralPlanController;
+use App\Http\Controllers\Api\Executor\PensionController as ExecutorPensionController;
+use App\Http\Controllers\Api\Executor\PictureController as ExecutorPictureController;
+use App\Http\Controllers\Api\Executor\VideoController as ExecutorVideoController;
+use App\Http\Controllers\Api\Executor\OtherTypeofAssetController as ExecutorOtherTypeofAssetController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -191,12 +209,32 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [PartnerDocumentsController::class, 'destroy'])->name('documents.destroy');
     Route::get('/documents/view/{document_type}', [PartnerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
+    
+    // Partner Funeral Plan Types
+    Route::post('/funeral_plans/save_custom_type', [PartnerFuneralPlanController::class, 'saveCustomType'])->name('funeral_plans.save_custom_type');
+    // Partner Funeral Plans
+    Route::get('/funeral_plans/view', [PartnerFuneralPlanController::class, 'view'])->name('funeral_plans.view');
+    Route::post('/funeral_plans/store', [PartnerFuneralPlanController::class, 'store'])->name('funeral_plans.store');
+    Route::post('/funeral_plans/update/{id}', [PartnerFuneralPlanController::class, 'update'])->name('funeral_plans.update');
+    Route::delete('/funeral_plans/destroy/{id}', [PartnerFuneralPlanController::class, 'destroy'])->name('funeral_plans.destroy');
 
     // Partner Pictures AND VIDEOS
     Route::get('/pictures_and_videos/view', [PartnerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
     Route::post('/pictures_and_videos/store', [PartnerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
     Route::post('/pictures_and_videos/update/{id}', [PartnerPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
     Route::delete('/pictures_and_videos/destroy/{id}', [PartnerPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
+
+    // PICTURES CONTROLLER
+    Route::get('/pictures/view', [PartnerPictureController::class, 'view'])->name('pictures.view');
+    Route::post('/pictures/store', [PartnerPictureController::class, 'store'])->name('pictures.store');
+    Route::post('/pictures/update/{id}', [PartnerPictureController::class, 'update'])->name('pictures.update');
+    Route::delete('/pictures/destroy/{id}', [PartnerPictureController::class, 'destroy'])->name('pictures.destroy');
+
+    // VIDEOS CONTROLLER
+    Route::get('/videos/view', [PartnerVideoController::class, 'view'])->name('videos.view');
+    Route::post('/videos/store', [PartnerVideoController::class, 'store'])->name('videos.store');
+    Route::post('/videos/update/{id}', [PartnerVideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/destroy/{id}', [PartnerVideoController::class, 'destroy'])->name('videos.destroy');
 
     // Reviews
     Route::post('reviews', [PartnerReviewController::class, 'store'])->name('reviews.store');
@@ -282,6 +320,28 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/other_assets/store', [PartnerOtherAssetController::class, 'store'])->name('other_assets.store');
     Route::post('/other_assets/update/{id}', [PartnerOtherAssetController::class, 'update'])->name('other_assets.update');
     Route::delete('/other_assets/destroy/{id}', [PartnerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
+
+    // Custom Other Type of Asset Type
+    Route::post('/other_type_of_assets/save_custom_type', [PartnerOtherTypeofAssetController::class, 'saveCustomType'])->name('other_type_of_assets.save_custom_type');
+    // Customer Other Type of Assets
+    Route::get('/other_type_of_assets/view', [PartnerOtherTypeofAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::post('/other_type_of_assets/store', [PartnerOtherTypeofAssetController::class, 'store'])->name('other_type_of_assets.store');
+    Route::post('/other_type_of_assets/update/{id}', [PartnerOtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
+    Route::delete('/other_type_of_assets/destroy/{id}', [PartnerOtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
+
+    // Partner Foreign Asset Type
+    Route::post('/foreign_assets/save_custom_type', [PartnerForeignAssetsController::class, 'saveCustomType'])->name('foreign_assets.save_custom_type');
+    // Partner Foreign Assets
+    Route::get('/foreign_assets/view', [PartnerForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    Route::post('/foreign_assets/store', [PartnerForeignAssetsController::class, 'store'])->name('foreign_assets.store');
+    Route::post('/foreign_assets/update/{id}', [PartnerForeignAssetsController::class, 'update'])->name('foreign_assets.update');
+    Route::delete('/foreign_assets/destroy/{id}', [PartnerForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
+
+    // Partner pensions 
+    Route::get('/pension/view', [PartnerPensionController::class, 'view'])->name('pensions.view');
+    Route::post('/pension/store', [PartnerPensionController::class, 'store'])->name('pensions.store');
+    Route::post('/pension/update/{id}', [PartnerPensionController::class, 'update'])->name('pensions.update');
+    Route::delete('/pension/destroy/{id}', [PartnerPensionController::class, 'destroy'])->name('pensions.destroy');
 
     Route::get('/guidance/view', [PartnerGuidanceController::class, 'view'])->name('guidance.view');
     Route::post('/guidance/store', [PartnerGuidanceController::class, 'store'])->name('guidance.store');
@@ -376,11 +436,31 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::delete('/documents/destroy/{id}', [CustomerDocumentsController::class, 'destroy'])->name('documents.destroy');
     Route::get('/documents/view/{document_type}', [CustomerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
 
+    // Custom Funeral Plan Types
+    Route::post('/funeral_plans/save_custom_type', [CustomerFuneralPlanController::class, 'saveCustomType'])->name('funeral_plans.save_custom_type');
+    // Customer Funeral Plans
+    Route::get('/funeral_plans/view', [CustomerFuneralPlanController::class, 'view'])->name('funeral_plans.view');
+    Route::post('/funeral_plans/store', [CustomerFuneralPlanController::class, 'store'])->name('funeral_plans.store');
+    Route::post('/funeral_plans/update/{id}', [CustomerFuneralPlanController::class, 'update'])->name('funeral_plans.update');
+    Route::delete('/funeral_plans/destroy/{id}', [CustomerFuneralPlanController::class, 'destroy'])->name('funeral_plans.destroy');
+
     // PICTURES & VIDEOS CONTROLLER
     Route::get('/pictures_and_videos/view', [CustomerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
     Route::post('/pictures_and_videos/store', [CustomerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
     Route::post('/pictures_and_videos/update/{id}', [CustomerPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
     Route::delete('/pictures_and_videos/destroy/{id}', [CustomerPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
+
+    // PICTURES CONTROLLER
+    Route::get('/pictures/view', [CustomerPictureController::class, 'view'])->name('pictures.view');
+    Route::post('/pictures/store', [CustomerPictureController::class, 'store'])->name('pictures.store');
+    Route::post('/pictures/update/{id}', [CustomerPictureController::class, 'update'])->name('pictures.update');
+    Route::delete('/pictures/destroy/{id}', [CustomerPictureController::class, 'destroy'])->name('pictures.destroy');
+
+    // VIDEOS CONTROLLER
+    Route::get('/videos/view', [CustomerVideoController::class, 'view'])->name('videos.view');
+    Route::post('/videos/store', [CustomerVideoController::class, 'store'])->name('videos.store');
+    Route::post('/videos/update/{id}', [CustomerVideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/destroy/{id}', [CustomerVideoController::class, 'destroy'])->name('videos.destroy');
 
     // Reviews
     Route::post('reviews', [CustomerReviewController::class, 'store'])->name('reviews.store');
@@ -466,6 +546,28 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/other_assets/update/{id}', [CustomerOtherAssetController::class, 'update'])->name('other_assets.update');
     Route::delete('/other_assets/destroy/{id}', [CustomerOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
 
+    // Custom Other Type of Asset Type
+    Route::post('/other_type_of_assets/save_custom_type', [CustomerOtherTypeofAssetController::class, 'saveCustomType'])->name('other_type_of_assets.save_custom_type');
+    // Customer Other Type of Assets
+    Route::get('/other_type_of_assets/view', [CustomerOtherTypeofAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::post('/other_type_of_assets/store', [CustomerOtherTypeofAssetController::class, 'store'])->name('other_type_of_assets.store');
+    Route::post('/other_type_of_assets/update/{id}', [CustomerOtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
+    Route::delete('/other_type_of_assets/destroy/{id}', [CustomerOtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
+
+    // Custom Foreign Asset Type
+    Route::post('/foreign_assets/save_custom_type', [CustomerForeignAssetsController::class, 'saveCustomType'])->name('foreign_assets.save_custom_type');
+    // Customer Foreign Assets
+    Route::get('/foreign_assets/view', [CustomerForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    Route::post('/foreign_assets/store', [CustomerForeignAssetsController::class, 'store'])->name('foreign_assets.store');
+    Route::post('/foreign_assets/update/{id}', [CustomerForeignAssetsController::class, 'update'])->name('foreign_assets.update');
+    Route::delete('/foreign_assets/destroy/{id}', [CustomerForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
+
+    // Customer pensions 
+    Route::get('/pension/view', [CustomerPensionController::class, 'view'])->name('pensions.view');
+    Route::post('/pension/store', [CustomerPensionController::class, 'store'])->name('pensions.store');
+    Route::post('/pension/update/{id}', [CustomerPensionController::class, 'update'])->name('pensions.update');
+    Route::delete('/pension/destroy/{id}', [CustomerPensionController::class, 'destroy'])->name('pensions.destroy');
+
     Route::get('/guidance/view', [CustomerGuidanceController::class, 'view'])->name('guidance.view');
     Route::post('/guidance/store', [CustomerGuidanceController::class, 'store'])->name('guidance.store');
     Route::get('/guidance/{id}/media', [CustomerGuidanceController::class, 'getMedia']);
@@ -546,6 +648,8 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/guidance', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
     Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::get('/pictures/view', [ExecutorPictureController::class, 'view'])->name('pictures.view');
+    Route::get('/videos/view', [ExecutorVideoController::class, 'view'])->name('videos.view');
 
     // Reviews
     Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
@@ -567,6 +671,10 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/digital_assets', [ExecutorDigitalAssetController::class, 'index'])->name('digital_assets.view');
     Route::get('/intellectual_properties', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
     Route::get('/other_assets', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
+    Route::get('/other_type_of_assets/view', [ExecutorOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::get('/pension/view', [ExecutorPensionController::class, 'view'])->name('pensions.view');
+    Route::get('/funeral_plans/view', [ExecutorFuneralPlanController::class, 'view'])->name('funeral_plans.view');
+    Route::get('/foreign_assets/view', [ExecutorForeignAssetsController::class, 'view'])->name('foreign_assets.view');
     Route::get('/tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
 
     Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']);
