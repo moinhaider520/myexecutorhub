@@ -30,6 +30,7 @@
                           <th>Document Type</th>
                           <th>Description</th>
                           <th>Download Link</th>
+                          <th>Reminder Date</th>
                           <th>Reviews</th>
                           <th>Action</th>
                         </tr>
@@ -42,6 +43,7 @@
                           <td>{{ $document->description }}</td>
                           <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}"
                               target="_blank">Download</a></td>
+                          <td>{{ $document->reminder_date ? date('d M Y', strtotime($document->reminder_date)) : 'Not set' }}</td>
                           <td><button type="button" class="btn btn-secondary btn-sm edit-button" data-toggle="modal"
                               data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
                           <td>
@@ -50,7 +52,8 @@
                             <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
                               data-target="#editDocumentModal" data-id="{{ $document->id }}"
                               data-document_type="{{ $document->document_type }}"
-                              data-description="{{ $document->description }}">Edit</button>
+                              data-description="{{ $document->description }}"
+                              data-reminder_date="{{ $document->reminder_date }}">Edit</button>
                             <form action="{{ route('customer.documents.destroy', $document->id) }}" method="POST"
                               style="display:inline;">
                               @csrf
@@ -133,6 +136,12 @@
             <span class="text-danger" id="file_error"></span>
           </div>
 
+          <div class="form-group mb-4">
+            <label for="reminder_date">Reminder Date</label>
+            <input type="date" class="form-control" name="reminder_date" id="reminder_date">
+            <span class="text-danger" id="reminder_date_error"></span>
+          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -192,6 +201,12 @@
             <label for="editFile">Upload Document</label>
             <input type="file" class="form-control" name="file" id="editFile">
             <span class="text-danger" id="edit_file_error"></span>
+          </div>
+
+          <div class="form-group mb-4">
+            <label for="editReminderDate">Reminder Date</label>
+            <input type="date" class="form-control" name="reminder_date" id="editReminderDate">
+            <span class="text-danger" id="edit_reminder_date_error"></span>
           </div>
 
           <div class="modal-footer">
@@ -333,10 +348,12 @@
       const id = $(this).data('id');
       const documentType = $(this).data('document_type');
       const description = $(this).data('description');
+      const reminderDate = $(this).data('reminder_date');
 
       $('#editDocumentId').val(id);
       $('#editDocumentType').val(documentType);
       $('#editDescription').val(description);
+      $('#editReminderDate').val(reminderDate);
     });
 
     // Handle Edit Document form submission
@@ -377,12 +394,14 @@
       $('#document_type_error').text('');
       $('#description_error').text('');
       $('#file_error').text('');
+      $('#reminder_date_error').text('');
     }
 
     function clearEditErrors() {
       $('#edit_document_type_error').text('');
       $('#edit_description_error').text('');
       $('#edit_file_error').text('');
+      $('#edit_reminder_date_error').text('');
     }
 
     // Display error messages
@@ -396,6 +415,9 @@
       if (errors.file) {
         $('#file_error').text(errors.file[0]);
       }
+      if (errors.reminder_date) {
+        $('#reminder_date_error').text(errors.reminder_date[0]);
+      }
     }
 
     function displayEditErrors(errors) {
@@ -407,6 +429,9 @@
       }
       if (errors.file) {
         $('#edit_file_error').text(errors.file[0]);
+      }
+      if (errors.reminder_date) {
+        $('#edit_reminder_date_error').text(errors.reminder_date[0]);
       }
     }
   });

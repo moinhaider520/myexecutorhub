@@ -1,17 +1,17 @@
 <?php
+
 namespace App\Http\Controllers\Api\Partner;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\OnboardingProgress;
+use App\Mail\DocumentMail;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
-use App\Mail\DocumentMail;
-use Illuminate\Support\Facades\Mail;
-use App\Models\User;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 
@@ -20,7 +20,7 @@ class DocumentsController extends Controller
     use ImageUpload;
 
     /**
-     * Display a list of documents for the authenticated Partner.
+     * Display a list of documents for the authenticated partner.
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -29,16 +29,26 @@ class DocumentsController extends Controller
         try {
             $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
             $documents = Document::where('created_by', Auth::id())->get();
+            
+            $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
+            
             return response()->json([
                 'success' => true,
                 'documents' => $documents,
-                'documentTypes' => $documentTypes
+                'documentTypes' => $documentTypes,
+                'usedDocumentTypes' => $usedDocumentTypes
             ], 200);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
+    /**
+     * Display documents of a specific type for the authenticated partner.
+     *
+     * @param  string  $document_type
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function ViewByDocType($document_type)
     {
         try {
@@ -67,6 +77,7 @@ class DocumentsController extends Controller
             'document_type' => 'required|string|max:255',
             'description' => 'required',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -78,10 +89,11 @@ class DocumentsController extends Controller
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => Auth::id(),
+                'reminder_date' => $request->reminder_date,
             ]);
 
-            // Update onboarding progress
+            // Check if onboarding_progress exists for the user
             $progress = OnboardingProgress::firstOrCreate(
                 ['user_id' => Auth::id()],
                 ['document_uploaded' => true]
@@ -94,14 +106,13 @@ class DocumentsController extends Controller
 
             DB::commit();
 
-            // Send email notification
+            // Send email
             $user = Auth::user();
             $data = [
                 'first_name' => $user->name,
                 'document_name' => $document->document_type,
             ];
-            Mail::to($user->email)->send(new DocumentMail($data));
-
+            
             // Send push notification
             if ($user->expo_token) {
                 $expo = new Expo();
@@ -112,12 +123,15 @@ class DocumentsController extends Controller
                 $expo->send($message)->to($user->expo_token)->push();
             }
 
-            return response()->json(['success' => true, 'message' => 'Document added successfully.'], 201);
+            Mail::to($user->email)->send(new DocumentMail($data));
+
+            return response()->json(['success' => true, 'message' => 'Document added successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+
     /**
      * Update the specified document.
      *
@@ -130,7 +144,8 @@ class DocumentsController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'file|mimes:pdf,doc,docx,jpg,png',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -143,6 +158,7 @@ class DocumentsController extends Controller
             $document->created_by = Auth::id();
 
             if ($request->hasFile('file')) {
+                // Delete the file from the public/assets/upload directory
                 $filePath = public_path('assets/upload/' . basename($document->file_path));
                 if (file_exists($filePath)) {
                     unlink($filePath);
@@ -152,10 +168,11 @@ class DocumentsController extends Controller
                 $document->file_path = $path;
             }
 
+            $document->reminder_date = $request->reminder_date;
             $document->save();
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Document updated successfully.'], 200);
+            return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -172,16 +189,18 @@ class DocumentsController extends Controller
     {
         try {
             DB::beginTransaction();
-
+            
             $document = Document::findOrFail($id);
+            // Delete the file from the public/assets/upload directory
             $filePath = public_path('assets/upload/' . basename($document->file_path));
             if (file_exists($filePath)) {
                 unlink($filePath);
             }
 
+            // Delete the document record
             $document->delete();
             DB::commit();
-
+            
             return response()->json(['success' => true, 'message' => 'Document deleted successfully.'], 200);
         } catch (\Exception $e) {
             DB::rollback();

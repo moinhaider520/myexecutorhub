@@ -29,16 +29,26 @@ class DocumentsController extends Controller
         try {
             $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
             $documents = Document::where('created_by', Auth::id())->get();
+            
+            $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
+            
             return response()->json([
                 'success' => true,
                 'documents' => $documents,
-                'documentTypes' => $documentTypes
+                'documentTypes' => $documentTypes,
+                'usedDocumentTypes' => $usedDocumentTypes
             ], 200);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
+    /**
+     * Display documents of a specific type for the authenticated customer.
+     *
+     * @param  string  $document_type
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function ViewByDocType($document_type)
     {
         try {
@@ -67,6 +77,7 @@ class DocumentsController extends Controller
             'document_type' => 'required|string|max:255',
             'description' => 'required',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -78,7 +89,8 @@ class DocumentsController extends Controller
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => Auth::id(),
+                'reminder_date' => $request->reminder_date,
             ]);
 
             // Check if onboarding_progress exists for the user
@@ -133,7 +145,8 @@ class DocumentsController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'file|mimes:pdf,doc,docx,jpg,png',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -155,6 +168,7 @@ class DocumentsController extends Controller
                 $document->file_path = $path;
             }
 
+            $document->reminder_date = $request->reminder_date;
             $document->save();
 
             DB::commit();

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Partner;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Document;
 use App\Models\OnboardingProgress;
-use App\Http\Controllers\Controller;
 use App\Mail\DocumentMail;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -18,12 +18,16 @@ use ExpoSDK\ExpoMessage;
 class DocumentsController extends Controller
 {
     use ImageUpload;
+
     public function view()
     {
         $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
         $documents = Document::where('created_by', Auth::id())->get();
-        return view('partner.documents.documents', compact('documents', 'documentTypes'));
-    }
+    
+        $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
+    
+        return view('partner.documents.documents', compact('documents', 'documentTypes', 'usedDocumentTypes'));
+    }    
 
     public function store(Request $request)
     {
@@ -31,6 +35,7 @@ class DocumentsController extends Controller
             'document_type' => 'required|string|max:255',
             'description' => 'required',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -42,7 +47,8 @@ class DocumentsController extends Controller
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => Auth::id(),
+                'reminder_date' => $request->reminder_date,
             ]);
 
             // Check if onboarding_progress exists for the user
@@ -51,7 +57,6 @@ class DocumentsController extends Controller
                 ['document_uploaded' => true]
             );
 
-            // If the record exists but document_uploaded is false, update it
             if (!$progress->document_uploaded) {
                 $progress->document_uploaded = true;
                 $progress->save();
@@ -65,7 +70,7 @@ class DocumentsController extends Controller
                 'first_name' => $user->name,
                 'document_name' => $document->document_type,
             ];
-
+            
             // Send push notification
             if ($user->expo_token) {
                 $expo = new Expo();
@@ -90,7 +95,8 @@ class DocumentsController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date', 
         ]);
 
         try {
@@ -113,6 +119,7 @@ class DocumentsController extends Controller
                 $document->file_path = $path;
             }
 
+            $document->reminder_date = $request->reminder_date;
             $document->save();
 
             DB::commit();
@@ -122,7 +129,6 @@ class DocumentsController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
-
 
     public function destroy($id)
     {
