@@ -18,12 +18,16 @@ use ExpoSDK\ExpoMessage;
 class DocumentsController extends Controller
 {
     use ImageUpload;
+
     public function view()
     {
         $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
         $documents = Document::where('created_by', Auth::id())->get();
-        return view('customer.documents.documents', compact('documents', 'documentTypes'));
-    }
+    
+        $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
+    
+        return view('customer.documents.documents', compact('documents', 'documentTypes', 'usedDocumentTypes'));
+    }    
 
     public function store(Request $request)
     {
@@ -31,6 +35,7 @@ class DocumentsController extends Controller
             'document_type' => 'required|string|max:255',
             'description' => 'required',
             'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -42,7 +47,8 @@ class DocumentsController extends Controller
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => Auth::id(),
+                'reminder_date' => $request->reminder_date,
             ]);
 
             // Check if onboarding_progress exists for the user
@@ -89,7 +95,8 @@ class DocumentsController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
+            'reminder_date' => 'nullable|date', 
         ]);
 
         try {
@@ -112,6 +119,7 @@ class DocumentsController extends Controller
                 $document->file_path = $path;
             }
 
+            $document->reminder_date = $request->reminder_date;
             $document->save();
 
             DB::commit();

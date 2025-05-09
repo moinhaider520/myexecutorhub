@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('document_type');
             $table->text('description')->nullable();
             $table->string('file_path');
+            $table->date('reminder_date')->nullable();
             $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
