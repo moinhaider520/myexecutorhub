@@ -1111,6 +1111,146 @@
             <!-- End container -->
         </section>
 
+        <!-- Roles
+			============================================= -->
+        <section id="roles" class="pt-100 faqs-section">
+            <div class="container">
+                <!-- SECTION TITLE -->
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-9">
+                        <div class="section-title mb-80">
+                            <!-- Title -->
+                            <h2 class="s-50 w-700">Executor Hub Roles</h2>
+
+                            <!-- Text -->
+                            <p class="s-21 color--grey">An overview of type of roles and their access on Executor Hub.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="faqs-3-questions">
+                    <div class="row">
+                        <!-- QUESTIONS HOLDER -->
+                        <div class="col-lg-6">
+                            <div class="questions-holder">
+                                <!-- QUESTION #1 -->
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>1.</span> Partner</h5>
+
+                                    <!-- Answer -->
+                                    <p class="color--grey">A Partner is an affiliate of Executor Hub who has access to
+                                        all the functionalities of Executor Hub. They can nominate executors, upload
+                                        documents, manage their assets & liabilities and much more. A Partner can also
+                                        earn through Executor Hub as they are promoting the services through our
+                                        affiliate program.
+                                    </p>
+                                </div>
+
+                                <!-- QUESTION #2 -->
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>2.</span> Free Trial Customer?</h5>
+
+                                    <!-- Answer -->
+                                    <p class="color--grey">A Free Trial Customer has access to all the functionalities
+                                        of Executor Hub for 14 Days after they sign up for a Free Trial. They can also
+                                        nominate their executors, manage documents and much more. However, their access
+                                        will be lost after 14 days and they will not be able to continue until they
+                                        subscribe to one of our Subscription Packages within 30 Days of losing their
+                                        access. Please refer to our Cancellation Policy regarding this.</p>
+                                </div>
+
+                                <!-- QUESTION #3 -->
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>3.</span> Basic Customer</h5>
+
+                                    <!-- Answer -->
+                                    <p>A Basic Customer is the one who has subscribed to our Basic Subscription Package.
+                                        They have a limited access to the Executor Hub and they can only nominate
+                                        executors and manage their assets & liabilites.</p>
+                                </div>
+
+
+                                <!-- QUESTION #4 -->
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>4.</span> Standard Customer</h5>
+
+                                    <!-- Answer -->
+                                    <p>A Standard Customer is the one who has Subscribed to our Standard Package and
+                                        also has a limited access to the Executor Hub. They can nominate executors,
+                                        manage their assets & liabilites, manage documents, nominate advisers and
+                                        communicate between their nominated executors & advisers.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END QUESTIONS HOLDER -->
+
+                        <!-- QUESTIONS WRAPPER -->
+                        <div class="col-lg-6">
+                            <div class="questions-holder">
+
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>5.</span>Premium Customer</h5>
+                                    <p>A Premium Customer is the one who has subscribed to our Premium Package and has
+                                        access to all of Executor Hub Functionalities including the nomination of
+                                        executors, advisers, Capacity Proof Videos, Document Management and much more.
+                                    </p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>6.</span>Executors</h5>
+                                    <p>Executors are those users who have been nominated/created by either a partner or
+                                        a customer. The Executor has limited access to the Platform which means that
+                                        they can only view all the data that is entered by a Customer in all the
+                                        modules. To become an
+                                        executor, it is mandatory for a partner or a customer to nominate you after they
+                                        sign up.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>7.</span>Advisers</h5>
+                                    <p>Advisers are those users who have been nominated/created by either a partner or
+                                        a customer. An Adviser also has limited access to the Platform which means that
+                                        they can only view all the data that is entered by a Customer. An Adviser also
+                                        has a limited access in such a way that they can only access those modules which
+                                        have been assigned by the customer to them.</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- END QUESTIONS HOLDER -->
+                    </div>
+                    <!-- End row -->
+                </div>
+
+                <!-- MORE QUESTIONS LINK -->
+                <div class="row">
+                    <div class="col">
+                        <div class="more-questions mt-40">
+                            <div class="more-questions-txt bg--white-400 r-100">
+                                <p class="p-lg">
+                                    Download the App on App Store <i class="fa-brands fa-app-store-ios"></i>
+                                    <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
+                                        class="color--theme">Download App</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- END FAQs-3 -->
+
         <!-- FAQs-3
 			============================================= -->
         <section id="faqs-3" class="pt-100 faqs-section">
@@ -1303,6 +1443,15 @@
                                         of 100 MB.</p>
                                 </div>
 
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>15.</span>Can I use one email for multiple roles on
+                                        Executor Hub?</h5>
+                                    <p>No, Executor Hub allows only one email per role. For example, if you are a
+                                        Customer and want to nominate yourself as an executor. Then you will have to
+                                        choose unique emails for both roles.</p>
+                                </div>
+
                             </div>
                         </div>
                         <!-- END QUESTIONS HOLDER -->
@@ -1329,6 +1478,8 @@
             <!-- End container -->
         </section>
         <!-- END FAQs-3 -->
+
+
 
 
 
@@ -1578,7 +1729,11 @@
                                     <h2 class="s-50 w-700">Work With Us</h2>
 
                                     <!-- Text -->
-                                    <p class="p-xl">At Executor Hub, we’re committed to simplifying estate administration for everyone involved—from executors to families. Join our affiliate program and unlock new revenue opportunities for your business while providing clients with a valuable, streamlined solution for managing their estates.</p>
+                                    <p class="p-xl">At Executor Hub, we’re committed to simplifying estate
+                                        administration for everyone involved—from executors to families. Join our
+                                        affiliate program and unlock new revenue opportunities for your business while
+                                        providing clients with a valuable, streamlined solution for managing their
+                                        estates.</p>
                                 </div>
                             </div>
                         </div>
