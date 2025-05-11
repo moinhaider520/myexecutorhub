@@ -1566,23 +1566,45 @@
         <!-- END MODAL WINDOW (REQUEST FORM) -->
 
         <!-- WORK WITH US -->
-        <section id="contacts-2" class="pb-50 inner-page-hero contacts-section division">
+        <section id="contacts-2" class="pt-100 ws-wrapper content-section">
             <div class="container">
-                <!-- SECTION TITLE -->
-                <div class="row justify-content-center">
-                    <div class="col-md-10 col-lg-9">
-                        <div class="section-title text-center mb-80">
-                            <!-- Title -->
-                            <h2 class="s-52 w-700">Work With Us</h2>
+                <div class="bc-5-wrapper bg--04 hidd bg--scroll r-16">
+                    <div class="section-overlay">
+                        <!-- SECTION TITLE -->
+                        <div class="row justify-content-center">
+                            <div class="col-md-11 col-lg-9">
+                                <div class="section-title wow fadeInUp mb-60">
+                                    <!-- Title -->
+                                    <h2 class="s-50 w-700">Work With Us</h2>
 
-                            <!-- Text -->
-                            <p class="p-lg">At Executor Hub, we’re committed to simplifying estate administration for
-                                everyone involved—from executors to families. Join our affiliate program and unlock new
-                                revenue opportunities for your business while providing clients with a valuable,
-                                streamlined solution for managing their estates.</p>
+                                    <!-- Text -->
+                                    <p class="p-xl">At Executor Hub, we’re committed to simplifying estate administration for everyone involved—from executors to families. Join our affiliate program and unlock new revenue opportunities for your business while providing clients with a valuable, streamlined solution for managing their estates.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- IMAGE BLOCK -->
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
+                                    <!-- Play Icon -->
+                                    <a class="video-popup1" href="{{ asset('assets/frontend/partner.mp4') }}">
+                                        <div class="video-btn video-btn-xl bg--theme">
+                                            <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <!-- Preview Image -->
+                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card.webp')}}"
+                                        alt="content-image" />
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- End section overlay -->
                 </div>
+                <!-- End content wrapper -->
             </div>
             <!-- End container -->
         </section>
