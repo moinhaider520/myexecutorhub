@@ -50,7 +50,7 @@
                                         <p class="mb-0 text-truncate"> Total Assets Networth</p>
                                     </div>
                                     <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
-                                    alt=""></div>
+                                            alt=""></div>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                         <p class="mb-0 text-truncate"> Liabilities Net Worth</p>
                                     </div>
                                     <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
-                                    alt=""></div>
+                                            alt=""></div>
                                 </div>
                             </div>
                         </div>
@@ -101,6 +101,48 @@
             </div>
         </div>
     </div>
+    <!-- Referred Users Section -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <h5 class="card-header">Users Referred with Your Coupon</h5>
+                    <div class="card-body">
+                        @if($referredUsers->isEmpty())
+                        <p>No users have used your coupon yet.</p>
+                        @else
+                        <div class="table-responsive theme-scrollbar">
+                            <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
+                                <table class="display dataTable no-footer" id="basic-1" role="grid" aria-describedby="basic-1_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Signup Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($referredUsers as $index => $referral)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>{{ $referral->user->name ?? '-' }}</td>
+                                            <td>{{ $referral->user->email ?? '-' }}</td>
+                                            <td>{{ $referral->created_at->format('d M Y') }}</td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Referred Users Section -->
+
     <!-- Container-fluid Ends-->
 </div>
 @endsection

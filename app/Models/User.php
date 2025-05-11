@@ -54,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(OnboardingProgress::class, 'user_id');
     }
+
+    public function referredUsers()
+    {
+        return $this->hasMany(CouponUsage::class, 'partner_id');
+    }
+
+    public function usedCouponFrom()
+    {
+        return $this->hasOne(CouponUsage::class, 'user_id');
+    }
 }
