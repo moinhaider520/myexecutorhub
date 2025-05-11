@@ -549,7 +549,7 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     // Custom Other Type of Asset Type
     Route::post('/other_type_of_assets/save_custom_type', [CustomerOtherTypeofAssetController::class, 'saveCustomType'])->name('other_type_of_assets.save_custom_type');
     // Customer Other Type of Assets
-    Route::get('/other_type_of_assets/view', [CustomerOtherTypeofAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::get('/other_type_of_assets/view', [CustomerOtherTypeofAssetController::class, 'index'])->name('other_type_of_assets.view');
     Route::post('/other_type_of_assets/store', [CustomerOtherTypeofAssetController::class, 'store'])->name('other_type_of_assets.store');
     Route::post('/other_type_of_assets/update/{id}', [CustomerOtherTypeofAssetController::class, 'update'])->name('other_type_of_assets.update');
     Route::delete('/other_type_of_assets/destroy/{id}', [CustomerOtherTypeofAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
