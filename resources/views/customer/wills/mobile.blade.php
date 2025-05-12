@@ -69,6 +69,13 @@
               <div id="dummy-text">
                 <b>You are ready to start.</b> It should take 10-20 minutes. You must complete your session in one go. If you pause or cancel your session, you will have to start again from Device Check.
               </div>
+               <p>You will be asked for the following things when recording a Will, so make sure to prepare these at the time of recording:</p>
+          <ol>
+            <li>General Information about you</li>
+            <li>General Information of your assets and liabilities</li>
+            <li>General Information of your executors</li>
+          </ol>
+          <br />
               <button id="start-button" class="btn btn-primary w-100 mb-3">Start</button>
 
               <div class="canvas-container" id="canvas-container">

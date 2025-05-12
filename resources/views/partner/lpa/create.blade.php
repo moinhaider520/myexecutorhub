@@ -56,6 +56,13 @@
                 <div id="dummy-text"><b>You are ready to start.</b> It should take 10-20 minutes. You must complete your
                   session in one go. If you pause or cancel your session you will have to start again from Device Check.
                 </div>
+                 <p>You will be asked for the following things when recording an LPA, so make sure to prepare these at the time of recording:</p>
+                <ol>
+                  <li>PHOTO ID (Driver License, Passport)</li>
+                  <li> Proof of Address - Utility Bills</li>
+                  <li>General Information about you</li>
+                </ol>
+                <br/>
                 <button id="start-button" class="btn btn-primary">Start</button>
 
                 <div class="canvas-container" id="canvas-container">
