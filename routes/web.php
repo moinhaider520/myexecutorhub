@@ -257,6 +257,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/partners/store', [PartnerController::class, 'store'])->name('partners.store');
     Route::post('/partners', [PartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
     Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
+    Route::get('/partners/{id}/view_refferals', [PartnerController::class, 'view_refferals'])->name('partners.view_refferals');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');
 
@@ -905,7 +906,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/foreign_assets/view', [OthersForeignAssetsController::class, 'view'])->name('foreign_assets.view');
     });
 
-    
+
     Route::middleware("permission:view funeral plan")->group(function () {
         Route::get('/funeral_plans/view', [OthersFuneralPlanController::class, 'view'])->name('funeral_plans.view');
     });

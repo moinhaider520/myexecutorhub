@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
+use App\Models\CouponUsage;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Helpers\EncryptionHelper;
@@ -22,6 +23,15 @@ class PartnerController extends Controller
     {
         $partners = User::role('partner')->get();
         return view('admin.partners.index', compact('partners'));
+    }
+
+    public function view_refferals($id)
+    {
+        $referredUsers = CouponUsage::with('user')
+            ->where('partner_id', $id)
+            ->latest()
+            ->get();
+        return view('admin.partners.view_refferals', compact('referredUsers'));
     }
 
     public function send_invite()
@@ -127,7 +137,7 @@ class PartnerController extends Controller
 
             Mail::to($request->email)->send(new CustomEmail(
                 [
-                    'subject' => 'You Have Been Invited to Executor Hub.', 
+                    'subject' => 'You Have Been Invited to Executor Hub.',
                     'message' => $message,
                 ],
                 'You Have Been Invited to Executor Hub.'

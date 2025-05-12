@@ -23,11 +23,11 @@ class DocumentsController extends Controller
     {
         $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
         $documents = Document::where('created_by', Auth::id())->get();
-    
+
         $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
-    
+
         return view('customer.documents.documents', compact('documents', 'documentTypes', 'usedDocumentTypes'));
-    }    
+    }
 
     public function store(Request $request)
     {
@@ -49,6 +49,7 @@ class DocumentsController extends Controller
                 'file_path' => $path,
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
+                'reminder_type' => $request->reminder_type,
             ]);
 
             // Check if onboarding_progress exists for the user
@@ -70,7 +71,7 @@ class DocumentsController extends Controller
                 'first_name' => $user->name,
                 'document_name' => $document->document_type,
             ];
-            
+
             // Send push notification
             if ($user->expo_token) {
                 $expo = new Expo();
@@ -96,7 +97,7 @@ class DocumentsController extends Controller
             'document_type' => 'required|string|max:255',
             'description' => 'required',
             'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
-            'reminder_date' => 'nullable|date', 
+            'reminder_date' => 'nullable|date',
         ]);
 
         try {
@@ -106,6 +107,8 @@ class DocumentsController extends Controller
 
             $document->document_type = $request->document_type;
             $document->description = $request->description;
+            $document->reminder_type = $request->edit_reminder_type;
+
             $document->created_by = Auth::id();
 
             if ($request->hasFile('file')) {
