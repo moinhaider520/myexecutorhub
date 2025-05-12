@@ -29,9 +29,9 @@ class DocumentsController extends Controller
         try {
             $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
             $documents = Document::where('created_by', Auth::id())->get();
-            
+
             $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
-            
+
             return response()->json([
                 'success' => true,
                 'documents' => $documents,
@@ -88,6 +88,7 @@ class DocumentsController extends Controller
             $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
+                'reminder_type' => $request->reminder_type,
                 'file_path' => $path,
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
@@ -112,7 +113,7 @@ class DocumentsController extends Controller
                 'first_name' => $user->name,
                 'document_name' => $document->document_type,
             ];
-            
+
             // Send push notification
             if ($user->expo_token) {
                 $expo = new Expo();
@@ -155,6 +156,7 @@ class DocumentsController extends Controller
 
             $document->document_type = $request->document_type;
             $document->description = $request->description;
+            $document->reminder_type = $request->reminder_type;
             $document->created_by = Auth::id();
 
             if ($request->hasFile('file')) {
@@ -189,7 +191,7 @@ class DocumentsController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             $document = Document::findOrFail($id);
             // Delete the file from the public/assets/upload directory
             $filePath = public_path('assets/upload/' . basename($document->file_path));
@@ -200,7 +202,7 @@ class DocumentsController extends Controller
             // Delete the document record
             $document->delete();
             DB::commit();
-            
+
             return response()->json(['success' => true, 'message' => 'Document deleted successfully.'], 200);
         } catch (\Exception $e) {
             DB::rollback();

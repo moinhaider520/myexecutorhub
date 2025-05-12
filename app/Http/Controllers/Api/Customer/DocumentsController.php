@@ -29,9 +29,9 @@ class DocumentsController extends Controller
         try {
             $documentTypes = DocumentTypes::where('created_by', Auth::id())->get();
             $documents = Document::where('created_by', Auth::id())->get();
-            
+
             $usedDocumentTypes = $documents->pluck('document_type')->unique()->toArray();
-            
+
             return response()->json([
                 'success' => true,
                 'documents' => $documents,
@@ -89,6 +89,7 @@ class DocumentsController extends Controller
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
+                'reminder_type' => $request->reminder_type,
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
             ]);
@@ -113,7 +114,7 @@ class DocumentsController extends Controller
                 'document_name' => $document->document_type,
             ];
 
-            
+
             // Send push notification
             if ($user->expo_token) {
                 $expo = new Expo();
@@ -156,6 +157,7 @@ class DocumentsController extends Controller
 
             $document->document_type = $request->document_type;
             $document->description = $request->description;
+            $document->reminder_type = $request->reminder_type;
             $document->created_by = Auth::id();
 
             if ($request->hasFile('file')) {

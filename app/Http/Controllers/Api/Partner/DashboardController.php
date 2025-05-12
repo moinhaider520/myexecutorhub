@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\CouponUsage;
 use App\Models\User;
 use App\Models\Document;
 use App\Models\BankAccount;
@@ -32,6 +33,11 @@ class DashboardController extends Controller
 
             $progress = OnboardingProgress::where('user_id', $user->id)->first();
 
+            $referredUsers = CouponUsage::with('user')
+            ->where('partner_id', $user->id)
+            ->latest()
+            ->get();
+
             $guide = [
                 'Add at Least One Executor' => $progress->executor_added ?? false,
                 'Add at Least One Bank Account' => $progress->bank_account_added ?? false,
@@ -49,6 +55,7 @@ class DashboardController extends Controller
                     'total_bank_balance' => $totalBankBalance,
                     'total_debt' => $totalDebt,
                     'guide' => $guide,
+                    'referredUsers' => $referredUsers
                 ]
             ], 200);
         } catch (\Exception $e) {
