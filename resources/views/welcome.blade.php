@@ -336,6 +336,9 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#features-11"
                                         class="h-link">Features</a></li>
 
+                                <li class="nl-simple" aria-haspopup="true"><a href="#roles"
+                                        class="h-link">Roles</a></li>
+
                                 <li class="nl-simple" aria-haspopup="true"><a href="#benefits-11"
                                         class="h-link">Benefits</a></li>
 
@@ -1152,7 +1155,7 @@
                                 <!-- QUESTION #2 -->
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>2.</span> Free Trial Customer?</h5>
+                                    <h5 class="s-22 w-700"><span>2.</span> Free Trial Customer</h5>
 
                                     <!-- Answer -->
                                     <p class="color--grey">A Free Trial Customer has access to all the functionalities
