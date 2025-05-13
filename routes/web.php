@@ -541,6 +541,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')->group(function () {
     Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
 
+    Route::post('/dashboard/update-reminder', [PartnerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');
     // LPA
     Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');

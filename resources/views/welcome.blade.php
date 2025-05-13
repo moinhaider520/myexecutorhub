@@ -336,8 +336,8 @@
                                 <li class="nl-simple" aria-haspopup="true"><a href="#features-11"
                                         class="h-link">Features</a></li>
 
-                                <li class="nl-simple" aria-haspopup="true"><a href="#roles"
-                                        class="h-link">Roles</a></li>
+                                <li class="nl-simple" aria-haspopup="true"><a href="#roles" class="h-link">Roles</a>
+                                </li>
 
                                 <li class="nl-simple" aria-haspopup="true"><a href="#benefits-11"
                                         class="h-link">Benefits</a></li>
@@ -994,6 +994,58 @@
         </section>
         <!-- END TEXT CONTENT -->
 
+        <!-- TEXT CONTENT
+			============================================= -->
+        <section class="pt-100 ct-01 content-section division">
+            <div class="container">
+                <!-- SECTION CONTENT (ROW) -->
+                <div class="row d-flex align-items-center">
+                    <!-- TEXT BLOCK -->
+                    <div class="col-md-6 order-last order-md-2">
+                        <div class="txt-block left-column wow fadeInRight">
+                            <!-- Section ID -->
+                            <span class="section-id">Easy Onboarding</span>
+
+                            <!-- Title -->
+                            <h2 class="s-46 w-700">Achieve more with better workflows</h2>
+
+                            <!-- Text -->
+                            <p>
+                                Executor Hub allows a user-friendly interface for managing your documents, executors and
+                                assets. You can easily login to the portal at any time and get your work done with ease.
+                            </p>
+
+                            <!-- Small Title -->
+                            <h5 class="s-24 w-700">Get more done in less time</h5>
+
+                            <!-- List -->
+                            <ul class="simple-list">
+                                <li class="list-item">
+                                    <p>Easy to use portal with runtime configurations.</p>
+                                </li>
+
+                                <li class="list-item">
+                                    <p class="mb-0">Easily accessible from anywhere, anytime.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END TEXT BLOCK -->
+
+                    <!-- IMAGE BLOCK -->
+                    <div class="col-md-6 order-first order-md-2">
+                        <div class="img-block right-column wow fadeInLeft">
+                            <img class="img-fluid" src="{{asset('assets/frontend/images/onboarding.png')}}"
+                                alt="content-image" />
+                        </div>
+                    </div>
+                </div>
+                <!-- END SECTION CONTENT (ROW) -->
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- END TEXT CONTENT -->
+
 
         <section id="pricing-1" style="margin-top:50px;" class="gr--whitesmoke pb-40 inner-page-hero pricing-section">
             <div class="container">
@@ -1593,63 +1645,6 @@
 
 
 
-        <!-- TEXT CONTENT
-			============================================= -->
-        <section class="pt-100 ct-01 content-section division">
-            <div class="container">
-                <!-- SECTION CONTENT (ROW) -->
-                <div class="row d-flex align-items-center">
-                    <!-- TEXT BLOCK -->
-                    <div class="col-md-6 order-last order-md-2">
-                        <div class="txt-block left-column wow fadeInRight">
-                            <!-- Section ID -->
-                            <span class="section-id">Easy Onboarding</span>
-
-                            <!-- Title -->
-                            <h2 class="s-46 w-700">Achieve more with better workflows</h2>
-
-                            <!-- Text -->
-                            <p>
-                                Executor Hub allows a user-friendly interface for managing your documents, executors and
-                                assets. You can easily login to the portal at any time and get your work done with ease.
-                            </p>
-
-                            <!-- Small Title -->
-                            <h5 class="s-24 w-700">Get more done in less time</h5>
-
-                            <!-- List -->
-                            <ul class="simple-list">
-                                <li class="list-item">
-                                    <p>Easy to use portal with runtime configurations.</p>
-                                </li>
-
-                                <li class="list-item">
-                                    <p class="mb-0">Easily accessible from anywhere, anytime.</p>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- END TEXT BLOCK -->
-
-                    <!-- IMAGE BLOCK -->
-                    <div class="col-md-6 order-first order-md-2">
-                        <div class="img-block right-column wow fadeInLeft">
-                            <img class="img-fluid" src="{{asset('assets/frontend/images/onboarding.png')}}"
-                                alt="content-image" />
-                        </div>
-                    </div>
-                </div>
-                <!-- END SECTION CONTENT (ROW) -->
-            </div>
-            <!-- End container -->
-        </section>
-        <!-- END TEXT CONTENT -->
-
-
-
-
-
-
         <!-- MODAL WINDOW (REQUEST FORM)
 			============================================= -->
         <div id="modal-3" class="modal auto-off fade" tabindex="-1" role="dialog" aria-labelledby="modal-3">
@@ -1740,6 +1735,8 @@
                                 </div>
                             </div>
                         </div>
+
+                        <h2 class="text-center mb-4">Empowering Executors, ensuring legacies.</h2>
 
                         <!-- IMAGE BLOCK -->
                         <div class="row justify-content-center">
