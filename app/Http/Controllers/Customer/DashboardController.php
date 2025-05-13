@@ -8,6 +8,9 @@ use App\Models\OnboardingProgress;
 use App\Models\Document;
 use App\Models\BankAccount;
 use App\Models\DebtAndLiability;
+use App\Models\DocumentReminder;
+use App\Models\DocumentTypes;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -39,12 +42,83 @@ class DashboardController extends Controller
             'Upload at Least One Picture' => $progress->picture_uploaded ?? false,
         ];
 
+        // Get all document types (system defined + user custom types)
+        $defaultTypes = [
+            "Property deeds and titles",
+            "Tax returns and tax documents",
+            "Loan agreements",
+            "Business contracts",
+            "DEEDS",
+            "Life insurance",
+            "Mortgage",
+            "Draft Document",
+            "Will",
+            "Foreign Wills",
+            "Will register certificate",
+            "Will commentary",
+            "Glossary",
+            "Will clarity statement",
+            "Trust",
+            "Lasting power of attorney property & finance",
+            "Lasting power of attorney health & welfare",
+            "Advanced directive property & finance",
+            "Advance directive health & welfare",
+            "Letter of exclusion",
+            "Memorandum of wishes"
+        ];
+        
+        $customTypes = DocumentTypes::where('created_by', $user->id)->pluck('name')->toArray();
+        $allDocumentTypes = array_merge($defaultTypes, $customTypes);
+        
+        // Get uploaded document types for the user
+        $uploadedDocumentTypes = Document::where('created_by', $user->id)
+            ->pluck('document_type')
+            ->unique()
+            ->toArray();
+            
+        // Get reminders set by the user
+        $documentReminders = DocumentReminder::where('user_id', $user->id)
+            ->pluck('frequency', 'document_type')
+            ->toArray();
+            
         return view('customer.dashboard', compact(
             'totalExecutors',
             'totalDocuments',
             'totalBankBalance',
             'totalDebt',
-            'guide'
+            'guide',
+            'allDocumentTypes',
+            'uploadedDocumentTypes',
+            'documentReminders'
         ));
+    }
+    
+    /**
+     * Update document reminder settings.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateDocumentReminder(Request $request)
+    {
+        $request->validate([
+            'document_type' => 'required|string',
+            'frequency' => 'required|in:weekly,fortnightly,monthly,quarterly,annually,not_required',
+        ]);
+        
+        $user = Auth::user();
+        
+        DocumentReminder::updateOrCreate(
+            [
+                'user_id' => $user->id,
+                'document_type' => $request->document_type,
+            ],
+            [
+                'frequency' => $request->frequency,
+                'last_reminded_at' => now(),
+            ]
+        );
+        
+        return response()->json(['success' => true]);
     }
 }

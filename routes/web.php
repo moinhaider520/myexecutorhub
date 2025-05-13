@@ -277,6 +277,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
 
+    // New routes for document reminders
+    Route::post('/dashboard/update-reminder', [CustomerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');
     // LPA
     Route::get('lpa', [LPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [LPAController::class, 'create'])->name('lpa.create');

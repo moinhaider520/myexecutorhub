@@ -27,7 +27,7 @@
         <div class="row widget-grid">
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
                 <div class="row">
-                <div class="col-xl-6 col-sm-6">
+                    <div class="col-xl-6 col-sm-6">
                         <div class="card">
                             <div class="card-body student">
                                 <div class="d-flex gap-2 align-items-end">
@@ -52,7 +52,7 @@
                                         </div>
                                     </div>
                                     <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
-                                    alt=""></div>
+                                            alt=""></div>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +89,123 @@
             </div>
         </div>
     </div>
+
+    <!-- Document Reminders Section -->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Document Status & Reminders</h4>
+                        <span>Get reminders for documents you need to upload</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive theme-scrollbar">
+                            <table class="display dataTable no-footer" id="document-reminders-table">
+                                <thead>
+                                    <tr>
+                                        <th>Document Type</th>
+                                        <th>Status</th>
+                                        <th>Reminder Frequency</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($allDocumentTypes as $documentType)
+                                    <tr>
+                                        <td>{{ $documentType }}</td>
+                                        <td>
+                                            @if(in_array($documentType, $uploadedDocumentTypes))
+                                            <span class="badge badge-success">Uploaded</span>
+                                            @else
+                                            <span class="badge badge-danger">Not Uploaded</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <select class=" reminder-frequency"
+                                                data-document-type="{{ $documentType }}"
+                                                {{ in_array($documentType, $uploadedDocumentTypes) ? 'disabled' : '' }}>
+                                                <option value="not_required" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'not_required' ? 'selected' : '' }}>Not Required</option>
+                                                <option value="weekly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'weekly' ? 'selected' : '' }}>Weekly</option>
+                                                <option value="fortnightly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'fortnightly' ? 'selected' : '' }}>Fortnightly</option>
+                                                <option value="monthly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                                <option value="quarterly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'quarterly' ? 'selected' : '' }}>Quarterly</option>
+                                                <option value="annually" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'annually' ? 'selected' : '' }}>Annually</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            @if(!in_array($documentType, $uploadedDocumentTypes))
+                                            <a href="{{ route('customer.documents.view') }}" class="btn btn-success btn-sm">
+                                                Upload Document
+                                            </a>
+                                            @else
+                                            <a href="{{ route('customer.documents.view') }}" class="btn btn-info btn-sm">
+                                                View Document
+                                            </a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Container-fluid Ends-->
 </div>
+
+<!-- Scripts for Document Reminders -->
+ <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+    $(document).ready(function() {
+        // Enable table sorting
+        $('#document-reminders-table').DataTable({
+            "ordering": true,
+            "paging": true,
+            "searching": true
+        });
+
+        // Handle reminder frequency changes
+        $('.reminder-frequency').on('change', function() {
+            const documentType = $(this).data('document-type');
+            const frequency = $(this).val();
+
+            $.ajax({
+                url: "{{ route('customer.dashboard.update-reminder') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    document_type: documentType,
+                    frequency: frequency
+                },
+                success: function(response) {
+                    if (response.success) {
+                        // Show success notification
+                        Toastify({
+                            text: "Reminder settings updated successfully!",
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            backgroundColor: "#4caf50"
+                        }).showToast();
+                    }
+                },
+                error: function(xhr) {
+                    // Show error notification
+                    Toastify({
+                        text: "Error updating reminder settings",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#f44336"
+                    }).showToast();
+                }
+            });
+        });
+    });
+</script>
+
 @endsection
