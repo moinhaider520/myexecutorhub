@@ -963,6 +963,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::middleware("permission:view life remembered")->group(function () {
+        Route::get('/life_remembered_videos/view', [OthersLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
         Route::get('/life-remembered', [OthersLifeRememberedController::class, 'view'])->name('life_remembered.view');
     });
 
