@@ -20,7 +20,7 @@
                         <tr role="row">
                           <th>Sr</th>
                           <th>Description</th>
-                          <th>Files</th>
+                          <th>Pictures</th>
                         </tr>
                       </thead>
                       <tbody>

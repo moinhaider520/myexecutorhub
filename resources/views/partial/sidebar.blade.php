@@ -377,7 +377,7 @@
                             <span>Life Remembered </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.life_remembered.view') }}">Manage Notes</a></li>
+                            <li><a href="{{ route('partner.life_remembered.view') }}">Manage Pictures</a></li>
                             <li><a href="{{ route('partner.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>
@@ -695,7 +695,7 @@
                             <span>Life Remembered </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.life_remembered.view') }}">Manage Notes</a></li>
+                            <li><a href="{{ route('customer.life_remembered.view') }}">Manage Pictures</a></li>
                             <li><a href="{{ route('customer.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>
@@ -960,7 +960,7 @@
                             <span>Life Remembered </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('executor.life_remembered.view') }}">Manage Notes</a></li>
+                            <li><a href="{{ route('executor.life_remembered.view') }}">Manage Pictures</a></li>
                             <li><a href="{{ route('executor.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>
@@ -1204,7 +1204,7 @@
                             <span>Life Remembered</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('life_remembered.view') }}">Manage Notes</a></li>
+                            <li><a href="{{ route('life_remembered.view') }}">Manage Pictures</a></li>
                             @can('view voice notes')
                             <li><a href="{{ route('voice_notes.view') }}">Manage Voice Notes</a></li>
                             @endcan

@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDocumentModal">
-              Add Notes
+              Add Pictures
             </button>
           </div>
         </div>
@@ -27,7 +27,7 @@
                         <tr role="row">
                           <th>Sr</th>
                           <th>Description</th>
-                          <th>Files</th>
+                          <th>Pictures</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -103,8 +103,8 @@
             <span class="text-danger" id="description_error"></span>
           </div>
           <div class="form-group mb-4">
-            <label for="file">Upload Pictures/Videos</label>
-            <input type="file" class="form-control" name="file[]" id="file" accept="image/*,video/*" multiple>
+            <label for="file">Upload Pictures</label>
+            <input type="file" class="form-control" name="file[]" id="file" accept="image/*" multiple>
             <span class="text-danger" id="file_error"></span>
           </div>
           <div class="modal-footer">
@@ -136,7 +136,7 @@
             <span class="text-danger" id="edit_description_error"></span>
           </div>
           <div class="form-group mb-4" id="existingMediaSection" style="display: none;">
-            <label>Existing Files</label>
+            <label>Existing Pictures</label>
             <div class="row" id="mediaPreviewContainer"></div>
           </div>
 
