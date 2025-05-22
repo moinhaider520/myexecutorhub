@@ -35,6 +35,7 @@ use App\Http\Controllers\Partner\WishesController as PartnerWishesController;
 use App\Http\Controllers\Partner\MemorandumWishController as PartnerMemorandumWishController;
 use App\Http\Controllers\Partner\GuidanceController as PartnerGuidanceController;
 use App\Http\Controllers\Partner\LifeRememberedController as PartnerLifeRememberedController;
+use App\Http\Controllers\Partner\LifeRememberedVideoController as PartnerLifeRememberedVideoController;
 use App\Http\Controllers\Partner\AdvisorsController as PartnerAdvisorsController;
 use App\Http\Controllers\Partner\ExecutorsController as PartnerExecutorsController;
 use App\Http\Controllers\Partner\OrgansDonationController as PartnerOrgansDonationController;
@@ -76,6 +77,7 @@ use App\Http\Controllers\Customer\WishesController;
 use App\Http\Controllers\Customer\MemorandumWishController;
 use App\Http\Controllers\Customer\GuidanceController;
 use App\Http\Controllers\Customer\LifeRememberedController;
+use App\Http\Controllers\Customer\LifeRememberedVideoController;
 use App\Http\Controllers\Customer\AdvisorsController;
 use App\Http\Controllers\Customer\ExecutorsController;
 use App\Http\Controllers\Customer\OrgansDonationController;
@@ -96,6 +98,7 @@ use App\Http\Controllers\Customer\FuneralWakeController;
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
+use App\Http\Controllers\Executor\LifeRememberedVideoController as ExecutorLifeRememberedVideoController;
 use App\Http\Controllers\Executor\WishesController as ExecutorWishesController;
 use App\Http\Controllers\Executor\MemorandumWishController as ExecutorMemorandumWishController;
 use App\Http\Controllers\Executor\GuidanceController as ExecutorGuidanceController;
@@ -152,6 +155,7 @@ use App\Http\Controllers\Others\DocumentsController as OthersDocumentsController
 use App\Http\Controllers\Others\PictureController as OthersPictureController;
 use App\Http\Controllers\Others\VideoController as OthersVideoController;
 use App\Http\Controllers\Others\LifeRememberedController as OthersLifeRememberedController;
+use App\Http\Controllers\Others\LifeRememberedVideoController as OthersLifeRememberedVideoController;
 use App\Http\Controllers\Others\AdvisorsController as OthersAdvisorsController;
 use App\Http\Controllers\Others\ExecutorsController as OthersExecutorsController;
 use App\Http\Controllers\Others\OrgansDonationController as OthersOrgansDonationController;
@@ -321,6 +325,14 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/life_remembered/update', [LifeRememberedController::class, 'update'])->name('life_remembered.update');
     Route::post('/life_remembered/update/{id}', [LifeRememberedController::class, 'update'])->name('life_remembered.update');
     Route::delete('/life_remembered/destroy/{id}', [LifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
+
+    // Customer Life Remembered Videos
+    Route::get('/life_remembered_videos/view', [LifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::post('/life_remembered_videos/store', [LifeRememberedVideoController::class, 'store'])->name('life_remembered_videos.store');
+    Route::get('/life_remembered_videos/{id}/media', [LifeRememberedVideoController::class, 'getMedia']);
+    Route::delete('/life_remembered_videos/media/{id}', [LifeRememberedVideoController::class, 'deleteMedia']);
+    Route::post('/life_remembered_videos/update/{id}', [LifeRememberedVideoController::class, 'update'])->name('life_remembered_videos.update');
+    Route::delete('/life_remembered_videos/destroy/{id}', [LifeRememberedVideoController::class, 'destroy'])->name('life_remembered_videos.destroy');
 
     // Customer Wishes
     Route::get('/wishes/view', [WishesController::class, 'view'])->name('wishes.view');
@@ -585,6 +597,13 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/life_remembered/update/{id}', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
     Route::delete('/life_remembered/destroy/{id}', [PartnerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
+    // Partner Life Remembered Videos
+    Route::get('/life_remembered_videos/view', [PartnerLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::post('/life_remembered_videos/store', [PartnerLifeRememberedVideoController::class, 'store'])->name('life_remembered_videos.store');
+    Route::get('/life_remembered_videos/{id}/media', [PartnerLifeRememberedVideoController::class, 'getMedia']);
+    Route::delete('/life_remembered_videos/media/{id}', [PartnerLifeRememberedVideoController::class, 'deleteMedia']);
+    Route::post('/life_remembered_videos/update/{id}', [PartnerLifeRememberedVideoController::class, 'update'])->name('life_remembered_videos.update');
+    Route::delete('/life_remembered_videos/destroy/{id}', [PartnerLifeRememberedVideoController::class, 'destroy'])->name('life_remembered_videos.destroy');
 
     // Partner Wishes
     Route::get('/wishes/view', [PartnerWishesController::class, 'view'])->name('wishes.view');
@@ -831,6 +850,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
 
     // Executors View Routes
     Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::get('/life_remembered_videos/view', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
     Route::get('/wishes/view', [ExecutorWishesController::class, 'view'])->name('wishes.view');
     Route::get('/memorandum_wishes/view', [ExecutorMemorandumWishController::class, 'view'])->name('memorandum_wishes.view');
     Route::get('/guidance/view', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');

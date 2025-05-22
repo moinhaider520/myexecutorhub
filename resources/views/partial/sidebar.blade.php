@@ -378,6 +378,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.life_remembered.view') }}">Manage Pictures</a></li>
+                            <li><a href="{{ route('partner.life_remembered_videos.view') }}">Manage Videos</a></li>
                             <li><a href="{{ route('partner.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>
@@ -696,6 +697,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.life_remembered.view') }}">Manage Pictures</a></li>
+                            <li><a href="{{ route('customer.life_remembered_videos.view') }}">Manage Videos</a></li>
                             <li><a href="{{ route('customer.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>
@@ -961,6 +963,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.life_remembered.view') }}">Manage Pictures</a></li>
+                            <li><a href="{{ route('customer.life_remembered_videos.view') }}">Manage Videos</a></li>
                             <li><a href="{{ route('executor.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>

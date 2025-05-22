@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Executor;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\LifeRemembered;
 use Illuminate\Support\Facades\Auth;
 
