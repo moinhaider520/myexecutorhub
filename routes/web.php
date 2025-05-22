@@ -161,6 +161,7 @@ use App\Http\Controllers\Others\ReviewController as OthersReviewController;
 use App\Http\Controllers\Others\WithdrawalController as OthersWithdrawalController;
 
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TwoFactorController;
 
@@ -175,6 +176,13 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe/success', 'success')->name('stripe.success');
     Route::get('stripe/resubscribesuccess', 'resubscribesuccess')->name('stripe.resubscribesuccess');
     Route::post('subscription/cancel', 'cancelSubscription')->name('subscription.cancel');
+});
+
+Route::controller(PayPalController::class)->group(function () {
+    Route::get('paypal', 'index')->name('paypal');
+    Route::get('paypal/payment', 'payment')->name('paypal.payment');
+    Route::get('paypal/payment/success', 'paymentSuccess')->name('paypal.payment.success');
+    Route::get('paypal/payment/cancel', 'paymentCancel')->name('paypal.payment.cancel');
 });
 
 
