@@ -212,7 +212,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/documents/update/{id}', [PartnerDocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [PartnerDocumentsController::class, 'destroy'])->name('documents.destroy');
     Route::get('/documents/view/{document_type}', [PartnerDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
-    
+
     // Partner Funeral Plan Types
     Route::post('/funeral_plans/save_custom_type', [PartnerFuneralPlanController::class, 'saveCustomType'])->name('funeral_plans.save_custom_type');
     // Partner Funeral Plans
@@ -369,6 +369,13 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/life_remembered/update', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
     Route::post('/life_remembered/update/{id}', [PartnerLifeRememberedController::class, 'update'])->name('life_remembered.update');
     Route::delete('/life_remembered/destroy/{id}', [PartnerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
+
+    Route::get('/life_remembered_videos/view', [PartnerLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::post('/life_remembered_videos/store', [PartnerLifeRememberedVideoController::class, 'store'])->name('life_remembered_videos.store');
+    Route::get('/life_remembered_videos/{id}/media', [PartnerLifeRememberedVideoController::class, 'getMedia']);
+    Route::delete('/life_remembered_videos/media/{id}', [PartnerLifeRememberedVideoController::class, 'deleteMedia']);
+    Route::post('/life_remembered_videos/update/{id}', [PartnerLifeRememberedVideoController::class, 'update'])->name('life_remembered_videos.update');
+    Route::delete('/life_remembered_videos/destroy/{id}', [PartnerLifeRememberedVideoController::class, 'destroy'])->name('life_remembered_videos.destroy');
 
     Route::get('/voice-notes', [PartnerVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice-notes', [PartnerVoiceNotesController::class, 'store'])->name('voice_notes.store');
@@ -595,6 +602,13 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/life_remembered/update/{id}', [CustomerLifeRememberedController::class, 'update'])->name('life_remembered.update');
     Route::delete('/life_remembered/destroy/{id}', [CustomerLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
 
+    Route::get('/life_remembered_videos/view', [CustomerLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::post('/life_remembered_videos/store', [CustomerLifeRememberedVideoController::class, 'store'])->name('life_remembered_videos.store');
+    Route::get('/life_remembered_videos/{id}/media', [CustomerLifeRememberedVideoController::class, 'getMedia']);
+    Route::delete('/life_remembered_videos/media/{id}', [CustomerLifeRememberedVideoController::class, 'deleteMedia']);
+    Route::post('/life_remembered_videos/update/{id}', [CustomerLifeRememberedVideoController::class, 'update'])->name('life_remembered_videos.update');
+    Route::delete('/life_remembered_videos/destroy/{id}', [CustomerLifeRememberedVideoController::class, 'destroy'])->name('life_remembered_videos.destroy');
+
     Route::get('/voice-notes', [CustomerVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::post('/voice-notes', [CustomerVoiceNotesController::class, 'store'])->name('voice_notes.store');
     Route::delete('/voice-notes/{id}', [CustomerVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
@@ -661,6 +675,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
 
     Route::get('/wishes', [ExecutorWishesController::class, 'view'])->name('wishes.view');
     Route::get('/life-remembered', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::get('/life_remembered_videos/view', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
     Route::get('/voice-notes', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
     Route::get('/organs-donations', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
     Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
