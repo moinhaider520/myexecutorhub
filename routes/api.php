@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\Partner\DashboardController as PartnerDashboardCont
 use App\Http\Controllers\Api\Partner\GuidanceController as PartnerGuidanceController;
 use App\Http\Controllers\Api\Partner\WishesController as PartnerWishesController;
 use App\Http\Controllers\Api\Partner\LifeRememberedController as PartnerLifeRememberedController;
+use App\Http\Controllers\Api\Partner\LifeRememberedVideoController as PartnerLifeRememberedVideoController;
 use App\Http\Controllers\Api\Partner\VoiceNotesController as PartnerVoiceNotesController;
 use App\Http\Controllers\Api\Partner\OrgansDonationController as PartnerOrgansDonationController;
 use App\Http\Controllers\Api\Partner\BankAccountController as PartnerBankAccountController;
@@ -55,6 +56,7 @@ use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardCo
 use App\Http\Controllers\Api\Customer\GuidanceController as CustomerGuidanceController;
 use App\Http\Controllers\Api\Customer\WishesController as CustomerWishesController;
 use App\Http\Controllers\Api\Customer\LifeRememberedController as CustomerLifeRememberedController;
+use App\Http\Controllers\Api\Customer\LifeRememberedVideoController as CustomerLifeRememberedVideoController;
 use App\Http\Controllers\Api\Customer\VoiceNotesController as CustomerVoiceNotesController;
 use App\Http\Controllers\Api\Customer\OrgansDonationController as CustomerOrgansDonationController;
 use App\Http\Controllers\Api\Customer\BankAccountController as CustomerBankAccountController;
@@ -93,6 +95,7 @@ use App\Http\Controllers\Api\Executor\DashboardController as ExecutorDashboardCo
 use App\Http\Controllers\Api\Executor\GuidanceController as ExecutorGuidanceController;
 use App\Http\Controllers\Api\Executor\WishesController as ExecutorWishesController;
 use App\Http\Controllers\Api\Executor\LifeRememberedController as ExecutorLifeRememberedController;
+use App\Http\Controllers\Api\Executor\LifeRememberedVideoController as ExecutorLifeRememberedVideoController;
 use App\Http\Controllers\Api\Executor\VoiceNotesController as ExecutorVoiceNotesController;
 use App\Http\Controllers\Api\Executor\OrgansDonationController as ExecutorOrgansDonationController;
 use App\Http\Controllers\Api\Executor\BankAccountController as ExecutorBankAccountController;
