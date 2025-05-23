@@ -963,7 +963,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.life_remembered.view') }}">Manage Pictures</a></li>
-                            <li><a href="{{ route('customer.life_remembered_videos.view') }}">Manage Videos</a></li>
+                            <li><a href="{{ route('executor.life_remembered_videos.view') }}">Manage Videos</a></li>
                             <li><a href="{{ route('executor.voice_notes.view') }}">Manage Voice Notes</a></li>
                         </ul>
                     </li>

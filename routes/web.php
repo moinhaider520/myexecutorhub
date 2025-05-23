@@ -832,6 +832,8 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
 
     // Dashboard
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard/update-todo', [ExecutorDashboardController::class, 'updateTodoStatus'])->name('dashboard.update-todo');
+
     // Reviews
     Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
     Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
