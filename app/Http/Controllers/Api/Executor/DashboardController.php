@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Document;
 use App\Models\BankAccount;
 use App\Models\DebtAndLiability;
+use App\Models\DocumentLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 
@@ -31,6 +32,7 @@ class DashboardController extends Controller
             $totalDocuments = Document::where('created_by', $createdById)->count();
             $totalBankBalance = BankAccount::where('created_by', $createdById)->sum('balance');
             $totalDebt = DebtAndLiability::where('created_by', $createdById)->sum('amount_outstanding');
+            $documentLocations = DocumentLocation::where('created_by', $user->created_by)->get();
 
             // Return the data as a JSON response
             return response()->json([
@@ -40,6 +42,7 @@ class DashboardController extends Controller
                     'total_documents' => $totalDocuments,
                     'total_bank_balance' => $totalBankBalance,
                     'total_debt' => $totalDebt,
+                    'documentLocations', $documentLocations
                 ]
             ], 200);
         } catch (\Exception $e) {

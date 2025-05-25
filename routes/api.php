@@ -178,8 +178,11 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/profile/update', [PartnerProfileController::class, 'update_profile'])->name('profile.update');
     Route::post('/profile/picture', [PartnerProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [PartnerProfileController::class, 'update_password'])->name('profile.update.password');
-    Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard/store-location', [PartnerDashboardController::class, 'storeDocumentLocation'])->name('dashboard.store-location');
+    Route::post('/dashboard/update-location/{id}', [PartnerDashboardController::class, 'updateLocation'])->name('dashboard.update-location');
+    Route::delete('/dashboard/delete-location/{id}', [PartnerDashboardController::class, 'deleteLocation'])->name('dashboard.delete-location');
 
     // Partner Withdraw
     Route::get('/withdraw', [PartnerWithdrawalController::class, 'view'])->name('withdraw.view');
@@ -418,7 +421,11 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/profile/update', [CustomerProfileController::class, 'update_profile'])->name('profile.update');
     Route::post('/profile/picture', [CustomerProfileController::class, 'picture_update'])->name('profile.picture');
     Route::post('/profile/change/password', [CustomerProfileController::class, 'update_password'])->name('profile.update.password');
+
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard/store-location', [CustomerDashboardController::class, 'storeDocumentLocation'])->name('dashboard.store-location');
+    Route::post('/dashboard/update-location/{id}', [CustomerDashboardController::class, 'updateLocation'])->name('dashboard.update-location');
+    Route::delete('delete-location/{id}', [CustomerDashboardController::class, 'deleteLocation'])->name('dashboard.delete-location');
 
     // Customer Withdraw
     Route::get('/withdraw', [CustomerWithdrawalController::class, 'view'])->name('withdraw.view');

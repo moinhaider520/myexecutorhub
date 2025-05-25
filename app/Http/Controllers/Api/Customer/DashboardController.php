@@ -8,8 +8,11 @@ use App\Models\Document;
 use App\Models\BankAccount;
 use App\Models\OnboardingProgress;
 use App\Models\DebtAndLiability;
+use App\Models\DocumentLocation;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -21,10 +24,8 @@ class DashboardController extends Controller
     public function index()
     {
         try {
-            // Get the currently authenticated user
             $user = Auth::user();
 
-            // Fetch totals specific to the authenticated user
             $totalExecutors = User::role('executor')->where('created_by', $user->id)->count();
             $totalDocuments = Document::where('created_by', $user->id)->count();
             $totalBankBalance = BankAccount::where('created_by', $user->id)->sum('balance');
@@ -40,7 +41,8 @@ class DashboardController extends Controller
                 'Upload at Least One Document' => $progress->document_uploaded ?? false,
             ];
 
-            // Return the data as a JSON response
+            $documentLocations = DocumentLocation::where('created_by', $user->id)->get();
+
             return response()->json([
                 'success' => true,
                 'data' => [
@@ -49,13 +51,117 @@ class DashboardController extends Controller
                     'total_bank_balance' => $totalBankBalance,
                     'total_debt' => $totalDebt,
                     'guide' => $guide,
+                    'document_locations' => $documentLocations,
                 ]
-            ], 200);
+            ]);
         } catch (\Exception $e) {
-            // Handle errors and return a response
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve dashboard data',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Store a new document location.
+     */
+    public function storeDocumentLocation(Request $request): JsonResponse
+    {
+        $request->validate([
+            'location' => 'required|string|max:255',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $location = DocumentLocation::create([
+                'created_by' => Auth::id(),
+                'location' => $request->location,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Document location added successfully.',
+                'data' => $location,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to add location. Please try again.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Update a document location.
+     */
+    public function updateDocumentLocation(Request $request, $id): JsonResponse
+    {
+        $request->validate([
+            'location' => 'required|string|max:255',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $location = DocumentLocation::where('id', $id)
+                ->where('created_by', Auth::id())
+                ->firstOrFail();
+
+            $location->update([
+                'location' => $request->location,
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Location updated successfully.',
+                'data' => $location,
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update location. Please try again.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    /**
+     * Delete a document location.
+     */
+    public function deleteDocumentLocation($id): JsonResponse
+    {
+        DB::beginTransaction();
+
+        try {
+            $location = DocumentLocation::where('id', $id)
+                ->where('created_by', Auth::id())
+                ->firstOrFail();
+
+            $location->delete();
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Location deleted successfully.',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete location. Please try again.',
                 'error' => $e->getMessage(),
             ], 500);
         }
