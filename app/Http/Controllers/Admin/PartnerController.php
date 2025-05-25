@@ -64,6 +64,7 @@ class PartnerController extends Controller
             'city' => 'required',
             'postal_code' => 'required|numeric',
             'contact_number' => 'required',
+            'access_type' => 'required|in:Friends & Family,Collaborator',
         ]);
 
         $couponCode = $request->name . strtoupper(uniqid());
@@ -78,6 +79,7 @@ class PartnerController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
+                'access_type' => $request->access_type, 
                 'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
@@ -178,6 +180,7 @@ class PartnerController extends Controller
             'city' => 'required',
             'postal_code' => 'required|numeric',
             'contact_number' => 'required',
+            'access_type' => 'required|in:Friends & Family,Collaborator',
         ]);
 
         try {
@@ -191,6 +194,7 @@ class PartnerController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
+                'access_type' => $request->access_type, 
             ]);
 
             DB::commit();

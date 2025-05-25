@@ -25,6 +25,7 @@
                                                         <th>Email</th>
                                                         <th>Address</th>
                                                         <th>Contact Number</th>
+                                                        <th>Access Type</th> <!-- New Column -->
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -36,6 +37,7 @@
                                                             <td>{{ $partner->email ?? 'N/A' }}</td>
                                                             <td>{{ $partner->address ?? 'N/A' }}</td>
                                                             <td>{{ $partner->phone_number ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->access_type ?? 'N/A' }}</td>
                                                             <td>
                                                                 <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
                                                                     class="btn btn-primary btn-sm">View Refferals</a>

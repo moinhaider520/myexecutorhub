@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('city')->nullable();
             $table->string('postal_code')->nullable();
             $table->string('contact_number')->nullable();
+            $table->string('access_type')->nullable();
             $table->string('relationship')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('title')->nullable();
@@ -43,10 +44,10 @@ return new class extends Migration
             $table->string('expo_token')->nullable(); // Expo token
             $table->string('user_role')->nullable(); // This field is for cron job purpose only
             $table->timestamp('last_login')->nullable()->useCurrent(); // Default to current timestamp
-            $table->string('two_factor_code')->nullable(); 
-            $table->string('two_factor_expires_at')->nullable(); 
-            $table->string('stripe_customer_id')->nullable(); 
-            $table->string('stripe_subscription_id')->nullable(); 
+            $table->string('two_factor_code')->nullable();
+            $table->string('two_factor_expires_at')->nullable();
+            $table->string('stripe_customer_id')->nullable();
+            $table->string('stripe_subscription_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
