@@ -90,6 +90,98 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4>Location of My Documents</h4>
+                            <span>Add and manage storage locations</span>
+                        </div>
+                        <form method="POST" action="{{ route('customer.dashboard.store-location') }}" class="d-flex">
+                            @csrf
+                            <input type="text" name="location" class="form-control me-2" placeholder="Add new location" required>
+                            @error('location')
+                            <div class="invalid-feedback d-block">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        @if($documentLocations->isEmpty())
+                        <p>No locations added yet.</p>
+                        @else
+                        <div class="table-responsive theme-scrollbar">
+                            <table class="display dataTable no-footer" id="document-locations-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Location</th>
+                                        <th>Added At</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($documentLocations as $index => $location)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $location->location }}</td>
+                                        <td>{{ $location->created_at->format('d M Y, H:i') }}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-sm btn-warning edit-location-button"
+                                                data-toggle="modal" data-target="#editLocationModal"
+                                                data-id="{{ $location->id }}"
+                                                data-location="{{ $location->location }}">Edit</button>
+
+                                            <form action="{{ route('customer.dashboard.delete-location', $location->id) }}" method="POST" style="display: inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this location?')">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT LOCATION MODAL -->
+    <div class="modal fade" id="editLocationModal" tabindex="-1" role="dialog" aria-labelledby="editLocationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLocationModalLabel">Edit Location</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="editLocationForm">
+                        @csrf
+                        @method('POST')
+                        <input type="hidden" name="id" id="editLocationId">
+                        <div class="form-group mb-2">
+                            <label for="editLocation">Location</label>
+                            <input type="text" class="form-control" name="location" id="editLocation"
+                                placeholder="Enter location" required>
+                            <span class="text-danger" id="edit_location_error"></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateLocation">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Document Reminders Section -->
     <div class="container">
         <div class="row">
@@ -158,7 +250,10 @@
 </div>
 
 <!-- Scripts for Document Reminders -->
- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script>
     $(document).ready(function() {
         // Enable table sorting
@@ -167,6 +262,13 @@
             "paging": true,
             "searching": true
         });
+
+        $('#document-locations-table').DataTable({
+            "ordering": true,
+            "paging": true,
+            "searching": true
+        });
+
 
         // Handle reminder frequency changes
         $('.reminder-frequency').on('change', function() {
@@ -205,6 +307,58 @@
                 }
             });
         });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Handle edit button click to populate modal
+        $('.edit-location-button').on('click', function() {
+            var id = $(this).data('id');
+            var location = $(this).data('location');
+
+            $('#editLocationId').val(id);
+            $('#editLocation').val(location);
+        });
+
+        // Handle update location
+        $('#updateLocation').on('click', function() {
+            var id = $('#editLocationId').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/customer/dashboard/update-location/' + id,
+                data: $('#editLocationForm').serialize(),
+                success: function(response) {
+                    Toastify({
+                        text: "Location updated successfully!",
+                        duration: 3000,
+                        gravity: "top",
+                        position: "right",
+                        backgroundColor: "#4caf50"
+                    }).showToast();
+
+                    // Optional: reload after short delay to let user see toast
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function(response) {
+                    var errors = response.responseJSON.errors;
+                    if (errors && errors.location) {
+                        $('#edit_location_error').text(errors.location[0]);
+                    } else {
+                        Toastify({
+                            text: "Failed to update location",
+                            duration: 3000,
+                            gravity: "top",
+                            position: "right",
+                            backgroundColor: "#f44336"
+                        }).showToast();
+                    }
+                }
+            });
+        });
+
     });
 </script>
 

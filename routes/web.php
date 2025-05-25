@@ -95,6 +95,7 @@ use App\Http\Controllers\Customer\LPAController;
 use App\Http\Controllers\Customer\WillController;
 use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
+
 // Role Executor Controller 
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
@@ -291,6 +292,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // New routes for document reminders
     Route::post('/dashboard/update-reminder', [CustomerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');
+    Route::post('/dashboard/store-location', [CustomerDashboardController::class, 'storeDocumentLocation'])->name('dashboard.store-location');
+    Route::post('/dashboard/update-location/{id}', [CustomerDashboardController::class, 'updateLocation'])->name('dashboard.update-location');
+    Route::delete('delete-location/{id}', [CustomerDashboardController::class, 'deleteLocation'])->name('dashboard.delete-location');
+
     // LPA
     Route::get('lpa', [LPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [LPAController::class, 'create'])->name('lpa.create');
@@ -562,6 +567,9 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
 
     Route::post('/dashboard/update-reminder', [PartnerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');
+    Route::post('/dashboard/store-location', [PartnerDashboardController::class, 'storeDocumentLocation'])->name('dashboard.store-location');
+    Route::post('/dashboard/update-location/{id}', [PartnerDashboardController::class, 'updateLocation'])->name('dashboard.update-location');
+    Route::delete('/dashboard/delete-location/{id}', [PartnerDashboardController::class, 'deleteLocation'])->name('dashboard.delete-location');
     // LPA
     Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');

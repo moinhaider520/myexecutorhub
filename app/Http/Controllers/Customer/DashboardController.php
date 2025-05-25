@@ -10,8 +10,10 @@ use App\Models\BankAccount;
 use App\Models\DebtAndLiability;
 use App\Models\DocumentReminder;
 use App\Models\DocumentTypes;
+use App\Models\DocumentLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -32,6 +34,7 @@ class DashboardController extends Controller
         $totalDebt = DebtAndLiability::where('created_by', $user->id)->sum('amount_outstanding');
 
         $progress = OnboardingProgress::where('user_id', Auth::id())->first();
+        $documentLocations = DocumentLocation::where('created_by', $user->id)->get();
 
         $guide = [
             'Add at Least One Executor' => $progress->executor_added ?? false,
@@ -66,21 +69,21 @@ class DashboardController extends Controller
             "Letter of exclusion",
             "Memorandum of wishes"
         ];
-        
+
         $customTypes = DocumentTypes::where('created_by', $user->id)->pluck('name')->toArray();
         $allDocumentTypes = array_merge($defaultTypes, $customTypes);
-        
+
         // Get uploaded document types for the user
         $uploadedDocumentTypes = Document::where('created_by', $user->id)
             ->pluck('document_type')
             ->unique()
             ->toArray();
-            
+
         // Get reminders set by the user
         $documentReminders = DocumentReminder::where('user_id', $user->id)
             ->pluck('frequency', 'document_type')
             ->toArray();
-            
+
         return view('customer.dashboard', compact(
             'totalExecutors',
             'totalDocuments',
@@ -89,10 +92,12 @@ class DashboardController extends Controller
             'guide',
             'allDocumentTypes',
             'uploadedDocumentTypes',
-            'documentReminders'
+            'documentReminders',
+            'documentLocations'
+
         ));
     }
-    
+
     /**
      * Update document reminder settings.
      *
@@ -105,9 +110,9 @@ class DashboardController extends Controller
             'document_type' => 'required|string',
             'frequency' => 'required|in:weekly,fortnightly,monthly,quarterly,annually,not_required',
         ]);
-        
+
         $user = Auth::user();
-        
+
         DocumentReminder::updateOrCreate(
             [
                 'user_id' => $user->id,
@@ -118,7 +123,65 @@ class DashboardController extends Controller
                 'last_reminded_at' => now(),
             ]
         );
-        
+
         return response()->json(['success' => true]);
+    }
+
+    public function storeDocumentLocation(Request $request)
+    {
+        $request->validate([
+            'location' => 'required|string|max:255',
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            DocumentLocation::create([
+                'created_by' => Auth::id(),
+                'location' => $request->location,
+            ]);
+
+            DB::commit();
+            return redirect()->route('customer.dashboard')->with('success', 'Document location added successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to add location. Please try again.');
+        }
+    }
+
+
+    public function updateLocation(Request $request, $id)
+    {
+        $request->validate(['location' => 'required|string|max:255']);
+
+        DB::beginTransaction();
+
+        try {
+            $location = DocumentLocation::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+            $location->update(['location' => $request->location]);
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Location updated successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to update location. Please try again.');
+        }
+    }
+
+
+    public function deleteLocation($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            $location = DocumentLocation::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+            $location->delete();
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Location deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to delete location. Please try again.');
+        }
     }
 }

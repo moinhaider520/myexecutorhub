@@ -9,7 +9,8 @@ use App\Models\Document;
 use App\Models\User;
 use App\Models\ExecutorTodoStage;
 use App\Models\ExecutorTodoProgress;
-use Auth;
+use App\Models\DocumentLocation;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -29,18 +30,20 @@ class DashboardController extends Controller
         $totalDocuments = Document::where('created_by', $user->created_by)->count();
         $totalBankBalance = BankAccount::where('created_by', $user->created_by)->sum('balance');
         $totalDebt = DebtAndLiability::where('created_by', $user->created_by)->sum('amount_outstanding');
+        $documentLocations = DocumentLocation::where('created_by', $user->created_by)->get();
+
 
         // Fetch executor todo stages with items (both standard and advanced)
         $standardTodoStages = ExecutorTodoStage::with(['todoItems'])
             ->where('type', 'standard')
             ->orderBy('order')
             ->get();
-            
+
         $advancedTodoStages = ExecutorTodoStage::with(['todoItems'])
             ->where('type', 'advanced')
             ->orderBy('order')
             ->get();
-        
+
         // Load user progress for each todo item (Standard)
         foreach ($standardTodoStages as $stage) {
             foreach ($stage->todoItems as $todoItem) {
@@ -50,7 +53,7 @@ class DashboardController extends Controller
                     ->first();
             }
         }
-        
+
         // Load user progress for each todo item (Advanced)
         foreach ($advancedTodoStages as $stage) {
             foreach ($stage->todoItems as $todoItem) {
@@ -62,22 +65,22 @@ class DashboardController extends Controller
         }
 
         // Calculate todo statistics for both lists
-        $standardTotalItems = $standardTodoStages->sum(function($stage) {
+        $standardTotalItems = $standardTodoStages->sum(function ($stage) {
             return $stage->todoItems->count();
         });
 
-        $standardCompletedItems = $standardTodoStages->sum(function($stage) {
-            return $stage->todoItems->sum(function($item) {
+        $standardCompletedItems = $standardTodoStages->sum(function ($stage) {
+            return $stage->todoItems->sum(function ($item) {
                 return $item->currentUserProgress && $item->currentUserProgress->status === 'completed' ? 1 : 0;
             });
         });
 
-        $advancedTotalItems = $advancedTodoStages->sum(function($stage) {
+        $advancedTotalItems = $advancedTodoStages->sum(function ($stage) {
             return $stage->todoItems->count();
         });
 
-        $advancedCompletedItems = $advancedTodoStages->sum(function($stage) {
-            return $stage->todoItems->sum(function($item) {
+        $advancedCompletedItems = $advancedTodoStages->sum(function ($stage) {
+            return $stage->todoItems->sum(function ($item) {
                 return $item->currentUserProgress && $item->currentUserProgress->status === 'completed' ? 1 : 0;
             });
         });
@@ -97,7 +100,8 @@ class DashboardController extends Controller
             'standardCompletionPercentage',
             'advancedTotalItems',
             'advancedCompletedItems',
-            'advancedCompletionPercentage'
+            'advancedCompletionPercentage',
+            'documentLocations'
         ));
     }
 
