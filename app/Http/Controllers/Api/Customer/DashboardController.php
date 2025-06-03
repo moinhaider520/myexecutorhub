@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use App\Models\BusinessInterest;
+use App\Models\DigitalAsset;
+use App\Models\ForeignAssets;
+use App\Models\IntellectualProperty;
+use App\Models\InvestmentAccount;
+use App\Models\PersonalChattel;
+use App\Models\Property;
 
 class DashboardController extends Controller
 {
@@ -28,7 +35,15 @@ class DashboardController extends Controller
 
             $totalExecutors = User::role('executor')->where('created_by', $user->id)->count();
             $totalDocuments = Document::where('created_by', $user->id)->count();
-            $totalBankBalance = BankAccount::where('created_by', $user->id)->sum('balance');
+            $bankbalance = BankAccount::where('created_by', $user->id)->sum('balance');
+            $totalBusinessInterest = BusinessInterest::where('created_by', $user->id)->sum('share_value');
+            $totalDigitalAssets = DigitalAsset::where('created_by', $user->id)->sum('value');
+            $totalForeignAssets = ForeignAssets::where('created_by', $user->id)->sum('asset_value');
+            $totalInvestmentAccounts = InvestmentAccount::where('created_by', $user->id)->sum('balance');
+            $totalPersonalChattel = PersonalChattel::where('created_by', $user->id)->sum('value');
+            $totalProperty = Property::where('created_by', $user->id)->sum('value');
+
+            $totalBankBalance = $bankbalance + $totalBusinessInterest + $totalDigitalAssets + $totalForeignAssets + $totalInvestmentAccounts + $totalPersonalChattel + $totalProperty;
             $totalDebt = DebtAndLiability::where('created_by', $user->id)->sum('amount_outstanding');
 
             $progress = OnboardingProgress::where('user_id', $user->id)->first();
