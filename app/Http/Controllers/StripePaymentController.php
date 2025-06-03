@@ -34,149 +34,6 @@ class StripePaymentController extends Controller
     /**
      * Handle the Stripe payment.
      */
-    // public function stripePost(Request $request): RedirectResponse
-    // {
-    //     Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-
-    //     // Validate the required fields
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255',
-    //         'address_line1' => 'required|string|max:255',
-    //         'city' => 'required|string|max:255',
-    //         'postal_code' => 'required|string|max:10',
-    //         'country' => 'required|string|max:255',
-    //         'plan' => 'required|numeric|min:8',
-    //         'password' => 'required_if:user_type,new|nullable|string|min:8',
-    //         'coupon_code' => 'nullable|string', // Optional coupon code
-    //     ]);
-
-    //     $user = null;
-
-    //     // Check if the user is an existing user
-    //     if ($request->user_type === 'existing') {
-    //         // Check if the email exists in the database
-    //         $user = User::where('email', $request->email)->first();
-
-    //         if (!$user) {
-    //             return back()->with('stripe_error', 'Email not found in the system.');
-    //         }
-
-    //         // Check if the coupon code has been used by this user
-    //         if ($request->filled('coupon_code') && $user->coupon_code === $request->input('coupon_code')) {
-    //             return back()->with('stripe_error', 'You cannot use your own coupon code.');
-    //         }
-    //     }
-
-    //     // Handle new user registration
-    //     if ($request->user_type === 'new') {
-    //         // Generate a unique coupon code
-    //         $couponCode = 'COUPON-' . strtoupper(uniqid());
-
-    //         // Register the user
-    //         $user = User::create([
-    //             'name' => $request->name,
-    //             'email' => $request->email,
-    //             'password' => bcrypt($request->password),
-    //             'trial_ends_at' => now()->addDays(7), // Set trial end date to 7 days from now
-    //             'subscribed_package' => "free_trial",
-    //             'user_role' => 'customer',
-    //             'coupon_code' => $couponCode, // Store the generated coupon code
-    //         ])->assignRole('customer');
-    //     }
-
-    //     // Check if a valid coupon code is provided
-    //     if ($request->filled('coupon_code')) {
-    //         $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
-
-    //         if ($couponOwner) {
-    //             // Check if the coupon has already been used
-    //             if ($couponOwner->coupon_used) {
-    //                 return back()->with('stripe_error', 'Coupon has already been used.');
-    //             }
-
-    //             $commissionAmount = '';
-    //             // Calculate the commission amount based on the coupon owner role
-    //             if ($couponOwner->hasRole('partner')) {
-    //                 // Calculate the commission amount (20% of the plan amount)
-    //                 $planAmount = $request->input('plan');
-    //                 $commissionAmount = ($planAmount * 0.20);
-
-    //                 // Do not mark the coupon as used if the coupon owner has the 'partner' role
-    //             } else {
-    //                 $commissionAmount = '5'; // Or calculate based on the plan amount
-
-    //                 // Mark the coupon as used if the coupon owner does not have the 'partner' role
-    //                 $couponOwner->update(['coupon_used' => true]);
-    //             }
-
-    //             // Update the commission amount for the coupon code owner
-    //             $couponOwner->increment('commission_amount', $commissionAmount);
-    //         } else {
-    //             return back()->with('stripe_error', 'Invalid Coupon.');
-    //         }
-    //     }
-
-
-    //     // Check if the user is joining after the free trial
-    //     $joiningAfterFreeTrial = $user->subscribed_package === "free_trial" &&
-    //         Carbon::parse($user->trial_ends_at)->isPast();
-
-
-    //     // Map the plan amount to the package name
-    //     $packageNames = [
-    //         '5.99' => 'Basic',
-    //         '11.99' => 'Standard',
-    //         '19.99' => 'Premium'
-    //     ];
-    //     $packageName = $packageNames[$request->plan] ?? 'Unknown Package';
-
-    //     try {
-    //         // Process the payment
-    //         Stripe\Charge::create([
-    //             "amount" => $request->plan * 100, // Amount in cents
-    //             "currency" => "gbp",
-    //             "source" => $request->stripeToken,
-    //             "description" => "Payment for {$packageName} membership plan.",
-    //             "receipt_email" => $request->email,
-    //             "shipping" => [
-    //                 "name" => $request->name,
-    //                 "address" => [
-    //                     "line1" => $request->address_line1,
-    //                     "city" => $request->city,
-    //                     "postal_code" => $request->postal_code,
-    //                     "country" => $request->country,
-    //                 ],
-    //             ],
-    //         ]);
-
-    //         // Update the user's subscription details
-    //         $user->update([
-    //             'subscribed_package' => $packageName,
-    //             'trial_ends_at' => now()->addMonth(),
-    //         ]);
-
-    //         // Update all users created by this user
-    //         User::where('created_by', $user->id)
-    //             ->update([
-    //                 'subscribed_package' => $packageName,
-    //                 'trial_ends_at' => now()->addMonth(),
-    //             ]);
-
-    //         // If the user is joining after a free trial, send a welcome email
-    //         if ($joiningAfterFreeTrial) {
-    //             $user->notify(new WelcomeEmail($user, true));
-    //         } if ($request->user_type === 'new') {
-    //             $user->notify(new WelcomeEmail($user));
-    //         }
-
-    //         // Redirect to login page after successful payment
-    //         return redirect()->route('login')->with('success', 'Payment successful! Your subscription has been updated.');
-    //     } catch (CardException $e) {
-    //         // Handle Stripe errors
-    //         return back()->with('stripe_error', $e->getMessage());
-    //     }
-    // }
     public function stripePost(Request $request): RedirectResponse
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -192,89 +49,46 @@ class StripePaymentController extends Controller
             'coupon_code' => 'nullable|string', // Optional coupon code
         ]);
 
-        // Check if the user already exists and create new user
-        $user = User::where('email', $request->email)->first();
-        if (!$user) {
-            $couponCode = $request->name . strtoupper(uniqid());
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'user_role' => 'customer',
-                'coupon_code' => $couponCode,
-            ])->assignRole('customer');
-        } else {
+        // Check if the user already exists
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
             return back()->with('stripe_error', 'User with this email already exists.');
         }
 
-        // Check if a valid coupon code is provided
+        // Validate coupon code if provided (but don't process it yet)
+        $couponOwner = null;
         if ($request->filled('coupon_code')) {
             $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
-
-            if ($couponOwner) {
-                $commissionAmount = '';
-
-                // Check if the coupon owner has the 'partner' role
-                if ($couponOwner->hasRole('partner')) {
-                    // Increment the affiliate_count for the partner
-                    $couponOwner->increment('affiliate_count');
-
-                    // Get the affiliate count to determine commission rate
-                    $affiliateCount = $couponOwner->affiliate_count;
-                    $planKey = $request->input('plan'); // Get the selected plan key
-
-                    $plans = [
-                        'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
-                        'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
-                        'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
-                    ];
-
-                    $planAmount = $plans[$planKey] ?? 0; // Map the price or default to 0
-
-                    // Calculate the commission amount based on affiliate count
-                    if ($affiliateCount <= 50) {
-                        $commissionAmount = $planAmount * 0.20;  // 20% commission
-                    } else {
-                        $commissionAmount = $planAmount * 0.30;  // 30% commission
-                    }
-
-                    // Log coupon usage
-                    CouponUsage::create([
-                        'partner_id' => $couponOwner->id,
-                        'user_id' => $user->id,
-                    ]);
-
-                    // Do not mark the coupon as used for 'partner' role
-                } else {
-                    // Check if the coupon has already been used for non-partner users
-                    if ($couponOwner->coupon_used) {
-                        return back()->with('stripe_error', 'Coupon has already been used.');
-                    }
-
-                    // Set a fixed commission for non-partner users
-                    $commissionAmount = 5;  // Or calculate based on the plan amount
-
-                    // Mark the coupon as used for non-partner users
-                    $couponOwner->update(['coupon_used' => true]);
-                }
-
-                // Update the commission amount for the coupon code owner
-                $couponOwner->increment('commission_amount', $commissionAmount);
-            } else {
+            
+            if (!$couponOwner) {
                 return back()->with('stripe_error', 'Invalid Coupon.');
+            }
+
+            // Check if the coupon has already been used for non-partner users
+            if (!$couponOwner->hasRole('partner') && $couponOwner->coupon_used) {
+                return back()->with('stripe_error', 'Coupon has already been used.');
             }
         }
 
-        // Create Stripe Checkout Session
+        // Create Stripe Checkout Session with metadata containing user data
         $session = Session::create([
             'payment_method_types' => ['card'],
             'mode' => 'subscription',
-            'customer_email' => $user->email,
+            'customer_email' => $request->email,
             'line_items' => [
                 [
                     'price' => $request->plan, // Stripe Price ID
                     'quantity' => 1,
                 ]
+            ],
+            'metadata' => [
+                'user_name' => $request->name,
+                'user_email' => $request->email,
+                'user_password' => bcrypt($request->password),
+                'user_city' => $request->city,
+                'user_postal_code' => $request->postal_code,
+                'user_country' => $request->country,
+                'coupon_code' => $request->coupon_code ?? '',
             ],
             'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
         ]);
@@ -298,13 +112,83 @@ class StripePaymentController extends Controller
             return redirect()->route('dashboard')->with('error', 'Invalid session.');
         }
 
-        // Find the user by email
-        $user = User::where('email', $session->customer_email)->first();
-        if (!$user) {
-            return redirect()->route('dashboard')->with('error', 'User not found.');
+        // Check if user already exists (double-check)
+        $existingUser = User::where('email', $session->customer_email)->first();
+        if ($existingUser) {
+            return redirect()->route('dashboard')->with('error', 'User already exists.');
         }
 
-        // Retrieve Subscription ID
+        // Create the user after successful payment
+        $couponCode = $session->metadata->user_name . strtoupper(uniqid());
+        $user = User::create([
+            'name' => $session->metadata->user_name,
+            'email' => $session->metadata->user_email,
+            'password' => $session->metadata->user_password, // Already hashed
+            'user_role' => 'customer',
+            'coupon_code' => $couponCode,
+        ])->assignRole('customer');
+
+        // Process coupon code if provided
+        if (!empty($session->metadata->coupon_code)) {
+            $couponOwner = User::where('coupon_code', $session->metadata->coupon_code)->first();
+
+            if ($couponOwner) {
+                $commissionAmount = '';
+
+                // Check if the coupon owner has the 'partner' role
+                if ($couponOwner->hasRole('partner')) {
+                    // Increment the affiliate_count for the partner
+                    $couponOwner->increment('affiliate_count');
+
+                    // Get the affiliate count to determine commission rate
+                    $affiliateCount = $couponOwner->affiliate_count;
+
+                    // Retrieve Subscription ID to get the plan amount
+                    $subscriptions = Subscription::all(['customer' => $session->customer]);
+                    $subscription = $subscriptions->data[0] ?? null;
+                    
+                    if ($subscription) {
+                        $priceId = $subscription->items->data[0]->price->id;
+                        
+                        $plans = [
+                            'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
+                            'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
+                            'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
+                        ];
+
+                        $planAmount = $plans[$priceId] ?? 0;
+
+                        // Calculate the commission amount based on affiliate count
+                        if ($affiliateCount <= 50) {
+                            $commissionAmount = $planAmount * 0.20;  // 20% commission
+                        } else {
+                            $commissionAmount = $planAmount * 0.30;  // 30% commission
+                        }
+                    }
+
+                    // Log coupon usage
+                    CouponUsage::create([
+                        'partner_id' => $couponOwner->id,
+                        'user_id' => $user->id,
+                    ]);
+
+                    // Do not mark the coupon as used for 'partner' role
+                } else {
+                    // Set a fixed commission for non-partner users
+                    $commissionAmount = 5;  // Or calculate based on the plan amount
+
+                    // Mark the coupon as used for non-partner users
+                    $couponOwner->update(['coupon_used' => true]);
+                }
+
+                // Update the commission amount for the coupon code owner
+                if ($commissionAmount) {
+                    $couponOwner->increment('commission_amount', $commissionAmount);
+                }
+            }
+        }
+
+        // Retrieve Subscription ID and update user subscription details
         $subscriptions = Subscription::all(['customer' => $session->customer]);
         $subscription = $subscriptions->data[0] ?? null;
 
@@ -323,7 +207,7 @@ class StripePaymentController extends Controller
             $user->update([
                 'stripe_customer_id' => $session->customer,
                 'stripe_subscription_id' => $subscription->id,
-                'subscribed_package' => $planName, // Store Plan Name Instead of Price ID
+                'subscribed_package' => $planName,
                 'trial_ends_at' => now()->addMonth(),
             ]);
 
@@ -334,6 +218,7 @@ class StripePaymentController extends Controller
                     'trial_ends_at' => now()->addMonth(),
                 ]);
 
+            // Send welcome email
             $user->notify(new WelcomeEmail($user));
         }
 
@@ -382,7 +267,6 @@ class StripePaymentController extends Controller
         if (!$user) {
             return back()->with('error', 'User not found.');
         }
-
 
         // Create Stripe Checkout Session
         $session = Session::create([
@@ -441,7 +325,7 @@ class StripePaymentController extends Controller
 
             $user->update([
                 'stripe_subscription_id' => $subscription->id,
-                'subscribed_package' => $planName, // Store Plan Name Instead of Price ID
+                'subscribed_package' => $planName,
                 'trial_ends_at' => now()->addMonth(),
             ]);
 

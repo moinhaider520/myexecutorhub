@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -73,6 +74,12 @@
                         @if (session('stripe_error'))
                         <div class="alert alert-danger">
                             {{ session('stripe_error') }}
+                        </div>
+                        @endif
+
+                        @if (session('paypal_error'))
+                        <div class="alert alert-danger">
+                            {{ session('paypal_error') }}
                         </div>
                         @endif
 
@@ -178,7 +185,7 @@
                         </div>
 
                         <div id="paypal-buttons" class="payment-buttons">
-                            <form id="paypal-form" method="post" action="">
+                            <form id="paypal-form" method="post" action="{{ route('paypal.post') }}">
                                 @csrf
                                 <button type="submit" class="btn btn-warning btn-lg w-100">
                                     Subscribe with PayPal

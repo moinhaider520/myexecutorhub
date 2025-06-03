@@ -184,10 +184,14 @@ Route::controller(StripePaymentController::class)->group(function () {
 });
 
 Route::controller(PayPalController::class)->group(function () {
-    Route::get('paypal', 'index')->name('paypal');
-    Route::get('paypal/payment', 'payment')->name('paypal.payment');
-    Route::get('paypal/payment/success', 'paymentSuccess')->name('paypal.payment.success');
-    Route::get('paypal/payment/cancel', 'paymentCancel')->name('paypal.payment.cancel');
+    Route::get('paypal', 'paypal')->name('paypal');
+    Route::get('paypal_mobile', 'paypal_mobile')->name('paypal_mobile');
+    Route::post('paypal', 'paypalPost')->name('paypal.post');
+    Route::post('paypal/resubscribe', 'resubscribe')->name('paypal.resubscribe');
+    Route::get('paypal/success', 'success')->name('paypal.success');
+    Route::get('paypal/cancel', 'cancel')->name('paypal.cancel');
+    Route::get('paypal/resubscribesuccess', 'resubscribesuccess')->name('paypal.resubscribesuccess');
+    Route::post('paypal-subscription/cancel', 'cancelSubscription')->name('paypal.subscription.cancel');
 });
 
 
