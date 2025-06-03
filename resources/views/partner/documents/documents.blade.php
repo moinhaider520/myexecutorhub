@@ -164,7 +164,7 @@
 
         <div class="form-group mb-4">
         <label for="reminder_date">Reminder Type</label>
-        <select class="form-control" name="reminder_type" required>
+        <select class="form-control" name="reminder_type">
           <option value="" selected disabled>Choose Reminder Type</option>
           <option value="mobile">Mobile Notification</option>
           <option value="email">Email Notification</option>
@@ -243,7 +243,7 @@
 
         <div class="form-group mb-4">
         <label for="reminder_date">Reminder Type</label>
-        <select class="form-control" name="edit_reminder_type" id="edit_reminder_type" required>
+        <select class="form-control" name="edit_reminder_type" id="edit_reminder_type">
           <option value="" selected disabled>Choose Reminder Type</option>
           <option value="mobile">Mobile Notification</option>
           <option value="email">Email Notification</option>

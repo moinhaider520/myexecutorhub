@@ -41,7 +41,7 @@
           <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
           @csrf
           <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1R4UE4SBn09iuv4xvH0KeSEJ">
+          <input type="hidden" name="plan" value="price_1R6CY5A22YOnjf5ZrChFVLg2">
           <button id='pay-btn' class="btn btn-success mt-3" type="submit"
           style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
           </form>
@@ -64,7 +64,7 @@
           <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
           @csrf
           <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1R4UEjSBn09iuv4xIez1NWXm">
+          <input type="hidden" name="plan" value="price_1R6CZDA22YOnjf5ZUEFGbQOE">
           <button id='pay-btn' class="btn btn-success mt-3" type="submit"
           style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
           </form>
@@ -91,7 +91,7 @@
           <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
           @csrf
           <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1R4UFCSBn09iuv4xWmFqEjqr">
+          <input type="hidden" name="plan" value="price_1R6CaeA22YOnjf5Z0sW3CZ9F">
           <button id='pay-btn' class="btn btn-success mt-3" type="submit"
           style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
           </form>

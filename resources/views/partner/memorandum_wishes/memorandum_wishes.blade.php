@@ -9,7 +9,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addDocumentModal">
-              Add Memorandum Wish
+              Add Memorandum of Wish
             </button>
           </div>
         </div>
@@ -17,7 +17,7 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h4>Memorandum Wishes</h4>
+                <h4>Memorandum of Wishes</h4>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">
@@ -92,7 +92,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addDocumentModalLabel">Add Memorandum Wish</h5>
+        <h5 class="modal-title" id="addDocumentModalLabel">Add Memorandum of Wish</h5>
       </div>
       <div class="modal-body">
         <form id="addDocumentForm" enctype="multipart/form-data">
@@ -123,7 +123,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editDocumentModalLabel">Edit Memorandum Wish</h5>
+        <h5 class="modal-title" id="editDocumentModalLabel">Edit Memorandum of Wish</h5>
       </div>
       <div class="modal-body">
         <form id="editDocumentForm" enctype="multipart/form-data">
