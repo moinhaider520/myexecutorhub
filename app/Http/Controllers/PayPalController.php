@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -41,72 +39,38 @@ class PayPalController extends Controller
             'coupon_code' => 'nullable|string',
         ]);
 
-        // Check if the user already exists and create new user
-        $user = User::where('email', $request->email)->first();
-        if (!$user) {
-            $couponCode = $request->name . strtoupper(uniqid());
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
-                'user_role' => 'customer',
-                'coupon_code' => $couponCode,
-            ])->assignRole('customer');
-        } else {
+        // Check if the user already exists
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
             return back()->with('paypal_error', 'User with this email already exists.');
         }
 
-        // Handle coupon code logic (same as Stripe)
+        // Validate coupon code if provided (but don't process it yet)
+        $couponOwner = null;
         if ($request->filled('coupon_code')) {
             $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
-
-            if ($couponOwner) {
-                $commissionAmount = '';
-
-                if ($couponOwner->hasRole('partner')) {
-                    $couponOwner->increment('affiliate_count');
-                    $affiliateCount = $couponOwner->affiliate_count;
-                    $planKey = $request->input('plan');
-
-                    $plans = [
-                        'basic' => 5.99,
-                        'standard' => 11.99,
-                        'premium' => 19.99,
-                    ];
-
-                    $planAmount = $plans[$planKey] ?? 0;
-
-                    if ($affiliateCount <= 50) {
-                        $commissionAmount = $planAmount * 0.20;
-                    } else {
-                        $commissionAmount = $planAmount * 0.30;
-                    }
-
-                    CouponUsage::create([
-                        'partner_id' => $couponOwner->id,
-                        'user_id' => $user->id,
-                    ]);
-                } else {
-                    if ($couponOwner->coupon_used) {
-                        return back()->with('paypal_error', 'Coupon has already been used.');
-                    }
-
-                    $commissionAmount = 5;
-                    $couponOwner->update(['coupon_used' => true]);
-                }
-
-                $couponOwner->increment('commission_amount', $commissionAmount);
-            } else {
+            
+            if (!$couponOwner) {
                 return back()->with('paypal_error', 'Invalid Coupon.');
+            }
+
+            // Check if the coupon has already been used for non-partner users
+            if (!$couponOwner->hasRole('partner') && $couponOwner->coupon_used) {
+                return back()->with('paypal_error', 'Coupon has already been used.');
             }
         }
 
         // Store user data in session for PayPal callback
         session([
             'paypal_user_data' => [
-                'user_id' => $user->id,
-                'plan' => $request->plan,
+                'name' => $request->name,
                 'email' => $request->email,
+                'password' => bcrypt($request->password), // Hash password before storing
+                'city' => $request->city,
+                'postal_code' => $request->postal_code,
+                'country' => $request->country,
+                'plan' => $request->plan,
+                'coupon_code' => $request->coupon_code ?? '',
             ]
         ]);
 
@@ -227,31 +191,87 @@ class PayPalController extends Controller
             $subscription = $provider->showSubscriptionDetails($subscriptionId);
 
             if ($subscription && $subscription['status'] == 'ACTIVE') {
-                $user = User::find($userData['user_id']);
                 
-                if ($user) {
-                    $planName = ucfirst($userData['plan']);
+                // Double-check if user already exists
+                $existingUser = User::where('email', $userData['email'])->first();
+                if ($existingUser) {
+                    session()->forget('paypal_user_data');
+                    return redirect()->route('dashboard')->with('error', 'User already exists.');
+                }
 
-                    $user->update([
-                        'paypal_subscription_id' => $subscriptionId,
+                // Create the user after successful payment
+                $couponCode = $userData['name'] . strtoupper(uniqid());
+                $user = User::create([
+                    'name' => $userData['name'],
+                    'email' => $userData['email'],
+                    'password' => $userData['password'], // Already hashed
+                    'user_role' => 'customer',
+                    'coupon_code' => $couponCode,
+                ])->assignRole('customer');
+
+                // Process coupon code if provided
+                if (!empty($userData['coupon_code'])) {
+                    $couponOwner = User::where('coupon_code', $userData['coupon_code'])->first();
+
+                    if ($couponOwner) {
+                        $commissionAmount = '';
+
+                        if ($couponOwner->hasRole('partner')) {
+                            $couponOwner->increment('affiliate_count');
+                            $affiliateCount = $couponOwner->affiliate_count;
+
+                            $plans = [
+                                'basic' => 5.99,
+                                'standard' => 11.99,
+                                'premium' => 19.99,
+                            ];
+
+                            $planAmount = $plans[$userData['plan']] ?? 0;
+
+                            if ($affiliateCount <= 50) {
+                                $commissionAmount = $planAmount * 0.20;
+                            } else {
+                                $commissionAmount = $planAmount * 0.30;
+                            }
+
+                            CouponUsage::create([
+                                'partner_id' => $couponOwner->id,
+                                'user_id' => $user->id,
+                            ]);
+                        } else {
+                            $commissionAmount = 5;
+                            $couponOwner->update(['coupon_used' => true]);
+                        }
+
+                        if ($commissionAmount) {
+                            $couponOwner->increment('commission_amount', $commissionAmount);
+                        }
+                    }
+                }
+
+                // Update user subscription details
+                $planName = ucfirst($userData['plan']);
+
+                $user->update([
+                    'paypal_subscription_id' => $subscriptionId,
+                    'subscribed_package' => $planName,
+                    'trial_ends_at' => now()->addMonth(),
+                ]);
+
+                // Update all users created by this user
+                User::where('created_by', $user->id)
+                    ->update([
                         'subscribed_package' => $planName,
                         'trial_ends_at' => now()->addMonth(),
                     ]);
 
-                    // Update all users created by this user
-                    User::where('created_by', $user->id)
-                        ->update([
-                            'subscribed_package' => $planName,
-                            'trial_ends_at' => now()->addMonth(),
-                        ]);
+                // Send welcome email
+                $user->notify(new WelcomeEmail($user));
 
-                    $user->notify(new WelcomeEmail($user));
+                // Clear session data
+                session()->forget('paypal_user_data');
 
-                    // Clear session data
-                    session()->forget('paypal_user_data');
-
-                    return redirect()->route('dashboard')->with('success', 'PayPal subscription created successfully!');
-                }
+                return redirect()->route('dashboard')->with('success', 'PayPal subscription created successfully!');
             }
 
             return redirect()->route('dashboard')->with('error', 'PayPal subscription verification failed.');

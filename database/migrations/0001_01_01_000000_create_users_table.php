@@ -48,6 +48,7 @@ return new class extends Migration
             $table->string('two_factor_expires_at')->nullable();
             $table->string('stripe_customer_id')->nullable();
             $table->string('stripe_subscription_id')->nullable();
+            $table->string('paypal_subscription_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
