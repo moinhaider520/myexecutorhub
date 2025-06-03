@@ -1735,9 +1735,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <h2 class="text-center mb-4">Empowering Executors, ensuring legacies.</h2>
-
                         <!-- IMAGE BLOCK -->
                         <div class="row justify-content-center">
                             <div class="col">
@@ -1751,7 +1748,7 @@
                                     </a>
 
                                     <!-- Preview Image -->
-                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card.webp')}}"
+                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card-2.png')}}"
                                         alt="content-image" />
                                 </div>
                             </div>
