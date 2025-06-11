@@ -1,6 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+    <style>
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+    </style>
     <div class="page-body">
         <!-- ONBOARDING SECTION -->
         @if (!collect($guide)->every(fn($completed) => $completed))
@@ -8,6 +17,7 @@
                 <div class="row">
                     <div class="card">
                         <h2 class="p-2">Onboarding Guide</h2>
+                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
                         <br />
                         <ol>
                             @foreach ($guide as $task => $completed)
@@ -306,6 +316,88 @@
                 </div>
             </div>
         </div>
+
+        <!-- GUIDE MODAL -->
+        <div class="modal fade" id="guideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Executor Hub Onboarding Guide</h5>
+                        <button type="button" class="btn-close" aria-label="Close" id="modalCloseBtn"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <!-- Step Contents -->
+                        <div class="step active" data-audio="{{ asset('assets/partner_guide_audios/audio1.mp3') }}">
+                            <h4>Welcome to Executor Hub for Partners</h4>
+                            <p>You’re joining a digital platform built to simplify estate administration for your clients
+                                and grow your business with passive income opportunities. Let's get started.</p>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio2.mp3') }}">
+                            <h4>Account Setup</h4>
+                            <p>Please go to the Advisers Tab from the sidemenu. Click on Add Adviser and choose your partner
+                                type. For example an Adviser, Will Writer or a Solicitor. Enter your Partner details and
+                                click on save to send them an invite.</p>
+                            <h5>Step 1:</h5>
+                            <img src="{{ asset('assets/partner_guide_images/image1.png') }}"
+                                style="width:100%;height:450px;" />
+                            <h5>Step 2:</h5>
+                            <img src="{{ asset('assets/partner_guide_images/image2.png') }}"
+                                style="width:100%;height:450px;" />
+                            <h5>Step 3:</h5>
+                            <img src="{{ asset('assets/partner_guide_images/image3.png') }}"
+                                style="width:100%;height:450px;" />
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio3.mp3') }}">
+                            <h4>Your Dashboard</h4>
+                            <p>Your Dashboard gives you an overview of your networth, documents uploaded, executors and
+                                tasks that need to be completed. You can have an overview of the commission you've earned
+                                and see your coupon code that you can use to invite clients.</p>
+                            <img src="{{ asset('assets/partner_guide_images/image4.png') }}"
+                                style="width:100%;height:450px;" />
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio4.mp3') }}">
+                            <h4>Invite Your First Client</h4>
+                            <ul>
+                                <p>You can copy your coupon code from your main dashboard and share it with your clients via
+                                    email, text or any other platform. Your client can then enter the coupon code at the
+                                    time of sign up allowing you to earn your commission.</p>
+                                <img src="{{ asset('assets/partner_guide_images/image5.png') }}"
+                                    style="width:100%;height:450px;" />
+                            </ul>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio5.mp3') }}">
+                            <h4>Benefits Overview</h4>
+                            <ul>
+                                <p>You can get automated email notifications when your client uploads a key document. You
+                                    can access your annual review of documents, LPA's and investment prompts. Your Digital
+                                    journey is aligned with UK digital ID plans (Wallet-ready)</p>
+                            </ul>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio6.mp3') }}">
+                            <h4>Final Setup</h4>
+                            <ul>
+                                <li>Join partner-only WhatsApp/Slack group.</li>
+                                <li>Download partner guide PDF.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+                        <button class="btn btn-primary" id="nextBtn">Next</button>
+                        <button class="btn btn-success d-none" id="finishBtn">Finish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <audio id="stepAudio" autoplay hidden></audio>
         <!-- Container-fluid Ends-->
     </div>
 
@@ -418,6 +510,83 @@
                 });
             });
 
+        });
+    </script>
+    <script>
+        const steps = document.querySelectorAll('.step');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        const viewGuideBtn = document.getElementById('viewGuideBtn');
+        const guideModal = new bootstrap.Modal(document.getElementById('guideModal'));
+        const stepAudio = document.getElementById('stepAudio');
+        let currentStep = 0;
+
+        function showStep(index) {
+            steps.forEach((step, i) => {
+                step.classList.remove('active');
+                if (i === index) {
+                    step.classList.add('active');
+                    let audio = step.getAttribute('data-audio');
+                    if (audio) {
+                        stepAudio.src = audio;
+                        stepAudio.play();
+                    }
+                }
+            });
+
+            prevBtn.disabled = index === 0;
+            nextBtn.classList.toggle('d-none', index === steps.length - 1);
+            finishBtn.classList.toggle('d-none', index !== steps.length - 1);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        viewGuideBtn.addEventListener('click', () => {
+            currentStep = 0;
+            showStep(currentStep);
+            guideModal.show();
+        });
+
+        function stopAudio() {
+            const audio = document.getElementById('stepAudio');
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        }
+
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            stopAudio();
+            guideModal.hide();
+        });
+
+        document.getElementById('finishBtn').addEventListener('click', () => {
+            stopAudio();
+            guideModal.hide();
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Show modal only on first visit
+            if (!localStorage.getItem('hasVisited')) {
+                guideModal.show();
+                localStorage.setItem('hasVisited', 'true');
+            }
+
+            // Trigger audio for first step
+            showStep(currentStep);
         });
     </script>
 @endsection
