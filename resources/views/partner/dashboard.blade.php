@@ -582,11 +582,10 @@
             // Show modal only on first visit
             if (!localStorage.getItem('hasVisited')) {
                 guideModal.show();
+                showStep(currentStep); // ✅ move inside
                 localStorage.setItem('hasVisited', 'true');
             }
-
-            // Trigger audio for first step
-            showStep(currentStep);
         });
+
     </script>
 @endsection

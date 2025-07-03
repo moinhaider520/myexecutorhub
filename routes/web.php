@@ -169,9 +169,14 @@ use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TwoFactorController;
+use App\Http\Controllers\PartnerRegistationController;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
 Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
+
+
+Route::get('partner-registration', [PartnerRegistationController::class, 'index'])->name('partner-registration.index');
+Route::post('partner-registration', [PartnerRegistationController::class, 'store'])->name('partner-registration.store');
 
 Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');

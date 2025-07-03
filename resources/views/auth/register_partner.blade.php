@@ -14,9 +14,9 @@
                             </a>
                         </div>
                         <div class="login-main">
-                            <form method="POST" action="{{ route('register') }}" class="theme-form">
+                            <form method="POST" action="{{ route('partner-registration.store') }}" class="theme-form">
                                 @csrf
-                                <h4>Sign up for a new account</h4>
+                                <h4>Sign Up as a Partner</h4>
                                 <p>Enter your details to create an account</p>
                                 <div class="form-group">
                                     <label class="col-form-label">Name</label>
@@ -96,11 +96,6 @@
                                 <div class=" mt-3">
                                     <a href="{{ route('login') }}">
                                         Already have an account?
-                                    </a>
-                                </div>
-                                <div class=" mt-3">
-                                    <a href="{{ route('partner-registration.index') }}">
-                                        Sign up as a partner?
                                     </a>
                                 </div>
                             </form>

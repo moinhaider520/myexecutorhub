@@ -62,7 +62,7 @@ class PartnerController extends Controller
             'email' => 'required|email|unique:users,email',
             'address' => 'required',
             'city' => 'required',
-            'postal_code' => 'required|numeric',
+            'postal_code' => 'required',
             'contact_number' => 'required',
             'access_type' => 'required|in:Friends & Family,Collaborator',
         ]);
@@ -178,7 +178,7 @@ class PartnerController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'address' => 'required',
             'city' => 'required',
-            'postal_code' => 'required|numeric',
+            'postal_code' => 'required',
             'contact_number' => 'required',
             'access_type' => 'required|in:Friends & Family,Collaborator',
         ]);
