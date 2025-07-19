@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Notifications\WelcomeEmail;
+use App\Notifications\WelcomeEmailPartner;
 use DB;
 use Hash;
 use Http;
@@ -22,19 +23,7 @@ class PartnerRegistationController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
-            'g-recaptcha-response' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
-                        'secret' => config('services.recaptcha.secret_key'),
-                        'response' => $value,
-                    ]);
 
-                    if (!$response->json('success')) {
-                        $fail('Captcha validation failed.');
-                    }
-                }
-            ],
         ]);
 
         $couponCode = $request->name . strtoupper(uniqid());
@@ -58,7 +47,7 @@ class PartnerRegistationController extends Controller
             $partner->assignRole('partner');
 
             DB::commit();
-            $partner->notify(new WelcomeEmail($partner));
+            $partner->notify(new WelcomeEmailPartner($partner));
 
             // Authenticate the user
             Auth::login($partner);

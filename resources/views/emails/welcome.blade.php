@@ -59,7 +59,6 @@
                                 © {{ date('Y') }} My Executor Hub. All rights reserved.
                             </p>
                             <p style="color: #888888; font-size: 12px;">
-                                <a href="{{ url('/unsubscribe') }}" style="color: #007bff; text-decoration: none;">Unsubscribe</a> | 
                                 <a href="{{ url('/privacy-policy') }}" style="color: #007bff; text-decoration: none;">Privacy Policy</a>
                             </p>
                         </td>

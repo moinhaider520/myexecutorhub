@@ -53,7 +53,7 @@ use App\Http\Controllers\Partner\LPAController as PartnerLPAController;
 use App\Http\Controllers\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
 use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeController;
-
+use App\Http\Controllers\Partner\WillGeneratorController as PartnerWillGeneratorController;
 // Role Customer Controller 
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
@@ -842,6 +842,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     // Membership
     Route::get('/membership/membership', [PartnerMembershipController::class, 'index'])->name('membership.view');
     Route::get('/membership/checkout', [PartnerMembershipController::class, 'checkout_page'])->name('checkout.view');
+
+    // WILL GENERATOR
+    Route::get('will_generator', [PartnerWillGeneratorController::class, 'index'])->name('will_generator.index');
+    Route::get('will_generator/create', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
 });
 
 // Executors  Routes
