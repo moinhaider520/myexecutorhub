@@ -211,8 +211,7 @@
                             <span>Will Generator</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.will_generator.create') }}">Create</a></li>
-                            <li><a href="{{ route('partner.will_generator.index') }}">View</a></li>
+                            <li><a href="{{ route('partner.will_generator.create') }}">View</a></li>
                         </ul>
                     </li>
 

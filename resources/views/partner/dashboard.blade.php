@@ -37,7 +37,8 @@
             <div class="row">
                 <div class="col text-center">
                     <h5>Your Coupon Code:</h5>
-                    <p class="lead">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
+                     <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
+                    <button class="btn btn-primary mt-3" onclick="copyAffiliateLink()">Copy Affiliate Link</button>
                 </div>
                 <div class="col text-center">
                     <h5>Your Commission Amount:</h5>
@@ -588,4 +589,20 @@
         });
 
     </script>
+
+    <script>
+function copyAffiliateLink() {
+    var couponCode = document.getElementById('couponCode').innerText.trim();
+    if(couponCode && couponCode !== 'No Coupon Code Available') {
+        var url = "{{ url('/partner_registration') }}" + "?coupon_code=" + encodeURIComponent(couponCode);
+        navigator.clipboard.writeText(url).then(function() {
+            alert('Affiliate link copied to clipboard!');
+        }, function(err) {
+            alert('Failed to copy: ' + err);
+        });
+    } else {
+        alert('No valid coupon code available.');
+    }
+}
+</script>
 @endsection

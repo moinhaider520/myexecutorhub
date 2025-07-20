@@ -208,6 +208,12 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/partner_registration', function (\Illuminate\Http\Request $request) {
+    $couponCode = $request->query('coupon_code');
+    return view('affiliate_link', compact('couponCode'));
+})->name('partner_registration');
+
+
 Route::get('/cookies', function () {
     return view('cookies');
 })->name('cookies');
@@ -846,6 +852,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     // WILL GENERATOR
     Route::get('will_generator', [PartnerWillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
+    Route::get('will_generator/about_you', [PartnerWillGeneratorController::class, 'about_you'])->name('will_generator.about_you');
 });
 
 // Executors  Routes

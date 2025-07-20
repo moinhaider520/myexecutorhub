@@ -18,4 +18,10 @@ class WillGeneratorController extends Controller
         $authId = auth()->id();
         return view('partner.will_generator.create', ['authId' => $authId]);
     }
+
+    public function about_you()
+    {
+        $authId = auth()->id();
+        return view('partner.will_generator.about_you', ['authId' => $authId]);
+    }
 }

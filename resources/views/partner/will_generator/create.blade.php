@@ -1,105 +1,99 @@
-@extends('layouts.will_generator')
+@extends('layouts.master')
 
 @section('content')
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <style>
-    #dummy-text {
-    margin-bottom: 20px;
-    font-size: 18px;
-    }
 
-    canvas,
-    video {
-    border: 1px solid #ddd;
-    background-color: #000;
-    }
-
-    .canvas-container {
-    position: relative;
-    display: none;
-    }
-
-    canvas {
-    width: 640px;
-    height: 360px;
-    }
-
-    video.preview {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 150px;
-    height: 90px;
-    display: none;
-    }
-
-    .controls {
-    display: flex;
-    justify-content: space-between;
-    width: 640px;
-    margin-top: 10px;
-    }
-  </style>
-
-
-  <!-- Container-fluid starts-->
-  <div class="container-fluid default-dashboard">
+  <div class="page-body">
+    <!-- Container-fluid starts-->
+    <div class="container-fluid default-dashboard">
     <div class="row widget-grid">
-    <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
+      <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
       <div class="row">
-      <div class="col-xl-12">
-        <div class="card height-equal">
-        <div class="card-header">
-          <h4>Create Your Will</h4>
-          <p class="f-m-light mt-1">
-          Fill up your details and proceed next steps.</p>
-        </div>
-        <div class="card-body basic-wizard important-validation">
-          <div class="stepper-horizontal theme-scrollbar" id="stepper1">
-          <div class="stepper-one stepper step">
-            <div class="step-circle"><span>1</span></div>
-            <div class="step-title">About You</div>
-            <div class="step-bar-left"></div>
-            <div class="step-bar-right"></div>
+        <!-- STEPS -->
+        <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+          <h4>STEP 1 - About You</h4>
           </div>
-          <div class="stepper-two step">
-            <div class="step-circle"><span>2</span></div>
-            <div class="step-title">Accounts & Property</div>
-            <div class="step-bar-left"></div>
-            <div class="step-bar-right"></div>
-          </div>
-          <div class="stepper-three step">
-            <div class="step-circle"><span>3</span></div>
-            <div class="step-title">Your Estate</div>
-            <div class="step-bar-left"></div>
-            <div class="step-bar-right"></div>
-          </div>
-          <div class="stepper-four step">
-            <div class="step-circle"><span>4</span></div>
-            <div class="step-title">Executors</div>
-            <div class="step-bar-left"></div>
-            <div class="step-bar-right"></div>
-          </div>
-
-          </div>
-          <form id="msform" class="needs-validation" novalidate>
-          @include('partner.will_generator.partials.step1')
-          @include('partner.will_generator.partials.step2')
-          @include('partner.will_generator.partials.step3')
-          @include('partner.will_generator.partials.step4')
-          </form>
-          <div class="wizard-footer d-flex gap-2 justify-content-end">
-          <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled=""> Back</button>
-          <button class="btn btn-primary" id="nextbtn" onclick="nextStep()">Next</button>
+          <div class="card-body">
+          <p>Karen Roberts</p>
+          <p>04/11/2000</p>
+          <p>XYZ Street</p>
+          <p>Is Single</p>
+          <p>The Parent of Melissa</p>
+          <p>No Pets</p>
+          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
           </div>
         </div>
+        <div class="card">
+          <div class="card-header">
+          <h4>STEP 2 - Accounts and Property</h4>
+          </div>
+          <div class="card-body">
+          <p>Test Property</p>
+          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+          <h4>STEP 3 - Your Estate</h4>
+          </div>
+          <div class="card-body">
+          <p>Thane Dillards ............... 16.67%</p>
+          <p>The RNLI ............... 16.67%</p>
+          <p>Macmillan Cancer Support ............... 16.67%</p>
+          <p>The Charities Aid Foundation ............... 16.67%</p>
+          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+          <h4>STEP 4 - Executors</h4>
+          </div>
+          <div class="card-body">
+          <p>Your Executor is Thimoty</p>
+          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+          <h4>Gifts (Optional)</h4>
+          </div>
+          <div class="card-body">
+          <p>£50000 to Keane Woodward</p>
+          <p>My Watch to Keane Woodward</p>
+          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+          <h4>Funeral wishes (Optional)</h4>
+          </div>
+          <div class="card-body">
+          <p>Give your family less to worry about. Add your wishes so they know what to do when the time comes.
+          </p>
+          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          </div>
+        </div>
+        </div>
+        <!-- ACTION BUTTONS -->
+        <div class="col-md-6">
+        Your Progress
+        <div class="progress" style="height: 25px;">
+          <div class="progress-bar bg-success" role="progressbar" id="myProgressBar" style="width: 0%;"
+          aria-valuemin="0" aria-valuemax="100">
+          0%
+          </div>
+        </div>
+        <img
+          src="https://res.cloudinary.com/dwr27vxv7/image/upload/c_scale,f_auto,q_auto,w_600/illustrations/experts.png" />
+        <button class="btn btn-primary w-100">Download Your Will</button>
         </div>
       </div>
       </div>
     </div>
     </div>
-  </div>
-  <!-- Container-fluid Ends-->
+    <!-- Container-fluid Ends-->
   </div>
 
 
@@ -108,68 +102,16 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
   <script>
-    let currentStep = 0;
-    const steps = document.querySelectorAll('#msform > div');
-
-    const steppers = document.querySelectorAll('.stepper-horizontal .step');
-    const nextBtn = document.getElementById('nextbtn');
-    const backBtn = document.getElementById('backbtn');
-
-    function showStep(index) {
-    steps.forEach((step, i) => {
-      step.style.display = (i === index) ? 'flex' : 'none';
-    });
-
-    steppers.forEach((stepper, i) => {
-      stepper.classList.toggle('active', i <= index);
-    });
-
-    backBtn.disabled = index === 0;
-    nextBtn.textContent = (index === steps.length - 1) ? 'Finish' : 'Next';
+    function setProgress(percent) {
+    var progressBar = document.getElementById('myProgressBar');
+    progressBar.style.width = percent + '%';
+    progressBar.innerText = percent + '%';
+    progressBar.setAttribute('aria-valuenow', percent);
     }
 
-    function nextStep() {
-    const form = document.getElementById('msform'); // your single form
-
-    // Only validate inputs in the current step
-    const currentInputs = steps[currentStep].querySelectorAll('input, select, textarea');
-    let isValid = true;
-
-    currentInputs.forEach(input => {
-      if (!input.checkValidity()) {
-      isValid = false;
-      }
-    });
-
-    // Show browser validation if needed
-    if (!isValid) {
-      form.reportValidity();
-      return;
-    }
-
-
-    if (currentStep < steps.length - 1) {
-      currentStep++;
-      showStep(currentStep);
-    } else {
-      document.getElementById('msform').submit();
-      // Or use AJAX here instead if you prefer
-    }
-    }
-
-    function backStep() {
-    if (currentStep > 0) {
-      currentStep--;
-      showStep(currentStep);
-    }
-    }
-
-    // Initialize first step
-    showStep(currentStep);
+    // Example usage:
+    setProgress(70); // sets it to 70%
   </script>
-
-
 
 @endsection
