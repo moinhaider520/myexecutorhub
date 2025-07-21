@@ -210,8 +210,10 @@ Route::get('/', function () {
 
 Route::get('/partner_registration', function (\Illuminate\Http\Request $request) {
     $couponCode = $request->query('coupon_code');
-    return view('affiliate_link', compact('couponCode'));
+    $assignedTo = $request->query('assigned_to'); // optional
+    return view('affiliate_link', compact('couponCode', 'assignedTo'));
 })->name('partner_registration');
+
 
 
 Route::get('/cookies', function () {

@@ -6,6 +6,11 @@
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
+                            <div class="row">
+            <div class="card">
+                <h2 class="p-2">Access The Gazette Website - <a href="https://www.thegazette.co.uk" target="_blank">Gazette Website</a></h2>                
+            </div>
+        </div>
                 <div class="row">
                     <div class="col-xl-6 col-sm-6">
                         <div class="card">

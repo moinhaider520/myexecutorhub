@@ -11,6 +11,7 @@
         }
     </style>
     <div class="page-body">
+        
         <!-- ONBOARDING SECTION -->
         @if (!collect($guide)->every(fn($completed) => $completed))
             <div class="container">
@@ -37,8 +38,9 @@
             <div class="row">
                 <div class="col text-center">
                     <h5>Your Coupon Code:</h5>
-                     <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
-                    <button class="btn btn-primary mt-3" onclick="copyAffiliateLink()">Copy Affiliate Link</button>
+                    <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
+                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#assignModal">Copy Affiliate
+                        Link</button>
                 </div>
                 <div class="col text-center">
                     <h5>Your Commission Amount:</h5>
@@ -127,6 +129,7 @@
                                                             <th>Name</th>
                                                             <th>Email</th>
                                                             <th>Signup Date</th>
+                                                            <th>Reffered By</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -136,6 +139,7 @@
                                                                 <td>{{ $referral->user->name ?? '-' }}</td>
                                                                 <td>{{ $referral->user->email ?? '-' }}</td>
                                                                 <td>{{ $referral->created_at->format('d M Y') }}</td>
+                                                                <td>{{ $referral->user->reffered_by ?? '-' }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>
@@ -333,6 +337,7 @@
                             <h4>Welcome to Executor Hub for Partners</h4>
                             <p>You’re joining a digital platform built to simplify estate administration for your clients
                                 and grow your business with passive income opportunities. Let's get started.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio2.mp3') }}">
@@ -349,6 +354,8 @@
                             <h5>Step 3:</h5>
                             <img src="{{ asset('assets/partner_guide_images/image3.png') }}"
                                 style="width:100%;height:450px;" />
+
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio3.mp3') }}">
@@ -358,6 +365,8 @@
                                 and see your coupon code that you can use to invite clients.</p>
                             <img src="{{ asset('assets/partner_guide_images/image4.png') }}"
                                 style="width:100%;height:450px;" />
+
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio4.mp3') }}">
@@ -369,6 +378,7 @@
                                 <img src="{{ asset('assets/partner_guide_images/image5.png') }}"
                                     style="width:100%;height:450px;" />
                             </ul>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio5.mp3') }}">
@@ -378,21 +388,48 @@
                                     can access your annual review of documents, LPA's and investment prompts. Your Digital
                                     journey is aligned with UK digital ID plans (Wallet-ready)</p>
                             </ul>
+                            <h4>See why professionals are partnering with Executor Hub</h4>
+                            <div class="row justify-content-center">
+                                <div class="col">
+                                    <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
+                                        <video width="100%" controls poster="optional-poster.jpg">
+                                            <source src="{{ asset('assets/frontend/partner.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
-                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio6.mp3') }}">
-                            <h4>Final Setup</h4>
-                            <ul>
-                                <li>Join partner-only WhatsApp/Slack group.</li>
-                                <li>Download partner guide PDF.</li>
-                            </ul>
-                        </div>
                     </div>
 
                     <div class="modal-footer">
                         <button class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
                         <button class="btn btn-primary" id="nextBtn">Next</button>
                         <button class="btn btn-success d-none" id="finishBtn">Finish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AFFILIATE MODAL -->
+        <!-- Modal -->
+        <div class="modal fade" id="assignModal" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="assignModalLabel">Assign To Staff Member</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" id="staffMemberName" class="form-control"
+                            placeholder="Enter staff member name (optional)">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="generateAndCopyLink()">Copy Affiliate
+                            Link</button>
                     </div>
                 </div>
             </div>
@@ -521,7 +558,19 @@
         const viewGuideBtn = document.getElementById('viewGuideBtn');
         const guideModal = new bootstrap.Modal(document.getElementById('guideModal'));
         const stepAudio = document.getElementById('stepAudio');
+        const repeatButtons = document.querySelectorAll('.repeatBtn');
         let currentStep = 0;
+
+        repeatButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const audio = steps[index].getAttribute('data-audio');
+                if (audio) {
+                    stepAudio.src = audio;
+                    stepAudio.play();
+                }
+            });
+        });
+
 
         function showStep(index) {
             steps.forEach((step, i) => {
@@ -591,18 +640,27 @@
     </script>
 
     <script>
-function copyAffiliateLink() {
-    var couponCode = document.getElementById('couponCode').innerText.trim();
-    if(couponCode && couponCode !== 'No Coupon Code Available') {
-        var url = "{{ url('/partner_registration') }}" + "?coupon_code=" + encodeURIComponent(couponCode);
-        navigator.clipboard.writeText(url).then(function() {
-            alert('Affiliate link copied to clipboard!');
-        }, function(err) {
-            alert('Failed to copy: ' + err);
-        });
-    } else {
-        alert('No valid coupon code available.');
-    }
-}
-</script>
+        function generateAndCopyLink() {
+            var couponCode = document.getElementById('couponCode').innerText.trim();
+            var staffName = document.getElementById('staffMemberName').value.trim();
+
+            if (couponCode && couponCode !== 'No Coupon Code Available') {
+                var url = "{{ url('/partner_registration') }}" + "?coupon_code=" + encodeURIComponent(couponCode);
+                if (staffName) {
+                    url += "&assigned_to=" + encodeURIComponent(staffName);
+                }
+
+                navigator.clipboard.writeText(url).then(function () {
+                    alert('Affiliate link copied to clipboard!');
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('assignModal'));
+                    modal.hide(); // Close modal after copying
+                }, function (err) {
+                    alert('Failed to copy: ' + err);
+                });
+            } else {
+                alert('No valid coupon code available.');
+            }
+        }
+    </script>
+
 @endsection

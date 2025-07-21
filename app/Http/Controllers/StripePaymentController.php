@@ -46,6 +46,7 @@ class StripePaymentController extends Controller
             'country' => 'required|string|max:255',
             'plan' => 'required|string', // Stripe Price ID
             'password' => 'required|string|min:8',
+            'assigned_to' => 'nullable',
             'coupon_code' => 'nullable|string', // Optional coupon code
         ]);
 
@@ -89,6 +90,7 @@ class StripePaymentController extends Controller
                 'user_postal_code' => $request->postal_code,
                 'user_country' => $request->country,
                 'coupon_code' => $request->coupon_code ?? '',
+                'reffered_by' => $request->assigned_to ?? '',
             ],
             'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
         ]);
@@ -126,6 +128,7 @@ class StripePaymentController extends Controller
             'password' => $session->metadata->user_password, // Already hashed
             'user_role' => 'customer',
             'coupon_code' => $couponCode,
+            'reffered_by' => $session->metadata->reffered_by,
         ])->assignRole('customer');
 
         // Process coupon code if provided
