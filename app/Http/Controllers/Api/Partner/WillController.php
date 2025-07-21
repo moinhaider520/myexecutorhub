@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\LPAVideos;
 use App\Models\WillVideos;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth ;
 
 class WillController extends Controller
 {

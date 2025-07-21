@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\EmailController as AdminEmailController;
 
-// Role Partner Controller 
+// Role Partner Controller
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
 use App\Http\Controllers\Partner\SettingController as PartnerSettingController;
 use App\Http\Controllers\Partner\BankAccountController as PartnerBankAccountController;
@@ -54,7 +54,7 @@ use App\Http\Controllers\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
 use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeController;
 use App\Http\Controllers\Partner\WillGeneratorController as PartnerWillGeneratorController;
-// Role Customer Controller 
+// Role Customer Controller
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
 use App\Http\Controllers\Customer\BankAccountController;
@@ -96,7 +96,7 @@ use App\Http\Controllers\Customer\WillController;
 use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
 
-// Role Executor Controller 
+// Role Executor Controller
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Executor\LifeRememberedController as ExecutorLifeRememberedController;
 use App\Http\Controllers\Executor\LifeRememberedVideoController as ExecutorLifeRememberedVideoController;
@@ -323,15 +323,15 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('wills/store', [WillController::class, 'store'])->name('wills.store');
     Route::delete('/wills/destroy/{id}', [WillController::class, 'destroy'])->name('wills.destroy');
 
-    // Notifications 
+    // Notifications
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
 
-    // Assign Permission 
+    // Assign Permission
     Route::get('/assign-permissions', [PermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');
     Route::post('/assign-permissions', [PermissionController::class, 'assignPermissions'])->name('assign_permissions');
 
-    // Customer Profile 
+    // Customer Profile
     Route::get('/edit-profile', [CustomerSettingController::class, 'editProfile'])->name('edit_profile');
     Route::post('/update-profile', [CustomerSettingController::class, 'updateProfile'])->name('update_profile');
     Route::post('/update-profile-image', [CustomerSettingController::class, 'updateProfileImage'])->name('update_profile_image');
@@ -530,7 +530,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/foreign_assets/update/{id}', [ForeignAssetsController::class, 'update'])->name('foreign_assets.update');
     Route::delete('/foreign_assets/destroy/{id}', [ForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
 
-    // Customer pensions 
+    // Customer pensions
     Route::get('/pension/view', [PensionController::class, 'view'])->name('pensions.view');
     Route::post('/pension/store', [PensionController::class, 'store'])->name('pensions.store');
     Route::post('/pension/update/{id}', [PensionController::class, 'update'])->name('pensions.update');
@@ -597,15 +597,15 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('wills/store', action: [PartnerWillController::class, 'store'])->name('wills.store');
     Route::delete('/wills/destroy/{id}', [PartnerWillController::class, 'destroy'])->name('wills.destroy');
 
-    // Assign Permission 
+    // Assign Permission
     Route::get('/assign-permissions', [PartnerPermissionController::class, 'showAssignPermissionsForm'])->name('assign_permissions_form');
     Route::post('/assign-permissions', [PartnerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
 
-    // Notifications 
+    // Notifications
     Route::get('notifications', [PartnerNotificationController::class, 'index'])->name('notifications.index');
     Route::post('notifications/read/{id}', [PartnerNotificationController::class, 'markAsRead'])->name('notifications.read');
 
-    // Customer Profile 
+    // Customer Profile
     Route::get('/edit-profile', [PartnerSettingController::class, 'editProfile'])->name('edit_profile');
     Route::post('/update-profile', [PartnerSettingController::class, 'updateProfile'])->name('update_profile');
     Route::post('/update-profile-image', [PartnerSettingController::class, 'updateProfileImage'])->name('update_profile_image');
@@ -810,7 +810,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/foreign_assets/update/{id}', [PartnerForeignAssetsController::class, 'update'])->name('foreign_assets.update');
     Route::delete('/foreign_assets/destroy/{id}', [PartnerForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
 
-    // Partner pensions 
+    // Partner pensions
     Route::get('/pension/view', [PartnerPensionController::class, 'view'])->name('pensions.view');
     Route::post('/pension/store', [PartnerPensionController::class, 'store'])->name('pensions.store');
     Route::post('/pension/update/{id}', [PartnerPensionController::class, 'update'])->name('pensions.update');
@@ -853,6 +853,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator', [PartnerWillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
     Route::get('will_generator/about_you', [PartnerWillGeneratorController::class, 'about_you'])->name('will_generator.about_you');
+    Route::post('will_generator/about_you', [PartnerWillGeneratorController::class, 'store_about_you'])->name('will_generator.store_about_you');
 });
 
 // Executors  Routes
@@ -872,7 +873,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
 
-    // LPA 
+    // LPA
     Route::get('lpa', [ExecutorLPAController::class, 'index'])->name('lpa.index');
 
     // WILLS

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('will__user__infos', function (Blueprint $table) {
+        Schema::create('will_user_infos', function (Blueprint $table) {
             $table->id();
             $table->string('legal_name')->nullable();
             $table->string('user_name')->nullable();
@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('martial_status')->nullable();
             $table->string('children')->nullable();
             $table->string('pets')->nullable();
-
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -35,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('will__user__infos');
+        Schema::dropIfExists('will_user_infos');
     }
 };

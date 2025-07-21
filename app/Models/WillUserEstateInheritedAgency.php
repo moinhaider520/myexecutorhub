@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-class Will_User_Estate extends Model
+class WillUserEstateInheritedAgency extends Model
 {
     use HasFactory;
     protected $guarded=[];

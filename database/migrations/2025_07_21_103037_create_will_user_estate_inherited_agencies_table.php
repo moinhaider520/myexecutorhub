@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('will__user__estates', function (Blueprint $table) {
+        Schema::create('will_user_estate_inherited_agencies', function (Blueprint $table) {
             $table->id();
-            $table->string('specific_person_will')->nullable();
-            $table->text('will_estate_reason')->nullable();
+            $table->string('agency_name')->nullable();
+            $table->string('percentage_estate')->nullable();
+            $table->foreignId('user_estate_id')->references('id')->on('will_user_estates')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('will__user__estates');
+        Schema::dropIfExists('will_user_estate_inherited_agencies');
     }
 };

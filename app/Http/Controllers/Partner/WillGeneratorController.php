@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Will_User_Info;
+use App\Models\WillUserInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class WillGeneratorController extends Controller
 {
@@ -23,5 +27,33 @@ class WillGeneratorController extends Controller
     {
         $authId = auth()->id();
         return view('partner.will_generator.about_you', ['authId' => $authId]);
+    }
+
+    public function store_about_you(Request $request)
+    {
+        try{
+
+            DB::beginTransaction();
+            WillUserInfo::create([
+                'legal_name'=>$request->legal_name,
+                'user_name'=>$request->user_name,
+                'date_of_birth'=>$request->date_of_birth,
+                'address_line_1'=>$request->address_line_1,
+                'address_line_2'=>$request->address_line_2,
+                'city'=>$request->city,
+                'post_code'=>$request->post_code,
+                'phone_number'=>$request->phone_number,
+                'martial_status'=>$request->martial_status,
+                'children'=>$request->children,
+                'pets'=>$request->pets,
+                'user_id'=>Auth::user()->id,
+            ]);
+            DB::commit();
+            return redirect()->back()->with(['success'=>'Your Personal Information has been submitted successfully']);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
     }
 }

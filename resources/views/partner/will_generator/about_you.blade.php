@@ -53,13 +53,15 @@
           <h4>About You</h4>
         </div>
         <div class="card-body basic-wizard important-validation">
-          <form id="msform" class="needs-validation" novalidate>
+          <form id="msform" class="needs-validation" novalidate  action="{{route('partner.will_generator.store_about_you')}}" method="POST">
+            @csrf
           @include('partner.will_generator.partials.about_you_partials.step1')
           @include('partner.will_generator.partials.about_you_partials.step2')
           @include('partner.will_generator.partials.about_you_partials.step3')
           @include('partner.will_generator.partials.about_you_partials.step4')
+          @include('partner.will_generator.partials.about_you_partials.step5')
           </form>
-          <div class="wizard-footer d-flex gap-2 justify-content-end mt-2">
+          <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
           <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled=""> Back</button>
           <button class="btn btn-primary" id="nextbtn" onclick="nextStep()">Next</button>
           </div>

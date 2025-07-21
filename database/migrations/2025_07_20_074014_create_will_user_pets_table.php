@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('will__user__accounts__properties', function (Blueprint $table) {
+        Schema::create('will_user_pets', function (Blueprint $table) {
             $table->id();
-            $table->string('asset_type')->nullable();
-            $table->string('asset_name')->nullable();
+            $table->string('pet_name')->nullable();
+            $table->foreignId('will_user_id')->references('id')->on('will_user_infos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('will__user__accounts__properties');
+        Schema::dropIfExists('will_user_pets');
     }
 };

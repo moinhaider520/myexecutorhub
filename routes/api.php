@@ -50,7 +50,7 @@ use App\Http\Controllers\Api\Partner\PictureController as PartnerPictureControll
 use App\Http\Controllers\Api\Partner\VideoController as PartnerVideoController;
 use App\Http\Controllers\Api\Partner\OtherTypeofAssetController as PartnerOtherTypeofAssetController;
 
-// Customer 
+// Customer
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
 use App\Http\Controllers\Api\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Api\Customer\GuidanceController as CustomerGuidanceController;
@@ -89,7 +89,7 @@ use App\Http\Controllers\Api\Customer\PictureController as CustomerPictureContro
 use App\Http\Controllers\Api\Customer\VideoController as CustomerVideoController;
 use App\Http\Controllers\Api\Customer\OtherTypeofAssetController as CustomerOtherTypeofAssetController;
 
-// Executor 
+// Executor
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
 use App\Http\Controllers\Api\Executor\DashboardController as ExecutorDashboardController;
 use App\Http\Controllers\Api\Executor\GuidanceController as ExecutorGuidanceController;
@@ -128,7 +128,7 @@ use App\Http\Controllers\Api\Executor\OtherTypeofAssetController as ExecutorOthe
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ExpoController;
-
+use App\Http\Controllers\Api\Partner\WillGeneratorController as PartnerWillGeneratorController;
 use Stripe\Customer;
 
 
@@ -343,7 +343,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/foreign_assets/update/{id}', [PartnerForeignAssetsController::class, 'update'])->name('foreign_assets.update');
     Route::delete('/foreign_assets/destroy/{id}', [PartnerForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
 
-    // Partner pensions 
+    // Partner pensions
     Route::get('/pension/view', [PartnerPensionController::class, 'view'])->name('pensions.view');
     Route::post('/pension/store', [PartnerPensionController::class, 'store'])->name('pensions.store');
     Route::post('/pension/update/{id}', [PartnerPensionController::class, 'update'])->name('pensions.update');
@@ -404,7 +404,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::get('/messages/{userId}', [PartnerMessageController::class, 'getMessages']);
     Route::get('/users', [PartnerMessageController::class, 'getUsers']);
 
-    // Assign Permission 
+    // Assign Permission
     Route::get('/assign-permissions', [PartnerPermissionController::class, 'getRolesAndPermissions'])->name('assign_permissions_form');
     Route::post('/assign-permissions', [PartnerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
 
@@ -413,6 +413,11 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
 
     // WILLS
     Route::get('/wills', [PartnerWillController::class, 'view'])->name('wills.view');
+
+
+    Route::post('/store_about_you',[PartnerWillGeneratorController::class,'store_about_you'])->name('wills.store_about_you');
+    Route::post('/store_child',[PartnerWillGeneratorController::class,'store_child'])->name('wills.store_child');
+    Route::post('/store_pet',[PartnerWillGeneratorController::class,'store_pet'])->name('wills.store_pet');
 });
 
 // Customer-specific routes
@@ -579,7 +584,7 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/foreign_assets/update/{id}', [CustomerForeignAssetsController::class, 'update'])->name('foreign_assets.update');
     Route::delete('/foreign_assets/destroy/{id}', [CustomerForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
 
-    // Customer pensions 
+    // Customer pensions
     Route::get('/pension/view', [CustomerPensionController::class, 'index'])->name('pensions.view');
     Route::post('/pension/store', [CustomerPensionController::class, 'store'])->name('pensions.store');
     Route::post('/pension/update/{id}', [CustomerPensionController::class, 'update'])->name('pensions.update');
@@ -645,7 +650,7 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::get('/messages/{userId}', [CustomerMessageController::class, 'getMessages']);
     Route::get('/users', [CustomerMessageController::class, 'getUsers']);
 
-    // Assign Permission 
+    // Assign Permission
     Route::get('/assign-permissions', [CustomerPermissionController::class, 'getRolesAndPermissions'])->name('assign_permissions_form');
     Route::post('/assign-permissions', [CustomerPermissionController::class, 'assignPermissions'])->name('assign_permissions');
 
@@ -664,7 +669,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/profile/change/password', [ExecutorProfileController::class, 'update_password'])->name('profile.update.password');
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/update-todo', [ExecutorDashboardController::class, 'updateTodoStatus'])->name('dashboard.update-todo');
-    
+
     // Customer Withdraw
     Route::get('/withdraw', [ExecutorWithdrawalController::class, 'view'])->name('withdraw.view');
     Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
