@@ -1735,6 +1735,7 @@
                                 </div>
                             </div>
                         </div>
+                        <h4 class="text-center">See why professionals are partnering with Executor Hub</h4>
                         <!-- IMAGE BLOCK -->
                         <div class="row justify-content-center">
                             <div class="col">

@@ -207,6 +207,7 @@ class PayPalController extends Controller
                     'password' => $userData['password'], // Already hashed
                     'user_role' => 'customer',
                     'coupon_code' => $couponCode,
+                    'reffered_by' => $userData['reffered_by'],
                 ])->assignRole('customer');
 
                 // Process coupon code if provided

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -49,6 +48,7 @@ return new class extends Migration
             $table->string('stripe_customer_id')->nullable();
             $table->string('stripe_subscription_id')->nullable();
             $table->string('paypal_subscription_id')->nullable();
+            $table->string('reffered_by')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -63,7 +63,7 @@
 
     <!-- RESPONSIVE CSS -->
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <style>
     .exit-popup {
@@ -413,6 +413,9 @@
                                         <input type="password" class="form-control" name="password" id="password"
                                             placeholder="Enter Password" required>
                                     </div>
+
+                                    <input type="hidden" name="assigned_to" id="assigned_to">
+
 
                                     <div class="row mt-3">
                                         <div class="col-md-6">
@@ -1560,10 +1563,10 @@
 
     <script src="{{ asset('assets/frontend/js/changer.js') }}"></script>
     <script defer src="{{ asset('assets/frontend/js/styleswitch.js') }}"></script>
-        <script>
-        $(document).ready(function() {
+    <script>
+        $(document).ready(function () {
             // Payment method selection
-            $('.payment-option').click(function() {
+            $('.payment-option').click(function () {
                 $('.payment-option').removeClass('active');
                 $('.payment-buttons').removeClass('active');
 
@@ -1596,7 +1599,7 @@
             }
 
             // Stripe form submission
-            $('#stripe-form').submit(function(e) {
+            $('#stripe-form').submit(function (e) {
                 if (!validateForm()) {
                     e.preventDefault();
                     return false;
@@ -1616,7 +1619,7 @@
             });
 
             // PayPal form submission
-            $('#paypal-form').submit(function(e) {
+            $('#paypal-form').submit(function (e) {
                 if (!validateForm()) {
                     e.preventDefault();
                     return false;
@@ -1649,15 +1652,21 @@
         }
     </script>
 
-    <script>
-document.addEventListener("DOMContentLoaded", function() {
+<script>
+document.addEventListener("DOMContentLoaded", function () {
     const urlParams = new URLSearchParams(window.location.search);
     const couponCode = urlParams.get('coupon_code');
+    const assignedTo = urlParams.get('assigned_to');
+
     if (couponCode) {
         document.getElementById('coupon_code').value = couponCode;
     }
+    if (assignedTo) {
+        document.getElementById('assigned_to').value = assignedTo;
+    }
 });
 </script>
+
 
 </body>
 
