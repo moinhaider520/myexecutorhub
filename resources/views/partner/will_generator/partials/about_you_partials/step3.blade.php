@@ -2,7 +2,7 @@
     <div class="form-group mb-3 col-sm-6" >
             <label for="form-label">Martial Status</label>
             <p>Select your current legal status, even if you know it’s going to change soon. You can always update this in the future.</p>
-            <select class="form-control" name="how_acting" id="how_acting" required>
+            <select class="form-control" name="martial_status" id="martial_status" required>
             <option value="" disabled>-- Select --</option>
               <option value="Single">Single</option>
               <option value="Living with partner but not married">Living with partner but not married</option>

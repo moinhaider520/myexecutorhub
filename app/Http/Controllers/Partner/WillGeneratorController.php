@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Will_User_Info;
+use App\Models\WillUserChildren;
 use App\Models\WillUserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,6 +23,11 @@ class WillGeneratorController extends Controller
     {
         $authId = auth()->id();
         return view('partner.will_generator.create', ['authId' => $authId]);
+    }
+    public function step4()
+    {
+        $authId = auth()->id();
+        return view('partner.will_generator.step4', ['authId' => $authId]);
     }
 
     public function about_you()
@@ -49,11 +56,28 @@ class WillGeneratorController extends Controller
                 'user_id'=>Auth::user()->id,
             ]);
             DB::commit();
-            return redirect()->back()->with(['success'=>'Your Personal Information has been submitted successfully']);
+            return redirect()->route('partner.will_generator.step4');
         }
         catch(\Exception $e){
             DB::rollBack();
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+    public function store_user_child(Request $request)
+    {
+        
+        try {
+            DB::beginTransaction();
+            WillUserChildren::create([
+                'child_name' => $request->name,
+                'date_of_birth' => $request->date_of_birth,
+                'will_user_id'=>Auth::user()->id,
+            ]);
+            DB::commit();
+            return response()->json(['status' => true, 'message' => 'Child information saved successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 }

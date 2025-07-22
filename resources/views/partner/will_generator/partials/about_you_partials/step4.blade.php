@@ -61,7 +61,7 @@
         <div id="addChildButtonContainer" class="hidden" style="display: none;">
             <button type="button"
                 class="w-full py-3 px-4 bg-white border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-blue-500 hover:text-blue-700 transition-all duration-200 flex items-center justify-center"
-                data-toggle="modal" data-target="#addExecutorModal">
+                data-toggle="modal" data-target="#addWillChildModal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="inline-block mr-2">
@@ -74,38 +74,37 @@
     </div>
 
 </div>
-<div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addExecutorModalLabel">Add a child</h5>
-            </div>
-            <div class="modal-body">
-                <form id="addExecutorForm">
-                    @csrf
-                    <div class="form-group mb-3">
-                        <label for="name">Child Full Name</label>
-                        <input type="text" class="form-control" name="name" id="name"
-                            placeholder="Enter Child Name" required>
-                        <div class="text-danger" id="error-name"></div>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="date_of_birth">Date Of Birth</label>
-                        <input type="text" class="form-control" name="date_of_birth" id="date_of_birth"
-                            placeholder="Enter Date of birth" required>
-                        <div class="text-danger" id="error-date_of_birth"></div>
-                    </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-            </form>
+<div class="modal" id="addWillChildModal" tabindex="-1" role="dialog" aria-labelledby="addWillChildModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="addWillChildForm"> 
+      @csrf
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addWillChildModalLabel">Add a child</h5>
         </div>
-    </div>
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label for="name">Child Full Name</label>
+            <input type="text" class="form-control" name="name" id="name"
+              placeholder="Enter Child Name" required>
+            <div class="text-danger" id="error-name"></div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="date_of_birth">Date Of Birth</label>
+            <input type="text" class="form-control" name="child_date_of_birth" id="date_of_birth"
+              placeholder="Enter Date of birth" required>
+            <div class="text-danger" id="error-date_of_birth"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveChildButton">Save changes</button>
+        </div>
+      </div>
+    </form> 
+  </div>
 </div>
+
 <script>
     // Get references to the DOM elements
     const yesOption = document.getElementById('yesOption');
@@ -165,6 +164,73 @@
     window.onload = function() {
         handleSelection(null); // Ensures no option is selected and child details/button are hidden initially
     };
+   $(document).ready(function() {
+        var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': csrfToken
+            }
+        });
+
+        function clearAddErrors() {
+            $('#error-name').text('');
+            $('#error-date_of_birth').text('');
+        }
+
+        $('#saveChildButton').on('click', function(e) {
+            e.preventDefault();
+            clearAddErrors();
+
+            var childName = $('#name').val();
+            var childDateOfBirth = $('#date_of_birth').val();
+
+            var postData = {
+                name: childName,
+                date_of_birth: childDateOfBirth
+            };
+
+            console.log("Data being sent:", postData);
+
+            $.ajax({
+                url: "{{ route('partner.will_generator.user_child.store') }}",
+                method: 'POST',
+                data: postData,
+                dataType: 'json',
+
+                success: function(response) {
+                    if (response.success) {
+                        $('#addWillChildModal').modal('hide');
+                        alert('Child added successfully!');
+                    } else {
+                        alert(response.message || 'An unknown error occurred during processing.');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    if (jqXHR.status === 419) {
+                        alert('Your session has expired or the security token is invalid. Please refresh the page and try again.');
+                        location.reload();
+                    } else if (jqXHR.status === 422) {
+                        var errors = jqXHR.responseJSON.errors;
+                        if (errors.name) {
+                            $('#error-name').text(errors.name);
+                        }
+                        if (errors.date_of_birth) {
+                            $('#error-date_of_birth').text(errors.date_of_birth);
+                        }
+                    } else {
+                        var errorMessage = 'An unexpected error occurred.';
+                        if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                            errorMessage = jqXHR.responseJSON.message;
+                        } else if (errorThrown) {
+                            errorMessage = errorThrown;
+                        }
+                        alert(errorMessage);
+                        console.error("AJAX Error:", jqXHR, textStatus, errorThrown);
+                    }
+                }
+            });
+        });
+    });
 </script>
 </div>
-

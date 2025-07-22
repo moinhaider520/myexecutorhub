@@ -58,8 +58,6 @@
           @include('partner.will_generator.partials.about_you_partials.step1')
           @include('partner.will_generator.partials.about_you_partials.step2')
           @include('partner.will_generator.partials.about_you_partials.step3')
-          @include('partner.will_generator.partials.about_you_partials.step4')
-          @include('partner.will_generator.partials.about_you_partials.step5')
           </form>
           <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
           <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled=""> Back</button>
@@ -100,7 +98,7 @@
     });
 
     backBtn.disabled = index === 0;
-    nextBtn.textContent = (index === steps.length - 1) ? 'Finish' : 'Next';
+    nextBtn.textContent = (index === steps.length - 1) ? 'Next':'Next';
     }
 
     function nextStep() {
