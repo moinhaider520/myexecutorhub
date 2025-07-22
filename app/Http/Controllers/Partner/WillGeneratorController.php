@@ -29,6 +29,11 @@ class WillGeneratorController extends Controller
         $authId = auth()->id();
         return view('partner.will_generator.step4', ['authId' => $authId]);
     }
+    public function step5()
+    {
+        $authId = auth()->id();
+        return view('partner.will_generator.step5', ['authId' => $authId]);
+    }
 
     public function about_you()
     {
@@ -41,7 +46,7 @@ class WillGeneratorController extends Controller
         try{
 
             DB::beginTransaction();
-            WillUserInfo::create([
+            $will_user_id=WillUserInfo::create([
                 'legal_name'=>$request->legal_name,
                 'user_name'=>$request->user_name,
                 'date_of_birth'=>$request->date_of_birth,
@@ -56,6 +61,7 @@ class WillGeneratorController extends Controller
                 'user_id'=>Auth::user()->id,
             ]);
             DB::commit();
+            session(['will_user_id' => $will_user_id->id]);
             return redirect()->route('partner.will_generator.step4');
         }
         catch(\Exception $e){
@@ -65,13 +71,13 @@ class WillGeneratorController extends Controller
     }
     public function store_user_child(Request $request)
     {
-        
+
         try {
             DB::beginTransaction();
             WillUserChildren::create([
                 'child_name' => $request->name,
                 'date_of_birth' => $request->date_of_birth,
-                'will_user_id'=>Auth::user()->id,
+                'will_user_id'=>session('will_user_id'),
             ]);
             DB::commit();
             return response()->json(['status' => true, 'message' => 'Child information saved successfully']);

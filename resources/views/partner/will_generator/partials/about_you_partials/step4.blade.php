@@ -76,13 +76,14 @@
 </div>
 <div class="modal" id="addWillChildModal" tabindex="-1" role="dialog" aria-labelledby="addWillChildModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <form id="addWillChildForm"> 
+    <form id="addWillChildForm">
       @csrf
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="addWillChildModalLabel">Add a child</h5>
         </div>
         <div class="modal-body">
+
           <div class="form-group mb-3">
             <label for="name">Child Full Name</label>
             <input type="text" class="form-control" name="name" id="name"
@@ -101,7 +102,7 @@
           <button type="button" class="btn btn-primary" id="saveChildButton">Save changes</button>
         </div>
       </div>
-    </form> 
+    </form>
   </div>
 </div>
 
@@ -185,9 +186,11 @@
             var childName = $('#name').val();
             var childDateOfBirth = $('#date_of_birth').val();
 
+
             var postData = {
                 name: childName,
                 date_of_birth: childDateOfBirth
+                will_user_id: will_user_id
             };
 
             console.log("Data being sent:", postData);
@@ -200,8 +203,8 @@
 
                 success: function(response) {
                     if (response.success) {
-                        $('#addWillChildModal').modal('hide');
-                        alert('Child added successfully!');
+                        $('#addWillChildModal').modal('toggle');
+
                     } else {
                         alert(response.message || 'An unknown error occurred during processing.');
                     }

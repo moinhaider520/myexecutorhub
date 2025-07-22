@@ -59,19 +59,14 @@
                                 <div class="stepper row g-3 needs-validation custom-input" novalidate="" >
                                     <div class="col-sm-12">
 
-                                        <h1 id="childrenQuestion" class="text-2xl sm:text-2xl font-bold text-gray-800 mb-4">
-                                            Do you have any children?<span class="txt-danger">*</span>
+                                        <h1 id="PetQuestion" class="text-2xl sm:text-2xl font-bold text-gray-800 mb-4">
+                                            Do you have any pets?<span class="txt-danger">*</span>
                                         </h1>
                                         <p class="text-gray-600 mb-2">
-                                            If your first child is on the way, select "No" for now. You can always update this in the future.
+                                            You can choose guardians for your pets in the next section.
                                         </p>
-                                        <p class="text-gray-600 mb-2">
-                                            Add all your biological and legally adopted children, whether or not you want to leave things to them in
-                                            your will.
-                                        </p>
-                                        <p class="text-gray-600 mb-6">
-                                            Do not add any step children here. You can add them later if you wish to leave them part of your estate.
-                                        </p>
+
+
 
                                         <!-- Radio Button Style Selection -->
                                         <div class="space-y-4 mb-8">
@@ -92,11 +87,11 @@
                                                     No
                                                 </span>
                                             </div>
-                                            <input type="hidden" name="children" id="children">
+                                            <input type="hidden" name="Pet" id="Pet">
                                         </div>
 
-                                        <!-- Conditional Rendering of Child Details -->
-                                        <div id="childDetails" class="bg-white p-4 rounded-lg shadow-md border border-gray-200 hidden mb-8">
+                                        <!-- Conditional Rendering of Pet Details -->
+                                        <div id="PetDetails" class="bg-white p-4 rounded-lg shadow-md border border-gray-200 hidden mb-8">
                                             <div class="flex justify-between items-center">
                                                 <div>
                                                     <p class="font-semibold text-gray-900">Melyssa Workman</p>
@@ -115,47 +110,42 @@
                                             </div>
                                         </div>
 
-                                        <div id="addChildButtonContainer" class="hidden" style="display: none;">
+                                        <div id="addPetButtonContainer" class="hidden" style="display: none;">
                                             <button type="button"
                                                 class="w-full py-3 px-4 bg-white border-2 border-dashed border-gray-300 rounded-lg text-gray-600 hover:border-blue-500 hover:text-blue-700 transition-all duration-200 flex items-center justify-center"
-                                                data-toggle="modal" data-target="#addWillChildModal">
+                                                data-toggle="modal" data-target="#addWillPetModal">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                                     class="inline-block mr-2">
                                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                                 </svg>
-                                                Add child
+                                                Add a pet
                                             </button>
                                         </div>
                                     </div>
 
                                 </div>
-                                <div class="modal" id="addWillChildModal" tabindex="-1" role="dialog" aria-labelledby="addWillChildModalLabel" aria-hidden="true">
+                                <div class="modal" id="addWillPetModal" tabindex="-1" role="dialog" aria-labelledby="addWillPetModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
-                                        <form id="addWillChildForm">
+                                        <form id="addWillPetForm">
                                             @csrf
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="addWillChildModalLabel">Add a child</h5>
+                                                    <h5 class="modal-title" id="addWillPetModalLabel">Add a pet</h5>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="form-group mb-3">
-                                                        <label for="name">Child Full Name</label>
+                                                        <label for="name">Pet Name</label>
                                                         <input type="text" class="form-control" name="name" id="name"
-                                                            placeholder="Enter Child Name" required>
+                                                            placeholder="Enter Pet Name" required>
                                                         <div class="text-danger" id="error-name"></div>
                                                     </div>
-                                                    <div class="form-group mb-3">
-                                                        <label for="date_of_birth">Date Of Birth</label>
-                                                        <input type="text" class="form-control" name="child_date_of_birth" id="date_of_birth"
-                                                            placeholder="Enter Date of birth" required>
-                                                        <div class="text-danger" id="error-date_of_birth"></div>
-                                                    </div>
+
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary" id="saveChildButton">Save changes</button>
+                                                    <button type="button" class="btn btn-primary" id="savePetButton">Save changes</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -167,7 +157,7 @@
                         </form>
                         <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
                             <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled=""> Back</button>
-                            <a href="{{route('partner.will_generator.step5')}}" class="btn btn-primary" id="nextbtn">Next</a>
+                            <button class="btn btn-primary" id="nextbtn">Next</button>
                         </div>
                     </div>
                 </div>
@@ -188,15 +178,15 @@
     // Get references to the DOM elements
     const yesOption = document.getElementById('yesOption');
     const noOption = document.getElementById('noOption');
-    const childDetails = document.getElementById('childDetails');
-    const addChildButtonContainer = document.getElementById('addChildButtonContainer'); // Get the new button container
+    const PetDetails = document.getElementById('PetDetails');
+    const addPetButtonContainer = document.getElementById('addPetButtonContainer'); // Get the new button container
 
     // Variable to store the current selection
-    let hasChildren = null; // 'yes', 'no', or null
+    let hasPet = null; // 'yes', 'no', or null
 
     // Function to handle the selection
     function handleSelection(selection) {
-        hasChildren = selection; // Update the selection state
+        hasPet = selection; // Update the selection state
 
         // Reset styles for both options
         yesOption.classList.remove('border-blue-500', 'bg-blue-50', 'shadow-inner');
@@ -210,33 +200,33 @@
         noOption.querySelector('span').classList.add('text-gray-800');
 
         // Apply selected styles based on the current selection
-        if (hasChildren === 'yes') {
+        if (hasPet === 'yes') {
             yesOption.classList.add('border-blue-500', 'bg-blue-50', 'shadow-inner');
             yesOption.classList.remove('border-gray-300', 'bg-gray-50', 'hover:bg-gray-100');
             yesOption.querySelector('span').classList.add('text-blue-700');
             yesOption.querySelector('span').classList.remove('text-gray-800');
-        } else if (hasChildren === 'no') {
+        } else if (hasPet === 'no') {
             noOption.classList.add('border-blue-500', 'bg-blue-50', 'shadow-inner');
             noOption.classList.remove('border-gray-300', 'bg-gray-50', 'hover:bg-gray-100');
             noOption.querySelector('span').classList.add('text-blue-700');
             noOption.querySelector('span').classList.remove('text-gray-800');
         }
 
-        // Show/hide child details and "Add child" button based on selection
-        if (hasChildren === 'yes') {
-            childDetails.classList.remove('hidden');
-            childDetails.style.display = 'block'; // Ensure it's block for visibility
+        // Show/hide Pet details and "Add Pet" button based on selection
+        if (hasPet === 'yes') {
+            PetDetails.classList.remove('hidden');
+            PetDetails.style.display = 'block'; // Ensure it's block for visibility
 
-            addChildButtonContainer.classList.remove('hidden');
-            addChildButtonContainer.style.display = 'block'; // Show the add child button
+            addPetButtonContainer.classList.remove('hidden');
+            addPetButtonContainer.style.display = 'block'; // Show the add Pet button
         } else {
-            childDetails.classList.add('hidden');
-            childDetails.style.display = 'none'; // Ensure it's none for hiding
+            PetDetails.classList.add('hidden');
+            PetDetails.style.display = 'none'; // Ensure it's none for hiding
 
-            addChildButtonContainer.classList.add('hidden');
-            addChildButtonContainer.style.display = 'none'; // Hide the add child button
+            addPetButtonContainer.classList.add('hidden');
+            addPetButtonContainer.style.display = 'none'; // Hide the add Pet button
         }
-        $("#children").val(hasChildren);
+        $("#Pet").val(hasPet);
     }
 
 
@@ -254,20 +244,20 @@
 
         function clearAddErrors() {
             $('#error-name').text('');
-            $('#error-date_of_birth').text('');
+
         }
 
-        $('#saveChildButton').on('click', function(e) {
+        $('#savePetButton').on('click', function(e) {
             e.preventDefault();
             clearAddErrors();
 
-            var childName = $('#name').val();
-            var childDateOfBirth = $('#date_of_birth').val();
+            var PetName = $('#name').val();
+
 
 
             var postData = {
-                name: childName,
-                date_of_birth: childDateOfBirth
+                name: PetName,
+
 
             };
 
@@ -280,7 +270,7 @@
                 dataType: 'json',
 
                 success: function(response) {
-                 $('#addWillChildModal').click();
+                 $('#addWillPetModal').click();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status === 419) {
