@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Will_User_Info;
 use App\Models\WillUserChildren;
 use App\Models\WillUserInfo;
+use App\Models\WillUserPet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -26,13 +27,32 @@ class WillGeneratorController extends Controller
     }
     public function step4()
     {
-        $authId = auth()->id();
-        return view('partner.will_generator.step4', ['authId' => $authId]);
+        $children = WillUserChildren::where('will_user_id','=',session('will_user_id'))->get();
+        return view('partner.will_generator.step4', ['children' => $children]);
+    }
+
+    public function store_step4(Request $request)
+    {
+
+        $will_user_id=WillUserInfo::where('id','=',session('will_user_id'))
+        ->update([
+                'children'=>$request->children,
+            ]);
+        return redirect()->route('partner.will_generator.step5');
     }
     public function step5()
     {
-        $authId = auth()->id();
-        return view('partner.will_generator.step5', ['authId' => $authId]);
+        $pets = WillUserPet::where('will_user_id','=',session('will_user_id'))->get();
+        return view('partner.will_generator.step5', ['pets' => $pets]);
+    }
+    public function store_step5(Request $request)
+    {
+
+        $will_user_id=WillUserInfo::where('id','=',session('will_user_id'))
+        ->update([
+                'pets'=>$request->pets,
+            ]);
+        return redirect()->route('partner.will_generator.create')->with(['success'=>'Your Personal Information has been submitted successfully']);
     }
 
     public function about_you()
@@ -80,10 +100,124 @@ class WillGeneratorController extends Controller
                 'will_user_id'=>session('will_user_id'),
             ]);
             DB::commit();
-            return response()->json(['status' => true, 'message' => 'Child information saved successfully']);
+            $children = WillUserChildren::where('will_user_id','=',session('will_user_id'))->get();
+
+            $html = view('partner.will_generator.ajax.children_list', ['children' => $children])->render();
+            return response()->json(['status' => true, 'message' => 'Child information saved successfully','data'=>$html]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function edit_user_child(Request $request){
+        try{
+            DB::beginTransaction();
+            WillUserChildren::where('id','=',$request->child_id)
+            ->update([
+                'child_name' => $request->child_name,
+                'date_of_birth' => $request->edit_child_date_of_birth,
+            ]);
+            DB::commit();
+            $children = WillUserChildren::where('will_user_id','=',session('will_user_id'))->get();
+            $html = view('partner.will_generator.ajax.children_list', ['children' => $children])->render();
+            return response()->json(['status' => true, 'message' => 'Pet information update successfully','data'=>$html]);
+
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+
+    }
+
+    public function delete_user_child(Request $request){
+        try{
+
+            $user_child=WillUserChildren::where('id','=',$request->child_id)->first();
+            if($user_child){
+                DB::beginTransaction();
+                $user_child->delete();
+                DB::commit();
+            }
+            else{
+                return response()->json(['status'=>false,'message'=>'No Pet found']);
+            }
+
+            $children = WillUserChildren::where('will_user_id','=',session('will_user_id'))->get();
+            $html = view('partner.will_generator.ajax.children_list', ['children' => $children])->render();
+            return response()->json(['status' => true, 'message' => 'Pet information deleted successfully','data'=>$html]);
+
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+
+    public function store_user_pet(Request $request)
+    {
+
+        try {
+            DB::beginTransaction();
+            WillUserPet::create([
+                'pet_name' => $request->name,
+                'will_user_id'=>session('will_user_id'),
+            ]);
+            DB::commit();
+            $pets = WillUserPet::where('will_user_id','=',session('will_user_id'))->get();
+
+            $html = view('partner.will_generator.ajax.pet_list', ['pets' => $pets])->render();
+            return response()->json(['status' => true, 'message' => 'Pet information saved successfully','data'=>$html]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function edit_user_pet(Request $request){
+        try{
+            DB::beginTransaction();
+            WillUserPet::where('id','=',$request->pet_id)
+            ->update([
+                'pet_name' => $request->name,
+            ]);
+            DB::commit();
+            $pets = WillUserPet::where('will_user_id','=',session('will_user_id'))->get();
+            $html = view('partner.will_generator.ajax.pet_list', ['pets' => $pets])->render();
+            return response()->json(['status' => true, 'message' => 'Pet information update successfully','data'=>$html]);
+
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+
+    }
+
+    public function delete_user_pet(Request $request){
+        try{
+
+            $user_pet=WillUserPet::where('id','=',$request->pet_id)->first();
+            if($user_pet){
+                DB::beginTransaction();
+                $user_pet->delete();
+                DB::commit();
+            }
+            else{
+                return response()->json(['status'=>false,'message'=>'No Pet found']);
+            }
+
+            $pets = WillUserPet::where('will_user_id','=',session('will_user_id'))->get();
+            $html = view('partner.will_generator.ajax.pet_list', ['pets' => $pets])->render();
+            return response()->json(['status' => true, 'message' => 'Pet information deleted successfully','data'=>$html]);
+
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
 }

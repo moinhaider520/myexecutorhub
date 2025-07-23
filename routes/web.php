@@ -856,9 +856,16 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator/create', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
     Route::get('will_generator/about_you', [PartnerWillGeneratorController::class, 'about_you'])->name('will_generator.about_you');
     Route::get('will_generator/step4', [PartnerWillGeneratorController::class, 'step4'])->name('will_generator.step4');
+    Route::post('will_generator/step4', [PartnerWillGeneratorController::class, 'store_step4'])->name('will_generator.store_step4');
     Route::get('will_generator/step5', [PartnerWillGeneratorController::class, 'step5'])->name('will_generator.step5');
+    Route::post('will_generator/step5', [PartnerWillGeneratorController::class, 'store_step5'])->name('will_generator.store_step5');
     Route::post('will_generator/about_you', [PartnerWillGeneratorController::class, 'store_about_you'])->name('will_generator.store_about_you');
     Route::post('will_generator/user_child/store', [PartnerWillGeneratorController::class, 'store_user_child'])->name('will_generator.user_child.store');
+    Route::post('will_generator/user_child/edit', [PartnerWillGeneratorController::class, 'edit_user_child'])->name('will_generator.user_child.edit');
+    Route::post('will_generator/user_child/delete', [PartnerWillGeneratorController::class, 'delete_user_child'])->name('will_generator.user_child.delete');
+    Route::post('will_generator/user_pet/store', [PartnerWillGeneratorController::class, 'store_user_pet'])->name('will_generator.user_pet.store');
+    Route::post('will_generator/user_pet/edit', [PartnerWillGeneratorController::class, 'edit_user_pet'])->name('will_generator.user_pet.edit');
+    Route::post('will_generator/user_pet/delete', [PartnerWillGeneratorController::class, 'delete_user_pet'])->name('will_generator.user_pet.delete');
 });
 
 // Executors  Routes
