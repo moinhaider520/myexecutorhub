@@ -14,8 +14,6 @@
             /* Add some spacing between child items */
         }
     </style>
-
-
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">

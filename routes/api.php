@@ -415,9 +415,13 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::get('/wills', [PartnerWillController::class, 'view'])->name('wills.view');
 
 
-    Route::post('/store_about_you',[PartnerWillGeneratorController::class,'store_about_you'])->name('wills.store_about_you');
-    Route::post('/store_child',[PartnerWillGeneratorController::class,'store_child'])->name('wills.store_child');
-    Route::post('/store_pet',[PartnerWillGeneratorController::class,'store_pet'])->name('wills.store_pet');
+    Route::post('/will_generator/store_about_you',[PartnerWillGeneratorController::class,'store_about_you'])->name('wills.store_about_you');
+    Route::post('/will_generator/store_child',[PartnerWillGeneratorController::class,'store_child'])->name('will_generator.store_child');
+    Route::post('/will_generator/edit_child',[PartnerWillGeneratorController::class,'edit_child'])->name('will_generator.edit_child');
+    Route::post('/will_generator/delete_child',[PartnerWillGeneratorController::class,'delete_child'])->name('will_generator.delete_child');
+    Route::post('/will_generator/store_pet',[PartnerWillGeneratorController::class,'store_pet'])->name('will_generator.store_pet');
+    Route::post('/will_generator/edit_pet',[PartnerWillGeneratorController::class,'edit_pet'])->name('will_generator.edit_pet');
+    Route::post('/will_generator/delete_pet',[PartnerWillGeneratorController::class,'delete_pet'])->name('will_generator.delete_pet');
 });
 
 // Customer-specific routes
