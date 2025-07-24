@@ -1,6 +1,15 @@
 @extends('layouts.master')
 
 @section('content')
+    <style>
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+    </style>
     <div class="page-body">
         <!-- ONBOARDING SECTION -->
         @if (!collect($guide)->every(fn($completed) => $completed))
@@ -8,6 +17,7 @@
                 <div class="row">
                     <div class="card">
                         <h2 class="p-2">Onboarding Guide</h2>
+                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
                         <br />
                         <ol>
                             @foreach ($guide as $task => $completed)
@@ -259,6 +269,97 @@
             </div>
         </div>
         <!-- Container-fluid Ends-->
+
+                <!-- GUIDE MODAL -->
+        <div class="modal fade" id="guideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Executor Hub Onboarding Guide</h5>
+                        <button type="button" class="btn-close" aria-label="Close" id="modalCloseBtn"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <!-- Step Contents -->
+                        <div class="step active" data-audio="{{ asset('assets/customer_guide_audios/audio1.mp3') }}">
+                            <h4>Welcome to Executor Hub</h4>
+                            <p>You’re here to manage your loved one’s estate securely, clearly, and at your own pace — with step-by-step guidance every step of the way.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio2.mp3') }}">
+                            <h4>Profile Setup</h4>
+                            <p>Nominate your Executors by entering name, email, and relation under the Executor Tab.</p>
+                            <img src="{{ asset('assets/customer_guide_images/image1.png') }}"
+                                style="width:100%;height:450px;" />
+
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio3.mp3') }}">
+                            <h4>Guided Tour of Your Hub</h4>
+                            <ul>
+                                <li>To-Do List: Timeline of executor duties</li>
+                                <li>
+                                                                <img src="{{ asset('assets/customer_guide_images/image2.png') }}"
+                                style="width:100%;height:250px;" />
+                                </li>
+                                <li>Vault: Secure uploads (Will, LPA, etc.)</li>
+                                <li>
+                                                                <img src="{{ asset('assets/customer_guide_images/image3.png') }}"
+                                style="width:100%;height:450px;" />
+                                </li>
+                                <li>People: Collaborators & advisers</li>
+                                <li>
+                                                                <img src="{{ asset('assets/customer_guide_images/image4.png') }}"
+                                style="width:100%;height:450px;" />
+                                </li>
+                                <li>Messages: Leave or receive messages for/from loved ones</li>
+                                <li>Resources: Video guides, checklists, legal explainers</li>
+                            </ul>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio4.mp3') }}">
+                            <h4>Support Options</h4>
+                            <ol>
+                                <li>Live chat / ask an adviser</li>
+                                <li>Book a call with a partner by sending an email to hello@executorhub.co.uk</li>
+                                <li>
+                                                                <img src="{{ asset('assets/customer_guide_images/image5.png') }}"
+                                style="width:100%;height:450px;" />
+                                </li>
+                            </ol>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio5.mp3') }}">
+                            <h4>Personalisation</h4>
+                            <ul>
+                                <li>Choose reminders (email/SMS)</li>
+                                <li>Save backup contacts</li>
+                                <li>Save Assets & Liabilities</li>
+                                <li>Save Life Moments & Voice Notes</li>
+                            </ul>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio6.mp3') }}">
+                            <h4>Final Tip</h4>
+                            <p>“You can access this anywhere, anytime. Bookmark your dashboard now.”</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" id="prevBtn" disabled>Previous</button>
+                        <button class="btn btn-primary" id="nextBtn">Next</button>
+                        <button class="btn btn-success d-none" id="finishBtn">Finish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <audio id="stepAudio" autoplay hidden></audio>
     </div>
 
     <!-- Scripts for Document Reminders -->
@@ -372,6 +473,95 @@
             });
 
         });
+    </script>
+
+    <script>
+        const steps = document.querySelectorAll('.step');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        const viewGuideBtn = document.getElementById('viewGuideBtn');
+        const guideModal = new bootstrap.Modal(document.getElementById('guideModal'));
+        const stepAudio = document.getElementById('stepAudio');
+        const repeatButtons = document.querySelectorAll('.repeatBtn');
+        let currentStep = 0;
+
+        repeatButtons.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const audio = steps[index].getAttribute('data-audio');
+                if (audio) {
+                    stepAudio.src = audio;
+                    stepAudio.play();
+                }
+            });
+        });
+
+
+        function showStep(index) {
+            steps.forEach((step, i) => {
+                step.classList.remove('active');
+                if (i === index) {
+                    step.classList.add('active');
+                    let audio = step.getAttribute('data-audio');
+                    if (audio) {
+                        stepAudio.src = audio;
+                        stepAudio.play();
+                    }
+                }
+            });
+
+            prevBtn.disabled = index === 0;
+            nextBtn.classList.toggle('d-none', index === steps.length - 1);
+            finishBtn.classList.toggle('d-none', index !== steps.length - 1);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        });
+
+        viewGuideBtn.addEventListener('click', () => {
+            currentStep = 0;
+            showStep(currentStep);
+            guideModal.show();
+        });
+
+        function stopAudio() {
+            const audio = document.getElementById('stepAudio');
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        }
+
+        document.getElementById('modalCloseBtn').addEventListener('click', () => {
+            stopAudio();
+            guideModal.hide();
+        });
+
+        document.getElementById('finishBtn').addEventListener('click', () => {
+            stopAudio();
+            guideModal.hide();
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Show modal only on first visit
+            if (!localStorage.getItem('hasVisited')) {
+                guideModal.show();
+                showStep(currentStep); // ✅ move inside
+                localStorage.setItem('hasVisited', 'true');
+            }
+        });
+
     </script>
 
 @endsection

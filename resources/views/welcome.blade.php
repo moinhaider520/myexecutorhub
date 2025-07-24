@@ -1839,40 +1839,54 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form id="contact-form" class="row contact-form" action="{{ route('partner.submit') }}"
-                                method="POST">
+                            <form id="contact-form" class="row contact-form" method="POST" action="{{ route('partner-registration.store') }}">
                                 @csrf
-
-                                <!-- Business Name Input -->
                                 <div class="col-md-12">
-                                    <p class="p-lg">Business Name:</p>
-                                    <span>Enter your business name:</span>
-                                    <input type="text" name="business_name" class="form-control"
-                                        placeholder="Business Name*" required />
+                                    <p class="p-lg">Name:</p>
+                                    <span>Enter your name:</span>
+                                    <input type="text" name="name" class="form-control"
+                                        placeholder="Name*" required />
                                 </div>
 
-                                <!-- Contact Name Input -->
-                                <div class="col-md-12">
-                                    <p class="p-lg">Contact Name:</p>
-                                    <span>Enter your full name:</span>
-                                    <input type="text" name="contact_name" class="form-control" placeholder="Your Name*"
-                                        required />
-                                </div>
 
-                                <!-- Contact Email Input -->
                                 <div class="col-md-12">
-                                    <p class="p-lg">Contact Email:</p>
+                                    <p class="p-lg">Email:</p>
                                     <span>Please enter a valid email address:</span>
-                                    <input type="email" name="contact_email" class="form-control"
+                                    <input type="email" name="email" class="form-control"
                                         placeholder="Email Address*" required />
                                 </div>
 
                                 <!-- Contact Number Input -->
                                 <div class="col-md-12">
-                                    <p class="p-lg">Contact Number:</p>
-                                    <span>Enter your phone number:</span>
-                                    <input type="tel" name="contact_number" class="form-control"
-                                        placeholder="Contact Number*" required />
+                                    <p class="p-lg">Password:</p>
+                                    <span>Enter your password:</span>
+                                    <input type="password" name="password" class="form-control"
+                                        placeholder="******" required />
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="p-lg">Confirm Password:</p>
+                                    <span>Enter your password:</span>
+                                    <input type="password" name="password_confirmation" class="form-control"
+                                        placeholder="******" required />
+                                </div>
+                                <!-- Email notifications checkbox -->
+                                <div class="form-group">
+                                    <div>
+                                        <input class="" type="checkbox" name="email_notifications" id="email_notifications"
+                                            value="1" {{ old('email_notifications') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="email_notifications">
+                                            Opt in to email notifications?
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <input class="" type="checkbox" name="privacy_policy" id="privacy_policy" value="1"
+                                            {{ old('privacy_policy') ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="privacy_policy">
+                                            Do you agree with our terms and privacy policy?
+                                        </label>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
@@ -1885,7 +1899,7 @@
                                 </div>
                                 <!-- Submit Button -->
                                 <div class="col-md-12 mt-15 form-btn text-right">
-                                    <button type="submit" class="btn btn--theme hover--theme">Submit Request</button>
+                                    <button type="submit" class="btn btn--theme hover--theme">Sign Up as a Partner</button>
                                 </div>
                             </form>
                         </div>

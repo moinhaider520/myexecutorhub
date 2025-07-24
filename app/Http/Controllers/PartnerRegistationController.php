@@ -23,11 +23,24 @@ class PartnerRegistationController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
+            'g-recaptcha-response' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                        'secret' => config('services.recaptcha.secret_key'),
+                        'response' => $value,
+                    ]);
+
+                    if (!$response->json('success')) {
+                        $fail('Captcha validation failed.');
+                    }
+                }
+            ],
 
         ]);
 
         $couponCode = $request->name . strtoupper(uniqid());
-        $accesstype = 'Collaborator';
+        $accesstype = 'Direct Partners';
 
         try {
             DB::beginTransaction();

@@ -64,7 +64,9 @@
                                         <select name="access_type" id="access_type" class="form-control" required>
                                             <option value="" disabled selected>Select Access Type</option>
                                             <option value="Friends & Family" {{ old('access_type') == 'Friends & Family' ? 'selected' : '' }}>Friends & Family</option>
-                                            <option value="Collaborator" {{ old('access_type') == 'Collaborator' ? 'selected' : '' }}>Collaborator</option>
+                                            <option value="Direct Partners" {{ old('access_type') == 'Direct Partners' ? 'selected' : '' }}>Direct Partners</option>
+                                            <option value="Will Power Staff" {{ old('access_type') == 'Will Power Staff' ? 'selected' : '' }}>Will Power Staff</option>
+                                            <option value="Partner Organisations" {{ old('access_type') == 'Direct' ? 'selected' : '' }}>Partner Organisations</option>
                                         </select>
                                         @error('access_type')
                                         <div class="text-danger">{{ $message }}</div>
