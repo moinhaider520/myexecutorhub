@@ -31,7 +31,7 @@
           </div>
           <div class="card-body">
           <p>Test Property</p>
-          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          <a href="{{ route('partner.will_generator.account_properties') }}">Edit</a>
           </div>
         </div>
         <div class="card">

@@ -866,6 +866,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/user_pet/store', [PartnerWillGeneratorController::class, 'store_user_pet'])->name('will_generator.user_pet.store');
     Route::post('will_generator/user_pet/edit', [PartnerWillGeneratorController::class, 'edit_user_pet'])->name('will_generator.user_pet.edit');
     Route::post('will_generator/user_pet/delete', [PartnerWillGeneratorController::class, 'delete_user_pet'])->name('will_generator.user_pet.delete');
+
+    Route::get('will_generator/account_properties', [PartnerWillGeneratorController::class, 'account_properties'])->name('will_generator.account_properties');
 });
 
 // Executors  Routes
