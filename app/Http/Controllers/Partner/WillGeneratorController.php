@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Will_User_Info;
+use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
 use App\Models\WillUserInfo;
 use App\Models\WillUserPet;
@@ -219,5 +220,12 @@ class WillGeneratorController extends Controller
             DB::rollBack();
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
+    }
+
+
+
+    public function account_properties(){
+        $assets=WillUserAccountsProperty::all();
+        return view('partner.will_generator.account_properties',compact('assets'));
     }
 }
