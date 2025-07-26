@@ -868,6 +868,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/user_pet/delete', [PartnerWillGeneratorController::class, 'delete_user_pet'])->name('will_generator.user_pet.delete');
 
     Route::get('will_generator/account_properties', [PartnerWillGeneratorController::class, 'account_properties'])->name('will_generator.account_properties');
+    Route::post('will_generator/account_properties', [PartnerWillGeneratorController::class, 'submit_account_properties'])->name('will_generator.account_properties');
+    Route::post('will_generator/account_properties/store', [PartnerWillGeneratorController::class, 'store_account_properties'])->name('will_generator.account_properties.store');
+    Route::put('will_generator/account_properties/update', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
+    Route::delete('will_generator/account_properties/delete/{id}', [PartnerWillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
 });
 
 // Executors  Routes

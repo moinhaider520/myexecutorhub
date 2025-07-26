@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('asset_type')->nullable();
             $table->string('asset_name')->nullable();
+            $table->string('mortage')->nullable();
+            $table->string('owner')->nullable();
+            $table->foreignId('will_user_id')->references('id')->on('will_user_infos')->onDelete('cascade');
+            $table->foreignId('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

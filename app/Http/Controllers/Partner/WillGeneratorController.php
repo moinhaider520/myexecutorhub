@@ -228,4 +228,78 @@ class WillGeneratorController extends Controller
         $assets=WillUserAccountsProperty::all();
         return view('partner.will_generator.account_properties',compact('assets'));
     }
+    public function submit_account_properties(){
+       return redirect()->route('partner.will_generator.create')->with(['success'=>'Your Account Information has been submitted successfully']);
+    }
+
+
+    public function store_account_properties(Request $request){
+        try{
+            $will_user_id=session('will_user_id')??WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            WillUserAccountsProperty::create([
+                'asset_type'=>$request->asset_type,
+                'asset_name'=>$request->asset_value,
+                'mortage'=>$request->has_mortgage,
+                'owner'=>$request->ownership_type,
+                'will_user_id'=>$will_user_id,
+                'created_by'=>Auth::user()->id,
+            ]);
+            DB::commit();
+            $assets = WillUserAccountsProperty::where('will_user_id','=',$will_user_id)->get();
+            $html = view('partner.will_generator.ajax.asset_list', ['assets' => $assets])->render();
+            return response()->json(['status' => true, 'message' => 'Account information deleted successfully','data'=>$html]);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+    public function update_account_properties(Request $request){
+        try{
+            $will_user_id=session('will_user_id')??WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            WillUserAccountsProperty::where('id','=',$request->id)
+            ->update([
+                'asset_type'=>$request->asset_type,
+                'asset_name'=>$request->asset_value,
+                'mortage'=>$request->has_mortgage,
+                'owner'=>$request->ownership_type,
+            ]);
+            DB::commit();
+            $assets = WillUserAccountsProperty::where('will_user_id','=',$will_user_id)->get();
+            $html = view('partner.will_generator.ajax.asset_list', ['assets' => $assets])->render();
+            return response()->json(['status' => true, 'message' => 'Account information update successfully','data'=>$html]);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+
+
+
+    public function delete_account_properties($id){
+        try{
+            $will_user_id=session('will_user_id')??WillUserInfo::latest()->first()->id;
+            $account_property=WillUserAccountsProperty::where('id','=',$id)->first();
+            if($account_property){
+                DB::beginTransaction();
+                $account_property->delete();
+                DB::commit();
+            }
+            else{
+                return response()->json(['status'=>false,'message'=>'No Pet found']);
+            }
+
+           $assets = WillUserAccountsProperty::where('will_user_id','=',$will_user_id)->get();
+            $html = view('partner.will_generator.ajax.asset_list', ['assets' => $assets])->render();
+            return response()->json(['status' => true, 'message' => 'Account Information deleted successfully','data'=>$html]);
+
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
 }
