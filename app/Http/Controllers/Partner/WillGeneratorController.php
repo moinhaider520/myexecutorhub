@@ -302,4 +302,44 @@ class WillGeneratorController extends Controller
             return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
+
+
+    public function executor(){
+        return view('partner.will_generator.executor');
+    }
+    public function executor_step2(){
+        return view('partner.will_generator.executor_step2');
+    }
+    public function executor_step3(){
+        return view('partner.will_generator.executor_step3');
+    }
+    public function get_executor_step3(Request $request){
+        if($request->executor_type=="friends_family"){
+            return redirect()->route('partner.will_generator.family_friend');
+        }
+        elseif($request->executor_type=="farewill_trustees"){
+            return redirect()->route('partner.will_generator.farewill_trustees');
+        }
+    }
+    public function family_friend(){
+        $executors=User::role('executor')->get();
+        return view('partner.will_generator.family_friend',compact('executors'));
+    }
+    public function farewill_trustees(){
+       return view('partner.will_generator.farewill_trustees');
+    }
+
+    public function store_family_friend(Request $request){
+        try{
+            DB::beginTransaction();
+            $will_user_id=WillUserInfo::where('id',session('will_user_id'))->first() ??WillUserInfo::latest()->first();
+            $will_user_id->executors()->sync($request->executors);
+            DB::commit();
+            return redirect()->route('partner.will_generator.create')->with(['success'=>'Your Executors has been selected successfully']);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
 }

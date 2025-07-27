@@ -64,4 +64,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(CouponUsage::class, 'user_id');
     }
+
+
+    public function willUserInfosAsExecutor()
+    {
+        return $this->belongsToMany(WillUserInfo::class, 'will_user_executors', 'executor_id', 'will_user_info_id');
+    }
 }

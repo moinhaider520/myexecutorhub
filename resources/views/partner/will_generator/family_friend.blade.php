@@ -1,0 +1,648 @@
+@extends('layouts.will_generator')
+
+@section('title', 'Choose your executors')
+
+@section('content')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Using Tailwind CSS directly as per the screenshot's design language --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to match the screenshot more closely */
+        body {
+            background-color: #f5f5f5;
+            /* Light grey background for the whole page */
+        }
+
+        .executor-card {
+            background-color: #ffffff;
+            /* White background for individual executor cards */
+            border: 1px solid #e0e0e0;
+            /* Light border */
+            border-radius: 0.5rem;
+            /* Rounded corners */
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            /* Reduced margin for closer packing */
+            display: flex;
+            /* Use flexbox for alignment */
+            align-items: center;
+            /* Vertically align items */
+            justify-content: space-between;
+            /* Space between content and edit button */
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            /* Subtle shadow */
+        }
+
+        .executor-card:hover {
+            border-color: #a0aec0;
+            /* Darker border on hover */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            /* Slightly more prominent shadow */
+        }
+
+        .executor-card input[type="checkbox"] {
+            /* Custom checkbox styling to match the screenshot */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            /* Adjust size */
+            height: 1.25rem;
+            /* Adjust size */
+            border: 2px solid #a0aec0;
+            /* Border color */
+            border-radius: 0.25rem;
+            /* Slightly rounded corners */
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            margin-right: 1rem;
+            /* Space between checkbox and text */
+            flex-shrink: 0;
+            /* Prevent checkbox from shrinking */
+        }
+
+        .executor-card input[type="checkbox"]:checked {
+            background-color: #F6E05E;
+            /* Yellow background when checked */
+            border-color: #F6E05E;
+            /* Yellow border when checked */
+        }
+
+        .executor-card input[type="checkbox"]:checked::after {
+            /* Checkmark for the custom checkbox */
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0.5rem;
+            height: 0.75rem;
+            border: solid #1a202c;
+            /* Dark color for checkmark */
+            border-width: 0 2px 2px 0;
+            transform: translate(-50%, -60%) rotate(45deg);
+        }
+
+        .executor-card label {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            /* Allow label to take available space */
+            cursor: pointer;
+        }
+
+        .executor-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .executor-name {
+            font-weight: 600;
+            /* Semi-bold for name */
+            color: #2d3748;
+            /* Dark text color */
+        }
+
+        .executor-contact {
+            font-size: 0.875rem;
+            /* Smaller font for contact info */
+            color: #718096;
+            /* Lighter text color */
+        }
+
+        .edit-button {
+            color: #4299e1;
+            /* Blue for "Edit" link */
+            font-weight: 500;
+            text-decoration: none;
+            margin-left: 1rem;
+            flex-shrink: 0;
+            /* Prevent button from shrinking */
+        }
+
+        .edit-button:hover {
+            text-decoration: underline;
+        }
+
+        .add-someone-new {
+            color: #4299e1;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .add-someone-new:hover {
+            text-decoration: underline;
+        }
+
+        /* Styles for the "Back" and "Save and Continue" buttons */
+        .back-button {
+            background: none;
+            border: none;
+            color: #4299e1;
+            /* Blue for links */
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            transition: color 0.2s ease-in-out;
+        }
+
+        .back-button:hover {
+            color: #2b6cb0;
+            /* Darker blue on hover */
+            text-decoration: underline;
+        }
+
+        .save-continue-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 2rem;
+            /* Adjusted padding */
+            border: 1px solid transparent;
+            font-size: 1rem;
+            /* Base font size */
+            font-weight: 500;
+            border-radius: 0.375rem;
+            /* Medium rounded corners */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            /* Shadow */
+            color: #1a202c;
+            /* Dark text for button */
+            background-color: #F6E05E;
+            /* Yellow background */
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out;
+        }
+
+        .save-continue-button:hover {
+            background-color: #ECC94B;
+            /* Darker yellow on hover */
+        }
+
+        .save-continue-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(252, 211, 77, 0.5);
+            /* Focus ring */
+        }
+
+        /* Global styling adjustments for better visual hierarchy */
+        h1,
+        h2 {
+            font-weight: 700;
+            /* Bold for headings */
+            color: #1a202c;
+            /* Darker heading color */
+        }
+
+        p,
+        li {
+            color: #4a5568;
+            /* Slightly lighter text for body */
+        }
+    </style>
+
+    {{-- The main container div should structure the content like the screenshot --}}
+    <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col lg:flex-row lg:space-x-8">
+            {{-- Main content area --}}
+            <div class="lg:w-2/3">
+                <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                        Choose your executors
+                    </h1>
+                    <p class="text-gray-700 leading-relaxed mb-8">
+                        You can choose between one and four executors. We recommend choosing more than one, especially if
+                        any beneficiaries of your will are currently under 18.
+                    </p>
+
+                    <form id="executorChoiceForm" class="space-y-6" action="{{route('partner.will_generator.store_family_friend')}}" method="POST">
+                        @csrf
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Friends and family</h2>
+                            <div class="space-y-3">
+                                {{-- Example executor cards (you would loop through actual data here) --}}
+                                @forelse ($executors as $executor)
+                                    <div class="executor-card">
+                                        <label>
+                                            <input type="checkbox" name="executors[]" value="{{$executor->id}}">
+                                            <div class="executor-details">
+                                                <span class="executor-name">{{ $executor->name }}
+                                                    {{ $executor->lastname }}</span>
+                                                <span class="executor-contact">dahovoxun@mailinator.com</span>
+                                            </div>
+                                        </label>
+                                        <a data-toggle="modal" data-target="#editExecutorModal"
+                                            data-id="{{ $executor->id }}" data-name="{{ $executor->name }}"
+                                            data-lastname="{{ $executor->lastname }}"
+                                            data-how_acting="{{ $executor->how_acting }}"
+                                            data-email="{{ $executor->email }}"
+                                            data-relationship="{{ $executor->relationship }}"
+                                            data-status="{{ $executor->status }}" data-title="{{ $executor->title }}"
+                                            data-phone_number="{{ $executor->phone_number }}" class="edit-button">Edit</a>
+                                    </div>
+                                @empty
+                                    <p class="text-gray-600 italic">No friends or family executors added yet. Click "Add
+                                        someone new" to get started.</p>
+                                @endforelse
+
+                                {{-- End example executor cards --}}
+                            </div>
+                            <a href="#" class="add-someone-new" data-toggle="modal" data-target="#addExecutorModal">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                </svg>
+                                Add someone new
+                            </a>
+                        </div>
+
+                        {{-- Professional executors section --}}
+                        <div class="mb-8">
+                            <h2 class="text-xl font-semibold text-gray-800 mb-4">Professional executors</h2>
+                            <div class="space-y-3">
+                                <div class="executor-card">
+                                    <label>
+                                        <input type="checkbox" name="executors[]" value="farewill_trustees">
+                                        <div class="executor-details">
+                                            <span class="executor-name">Farewill Trustees</span>
+                                        </div>
+                                    </label>
+                                    {{-- No edit button for professional executors based on screenshot --}}
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Action buttons --}}
+                        <div class="flex justify-between items-center mt-8">
+                            <a href="#" class="back-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                                </svg>
+                                Back
+                            </a>
+                            <button type="submit" class="save-continue-button">
+                                Save and continue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Sidebar area --}}
+            <div class="lg:w-1/3 mt-8 lg:mt-0">
+                <div class="bg-white shadow-sm sm:rounded-lg p-6">
+                    <h4 class="text-lg font-semibold text-gray-800 mb-4">Questions?</h4>
+                    <p class="text-gray-700 mb-2">
+                        Call us on <a href="tel:02045387294" class="text-blue-600 hover:underline">020 4538 7294</a>
+                    </p>
+                    <p class="text-gray-700">
+                        <a href="mailto:info@farewill.com" class="text-blue-600 hover:underline flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1 inline-block" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                            Email us
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExecutorModalLabel">Add Executor</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="addExecutorForm">
+                        @csrf
+                        <div class="form-group mb-3">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                placeholder="Enter Title" required>
+                            <div class="text-danger" id="error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="name">First Name</label>
+                            <input type="text" class="form-control" name="name" id="name"
+                                placeholder="Enter First Name" required>
+                            <div class="text-danger" id="error-name"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname"
+                                placeholder="Enter Last Name" required>
+                            <div class="text-danger" id="error-lastname"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="how_acting">How Acting?</label>
+                            <select class="form-control" name="how_acting" id="how_acting" required>
+                                <option value="" disabled>-- Select --</option>
+                                <option value="Solely">Solely</option>
+                                <option value="Main">Main</option>
+                                <option value="Reserve">Reserve</option>
+                            </select>
+                            <div class="text-danger" id="error-how_acting"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone_number">Contact Number(s)</label>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number"
+                                placeholder="Enter Contact Number" required>
+                            <div class="text-danger" id="error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="email"
+                                placeholder="Email Address" required>
+                            <div class="text-danger" id="error-email"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="relationship">Relationship</label>
+                            <select class="form-control" name="relationship" id="relationship" required>
+                                <option value="Family">Family</option>
+                                <option value="Friend">Friend</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="text-danger" id="error-relationship"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="status">Access Type</label>
+                            <select class="form-control" name="status" id="status" required>
+                                <option value="A">Immediate Access</option>
+                                <option value="N">Upon Death</option>
+                            </select>
+                            <div class="text-danger" id="error-status"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Enter Password" required>
+                            <div class="text-danger" id="error-password"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control" name="password_confirmation"
+                                id="password_confirmation" placeholder="Confirm Password" required>
+                            <div class="text-danger" id="error-password_confirmation"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT EXECUTOR MODAL -->
+    <div class="modal fade" id="editExecutorModal" tabindex="-1" role="dialog"
+        aria-labelledby="editExecutorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editExecutorModalLabel">Edit Executor</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="editExecutorForm">
+                        @csrf
+                        <input type="hidden" name="id" id="editExecutorId">
+                        <div class="form-group mb-3">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" name="title" id="edit_title"
+                                placeholder="Enter Title" required>
+                            <div class="text-danger" id="edit-error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_name">First Name</label>
+                            <input type="text" class="form-control" name="name" id="edit_name"
+                                placeholder="Enter First Name" required>
+                            <div class="text-danger" id="edit-error-name"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_lastname">Last Name</label>
+                            <input type="text" class="form-control" name="lastname" id="edit_lastname"
+                                placeholder="Enter Last Name" required>
+                            <div class="text-danger" id="edit-error-lastname"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_how_acting">How Acting?</label>
+                            <select class="form-control" name="how_acting" id="edit_how_acting" required>
+                                <option value="" disabled>-- Select --</option>
+                                <option value="Solely">Solely</option>
+                                <option value="Main">Main</option>
+                                <option value="Reserve">Reserve</option>
+                            </select>
+                            <div class="text-danger" id="error-edit_how_acting"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone_number">Contact Number(s)</label>
+                            <input type="text" class="form-control" name="phone_number" id="edit_phone_number"
+                                placeholder="Enter Contact Number" required>
+                            <div class="text-danger" id="error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_email">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="edit_email"
+                                placeholder="Email Address" required>
+                            <div class="text-danger" id="edit-error-email"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_relationship">Relationship</label>
+                            <select class="form-control" name="relationship" id="edit_relationship" required>
+                                <option value="Family">Family</option>
+                                <option value="Friend">Friend</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="text-danger" id="edit-error-relationship"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_status">Access Type</label>
+                            <select class="form-control" name="status" id="edit_status" required>
+                                <option value="A">Immediate Access</option>
+                                <option value="N">Upon Death</option>
+                            </select>
+                            <div class="text-danger" id="edit-error-status"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_password">Password</label>
+                            <input type="password" class="form-control" name="password" id="edit_password"
+                                placeholder="Enter Password">
+                            <div class="text-danger" id="edit-error-password"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control" name="password_confirmation"
+                                id="edit_password_confirmation" placeholder="Confirm Password">
+                            <div class="text-danger" id="edit-error-password_confirmation"></div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                    <form action="{{ route('partner.executors.destroy', $executor->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Clear previous error messages
+            function clearAddErrors() {
+                $('#error-title').text('');
+                $('#error-name').text('');
+                $('#error-lastname').text('');
+                $('#error-phone_number').text('');
+                $('#error-email').text('');
+                $('#error-relationship').text('');
+                $('#error-status').text('');
+                $('#error-password').text('');
+                $('#error-password_confirmation').text('');
+                $('#error-how_acting').text('');
+            }
+
+            function clearEditErrors() {
+                $('#error-title').text('');
+                $('#edit-error-name').text('');
+                $('#edit-error-lastname').text('');
+                $('#error-phone_number').text('');
+                $('#edit-error-email').text('');
+                $('#edit-error-relationship').text('');
+                $('#edit-error-status').text('');
+                $('#edit-error-password').text('');
+                $('#edit-error-password_confirmation').text('');
+                $('#edit-error-how_acting').text('');
+            }
+
+            // Handle submission of add executor form
+            $('#addExecutorForm').on('submit', function(e) {
+                e.preventDefault();
+                clearAddErrors(); // Clear previous error messages
+
+                $.ajax({
+                    url: "{{ route('partner.executors.store') }}",
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(response) {
+                        var errors = response.responseJSON.errors;
+                        $('#error-title').text(errors.title);
+                        $('#error-name').text(errors.name);
+                        $('#error-lastname').text(errors.lastname);
+                        $('#error-email').text(errors.email);
+                        $('#error-relationship').text(errors.relationship);
+                        $('#error-status').text(errors.status);
+                        $('#error-password').text(errors.password);
+                        $('#error-password_confirmation').text(errors.password_confirmation);
+                        $('#error-how_acting').text(errors.how_acting);
+                    }
+                });
+            });
+
+            // Handle click on edit button for executor
+            $('.edit-button').on('click', function() {
+                var id = $(this).data('id');
+                var title = $(this).data('title');
+                var name = $(this).data('name');
+                var lastname = $(this).data('lastname');
+                var phone_number = $(this).data('phone_number');
+                var email = $(this).data('email');
+                var relationship = $(this).data('relationship');
+                var status = $(this).data('status');
+                var how_acting = $(this).data('how_acting');
+
+                $('#editExecutorId').val(id);
+                $('#edit_title').val(title);
+                $('#edit_name').val(name);
+                $('#edit_lastname').val(lastname);
+                $('#edit_phone_number').val(phone_number);
+                $('#edit_email').val(email);
+                $('#edit_relationship').val(relationship);
+                $('#edit_status').val(status);
+                $('#edit_how_acting').val(how_acting);
+                clearEditErrors(); // Clear previous error messages
+            });
+
+            // Handle submission of edit executor form
+            $('#editExecutorForm').on('submit', function(e) {
+                e.preventDefault();
+                var id = $('#editExecutorId').val();
+                clearEditErrors(); // Clear previous error messages
+
+                $.ajax({
+                    url: "/partner/executors/update/" + id,
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(response) {
+                        var errors = response.responseJSON.errors;
+                        $('#edit-error-name').text(errors.name);
+                        $('#edit-error-lastname').text(errors.lastname);
+                        $('#edit-error-email').text(errors.email);
+                        $('#edit-error-relationship').text(errors.relationship);
+                        $('#edit-error-status').text(errors.status);
+                        $('#edit-error-password').text(errors.password);
+                        $('#edit-error-password_confirmation').text(errors
+                            .password_confirmation);
+                    }
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+
+            $('#executorChoiceForm').on('submit', function(e) {
+
+                const selectedExecutors = $('input[name="executors[]"]:checked').map(function() {
+                    return $(this).val();
+                }).get();
+
+                console.log("Selected Executors:", selectedExecutors);
+
+                if (selectedExecutors.length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Please select at least one executor!',
+                    });
+                    return false;
+                }
+
+            });
+        });
+    </script>
+@endsection

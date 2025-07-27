@@ -52,7 +52,7 @@
           </div>
           <div class="card-body">
           <p>Your Executor is Thimoty</p>
-          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          <a href="{{ route('partner.will_generator.executor') }}">Edit</a>
           </div>
         </div>
         <div class="card">
