@@ -170,6 +170,7 @@ use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\PartnerRegistationController;
+use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
 Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
@@ -881,18 +882,14 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/executor/store_family_friend', [PartnerWillGeneratorController::class, 'store_family_friend'])->name('will_generator.store_family_friend');
     Route::get('will_generator/executor/farewill_trustees', [PartnerWillGeneratorController::class, 'farewill_trustees'])->name('will_generator.farewill_trustees');
 
-    Route::get('will_generator/estates',function () {
-        return view('partner.will_generator.estate.your_estate');
-    })->name('will_generator.estates');
-    Route::get('will_generator/choose_inherited_persons',function () {
-        return view('partner.will_generator.estate.choose_inherited_persons');
-    })->name('will_generator.choose_inherited_persons');
-    Route::get('will_generator/choose_inherited_charity',function () {
-        return view('partner.will_generator.estate.choose_inherited_charity');
-    })->name('will_generator.choose_inherited_charity');
-    Route::get('will_generator/share_percentage',function () {
-        return view('partner.will_generator.estate.share_percentage');
-    })->name('will_generator.share_percentage');
+    Route::get('will_generator/estates',[PartnerWillGeneratorController::class,'your_estate'])->name('will_generator.estates');
+    Route::get('will_generator/choose_inherited_persons',[PartnerWillGeneratorController::class,'choose_inherited_persons'])->name('will_generator.choose_inherited_persons');
+    Route::get('will_generator/choose_inherited_charity',[PartnerWillGeneratorController::class,'choose_inherited_charity'])->name('will_generator.choose_inherited_charity');
+    Route::post('will_generator/process_inherited_charity',[PartnerWillGeneratorController::class,'process_inherited_charity'])->name('will_generator.process_inherited_charity');
+    Route::get('will_generator/share_percentage',[PartnerWillGeneratorController::class,'share_percentage'])->name('will_generator.share_percentage');
+    Route::get('will_generator/gift',[PartnerWillGeneratorController::class,'gift'])->name('will_generator.gift');
+    Route::get('will_generator/gift/add/{type}',[PartnerWillGeneratorController::class,'show_add_gift'])->name('will_generator.gift.add');
+
 
 });
 

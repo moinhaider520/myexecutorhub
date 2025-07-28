@@ -135,7 +135,7 @@
                                 Inheritors
                             </div>
                             <div class="card-body basic-wizard important-validation">
-                                <form action="#" method="POST">
+                                <form action="{{route('partner.will_generator.store_family_friend')}}" method="POST">
                                     @csrf
 
                                     <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
@@ -152,82 +152,35 @@
 
                                     {{-- Existing People/Charities List --}}
                                     <div class="space-y-3 mb-6">
-                                        {{-- Example Person 1 (Keane Woodward) --}}
-                                        <label for="keaneWoodward" class="person-item cursor-pointer">
+                                       @forelse ($executors as $executor)
+                                     <label for="{{$executor->name}}" class="person-item cursor-pointer">
                                             <div class="person-info">
-                                                <input type="checkbox" id="keaneWoodward" name="inheritors[]" value="keane_woodward" checked>
+                                                <input type="checkbox" id="{{$executor->name}}" name="inheritors[]" value="{{$executor->id}}" checked>
                                                 <div class="person-details">
-                                                    <span class="person-name">Keane Woodward</span>
-                                                    <span class="person-additional-info">dashoccsaur@mailinator.com</span>
+                                                    <span class="person-name">{{$executor->name}}{{$executor->lastname}}</span>
+                                                    <span class="person-additional-info">{{$executor->email}}</span>
                                                 </div>
                                             </div>
-                                            <button type="button" class="edit-button">Edit</button>
+                                            <a data-toggle="modal" data-target="#editExecutorModal"
+                                            data-id="{{ $executor->id }}" data-name="{{ $executor->name }}"
+                                            data-lastname="{{ $executor->lastname }}"
+                                            data-how_acting="{{ $executor->how_acting }}"
+                                            data-email="{{ $executor->email }}"
+                                            data-relationship="{{ $executor->relationship }}"
+                                            data-status="{{ $executor->status }}" data-title="{{ $executor->title }}"
+                                            data-phone_number="{{ $executor->phone_number }}" class="edit-button">Edit</a>
                                         </label>
+                                @empty
+                                    <p class="text-gray-600 italic">No inherited person friend or family added yet. Click "Add
+                                        someone new" to get started.</p>
+                                @endforelse
 
-                                        {{-- Example Person 2 (Thane Dillard) --}}
-                                        <label for="thaneDillard" class="person-item cursor-pointer">
-                                            <div class="person-info">
-                                                {{-- Added checkmark icon inside the checkbox for visual consistency with screenshot --}}
-                                                <input type="checkbox" id="thaneDillard" name="inheritors[]" value="thane_dillard" checked>
-                                                <div class="person-details">
-                                                    <span class="person-name">Thane Dillard</span>
-                                                    <span class="person-additional-info">xyytyp@mailinator.com</span>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="edit-button">Edit</button>
-                                        </label>
 
-                                        {{-- Example Person 3 (Lane Rodgers) --}}
-                                        <label for="laneRodgers" class="person-item cursor-pointer">
-                                            <div class="person-info">
-                                                <input type="checkbox" id="laneRodgers" name="inheritors[]" value="lane_rodgers" checked>
-                                                <div class="person-details">
-                                                    <span class="person-name">Lane Rodgers</span>
-                                                    <span class="person-additional-info">ruici@mailinator.com</span>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="edit-button">Edit</button>
-                                        </label>
 
-                                        {{-- Example Person 4 (Melyssa Workman - Unchecked) --}}
-                                        <label for="melyssaWorkman" class="person-item cursor-pointer">
-                                            <div class="person-info">
-                                                <input type="checkbox" id="melyssaWorkman" name="inheritors[]" value="melyssa_workman">
-                                                <div class="person-details">
-                                                    <span class="person-name">Melyssa Workman</span>
-                                                    <span class="person-additional-info">23/09/1997</span>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="edit-button">Edit</button>
-                                        </label>
-
-                                        {{-- Example Person 5 (Timon Brock - Unchecked) --}}
-                                        <label for="timonBrock" class="person-item cursor-pointer">
-                                            <div class="person-info">
-                                                <input type="checkbox" id="timonBrock" name="inheritors[]" value="timon_brock">
-                                                <div class="person-details">
-                                                    <span class="person-name">Timon Brock</span>
-                                                    <span class="person-additional-info">nosic@mailinator.com</span>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="edit-button">Edit</button>
-                                        </label>
-
-                                        {{-- Example Person 6 (Blair Bruce - Unchecked) --}}
-                                        <label for="blairBruce" class="person-item cursor-pointer">
-                                            <div class="person-info">
-                                                <input type="checkbox" id="blairBruce" name="inheritors[]" value="blair_bruce">
-                                                <div class="person-details">
-                                                    <span class="person-name">Blair Bruce</span>
-                                                    <span class="person-additional-info">07/02/1980</span>
-                                                </div>
-                                            </div>
-                                            <button type="button" class="edit-button">Edit</button>
-                                        </label>
                                     </div>
 
                                     {{-- Add someone new button --}}
-                                    <button type="button" class="add-new-button" id="addNewInheritor">
+                                    <button type="button" class="add-new-button" id="addNewInheritor" data-toggle="modal" data-target="#addExecutorModal">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
                                         </svg>
@@ -274,13 +227,313 @@
             </div>
         </div>
     </div>
+<div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addExecutorModalLabel">Add Executor</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="addExecutorForm">
+                        @csrf
+                        <div class="form-group mb-3">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                placeholder="Enter Title" required>
+                            <div class="text-danger" id="error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="name">First Name</label>
+                            <input type="text" class="form-control" name="name" id="name"
+                                placeholder="Enter First Name" required>
+                            <div class="text-danger" id="error-name"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" class="form-control" name="lastname" id="lastname"
+                                placeholder="Enter Last Name" required>
+                            <div class="text-danger" id="error-lastname"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="how_acting">How Acting?</label>
+                            <select class="form-control" name="how_acting" id="how_acting" required>
+                                <option value="" disabled>-- Select --</option>
+                                <option value="Solely">Solely</option>
+                                <option value="Main">Main</option>
+                                <option value="Reserve">Reserve</option>
+                            </select>
+                            <div class="text-danger" id="error-how_acting"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone_number">Contact Number(s)</label>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number"
+                                placeholder="Enter Contact Number" required>
+                            <div class="text-danger" id="error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="email">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="email"
+                                placeholder="Email Address" required>
+                            <div class="text-danger" id="error-email"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="relationship">Relationship</label>
+                            <select class="form-control" name="relationship" id="relationship" required>
+                                <option value="Family">Family</option>
+                                <option value="Friend">Friend</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="text-danger" id="error-relationship"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="status">Access Type</label>
+                            <select class="form-control" name="status" id="status" required>
+                                <option value="A">Immediate Access</option>
+                                <option value="N">Upon Death</option>
+                            </select>
+                            <div class="text-danger" id="error-status"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password">Password</label>
+                            <input type="password" class="form-control" name="password" id="password"
+                                placeholder="Enter Password" required>
+                            <div class="text-danger" id="error-password"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control" name="password_confirmation"
+                                id="password_confirmation" placeholder="Confirm Password" required>
+                            <div class="text-danger" id="error-password_confirmation"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- EDIT EXECUTOR MODAL -->
+    <div class="modal fade" id="editExecutorModal" tabindex="-1" role="dialog"
+        aria-labelledby="editExecutorModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editExecutorModalLabel">Edit Executor</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="editExecutorForm">
+                        @csrf
+                        <input type="hidden" name="id" id="editExecutorId">
+                        <div class="form-group mb-3">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" name="title" id="edit_title"
+                                placeholder="Enter Title" required>
+                            <div class="text-danger" id="edit-error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_name">First Name</label>
+                            <input type="text" class="form-control" name="name" id="edit_name"
+                                placeholder="Enter First Name" required>
+                            <div class="text-danger" id="edit-error-name"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_lastname">Last Name</label>
+                            <input type="text" class="form-control" name="lastname" id="edit_lastname"
+                                placeholder="Enter Last Name" required>
+                            <div class="text-danger" id="edit-error-lastname"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_how_acting">How Acting?</label>
+                            <select class="form-control" name="how_acting" id="edit_how_acting" required>
+                                <option value="" disabled>-- Select --</option>
+                                <option value="Solely">Solely</option>
+                                <option value="Main">Main</option>
+                                <option value="Reserve">Reserve</option>
+                            </select>
+                            <div class="text-danger" id="error-edit_how_acting"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="phone_number">Contact Number(s)</label>
+                            <input type="text" class="form-control" name="phone_number" id="edit_phone_number"
+                                placeholder="Enter Contact Number" required>
+                            <div class="text-danger" id="error-title"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_email">Email Address</label>
+                            <input type="email" class="form-control" name="email" id="edit_email"
+                                placeholder="Email Address" required>
+                            <div class="text-danger" id="edit-error-email"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_relationship">Relationship</label>
+                            <select class="form-control" name="relationship" id="edit_relationship" required>
+                                <option value="Family">Family</option>
+                                <option value="Friend">Friend</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div class="text-danger" id="edit-error-relationship"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_status">Access Type</label>
+                            <select class="form-control" name="status" id="edit_status" required>
+                                <option value="A">Immediate Access</option>
+                                <option value="N">Upon Death</option>
+                            </select>
+                            <div class="text-danger" id="edit-error-status"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_password">Password</label>
+                            <input type="password" class="form-control" name="password" id="edit_password"
+                                placeholder="Enter Password">
+                            <div class="text-danger" id="edit-error-password"></div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="edit_password_confirmation">Confirm Password</label>
+                            <input type="password" class="form-control" name="password_confirmation"
+                                id="edit_password_confirmation" placeholder="Confirm Password">
+                            <div class="text-danger" id="edit-error-password_confirmation"></div>
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                    <form action="{{ route('partner.executors.destroy', $executor->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                </div>
+            </div>
+        </div>
+    </div>
     {{-- Include necessary scripts --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        $(document).ready(function() {
+            // Clear previous error messages
+            function clearAddErrors() {
+                $('#error-title').text('');
+                $('#error-name').text('');
+                $('#error-lastname').text('');
+                $('#error-phone_number').text('');
+                $('#error-email').text('');
+                $('#error-relationship').text('');
+                $('#error-status').text('');
+                $('#error-password').text('');
+                $('#error-password_confirmation').text('');
+                $('#error-how_acting').text('');
+            }
 
+            function clearEditErrors() {
+                $('#error-title').text('');
+                $('#edit-error-name').text('');
+                $('#edit-error-lastname').text('');
+                $('#error-phone_number').text('');
+                $('#edit-error-email').text('');
+                $('#edit-error-relationship').text('');
+                $('#edit-error-status').text('');
+                $('#edit-error-password').text('');
+                $('#edit-error-password_confirmation').text('');
+                $('#edit-error-how_acting').text('');
+            }
+
+            // Handle submission of add executor form
+            $('#addExecutorForm').on('submit', function(e) {
+                e.preventDefault();
+                clearAddErrors(); // Clear previous error messages
+
+                $.ajax({
+                    url: "{{ route('partner.executors.store') }}",
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(response) {
+                        var errors = response.responseJSON.errors;
+                        $('#error-title').text(errors.title);
+                        $('#error-name').text(errors.name);
+                        $('#error-lastname').text(errors.lastname);
+                        $('#error-email').text(errors.email);
+                        $('#error-relationship').text(errors.relationship);
+                        $('#error-status').text(errors.status);
+                        $('#error-password').text(errors.password);
+                        $('#error-password_confirmation').text(errors.password_confirmation);
+                        $('#error-how_acting').text(errors.how_acting);
+                    }
+                });
+            });
+
+            // Handle click on edit button for executor
+            $('.edit-button').on('click', function() {
+                var id = $(this).data('id');
+                var title = $(this).data('title');
+                var name = $(this).data('name');
+                var lastname = $(this).data('lastname');
+                var phone_number = $(this).data('phone_number');
+                var email = $(this).data('email');
+                var relationship = $(this).data('relationship');
+                var status = $(this).data('status');
+                var how_acting = $(this).data('how_acting');
+
+                $('#editExecutorId').val(id);
+                $('#edit_title').val(title);
+                $('#edit_name').val(name);
+                $('#edit_lastname').val(lastname);
+                $('#edit_phone_number').val(phone_number);
+                $('#edit_email').val(email);
+                $('#edit_relationship').val(relationship);
+                $('#edit_status').val(status);
+                $('#edit_how_acting').val(how_acting);
+                clearEditErrors(); // Clear previous error messages
+            });
+
+            // Handle submission of edit executor form
+            $('#editExecutorForm').on('submit', function(e) {
+                e.preventDefault();
+                var id = $('#editExecutorId').val();
+                clearEditErrors(); // Clear previous error messages
+
+                $.ajax({
+                    url: "/partner/executors/update/" + id,
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            location.reload();
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function(response) {
+                        var errors = response.responseJSON.errors;
+                        $('#edit-error-name').text(errors.name);
+                        $('#edit-error-lastname').text(errors.lastname);
+                        $('#edit-error-email').text(errors.email);
+                        $('#edit-error-relationship').text(errors.relationship);
+                        $('#edit-error-status').text(errors.status);
+                        $('#edit-error-password').text(errors.password);
+                        $('#edit-error-password_confirmation').text(errors
+                            .password_confirmation);
+                    }
+                });
+            });
+        });
+    </script>
     <script>
         $(document).ready(function() {
             // Function to update the inheritance summary list
@@ -294,62 +547,28 @@
                     summaryList.append(`<li>${personName}</li>`);
                 });
 
-                // Add static charity/organization names (as they appear in the screenshot)
-                // You might fetch these dynamically or have them pre-listed based on your application logic
-                // For demonstration, these are hardcoded as they seem to be fixed examples in the screenshot's summary.
-                if ($('input[name="inheritors[]"]:checked').length > 0) { // Only add if some people are selected
+                if ($('input[name="inheritors[]"]:checked').length > 0) {
                     summaryList.append(`<li>The RNLI</li>`);
                     summaryList.append(`<li>Macmillan Cancer Support</li>`);
                     summaryList.append(`<li>Esdhi International Foundation UK</li>`);
                     summaryList.append(`<li>The Charities Aid Foundation</li>`);
                 } else {
-                    // If no people are selected, maybe display a message or only the charities if that's the default
-                    // For now, if no people are checked, only charities will show if you modify this logic.
-                    // Based on the screenshot, it shows both people and charities when people are selected.
-                    // If no people are selected, the summary might be empty or show only "charity instead" message.
+
                 }
 
                 if (summaryList.children().length === 0) {
-                    summaryList.append('<li>None selected</li>'); // Or a more appropriate message
+                    summaryList.append('<li>None selected</li>');
                 }
             }
 
-            // Initial update when the page loads
             updateInheritanceSummary();
 
-            
+
             $('input[name="inheritors[]"]').on('change', function() {
                 updateInheritanceSummary();
             });
 
-            // Handle "Add someone new" button click
-            $('#addNewInheritor').on('click', function() {
-                // Here you would typically open a modal or redirect to a page
-                // to add a new person or charity.
-                // For demonstration, we'll just show an alert.
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Add New Inheritor',
-                    text: 'This would open a form to add a new person or charity.',
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-    
-            });
 
-            // Handle "Edit" button clicks (these currently do nothing but trigger an alert)
-            $('.edit-button').on('click', function(e) {
-                e.preventDefault(); // Prevent default button action if inside a form
-                const personName = $(this).siblings('.person-info').find('.person-name').text();
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Edit Person',
-                    text: `This would open an edit form for ${personName}.`,
-                    showConfirmButton: false,
-                    timer: 2000
-                });
-
-            });
         });
     </script>
 @endsection

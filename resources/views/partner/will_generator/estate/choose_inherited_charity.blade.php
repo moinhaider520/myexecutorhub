@@ -444,7 +444,7 @@
                             Charity Gifts
                         </div>
                         <div class="card-body basic-wizard important-validation">
-                            <form action="#" method="POST">
+                            <form action="{{route('partner.will_generator.process_inherited_charity')}}" method="POST">
                                 @csrf
 
                                 <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
