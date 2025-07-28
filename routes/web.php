@@ -881,6 +881,18 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/executor/store_family_friend', [PartnerWillGeneratorController::class, 'store_family_friend'])->name('will_generator.store_family_friend');
     Route::get('will_generator/executor/farewill_trustees', [PartnerWillGeneratorController::class, 'farewill_trustees'])->name('will_generator.farewill_trustees');
 
+    Route::get('will_generator/estates',function () {
+        return view('partner.will_generator.estate.your_estate');
+    })->name('will_generator.estates');
+    Route::get('will_generator/choose_inherited_persons',function () {
+        return view('partner.will_generator.estate.choose_inherited_persons');
+    })->name('will_generator.choose_inherited_persons');
+    Route::get('will_generator/choose_inherited_charity',function () {
+        return view('partner.will_generator.estate.choose_inherited_charity');
+    })->name('will_generator.choose_inherited_charity');
+    Route::get('will_generator/share_percentage',function () {
+        return view('partner.will_generator.estate.share_percentage');
+    })->name('will_generator.share_percentage');
 
 });
 
