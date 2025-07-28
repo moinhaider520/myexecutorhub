@@ -8,6 +8,7 @@ use App\Models\Will_User_Info;
 use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
 use App\Models\WillUserInfo;
+use App\Models\WillUserInheritedGift;
 use App\Models\WillUserPet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -384,5 +385,36 @@ class WillGeneratorController extends Controller
     {
         $executors = User::role('executor')->get();
         return view('partner.will_generator.gift_add', compact('type','executors'));
+    }
+    public function store_add_gift(Request $request)
+    {
+        try{
+            $createdBy = Auth::id();
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            if (is_null($willUserId)) {
+                return back()->with('error', 'Could not determine the associated will. Please try again.');
+            }
+
+            $familyInheritedIdsString = implode(',', $request['recipients']);
+
+
+        DB::beginTransaction();
+        $gift = WillUserInheritedGift::create([
+            'gift_type' => $request['type'],
+            'gift_name' => $request['item_description'],
+            'family_inherited_id' => $familyInheritedIdsString, // Store the comma-separated string
+            'leave_message' => $request['message'],
+            'will_user_id' => $willUserId->id,
+            'created_by' => $createdBy,
+        ]);
+        DB::commit();
+
+        return redirect()->route('partner.will_generator.gift')->with('success', 'Gift added successfully!');
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
     }
 }

@@ -62,8 +62,8 @@
             margin-right: 0.5rem;
         }
 
-        /* Person/Recipient Item Styles (reused from previous pages) */
-        .person-item {
+        /* Executor Card Styles */
+        .executor-card {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -72,23 +72,41 @@
             border-radius: 0.375rem; /* Rounded corners */
             margin-bottom: 0.75rem;
             background-color: #fff;
+            transition: border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .executor-card:hover {
+            background-color: #f7fafc; /* Lighter background on hover */
         }
 
-        .person-details {
-            flex-grow: 1;
+        .executor-card label {
+            display: flex; /* Make the label a flex container to align checkbox and details */
+            align-items: center;
+            width: 100%; /* Make label take full width of card */
+            cursor: pointer;
         }
 
-        .person-name {
+        .executor-card input[type="checkbox"] {
+            margin-right: 1rem; /* Space between checkbox and text */
+            transform: scale(1.2); /* Slightly larger checkbox */
+        }
+
+        .executor-details {
+            flex-grow: 1; /* Allow details to take available space */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .executor-name {
             font-weight: 600;
             color: #1a202c;
         }
 
-        .person-info {
+        .executor-contact {
             font-size: 0.875rem;
             color: #4a5568;
         }
 
-        .edit-person-button {
+        .edit-button {
             padding: 0.5rem 1rem;
             background-color: #edf2f7; /* Light gray */
             color: #2d3748; /* Dark text */
@@ -99,11 +117,11 @@
             cursor: pointer;
             transition: all 0.2s ease-in-out;
         }
-        .edit-person-button:hover {
+        .edit-button:hover {
             background-color: #e2e8f0;
         }
 
-        /* Add Someone New Button (reused) */
+        /* Add Someone New Button */
         .add-new-person-button {
             display: flex;
             align-items: center;
@@ -202,222 +220,174 @@
         .related-articles-card ul li a:hover {
             text-decoration: underline;
         }
-
-        .executor-card { /* Renamed from beneficiary-card for clarity based on user input */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1rem;
-        border: 1px solid #e2e8f0; /* Light gray border */
-        border-radius: 0.375rem; /* Rounded corners */
-        margin-bottom: 0.75rem;
-        background-color: #fff;
-        transition: border-color 0.2s ease, background-color 0.2s ease;
-    }
-    /* You might want a hover state if the entire card is clickable, but usually for checkboxes, the label is the clickable area */
-    .executor-card:hover {
-        background-color: #f7fafc; /* Lighter background on hover */
-    }
-
-    .executor-card label {
-        display: flex; /* Make the label a flex container to align checkbox and details */
-        align-items: center;
-        width: 100%; /* Make label take full width of card */
-        cursor: pointer;
-    }
-
-    .executor-card input[type="checkbox"] {
-        margin-right: 1rem; /* Space between checkbox and text */
-        transform: scale(1.2); /* Slightly larger checkbox */
-    }
-
-    .executor-details {
-        flex-grow: 1; /* Allow details to take available space */
-        display: flex;
-        flex-direction: column;
-    }
-
-    .executor-name {
-        font-weight: 600;
-        color: #1a202c;
-    }
-
-    .executor-contact {
-        font-size: 0.875rem;
-        color: #4a5568;
-    }
-
-    .edit-button { /* Keep this as edit-button or rename to edit-executor-button for consistency */
-        padding: 0.5rem 1rem;
-        background-color: #edf2f7; /* Light gray */
-        color: #2d3748; /* Dark text */
-        border: 1px solid #e2e8f0;
-        border-radius: 0.25rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-    }
-    .edit-button:hover {
-        background-color: #e2e8f0;
-    }
     </style>
 
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
             <div class="col-xl-8"> {{-- Main content area --}}
                 <div class="card height-equal">
-                    <div class="card-body basic-wizard important-validation">
-                        {{-- Dynamic Title based on gift type --}}
-                        <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                            @if($type == 'one-off')
-                                Leave a one-off item as a gift
-                            @elseif($type == 'collection')
-                                Leave a collection of items as a gift
-                            @elseif($type == 'vehicle')
-                                Leave a vehicle as a gift
-                            @elseif($type == 'money')
-                                Leave a sum of money as a gift
-                            @else
-                                Add a Gift
-                            @endif
-                        </h1>
+                    <form method="POST" action="{{ route('partner.will_generator.gift.store_add_gift') }}">
+                        @csrf {{-- Don't forget the CSRF token! --}}
 
-                        {{-- Dynamic "Be specific" guidance --}}
-                        <div class="guidance-section text-red-600 mb-4">
-                            <p class="font-semibold mb-1">Be specific</p>
-                            @if($type == 'one-off')
-                                <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "Painting signed by A. F. Digby, of an old man eating breadcrumbs."</p>
-                                <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "Painting"</p>
-                            @elseif($type == 'collection')
-                                <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "My books, jewellery or a shelf full of vinyls, wherever they are kept at the date of my death" to make sure you're leaving your full collection.</p>
-                                <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "All my books"</p>
-                            @elseif($type == 'vehicle')
-                                <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "My car, registration number FW1 1AA"</p>
-                                <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "My car"</p>
-                            @endif
-                        </div>
+                        {{-- Hidden field to pass the 'type' to the controller --}}
+                        <input type="hidden" name="type" value="{{ $type }}">
 
-                        {{-- General descriptive text for one-off/collection/vehicle --}}
-                        @if($type == 'one-off')
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                You may only have one painting now, but if you buy another one in the
-                                future, your administrators won't know which one you mean. Always be
-                                as specific as possible so that your wishes are easy to understand.
-                            </p>
-                        @elseif($type == 'collection')
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                If you want to leave all your personal possessions write "personal
-                                possessions as defined by section 55 Administration of Estates Act".
-                            </p>
-                        @elseif($type == 'vehicle')
-                            <p class="text-gray-700 leading-relaxed mb-4">
-                                The first example ensures your beneficiary will only inherit the car if
-                                you still own it when you die. The second example means you will give
-                                the last car you own as a gift, even if it's different from the one you
-                                own now.
-                            </p>
-                            <p class="text-gray-700 leading-relaxed mb-6">
-                                If you want to leave whichever car you have when you die
-                            </p>
-                            <div class="guidance-section text-red-600 mb-4">
-                                <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "My car at the date of my death"</p>
-                                <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "My car"</p>
-                            </div>
-                        @endif
+                        {{-- You might also need a hidden input for will_user_id if it's not determined from the session/auth --}}
+                        {{-- Example: <input type="hidden" name="will_user_id" value="{{ $will_user_id ?? '' }}"> --}}
 
-                        {{-- What's the item/collection/vehicle/amount? --}}
-                        <div class="mb-6">
-                            <label for="itemDescription" class="block text-gray-700 text-sm font-semibold mb-2">
+                        <div class="card-body basic-wizard important-validation">
+                            {{-- Dynamic Title based on gift type --}}
+                            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
                                 @if($type == 'one-off')
-                                    Description of item
+                                    Leave a one-off item as a gift
                                 @elseif($type == 'collection')
-                                    Description of collection
+                                    Leave a collection of items as a gift
                                 @elseif($type == 'vehicle')
-                                    Description of the vehicle
+                                    Leave a vehicle as a gift
                                 @elseif($type == 'money')
-                                    Amount
+                                    Leave a sum of money as a gift
+                                @else
+                                    Add a Gift
                                 @endif
-                            </label>
-                            @if($type == 'money')
-                                <input type="number" step="0.01" id="itemDescription" name="item_description" class="form-input" placeholder="e.g. 500" required>
-                            @else
-                                <input type="text" id="itemDescription" name="item_description" class="form-input" placeholder="My watch" value="{{ $type == 'one-off' ? 'My watch' : ($type == 'collection' ? 'All my books' : ($type == 'vehicle' ? 'My car' : '')) }}" required>
+                            </h1>
+
+                            {{-- Dynamic "Be specific" guidance --}}
+                            <div class="guidance-section text-red-600 mb-4">
+                                <p class="font-semibold mb-1">Be specific</p>
+                                @if($type == 'one-off')
+                                    <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "Painting signed by A. F. Digby, of an old man eating breadcrumbs."</p>
+                                    <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "Painting"</p>
+                                @elseif($type == 'collection')
+                                    <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "My books, jewellery or a shelf full of vinyls, wherever they are kept at the date of my death" to make sure you're leaving your full collection.</p>
+                                    <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "All my books"</p>
+                                @elseif($type == 'vehicle')
+                                    <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "My car, registration number FW1 1AA"</p>
+                                    <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "My car"</p>
+                                @endif
+                            </div>
+
+                            {{-- General descriptive text for one-off/collection/vehicle --}}
+                            @if($type == 'one-off')
+                                <p class="text-gray-700 leading-relaxed mb-6">
+                                    You may only have one painting now, but if you buy another one in the
+                                    future, your administrators won't know which one you mean. Always be
+                                    as specific as possible so that your wishes are easy to understand.
+                                </p>
+                            @elseif($type == 'collection')
+                                <p class="text-gray-700 leading-relaxed mb-6">
+                                    If you want to leave all your personal possessions write "personal
+                                    possessions as defined by section 55 Administration of Estates Act".
+                                </p>
+                            @elseif($type == 'vehicle')
+                                <p class="text-gray-700 leading-relaxed mb-4">
+                                    The first example ensures your beneficiary will only inherit the car if
+                                    you still own it when you die. The second example means you will give
+                                    the last car you own as a gift, even if it's different from the one you
+                                    own now.
+                                </p>
+                                <p class="text-gray-700 leading-relaxed mb-6">
+                                    If you want to leave whichever car you have when you die
+                                </p>
+                                <div class="guidance-section text-red-600 mb-4">
+                                    <p class="do-say"><span class="bullet text-green-500">&bull;</span>Do say: "My car at the date of my death"</p>
+                                    <p class="dont-say"><span class="bullet text-red-500">&bull;</span>Don't say: "My car"</p>
+                                </div>
                             @endif
-                        </div>
 
-                        {{-- Who would you like to leave it to? (Common Section) --}}
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-800 mb-4">
-                                Who would you like to leave it to?
-                            </h3>
-                            <p class="text-gray-700 text-sm mb-4">
-                                Select a person or add someone new
-                            </p>
+                            {{-- What's the item/collection/vehicle/amount? --}}
+                            <div class="mb-6">
+                                <label for="itemDescription" class="block text-gray-700 text-sm font-semibold mb-2">
+                                    @if($type == 'one-off')
+                                        Description of item
+                                    @elseif($type == 'collection')
+                                        Description of collection
+                                    @elseif($type == 'vehicle')
+                                        Description of the vehicle
+                                    @elseif($type == 'money')
+                                        Amount
+                                    @endif
+                                </label>
+                                @if($type == 'money')
+                                    <input type="number" step="0.01" id="itemDescription" name="item_description" class="form-input" placeholder="e.g. 500" required>
+                                @else
+                                    <input type="text" id="itemDescription" name="item_description" class="form-input" placeholder="My watch" value="{{ $type == 'one-off' ? 'My watch' : ($type == 'collection' ? 'All my books' : ($type == 'vehicle' ? 'My car' : '')) }}" required>
+                                @endif
+                            </div>
 
-                            <div id="peopleList" class="space-y-3">
-                               @forelse ($executors as $executor) {{-- Use $executors as you specified --}}
-                                    <div class="executor-card">
-                                        <label>
-                                            <input type="checkbox" name="recipients[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"> {{-- Use 'recipients[]' for multiple --}}
-                                            <div class="executor-details">
-                                                <span class="executor-name">{{ $executor->name }} {{ $executor->lastname }}</span>
-                                                <span class="executor-contact">{{ $executor->email ?? 'No email available' }}</span> {{-- Use ?? to handle missing email --}}
-                                            </div>
-                                        </label>
-                                        {{-- The Edit button from your provided code --}}
-                                        <button type="button" class="edit-button"
-                                            data-toggle="modal" data-target="#editExecutorModal"
-                                            data-id="{{ $executor->id }}" data-name="{{ $executor->name }}"
-                                            data-lastname="{{ $executor->lastname }}"
-                                            data-how_acting="{{ $executor->how_acting ?? '' }}" {{-- Add null coalescing for safety --}}
-                                            data-email="{{ $executor->email ?? '' }}"
-                                            data-relationship="{{ $executor->relationship ?? '' }}"
-                                            data-status="{{ $executor->status ?? '' }}" data-title="{{ $executor->title ?? '' }}"
-                                            data-phone_number="{{ $executor->phone_number ?? '' }}">
-                                            Edit
-                                        </button>
-                                    </div>
-                                @empty
-                                    <p class="text-gray-600 italic">No friends or family added yet. Click "Add
-                                        someone new" to get started.</p>
-                                @endforelse
-                                <button type="button" class="add-new-person-button" id="addNewPersonButton">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
-                                    </svg>
-                                    Add someone new
+                            {{-- Who would you like to leave it to? (Common Section) --}}
+                            <div class="mb-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-4">
+                                    Who would you like to leave it to?
+                                </h3>
+                                <p class="text-gray-700 text-sm mb-4">
+                                    Select one or more people or add someone new
+                                </p>
+
+                                <div id="peopleList" class="space-y-3">
+                                    @forelse ($executors as $executor)
+                                        <div class="executor-card">
+                                            <label>
+                                                {{-- Check if this executor's ID is in the $selectedRecipientIds array --}}
+                                                <input type="checkbox" name="recipients[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
+                                                    @if(isset($selectedRecipientIds) && in_array($executor->id, $selectedRecipientIds)) checked @endif>
+                                                <div class="executor-details">
+                                                    <span class="executor-name">{{ $executor->name }} {{ $executor->lastname }}</span>
+                                                    <span class="executor-contact">{{ $executor->email ?? 'No email available' }}</span>
+                                                </div>
+                                            </label>
+                                            <button type="button" class="edit-button"
+                                                data-toggle="modal" data-target="#editExecutorModal"
+                                                data-id="{{ $executor->id }}" data-name="{{ $executor->name }}"
+                                                data-lastname="{{ $executor->lastname }}"
+                                                data-how_acting="{{ $executor->how_acting ?? '' }}"
+                                                data-email="{{ $executor->email ?? '' }}"
+                                                data-relationship="{{ $executor->relationship ?? '' }}"
+                                                data-status="{{ $executor->status ?? '' }}" data-title="{{ $executor->title ?? '' }}"
+                                                data-phone_number="{{ $executor->phone_number ?? '' }}">
+                                                Edit
+                                            </button>
+                                        </div>
+                                    @empty
+                                        <p class="text-gray-600 italic">No friends or family added yet. Click "Add
+                                            someone new" to get started.</p>
+                                    @endforelse
+
+                                    <button type="button" class="add-new-person-button" id="addNewPersonButton">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                                        </svg>
+                                        Add someone new
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{-- Leave a message (Optional) (Common Section) --}}
+                            <div class="mb-6">
+                                <h3 class="text-xl font-bold text-gray-800 mb-4">
+                                    Leave a message
+                                </h3>
+                                <p class="text-gray-700 leading-relaxed mb-4">
+                                    Tell them what you're leaving and why you're leaving it to them. You
+                                    can also say something you'd like them to do with it, although they
+                                    won't be legally obliged to carry out your wishes.
+                                </p>
+                                <label for="messageOptional" class="block text-gray-700 text-sm font-semibold mb-2">
+                                    Your message (optional)
+                                </label>
+                                <textarea id="messageOptional" name="message" class="form-input" rows="4" placeholder="e.g. This watch was given to me by my father..."></textarea>
+                            </div>
+
+                            {{-- Bottom Navigation (Common Section) --}}
+                            <div class="bottom-nav-buttons">
+                                <button type="button" class="back-button" onclick="history.back()">
+                                    &larr; Back
                                 </button>
-
+                                <button type="submit" class="save-continue-button">
+                                    Save and continue
+                                </button>
                             </div>
                         </div>
-
-                        {{-- Leave a message (Optional) (Common Section) --}}
-                        <div class="mb-6">
-                            <h3 class="text-xl font-bold text-gray-800 mb-4">
-                                Leave a message
-                            </h3>
-                            <p class="text-gray-700 leading-relaxed mb-4">
-                                Tell them what you're leaving and why you're leaving it to them. You
-                                can also say something you'd like them to do with it, although they
-                                won't be legally obliged to carry out your wishes.
-                            </p>
-                            <label for="messageOptional" class="block text-gray-700 text-sm font-semibold mb-2">
-                                Your message (optional)
-                            </label>
-                            <textarea id="messageOptional" name="message" class="form-input" rows="4" placeholder="e.g. This watch was given to me by my father..."></textarea>
-                        </div>
-
-                        {{-- Bottom Navigation (Common Section) --}}
-                        <div class="bottom-nav-buttons">
-                            <button type="button" class="back-button" onclick="history.back()">
-                                &larr; Back
-                            </button>
-                            <button type="submit" class="save-continue-button" id="saveAndContinueButton">
-                                Save and continue
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -440,17 +410,22 @@
     <script>
         $(document).ready(function() {
             // Handle "Edit" button click for existing people
-            $('#peopleList').on('click', '.edit-person-button', function() {
-                const personId = $(this).data('person-id');
-                const personName = $(this).closest('.person-item').find('.person-name').text();
+            $('#peopleList').on('click', '.edit-button', function(event) {
+                event.stopPropagation(); // Prevent label click if it's within a label
+
+                const data = $(this).data();
+
                 Swal.fire({
                     icon: 'info',
-                    title: 'Edit Person',
-                    text: `This would open an edit form for "${personName}" (ID: ${personId}).`,
+                    title: 'Edit Executor',
+                    html: `This would open a modal to edit details for: <br>
+                           <strong>${data.name} ${data.lastname}</strong><br>
+                           Email: ${data.email || 'N/A'}<br>
+                           Relationship: ${data.relationship || 'N/A'}<br>
+                           Phone: ${data.phoneNumber || 'N/A'}`,
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                 });
-
             });
 
             // Handle "Add someone new" button click
@@ -465,33 +440,51 @@
 
             });
 
-            // Handle "Save and continue" button click
-            $('#saveAndContinueButton').on('click', function() {
-                // In a real application, you would collect form data (item description, selected recipient, message)
-                // and send it via AJAX to your backend or submit a form.
-                const itemDescription = $('#itemDescription').val();
-                const message = $('#messageOptional').val();
-                const giftType = "{{ $type }}"; // Get the current gift type from Blade
+            // Handle form submission
+            $('form').on('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission initially
 
-                // Simple validation example
+                const itemDescription = $('#itemDescription').val();
+                const selectedRecipientIds = $('input[name="recipients[]"]:checked').map(function() {
+                    return $(this).val();
+                }).get();
+                const message = $('#messageOptional').val();
+                const giftType = "{{ $type }}";
+
+                // Validation: Check if an item description is provided
                 if (!itemDescription) {
                     Swal.fire({
                         icon: 'error',
                         title: 'Oops...',
                         text: `Please provide a description for the ${giftType}!`,
                     });
-                    return;
+                    return; // Stop form submission
                 }
 
+                // Validation: Check if at least one recipient is selected
+                if (selectedRecipientIds.length === 0) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Please select at least one recipient for this gift!',
+                    });
+                    return; // Stop form submission
+                }
+
+                // If validation passes, show success SweetAlert and then submit the form programmatically
                 Swal.fire({
                     icon: 'success',
-                    title: 'Gift Saved!',
-                    text: `Your ${giftType} gift details have been saved. Returning to gifts overview.`,
+                    title: 'Gift Saving...',
+                    text: `Preparing to save your ${giftType} gift details.`,
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 1500, // Short timer before actual submission
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
                 }).then(() => {
-                    // Redirect back to the main gifts page after saving
-                    window.location.href = "{{ route('partner.will_generator.gift') }}";
+                    // Now, submit the form
+                    this.submit();
                 });
             });
         });
