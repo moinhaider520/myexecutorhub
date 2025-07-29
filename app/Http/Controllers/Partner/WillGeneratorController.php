@@ -300,11 +300,11 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function partner_delete($id)
+    public function partner_delete(Request $request)
     {
         try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
-            $will_inherited_people = WillInheritedPeople::where('id', '=', $id)->first();
+            $will_inherited_people = WillInheritedPeople::where('id', '=', $request->id)->first();
             if ($will_inherited_people) {
                 DB::beginTransaction();
                 $will_inherited_people->delete();
@@ -315,7 +315,7 @@ class WillGeneratorController extends Controller
 
             $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)->get();
             $html = view('partner.will_generator.ajax.partner_list', ['partners' => $partners])->render();
-            return response()->json(['status' => true, 'message' => 'Account Information deleted successfully', 'data' => $html]);
+            return response()->json(['status' => true, 'message' => 'Partner deleted successfully', 'data' => $html]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -613,5 +613,31 @@ class WillGeneratorController extends Controller
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+
+    public function store_user_partner(Request $request){
+        try{
+
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            WillInheritedPeople::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'will_user_id' => $will_user_id,
+                'type' => $request->type,
+            ]);
+            DB::commit();
+            $partners=WillInheritedPeople::where('will_user_id',$will_user_id)->get();
+            $html=view('partner.will_generator.ajax.partner_list',compact('partners'))->render();
+            return response()->json(['status'=>true,'messsage'=>'Partner have been saved successfully','data'=>$html]);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+
     }
 }

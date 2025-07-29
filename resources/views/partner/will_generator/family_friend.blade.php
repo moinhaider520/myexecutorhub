@@ -221,36 +221,35 @@
                         any beneficiaries of your will are currently under 18.
                     </p>
 
-                    <form id="executorChoiceForm" class="space-y-6" action="{{route('partner.will_generator.store_family_friend')}}" method="POST">
+                    <form id="executorChoiceForm" class="space-y-6"
+                        action="{{ route('partner.will_generator.store_family_friend') }}" method="POST">
                         @csrf
                         <div class="mb-8">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Friends and family</h2>
                             <div class="space-y-3">
-                                {{-- Example executor cards (you would loop through actual data here) --}}
-                                @forelse ($executors as $executor)
-                                    <div class="executor-card">
-                                        <label>
-                                            <input type="checkbox" name="executors[]" value="{{$executor->id}}">
-                                            <div class="executor-details">
-                                                <span class="executor-name">{{ $executor->first_name }}
-                                                    {{ $executor->last_name }}</span>
-                                                <span class="executor-contact">{{$executor->email}}</span>
-                                            </div>
-                                        </label>
-                                        <a data-toggle="modal" data-target="#editExecutorModal"
-                                            data-id="{{ $executor->id }}" data-name="{{ $executor->first_name }}"
-                                            data-lastname="{{ $executor->last_name }}"
-                                       
-                                            data-email="{{ $executor->email }}"
-                                            data-relationship="{{ $executor->type }}"
-                                            data-status="{{ $executor->status }}" data-title="{{ $executor->title }}"
-                                            data-phone_number="{{ $executor->phone_number }}" class="edit-button">Edit</a>
-                                    </div>
-                                @empty
-                                    <p class="text-gray-600 italic">No friends or family executors added yet. Click "Add
-                                        someone new" to get started.</p>
-                                @endforelse
-
+                                <div id="existingPartnerList">
+                                    @forelse ($executors as $executor)
+                                        <div class="executor-card">
+                                            <label>
+                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}">
+                                                <div class="executor-details">
+                                                    <span class="executor-name">{{ $executor->first_name }}
+                                                        {{ $executor->last_name }}</span>
+                                                    <span class="executor-contact">{{ $executor->email }}</span>
+                                                </div>
+                                            </label>
+                                            <a data-toggle="modal" data-target="#editExecutorModal"
+                                                data-id="{{ $executor->id }}" data-name="{{ $executor->first_name }}"
+                                                data-lastname="{{ $executor->last_name }}"
+                                                data-email="{{ $executor->email }}"
+                                                data-relationship="{{ $executor->type }}"
+                                                data-phone_number="{{ $executor->phone }}" class="edit-button">Edit</a>
+                                        </div>
+                                    @empty
+                                        <p class="text-gray-600 italic">No friends or family executors added yet. Click "Add
+                                            someone new" to get started.</p>
+                                    @endforelse
+                                </div>
                                 {{-- End example executor cards --}}
                             </div>
                             <a href="#" class="add-someone-new" data-toggle="modal" data-target="#addExecutorModal">
@@ -317,8 +316,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -339,7 +337,7 @@
                                 placeholder="Enter Last Name" required>
                             <div class="text-danger" id="error-lastname"></div>
                         </div>
-                       
+
                         <div class="form-group mb-3">
                             <label for="phone_number">Contact Number(s)</label>
                             <input type="text" class="form-control" name="phone" id="phone_number"
@@ -354,15 +352,15 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="relationship">Relationship</label>
-                            <select class="form-control" name="type" id="relationship" required>
+                            <select class="form-control" name="type" id="relationship">
                                 <option value="partner">Partner</option>
                                 <option value="child">Child</option>
                                 <option value="Other">Other</option>
                             </select>
                             <div class="text-danger" id="error-relationship"></div>
                         </div>
-                       
-                        
+
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -375,7 +373,7 @@
 
     <!-- EDIT EXECUTOR MODAL -->
     <div class="modal fade" id="editExecutorModal" tabindex="-1" role="dialog"
-        aria-labelledby="editExecutorModalLabel" aria-hidden="true">
+        aria-labelledby="editExecutorModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -385,7 +383,7 @@
                     <form id="editExecutorForm">
                         @csrf
                         <input type="hidden" name="id" id="editExecutorId">
-                       
+
                         <div class="form-group mb-3">
                             <label for="edit_name">First Name</label>
                             <input type="text" class="form-control" name="first_name" id="edit_first_name"
@@ -398,7 +396,7 @@
                                 placeholder="Enter Last Name" required>
                             <div class="text-danger" id="edit-error-lastname"></div>
                         </div>
-                       
+
                         <div class="form-group mb-3">
                             <label for="phone_number">Contact Number(s)</label>
                             <input type="text" class="form-control" name="phone_number" id="edit_phone_number"
@@ -413,26 +411,21 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="edit_relationship">Relationship</label>
-                            <select class="form-control" name="relationship" id="edit_relationship" required>
+                            <select class="form-control" name="relationship" id="edit_relationship">
                                 <option value="partner">Partner</option>
                                 <option value="child">Child</option>
                                 <option value="Other">Other</option>
                             </select>
                             <div class="text-danger" id="edit-error-relationship"></div>
                         </div>
-                        
-                        <div class="modal-footer">
 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="deletePersonButton">Remove Child</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>
-                    <form action="{{ route('partner.will_generator.user_partner.delete', $executor->id) }}" method="POST"
-                                style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+
                 </div>
             </div>
         </div>
@@ -451,8 +444,8 @@
                 $('#error-email').text('');
                 $('#error-relationship').text('');
                 $('#error-status').text('');
-                
-        
+
+
             }
 
             function clearEditErrors() {
@@ -463,8 +456,8 @@
                 $('#edit-error-email').text('');
                 $('#edit-error-relationship').text('');
                 $('#edit-error-status').text('');
-               
-                
+
+
             }
 
             // Handle submission of add executor form
@@ -473,15 +466,13 @@
                 clearAddErrors(); // Clear previous error messages
 
                 $.ajax({
-                    url: "{{ route('partner.executors.store') }}",
+                    url: "{{ route('partner.will_generator.user_partner.store') }}",
                     method: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
-                        if (response.success) {
-                            location.reload();
-                        } else {
-                            alert(response.message);
-                        }
+                        console.log(response);
+                        $('#addExecutorModal').click();
+                        $('#existingPartnerList').html(response.data);
                     },
                     error: function(response) {
                         var errors = response.responseJSON.errors;
@@ -491,33 +482,32 @@
                         $('#error-email').text(errors.email);
                         $('#error-relationship').text(errors.relationship);
                         $('#error-status').text(errors.status);
-                        
-                      
+
+
                     }
                 });
             });
 
             // Handle click on edit button for executor
-            $('.edit-button').on('click', function() {
+            $(document).on('click', '.edit-button', function() {
                 var id = $(this).data('id');
-                var title = $(this).data('title');
+                // var title = $(this).data('title'); // Removed, as 'title' input is not in your current modal
                 var name = $(this).data('name');
-                var lastname = $(this).data('last_name');
+                var lastname = $(this).data('lastname');
                 var phone_number = $(this).data('phone_number');
                 var email = $(this).data('email');
                 var relationship = $(this).data('relationship');
-                var status = $(this).data('status');
-                
+                // var status = $(this).data('status'); // Removed, as 'status' input is not in your current modal
 
                 $('#editExecutorId').val(id);
-                $('#edit_title').val(title);
+                // $('#edit_title').val(title); // Removed
                 $('#edit_first_name').val(name);
                 $('#edit_last_name').val(lastname);
                 $('#edit_phone_number').val(phone_number);
                 $('#edit_email').val(email);
                 $('#edit_relationship').val(relationship);
-                $('#edit_status').val(status);
-                clearEditErrors(); // Clear previous error messages
+                clearEditErrors();
+                $('#editExecutorModal').click();
             });
 
             // Handle submission of edit executor form
@@ -544,15 +534,19 @@
                         $('#edit-error-email').text(errors.email);
                         $('#edit-error-relationship').text(errors.relationship);
                         $('#edit-error-status').text(errors.status);
-                       
+
                     }
                 });
             });
         });
-    </script>
-    <script>
-        $(document).ready(function() {
 
+        $(document).ready(function() {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            });
             $('#executorChoiceForm').on('submit', function(e) {
 
                 const selectedExecutors = $('input[name="executors[]"]:checked').map(function() {
@@ -570,6 +564,57 @@
                     return false;
                 }
 
+            });
+            $('#deletePersonButton').on('click', function(e) {
+                e.preventDefault();
+                var person_id = $('#editExecutorId').val();
+                var postData = {
+                    id: person_id,
+
+                };
+                $.ajax({
+                    url: "{{ route('partner.will_generator.user_partner.delete') }}",
+                    method: 'Delete',
+                    data: postData,
+                    dataType: 'json',
+
+                    success: function(response) {
+                        $('#editExecutorId').val('');
+                        $('#edit_title').val('');
+                        $('#edit_first_name').val('');
+                        $('#edit_last_name').val('');
+                        $('#edit_phone_number').val('');
+                        $('#edit_email').val('');
+                        $('#edit_relationship').val('');
+                        $('#editExecutorModal').click();
+                        $('#existingPartnerList').html(response.data);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        if (jqXHR.status === 419) {
+                            alert(
+                                'Your session has expired or the security token is invalid. Please refresh the page and try again.'
+                            );
+                            location.reload();
+                        } else if (jqXHR.status === 422) {
+                            var errors = jqXHR.responseJSON.errors;
+                            if (errors.name) {
+                                $('#error-name').text(errors.name);
+                            }
+                            if (errors.date_of_birth) {
+                                $('#error-date_of_birth').text(errors.date_of_birth);
+                            }
+                        } else {
+                            var errorMessage = 'An unexpected error occurred.';
+                            if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
+                                errorMessage = jqXHR.responseJSON.message;
+                            } else if (errorThrown) {
+                                errorMessage = errorThrown;
+                            }
+                            alert(errorMessage);
+                            console.error("AJAX Error:", jqXHR, textStatus, errorThrown);
+                        }
+                    }
+                });
             });
         });
     </script>

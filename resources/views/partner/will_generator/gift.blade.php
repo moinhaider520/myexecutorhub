@@ -356,7 +356,7 @@
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
                             success: function(response) {
-                                giftItem.remove(); // Remove the gift item from the DOM on success
+                                giftItem.remove();
                                 Swal.fire(
                                     'Removed!',
                                     `"${giftName}" has been removed.`,
@@ -402,7 +402,7 @@
                     showConfirmButton: false,
                     timer: 2000
                 }).then(() => {
-                   
+
                     window.location.href = "{{route('partner.will_generator.create')}}";
                 });
             });
