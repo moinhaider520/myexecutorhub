@@ -451,8 +451,7 @@
                 $('#error-email').text('');
                 $('#error-relationship').text('');
                 $('#error-status').text('');
-                $('#error-password').text('');
-                $('#error-password_confirmation').text('');
+                
         
             }
 
@@ -492,8 +491,7 @@
                         $('#error-email').text(errors.email);
                         $('#error-relationship').text(errors.relationship);
                         $('#error-status').text(errors.status);
-                        $('#error-password').text(errors.password);
-                        $('#error-password_confirmation').text(errors.password_confirmation);
+                        
                       
                     }
                 });
@@ -546,9 +544,7 @@
                         $('#edit-error-email').text(errors.email);
                         $('#edit-error-relationship').text(errors.relationship);
                         $('#edit-error-status').text(errors.status);
-                        $('#edit-error-password').text(errors.password);
-                        $('#edit-error-password_confirmation').text(errors
-                            .password_confirmation);
+                       
                     }
                 });
             });
