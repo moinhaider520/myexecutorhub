@@ -594,9 +594,8 @@ input[type="radio"] {
                 data: postData,
                 dataType: 'json',
                 success: function(response) {
-                    $('#addWillAssetModal').modal('hide'); // Use modal('hide') for Bootstrap 4/5
+                    $('#addWillAssetModal').click(); 
                     $('#existingAssetsList').html(response.data);
-                    // Optional: show a success message to the user
                     Swal.fire('Success!', 'Asset added successfully!', 'success');
                 },
                 error: function(jqXHR) {

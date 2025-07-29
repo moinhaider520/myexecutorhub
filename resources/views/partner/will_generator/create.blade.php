@@ -72,7 +72,7 @@
           <div class="card-body">
           <p>Give your family less to worry about. Add your wishes so they know what to do when the time comes.
           </p>
-          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          <a href="{{ route('partner.will_generator.funeral') }}">Edit</a>
           </div>
         </div>
         </div>

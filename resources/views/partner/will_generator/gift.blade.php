@@ -217,19 +217,31 @@
                             Physical gifts
                         </h2>
 
-                        {{-- Existing Physical Gifts List (Example) --}}
+                        {{-- Existing Physical Gifts List (Dynamic) --}}
                         <div id="physicalGiftsList" class="space-y-3 mb-8">
-                            <div class="gift-item">
-                                <div class="gift-details">
-                                    <span class="gift-name">My Watch</span>
-                                    <span class="gift-recipient block">Keane Woodward</span>
+                            @forelse($physicalGifts as $gift)
+                                <div class="gift-item" data-gift-id="{{ $gift->id }}">
+                                    <div class="gift-details">
+                                        <span class="gift-name">{{ $gift->gift_name }}</span>
+                                        {{-- You might need to fetch the recipient's name based on family_inherited_id --}}
+                                        <span class="gift-recipient block">
+                                            @if($gift->family_inherited_id)
+                                                {{-- Assuming you have a way to get the family member's name, e.g., through a relationship --}}
+                                                {{-- For now, let's just display the ID, or you can add logic to fetch the name --}}
+                                                Recipient ID: {{ $gift->family_inherited_id }}
+                                            @else
+                                                No specific recipient
+                                            @endif
+                                        </span>
+                                    </div>
+                                    <div class="gift-actions">
+                                        <button type="button" class="gift-action-button remove-button">Remove</button>
+                                        <button type="button" class="gift-action-button edit-button">Edit</button>
+                                    </div>
                                 </div>
-                                <div class="gift-actions">
-                                    <button type="button" class="gift-action-button remove-button">Remove</button>
-                                    <button type="button" class="gift-action-button edit-button">Edit</button>
-                                </div>
-                            </div>
-                            {{-- More gift items would be dynamically added here --}}
+                            @empty
+                                <p class="text-gray-600">No physical gifts added yet.</p>
+                            @endforelse
                         </div>
 
                         <h2 class="text-2xl font-bold text-gray-800 mb-4">
@@ -322,6 +334,7 @@
             // Handle "Remove" button click for physical gifts
             $('#physicalGiftsList').on('click', '.remove-button', function() {
                 const giftItem = $(this).closest('.gift-item');
+                const giftId = giftItem.data('gift-id'); // Get the gift ID
                 const giftName = giftItem.find('.gift-name').text();
 
                 Swal.fire({
@@ -334,13 +347,31 @@
                     confirmButtonText: 'Yes, remove it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        giftItem.remove(); // Remove the gift item from the DOM
-                        Swal.fire(
-                            'Removed!',
-                            `"${giftName}" has been removed.`,
-                            'success'
-                        );
-                        // In a real application, you would also send an AJAX request to your backend to delete the gift from the database.
+                        // In a real application, you would send an AJAX request to your backend to delete the gift from the database.
+                        // Example AJAX call:
+                        $.ajax({
+                            url: '/partner/will_generator/gift/delete/' + giftId, // Your API endpoint for deleting gifts
+                            type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function(response) {
+                                giftItem.remove(); // Remove the gift item from the DOM on success
+                                Swal.fire(
+                                    'Removed!',
+                                    `"${giftName}" has been removed.`,
+                                    'success'
+                                );
+                            },
+                            error: function(xhr) {
+                                Swal.fire(
+                                    'Error!',
+                                    'Failed to remove gift. Please try again.',
+                                    'error'
+                                );
+                                console.error('Error removing gift:', xhr.responseText);
+                            }
+                        });
                     }
                 });
             });
@@ -348,15 +379,11 @@
             // Handle "Edit" button click for physical gifts
             $('#physicalGiftsList').on('click', '.edit-button', function() {
                 const giftItem = $(this).closest('.gift-item');
+                const giftId = giftItem.data('gift-id'); // Get the gift ID
                 const giftName = giftItem.find('.gift-name').text();
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Edit Gift',
-                    text: `This would open an edit form for "${giftName}".`,
-                    showConfirmButton: false,
-                    timer: 2000
-                });
 
+                // Redirect to an edit page for the specific gift
+                window.location.href = "{{ url('partner/will_generator/gift/edit_add_gift') }}/" + giftId;
             });
 
             // Handle "Add" button click for different gift types
@@ -375,8 +402,8 @@
                     showConfirmButton: false,
                     timer: 2000
                 }).then(() => {
-                    // In a real application, you would redirect to the next step in the will generation process.
-                    window.location.href = "#";
+                   
+                    window.location.href = "{{route('partner.will_generator.create')}}";
                 });
             });
         });

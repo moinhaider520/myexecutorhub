@@ -6,11 +6,11 @@
         <div class="flex justify-between items-center">
             <div>
                 <p class="font-semibold text-gray-900">
-                    {{ @$pet->pet_name }}</p>
+                    {{ @$pet->first_name }}</p>
 
             </div>
             <button type="button" data-toggle="modal" data-target="#editWillPetModal" data-id="{{ $pet->id }}"
-                data-name="{{ $pet->pet_name }}" data-will="{{ $pet->will_user_id }}"
+                data-name="{{ $pet->first_name }}" data-will="{{ $pet->will_user_id }}"
                 class="edit_button text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"

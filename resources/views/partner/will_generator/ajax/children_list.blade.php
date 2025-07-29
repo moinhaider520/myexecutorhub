@@ -4,12 +4,12 @@
             <div class="flex justify-between items-center">
                 <div>
                     <p class="font-semibold text-gray-900">
-                        {{ @$child->child_name }}</p>
+                        {{ @$child->first_name }}</p>
                     <p class="text-sm text-gray-600">
                         {{ @$child->date_of_birth }}</p>
                 </div>
                 <button type="button" data-toggle="modal" data-target="#editWillChildModal" data-id="{{ $child->id }}"
-                    data-name="{{ $child->child_name }}" data-date="{{ $child->date_of_birth }}"
+                    data-name="{{ $child->first_name }}" data-date="{{ $child->date_of_birth }}"
                     data-will="{{ $child->will_user_id }}"
                     class="edit_button text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"

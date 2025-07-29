@@ -66,7 +66,7 @@
                                                             <div class="flex justify-between items-center">
                                                                 <div>
                                                                     <p class="font-semibold text-gray-900">
-                                                                        {{ @$pet->pet_name }}</p>
+                                                                        {{ @$pet->first_name }}</p>
 
                                                                 </div>
                                                                 <button type="button" data-toggle="modal"

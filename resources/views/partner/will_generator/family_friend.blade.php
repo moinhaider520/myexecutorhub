@@ -232,17 +232,17 @@
                                         <label>
                                             <input type="checkbox" name="executors[]" value="{{$executor->id}}">
                                             <div class="executor-details">
-                                                <span class="executor-name">{{ $executor->name }}
-                                                    {{ $executor->lastname }}</span>
-                                                <span class="executor-contact">dahovoxun@mailinator.com</span>
+                                                <span class="executor-name">{{ $executor->first_name }}
+                                                    {{ $executor->last_name }}</span>
+                                                <span class="executor-contact">{{$executor->email}}</span>
                                             </div>
                                         </label>
                                         <a data-toggle="modal" data-target="#editExecutorModal"
-                                            data-id="{{ $executor->id }}" data-name="{{ $executor->name }}"
-                                            data-lastname="{{ $executor->lastname }}"
-                                            data-how_acting="{{ $executor->how_acting }}"
+                                            data-id="{{ $executor->id }}" data-name="{{ $executor->first_name }}"
+                                            data-lastname="{{ $executor->last_name }}"
+                                       
                                             data-email="{{ $executor->email }}"
-                                            data-relationship="{{ $executor->relationship }}"
+                                            data-relationship="{{ $executor->type }}"
                                             data-status="{{ $executor->status }}" data-title="{{ $executor->title }}"
                                             data-phone_number="{{ $executor->phone_number }}" class="edit-button">Edit</a>
                                     </div>
@@ -322,42 +322,27 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addExecutorModalLabel">Add Executor</h5>
+                    <h5 class="modal-title" id="addExecutorModalLabel">Add Person</h5>
                 </div>
                 <div class="modal-body">
                     <form id="addExecutorForm">
                         @csrf
                         <div class="form-group mb-3">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" name="title" id="title"
-                                placeholder="Enter Title" required>
-                            <div class="text-danger" id="error-title"></div>
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="name">First Name</label>
-                            <input type="text" class="form-control" name="name" id="name"
+                            <input type="text" class="form-control" name="first_name" id="first_name"
                                 placeholder="Enter First Name" required>
                             <div class="text-danger" id="error-name"></div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="lastname">Last Name</label>
-                            <input type="text" class="form-control" name="lastname" id="lastname"
+                            <input type="text" class="form-control" name="last_name" id="last_name"
                                 placeholder="Enter Last Name" required>
                             <div class="text-danger" id="error-lastname"></div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="how_acting">How Acting?</label>
-                            <select class="form-control" name="how_acting" id="how_acting" required>
-                                <option value="" disabled>-- Select --</option>
-                                <option value="Solely">Solely</option>
-                                <option value="Main">Main</option>
-                                <option value="Reserve">Reserve</option>
-                            </select>
-                            <div class="text-danger" id="error-how_acting"></div>
-                        </div>
+                       
                         <div class="form-group mb-3">
                             <label for="phone_number">Contact Number(s)</label>
-                            <input type="text" class="form-control" name="phone_number" id="phone_number"
+                            <input type="text" class="form-control" name="phone" id="phone_number"
                                 placeholder="Enter Contact Number" required>
                             <div class="text-danger" id="error-title"></div>
                         </div>
@@ -369,33 +354,15 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="relationship">Relationship</label>
-                            <select class="form-control" name="relationship" id="relationship" required>
-                                <option value="Family">Family</option>
-                                <option value="Friend">Friend</option>
+                            <select class="form-control" name="type" id="relationship" required>
+                                <option value="partner">Partner</option>
+                                <option value="child">Child</option>
                                 <option value="Other">Other</option>
                             </select>
                             <div class="text-danger" id="error-relationship"></div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="status">Access Type</label>
-                            <select class="form-control" name="status" id="status" required>
-                                <option value="A">Immediate Access</option>
-                                <option value="N">Upon Death</option>
-                            </select>
-                            <div class="text-danger" id="error-status"></div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" id="password"
-                                placeholder="Enter Password" required>
-                            <div class="text-danger" id="error-password"></div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="password_confirmation">Confirm Password</label>
-                            <input type="password" class="form-control" name="password_confirmation"
-                                id="password_confirmation" placeholder="Confirm Password" required>
-                            <div class="text-danger" id="error-password_confirmation"></div>
-                        </div>
+                       
+                        
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -412,40 +379,26 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editExecutorModalLabel">Edit Executor</h5>
+                    <h5 class="modal-title" id="editExecutorModalLabel">Edit Person</h5>
                 </div>
                 <div class="modal-body">
                     <form id="editExecutorForm">
                         @csrf
                         <input type="hidden" name="id" id="editExecutorId">
-                        <div class="form-group mb-3">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" name="title" id="edit_title"
-                                placeholder="Enter Title" required>
-                            <div class="text-danger" id="edit-error-title"></div>
-                        </div>
+                       
                         <div class="form-group mb-3">
                             <label for="edit_name">First Name</label>
-                            <input type="text" class="form-control" name="name" id="edit_name"
+                            <input type="text" class="form-control" name="first_name" id="edit_first_name"
                                 placeholder="Enter First Name" required>
-                            <div class="text-danger" id="edit-error-name"></div>
+                            <div class="text-danger" id="edit-error-first_name"></div>
                         </div>
                         <div class="form-group mb-3">
                             <label for="edit_lastname">Last Name</label>
-                            <input type="text" class="form-control" name="lastname" id="edit_lastname"
+                            <input type="text" class="form-control" name="last_name" id="edit_last_name"
                                 placeholder="Enter Last Name" required>
                             <div class="text-danger" id="edit-error-lastname"></div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="edit_how_acting">How Acting?</label>
-                            <select class="form-control" name="how_acting" id="edit_how_acting" required>
-                                <option value="" disabled>-- Select --</option>
-                                <option value="Solely">Solely</option>
-                                <option value="Main">Main</option>
-                                <option value="Reserve">Reserve</option>
-                            </select>
-                            <div class="text-danger" id="error-edit_how_acting"></div>
-                        </div>
+                       
                         <div class="form-group mb-3">
                             <label for="phone_number">Contact Number(s)</label>
                             <input type="text" class="form-control" name="phone_number" id="edit_phone_number"
@@ -461,39 +414,20 @@
                         <div class="form-group mb-3">
                             <label for="edit_relationship">Relationship</label>
                             <select class="form-control" name="relationship" id="edit_relationship" required>
-                                <option value="Family">Family</option>
-                                <option value="Friend">Friend</option>
+                                <option value="partner">Partner</option>
+                                <option value="child">Child</option>
                                 <option value="Other">Other</option>
                             </select>
                             <div class="text-danger" id="edit-error-relationship"></div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="edit_status">Access Type</label>
-                            <select class="form-control" name="status" id="edit_status" required>
-                                <option value="A">Immediate Access</option>
-                                <option value="N">Upon Death</option>
-                            </select>
-                            <div class="text-danger" id="edit-error-status"></div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="edit_password">Password</label>
-                            <input type="password" class="form-control" name="password" id="edit_password"
-                                placeholder="Enter Password">
-                            <div class="text-danger" id="edit-error-password"></div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="edit_password_confirmation">Confirm Password</label>
-                            <input type="password" class="form-control" name="password_confirmation"
-                                id="edit_password_confirmation" placeholder="Confirm Password">
-                            <div class="text-danger" id="edit-error-password_confirmation"></div>
-                        </div>
+                        
                         <div class="modal-footer">
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>
-                    <form action="{{ route('partner.executors.destroy', $executor->id) }}" method="POST"
+                    <form action="{{ route('partner.will_generator.user_partner.delete', $executor->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -519,20 +453,19 @@
                 $('#error-status').text('');
                 $('#error-password').text('');
                 $('#error-password_confirmation').text('');
-                $('#error-how_acting').text('');
+        
             }
 
             function clearEditErrors() {
                 $('#error-title').text('');
-                $('#edit-error-name').text('');
+                $('#edit-error-first_name').text('');
                 $('#edit-error-lastname').text('');
                 $('#error-phone_number').text('');
                 $('#edit-error-email').text('');
                 $('#edit-error-relationship').text('');
                 $('#edit-error-status').text('');
-                $('#edit-error-password').text('');
-                $('#edit-error-password_confirmation').text('');
-                $('#edit-error-how_acting').text('');
+               
+                
             }
 
             // Handle submission of add executor form
@@ -561,7 +494,7 @@
                         $('#error-status').text(errors.status);
                         $('#error-password').text(errors.password);
                         $('#error-password_confirmation').text(errors.password_confirmation);
-                        $('#error-how_acting').text(errors.how_acting);
+                      
                     }
                 });
             });
@@ -571,22 +504,21 @@
                 var id = $(this).data('id');
                 var title = $(this).data('title');
                 var name = $(this).data('name');
-                var lastname = $(this).data('lastname');
+                var lastname = $(this).data('last_name');
                 var phone_number = $(this).data('phone_number');
                 var email = $(this).data('email');
                 var relationship = $(this).data('relationship');
                 var status = $(this).data('status');
-                var how_acting = $(this).data('how_acting');
+                
 
                 $('#editExecutorId').val(id);
                 $('#edit_title').val(title);
-                $('#edit_name').val(name);
-                $('#edit_lastname').val(lastname);
+                $('#edit_first_name').val(name);
+                $('#edit_last_name').val(lastname);
                 $('#edit_phone_number').val(phone_number);
                 $('#edit_email').val(email);
                 $('#edit_relationship').val(relationship);
                 $('#edit_status').val(status);
-                $('#edit_how_acting').val(how_acting);
                 clearEditErrors(); // Clear previous error messages
             });
 

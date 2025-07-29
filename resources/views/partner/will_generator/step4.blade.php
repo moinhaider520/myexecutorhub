@@ -28,7 +28,7 @@
                                     action="{{ route('partner.will_generator.store_step4') }}" method="POST">
                                     @csrf
                                     <script src="https://cdn.tailwindcss.com"></script>
-                                    <div class="stepper row g-3 needs-validation custom-input" novalidate="">
+                                    <div class="stepper row g-3 needs-validation custom-input" novariate="">
                                         <div class="col-sm-12">
 
                                             <h1 id="childrenQuestion"
@@ -70,40 +70,8 @@
 
                                             <div id="childrenContentWrapper" class="child-details-wrapper">
                                                 <div id="existingChildrenList">
-                                                    @foreach ($children as $child)
-                                                        <div id="childDetails"
-                                                            class="child-detail-item bg-white p-4 rounded-lg shadow-md border border-gray-200 mb-8">
-                                                            <div class="flex justify-between items-center">
-                                                                <div>
-                                                                    <p class="font-semibold text-gray-900">
-                                                                        {{ @$child->child_name }}</p>
-                                                                    <p class="text-sm text-gray-600">
-                                                                        {{ @$child->date_of_birth }}</p>
-                                                                </div>
-                                                                <button type="button" data-toggle="modal"
-                                                                    data-target="#editWillChildModal"
-                                                                    data-id="{{ $child->id }}"
-                                                                    data-name="{{ $child->child_name }}"
-                                                                    data-date="{{ $child->date_of_birth }}"
-                                                                    data-will="{{ $child->will_user_id }}"
-                                                                    class="edit_button text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
-                                                                        height="16" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="currentColor" stroke-width="2"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="inline-block mr-1">
-                                                                        <path
-                                                                            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
-                                                                        </path>
-                                                                        <path
-                                                                            d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4Z">
-                                                                        </path>
-                                                                    </svg>
-                                                                    Edit details
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
+                                              
+                                                    @include('partner.will_generator.ajax.children_list', ['children' => $children])
                                                 </div>
 
                                                 <div id="addChildButtonContainer">
@@ -159,13 +127,13 @@
                             <label for="name">Child Full Name</label>
                             <input type="text" class="form-control" name="name" id="name"
                                 placeholder="Enter Child Name" required>
-                            <div class="text-danger" id="error-name"></div>
+                            <div class="text-danger" id="error-add-name"></div> {{-- Changed ID for clarity --}}
                         </div>
                         <div class="form-group mb-3">
                             <label for="date_of_birth">Date Of Birth</label>
                             <input type="text" class="form-control" name="child_date_of_birth" id="date_of_birth"
                                 placeholder="Enter Date of birth" required>
-                            <div class="text-danger" id="error-date_of_birth"></div>
+                            <div class="text-danger" id="error-add-date_of_birth"></div> {{-- Changed ID for clarity --}}
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -192,13 +160,13 @@
                             <label for="name">Child Name</label>
                             <input type="text" class="form-control" name="child_name" id="edit_child_name"
                                 placeholder="Enter Child Name" required>
-                            <div class="text-danger" id="error-name"></div>
+                            <div class="text-danger" id="error-edit-name"></div> {{-- Changed ID for clarity --}}
                         </div>
                         <div class="form-group mb-3">
                             <label for="edit_child_date_of_birth">Date Of Birth</label>
                             <input type="text" class="form-control" name="edit_child_date_of_birth"
                                 id="edit_child_date_of_birth" placeholder="Enter Date of birth" required>
-                            <div class="text-danger" id="error-date_of_birth"></div>
+                            <div class="text-danger" id="error-edit-date_of_birth"></div> {{-- Changed ID for clarity --}}
                         </div>
 
                     </div>
@@ -260,13 +228,13 @@
             $("#children").val(hasChildren);
         }
         window.onload = function() {
-            const initialChildrenCount = existingChildrenList.children.length;
-            if (initialChildrenCount > 0) {
+            // Include existing children by including the list partial
+            @if (count($children) > 0)
                 handleSelection('yes');
                 $("#children").val('yes');
-            } else {
+            @else
                 handleSelection(null);
-            }
+            @endif
         };
 
         $(document).ready(function() {
@@ -277,44 +245,62 @@
                 }
             });
 
-            function clearAddErrors() {
-                $('#error-name').text('');
-                $('#error-date_of_birth').text('');
-            }
-            $('#saveChildButton').on('click', function(e) {
-                e.preventDefault();
-                clearAddErrors();
-                var childName = $('#name').val();
-                var childDateOfBirth = $('#date_of_birth').val();
-                var postData = {
-                    name: childName,
-                    date_of_birth: childDateOfBirth
-                };
+            // Helper function for AJAX calls
+            function performAjaxCall(url, method, data, successCallback, errorCallback) {
                 $.ajax({
-                    url: "{{ route('partner.will_generator.user_child.store') }}",
-                    method: 'POST',
-                    data: postData,
+                    url: url,
+                    method: method,
+                    data: data,
                     dataType: 'json',
-
                     success: function(response) {
-                        $('#name').val('');
-                        $('#date_of_birth').val('');
-                        $('#addWillChildModal').click();
-                        $('#existingChildrenList').html(response.data);
+                        if (response.status) {
+                            $('#existingChildrenList').html(response.data); // Update the list
+                            if (response.message) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Success!',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                            successCallback(response); // Execute specific success logic
+                        } else {
+                            if (response.message) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: response.message,
+                                });
+                            }
+                        }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         if (jqXHR.status === 419) {
-                            alert(
-                                'Your session has expired or the security token is invalid. Please refresh the page and try again.'
-                            );
-                            location.reload();
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Session Expired!',
+                                text: 'Your session has expired. Please refresh the page.',
+                                confirmButtonText: 'Refresh'
+                            }).then(() => {
+                                location.reload();
+                            });
                         } else if (jqXHR.status === 422) {
                             var errors = jqXHR.responseJSON.errors;
-                            if (errors.name) {
-                                $('#error-name').text(errors.name);
-                            }
-                            if (errors.date_of_birth) {
-                                $('#error-date_of_birth').text(errors.date_of_birth);
+                            // Call the provided error callback to handle specific error messages
+                            if (errorCallback) {
+                                errorCallback(errors);
+                            } else {
+                                // Fallback for general validation errors if no specific handler
+                                let errorMessages = '';
+                                for (let field in errors) {
+                                    errorMessages += errors[field].join('<br>') + '<br>';
+                                }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Validation Error!',
+                                    html: errorMessages,
+                                });
                             }
                         } else {
                             var errorMessage = 'An unexpected error occurred.';
@@ -323,121 +309,147 @@
                             } else if (errorThrown) {
                                 errorMessage = errorThrown;
                             }
-                            alert(errorMessage);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: errorMessage,
+                            });
                             console.error("AJAX Error:", jqXHR, textStatus, errorThrown);
                         }
                     }
                 });
+            }
+
+            // Clear validation error messages in the add modal
+            function clearAddErrors() {
+                $('#error-add-name').text('');
+                $('#error-add-date_of_birth').text('');
+            }
+
+            // Clear validation error messages in the edit modal
+            function clearEditErrors() {
+                $('#error-edit-name').text('');
+                $('#error-edit-date_of_birth').text('');
+            }
+
+
+            $('#saveChildButton').on('click', function(e) {
+                e.preventDefault();
+                clearAddErrors(); // Clear previous errors
+                var childName = $('#name').val();
+                var childDateOfBirth = $('#date_of_birth').val();
+                var postData = {
+                    name: childName, // 'name' for store action (matches config in controller)
+                    date_of_birth: childDateOfBirth
+                };
+
+                performAjaxCall(
+                    "{{ route('partner.will_generator.user_child.store') }}", // Use the existing route name
+                    'POST',
+                    postData,
+                    function(response) {
+                        // Success callback: clear fields and close modal
+                        $('#name').val('');
+                        $('#date_of_birth').val('');
+                        $('#addWillChildModal').click(); // Use Bootstrap's modal hide
+                        handleSelection('yes'); // Ensure 'yes' is selected and details shown
+                    },
+                    function(errors) {
+                        // Error callback: display specific validation errors
+                        if (errors.name) {
+                            $('#error-add-name').text(errors.name);
+                        }
+                        if (errors.date_of_birth) {
+                            $('#error-add-date_of_birth').text(errors.date_of_birth);
+                        }
+                    }
+                );
             });
 
 
             $('#updateChildButton').on('click', function(e) {
                 e.preventDefault();
-                clearAddErrors();
+                clearEditErrors(); // Clear previous errors
                 var childName = $('#edit_child_name').val();
-                var childId = $('#edit_child_id').val()
+                var childId = $('#edit_child_id').val();
                 var edit_child_date_of_birth = $('#edit_child_date_of_birth').val();
                 var postData = {
-                    child_name: childName,
+                    child_name: childName, // 'child_name' for edit action (matches config in controller)
                     child_id: childId,
                     edit_child_date_of_birth: edit_child_date_of_birth,
-
                 };
-                $.ajax({
-                    url: "{{ route('partner.will_generator.user_child.edit') }}",
-                    method: 'POST',
-                    data: postData,
-                    dataType: 'json',
 
-                    success: function(response) {
+                performAjaxCall(
+                    "{{ route('partner.will_generator.user_child.edit') }}", // Use the existing route name
+                    'POST',
+                    postData,
+                    function(response) {
+                        // Success callback: clear fields and close modal
                         $('#edit_child_name').val('');
                         $('#edit_child_id').val('');
-                        $('#editWillChildModal').click();
-                        $('#existingChildrenList').html(response.data);
+                        $('#edit_child_date_of_birth').val('');
+                        $('#editWillChildModal').click(); // Use Bootstrap's modal hide
+                        // Re-evaluate if 'yes' should be selected based on remaining children (optional)
+                        // If there are no children left after deletion, you might want to switch to 'no'.
+                        // This might require re-fetching the list or checking its content.
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status === 419) {
-                            alert(
-                                'Your session has expired or the security token is invalid. Please refresh the page and try again.'
-                            );
-                            location.reload();
-                        } else if (jqXHR.status === 422) {
-                            var errors = jqXHR.responseJSON.errors;
-                            if (errors.name) {
-                                $('#error-name').text(errors.name);
-                            }
-                            if (errors.date_of_birth) {
-                                $('#error-date_of_birth').text(errors.date_of_birth);
-                            }
-                        } else {
-                            var errorMessage = 'An unexpected error occurred.';
-                            if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
-                                errorMessage = jqXHR.responseJSON.message;
-                            } else if (errorThrown) {
-                                errorMessage = errorThrown;
-                            }
-                            alert(errorMessage);
-                            console.error("AJAX Error:", jqXHR, textStatus, errorThrown);
+                    function(errors) {
+                        // Error callback: display specific validation errors
+                        if (errors.child_name) { // Note: now checking 'child_name' not 'name' due to controller config
+                            $('#error-edit-name').text(errors.child_name);
+                        }
+                        if (errors.edit_child_date_of_birth) {
+                            $('#error-edit-date_of_birth').text(errors.edit_child_date_of_birth);
                         }
                     }
-                });
+                );
             });
-            $(document).on('click', '.edit_button', function() {
 
+            // Populate edit modal when edit button is clicked
+            $(document).on('click', '.edit_button', function() {
                 var id = $(this).data('id');
                 var name = $(this).data('name');
                 var date_of_birth = $(this).data('date');
                 $('#edit_child_id').val(id);
                 $('#edit_child_name').val(name);
                 $('#edit_child_date_of_birth').val(date_of_birth);
-
+                clearEditErrors(); // Clear errors when opening modal
             });
 
 
             $('#deleteChildButton').on('click', function(e) {
                 e.preventDefault();
-                clearAddErrors();
-                var childId = $('#edit_child_id').val()
-                var postData = {
-                    child_id: childId,
 
-                };
-                $.ajax({
-                    url: "{{ route('partner.will_generator.user_child.delete') }}",
-                    method: 'POST',
-                    data: postData,
-                    dataType: 'json',
+                // SweetAlert confirmation
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var childId = $('#edit_child_id').val();
+                        var postData = {
+                            child_id: childId, // Matches the expected parameter in the controller
+                        };
 
-                    success: function(response) {
-                        $('#edit_child_name').val('');
-                        $('#edit_child_id').val('');
-                        $('#editWillChildModal').click();
-                        $('#existingChildrenList').html(response.data);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        if (jqXHR.status === 419) {
-                            alert(
-                                'Your session has expired or the security token is invalid. Please refresh the page and try again.'
-                            );
-                            location.reload();
-                        } else if (jqXHR.status === 422) {
-                            var errors = jqXHR.responseJSON.errors;
-                            if (errors.name) {
-                                $('#error-name').text(errors.name);
+                        performAjaxCall(
+                            "{{ route('partner.will_generator.user_child.delete') }}", // Use the existing route name
+                            'POST',
+                            postData,
+                            function(response) {
+                                // Success callback: close modal
+                                $('#editWillChildModal').click(); // Use Bootstrap's modal hide
+                                // Check if the list is empty after deletion and adjust selection
+                                if ($('#existingChildrenList').children().length === 0) {
+                                    handleSelection('no'); // Switch to 'No' if no children remain
+                                }
                             }
-                            if (errors.date_of_birth) {
-                                $('#error-date_of_birth').text(errors.date_of_birth);
-                            }
-                        } else {
-                            var errorMessage = 'An unexpected error occurred.';
-                            if (jqXHR.responseJSON && jqXHR.responseJSON.message) {
-                                errorMessage = jqXHR.responseJSON.message;
-                            } else if (errorThrown) {
-                                errorMessage = errorThrown;
-                            }
-                            alert(errorMessage);
-                            console.error("AJAX Error:", jqXHR, textStatus, errorThrown);
-                        }
+                            // No specific error callback needed for delete if generic handles it well
+                        );
                     }
                 });
             });
