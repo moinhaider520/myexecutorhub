@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('will_user_executors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('will_user_info_id')->references('id')->on('will_user_infos')->onDelete('cascade');
-            $table->foreignId('executor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('executor_id')->references('id')->on('will_inherited_people')->onDelete('cascade');
             $table->timestamps();
         });
     }

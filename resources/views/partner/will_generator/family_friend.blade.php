@@ -262,7 +262,8 @@
                         </div>
 
                         {{-- Professional executors section --}}
-                        <div class="mb-8">
+                        @if (isset($showProfessionalExecutors) && $showProfessionalExecutors)
+                           <div class="mb-8">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Professional executors</h2>
                             <div class="space-y-3">
                                 <div class="executor-card">
@@ -276,6 +277,8 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+                        
 
                         {{-- Action buttons --}}
                         <div class="flex justify-between items-center mt-8">
@@ -422,7 +425,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" id="deletePersonButton">Remove Child</button>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-primary">Update changes</button>
                         </div>
                     </form>
 
@@ -517,15 +520,12 @@
                 clearEditErrors(); // Clear previous error messages
 
                 $.ajax({
-                    url: "/partner/executors/update/" + id,
+                    url: "/partner/will_generator/user_partner/edit",
                     method: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
-                        if (response.success) {
-                            location.reload();
-                        } else {
-                            alert(response.message);
-                        }
+                        $('#editExecutorModal').click();
+                        $('#existingPartnerList').html(response.data);
                     },
                     error: function(response) {
                         var errors = response.responseJSON.errors;

@@ -887,6 +887,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/executor/get_executor_step3', [PartnerWillGeneratorController::class, 'get_executor_step3'])->name('will_generator.get_executor_step3');
     Route::post('will_generator/executor/store_family_friend', [PartnerWillGeneratorController::class, 'store_family_friend'])->name('will_generator.store_family_friend');
     Route::get('will_generator/executor/farewill_trustees', [PartnerWillGeneratorController::class, 'farewill_trustees'])->name('will_generator.farewill_trustees');
+    Route::post('will_generator/executor/store_farewill_trustees', [PartnerWillGeneratorController::class, 'store_farewill_trustees'])->name('will_generator.store_farewill_trustees');
 
     Route::get('will_generator/estates',[PartnerWillGeneratorController::class,'your_estate'])->name('will_generator.estates');
     Route::get('will_generator/choose_inherited_persons',[PartnerWillGeneratorController::class,'choose_inherited_persons'])->name('will_generator.choose_inherited_persons');

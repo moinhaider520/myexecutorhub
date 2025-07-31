@@ -82,6 +82,19 @@
             box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
         }
 
+        /* --- New CSS for validation feedback --- */
+        .percentage-input.is-invalid {
+            border-color: #ef4444; /* Tailwind red-500 */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5); /* Red shadow */
+        }
+
+        #totalPercentageError {
+            color: #ef4444; /* Tailwind red-500 */
+            font-size: 0.875rem; /* text-sm */
+            margin-top: 0.5rem;
+            display: none; /* Hidden by default */
+        }
+        /* --- End New CSS --- */
 
 
         .percentage-symbol {
@@ -193,7 +206,8 @@
             <div class="col-xl-7"> {{-- Main content area (using col-xl-7 as per previous discussion) --}}
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
-                        <form action="#" method="POST">
+                        {{-- Added ID for the form --}}
+                        <form id="shareEstateForm" action="#" method="POST">
                             @csrf
 
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
@@ -208,29 +222,28 @@
                                 @forelse ($executors as $executor)
                                     <div class="percentage-item">
                                         <div class="percentage-input-wrapper">
+                                            {{-- Added class 'beneficiary-percentage' --}}
                                             <input type="number" step="0.01" min="0" max="100"
-                                                class="percentage-input" name="percentages[thane_dillard]" value="16.67">
+                                                class="percentage-input beneficiary-percentage" name="percentages[{{ Str::slug($executor->name . $executor->lastname) }}]"
+                                                value="{{ old('percentages[' . Str::slug($executor->name . $executor->lastname) . ']', 0) }}">
                                             <span class="percentage-symbol">%</span>
                                         </div>
-                                        <span class="beneficiary-name">{{$executor->name}}{{$executor->lastname}}</span>
+                                        <span class="beneficiary-name">{{ $executor->name }} {{ $executor->lastname }}</span>
                                     </div>
                                 @empty
-                                    <p class="text-gray-600 italic"> Click "Add
-                                        someone new" to get started.</p>
+                                    <p class="text-gray-600 italic"> Click "Add someone new" to get started.</p>
                                 @endforelse
-
-
-
 
                                 {{-- Total Row --}}
                                 <div class="percentage-item total-row">
                                     <div class="percentage-input-wrapper">
-                                        <input type="text" class="percentage-input" id="totalPercentage" value="100"
-                                            readonly>
+                                        <input type="text" class="percentage-input" id="totalPercentage" value="0.00" readonly>
                                         <span class="percentage-symbol">%</span>
                                     </div>
                                     <span class="beneficiary-name">Total</span>
                                 </div>
+                                {{-- Error message display --}}
+                                <p id="totalPercentageError" class="text-sm mt-2 hidden">The total percentage must be 100%.</p>
                             </div>
 
                             {{-- Accordion for "Why do I have to share..." --}}
@@ -260,7 +273,8 @@
                                     &larr; Back
                                 </a>
 
-                                <button type="submit"
+                                {{-- Added ID for the submit button --}}
+                                <button type="submit" id="saveAndContinueBtn"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
                                     Save and continue
                                 </button>
@@ -276,12 +290,12 @@
                     <ul id="inheritanceSummaryList">
                         {{-- These items will be dynamically updated by JavaScript --}}
                         {{-- Initial items for demo, based on your screenshot's summary --}}
-                        <li>Thane Dillard</li>
-                        <li>Lane Rodgers</li>
-                        <li>The RNLI</li>
-                        <li>Macmillan Cancer Support</li>
-                        <li>Edhi International Foundation UK</li>
-                        <li>The Charities Aid Foundation</li>
+                        {{-- Assuming 'beneficiaries' data is passed from controller to populate this --}}
+                        @forelse ($executors as $executor)
+                            <li>{{ $executor->name }}</li>
+                        @empty
+                            <li>No beneficiaries added yet.</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>
@@ -302,36 +316,60 @@
                 accordionIcon.toggleClass('rotated');
             });
 
-            // --- Dynamic Total Percentage Calculation (for future if values are not fixed) ---
-            // This is just a placeholder for now as the screenshot shows fixed values
+            // --- 100% Total Percentage Validation Logic ---
+            const percentageInputs = $('.beneficiary-percentage'); // Select all percentage inputs
+            const totalPercentageInput = $('#totalPercentage'); // The input displaying the total
+            const shareEstateForm = $('#shareEstateForm'); // The form itself
+            const saveAndContinueBtn = $('#saveAndContinueBtn'); // The submit button
+            const totalPercentageError = $('#totalPercentageError'); // The error message element
+
             function calculateTotalPercentage() {
                 let total = 0;
-                $('.percentage-input').not('#totalPercentage').each(function() {
+                percentageInputs.each(function() {
                     const value = parseFloat($(this).val());
                     if (!isNaN(value)) {
                         total += value;
                     }
                 });
-                $('#totalPercentage').val(total.toFixed(2)); // Display with 2 decimal places
+                totalPercentageInput.val(total.toFixed(2)); // Display with 2 decimal places
+                return total;
             }
 
-            // Call on page load
-            calculateTotalPercentage();
+            function validateTotalPercentage() {
+                const total = calculateTotalPercentage();
+                const isValid = (total === 100); // Check for exact 100%
 
-            // Update on input change (if values become editable)
-            $('.percentage-input').not('#totalPercentage').on('input', function() {
-                calculateTotalPercentage();
+                if (isValid) {
+                    saveAndContinueBtn.prop('disabled', false); // Enable button
+                    totalPercentageInput.removeClass('is-invalid'); // Remove error styling
+                    totalPercentageError.addClass('hidden'); // Hide error message
+                } else {
+                    saveAndContinueBtn.prop('disabled', true); // Disable button
+                    totalPercentageInput.addClass('is-invalid'); // Add error styling
+                    totalPercentageError.removeClass('hidden'); // Show error message
+                }
+                return isValid;
+            }
+
+            // Attach event listeners to all percentage input fields
+            percentageInputs.on('input', validateTotalPercentage);
+
+            // Attach event listener to the form submission
+            shareEstateForm.on('submit', function(event) {
+                if (!validateTotalPercentage()) {
+                    event.preventDefault(); // Prevent form submission if total is not 100%
+                    // The error message is already shown by validateTotalPercentage()
+                }
             });
+
+            // Initial validation when the page loads
+            validateTotalPercentage();
 
             // --- Sidebar Inheritance Summary (Dynamic Population - Placeholder for now) ---
             // In a real application, you would fetch these beneficiaries from your backend
             // or pass them from the previous steps.
-            // For now, it's hardcoded based on the screenshot.
             function updateInheritanceSummary() {
-                // This function would typically retrieve selected beneficiaries from previous steps
-                // and populate the sidebar list. Since we're just building the page,
-                // the initial list is hardcoded to match the screenshot.
-                // If you need it to be dynamic based on actual data, we'll need backend integration.
+                
             }
 
             updateInheritanceSummary(); // Call on page load

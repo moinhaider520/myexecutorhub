@@ -1,8 +1,14 @@
+I apologize for the previous code not meeting your expectations. I understand you want to implement a flow where users can either search for a charity or, if not found, manually add the charity's details, with the modal changing accordingly.
+
+Let's refine the frontend code to achieve this. We'll implement two distinct modals and manage their visibility with JavaScript.
+
+Here's the revised Blade template and JavaScript, incorporating the search and manual add modals:
+
+```blade
 @extends('layouts.will_generator')
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-{{-- Using Tailwind CSS directly --}}
 <script src="https://cdn.tailwindcss.com"></script>
 
 <style>
@@ -154,22 +160,31 @@
     }
 
     .charity-logo-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%; /* Ensures it takes full width of the parent box */
-            flex-grow: 1; /* Allows it to take up available space in the column */
-            min-height: 60px; /* Increased min-height to give more room for larger logos */
-            margin-bottom: 0.5rem; /* Space between logo and text */
-            padding: 0.5rem; /* Add some padding inside the wrapper */
-            box-sizing: border-box; /* Include padding in height/width */
-        }
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        /* Ensures it takes full width of the parent box */
+        flex-grow: 1;
+        /* Allows it to take up available space in the column */
+        min-height: 60px;
+        /* Increased min-height to give more room for larger logos */
+        margin-bottom: 0.5rem;
+        /* Space between logo and text */
+        padding: 0.5rem;
+        /* Add some padding inside the wrapper */
+        box-sizing: border-box;
+        /* Include padding in height/width */
+    }
 
-        .charity-logo {
-            max-width: 100px; /* Allow image to be as wide as its wrapper */
-            max-height: 100px; /* Allow image to be as tall as its wrapper */
-            object-fit: contain; /* Ensures the image scales down to fit without cropping */
-        }
+    .charity-logo {
+        max-width: 100px;
+        /* Allow image to be as wide as its wrapper */
+        max-height: 100px;
+        /* Allow image to be as tall as its wrapper */
+        object-fit: contain;
+        /* Ensures the image scales down to fit without cropping */
+    }
 
     .charity-text-content {
         width: 100%;
@@ -347,7 +362,7 @@
         border-bottom: none;
     }
 
-    /* Modal specific styles (from image_826702.png) */
+    /* Modal specific styles */
     .modal-overlay {
         position: fixed;
         top: 0;
@@ -417,7 +432,8 @@
         color: #2d3748;
     }
 
-    .modal-body input[type="text"] {
+    .modal-body input[type="text"],
+    .modal-body input[type="email"] {
         width: 100%;
         padding: 0.75rem 1rem;
         border: 1px solid #e2e8f0;
@@ -428,9 +444,43 @@
         transition: border-color 0.2s ease;
     }
 
-    .modal-body input[type="text"]:focus {
+    .modal-body input[type="text"]:focus,
+    .modal-body input[type="email"]:focus {
         border-color: #4299e1;
         box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn-secondary {
+        background-color: #e2e8f0;
+        color: #2d3748;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+        background-color: #cbd5e0;
+    }
+
+    .btn-primary {
+        background-color: #4299e1;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 0.375rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary:hover {
+        background-color: #2b6cb0;
     }
 </style>
 
@@ -444,7 +494,7 @@
                             Charity Gifts
                         </div>
                         <div class="card-body basic-wizard important-validation">
-                            <form action="{{route('partner.will_generator.process_inherited_charity')}}" method="POST">
+                            <form action="#" method="POST">
                                 @csrf
 
                                 <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
@@ -471,7 +521,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 2: RNLI Lifeguards (with separate "Lifeguards" text) --}}
@@ -480,7 +529,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3-eu-west-1.amazonaws.com/site/charity_assets/royal_national_lifeboat_institution.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 3: Great Ormond Street Hospital Charity --}}
@@ -489,7 +537,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 4: Marie Curie --}}
@@ -498,7 +545,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 5: Shelter --}}
@@ -507,7 +553,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 6: Alzheimer's Society --}}
@@ -516,7 +561,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 7: WWF --}}
@@ -525,7 +569,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 8: NSPCC --}}
@@ -534,7 +577,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 9: British Heart Foundation --}}
@@ -543,7 +585,6 @@
                                             <div class="charity-logo-wrapper">
                                                 <img alt="" class="charity-logo" src="https://farewill-app.s3.eu-west-1.amazonaws.com/site/charity_assets/macmillan_cancer_support_1686228850951.png">
                                             </div>
-
                                         </label>
 
                                         {{-- Example Charity 10: Action for Children --}}
@@ -562,7 +603,6 @@
                                             <input type="checkbox" id="edhiFoundation" name="charities[]" value="edhi_foundation" checked>
                                             <div class="charity-text-details">
                                                 <span class="charity-text-name">Edhi International Foundation UK</span>
-
                                             </div>
                                         </label>
 
@@ -570,7 +610,6 @@
                                             <input type="checkbox" id="sdfsfw34234" name="charities[]" value="sdfsfw34234">
                                             <div class="charity-text-details">
                                                 <span class="charity-text-name">sdfsfw34234</span>
-
                                             </div>
                                         </label>
 
@@ -578,7 +617,6 @@
                                             <input type="checkbox" id="charitiesAidFoundation" name="charities[]" value="charities_aid_foundation" checked>
                                             <div class="charity-text-details">
                                                 <span class="charity-text-name">The Charities Aid Foundation</span>
-
                                             </div>
                                         </label>
                                     </div>
@@ -629,12 +667,12 @@
     </div>
 </div>
 
-{{-- Add New Charity Modal (from image_826702.png) --}}
-<div id="addCharityModal" class="modal-overlay">
+{{-- SEARCH CHARITY MODAL --}}
+<div id="searchCharityModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Add a new charity</h3>
-            <button type="button" class="modal-close-button" id="closeCharityModal">
+            <button type="button" class="modal-close-button" id="closeSearchCharityModal">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -642,15 +680,63 @@
         </div>
         <div class="modal-body">
             <label for="charitySearchInput">Search for a charity</label>
-            <input type="text" id="charitySearchInput" placeholder="">
+            <input type="text" id="charitySearchInput" placeholder="Enter charity name or registration number">
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-secondary" id="searchCharityButton">Search</button>
+            </div>
+            <div class="text-center mt-3">
+                <p>Can't find it?</p>
+                <button type="button" class="btn btn-primary" id="openManualAddCharityModal">Add your own charity</button>
+            </div>
         </div>
     </div>
 </div>
 
+{{-- MANUAL ADD CHARITY MODAL --}}
+<div id="manualAddCharityModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add your own charity details</h3>
+            <button type="button" class="modal-close-button" id="closeManualAddCharityModal">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form id="addManualCharityForm">
+                @csrf
+                <div class="form-group mb-3">
+                    <label for="manualCharityName">Charity Name</label>
+                    <input type="text" class="form-control" name="name" id="manualCharityName" placeholder="Enter charity name" required>
+                    <div class="text-danger" id="manual-error-name"></div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="manualRegistrationNumber">Registration Number (Optional)</label>
+                    <input type="text" class="form-control" name="registration_number" id="manualRegistrationNumber" placeholder="Enter registration number">
+                    <div class="text-danger" id="manual-error-registration_number"></div>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="manualCharityEmail">Email Address (Optional)</label>
+                    <input type="email" class="form-control" name="email" id="manualCharityEmail" placeholder="Enter email address">
+                    <div class="text-danger" id="manual-error-email"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="backToSearchCharityModal">Back to Search</button>
+                    <button type="submit" class="btn btn-primary">Add Charity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 {{-- Scripts --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{{-- You might not need Popper.js and Bootstrap JS if you're using pure Tailwind for modals --}}
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> --}}
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -728,30 +814,202 @@
         });
 
         // --- Modal Logic ---
-        const addCharityModal = $('#addCharityModal');
+        const searchCharityModal = $('#searchCharityModal');
+        const manualAddCharityModal = $('#manualAddCharityModal');
+
         const addYourOwnCharityButton = $('#addYourOwnCharityButton');
-        const closeCharityModalButton = $('#closeCharityModal');
+        const closeSearchCharityModalButton = $('#closeSearchCharityModal');
+        const openManualAddCharityModalButton = $('#openManualAddCharityModal');
+        const closeManualAddCharityModalButton = $('#closeManualAddCharityModal');
+        const backToSearchCharityModalButton = $('#backToSearchCharityModal');
 
+        // Open search charity modal
         addYourOwnCharityButton.on('click', function() {
-            addCharityModal.addClass('active');
+            searchCharityModal.addClass('active');
         });
 
-        closeCharityModalButton.on('click', function() {
-            addCharityModal.removeClass('active');
+        // Close search charity modal
+        closeSearchCharityModalButton.on('click', function() {
+            searchCharityModal.removeClass('active');
+            $('#charitySearchInput').val(''); // Clear search input
         });
 
-        // Close modal when clicking outside of it
-        addCharityModal.on('click', function(e) {
-            if ($(e.target).is(addCharityModal)) {
-                addCharityModal.removeClass('active');
+        // Open manual add charity modal from search modal
+        openManualAddCharityModalButton.on('click', function() {
+            searchCharityModal.removeClass('active');
+            manualAddCharityModal.addClass('active');
+        });
+
+        // Close manual add charity modal
+        closeManualAddCharityModalButton.on('click', function() {
+            manualAddCharityModal.removeClass('active');
+            $('#addManualCharityForm')[0].reset(); // Clear form
+            $('.text-danger').text(''); // Clear validation errors
+        });
+
+        // Back to search charity modal from manual add modal
+        backToSearchCharityModalButton.on('click', function() {
+            manualAddCharityModal.removeClass('active');
+            searchCharityModal.addClass('active');
+            $('#addManualCharityForm')[0].reset(); // Clear manual form
+            $('.text-danger').text(''); // Clear validation errors
+        });
+
+
+        // Close modals when clicking outside of them
+        searchCharityModal.on('click', function(e) {
+            if ($(e.target).is(searchCharityModal)) {
+                searchCharityModal.removeClass('active');
+                $('#charitySearchInput').val(''); // Clear search input
             }
         });
 
-        // Close modal with Escape key
+        manualAddCharityModal.on('click', function(e) {
+            if ($(e.target).is(manualAddCharityModal)) {
+                manualAddCharityModal.removeClass('active');
+                $('#addManualCharityForm')[0].reset(); // Clear form
+                $('.text-danger').text(''); // Clear validation errors
+            }
+        });
+
+        // Close modals with Escape key
         $(document).on('keydown', function(e) {
-            if (e.key === 'Escape' && addCharityModal.hasClass('active')) {
-                addCharityModal.removeClass('active');
+            if (e.key === 'Escape') {
+                if (searchCharityModal.hasClass('active')) {
+                    searchCharityModal.removeClass('active');
+                    $('#charitySearchInput').val('');
+                } else if (manualAddCharityModal.hasClass('active')) {
+                    manualAddCharityModal.removeClass('active');
+                    $('#addManualCharityForm')[0].reset();
+                    $('.text-danger').text('');
+                }
             }
+        });
+
+        // --- AJAX for adding manual charity ---
+        $('#addManualCharityForm').on('submit', function(e) {
+            e.preventDefault();
+
+            // Clear previous errors
+            $('.text-danger').text('');
+
+            const formData = $(this).serialize();
+
+            $.ajax({
+                url: '#', // Adjust this to your actual route for storing charities
+                method: 'POST',
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Charity Added!',
+                            text: response.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            manualAddCharityModal.removeClass('active');
+                            $('#addManualCharityForm')[0].reset();
+                            // Optionally, append the new charity to the list on the main page
+                            // This would involve creating a new charity-text-item element
+                            const newCharityHtml = `
+                                <label for="charity_${response.charity.id}" class="charity-text-item">
+                                    <input type="checkbox" id="charity_${response.charity.id}" name="charities[]" value="${response.charity.id}" checked>
+                                    <div class="charity-text-details">
+                                        <span class="charity-text-name">${response.charity.name}</span>
+                                        ${response.charity.registration_number ? `<span class="charity-text-registration">${response.charity.registration_number}</span>` : ''}
+                                    </div>
+                                </label>
+                            `;
+                            // Prepend or append to an appropriate container, e.g., the last div in charitySelectionContainer
+                            $('#charitySelectionContainer .space-y-3:last').append(newCharityHtml);
+                            updateInheritanceSummary(); // Refresh the summary list
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: response.message || 'Something went wrong.',
+                        });
+                    }
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422) { // Validation errors
+                        const errors = xhr.responseJSON.errors;
+                        for (const field in errors) {
+                            if (errors.hasOwnProperty(field)) {
+                                $(`#manual-error-${field}`).text(errors[field][0]);
+                            }
+                        }
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'An error occurred while adding the charity. Please try again.',
+                        });
+                    }
+                }
+            });
+        });
+
+        // --- Placeholder for Search Functionality (backend integration needed) ---
+        $('#searchCharityButton').on('click', function() {
+            const searchTerm = $('#charitySearchInput').val();
+            if (searchTerm.trim() === '') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Search Empty',
+                    text: 'Please enter a charity name or registration number to search.',
+                });
+                return;
+            }
+            console.log("Searching for charity:", searchTerm);
+            // In a real application, you would make an AJAX call here
+            // to your backend to search for charities.
+            // Example:
+            /*
+            $.ajax({
+                url: '/api/search-charities', // Your API endpoint
+                method: 'GET',
+                data: { query: searchTerm },
+                success: function(response) {
+                    if (response.charities && response.charities.length > 0) {
+                        // Display search results in the modal, possibly in a scrollable area
+                        // If a charity is found and selected, you might close this modal
+                        // and add it to the main list.
+                        console.log('Search results:', response.charities);
+                        Swal.fire('Found Charities', 'Displaying search results...', 'info');
+                        // Example: populate a results div within searchCharityModal
+                        // $('#searchResultsDiv').empty();
+                        // response.charities.forEach(charity => {
+                        //     $('#searchResultsDiv').append(`<p>${charity.name} (${charity.registration_number})</p>`);
+                        // });
+                    } else {
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'No Charity Found',
+                            text: 'No charities matched your search. Please try a different term or add your own.',
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Search Error',
+                        text: 'Failed to perform search. Please try again later.',
+                    });
+                }
+            });
+            */
+            // For now, simulate no results and suggest manual add
+            Swal.fire({
+                icon: 'info',
+                title: 'No Charity Found',
+                text: 'No charities matched your search. Please try a different term or click "Add your own charity".',
+            });
         });
     });
 </script>
