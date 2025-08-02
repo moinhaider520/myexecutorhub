@@ -203,7 +203,7 @@
             color: #4a5568;
             /* Slightly lighter text for body */
         }
- 
+
 
 
     .edit-button:hover {
@@ -308,12 +308,12 @@
 
                                 {{-- Existing People/Charities List --}}
                                 <div class="space-y-3 mb-6">
-                                
+
                                     <div id="existingPartnerList">
                                         @forelse ($executors as $executor)
                                         <div class="executor-card">
                                             <label>
-                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}">
+                                                <input type="checkbox" name="family_friends[]" value="{{ $executor->id }}">
                                                 <div class="executor-details">
                                                     <span class="executor-name">{{ $executor->first_name }}
                                                         {{ $executor->last_name }}</span>
@@ -328,7 +328,7 @@
                                                 data-phone_number="{{ $executor->phone }}" class="edit-button">Edit</a>
                                         </div>
                                         @empty
-                                        <p class="text-gray-600 italic">No friends or family executors added yet. Click "Add
+                                        <p class="text-gray-600 italic">No friends or family family_friends added yet. Click "Add
                                             someone new" to get started.</p>
                                         @endforelse
                                     </div>
@@ -617,13 +617,13 @@
             });
             $('#executorChoiceForm').on('submit', function(e) {
 
-                const selectedExecutors = $('input[name="executors[]"]:checked').map(function() {
+                const selectedfamily_friends = $('input[name="family_friends[]"]:checked').map(function() {
                     return $(this).val();
                 }).get();
 
-                console.log("Selected Executors:", selectedExecutors);
+                console.log("Selected family_friends:", selectedfamily_friends);
 
-                if (selectedExecutors.length === 0) {
+                if (selectedfamily_friends.length === 0) {
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
@@ -694,12 +694,12 @@
             summaryList.empty(); // Clear existing list
 
             // Get checked inheritors from the form
-            $('input[name="executors[]"]:checked').each(function() {
+            $('input[name="family_friends[]"]:checked').each(function() {
                 const personName = $(this).closest('.person-item').find('.person-name').text();
                 summaryList.append(`<li>${personName}</li>`);
             });
 
-            if ($('input[name="executors[]"]:checked').length > 0) {
+            if ($('input[name="family_friends[]"]:checked').length > 0) {
                 summaryList.append(`<li>The RNLI</li>`);
                 summaryList.append(`<li>Macmillan Cancer Support</li>`);
                 summaryList.append(`<li>Esdhi International Foundation UK</li>`);
@@ -716,7 +716,7 @@
         updateInheritanceSummary();
 
 
-        $('input[name="executors[]"]').on('change', function() {
+        $('input[name="family_friends[]"]').on('change', function() {
             updateInheritanceSummary();
         });
 

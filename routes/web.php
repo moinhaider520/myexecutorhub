@@ -893,6 +893,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator/choose_inherited_persons',[PartnerWillGeneratorController::class,'choose_inherited_persons'])->name('will_generator.choose_inherited_persons');
     Route::get('will_generator/choose_inherited_charity',[PartnerWillGeneratorController::class,'choose_inherited_charity'])->name('will_generator.choose_inherited_charity');
     Route::post('will_generator/process_inherited_charity',[PartnerWillGeneratorController::class,'process_inherited_charity'])->name('will_generator.process_inherited_charity');
+    Route::post('will_generator/charity/store',[PartnerWillGeneratorController::class,'store_charity'])->name('will_generator.store_charity');
     Route::get('will_generator/share_percentage',[PartnerWillGeneratorController::class,'share_percentage'])->name('will_generator.share_percentage');
 
 

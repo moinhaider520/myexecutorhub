@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Charity;
 use App\Models\User;
 use App\Models\Will_User_Info;
 use App\Models\WillInheritedPeople;
@@ -370,9 +371,27 @@ class WillGeneratorController extends Controller
     {
         try {
             DB::beginTransaction();
-            $will_user_id = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
-            $will_user_id->executors()->sync($request->executors);
+            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            $willUserInfo->beneficiaries()
+                         ->where('beneficiable_type', WillInheritedPeople::class)
+                         ->delete();
+
+            $selectedFamilyFriendsIds = $request->input('family_friends', []);
+
+            foreach ($selectedFamilyFriendsIds as $familyFriendId) {
+                $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);
+
+                $willUserInfo->beneficiaries()->create([
+                    'beneficiable_id' => $familyFriend->id,
+                    'beneficiable_type' => get_class($familyFriend), // App\Models\FamilyFriend
+                    'share_percentage' => 0.00, // Default, to be set in a later step
+                ]);
+            }
+
             DB::commit();
+
+            // Redirect to the charity selection page
             if (url()->previous() && url()->previous() == route('partner.will_generator.choose_inherited_persons')) {
                 return redirect()->route('partner.will_generator.choose_inherited_charity');
             } else {
@@ -383,6 +402,7 @@ class WillGeneratorController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
+
     public function store_farewill_trustees(Request $request)
     {
         try {
@@ -416,18 +436,56 @@ class WillGeneratorController extends Controller
     public function choose_inherited_charity()
     {
         $executors = User::role('executor')->get();
-        return view('partner.will_generator.estate.choose_inherited_charity', compact('executors'));
+        $charities=Charity::get();
+        return view('partner.will_generator.estate.choose_inherited_charity', compact('executors','charities'));
     }
 
     public function process_inherited_charity(Request $request)
     {
+        dd($request->all());
+         $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+        DB::beginTransaction();
         try {
-            $will_user_id = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
-            $will_user_id->executors()->sync($request->executors);
-            return redirect()->route('partner.will_generator.share_percentage');
+            // Remove existing Charity beneficiaries for this will
+            $willUserInfo->beneficiaries()
+                         ->where('beneficiable_type', Charity::class)
+                         ->delete();
+
+            if ($request->input('leave_to_charity') === 'yes') {
+                // Process pre-defined/logo charities (ensure their values are Charity IDs)
+                $selectedLogoCharityIds = $request->input('charities', []);
+                foreach ($selectedLogoCharityIds as $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity), // App\Models\Charity
+                        'share_percentage' => 0.00, // Default
+                    ]);
+                }
+
+                // Process manually added charities (their values are already Charity IDs)
+                $selectedManualCharityIds = $request->input('charities_manual', []);
+                foreach ($selectedManualCharityIds as $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity), // App\Models\Charity
+                        'share_percentage' => 0.00, // Default
+                    ]);
+                }
+            }
+
+
+            DB::commit();
+
+            // Redirect to the next step (e.g., allocating percentages)
+            return redirect()->route('partner.will_generator.allocate_percentages') // Create this route next
+                             ->with('success', 'Charity beneficiaries saved successfully!');
+
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
         }
     }
     public function share_percentage()
@@ -689,9 +747,30 @@ class WillGeneratorController extends Controller
             ]);
             DB::commit();
             $partners=WillInheritedPeople::where('will_user_id',$will_user_id)->get();
-           
+
             $html=view('partner.will_generator.ajax.partner_list',compact('partners'))->render();
             return response()->json(['status'=>true,'messsage'=>'Partner have been updated successfully','data'=>$html]);
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
+
+
+    public function store_charity(Request $request){
+        try{
+
+            DB::beginTransaction();
+            $charity=Charity::create([
+                'name'=>$request->name,
+                'registration_number'=>$request->registration_number,
+                'logo_path'=>$request->logo_path,
+            ]);
+            DB::commit();
+            $charities=Charity::get();
+            $html=view('partner.will_generator.ajax.charity',compact('charities'))->render();
+            return response()->json(['status'=>true,'message'=>'Charity store in database successfully','data'=>$html]);
         }
         catch(\Exception $e){
             DB::rollBack();

@@ -10,4 +10,9 @@ class WillInheritedPeople extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public function beneficiaries()
+    {
+        return $this->morphMany(Beneficiary::class, 'beneficiable');
+    }
+
 }
