@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Beneficiary;
 use App\Models\Charity;
 use App\Models\User;
 use App\Models\Will_User_Info;
@@ -348,12 +349,11 @@ class WillGeneratorController extends Controller
             ]);
         } elseif ($request->executor_type == "farewill_trustees") {
             return redirect()->route('partner.will_generator.farewill_trustees');
-        }
-        else{
+        } else {
             return view('partner.will_generator.family_friend', [
                 'showProfessionalExecutors' => true,
                 'selectedExecutorType' => $executorType,
-                'executors'=>$executors, // Pass for potential pre-selection or logic
+                'executors' => $executors, // Pass for potential pre-selection or logic
             ]);
         }
     }
@@ -374,8 +374,8 @@ class WillGeneratorController extends Controller
             $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
 
             $willUserInfo->beneficiaries()
-                         ->where('beneficiable_type', WillInheritedPeople::class)
-                         ->delete();
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->delete();
 
             $selectedFamilyFriendsIds = $request->input('family_friends', []);
 
@@ -436,21 +436,21 @@ class WillGeneratorController extends Controller
     public function choose_inherited_charity()
     {
         $executors = User::role('executor')->get();
-        $charities=Charity::get();
-        return view('partner.will_generator.estate.choose_inherited_charity', compact('executors','charities'));
+        $charities = Charity::get();
+        return view('partner.will_generator.estate.choose_inherited_charity', compact('executors', 'charities'));
     }
 
     public function process_inherited_charity(Request $request)
     {
-        dd($request->all());
-         $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
 
-        DB::beginTransaction();
         try {
+            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            DB::beginTransaction();
             // Remove existing Charity beneficiaries for this will
             $willUserInfo->beneficiaries()
-                         ->where('beneficiable_type', Charity::class)
-                         ->delete();
+                ->where('beneficiable_type', Charity::class)
+                ->delete();
 
             if ($request->input('leave_to_charity') === 'yes') {
                 // Process pre-defined/logo charities (ensure their values are Charity IDs)
@@ -476,22 +476,23 @@ class WillGeneratorController extends Controller
                 }
             }
 
-
             DB::commit();
 
-            // Redirect to the next step (e.g., allocating percentages)
-            return redirect()->route('partner.will_generator.allocate_percentages') // Create this route next
-                             ->with('success', 'Charity beneficiaries saved successfully!');
 
+            // Redirect to the next step (e.g., allocating percentages)
+            return redirect()->route('partner.will_generator.share_percentage') // Create this route next
+                ->with('success', 'Charity beneficiaries saved successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
     public function share_percentage()
     {
         $executors = User::role('executor')->get();
-        return view('partner.will_generator.estate.share_percentage', compact('executors'));
+        $beneficiaries = WillUserInfo::with('beneficiaries')->where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+        return view('partner.will_generator.estate.share_percentage', compact('executors', 'beneficiaries'));
     }
     public function gift()
     {
@@ -707,8 +708,9 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function store_user_partner(Request $request){
-        try{
+    public function store_user_partner(Request $request)
+    {
+        try {
 
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             DB::beginTransaction();
@@ -721,60 +723,84 @@ class WillGeneratorController extends Controller
                 'type' => $request->type,
             ]);
             DB::commit();
-            $partners=WillInheritedPeople::where('will_user_id',$will_user_id)->get();
-            $html=view('partner.will_generator.ajax.partner_list',compact('partners'))->render();
-            return response()->json(['status'=>true,'messsage'=>'Partner have been saved successfully','data'=>$html]);
-        }
-        catch(\Exception $e){
+            $partners = WillInheritedPeople::where('will_user_id', $will_user_id)->get();
+            $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
+            return response()->json(['status' => true, 'messsage' => 'Partner have been saved successfully', 'data' => $html]);
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
-
     }
 
 
-    public function edit_user_partner(Request $request){
-        try{
+    public function edit_user_partner(Request $request)
+    {
+        try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             DB::beginTransaction();
-            WillInheritedPeople::where('id',$request->id)
-            ->update([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'phone' => $request->phone_number,
-                'email' => $request->email,
-                'type' => $request->relationship,
-            ]);
+            WillInheritedPeople::where('id', $request->id)
+                ->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'phone' => $request->phone_number,
+                    'email' => $request->email,
+                    'type' => $request->relationship,
+                ]);
             DB::commit();
-            $partners=WillInheritedPeople::where('will_user_id',$will_user_id)->get();
+            $partners = WillInheritedPeople::where('will_user_id', $will_user_id)->get();
 
-            $html=view('partner.will_generator.ajax.partner_list',compact('partners'))->render();
-            return response()->json(['status'=>true,'messsage'=>'Partner have been updated successfully','data'=>$html]);
-        }
-        catch(\Exception $e){
+            $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
+            return response()->json(['status' => true, 'messsage' => 'Partner have been updated successfully', 'data' => $html]);
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 
 
-    public function store_charity(Request $request){
-        try{
+    public function store_charity(Request $request)
+    {
+        try {
 
             DB::beginTransaction();
-            $charity=Charity::create([
-                'name'=>$request->name,
-                'registration_number'=>$request->registration_number,
-                'logo_path'=>$request->logo_path,
+            $charity = Charity::create([
+                'name' => $request->name,
+                'registration_number' => $request->registration_number,
+                'logo_path' => $request->logo_path,
             ]);
             DB::commit();
-            $charities=Charity::get();
-            $html=view('partner.will_generator.ajax.charity',compact('charities'))->render();
-            return response()->json(['status'=>true,'message'=>'Charity store in database successfully','data'=>$html]);
-        }
-        catch(\Exception $e){
+            $charities = Charity::get();
+            $html = view('partner.will_generator.ajax.charity', compact('charities'))->render();
+            return response()->json(['status' => true, 'message' => 'Charity store in database successfully', 'data' => $html]);
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function store_share_percentage(Request $request)
+    {
+        try {
+            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            $inputPercentages = $request->input('percentages');
+            DB::beginTransaction();
+            foreach ($inputPercentages as $beneficiaryData) {
+                $beneficiaryId = $beneficiaryData['id'];
+                $percentage = $beneficiaryData['percentage'];
+                $beneficiary = Beneficiary::where('id', $beneficiaryId)
+                    ->where('will_user_id', $willUserInfo->id)
+                    ->first();
+                $beneficiary->share_percentage = $percentage;
+                $beneficiary->save();
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Beneficiary percentages updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to update beneficiary percentages. Please try again.');
         }
     }
 }

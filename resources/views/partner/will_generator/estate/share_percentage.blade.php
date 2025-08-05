@@ -84,16 +84,22 @@
 
         /* --- New CSS for validation feedback --- */
         .percentage-input.is-invalid {
-            border-color: #ef4444; /* Tailwind red-500 */
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5); /* Red shadow */
+            border-color: #ef4444;
+            /* Tailwind red-500 */
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.5);
+            /* Red shadow */
         }
 
         #totalPercentageError {
-            color: #ef4444; /* Tailwind red-500 */
-            font-size: 0.875rem; /* text-sm */
+            color: #ef4444;
+            /* Tailwind red-500 */
+            font-size: 0.875rem;
+            /* text-sm */
             margin-top: 0.5rem;
-            display: none; /* Hidden by default */
+            display: none;
+            /* Hidden by default */
         }
+
         /* --- End New CSS --- */
 
 
@@ -207,7 +213,8 @@
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
                         {{-- Added ID for the form --}}
-                        <form id="shareEstateForm" action="#" method="POST">
+                        <form id="shareEstateForm" action="{{ route('partner.will_generator.store_share_percentage') }}"
+                            method="POST">
                             @csrf
 
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
@@ -219,31 +226,38 @@
 
                             {{-- Percentage Input Fields --}}
                             <div id="percentageInputsContainer">
-                                @forelse ($executors as $executor)
+                                @forelse ($beneficiaries->beneficiaries as $beneficary)
                                     <div class="percentage-item">
                                         <div class="percentage-input-wrapper">
                                             {{-- Added class 'beneficiary-percentage' --}}
+                                            <input type="hidden" name="percentages[{{ $beneficary->id }}][id]"
+                                                value="{{ $beneficary->id }}"> {{-- Add a hidden input for the ID --}}
                                             <input type="number" step="0.01" min="0" max="100"
-                                                class="percentage-input beneficiary-percentage" name="percentages[{{ Str::slug($executor->name . $executor->lastname) }}]"
-                                                value="{{ old('percentages[' . Str::slug($executor->name . $executor->lastname) . ']', 0) }}">
+                                                class="percentage-input beneficiary-percentage"
+                                                name="percentages[{{ $beneficary->id }}][percentage]" {{-- Use beneficiary ID as the key for the percentage --}}
+                                                value="{{ old('percentages.' . $beneficary->id . '.percentage', $beneficary->share_percentage) }}">
                                             <span class="percentage-symbol">%</span>
                                         </div>
-                                        <span class="beneficiary-name">{{ $executor->name }} {{ $executor->lastname }}</span>
+                                        <span class="beneficiary-name">{{ $beneficary->name }}
+                                            {{ $beneficary->lastname }}</span>
                                     </div>
                                 @empty
                                     <p class="text-gray-600 italic"> Click "Add someone new" to get started.</p>
                                 @endforelse
 
+
                                 {{-- Total Row --}}
                                 <div class="percentage-item total-row">
                                     <div class="percentage-input-wrapper">
-                                        <input type="text" class="percentage-input" id="totalPercentage" value="0.00" readonly>
+                                        <input type="text" class="percentage-input" id="totalPercentage" value="0.00"
+                                            readonly>
                                         <span class="percentage-symbol">%</span>
                                     </div>
                                     <span class="beneficiary-name">Total</span>
                                 </div>
                                 {{-- Error message display --}}
-                                <p id="totalPercentageError" class="text-sm mt-2 hidden">The total percentage must be 100%.</p>
+                                <p id="totalPercentageError" class="text-sm mt-2 hidden">The total percentage must be 100%.
+                                </p>
                             </div>
 
                             {{-- Accordion for "Why do I have to share..." --}}
@@ -291,8 +305,8 @@
                         {{-- These items will be dynamically updated by JavaScript --}}
                         {{-- Initial items for demo, based on your screenshot's summary --}}
                         {{-- Assuming 'beneficiaries' data is passed from controller to populate this --}}
-                        @forelse ($executors as $executor)
-                            <li>{{ $executor->name }}</li>
+                        @forelse ($beneficiaries->beneficiaries as $beneficary)
+                            <li>{{ $beneficary->name }} {{ $beneficary->lastname }}</li>
                         @empty
                             <li>No beneficiaries added yet.</li>
                         @endforelse
@@ -357,8 +371,7 @@
             // Attach event listener to the form submission
             shareEstateForm.on('submit', function(event) {
                 if (!validateTotalPercentage()) {
-                    event.preventDefault(); // Prevent form submission if total is not 100%
-                    // The error message is already shown by validateTotalPercentage()
+
                 }
             });
 
@@ -369,7 +382,7 @@
             // In a real application, you would fetch these beneficiaries from your backend
             // or pass them from the previous steps.
             function updateInheritanceSummary() {
-                
+
             }
 
             updateInheritanceSummary(); // Call on page load
