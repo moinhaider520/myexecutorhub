@@ -302,9 +302,7 @@
                 <div class="inheritance-summary-card">
                     <h4>Inheriting your estate:</h4>
                     <ul id="inheritanceSummaryList">
-                        {{-- These items will be dynamically updated by JavaScript --}}
-                        {{-- Initial items for demo, based on your screenshot's summary --}}
-                        {{-- Assuming 'beneficiaries' data is passed from controller to populate this --}}
+
                         @forelse ($beneficiaries->beneficiaries as $beneficary)
                             <li>{{ $beneficary->name }} {{ $beneficary->lastname }}</li>
                         @empty
