@@ -444,8 +444,14 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('will_generator/gift/store_add_gift',[PartnerWillGeneratorController::class,'store_add_gift'])->name('will_generator.gift.store_add_gift');
     Route::post('will_generator/gift/update_gift/{id}',[PartnerWillGeneratorController::class,'update_gift'])->name('will_generator.gift.update_gift');
     Route::delete('will_generator/gift/delete/{id}',[PartnerWillGeneratorController::class,'delete_gift'])->name('will_generator.gift.delete_gift');
-});
 
+
+    // will generator step 3
+    Route::post('will_generator/executor/store_family_friend', [PartnerWillGeneratorController::class, 'store_family_friend'])->name('will_generator.store_family_friend');
+    Route::post('will_generator/process_inherited_charity',[PartnerWillGeneratorController::class,'process_inherited_charity'])->name('will_generator.process_inherited_charity');
+    Route::post('will_generator/charity/store',[PartnerWillGeneratorController::class,'store_charity'])->name('will_generator.store_charity');
+    Route::post('will_generator/store_share_percentage',[PartnerWillGeneratorController::class,'store_share_percentage'])->name('will_generator.store_share_percentage');
+});
 // Customer-specific routes
 Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(function () {
     Route::get('/profile', [CustomerProfileController::class, 'user_details'])->name('profile');

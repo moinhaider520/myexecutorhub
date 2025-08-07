@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Beneficiary;
+use App\Models\Charity;
 use App\Models\WillInheritedPeople;
 use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
@@ -452,6 +454,146 @@ class WillGeneratorController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function store_family_friend(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->delete();
+
+            $selectedFamilyFriendsIds = $request->input('family_friends', []);
+
+            foreach ($selectedFamilyFriendsIds as $familyFriendId) {
+                $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);
+
+                $willUserInfo->beneficiaries()->create([
+                    'beneficiable_id' => $familyFriend->id,
+                    'beneficiable_type' => get_class($familyFriend), // App\Models\FamilyFriend
+                    'share_percentage' => 0.00, // Default, to be set in a later step
+                ]);
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Family and friends beneficiaries processed successfully.',
+                'family_friends' => $willUserInfo->beneficiaries()
+                    ->where('beneficiable_type', WillInheritedPeople::class)
+                    ->get()
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function process_inherited_charity(Request $request)
+    {
+
+        try {
+            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            DB::beginTransaction();
+            // Remove existing Charity beneficiaries for this will
+            $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', Charity::class)
+                ->delete();
+
+            if ($request->input('leave_to_charity') === 'yes') {
+                // Process pre-defined/logo charities (ensure their values are Charity IDs)
+                $selectedLogoCharityIds = $request->input('charities', []);
+                foreach ($selectedLogoCharityIds as $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity), // App\Models\Charity
+                        'share_percentage' => 0.00, // Default
+                    ]);
+                }
+
+                // Process manually added charities (their values are already Charity IDs)
+                $selectedManualCharityIds = $request->input('charities_manual', []);
+                foreach ($selectedManualCharityIds as $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity), // App\Models\Charity
+                        'share_percentage' => 0.00, // Default
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            $beneficiaries=$willUserInfo->beneficiaries()
+                ->where('beneficiable_type', Charity::class)->get();
+            // Redirect to the next step (e.g., allocating percentages)
+            return response()->json([
+                'status' => true,
+                'message' => 'Charity beneficiaries processed successfully.',
+                'charities' => $beneficiaries
+                
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function store_charity(Request $request)
+    {
+        try {
+
+            DB::beginTransaction();
+            $charity = Charity::create([
+                'name' => $request->name,
+                'registration_number' => $request->registration_number,
+                'logo_path' => $request->logo_path,
+            ]);
+            DB::commit();
+            
+            return response()->json(['status' => true, 'message' => 'Charity store in database successfully', 'data' => $charity]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function store_share_percentage(Request $request)
+    {
+        try {
+            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            $inputPercentages = $request->input('percentages');
+            DB::beginTransaction();
+            foreach ($inputPercentages as $beneficiaryData) {
+                $beneficiaryId = $beneficiaryData['id'];
+                $percentage = $beneficiaryData['percentage'];
+                $beneficiary = Beneficiary::where('id', $beneficiaryId)
+                    ->where('will_user_id', $willUserInfo->id)
+                    ->first();
+                $beneficiary->share_percentage = $percentage;
+                $beneficiary->save();
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Beneficiary percentages updated successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Failed to update beneficiary percentages. Please try again.');
         }
     }
 
