@@ -8,6 +8,7 @@ use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
 use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
+use App\Models\WillUserInheritedGift;
 use App\Models\WillUserPet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -365,6 +366,89 @@ class WillGeneratorController extends Controller
             }
 
             return response()->json(['status' => true, 'message' => 'Partner deleted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function store_add_gift(Request $request)
+    {
+        try {
+            $createdBy = Auth::id();
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            if (is_null($willUserId)) {
+                return back()->with('error', 'Could not determine the associated will. Please try again.');
+            }
+
+            $familyInheritedIdsString = implode(',', $request['recipients']);
+
+
+            DB::beginTransaction();
+            $gift = WillUserInheritedGift::create([
+                'gift_type' => $request['type'],
+                'gift_name' => $request['item_description'],
+                'family_inherited_id' => $familyInheritedIdsString, // Store the comma-separated string
+                'leave_message' => $request['message'],
+                'will_user_id' => $willUserId->id,
+                'created_by' => $createdBy,
+            ]);
+            DB::commit();
+
+            return response()->json(['status' => true, 'message' => 'Gift added successfully!', 'data' => $gift]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function update_gift(Request $request, $id)
+    {
+        try {
+            $gift = WillUserInheritedGift::findOrFail($id);
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
+            if (is_null($willUserId) || $gift->will_user_id !== $willUserId->id) {
+                return back()->with('error', 'Unauthorized access or gift not found.');
+            }
+
+            $familyInheritedIdsString = implode(',', $request['recipients']);
+
+            DB::beginTransaction();
+            $gift->update([
+                'gift_type' => $request['type'],
+                'gift_name' => $request['item_description'],
+                'family_inherited_id' => $familyInheritedIdsString,
+                'leave_message' => $request['message'],
+            ]);
+            DB::commit();
+            $updated_gift = WillUserInheritedGift::findOrFail($id);
+            return response()->json(['status' => true, 'message' => 'Gift updated successfully!', 'data' => $updated_gift]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function delete_gift($id)
+    {
+        try {
+            $gift = WillUserInheritedGift::findOrFail($id);
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            if (is_null($willUserId) || $gift->will_user_id !== $willUserId->id) {
+                return back()->with('error', 'Unauthorized access or gift not found.');
+            }
+            DB::beginTransaction();
+            $gift->delete();
+            DB::commit();
+
+            return response()->json(['status' => true, 'message' => 'Gift deleted successfully']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
