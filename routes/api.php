@@ -422,6 +422,12 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/will_generator/store_pet',[PartnerWillGeneratorController::class,'store_pet'])->name('will_generator.store_pet');
     Route::post('/will_generator/edit_pet',[PartnerWillGeneratorController::class,'edit_pet'])->name('will_generator.edit_pet');
     Route::post('/will_generator/delete_pet',[PartnerWillGeneratorController::class,'delete_pet'])->name('will_generator.delete_pet');
+    
+
+    //account properties
+    Route::post('will_generator/account_properties/store',[PartnerWillGeneratorController::class,'store_account_properties'])->name('will_generator.account_properties.store');
+    Route::put('will_generator/account_properties/update', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
+    Route::delete('will_generator/account_properties/delete/{id}', [PartnerWillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
 });
 
 // Customer-specific routes

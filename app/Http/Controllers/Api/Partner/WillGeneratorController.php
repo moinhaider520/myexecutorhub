@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Models\WillInheritedPeople;
+use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
 use App\Models\WillUserInfo;
 use App\Models\WillUserPet;
@@ -44,10 +46,11 @@ class WillGeneratorController extends Controller
 
         try {
             DB::beginTransaction();
-            $child= WillUserChildren::create([
-                'child_name' => $request->name,
+            $child= WillInheritedPeople::create([
+                'first_name' => $request->name,
                 'date_of_birth' => $request->date_of_birth,
                 'will_user_id' => session('will_user_id'),
+                'type' => 'child',
             ]);
             DB::commit();
             return response()->json(['status' => true, 'message' => 'Child information saved successfully', 'Child' => $child]);
@@ -62,13 +65,13 @@ class WillGeneratorController extends Controller
     {
         try {
             DB::beginTransaction();
-            WillUserChildren::where('id', '=', $request->child_id)
+            WillInheritedPeople::where('id', '=', $request->child_id)
                 ->update([
-                    'child_name' => $request->child_name,
+                    'first_name' => $request->child_name,
                     'date_of_birth' => $request->edit_child_date_of_birth,
                 ]);
             DB::commit();
-            $children = WillUserChildren::where('id','=',$request->child_id)->first();
+            $children = WillInheritedPeople::where('id','=',$request->child_id)->first();
             return response()->json(['status' => true, 'message' => 'Child information updated successfully', 'data' => $children]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -80,13 +83,13 @@ class WillGeneratorController extends Controller
     {
         try {
 
-            $user_child = WillUserChildren::where('id', '=', $request->child_id)->first();
+            $user_child = WillInheritedPeople::where('id', '=', $request->child_id)->first();
             if ($user_child) {
                 DB::beginTransaction();
                 $user_child->delete();
                 DB::commit();
             } else {
-                return response()->json(['status' => false, 'message' => 'No Pet found']);
+                return response()->json(['status' => false, 'message' => 'No child found']);
             }
             return response()->json(['status' => true, 'message' => 'Child information deleted successfully', 'data' => $user_child]);
         } catch (\Exception $e) {
@@ -100,12 +103,13 @@ class WillGeneratorController extends Controller
 
         try {
             DB::beginTransaction();
-            $pet=WillUserPet::create([
-                'pet_name' => $request->name,
+            $pet=WillInheritedPeople::create([
+                'first_name' => $request->name,
                 'will_user_id' => session('will_user_id'),
+                'type' => 'pet',
             ]);
             DB::commit();
-            $pet = WillUserPet::where('id', '=', $pet->id)->first();
+            
             return response()->json(['status' => true, 'message' => 'Pet information submitted successfully','Pet Detail'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -118,12 +122,12 @@ class WillGeneratorController extends Controller
     {
         try {
             DB::beginTransaction();
-            WillUserPet::where('id', '=', $request->pet_id)
+            WillInheritedPeople::where('id', '=', $request->pet_id)
                 ->update([
-                    'pet_name' => $request->name,
+                    'first_name' => $request->name,
                 ]);
             DB::commit();
-            $pet = WillUserPet::where('id', '=', $request->pet_id)->first();
+            $pet = WillInheritedPeople::where('id', '=', $request->pet_id)->first();
             return response()->json(['status' => true, 'message' => 'Pet information update successfully','Pet Detail'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -135,7 +139,7 @@ class WillGeneratorController extends Controller
     {
         try {
 
-            $user_pet = WillUserPet::where('id', '=', $request->pet_id)->first();
+            $user_pet = WillInheritedPeople::where('id', '=', $request->pet_id)->first();
             if ($user_pet) {
                 DB::beginTransaction();
                 $user_pet->delete();
@@ -145,6 +149,72 @@ class WillGeneratorController extends Controller
             }
             $pet = WillUserPet::where('id', '=', $request->pet_id)->first();
             return response()->json(['status' => true, 'message' => 'Pet information delete successfully','Pet Detail'=>$pet]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+
+
+    public function store_account_properties(Request $request)
+    {
+        try {
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            $user_account_property=WillUserAccountsProperty::create([
+                'asset_type' => $request->asset_type,
+                'asset_name' => $request->asset_value,
+                'mortage' => $request->has_mortgage,
+                'owner' => $request->ownership_type,
+                'will_user_id' => $will_user_id,
+                'created_by' => Auth::user()->id,
+            ]);
+            DB::commit();
+            return response()->json(['status' => true, 'message' => 'Account information submitted successfully', 'data' => $user_account_property]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+    public function update_account_properties(Request $request)
+    {
+        try {
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            WillUserAccountsProperty::where('id', '=', $request->id)
+                ->update([
+                    'asset_type' => $request->asset_type,
+                    'asset_name' => $request->asset_value,
+                    'mortage' => $request->has_mortgage,
+                    'owner' => $request->ownership_type,
+                ]);
+            DB::commit();
+            $updated_account_property = WillUserAccountsProperty::where('id', '=', $request->id)->first();
+            return response()->json(['status' => true, 'message' => 'Account information update successfully', 'data' => $updated_account_property]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function delete_account_properties($id)
+    {
+        try {
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            $account_property = WillUserAccountsProperty::where('id', '=', $id)->first();
+            if ($account_property) {
+                DB::beginTransaction();
+                $account_property->delete();
+                DB::commit();
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Pet found']);
+            }
+            return response()->json(['status' => true, 'message' => 'Account Information deleted successfully']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
