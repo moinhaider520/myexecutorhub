@@ -302,27 +302,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function partner_delete(Request $request)
-    {
-        try {
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
-            $will_inherited_people = WillInheritedPeople::where('id', '=', $request->id)->first();
-            if ($will_inherited_people) {
-                DB::beginTransaction();
-                $will_inherited_people->delete();
-                DB::commit();
-            } else {
-                return response()->json(['status' => false, 'message' => 'No Pet found']);
-            }
-
-            $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)->get();
-            $html = view('partner.will_generator.ajax.partner_list', ['partners' => $partners])->render();
-            return response()->json(['status' => true, 'message' => 'Partner deleted successfully', 'data' => $html]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
-        }
-    }
+   
 
 
     public function executor()
@@ -757,7 +737,29 @@ class WillGeneratorController extends Controller
         }
     }
 
+ public function partner_delete(Request $request)
+    {
+        try {
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            $will_inherited_people = WillInheritedPeople::where('id', '=', $request->id)->first();
+            if ($will_inherited_people) {
+                DB::beginTransaction();
+                $will_inherited_people->delete();
+                DB::commit();
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Pet found']);
+            }
 
+            $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)->get();
+            $html = view('partner.will_generator.ajax.partner_list', ['partners' => $partners])->render();
+            return response()->json(['status' => true, 'message' => 'Partner deleted successfully', 'data' => $html]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    
     public function store_charity(Request $request)
     {
         try {

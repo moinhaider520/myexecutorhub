@@ -423,12 +423,16 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/will_generator/edit_pet',[PartnerWillGeneratorController::class,'edit_pet'])->name('will_generator.edit_pet');
     Route::post('/will_generator/delete_pet',[PartnerWillGeneratorController::class,'delete_pet'])->name('will_generator.delete_pet');
     
+    //will generator partner
+    Route::post('will_generator/user_partner/store', [PartnerWillGeneratorController::class, 'store_user_partner'])->name('will_generator.user_partner.store');
+    Route::post('will_generator/user_partner/edit', [PartnerWillGeneratorController::class, 'edit_user_partner'])->name('will_generator.user_partner.edit');
+    Route::delete('will_generator/user_partner/delete', [PartnerWillGeneratorController::class, 'delete_user_partner'])->name('will_generator.user_partner.delete');
+
 
     //account properties
     Route::post('will_generator/account_properties/store',[PartnerWillGeneratorController::class,'store_account_properties'])->name('will_generator.account_properties.store');
     Route::put('will_generator/account_properties/update', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
     Route::delete('will_generator/account_properties/delete/{id}', [PartnerWillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
-
 
 
     // will generator funeral plan

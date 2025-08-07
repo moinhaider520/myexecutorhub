@@ -299,4 +299,76 @@ class WillGeneratorController extends Controller
 
     }
 
+
+
+
+
+     public function store_user_partner(Request $request)
+    {
+        try {
+
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            $partner=WillInheritedPeople::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'will_user_id' => $will_user_id,
+                'type' => $request->type,
+            ]);
+            DB::commit();
+            return response()->json(['status' => true, 'messsage' => 'Partner have been saved successfully', 'data' => $partner]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function edit_user_partner(Request $request)
+    {
+        try {
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            DB::beginTransaction();
+            WillInheritedPeople::where('id', $request->id)
+                ->update([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'phone' => $request->phone_number,
+                    'email' => $request->email,
+                    'type' => $request->relationship,
+                ]);
+            DB::commit();
+            $partner = WillInheritedPeople::where('id', $request->id)->first();
+
+           
+            return response()->json(['status' => true, 'messsage' => 'Partner have been updated successfully', 'data' => $partner]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+     public function delete_user_partner(Request $request)
+    {
+        try {
+            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+            $will_inherited_people = WillInheritedPeople::where('id', '=', $request->id)->first();
+            if ($will_inherited_people) {
+                DB::beginTransaction();
+                $will_inherited_people->delete();
+                DB::commit();
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Pet found']);
+            }
+
+            return response()->json(['status' => true, 'message' => 'Partner deleted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
 }
