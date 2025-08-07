@@ -428,6 +428,11 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('will_generator/account_properties/store',[PartnerWillGeneratorController::class,'store_account_properties'])->name('will_generator.account_properties.store');
     Route::put('will_generator/account_properties/update', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
     Route::delete('will_generator/account_properties/delete/{id}', [PartnerWillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
+
+
+
+    // will generator funeral plan
+    Route::post('will_generator/store_funeral_plan', [PartnerWillGeneratorController::class, 'store_funeral_plan'])->name('will_generator.store_funeral_plan');
 });
 
 // Customer-specific routes

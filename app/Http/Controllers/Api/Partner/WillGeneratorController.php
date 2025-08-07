@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\WillInheritedPeople;
 use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
+use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
 use App\Models\WillUserPet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Validation\Rule;
 class WillGeneratorController extends Controller
 {
     public function store_about_you(Request $request)
@@ -221,5 +222,81 @@ class WillGeneratorController extends Controller
         }
     }
 
+
+
+    public function store_funeral_plan(Request $request){
+        {
+        try {
+            $createdBy = Auth::id();
+            $willUserInfo = WillUserInfo::where('user_id', $createdBy)->latest()->first();
+
+            if (is_null($willUserInfo)) {
+                return back()->with('error', 'Could not determine the associated will. Please try again.');
+            }
+            $willUserId = $willUserInfo->id;
+            $rules = [
+                'pre_paid_plan' => ['required', Rule::in(['yes', 'no'])],
+                'funeral_provider_name' => ['nullable', 'string', 'max:255'],
+                'funeral_identification_no' => ['nullable', 'string', 'max:255'],
+                'funeral_guide_wish' => ['nullable', Rule::in(['yes', 'no'])],
+                'include_funeral_wishes' => ['required', Rule::in(['yes', 'no'])],
+                'funeral_type_choice' => ['nullable', Rule::in(['cremation', 'burial', 'let_decide'])],
+                'direct_cremation_wish' => ['nullable', Rule::in(['yes', 'no'])],
+                'additional_wishes' => 'nullable|string|max:1000',
+            ];
+
+            if ($request->input('pre_paid_plan') === 'yes') {
+                $rules['funeral_provider_name'] = ['required', 'string', 'max:255'];
+            } else {
+                $rules['funeral_guide_wish'] = ['required', Rule::in(['yes', 'no'])];
+            }
+
+
+            if ($request->input('include_funeral_wishes') === 'yes') {
+                $rules['funeral_type_choice'] = ['required', Rule::in(['cremation', 'burial', 'let_decide'])];
+
+                if ($request->input('funeral_type_choice') === 'cremation') {
+                    $rules['direct_cremation_wish'] = ['required', Rule::in(['yes', 'no'])];
+                }
+            }
+
+            $validatedData = $request->validate($rules);
+
+            DB::beginTransaction();
+
+            $funeralPlan = WillUserFuneral::firstOrNew(['will_user_id' => $willUserId]);
+
+            $funeralPlan->funeral_paid = $validatedData['pre_paid_plan']; // "Do you have a pre-paid funeral plan?"
+
+            $funeralPlan->funeral_provider_name = $validatedData['funeral_provider_name'] ?? null;
+            $funeralPlan->funeral_identification_no = $validatedData['funeral_identification_no'] ?? null;
+
+            $funeralPlan->funeral_wish = ($validatedData['pre_paid_plan'] === 'no') ?
+                ($validatedData['funeral_guide_wish'] ?? null) : null;
+
+            if ($validatedData['include_funeral_wishes'] === 'yes') {
+                $funeralPlan->funeral_type = $validatedData['funeral_type_choice']; // cremation, burial, let_decide
+                $funeralPlan->funeral_direct_cremation = ($validatedData['funeral_type_choice'] === 'cremation') ?
+                    ($validatedData['direct_cremation_wish'] ?? null) : null;
+            } else {
+                $funeralPlan->funeral_type = 'no_wishes_not_included'; // Or null, depending on your preference
+                $funeralPlan->funeral_direct_cremation = null;
+            }
+
+            $funeralPlan->additional = $validatedData['additional_wishes'] ?? null;
+            $funeralPlan->created_by = $createdBy;
+            $funeralPlan->save();
+            DB::commit();
+            return response()->json(['status' => true, 'message' => 'Funeral plan saved successfully.', 'data' => $funeralPlan]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            DB::rollBack();
+            return back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    }
 
 }
