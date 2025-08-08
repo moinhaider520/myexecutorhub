@@ -544,6 +544,21 @@
                     @endif
 
                     @if (in_array($package, ['Basic', 'Standard', 'Premium', 'free_trial']))
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Will Generator</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.will_generator.create') }}">View</a></li>
+                        </ul>
+                    </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
