@@ -227,7 +227,7 @@
         <div class="row widget-grid">
             <div class="col-xl-8">
                 <div class="card height-equal">
-                    <form method="POST" action="{{ route('partner.will_generator.gift.update_gift', $gift->id) }}">
+                    <form method="POST" action="{{ route('customer.will_generator.gift.update_gift', $gift->id) }}">
                         @csrf
                         <input type="hidden" name="type" value="{{ $gift->gift_type ?? $type }}">
 
@@ -329,7 +329,7 @@
                                     @forelse ($executors as $executor)
                                         <div class="executor-card">
                                             <label>
-                                               
+
                                                 <input type="checkbox" name="recipients[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
                                                     @if(isset($selectedRecipientIds) && in_array($executor->id, $selectedRecipientIds)) checked @endif>
                                                 <div class="executor-details">

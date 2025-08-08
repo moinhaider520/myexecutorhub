@@ -25,7 +25,7 @@
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="msform" class="needs-validation" novalidate
-                                    action="{{ route('partner.will_generator.store_step4') }}" method="POST">
+                                    action="{{ route('customer.will_generator.store_step4') }}" method="POST">
                                     @csrf
                                     <script src="https://cdn.tailwindcss.com"></script>
                                     <div class="stepper row g-3 needs-validation custom-input" novariate="">
@@ -70,8 +70,8 @@
 
                                             <div id="childrenContentWrapper" class="child-details-wrapper">
                                                 <div id="existingChildrenList">
-                                              
-                                                    @include('partner.will_generator.ajax.children_list', ['children' => $children])
+
+                                                    @include('customer.will_generator.ajax.children_list', ['children' => $children])
                                                 </div>
 
                                                 <div id="addChildButtonContainer">
@@ -344,7 +344,7 @@
                 };
 
                 performAjaxCall(
-                    "{{ route('partner.will_generator.user_child.store') }}", // Use the existing route name
+                    "{{ route('customer.will_generator.user_child.store') }}", // Use the existing route name
                     'POST',
                     postData,
                     function(response) {
@@ -380,7 +380,7 @@
                 };
 
                 performAjaxCall(
-                    "{{ route('partner.will_generator.user_child.edit') }}", // Use the existing route name
+                    "{{ route('customer.will_generator.user_child.edit') }}", // Use the existing route name
                     'POST',
                     postData,
                     function(response) {
@@ -437,7 +437,7 @@
                         };
 
                         performAjaxCall(
-                            "{{ route('partner.will_generator.user_child.delete') }}", // Use the existing route name
+                            "{{ route('customer.will_generator.user_child.delete') }}", // Use the existing route name
                             'POST',
                             postData,
                             function(response) {

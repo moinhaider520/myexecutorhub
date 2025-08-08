@@ -226,7 +226,7 @@
         <div class="row widget-grid">
             <div class="col-xl-8"> {{-- Main content area --}}
                 <div class="card height-equal">
-                    <form method="POST" action="{{ route('partner.will_generator.gift.store_add_gift') }}">
+                    <form method="POST" action="{{ route('customer.will_generator.gift.store_add_gift') }}">
                         @csrf {{-- Don't forget the CSRF token! --}}
 
                         {{-- Hidden field to pass the 'type' to the controller --}}

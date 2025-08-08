@@ -22,7 +22,7 @@
           <p>Is Single</p>
           <p>The Parent of Melissa</p>
           <p>No Pets</p>
-          <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+          <a href="{{ route('customer.will_generator.about_you') }}">Edit</a>
           </div>
         </div>
         <div class="card">
@@ -31,7 +31,7 @@
           </div>
           <div class="card-body">
           <p>Test Property</p>
-          <a href="{{ route('partner.will_generator.account_properties') }}">Edit</a>
+          <a href="{{ route('customer.will_generator.account_properties') }}">Edit</a>
           </div>
         </div>
         <div class="card">
@@ -43,7 +43,7 @@
           <p>The RNLI ............... 16.67%</p>
           <p>Macmillan Cancer Support ............... 16.67%</p>
           <p>The Charities Aid Foundation ............... 16.67%</p>
-          <a href="{{ route('partner.will_generator.estates') }}">Edit</a>
+          <a href="{{ route('customer.will_generator.estates') }}">Edit</a>
           </div>
         </div>
         <div class="card">
@@ -52,7 +52,7 @@
           </div>
           <div class="card-body">
           <p>Your Executor is Thimoty</p>
-          <a href="{{ route('partner.will_generator.executor') }}">Edit</a>
+          <a href="{{ route('customer.will_generator.executor') }}">Edit</a>
           </div>
         </div>
         <div class="card">
@@ -62,7 +62,7 @@
           <div class="card-body">
           <p>£50000 to Keane Woodward</p>
           <p>My Watch to Keane Woodward</p>
-          <a href="{{ route('partner.will_generator.gift') }}">Edit</a>
+          <a href="{{ route('customer.will_generator.gift') }}">Edit</a>
           </div>
         </div>
         <div class="card">
@@ -72,7 +72,7 @@
           <div class="card-body">
           <p>Give your family less to worry about. Add your wishes so they know what to do when the time comes.
           </p>
-          <a href="{{ route('partner.will_generator.funeral') }}">Edit</a>
+          <a href="{{ route('customer.will_generator.funeral') }}">Edit</a>
           </div>
         </div>
         </div>

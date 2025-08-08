@@ -312,7 +312,7 @@
                     <h4 class="form-header">About You</h4>
                 </div>
                 <div class="card-body basic-wizard important-validation">
-                    <form id="msform" class="needs-validation" novalidate action="{{ route('partner.will_generator.store_step3') }}" method="POST">
+                    <form id="msform" class="needs-validation" novalidate action="{{ route('customer.will_generator.store_step3') }}" method="POST">
                         @csrf
                         <div class="row g-4">
                             <div class="col-sm-6 form-section">
@@ -390,6 +390,7 @@
             <div class="modal-body">
                 <form id="addExecutorForm">
                     @csrf
+                    <input type="hidden" name="type" value="partner">
                     <div class="form-group mb-3">
                         <label for="name">First Name</label>
                         <input type="text" class="form-control" name="first_name" id="first_name"
@@ -415,9 +416,6 @@
                             placeholder="Email Address" required>
                         <div class="text-danger" id="error-email"></div>
                     </div>
-                    <
-
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -440,7 +438,7 @@
                 <form id="editExecutorForm">
                     @csrf
                     <input type="hidden" name="id" id="editExecutorId">
-
+                    <input type="hidden" name="type" value="partner">
                     <div class="form-group mb-3">
                         <label for="edit_name">First Name</label>
                         <input type="text" class="form-control" name="first_name" id="edit_first_name"
@@ -517,7 +515,7 @@
             clearAddErrors(); // Clear previous error messages
 
             $.ajax({
-                url: "{{ route('partner.will_generator.user_partner.store') }}",
+                url: "{{ route('customer.will_generator.user_partner.store') }}",
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -621,7 +619,7 @@
 
             };
             $.ajax({
-                url: "{{ route('partner.will_generator.user_partner.delete') }}",
+                url: "{{ route('customer.will_generator.user_partner.delete') }}",
                 method: 'Delete',
                 data: postData,
                 dataType: 'json',
@@ -666,7 +664,7 @@
         });
     });
 </script>
->
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

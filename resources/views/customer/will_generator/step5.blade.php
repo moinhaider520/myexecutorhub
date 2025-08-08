@@ -27,7 +27,7 @@
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="msform" class="needs-validation" novalidate
-                                    action="{{ route('partner.will_generator.store_step5') }}" method="POST">
+                                    action="{{ route('customer.will_generator.store_step5') }}" method="POST">
                                     @csrf
                                     <script src="https://cdn.tailwindcss.com"></script>
                                     <div class="stepper row g-3 needs-validation custom-input" novalidate="">
@@ -273,7 +273,7 @@
 
                 };
                 $.ajax({
-                    url: "{{ route('partner.will_generator.user_pet.store') }}",
+                    url: "{{ route('customer.will_generator.user_pet.store') }}",
                     method: 'POST',
                     data: postData,
                     dataType: 'json',
@@ -323,7 +323,7 @@
 
                 };
                 $.ajax({
-                    url: "{{ route('partner.will_generator.user_pet.edit') }}",
+                    url: "{{ route('customer.will_generator.user_pet.edit') }}",
                     method: 'POST',
                     data: postData,
                     dataType: 'json',
@@ -381,7 +381,7 @@
 
                 };
                 $.ajax({
-                    url: "{{ route('partner.will_generator.user_pet.delete') }}",
+                    url: "{{ route('customer.will_generator.user_pet.delete') }}",
                     method: 'POST',
                     data: postData,
                     dataType: 'json',

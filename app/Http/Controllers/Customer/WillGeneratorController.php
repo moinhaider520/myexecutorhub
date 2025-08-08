@@ -35,6 +35,7 @@ class WillGeneratorController extends Controller
     public function step3()
     {
         $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+
         $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)
             ->where('type', 'partner')
             ->get();
@@ -316,13 +317,13 @@ class WillGeneratorController extends Controller
     {
         try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
-            $account_property = WillUserAccountsProperty::where('id', '=', $id)->first();
+            $account_property = WillUserAccountsProperty::find($id);
             if ($account_property) {
                 DB::beginTransaction();
                 $account_property->delete();
                 DB::commit();
             } else {
-                return response()->json(['status' => false, 'message' => 'No Pet found']);
+                return response()->json(['status' => false, 'message' => 'No Account Info found']);
             }
 
             $assets = WillUserAccountsProperty::where('will_user_id', '=', $will_user_id)->get();

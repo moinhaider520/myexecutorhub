@@ -213,7 +213,7 @@
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
                         {{-- Added ID for the form --}}
-                        <form id="shareEstateForm" action="{{ route('partner.will_generator.store_share_percentage') }}"
+                        <form id="shareEstateForm" action="{{ route('customer.will_generator.store_share_percentage') }}"
                             method="POST">
                             @csrf
 
@@ -282,7 +282,7 @@
 
 
                             <div class="d-flex justify-content-between mt-8">
-                                <a href="{{ route('partner.will_generator.choose_inherited_charity') }}"
+                                <a href="{{ route('customer.will_generator.choose_inherited_charity') }}"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                     &larr; Back
                                 </a>

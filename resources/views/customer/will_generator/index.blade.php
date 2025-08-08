@@ -7,7 +7,7 @@
       <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
-            <a href="{{route('partner.will_generator.about_you')}}" class="btn btn-primary">
+            <a href="{{route('customer.will_generator.about_you')}}" class="btn btn-primary">
               Add User Will
             </a>
           </div>
@@ -33,7 +33,7 @@
                           <th>City</th>
                           <th>Martial Status</th>
                           <th>Contact Number(s)</th>
-                          
+
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -48,8 +48,8 @@
                           <td>{{ $user_about_info->city }}</td>
                           <td>{{ $user_about_info->martial_status }}</td>
                           <td>{{ $user_about_info->phone_number }}</td>
-                       
-                          
+
+
                         </tr>
                         @endforeach
                       </tbody>

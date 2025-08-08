@@ -534,7 +534,7 @@
                                 Charity Gifts
                             </div>
                             <div class="card-body basic-wizard important-validation">
-                                <form action="{{route('partner.will_generator.process_inherited_charity')}}" method="POST">
+                                <form action="{{route('customer.will_generator.process_inherited_charity')}}" method="POST">
                                     @csrf
 
                                     <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
@@ -682,7 +682,7 @@
                                     </div> {{-- End charitySelectionContainer --}}
 
                                     <div class="d-flex justify-content-between mt-8">
-                                        <a href="{{ route('partner.will_generator.choose_inherited_persons') }}"
+                                        <a href="{{ route('customer.will_generator.choose_inherited_persons') }}"
                                             class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                             &larr; Back
                                         </a>
@@ -1096,7 +1096,7 @@
                     const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                     $.ajax({
-                        url: "{{ route('partner.will_generator.store_charity') }}",
+                        url: "{{ route('customer.will_generator.store_charity') }}",
                         type: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': csrfToken

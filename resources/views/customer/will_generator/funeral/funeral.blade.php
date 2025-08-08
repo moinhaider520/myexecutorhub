@@ -159,7 +159,7 @@
         <div class="row widget-grid">
             <div class="col-xl-8"> {{-- Main content area --}}
                 <div class="card height-equal">
-                    <form method="POST" action="{{ route('partner.will_generator.store_funeral_plan') }}" >
+                    <form method="POST" action="{{ route('customer.will_generator.store_funeral_plan') }}" >
                         @csrf
                         <div class="card-body basic-wizard important-validation">
 
