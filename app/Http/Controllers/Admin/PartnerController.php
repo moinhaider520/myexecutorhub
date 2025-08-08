@@ -64,7 +64,7 @@ class PartnerController extends Controller
             'city' => 'required',
             'postal_code' => 'required',
             'contact_number' => 'required',
-            'access_type' => 'required|in:Friends & Family,Collaborator',
+            'access_type' => 'required',
         ]);
 
         $couponCode = $request->name . strtoupper(uniqid());

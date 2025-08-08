@@ -24,7 +24,7 @@ class WillGeneratorController extends Controller
         try {
             $will_user_infos = WillUserInfo::where('user_id', Auth::user()->id)->get();
             if ($will_user_infos) {
-                return response()->json(['status' => true, 'Will User Infos' => $will_user_infos]);
+                return response()->json(['status' => true, 'data' => $will_user_infos]);
             } else {
                 return response()->json(['status' => false, 'message' => 'No Will User Info found']);
             }
@@ -37,7 +37,7 @@ class WillGeneratorController extends Controller
         try {
             $will_user_info = WillUserInfo::find($id);
             if ($will_user_info) {
-                return response()->json(['status' => true, 'Will User Info' => $will_user_info]);
+                return response()->json(['status' => true, 'data' => $will_user_info]);
             } else {
                 return response()->json(['status' => false, 'message' => 'No Will User Info found']);
             }
@@ -79,7 +79,7 @@ class WillGeneratorController extends Controller
             $children = WillInheritedPeople::where('will_user_id', $will_user_id)
                 ->where('type', 'child')
                 ->get();
-            return response()->json(['status' => true, 'Children' => $children]);
+            return response()->json(['status' => true, 'data' => $children]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -98,7 +98,7 @@ class WillGeneratorController extends Controller
                 'type' => 'child',
             ]);
             DB::commit();
-            return response()->json(['status' => true, 'message' => 'Child information saved successfully', 'Child' => $child]);
+            return response()->json(['status' => true, 'message' => 'Child information saved successfully', 'data' => $child]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -146,11 +146,10 @@ class WillGeneratorController extends Controller
     public function pet()
     {
         try {
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
-            $pets = WillInheritedPeople::where('will_user_id', $will_user_id)
-                ->where('type', 'pet')
+            $will_user_id = Auth::id();
+            $pets = WillUserPet::where('will_user_id', $will_user_id)
                 ->get();
-            return response()->json(['status' => true, 'Pets' => $pets]);
+            return response()->json(['status' => true, 'data' => $pets]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -161,32 +160,30 @@ class WillGeneratorController extends Controller
 
         try {
             DB::beginTransaction();
-            $pet=WillInheritedPeople::create([
-                'first_name' => $request->name,
-                'will_user_id' => session('will_user_id'),
-                'type' => 'pet',
+            $pet=WillUserPet::create([
+                'pet_name' => $request->name,
+                'will_user_id' => Auth::user()->id,
             ]);
             DB::commit();
             
-            return response()->json(['status' => true, 'message' => 'Pet information submitted successfully','Pet Detail'=>$pet]);
+            return response()->json(['status' => true, 'message' => 'Pet information submitted successfully','data'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 
-
     public function edit_user_pet(Request $request)
     {
         try {
             DB::beginTransaction();
-            WillInheritedPeople::where('id', '=', $request->pet_id)
+            WillUserPet::where('id', '=', $request->pet_id)
                 ->update([
-                    'first_name' => $request->name,
+                    'pet_name' => $request->name,
                 ]);
             DB::commit();
-            $pet = WillInheritedPeople::where('id', '=', $request->pet_id)->first();
-            return response()->json(['status' => true, 'message' => 'Pet information update successfully','Pet Detail'=>$pet]);
+            $pet = WillUserPet::where('id', '=', $request->pet_id)->first();
+            return response()->json(['status' => true, 'message' => 'Pet information update successfully','data'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -197,7 +194,7 @@ class WillGeneratorController extends Controller
     {
         try {
 
-            $user_pet = WillInheritedPeople::where('id', '=', $request->pet_id)->first();
+            $user_pet = WillUserPet::where('id', '=', $request->pet_id)->first();
             if ($user_pet) {
                 DB::beginTransaction();
                 $user_pet->delete();
@@ -206,7 +203,7 @@ class WillGeneratorController extends Controller
                 return response()->json(['status' => false, 'message' => 'No Pet found']);
             }
             $pet = WillUserPet::where('id', '=', $request->pet_id)->first();
-            return response()->json(['status' => true, 'message' => 'Pet information delete successfully','Pet Detail'=>$pet]);
+            return response()->json(['status' => true, 'message' => 'Pet information delete successfully','data'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -218,7 +215,7 @@ class WillGeneratorController extends Controller
         try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             $account_properties = WillUserAccountsProperty::where('will_user_id', $will_user_id)->get();
-            return response()->json(['status' => true, 'Account Properties' => $account_properties]);
+            return response()->json(['status' => true, 'data' => $account_properties]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -293,7 +290,7 @@ class WillGeneratorController extends Controller
         try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             $funeral_plan = WillUserFuneral::where('will_user_id', $will_user_id)->first();
-            return response()->json(['status' => true, 'Funeral Plan' => $funeral_plan]);
+            return response()->json(['status' => true, 'data' => $funeral_plan]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -381,7 +378,7 @@ class WillGeneratorController extends Controller
             $partners = WillInheritedPeople::where('will_user_id', $will_user_id)
                 ->where('type', 'partner')
                 ->get();
-            return response()->json(['status' => true, 'Partners' => $partners]);
+            return response()->json(['status' => true, 'data' => $partners]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -460,7 +457,7 @@ class WillGeneratorController extends Controller
         try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             $gifts = WillUserInheritedGift::where('will_user_id', $will_user_id)->get();
-            return response()->json(['status' => true, 'Gifts' => $gifts]);
+            return response()->json(['status' => true, 'data' => $gifts]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -555,7 +552,7 @@ class WillGeneratorController extends Controller
                 ->where('type', 'partner')
                 ->orWhere('type', '=', 'child')
                 ->get();
-            return response()->json(['status' => true, 'Family Friends' => $family_friends]);
+            return response()->json(['status' => true, 'data' => $family_friends]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -606,7 +603,7 @@ class WillGeneratorController extends Controller
             $charities = WillUserInfo::find($will_user_id)->beneficiaries()
                 ->where('beneficiable_type', Charity::class)
                 ->get();
-            return response()->json(['status' => true, 'Charities' => $charities]);
+            return response()->json(['status' => true, 'data' => $charities]);
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
@@ -783,7 +780,7 @@ class WillGeneratorController extends Controller
 
         return response()->json([
             'status' => true,
-            'beneficiaries' => $beneficiaries,
+            'data' => $beneficiaries,
         ]);
     }
 

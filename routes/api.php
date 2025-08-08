@@ -415,7 +415,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::get('/wills', [PartnerWillController::class, 'view'])->name('wills.view');
 
     Route::get('/will_generator/partner_about_you',[PartnerWillGeneratorController::class,'partner_about_you'])->name('wills.partner_about_you');
-    Route::get('/will_generator/about_you',[PartnerWillGeneratorController::class,'about_you'])->name('wills.about_you');
+    Route::get('/will_generator/about_you/{id}',[PartnerWillGeneratorController::class,'about_you'])->name('wills.about_you');
     Route::post('/will_generator/store_about_you',[PartnerWillGeneratorController::class,'store_about_you'])->name('wills.store_about_you');
 
     // will generator children and pets
@@ -425,9 +425,9 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/will_generator/delete_child',[PartnerWillGeneratorController::class,'delete_child'])->name('will_generator.delete_child');
 
     Route::get('/will_generator/pet',[PartnerWillGeneratorController::class,'pet'])->name('will_generator.pet');
-    Route::post('/will_generator/store_pet',[PartnerWillGeneratorController::class,'store_pet'])->name('will_generator.store_pet');
-    Route::post('/will_generator/edit_pet',[PartnerWillGeneratorController::class,'edit_pet'])->name('will_generator.edit_pet');
-    Route::post('/will_generator/delete_pet',[PartnerWillGeneratorController::class,'delete_pet'])->name('will_generator.delete_pet');
+    Route::post('/will_generator/store_pet',[PartnerWillGeneratorController::class,'store_user_pet'])->name('will_generator.store_pet');
+    Route::post('/will_generator/edit_pet',[PartnerWillGeneratorController::class,'edit_user_pet'])->name('will_generator.edit_pet');
+    Route::post('/will_generator/delete_pet',[PartnerWillGeneratorController::class,'delete_user_pet'])->name('will_generator.delete_pet');
     
     //will generator partner
     Route::get('will_generator/user_partner',[PartnerWillGeneratorController::class, 'user_partner'])->name('will_generator.user_partner');
