@@ -24,14 +24,45 @@ class WillGeneratorController extends Controller
 {
     public function index()
     {
-        // $wills = WillVideos::where('customer_id', Auth::id())->get();
-        return view('partner.will_generator.index');
+        $user_about_infos = WillUserInfo::where('user_id', Auth::id())->get();
+        return view('partner.will_generator.index',compact('user_about_infos'));
     }
 
     public function create()
     {
         $authId = auth()->id();
         return view('partner.will_generator.create', ['authId' => $authId]);
+    }
+
+
+    public function step3()
+    {
+        $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+        $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)
+            ->where('type', 'partner')
+            ->get();
+       
+        return view('partner.will_generator.step3', ['partners' => $partners]);
+    }   
+
+    public function store_step3(Request $request)
+    {
+        try {
+            
+            $will_inherited_people = WillInheritedPeople::where('id', '=', $request->executors)->first();
+          
+            DB::beginTransaction();
+            $will_user_id = WillUserInfo::where('id', '=', session('will_user_id'))
+                ->update([
+                    'martial_status' => $request->martial_status,
+                    'partner_name' => $will_inherited_people->first_name . ' ' . $will_inherited_people->last_name,
+                ]);
+            DB::commit();
+            return redirect()->route('partner.will_generator.step4');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
     }
     public function step4()
     {
@@ -66,6 +97,9 @@ class WillGeneratorController extends Controller
     public function about_you()
     {
         $authId = auth()->id();
+        $partners=WillInheritedPeople::where('will_user_id', session('will_user_id'))
+            ->where('type', 'partner')
+            ->get();
         return view('partner.will_generator.about_you', ['authId' => $authId]);
     }
 
@@ -90,7 +124,7 @@ class WillGeneratorController extends Controller
             ]);
             DB::commit();
             session(['will_user_id' => $will_user_id->id]);
-            return redirect()->route('partner.will_generator.step4');
+            return redirect()->route('partner.will_generator.step3');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -703,6 +737,7 @@ class WillGeneratorController extends Controller
                 'will_user_id' => $will_user_id,
                 'type' => $request->type,
             ]);
+            
             DB::commit();
             $partners = WillInheritedPeople::where('will_user_id', $will_user_id)->get();
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();

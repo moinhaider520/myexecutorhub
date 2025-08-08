@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('post_code')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('martial_status')->nullable();
+            $table->string('partner_name')->nullable();
             $table->string('children')->nullable();
             $table->string('pets')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');

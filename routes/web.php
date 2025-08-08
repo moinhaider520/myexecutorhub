@@ -856,6 +856,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator', [PartnerWillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
     Route::get('will_generator/about_you', [PartnerWillGeneratorController::class, 'about_you'])->name('will_generator.about_you');
+    Route::get('will_generator/step3', [PartnerWillGeneratorController::class, 'step3'])->name('will_generator.step3');
+    Route::post('will_generator/store_step3', [PartnerWillGeneratorController::class, 'store_step3'])->name('will_generator.store_step3');
     Route::get('will_generator/step4', [PartnerWillGeneratorController::class, 'step4'])->name('will_generator.step4');
     Route::post('will_generator/step4', [PartnerWillGeneratorController::class, 'store_step4'])->name('will_generator.store_step4');
     Route::get('will_generator/step5', [PartnerWillGeneratorController::class, 'step5'])->name('will_generator.step5');
