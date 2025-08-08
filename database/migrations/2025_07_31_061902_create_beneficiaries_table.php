@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('will_user_id')->references('id')->on('will_user_infos')->onDelete('cascade');
             $table->morphs('beneficiable');
             $table->decimal('share_percentage', 5, 2)->default(0.00); 
+            $table->enum('death_backup_plan', ['their_children', 'split_remaining'])->nullable();
+            $table->string('death_backup_name')->nullable();
             $table->unique(['will_user_id', 'beneficiable_id', 'beneficiable_type'], 'will_beneficiaries_unique_beneficiary');
             $table->timestamps();
         });

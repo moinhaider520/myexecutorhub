@@ -10,6 +10,7 @@ use App\Models\Will_User_Info;
 use App\Models\WillInheritedPeople;
 use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
+use App\Models\WillUserEstates;
 use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
 use App\Models\WillUserInheritedGift;
@@ -302,7 +303,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-   
+
 
 
     public function executor()
@@ -737,7 +738,7 @@ class WillGeneratorController extends Controller
         }
     }
 
- public function partner_delete(Request $request)
+    public function partner_delete(Request $request)
     {
         try {
             $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
@@ -759,7 +760,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-    
+
     public function store_charity(Request $request)
     {
         try {
@@ -799,10 +800,98 @@ class WillGeneratorController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Beneficiary percentages updated successfully!');
+            return redirect()->route('partner.will_generator.benificaries_death_backup');
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to update beneficiary percentages. Please try again.');
+        }
+    }
+
+
+    public function benificaries_death_backup(Request $request)
+    {
+        $willUserId = WillUserInfo::where('id', session('will_user_id'))->first()->id ?? WillUserInfo::latest()->first()->id;
+        if ($request->has('beneficiary')) {
+
+            $beneficiary = Beneficiary::where('will_user_id', $willUserId)
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->where('id', $request->beneficiary)
+                ->first();
+        } else {
+            $beneficiary = Beneficiary::where('will_user_id', $willUserId)
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->first();
+        }
+
+        $allBeneficiaries = WillUserInfo::with('beneficiaries')->where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+        return view('partner.will_generator.estate.benificaries_death', compact('beneficiary', 'allBeneficiaries'));
+    }
+
+
+    public function store_benificaries_death_backup(Request $request)
+    {
+
+        try {
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            DB::beginTransaction();
+            $beneficiary = Beneficiary::find($request->input('current_beneficiary_id'));
+            $beneficiary->death_backup_plan = $request->input('selected_backup_option');
+            $beneficiary->save();
+            DB::commit();
+
+            $beneficiaries = Beneficiary::where('will_user_id', $willUserId->id)
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->orderBy('id')
+                ->get();
+
+
+            $currentBeneficiaryIndex = $beneficiaries->search(function ($item) use ($beneficiary) {
+
+                return $item->id == $beneficiary->id;
+            });
+
+            $nextBeneficiary = $beneficiaries->get($currentBeneficiaryIndex + 1);
+
+            if ($nextBeneficiary) {
+
+                return redirect()->route('partner.will_generator.benificaries_death_backup', ['beneficiary' => $nextBeneficiary]);
+            } else {
+
+                return redirect()->route('partner.will_generator.estate.summary');
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+    public function estate_summary()
+    {
+        $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+        $beneficiaries = Beneficiary::where('will_user_id', $willUserId->id)
+            ->orderBy('id')
+            ->get();
+
+        return view('partner.will_generator.estate.summary', compact('beneficiaries'));
+    }
+
+    public function store_estate_summary(Request $request){
+        try {
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            DB::beginTransaction();
+            $will_estate_summary = WillUserEstates::create([
+                'specific_person_will' => $request->input('excluded_choice'),
+                'will_estate_reason' => $request->input('will_estate_reason'),
+                'will_user_id' => $willUserId->id,
+                'created_by' => Auth::user()->id,
+            ]);
+            
+            DB::commit();
+
+            return redirect()->route('partner.will_generator.create')->with(['success' => 'Your Estate Summary has been submitted successfully']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 }

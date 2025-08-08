@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('specific_person_will')->nullable();
             $table->text('will_estate_reason')->nullable();
+            $table->foreignId('will_user_id')->references('id')->on('will_user_infos')->onDelete('cascade');
+            $table->foreignId('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -8,6 +8,7 @@ use App\Models\Charity;
 use App\Models\WillInheritedPeople;
 use App\Models\WillUserAccountsProperty;
 use App\Models\WillUserChildren;
+use App\Models\WillUserEstates;
 use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
 use App\Models\WillUserInheritedGift;
@@ -712,4 +713,101 @@ class WillGeneratorController extends Controller
         }
     }
 
+
+    public function benificaries_death_backup(Request $request)
+    {
+        $willUserId = WillUserInfo::where('id', session('will_user_id'))->first()->id ?? WillUserInfo::latest()->first()->id;
+        if ($request->has('beneficiary')) {
+
+            $beneficiary = Beneficiary::where('will_user_id', $willUserId)
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->where('id', $request->beneficiary)
+                ->first();
+        } else {
+            $beneficiary = Beneficiary::where('will_user_id', $willUserId)
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->first();
+        }
+
+        $allBeneficiaries = WillUserInfo::with('beneficiaries')->where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+        return response()->json([
+            'status' => true,
+            'beneficiary' => $beneficiary,
+            'allBeneficiaries' => $allBeneficiaries->beneficiaries
+        ]);
+        
+    }
+
+
+    public function store_benificaries_death_backup(Request $request)
+    {
+
+        try {
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            DB::beginTransaction();
+            $beneficiary = Beneficiary::find($request->input('current_beneficiary_id'));
+            $beneficiary->death_backup_plan = $request->input('selected_backup_option');
+            $beneficiary->save();
+            DB::commit();
+
+            $beneficiaries = Beneficiary::where('will_user_id', $willUserId->id)
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->orderBy('id')
+                ->get();
+
+
+            $currentBeneficiaryIndex = $beneficiaries->search(function ($item) use ($beneficiary) {
+
+                return $item->id == $beneficiary->id;
+            });
+
+            $nextBeneficiary = $beneficiaries->get($currentBeneficiaryIndex + 1);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Beneficiary death backup plan updated successfully.',
+                'beneficiary' => $beneficiary,
+                'next_beneficiary' => $nextBeneficiary
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function estate_summary()
+    {
+        $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+        $beneficiaries = Beneficiary::where('will_user_id', $willUserId->id)
+            ->orderBy('id')
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'beneficiaries' => $beneficiaries,
+        ]);
+    }
+
+    public function store_estate_summary(Request $request){
+        try {
+            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            DB::beginTransaction();
+            $will_estate_summary = WillUserEstates::create([
+                'specific_person_will' => $request->input('excluded_choice'),
+                'will_estate_reason' => $request->input('will_estate_reason'),
+                'will_user_id' => $willUserId->id,
+                'created_by' => Auth::user()->id,
+            ]);
+            
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Estate summary saved successfully.',
+                'will_estate_summary' => $will_estate_summary
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
 }

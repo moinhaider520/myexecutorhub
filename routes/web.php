@@ -896,11 +896,12 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/charity/store',[PartnerWillGeneratorController::class,'store_charity'])->name('will_generator.store_charity');
     Route::get('will_generator/share_percentage',[PartnerWillGeneratorController::class,'share_percentage'])->name('will_generator.share_percentage');
     Route::post('will_generator/store_share_percentage',[PartnerWillGeneratorController::class,'store_share_percentage'])->name('will_generator.store_share_percentage');
+    Route::get('will_generator/benificaries_death_backup',[PartnerWillGeneratorController::class,'benificaries_death_backup'])->name('will_generator.benificaries_death_backup');
+    Route::post('will_generator/store_benificaries_death_backup',[PartnerWillGeneratorController::class,'store_benificaries_death_backup'])->name('will_generator.store_benificaries_death_backup');
+    Route::get('will_generator/estate/summary',[PartnerWillGeneratorController::class,'estate_summary'])->name('will_generator.estate.summary');
+    Route::post('will_generator/estate/store_estate_summary',[PartnerWillGeneratorController::class,'store_estate_summary'])->name('will_generator.estate.store_estate_summary');
 
-    Route::get('will_generator/benificaries_death',function()
-    {
-        return view('partner.will_generator.estate.benificaries_death');
-    });
+   
 
     Route::get('will_generator/gift',[PartnerWillGeneratorController::class,'gift'])->name('will_generator.gift');
     Route::get('will_generator/gift/add/{type}',[PartnerWillGeneratorController::class,'show_add_gift'])->name('will_generator.gift.add');

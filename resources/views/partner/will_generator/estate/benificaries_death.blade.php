@@ -127,11 +127,11 @@
             <div class="w-full xl:w-7/12 p-3"> {{-- Main content area --}}
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
-                        <form id="backupBeneficiaryForm" action="#" method="POST">
+                        <form id="backupBeneficiaryForm" action="{{route('partner.will_generator.store_benificaries_death_backup')}}" method="POST">
                             @csrf
 
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                                If Thane Dillard dies before you, who should inherit their share of the estate instead?
+                                If {{$beneficiary->getNameAttribute()}} dies before you, who should inherit their share of the estate instead?
                             </h1>
                             <p class="text-gray-700 leading-relaxed mb-6">
                                 Writing a will is all about being prepared for the unexpected. This is why we also ask you to name back-ups in case your chosen beneficiary dies before you. These are known as secondary beneficiaries.
@@ -139,7 +139,7 @@
 
                             {{-- Inheritance Options --}}
                             <div class="space-y-4">
-                                <div class="inheritance-option-card" data-option="children">
+                                <div class="inheritance-option-card" data-option="their_children">
                                     <span class="option-text">Their children</span>
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 arrow-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
@@ -155,10 +155,10 @@
                             </div>
 
                             <input type="hidden" name="selected_backup_option" id="selectedBackupOption">
-                            <input type="hidden" name="primary_beneficiary_id" value="1">
+                            <input type="hidden" name="current_beneficiary_id" value="{{$beneficiary->id}}">
 
                             <p class="text-gray-600 italic mt-6">
-                                Selecting 'Their children' includes all Thane Dillard's biological and legally adopted children but not step-children.
+                                Selecting 'Their children' includes all {{$beneficiary->getNameAttribute()}}'s biological and legally adopted children but not step-children.
                             </p>
 
                             <p class="text-gray-600 italic mt-4">
@@ -185,19 +185,19 @@
                 <div class="inheritance-summary-card">
                     <h4>Inheriting your estate:</h4>
                     <ul id="inheritanceSummaryList">
-                        {{-- @forelse ($allBeneficiaries as $beneficiary)
+                       @forelse ($allBeneficiaries->beneficiaries as $beneficiaries)
                             <li>
                                 <div class="beneficiary-info">
-                                    <span class="beneficiary-name-summary">{{ $beneficiary->name }} {{ $beneficiary->lastname }}</span>
-                                    @if ($beneficiary->id === $primaryBeneficiary->id)
+                                    <span class="beneficiary-name-summary">{{ $beneficiaries->getNameAttribute()}}</span>
+                                    @if ($beneficiaries->id === $beneficiary->id)
                                         <span class="beneficiary-backup-status">Backups: selecting now</span>
                                     @endif
                                 </div>
-                                <span class="beneficiary-percentage-summary">{{ number_format($beneficiary->share_percentage, 2) }}%</span>
+                                <span class="beneficiary-percentage-summary">{{ number_format($beneficiaries->share_percentage, 2) }}%</span>
                             </li>
                         @empty
                             <li>No beneficiaries added yet.</li>
-                        @endforelse --}}
+                        @endforelse
                     </ul>
                 </div>
             </div>
