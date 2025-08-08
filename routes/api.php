@@ -414,6 +414,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     // WILLS
     Route::get('/wills', [PartnerWillController::class, 'view'])->name('wills.view');
 
+    Route::get('/will_generator/partner_about_you',[PartnerWillGeneratorController::class,'partner_about_you'])->name('wills.partner_about_you');
     Route::get('/will_generator/about_you',[PartnerWillGeneratorController::class,'about_you'])->name('wills.about_you');
     Route::post('/will_generator/store_about_you',[PartnerWillGeneratorController::class,'store_about_you'])->name('wills.store_about_you');
 

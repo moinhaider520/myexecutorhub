@@ -18,10 +18,23 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 class WillGeneratorController extends Controller
 {
-    public function about_you()
+    public function partner_about_you()
     {
         try {
-            $will_user_info = WillUserInfo::where('user_id', Auth::user()->id)->first();
+            $will_user_infos = WillUserInfo::where('user_id', Auth::user()->id)->get();
+            if ($will_user_infos) {
+                return response()->json(['status' => true, 'Will User Infos' => $will_user_infos]);
+            } else {
+                return response()->json(['status' => false, 'message' => 'No Will User Info found']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function about_you($id){
+        try {
+            $will_user_info = WillUserInfo::find($id);
             if ($will_user_info) {
                 return response()->json(['status' => true, 'Will User Info' => $will_user_info]);
             } else {
@@ -31,8 +44,6 @@ class WillGeneratorController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
-
-
     public function store_about_you(Request $request)
     {
         try {
