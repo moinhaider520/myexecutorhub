@@ -7,12 +7,10 @@ use App\Models\Beneficiary;
 use App\Models\Charity;
 use App\Models\WillInheritedPeople;
 use App\Models\WillUserAccountsProperty;
-use App\Models\WillUserChildren;
 use App\Models\WillUserEstates;
 use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
 use App\Models\WillUserInheritedGift;
-use App\Models\WillUserPet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -124,11 +122,11 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function delete_user_child(Request $request)
+    public function delete_user_child($id)
     {
         try {
 
-            $user_child = WillInheritedPeople::where('id', '=', $request->child_id)->first();
+            $user_child = WillInheritedPeople::where('id', '=', $id)->first();
             if ($user_child) {
                 DB::beginTransaction();
                 $user_child->delete();
@@ -147,7 +145,7 @@ class WillGeneratorController extends Controller
     {
         try {
             $will_user_id = Auth::id();
-            $pets = WillUserPet::where('will_user_id', $will_user_id)
+            $pets = WillInheritedPeople::where('will_user_id', $will_user_id)->where('type','pet')
                 ->get();
             return response()->json(['status' => true, 'data' => $pets]);
         } catch (\Exception $e) {
@@ -160,12 +158,13 @@ class WillGeneratorController extends Controller
 
         try {
             DB::beginTransaction();
-            $pet=WillUserPet::create([
-                'pet_name' => $request->name,
-                'will_user_id' => Auth::user()->id,
+            $pet=WillInheritedPeople::create([
+                'first_name' => $request->name,
+                'will_user_id' => session('will_user_id'),
+                'type' => 'pet',
             ]);
             DB::commit();
-            
+
             return response()->json(['status' => true, 'message' => 'Pet information submitted successfully','data'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -177,12 +176,12 @@ class WillGeneratorController extends Controller
     {
         try {
             DB::beginTransaction();
-            WillUserPet::where('id', '=', $request->pet_id)
+            WillInheritedPeople::where('id', '=', $request->pet_id)
                 ->update([
-                    'pet_name' => $request->name,
+                    'first_name' => $request->name,
                 ]);
             DB::commit();
-            $pet = WillUserPet::where('id', '=', $request->pet_id)->first();
+            $pet = WillInheritedPeople::where('id', '=', $request->pet_id)->first();
             return response()->json(['status' => true, 'message' => 'Pet information update successfully','data'=>$pet]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -190,11 +189,11 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function delete_user_pet(Request $request)
+    public function delete_user_pet($id)
     {
         try {
 
-            $user_pet = WillUserPet::where('id', '=', $request->pet_id)->first();
+            $user_pet = WillInheritedPeople::where('id', '=', $id)->first();
             if ($user_pet) {
                 DB::beginTransaction();
                 $user_pet->delete();
@@ -202,8 +201,8 @@ class WillGeneratorController extends Controller
             } else {
                 return response()->json(['status' => false, 'message' => 'No Pet found']);
             }
-            $pet = WillUserPet::where('id', '=', $request->pet_id)->first();
-            return response()->json(['status' => true, 'message' => 'Pet information delete successfully','data'=>$pet]);
+
+            return response()->json(['status' => true, 'message' => 'Pet information delete successfully']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -269,7 +268,6 @@ class WillGeneratorController extends Controller
     public function delete_account_properties($id)
     {
         try {
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             $account_property = WillUserAccountsProperty::where('id', '=', $id)->first();
             if ($account_property) {
                 DB::beginTransaction();
@@ -423,7 +421,7 @@ class WillGeneratorController extends Controller
             DB::commit();
             $partner = WillInheritedPeople::where('id', $request->id)->first();
 
-           
+
             return response()->json(['status' => true, 'messsage' => 'Partner have been updated successfully', 'data' => $partner]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -432,11 +430,10 @@ class WillGeneratorController extends Controller
     }
 
 
-     public function delete_user_partner(Request $request)
+     public function delete_user_partner($id)
     {
         try {
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
-            $will_inherited_people = WillInheritedPeople::where('id', '=', $request->id)->first();
+            $will_inherited_people = WillInheritedPeople::where('id', '=', $id)->first();
             if ($will_inherited_people) {
                 DB::beginTransaction();
                 $will_inherited_people->delete();
@@ -654,7 +651,7 @@ class WillGeneratorController extends Controller
                 'status' => true,
                 'message' => 'Charity beneficiaries processed successfully.',
                 'charities' => $beneficiaries
-                
+
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -675,7 +672,7 @@ class WillGeneratorController extends Controller
                 'logo_path' => $request->logo_path,
             ]);
             DB::commit();
-            
+
             return response()->json(['status' => true, 'message' => 'Charity store in database successfully', 'data' => $charity]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -732,7 +729,7 @@ class WillGeneratorController extends Controller
             'beneficiary' => $beneficiary,
             'allBeneficiaries' => $allBeneficiaries->beneficiaries
         ]);
-        
+
     }
 
 
@@ -794,7 +791,7 @@ class WillGeneratorController extends Controller
                 'will_user_id' => $willUserId->id,
                 'created_by' => Auth::user()->id,
             ]);
-            
+
             DB::commit();
 
             return response()->json([

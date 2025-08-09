@@ -422,18 +422,18 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::get('/will_generator/child',[PartnerWillGeneratorController::class,'child'])->name('will_generator.child');
     Route::post('/will_generator/store_child',[PartnerWillGeneratorController::class,'store_user_child'])->name('will_generator.store_child');
     Route::post('/will_generator/edit_child',[PartnerWillGeneratorController::class,'edit_user_child'])->name('will_generator.edit_child');
-    Route::delete('/will_generator/delete_child',[PartnerWillGeneratorController::class,'delete_user_child'])->name('will_generator.delete_child');
+    Route::delete('/will_generator/delete_child/{id}',[PartnerWillGeneratorController::class,'delete_user_child'])->name('will_generator.delete_child');
 
     Route::get('/will_generator/pet',[PartnerWillGeneratorController::class,'pet'])->name('will_generator.pet');
     Route::post('/will_generator/store_pet',[PartnerWillGeneratorController::class,'store_user_pet'])->name('will_generator.store_pet');
     Route::post('/will_generator/edit_pet',[PartnerWillGeneratorController::class,'edit_user_pet'])->name('will_generator.edit_pet');
-    Route::delete('/will_generator/delete_pet',[PartnerWillGeneratorController::class,'delete_user_pet'])->name('will_generator.delete_pet');
+    Route::delete('/will_generator/delete_pet/{id}',[PartnerWillGeneratorController::class,'delete_user_pet'])->name('will_generator.delete_pet');
 
     //will generator partner
     Route::get('will_generator/user_partner',[PartnerWillGeneratorController::class, 'user_partner'])->name('will_generator.user_partner');
     Route::post('will_generator/user_partner/store', [PartnerWillGeneratorController::class, 'store_user_partner'])->name('will_generator.user_partner.store');
     Route::post('will_generator/user_partner/edit', [PartnerWillGeneratorController::class, 'edit_user_partner'])->name('will_generator.user_partner.edit');
-    Route::delete('will_generator/user_partner/delete', [PartnerWillGeneratorController::class, 'delete_user_partner'])->name('will_generator.user_partner.delete');
+    Route::delete('will_generator/user_partner/delete/{id}', [PartnerWillGeneratorController::class, 'delete_user_partner'])->name('will_generator.user_partner.delete');
 
 
     //account properties
