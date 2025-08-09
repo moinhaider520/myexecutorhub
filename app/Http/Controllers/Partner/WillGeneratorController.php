@@ -15,6 +15,7 @@ use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
 use App\Models\WillUserInheritedGift;
 use App\Models\WillUserPet;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -41,16 +42,16 @@ class WillGeneratorController extends Controller
         $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)
             ->where('type', 'partner')
             ->get();
-       
+
         return view('partner.will_generator.step3', ['partners' => $partners]);
-    }   
+    }
 
     public function store_step3(Request $request)
     {
         try {
-            
+
             $will_inherited_people = WillInheritedPeople::where('id', '=', $request->executors)->first();
-          
+
             DB::beginTransaction();
             $will_user_id = WillUserInfo::where('id', '=', session('will_user_id'))
                 ->update([
@@ -737,7 +738,7 @@ class WillGeneratorController extends Controller
                 'will_user_id' => $will_user_id,
                 'type' => $request->type,
             ]);
-            
+
             DB::commit();
             $partners = WillInheritedPeople::where('will_user_id', $will_user_id)->get();
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
@@ -920,7 +921,7 @@ class WillGeneratorController extends Controller
                 'will_user_id' => $willUserId->id,
                 'created_by' => Auth::user()->id,
             ]);
-            
+
             DB::commit();
 
             return redirect()->route('partner.will_generator.create')->with(['success' => 'Your Estate Summary has been submitted successfully']);
@@ -928,5 +929,16 @@ class WillGeneratorController extends Controller
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+
+
+
+    public function create_pdf($will_user_id)
+    {
+        $will_user=WillUserInfo::with('child')->find($will_user_id);
+
+        $pdf = PDF::loadView('partner.will_generator.will_pdf', ['user_info' => $will_user]);
+        return $pdf->download('invoice.pdf');
     }
 }

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+
 class WillGeneratorController extends Controller
 {
     public function partner_about_you()
@@ -31,7 +32,8 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function about_you($id){
+    public function about_you($id)
+    {
         try {
             $will_user_info = WillUserInfo::find($id);
             if ($will_user_info) {
@@ -84,12 +86,12 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function store_user_child(Request $request,$will_user_id)
+    public function store_user_child(Request $request, $will_user_id)
     {
 
         try {
             DB::beginTransaction();
-            $child= WillInheritedPeople::create([
+            $child = WillInheritedPeople::create([
                 'first_name' => $request->name,
                 'date_of_birth' => $request->date_of_birth,
                 'will_user_id' => $will_user_id,
@@ -104,7 +106,7 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function edit_user_child(Request $request,$id)
+    public function edit_user_child(Request $request, $id)
     {
         try {
             DB::beginTransaction();
@@ -114,7 +116,7 @@ class WillGeneratorController extends Controller
                     'date_of_birth' => $request->edit_child_date_of_birth,
                 ]);
             DB::commit();
-            $children = WillInheritedPeople::where('id','=',$request->child_id)->first();
+            $children = WillInheritedPeople::where('id', '=', $request->child_id)->first();
             return response()->json(['status' => true, 'message' => 'Child information updated successfully', 'data' => $children]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -144,7 +146,7 @@ class WillGeneratorController extends Controller
     public function pet($will_user_id)
     {
         try {
-            $pets = WillInheritedPeople::where('will_user_id', $will_user_id)->where('type','pet')
+            $pets = WillInheritedPeople::where('will_user_id', $will_user_id)->where('type', 'pet')
                 ->get();
             return response()->json(['status' => true, 'data' => $pets]);
         } catch (\Exception $e) {
@@ -152,26 +154,26 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function store_user_pet(Request $request,$will_user_id)
+    public function store_user_pet(Request $request, $will_user_id)
     {
 
         try {
             DB::beginTransaction();
-            $pet=WillInheritedPeople::create([
+            $pet = WillInheritedPeople::create([
                 'first_name' => $request->name,
                 'will_user_id' => $will_user_id,
                 'type' => 'pet',
             ]);
             DB::commit();
 
-            return response()->json(['status' => true, 'message' => 'Pet information submitted successfully','data'=>$pet]);
+            return response()->json(['status' => true, 'message' => 'Pet information submitted successfully', 'data' => $pet]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 
-    public function edit_user_pet(Request $request,$id)
+    public function edit_user_pet(Request $request, $id)
     {
         try {
             DB::beginTransaction();
@@ -181,7 +183,7 @@ class WillGeneratorController extends Controller
                 ]);
             DB::commit();
             $pet = WillInheritedPeople::where('id', '=', $id)->first();
-            return response()->json(['status' => true, 'message' => 'Pet information update successfully','data'=>$pet]);
+            return response()->json(['status' => true, 'message' => 'Pet information update successfully', 'data' => $pet]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -219,11 +221,11 @@ class WillGeneratorController extends Controller
 
 
 
-    public function store_account_properties(Request $request,$will_user_id)
+    public function store_account_properties(Request $request, $will_user_id)
     {
         try {
             DB::beginTransaction();
-            $user_account_property=WillUserAccountsProperty::create([
+            $user_account_property = WillUserAccountsProperty::create([
                 'asset_type' => $request->asset_type,
                 'asset_name' => $request->asset_value,
                 'mortage' => $request->has_mortgage,
@@ -238,7 +240,7 @@ class WillGeneratorController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
-    public function update_account_properties(Request $request,$id)
+    public function update_account_properties(Request $request, $id)
     {
         try {
 
@@ -289,73 +291,72 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function store_funeral_plan(Request $request,$will_user_id){
-        {
-        try {
+    public function store_funeral_plan(Request $request, $will_user_id)
+    { {
+            try {
 
-            $rules = [
-                'pre_paid_plan' => ['required', Rule::in(['yes', 'no'])],
-                'funeral_provider_name' => ['nullable', 'string', 'max:255'],
-                'funeral_identification_no' => ['nullable', 'string', 'max:255'],
-                'funeral_guide_wish' => ['nullable', Rule::in(['yes', 'no'])],
-                'include_funeral_wishes' => ['required', Rule::in(['yes', 'no'])],
-                'funeral_type_choice' => ['nullable', Rule::in(['cremation', 'burial', 'let_decide'])],
-                'direct_cremation_wish' => ['nullable', Rule::in(['yes', 'no'])],
-                'additional_wishes' => 'nullable|string|max:1000',
-            ];
+                $rules = [
+                    'pre_paid_plan' => ['required', Rule::in(['yes', 'no'])],
+                    'funeral_provider_name' => ['nullable', 'string', 'max:255'],
+                    'funeral_identification_no' => ['nullable', 'string', 'max:255'],
+                    'funeral_guide_wish' => ['nullable', Rule::in(['yes', 'no'])],
+                    'include_funeral_wishes' => ['required', Rule::in(['yes', 'no'])],
+                    'funeral_type_choice' => ['nullable', Rule::in(['cremation', 'burial', 'let_decide'])],
+                    'direct_cremation_wish' => ['nullable', Rule::in(['yes', 'no'])],
+                    'additional_wishes' => 'nullable|string|max:1000',
+                ];
 
-            if ($request->input('pre_paid_plan') === 'yes') {
-                $rules['funeral_provider_name'] = ['required', 'string', 'max:255'];
-            } else {
-                $rules['funeral_guide_wish'] = ['required', Rule::in(['yes', 'no'])];
-            }
-
-
-            if ($request->input('include_funeral_wishes') === 'yes') {
-                $rules['funeral_type_choice'] = ['required', Rule::in(['cremation', 'burial', 'let_decide'])];
-
-                if ($request->input('funeral_type_choice') === 'cremation') {
-                    $rules['direct_cremation_wish'] = ['required', Rule::in(['yes', 'no'])];
+                if ($request->input('pre_paid_plan') === 'yes') {
+                    $rules['funeral_provider_name'] = ['required', 'string', 'max:255'];
+                } else {
+                    $rules['funeral_guide_wish'] = ['required', Rule::in(['yes', 'no'])];
                 }
+
+
+                if ($request->input('include_funeral_wishes') === 'yes') {
+                    $rules['funeral_type_choice'] = ['required', Rule::in(['cremation', 'burial', 'let_decide'])];
+
+                    if ($request->input('funeral_type_choice') === 'cremation') {
+                        $rules['direct_cremation_wish'] = ['required', Rule::in(['yes', 'no'])];
+                    }
+                }
+
+                $validatedData = $request->validate($rules);
+
+                DB::beginTransaction();
+
+                $funeralPlan = WillUserFuneral::firstOrNew(['will_user_id' => $will_user_id]);
+
+                $funeralPlan->funeral_paid = $validatedData['pre_paid_plan']; // "Do you have a pre-paid funeral plan?"
+
+                $funeralPlan->funeral_provider_name = $validatedData['funeral_provider_name'] ?? null;
+                $funeralPlan->funeral_identification_no = $validatedData['funeral_identification_no'] ?? null;
+
+                $funeralPlan->funeral_wish = ($validatedData['pre_paid_plan'] === 'no') ?
+                    ($validatedData['funeral_guide_wish'] ?? null) : null;
+
+                if ($validatedData['include_funeral_wishes'] === 'yes') {
+                    $funeralPlan->funeral_type = $validatedData['funeral_type_choice']; // cremation, burial, let_decide
+                    $funeralPlan->funeral_direct_cremation = ($validatedData['funeral_type_choice'] === 'cremation') ?
+                        ($validatedData['direct_cremation_wish'] ?? null) : null;
+                } else {
+                    $funeralPlan->funeral_type = 'no_wishes_not_included'; // Or null, depending on your preference
+                    $funeralPlan->funeral_direct_cremation = null;
+                }
+
+                $funeralPlan->additional = $validatedData['additional_wishes'] ?? null;
+                $funeralPlan->created_by = Auth::user()->id;
+                $funeralPlan->save();
+                DB::commit();
+                return response()->json(['status' => true, 'message' => 'Funeral plan saved successfully.', 'data' => $funeralPlan]);
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                DB::rollBack();
+                return back()->withErrors($e->errors())->withInput();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return response()->json(['status' => false, 'message' => $e->getMessage()]);
             }
-
-            $validatedData = $request->validate($rules);
-
-            DB::beginTransaction();
-
-            $funeralPlan = WillUserFuneral::firstOrNew(['will_user_id' => $will_user_id]);
-
-            $funeralPlan->funeral_paid = $validatedData['pre_paid_plan']; // "Do you have a pre-paid funeral plan?"
-
-            $funeralPlan->funeral_provider_name = $validatedData['funeral_provider_name'] ?? null;
-            $funeralPlan->funeral_identification_no = $validatedData['funeral_identification_no'] ?? null;
-
-            $funeralPlan->funeral_wish = ($validatedData['pre_paid_plan'] === 'no') ?
-                ($validatedData['funeral_guide_wish'] ?? null) : null;
-
-            if ($validatedData['include_funeral_wishes'] === 'yes') {
-                $funeralPlan->funeral_type = $validatedData['funeral_type_choice']; // cremation, burial, let_decide
-                $funeralPlan->funeral_direct_cremation = ($validatedData['funeral_type_choice'] === 'cremation') ?
-                    ($validatedData['direct_cremation_wish'] ?? null) : null;
-            } else {
-                $funeralPlan->funeral_type = 'no_wishes_not_included'; // Or null, depending on your preference
-                $funeralPlan->funeral_direct_cremation = null;
-            }
-
-            $funeralPlan->additional = $validatedData['additional_wishes'] ?? null;
-            $funeralPlan->created_by = Auth::user()->id;
-            $funeralPlan->save();
-            DB::commit();
-            return response()->json(['status' => true, 'message' => 'Funeral plan saved successfully.', 'data' => $funeralPlan]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            DB::rollBack();
-            return back()->withErrors($e->errors())->withInput();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
-    }
-
     }
 
     public function user_partner($will_user_id)
@@ -370,12 +371,12 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function store_user_partner(Request $request,$will_user_id)
+    public function store_user_partner(Request $request, $will_user_id)
     {
         try {
 
             DB::beginTransaction();
-            $partner=WillInheritedPeople::create([
+            $partner = WillInheritedPeople::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone' => $request->phone,
@@ -392,7 +393,7 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function edit_user_partner(Request $request,$id)
+    public function edit_user_partner(Request $request, $id)
     {
         try {
             DB::beginTransaction();
@@ -414,7 +415,7 @@ class WillGeneratorController extends Controller
     }
 
 
-     public function delete_user_partner($id)
+    public function delete_user_partner($id)
     {
         try {
             $will_inherited_people = WillInheritedPeople::where('id', '=', $id)->first();
@@ -443,7 +444,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function store_add_gift(Request $request,$will_user_id)
+    public function store_add_gift(Request $request, $will_user_id)
     {
         try {
 
@@ -520,7 +521,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function store_family_friend(Request $request,$will_user_id)
+    public function store_family_friend(Request $request, $will_user_id)
     {
         try {
             DB::beginTransaction();
@@ -571,7 +572,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-    public function process_inherited_charity(Request $request,$will_user_id)
+    public function process_inherited_charity(Request $request, $will_user_id)
     {
 
         try {
@@ -609,7 +610,7 @@ class WillGeneratorController extends Controller
 
             DB::commit();
 
-            $beneficiaries=$willUserInfo->beneficiaries()
+            $beneficiaries = $willUserInfo->beneficiaries()
                 ->where('beneficiable_type', Charity::class)->get();
             // Redirect to the next step (e.g., allocating percentages)
             return response()->json([
@@ -647,7 +648,7 @@ class WillGeneratorController extends Controller
 
 
 
-    public function store_share_percentage(Request $request,$will_user_id)
+    public function store_share_percentage(Request $request, $will_user_id)
     {
         try {
             $willUserInfo = WillUserInfo::find($will_user_id);
@@ -673,7 +674,7 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function benificaries_death_backup(Request $request,$will_user_id)
+    public function benificaries_death_backup(Request $request, $will_user_id)
     {
 
         if ($request->has('beneficiary')) {
@@ -694,11 +695,10 @@ class WillGeneratorController extends Controller
             'beneficiary' => $beneficiary,
             'allBeneficiaries' => $allBeneficiaries->beneficiaries
         ]);
-
     }
 
 
-    public function store_benificaries_death_backup(Request $request,$will_user_id)
+    public function store_benificaries_death_backup(Request $request, $will_user_id)
     {
 
         try {
@@ -736,7 +736,7 @@ class WillGeneratorController extends Controller
     public function estate_summary($will_user_id)
     {
 
-        $beneficiaries = Beneficiary::where('will_user_id',$will_user_id)
+        $beneficiaries = Beneficiary::where('will_user_id', $will_user_id)
             ->orderBy('id')
             ->get();
 
@@ -746,7 +746,8 @@ class WillGeneratorController extends Controller
         ]);
     }
 
-    public function store_estate_summary(Request $request,$will_user_id){
+    public function store_estate_summary(Request $request, $will_user_id)
+    {
         try {
 
             DB::beginTransaction();

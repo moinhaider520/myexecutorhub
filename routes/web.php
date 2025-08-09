@@ -985,6 +985,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
      Route::get('will_generator/funeral',[PartnerWillGeneratorController::class,'funeral'])->name('will_generator.funeral');
      Route::post('will_generator/store_funeral_plan',[PartnerWillGeneratorController::class,'store_funeral_plan'])->name('will_generator.store_funeral_plan');
+     Route::get('will_generator/create_pdf/{will_user_id}',[PartnerWillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
 });
 
 // Executors  Routes

@@ -17,7 +17,11 @@ class WillUserInfo extends Model
         return $this->belongsToMany(User::class, 'will_user_executors', 'will_user_info_id', 'executor_id');
     }
 
-
+   public function child()
+    {
+        return $this->hasMany(WillInheritedPeople::class, 'will_user_id', 'id')
+                    ->where('type', 'child');
+    }
     public function beneficiaries()
     {
         return $this->hasMany(Beneficiary::class, 'will_user_id', 'id');
