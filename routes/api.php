@@ -417,6 +417,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::get('/will_generator/partner_about_you',[PartnerWillGeneratorController::class,'partner_about_you'])->name('wills.partner_about_you');
     Route::get('/will_generator/about_you/{id}',[PartnerWillGeneratorController::class,'about_you'])->name('wills.about_you');
     Route::post('/will_generator/store_about_you',[PartnerWillGeneratorController::class,'store_about_you'])->name('wills.store_about_you');
+    Route::post('/will_generator/edit_about_you/{id}',[PartnerWillGeneratorController::class,'update_about_you'])->name('will_generator.update_about_you');
 
     // will generator children and pets
     Route::get('/will_generator/child/{will_user_id}',[PartnerWillGeneratorController::class,'child'])->name('will_generator.child');
@@ -439,7 +440,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     //account properties
     Route::get('will_generator/account_properties/{will_user_id}',[PartnerWillGeneratorController::class,'account_properties'])->name('will_generator.account_properties');
     Route::post('will_generator/account_properties/store/{will_user_id}',[PartnerWillGeneratorController::class,'store_account_properties'])->name('will_generator.account_properties.store');
-    Route::put('will_generator/account_properties/update/{id}', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
+    Route::post('will_generator/account_properties/update/{id}', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
     Route::delete('will_generator/account_properties/delete/{id}', [PartnerWillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
 
 

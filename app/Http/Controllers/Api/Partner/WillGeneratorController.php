@@ -72,6 +72,37 @@ class WillGeneratorController extends Controller
         }
     }
 
+    public function update_about_you(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $user_will_user_info = WillUserInfo::findOrFail($id);
+
+            $user_will_user_info->update([
+                'legal_name' => $request->legal_name,
+                'user_name' => $request->user_name,
+                'date_of_birth' => $request->date_of_birth,
+                'address_line_1' => $request->address_line_1,
+                'address_line_2' => $request->address_line_2,
+                'city' => $request->city,
+                'post_code' => $request->post_code,
+                'phone_number' => $request->phone_number,
+                'martial_status' => $request->martial_status,
+                'children' => $request->children,
+                'pets' => $request->pets,
+            ]);
+
+            DB::commit();
+
+            return response()->json(['status' => true, 'data' => $user_will_user_info]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
     public function child($will_user_id)
     {
         try {
@@ -112,8 +143,8 @@ class WillGeneratorController extends Controller
             DB::beginTransaction();
             WillInheritedPeople::where('id', '=', $id)
                 ->update([
-                    'first_name' => $request->child_name,
-                    'date_of_birth' => $request->edit_child_date_of_birth,
+                    'first_name' => $request->name,
+                    'date_of_birth' => $request->date_of_birth,
                 ]);
             DB::commit();
             $children = WillInheritedPeople::where('id', '=', $request->child_id)->first();
@@ -401,9 +432,9 @@ class WillGeneratorController extends Controller
                 ->update([
                     'first_name' => $request->first_name,
                     'last_name' => $request->last_name,
-                    'phone' => $request->phone_number,
+                    'phone' => $request->phone,
                     'email' => $request->email,
-                    'type' => $request->relationship,
+                    'type' => $request->type,
                 ]);
             DB::commit();
             $partner = WillInheritedPeople::find($id);
@@ -558,7 +589,6 @@ class WillGeneratorController extends Controller
         }
     }
 
-
     public function inherited_charity($will_user_id)
     {
         try {
@@ -625,8 +655,6 @@ class WillGeneratorController extends Controller
         }
     }
 
-
-
     public function store_charity(Request $request)
     {
         try {
@@ -645,8 +673,6 @@ class WillGeneratorController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
-
-
 
     public function store_share_percentage(Request $request, $will_user_id)
     {
