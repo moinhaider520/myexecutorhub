@@ -161,12 +161,12 @@
                         <!-- ACTION BUTTONS -->
                         <div class="col-md-6">
                             Your Progress
-                            <div class="progress" style="height: 25px;">
+                            {{-- <div class="progress" style="height: 25px;">
                                 <div class="progress-bar bg-success" role="progressbar" id="myProgressBar"
                                     style="width: 0%;" aria-valuemin="0" aria-valuemax="100">
                                     0%
                                 </div>
-                            </div>
+                            </div> --}}
                             <img
                                 src="https://res.cloudinary.com/dwr27vxv7/image/upload/c_scale,f_auto,q_auto,w_600/illustrations/experts.png" />
                             <a href="{{ route('partner.will_generator.create_pdf',$will_user_info->id ) }}"
