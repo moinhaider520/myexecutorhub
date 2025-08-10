@@ -95,13 +95,10 @@ class WillGeneratorController extends Controller
         return redirect()->route('partner.will_generator.create',session('will_user_id'))->with(['success' => 'Your Personal Information has been submitted successfully']);
     }
 
-    public function about_you()
+    public function about_you($will_user_id=null)
     {
-        $authId = auth()->id();
-        $partners=WillInheritedPeople::where('will_user_id', session('will_user_id'))
-            ->where('type', 'partner')
-            ->get();
-        return view('partner.will_generator.about_you', ['authId' => $authId]);
+        $user_info=WillUserInfo::find($will_user_id);
+        return view('partner.will_generator.about_you',compact('user_info'));
     }
 
     public function store_about_you(Request $request)
@@ -109,7 +106,10 @@ class WillGeneratorController extends Controller
         try {
 
             DB::beginTransaction();
-            $will_user_id = WillUserInfo::create([
+            $will_user_id = WillUserInfo::updateOrCreate(
+                [
+                    'id'=>$request->will_user_id
+                ],[
                 'legal_name' => $request->legal_name,
                 'user_name' => $request->user_name,
                 'date_of_birth' => $request->date_of_birth,

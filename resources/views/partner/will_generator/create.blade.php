@@ -80,7 +80,7 @@
                                     @else
                                         <p>No pet</p>
                                     @endif
-                                    <a href="{{ route('partner.will_generator.about_you') }}">Edit</a>
+                                    <a href="{{ route('partner.will_generator.about_you',$will_user_info->id) }}">Edit</a>
                                 </div>
                             </div>
                             <div class="card">
