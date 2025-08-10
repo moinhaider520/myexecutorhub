@@ -579,7 +579,7 @@ class WillGeneratorController extends Controller
         try {
 
 
-            $familyInheritedIdsString = implode(',', $request['recipients']);
+            $familyInheritedIdsString = implode(',', $request['executors']);
             DB::beginTransaction();
             $gift = WillUserInheritedGift::create([
                 'gift_type' => $request['type'],

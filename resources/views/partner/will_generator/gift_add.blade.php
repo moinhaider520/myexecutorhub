@@ -385,7 +385,7 @@
                                     @forelse ($executors as $executor)
                                         <div class="executor-card">
                                             <label>
-                                                <input type="checkbox" name="recipients[]" value="{{ $executor->id }}">
+                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}">
                                                 <div class="executor-details">
                                                     <span class="executor-name">{{ $executor->first_name }}
                                                         {{ $executor->last_name }}</span>
