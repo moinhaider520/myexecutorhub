@@ -169,7 +169,7 @@
                             </div>
                             <img
                                 src="https://res.cloudinary.com/dwr27vxv7/image/upload/c_scale,f_auto,q_auto,w_600/illustrations/experts.png" />
-                            <a href="{{ route('partner.will_generator.create_pdf', 1) }}"
+                            <a href="{{ route('partner.will_generator.create_pdf',$will_user_info->id ) }}"
                                 class="btn btn-primary w-100">Download Your Will</a>
                         </div>
                     </div>

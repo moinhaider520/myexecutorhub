@@ -131,6 +131,26 @@ class WillGeneratorController extends Controller
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
+
+
+
+    public function delete_about_you($will_user_id){
+        try{
+            $user_info=WillUserInfo::find($will_user_id);
+            if($user_info)
+            {
+                DB::beginTransaction();
+                $user_info->delete();
+                DB::commit();
+            }
+            return redirect()->back()->with('success','User Info data has been deleted successfully');
+
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+        }
+    }
     public function store_user_child(Request $request)
     {
 

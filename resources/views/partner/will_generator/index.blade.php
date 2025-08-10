@@ -54,7 +54,7 @@
                                                                     class="btn btn-warning btn-sm edit-button"
                                                                     >Edit</a>
                                                                 <form
-                                                                    action="#"
+                                                                    action="{{route('partner.will_generator.delete_about_you',$user_about_info->id)}}"
                                                                     method="POST" style="display:inline;">
                                                                     @csrf
                                                                     @method('DELETE')
