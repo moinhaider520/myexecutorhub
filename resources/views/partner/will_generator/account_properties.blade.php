@@ -102,8 +102,9 @@ input[type="radio"] {
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="msform" class="needs-validation" novalidate
-                                    action="{{ route('partner.will_generator.account_properties') }}" method="POST">
+                                    action="{{ route('partner.will_generator.account_properties',$will_user_id) }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                                     <script src="https://cdn.tailwindcss.com"></script> {{-- Consider moving this to your main layout if used globally --}}
                                     <div class="stepper row g-3 needs-validation custom-input" novalidate="">
                                         <div class="col-sm-12">
@@ -128,6 +129,7 @@ input[type="radio"] {
 
 
                                             <div id="existingAssetsList">
+
                                                 @forelse ($assets as $asset)
                                                     <div id="assetDetailItem-{{ $asset->id }}"
                                                         class="asset-detail-item bg-white p-4 rounded-lg shadow-md border border-gray-200 mb-8">
@@ -554,6 +556,7 @@ input[type="radio"] {
 
         // --- Add Asset Form Submission (already good) ---
         $('#addWillAssetForm').on('submit', function(e) {
+            var will_user_id=$("#will_user_id").val();
             e.preventDefault();
             clearAddErrors();
 
@@ -589,12 +592,12 @@ input[type="radio"] {
             }
 
             $.ajax({
-                url: "{{route('partner.will_generator.account_properties.store')}}",
+                url: "{{route('partner.will_generator.account_properties.store','')}}/"+will_user_id,
                 method: 'POST',
                 data: postData,
                 dataType: 'json',
                 success: function(response) {
-                    $('#addWillAssetModal').click(); 
+                    $('#addWillAssetModal').click();
                     $('#existingAssetsList').html(response.data);
                     Swal.fire('Success!', 'Asset added successfully!', 'success');
                 },

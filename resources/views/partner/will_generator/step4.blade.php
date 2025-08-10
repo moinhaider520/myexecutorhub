@@ -70,7 +70,7 @@
 
                                             <div id="childrenContentWrapper" class="child-details-wrapper">
                                                 <div id="existingChildrenList">
-                                              
+
                                                     @include('partner.will_generator.ajax.children_list', ['children' => $children])
                                                 </div>
 
@@ -131,7 +131,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="date_of_birth">Date Of Birth</label>
-                            <input type="text" class="form-control" name="child_date_of_birth" id="date_of_birth"
+                            <input type="date" class="form-control" name="child_date_of_birth" id="date_of_birth"
                                 placeholder="Enter Date of birth" required>
                             <div class="text-danger" id="error-add-date_of_birth"></div> {{-- Changed ID for clarity --}}
                         </div>
@@ -164,7 +164,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="edit_child_date_of_birth">Date Of Birth</label>
-                            <input type="text" class="form-control" name="edit_child_date_of_birth"
+                            <input type="date" class="form-control" name="edit_child_date_of_birth"
                                 id="edit_child_date_of_birth" placeholder="Enter Date of birth" required>
                             <div class="text-danger" id="error-edit-date_of_birth"></div> {{-- Changed ID for clarity --}}
                         </div>

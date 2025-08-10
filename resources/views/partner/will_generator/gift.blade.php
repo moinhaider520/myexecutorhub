@@ -308,7 +308,7 @@
                         <button type="button" class="done-button" id="doneButton">
                             Done
                         </button>
-
+                        <input type="hidden" id="will_user_id" value="{{$will_user_id}}">
                     </div>
                 </div>
             </div>
@@ -331,6 +331,7 @@
 
     <script>
         $(document).ready(function() {
+            var will_user_id=$("#will_user_id").val();
             // Handle "Remove" button click for physical gifts
             $('#physicalGiftsList').on('click', '.remove-button', function() {
                 const giftItem = $(this).closest('.gift-item');
@@ -390,7 +391,7 @@
             $('.add-gift-button').on('click', function() {
                 const giftType = $(this).data('gift-type');
 
-                window.location.href = "{{ url('partner/will_generator/gift/add') }}/" + giftType;
+                window.location.href = "{{ url('partner/will_generator/gift/add') }}/" + giftType+'/'+will_user_id;
             });
 
             // Handle "Done" button click
@@ -403,7 +404,7 @@
                     timer: 2000
                 }).then(() => {
 
-                    window.location.href = "{{route('partner.will_generator.create')}}";
+                    window.location.href = "{{route('partner.will_generator.create','')}}/"+will_user_id;
                 });
             });
         });

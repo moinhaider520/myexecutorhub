@@ -319,7 +319,7 @@
                                 <label for="martial_status" class="form-label font-semibold">Marital Status <span class="text-red-500">*</span></label>
                                 <p class="form-helper-text">Select your current legal status, even if you know it's going to change soon. You can always update this later.</p>
                                 <select class="form-control" name="martial_status" id="martial_status" required>
-                                    <option value="" disabled selected>-- Select Marital Status --</option>
+                                    <option value="" disabled>-- Select Marital Status --</option>
                                     <option value="Single">Single</option>
                                     <option value="Living with partner but not married">Living with partner but not married</option>
                                     <option value="Married">Married</option>

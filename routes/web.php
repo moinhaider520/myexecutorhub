@@ -923,7 +923,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // WILL GENERATOR
     Route::get('will_generator', [PartnerWillGeneratorController::class, 'index'])->name('will_generator.index');
-    Route::get('will_generator/create', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
+    Route::get('will_generator/create/{will_user_id}', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
     Route::get('will_generator/about_you', [PartnerWillGeneratorController::class, 'about_you'])->name('will_generator.about_you');
     Route::get('will_generator/step3', [PartnerWillGeneratorController::class, 'step3'])->name('will_generator.step3');
     Route::post('will_generator/store_step3', [PartnerWillGeneratorController::class, 'store_step3'])->name('will_generator.store_step3');
@@ -945,9 +945,9 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/user_partner/edit', [PartnerWillGeneratorController::class, 'edit_user_partner'])->name('will_generator.user_partner.edit');
     Route::delete('will_generator/user_partner/delete', [PartnerWillGeneratorController::class, 'partner_delete'])->name('will_generator.user_partner.delete');
 
-    Route::get('will_generator/account_properties', [PartnerWillGeneratorController::class, 'account_properties'])->name('will_generator.account_properties');
-    Route::post('will_generator/account_properties', [PartnerWillGeneratorController::class, 'submit_account_properties'])->name('will_generator.account_properties');
-    Route::post('will_generator/account_properties/store', [PartnerWillGeneratorController::class, 'store_account_properties'])->name('will_generator.account_properties.store');
+    Route::get('will_generator/account_properties/{will_user_id}', [PartnerWillGeneratorController::class, 'account_properties'])->name('will_generator.account_properties');
+    Route::post('will_generator/account_properties/{will_user_id}', [PartnerWillGeneratorController::class, 'submit_account_properties'])->name('will_generator.account_properties');
+    Route::post('will_generator/account_properties/store/{will_user_id}', [PartnerWillGeneratorController::class, 'store_account_properties'])->name('will_generator.account_properties.store');
     Route::put('will_generator/account_properties/update', [PartnerWillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
     Route::delete('will_generator/account_properties/delete/{id}', [PartnerWillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
 
@@ -969,14 +969,14 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('will_generator/store_share_percentage',[PartnerWillGeneratorController::class,'store_share_percentage'])->name('will_generator.store_share_percentage');
     Route::get('will_generator/benificaries_death_backup',[PartnerWillGeneratorController::class,'benificaries_death_backup'])->name('will_generator.benificaries_death_backup');
     Route::post('will_generator/store_benificaries_death_backup',[PartnerWillGeneratorController::class,'store_benificaries_death_backup'])->name('will_generator.store_benificaries_death_backup');
-    Route::get('will_generator/estate/summary',[PartnerWillGeneratorController::class,'estate_summary'])->name('will_generator.estate.summary');
-    Route::post('will_generator/estate/store_estate_summary',[PartnerWillGeneratorController::class,'store_estate_summary'])->name('will_generator.estate.store_estate_summary');
+    Route::get('will_generator/estate/summary/{will_user_id}',[PartnerWillGeneratorController::class,'estate_summary'])->name('will_generator.estate.summary');
+    Route::post('will_generator/estate/store_estate_summary/{will_user_id}',[PartnerWillGeneratorController::class,'store_estate_summary'])->name('will_generator.estate.store_estate_summary');
 
 
 
-    Route::get('will_generator/gift',[PartnerWillGeneratorController::class,'gift'])->name('will_generator.gift');
-    Route::get('will_generator/gift/add/{type}',[PartnerWillGeneratorController::class,'show_add_gift'])->name('will_generator.gift.add');
-    Route::post('will_generator/gift/store_add_gift',[PartnerWillGeneratorController::class,'store_add_gift'])->name('will_generator.gift.store_add_gift');
+    Route::get('will_generator/gift/{will_user_id}',[PartnerWillGeneratorController::class,'gift'])->name('will_generator.gift');
+    Route::get('will_generator/gift/add/{type}/{will_user_id}',[PartnerWillGeneratorController::class,'show_add_gift'])->name('will_generator.gift.add');
+    Route::post('will_generator/gift/store_add_gift/{will_user_id}',[PartnerWillGeneratorController::class,'store_add_gift'])->name('will_generator.gift.store_add_gift');
     Route::get('will_generator/gift/edit_add_gift/{id}',[PartnerWillGeneratorController::class,'edit_add_gift'])->name('will_generator.gift.edit_add_gift');
     Route::post('will_generator/gift/update_gift/{id}',[PartnerWillGeneratorController::class,'update_gift'])->name('will_generator.gift.update_gift');
     Route::delete('will_generator/gift/delete/{id}',[PartnerWillGeneratorController::class,'delete_gift'])->name('will_generator.gift.delete_gift');

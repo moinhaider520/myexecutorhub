@@ -139,7 +139,7 @@
 
             <!-- Excluded Individuals Section -->
             <section class="bg-white p-6 rounded-lg shadow-md mb-8">
-                <form action="{{route('partner.will_generator.estate.store_estate_summary')}}" method="post">
+                <form action="{{route('partner.will_generator.estate.store_estate_summary',$will_user_id)}}" method="post">
                     @csrf
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Is there anyone you've specifically chosen to leave out of your will?</h2>
                 <p class="text-gray-600 mb-4">Such as close family, partners or someone who relies on you financially.</p>

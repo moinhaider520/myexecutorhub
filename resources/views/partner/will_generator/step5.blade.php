@@ -72,7 +72,7 @@
                                                                 <button type="button" data-toggle="modal"
                                                                     data-target="#editWillPetModal"
                                                                     data-id="{{ $pet->id }}"
-                                                                    data-name="{{ $pet->pet_name }}"
+                                                                    data-name="{{ $pet->first_name }}"
                                                                     data-will="{{ $pet->will_user_id }}"
                                                                     class="edit_button text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16"
