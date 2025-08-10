@@ -589,6 +589,17 @@ class WillGeneratorController extends Controller
         }
     }
 
+    public function charities()
+    {
+        try {
+
+            $charities = Charity::all();
+            return response()->json(['status' => true, 'data' => $charities]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
     public function inherited_charity($will_user_id)
     {
         try {

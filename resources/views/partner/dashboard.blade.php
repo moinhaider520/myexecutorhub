@@ -11,28 +11,26 @@
         }
     </style>
     <div class="page-body">
-        
+
         <!-- ONBOARDING SECTION -->
-        @if (!collect($guide)->every(fn($completed) => $completed))
-            <div class="container">
-                <div class="row">
-                    <div class="card">
-                        <h2 class="p-2">Onboarding Guide</h2>
-                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                        <br />
-                        <ol>
-                            @foreach ($guide as $task => $completed)
-                                @if ($completed)
-                                    <li style="color: green;">{{ $task }} (Completed)</li>
-                                @else
-                                    <li style="color: red;">{{ $task }}</li>
-                                @endif
-                            @endforeach
-                        </ol>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                    <h2 class="p-2">Onboarding Guide</h2>
+                    <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
+                    <br />
+                    <ol>
+                        @foreach ($guide as $task => $completed)
+                            @if ($completed)
+                                <li style="color: green;">{{ $task }} (Completed)</li>
+                            @else
+                                <li style="color: red;">{{ $task }}</li>
+                            @endif
+                        @endforeach
+                    </ol>
                 </div>
             </div>
-        @endif
+        </div>
         <!-- Coupon Section -->
         <div class="container">
             <div class="row">
@@ -355,6 +353,11 @@
                             <img src="{{ asset('assets/partner_guide_images/image3.png') }}"
                                 style="width:100%;height:450px;" />
 
+                            <h5>How to view my referrals? (Click on the Video to Pause/UnPause)</h5>
+                            <video id="referralsVideo"style="width:100%;height:450px;">
+                                <source src="{{ asset('assets/view_refferals.mkv') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -661,6 +664,18 @@
                 alert('No valid coupon code available.');
             }
         }
+    </script>
+
+    <script>
+        const video = document.getElementById('referralsVideo');
+
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
     </script>
 
 @endsection

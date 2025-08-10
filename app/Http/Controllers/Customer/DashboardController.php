@@ -109,7 +109,8 @@ class DashboardController extends Controller
             'allDocumentTypes',
             'uploadedDocumentTypes',
             'documentReminders',
-            'documentLocations'
+            'documentLocations',
+            'user'
 
         ));
     }

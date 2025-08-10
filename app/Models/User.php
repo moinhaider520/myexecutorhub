@@ -59,6 +59,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(CouponUsage::class, 'partner_id');
     }
+    
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'reffered_by');
+    }
 
     public function usedCouponFrom()
     {
