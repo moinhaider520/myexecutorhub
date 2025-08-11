@@ -773,7 +773,7 @@ class WillGeneratorController extends Controller
     public function estate_summary($will_user_id)
     {
 
-        $beneficiaries = Beneficiary::where('will_user_id', $will_user_id)
+        $beneficiaries = Beneficiary::with('willUser')->where('will_user_id', $will_user_id)
             ->orderBy('id')
             ->get();
 
@@ -802,6 +802,35 @@ class WillGeneratorController extends Controller
                 'message' => 'Estate summary saved successfully.',
                 'will_estate_summary' => $will_estate_summary
             ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function executors($will_user_id)
+    {
+        try {
+            $will_user_info = WillUserInfo::find($will_user_id);
+            $will_user_info->refresh()->load('executors');
+            return response()->json(['status' => true, 'data' => $will_user_info]);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function store_executor(Request $request, $will_user_id)
+    {
+        try {
+            
+            DB::beginTransaction();
+            $will_user_info = WillUserInfo::find($will_user_id);
+            $will_user_info->executors()->sync($request->executor_id);
+            
+            DB::commit();
+            $will_user_info = WillUserInfo::find($will_user_id);
+            $will_user_info->refresh()->load('executors');
+            return response()->json(['status' => true, 'message' => 'Executor saved successfully', 'data' => $will_user_info]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);

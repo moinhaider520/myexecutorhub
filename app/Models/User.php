@@ -71,8 +71,5 @@ class User extends Authenticatable
     }
 
 
-    public function willUserInfosAsExecutor()
-    {
-        return $this->belongsToMany(WillUserInfo::class, 'will_user_executors', 'executor_id', 'will_user_info_id');
-    }
+    
 }

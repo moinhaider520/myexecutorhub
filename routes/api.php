@@ -473,6 +473,10 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('will_generator/store_benificaries_death_backup/{will_user_id}', [PartnerWillGeneratorController::class, 'store_benificaries_death_backup'])->name('will_generator.store_benificaries_death_backup');
     Route::get('will_generator/estate/summary/{will_user_id}', [PartnerWillGeneratorController::class, 'estate_summary'])->name('will_generator.estate.summary');
     Route::post('will_generator/estate/store_estate_summary/{will_user_id}', [PartnerWillGeneratorController::class, 'store_estate_summary'])->name('will_generator.estate.store_estate_summary');
+    
+    
+    Route::get('will_generator/executor/{will_user_id}', [PartnerWillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
+    Route::post('will_generator/executor/store/{will_user_id}', [PartnerWillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
 
 });
 // Customer-specific routes
