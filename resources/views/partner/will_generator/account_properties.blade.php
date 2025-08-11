@@ -200,7 +200,7 @@ input[type="radio"] {
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <!-- <div class="col-xl-4">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Related articles</h4>
@@ -214,7 +214,7 @@ input[type="radio"] {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

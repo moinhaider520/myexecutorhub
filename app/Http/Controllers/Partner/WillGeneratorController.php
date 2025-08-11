@@ -471,9 +471,13 @@ class WillGeneratorController extends Controller
     }
     public function choose_inherited_charity()
     {
-        $executors = User::role('executor')->get();
+        $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+        $inheritedPersons = Beneficiary::where('beneficiable_type', WillInheritedPeople::class)
+            ->where('will_user_id', $will_user_id)
+            ->get();
+      
         $charities = Charity::get();
-        return view('partner.will_generator.estate.choose_inherited_charity', compact('executors', 'charities'));
+        return view('partner.will_generator.estate.choose_inherited_charity', compact('inheritedPersons', 'charities'));
     }
 
     public function process_inherited_charity(Request $request)

@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <!-- <div class="col-xl-4">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Questions?</h4>
@@ -127,7 +127,7 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

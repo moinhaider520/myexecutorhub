@@ -701,15 +701,10 @@
                         <div class="inheritance-summary-card">
                             <h4>Inheriting your estate:</h4>
                             <ul id="inheritanceSummaryList">
-                                {{-- These items will be dynamically updated by JavaScript --}}
-                                {{-- Initial items for demo, based on your screenshot's summary --}}
-                                <li>Keane Woodward</li>
-                                <li>Thane Dillard</li>
-                                <li>Lane Rodgers</li>
-                                <li>The RNLI</li>
-                                <li>Macmillan Cancer Support</li>
-                                <li>Edhi International Foundation UK</li>
-                                <li>The Charities Aid Foundation</li>
+                                @foreach( $inheritedPersons as $person)
+                                    <li>{{ $person->name }}</li>
+                                @endforeach
+                                
                             </ul>
                         </div>
                     </div>
@@ -807,13 +802,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Main Yes/No button logic
+      
             const yesButton = document.getElementById('yesButton');
             const noButton = document.getElementById('noButton');
             const leaveToCharityInput = document.getElementById('leaveToCharityInput');
             const charitySelectionContainer = document.getElementById('charitySelectionContainer');
-
-            // Check if these elements exist before adding listeners to avoid errors on pages where they might not be present
+            const inheritedPersonsHTML = document.createElement('div');
+        inheritedPersonsHTML.innerHTML = document.getElementById('inheritanceSummaryList').innerHTML;
             if (yesButton && noButton && leaveToCharityInput && charitySelectionContainer) {
                 yesButton.addEventListener('click', function() {
                     yesButton.classList.add('selected');
@@ -829,7 +824,6 @@
                     charitySelectionContainer.classList.add('hidden');
                 });
 
-                // Initialize state based on the hidden input (if pre-filled by backend)
                 if (leaveToCharityInput.value === 'no') {
                     charitySelectionContainer.classList.add('hidden');
                     noButton.classList.add('selected');
@@ -841,102 +835,65 @@
                 }
             }
 
-
-            // Charity item checkbox logic for logo-based charities
-            document.querySelectorAll('.charity-item').forEach(item => {
-                const checkbox = item.querySelector('input[type="checkbox"]');
-                item.addEventListener('click', function(e) {
-                    // Prevent click on label from re-toggling if checkbox itself was clicked
-                    if (e.target !== checkbox) {
-                        checkbox.checked = !checkbox.checked;
-                    }
-                    updateInheritanceSummary();
-                });
-                checkbox.addEventListener('change',
-                updateInheritanceSummary); // Listen to direct changes too
+            document.querySelectorAll('.charity-item, .charity-text-item').forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            item.addEventListener('click', function(e) {
+                if (e.target !== checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                }
+                updateInheritanceSummary(inheritedPersonsHTML);
             });
+            checkbox.addEventListener('change', () => updateInheritanceSummary(inheritedPersonsHTML));
+        });
 
-            // Charity item checkbox logic for text-based charities
-            document.querySelectorAll('.charity-text-item').forEach(item => {
-                const checkbox = item.querySelector('input[type="checkbox"]');
-                item.addEventListener('click', function(e) {
-                    if (e.target !== checkbox) {
-                        checkbox.checked = !checkbox.checked;
-                    }
-                    updateInheritanceSummary();
-                });
-                checkbox.addEventListener('change', updateInheritanceSummary);
-            });
+            function updateInheritanceSummary(initialList) {
+            const summaryList = document.getElementById('inheritanceSummaryList');
+            if (!summaryList) return;
 
-            // Function to update the inheritance summary sidebar
-            function updateInheritanceSummary() {
-                const summaryList = document.getElementById('inheritanceSummaryList');
-                if (!summaryList) return; // Exit if summary list isn't present
+            // 1. Clear the entire list first
+            summaryList.innerHTML = '';
+            
+            // 2. Add the inherited persons back
+            summaryList.innerHTML = initialList.innerHTML;
 
-                summaryList.innerHTML = `
-                <li>Keane Woodward</li>
-                <li>Thane Dillard</li>
-                <li>Lane Rodgers</li>
-            `; // Reset to fixed items
+            // 3. Add all selected charities (both pre-defined and manual)
+            document.querySelectorAll(
+                '.charity-item input[type="checkbox"]:checked, .charity-text-item input[type="checkbox"]:checked'
+            ).forEach(checkbox => {
+                let charityName = 'Unnamed Charity';
+                const parentItem = checkbox.closest('.charity-item, .charity-text-item');
 
-                document.querySelectorAll(
-                    '.charity-item input[type="checkbox"]:checked, .charity-text-item input[type="checkbox"]:checked'
-                ).forEach(checkbox => {
-                    let charityName = '';
-                    if (checkbox.closest('.charity-item')) {
+                if (parentItem) {
+                    const textNameElement = parentItem.querySelector('.charity-text-name');
+                    if (textNameElement) {
+                        charityName = textNameElement.textContent.trim();
+                    } else {
                         const charityId = checkbox.value;
                         switch (charityId) {
-                            case 'macmillan':
-                                charityName = 'Macmillan Cancer Support';
-                                break;
-                            case 'rnli':
-                                charityName = 'The RNLI';
-                                break;
-                            case 'gosh':
-                                charityName = 'Great Ormond Street Hospital Charity';
-                                break;
-                            case 'marie_curie':
-                                charityName = 'Marie Curie';
-                                break;
-                            case 'shelter':
-                                charityName = 'Shelter';
-                                break;
-                            case 'alzheimers':
-                                charityName = 'Alzheimer\'s Society';
-                                break;
-                            case 'wwf':
-                                charityName = 'WWF';
-                                break;
-                            case 'nspcc':
-                                charityName = 'NSPCC';
-                                break;
-                            case 'bhf':
-                                charityName = 'British Heart Foundation';
-                                break;
-                            case 'action_for_children':
-                                charityName = 'Action for Children';
-                                break;
-                            default:
-                                charityName = checkbox.value; // Fallback
+                            case 'macmillan': charityName = 'Macmillan Cancer Support'; break;
+                            case 'rnli': charityName = 'The RNLI'; break;
+                            case 'gosh': charityName = 'Great Ormond Street Hospital Charity'; break;
+                            case 'marie_curie': charityName = 'Marie Curie'; break;
+                            case 'shelter': charityName = 'Shelter'; break;
+                            case 'alzheimers': charityName = 'Alzheimer\'s Society'; break;
+                            case 'wwf': charityName = 'WWF'; break;
+                            case 'nspcc': charityName = 'NSPCC'; break;
+                            case 'bhf': charityName = 'British Heart Foundation'; break;
+                            case 'action_for_children': charityName = 'Action for Children'; break;
+                            default: charityName = checkbox.value; break; // Fallback
                         }
-                    } else if (checkbox.closest('.charity-text-item')) {
-                        charityName = checkbox.closest('.charity-text-item').querySelector(
-                            '.charity-text-name').textContent;
                     }
-
-                    if (charityName) {
-                        const listItem = document.createElement('li');
-                        listItem.textContent = charityName;
-                        summaryList.appendChild(listItem);
-                    }
-                });
-            }
-
-            // Initial summary update
-            updateInheritanceSummary();
-
-
-            // MODAL LOGIC
+                }
+                
+                // Add the charity to the summary list
+                const listItem = document.createElement('li');
+                listItem.textContent = charityName;
+                summaryList.appendChild(listItem);
+            });
+        }
+        
+        // Call the function once on page load to set the initial state
+        updateInheritanceSummary(inheritedPersonsHTML);
             const charityModal = document.getElementById('charityModal');
             const closeCharityModalButton = document.getElementById('closeCharityModal');
             const addYourOwnCharityButton = document.getElementById('addYourOwnCharityButton'); // Main page button
@@ -950,19 +907,16 @@
 
             const modalTitle = document.getElementById('modalTitle');
             const charitySearchInput = document.getElementById('charitySearchInput');
-            const searchResults = document.getElementById('searchResults'); // For dynamic search results
+            const searchResults = document.getElementById('searchResults');
             const noResultsMessage = searchResults.querySelector('.no-results-message');
 
-            // Function to open the main charity modal and show the search section
             function openCharityModal() {
-                charityModal.classList.add('active'); // This makes the modal visible
-                showSearchCharitySection(); // Always start with the search section
+                charityModal.classList.add('active'); 
+                showSearchCharitySection(); 
             }
 
-            // Function to close the main charity modal
             function closeCharityModal() {
-                charityModal.classList.remove('active'); // This hides the modal
-                // Optionally clear inputs when closing
+                charityModal.classList.remove('active'); 
                 charitySearchInput.value = '';
                 document.getElementById('manualCharityName').value = '';
                 document.getElementById('manualRegistrationNumber').value = '';
@@ -970,20 +924,19 @@
                 if (manualCharityEmail) {
                     manualCharityEmail.value = '';
                 }
-                // Hide any previous search results message
+               
                 noResultsMessage.classList.add('hidden');
-                // Also clear error messages on close
+               
                 document.getElementById('manual-error-name').textContent = '';
                 document.getElementById('manual-error-registration_number').textContent = '';
                 const manualErrorEmail = document.getElementById('manual-error-email');
                 if (manualErrorEmail) {
                     manualErrorEmail.textContent = '';
                 }
-                searchResults.innerHTML = ''; // Clear search results content
-                noResultsMessage.textContent = 'No results returned for ""'; // Reset the default message
+                searchResults.innerHTML = '';
+                noResultsMessage.textContent = 'No results returned for ""'; 
             }
 
-            // Function to show the search charity section
             function showSearchCharitySection() {
                 manualAddCharitySection.classList.add('hidden');
                 searchCharitySection.classList.remove('hidden');
@@ -994,38 +947,33 @@
             function showManualAddCharitySection() {
                 searchCharitySection.classList.add('hidden');
                 manualAddCharitySection.classList.remove('hidden');
-                modalTitle.textContent = 'Add a new charity'; // Title remains consistent
-                // Reset "I do not know" toggle if it was expanded
+                modalTitle.textContent = 'Add a new charity'; 
                 const charityNumberToggle = document.getElementById('charityNumberToggle');
                 const charityNumberDetails = document.querySelector('.charity-number-details');
-                if (charityNumberToggle) { // Check if element exists
+                if (charityNumberToggle) { 
                     charityNumberToggle.classList.remove('expanded');
                 }
-                if (charityNumberDetails) { // Check if element exists
+                if (charityNumberDetails) { 
                     charityNumberDetails.classList.add('hidden');
                 }
             }
-
-            // Event Listeners for modal interactions
-            // Check if addYourOwnCharityButton exists before attaching listener
             if (addYourOwnCharityButton) {
                 addYourOwnCharityButton.addEventListener('click', openCharityModal);
             }
             closeCharityModalButton.addEventListener('click', closeCharityModal);
             openManualAddCharityButton.addEventListener('click', showManualAddCharitySection);
             backToSearchCharityLink.addEventListener('click', function(e) {
-                e.preventDefault(); // Prevent default link behavior
+                e.preventDefault(); 
                 showSearchCharitySection();
             });
 
-            // Optional: Close modal if clicking outside content
             charityModal.addEventListener('click', function(e) {
                 if (e.target === charityModal) {
                     closeCharityModal();
                 }
             });
 
-            // "I do not know the charity number" toggle logic
+         
             const charityNumberToggle = document.getElementById('charityNumberToggle');
             const charityNumberDetails = document.querySelector('.charity-number-details');
 
@@ -1039,34 +987,30 @@
             }
 
 
-            // Form submission for manual charity (AJAX integration)
             const addManualCharityForm = document.getElementById('addManualCharityForm');
-            // Use jQuery's .on() for consistency with $.ajax if you prefer, or addEventListener
-            $(addManualCharityForm).on('submit', function(e) { // Changed to jQuery .on()
+            $(addManualCharityForm).on('submit', function(e) {
                 e.preventDefault();
 
                 const charityNameInput = document.getElementById('manualCharityName');
                 const charityRegistrationNumberInput = document.getElementById('manualRegistrationNumber');
                 const charityEmailInput = document.getElementById(
-                'manualCharityEmail'); // Re-added if it exists in your form HTML
+                'manualCharityEmail'); 
 
                 let isValid = true;
 
                 // Clear previous errors
                 $('#manual-error-name').text('');
                 $('#manual-error-registration_number').text('');
-                // Ensure you have a span with ID 'manual-error-email' in your HTML if using this
+                
                 const manualErrorEmailSpan = $('#manual-error-email');
                 if (manualErrorEmailSpan.length) {
                     manualErrorEmailSpan.text('');
                 }
 
-
                 if (charityNameInput.value.trim() === '') {
                     $('#manual-error-name').text('Charity Name is required.');
                     isValid = false;
                 }
-
                 const regNumber = charityRegistrationNumberInput.value.trim();
                 // Basic validation for registration number (e.g., if it's not empty, it should be digits)
                 if (regNumber !== '' && !/^\d+$/.test(regNumber)) {
@@ -1075,24 +1019,14 @@
                     isValid = false;
                 }
 
-                // Optional: Email validation if the field is present and required
-                // if (charityEmailInput && charityEmailInput.value.trim() !== '' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(charityEmailInput.value.trim())) {
-                //     if (manualErrorEmailSpan.length) {
-                //         manualErrorEmailSpan.text('Please enter a valid email address.');
-                //     }
-                //     isValid = false;
-                // }
-
 
                 if (isValid) {
                     const charityData = {
                         name: charityNameInput.value.trim(),
                         registration_number: regNumber,
-                        // Only include email if the input exists and has a value
+                       
                         email: charityEmailInput ? charityEmailInput.value.trim() : ''
                     };
-
-                    // Get CSRF token from the meta tag
                     const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
                     $.ajax({
@@ -1108,17 +1042,10 @@
                             closeCharityModal();
                             $("#charity_manual").html(response.data);
 
-                            // IMPORTANT: Update your UI after successful addition.
-                            // Example: Add the new charity to your summary list
                             if (response.charity && response.charity.name) {
-                                // You might want to refresh the entire summary or just append.
-                                // For simplicity, let's re-run the summary update (though a full refresh
-                                // of the charity list on the main page would be more robust for real apps).
+                             
                                 updateInheritanceSummary
-                            (); // Re-run to ensure summary is up-to-date
-                                // Optional: Add to the main selection grid. This would require more sophisticated HTML injection
-                                // to create a new .charity-text-item with a checkbox for selection.
-                                // For now, it will appear in the summary if added.
+                            (); 
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -1151,9 +1078,6 @@
                 }
             });
 
-
-            // Example: Handle search input (simplified)
-            // This was outside your DOMContentLoaded in the previous code, moved it inside.
             charitySearchInput.addEventListener('input', function() {
                 const query = this.value.trim();
                 // Clear previous search results
@@ -1173,55 +1097,15 @@
                             Macmillan Cancer Support (Registered: 261017)
                         </div>
                     `;
-                        // You'd add an event listener here if you want to select this result
+                        
                     }
-                    // In a real application, you'd make an AJAX request here
-                    // If you want to use jQuery for this search as well:
-                    /*
-                    $.ajax({
-                        url: '/api/search-charities', // Your Laravel search endpoint
-                        type: 'GET',
-                        data: { q: query },
-                        dataType: 'json',
-                        success: function(data) {
-                            searchResults.innerHTML = ''; // Clear previous results
-                            if (data.length > 0) {
-                                data.forEach(charity => {
-                                    const resultDiv = document.createElement('div');
-                                    resultDiv.textContent = charity.name + (charity.registration_number ? ` (Reg No: ${charity.registration_number})` : '');
-                                    resultDiv.classList.add('p-2', 'border-b', 'border-gray-200');
-                                    // Add logic to select this charity
-                                    resultDiv.addEventListener('click', function() {
-                                        // Logic to select this charity and potentially close modal or add to list
-                                        console.log('Selected from search:', charity);
-                                        // Example: Add to summary (you'd need to add to your main charity list as well)
-                                        const summaryList = document.getElementById('inheritanceSummaryList');
-                                        const listItem = document.createElement('li');
-                                        listItem.textContent = charity.name;
-                                        summaryList.appendChild(listItem);
-                                        closeCharityModal();
-                                    });
-                                    searchResults.appendChild(resultDiv);
-                                });
-                                noResultsMessage.classList.add('hidden');
-                            } else {
-                                noResultsMessage.classList.remove('hidden');
-                                noResultsMessage.textContent = `No results returned for "${query}"`;
-                            }
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.error('Search error:', errorThrown);
-                            // Handle search error
-                            searchResults.innerHTML = `<div class="text-red-500 text-sm mt-2">Error during search. Please try again.</div>`;
-                        }
-                    });
-                    */
+                   
                 } else {
                     noResultsMessage.classList.add('hidden');
                     searchResults.innerHTML = ''; // Clear results if input is empty
                 }
             });
 
-        }); // This closing brace closes the document.addEventListener('DOMContentLoaded', function() { ... });
+        }); 
     </script>
 @endsection

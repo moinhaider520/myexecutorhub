@@ -315,7 +315,7 @@
                                             <label>
                                                 <input type="checkbox" name="family_friends[]" value="{{ $executor->id }}">
                                                 <div class="executor-details">
-                                                    <span class="executor-name">{{ $executor->first_name }}
+                                                    <span class="executor-name" id="excutor_id_{{$executor->id}}">{{ $executor->first_name }}
                                                         {{ $executor->last_name }}</span>
                                                     <span class="executor-contact">{{ $executor->email }}</span>
                                                 </div>
@@ -366,18 +366,12 @@
                     </div>
                 </div>
 
-                <div class="col-xl-4 sidebar-col"> {{-- Adjusted column width for the sidebar --}}
+                <div class="col-xl-4 sidebar-col"> 
                     <div class="inheritance-summary-card">
                         <h4>Inheriting your estate:</h4>
                         <ul id="inheritanceSummaryList">
-                            {{-- These items will be dynamically updated by JavaScript --}}
-                            <li>Keane Woodward</li>
-                            <li>Thane Dillard</li>
-                            <li>Lane Rodgers</li>
-                            <li>The RNLI</li>
-                            <li>Macmillan Cancer Support</li>
-                            <li>Esdhi International Foundation UK</li>
-                            <li>The Charities Aid Foundation</li>
+                            
+                            
                         </ul>
                     </div>
                 </div>
@@ -695,15 +689,12 @@
 
             // Get checked inheritors from the form
             $('input[name="family_friends[]"]:checked').each(function() {
-                const personName = $(this).closest('.person-item').find('.person-name').text();
+                const personName = $(`#excutor_id_${$(this).val()}`).text();
                 summaryList.append(`<li>${personName}</li>`);
             });
 
             if ($('input[name="family_friends[]"]:checked').length > 0) {
-                summaryList.append(`<li>The RNLI</li>`);
-                summaryList.append(`<li>Macmillan Cancer Support</li>`);
-                summaryList.append(`<li>Esdhi International Foundation UK</li>`);
-                summaryList.append(`<li>The Charities Aid Foundation</li>`);
+                
             } else {
 
             }

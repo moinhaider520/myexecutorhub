@@ -160,8 +160,8 @@
                         </div>
                         <!-- ACTION BUTTONS -->
                         <div class="col-md-6">
-                            Your Progress
-                            {{-- <div class="progress" style="height: 25px;">
+                           {{--  Your Progress
+                            <div class="progress" style="height: 25px;">
                                 <div class="progress-bar bg-success" role="progressbar" id="myProgressBar"
                                     style="width: 0%;" aria-valuemin="0" aria-valuemax="100">
                                     0%
