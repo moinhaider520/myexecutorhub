@@ -278,7 +278,7 @@
                         <input type="hidden" name="type" value="{{ $type }}">
 
                         {{-- You might also need a hidden input for will_user_id if it's not determined from the session/auth --}}
-                        {{-- Example: <input type="hidden" name="will_user_id" value="{{ $will_user_id ?? '' }}"> --}}
+                        <input type="hidden" name="will_user_id" id="will_user_id" value="{{ @$will_user_id }}">
 
                         <div class="card-body basic-wizard important-validation">
                             {{-- Dynamic Title based on gift type --}}
@@ -397,7 +397,7 @@
                                                 data-lastname="{{ $executor->last_name }}"
                                                 data-email="{{ $executor->email }}"
                                                 data-relationship="{{ $executor->type }}"
-                                                data-phone_number="{{ $executor->phone }}" class="edit-button">Edit</a>
+                                                data-phone_number="{{ $executor->phone }}" data-will_user_id="{{ $executor->will_user_id }}" class="edit-button">Edit</a>
                                         </div>
                                     @empty
                                         <p class="text-gray-600 italic">No friends or family executors added yet. Click "Add
@@ -469,6 +469,7 @@
                 <div class="modal-body">
                     <form id="addExecutorForm">
                         @csrf
+                        <input type="hidden" name="will_user_id" id="will_user_id" value="{{ @$will_user_id }}">
                         <div class="form-group mb-3">
                             <label for="name">First Name</label>
                             <input type="text" class="form-control" name="first_name" id="first_name"
@@ -527,7 +528,7 @@
                     <form id="editExecutorForm">
                         @csrf
                         <input type="hidden" name="id" id="editExecutorId">
-
+                        <input type="hidden" name="will_user_id" id="will_user_id" value="{{ @$will_user_id }}">
                         <div class="form-group mb-3">
                             <label for="edit_name">First Name</label>
                             <input type="text" class="form-control" name="first_name" id="edit_first_name"
@@ -642,7 +643,7 @@
                 var phone_number = $(this).data('phone_number');
                 var email = $(this).data('email');
                 var relationship = $(this).data('relationship');
-
+                var will_user_id=$(this).data('will_user_id');
                 // var status = $(this).data('status'); // Removed, as 'status' input is not in your current modal
 
                 $('#editExecutorId').val(id);

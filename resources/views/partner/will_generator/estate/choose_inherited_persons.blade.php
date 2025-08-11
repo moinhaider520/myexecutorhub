@@ -1,11 +1,10 @@
 @extends('layouts.will_generator')
 
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-<style>
-
+    <style>
         body {
             background-color: #f5f5f5;
             /* Light grey background for the whole page */
@@ -206,180 +205,188 @@
 
 
 
-    .edit-button:hover {
-        color: #2b6cb0;
-        /* Darker blue on hover */
-    }
+        .edit-button:hover {
+            color: #2b6cb0;
+            /* Darker blue on hover */
+        }
 
-    .add-new-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-        border: 1px dashed #a0aec0;
-        /* Dashed gray border */
-        border-radius: 0.375rem;
-        color: #4a5568;
-        background-color: #f7fafc;
-        /* Light background */
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-        margin-top: 1.5rem;
-    }
+        .add-new-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            border: 1px dashed #a0aec0;
+            /* Dashed gray border */
+            border-radius: 0.375rem;
+            color: #4a5568;
+            background-color: #f7fafc;
+            /* Light background */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            margin-top: 1.5rem;
+        }
 
-    .add-new-button:hover {
-        border-color: #718096;
-        color: #2d3748;
-        background-color: #ebf4ff;
-    }
+        .add-new-button:hover {
+            border-color: #718096;
+            color: #2d3748;
+            background-color: #ebf4ff;
+        }
 
-    .add-new-button svg {
-        margin-right: 0.5rem;
-    }
+        .add-new-button svg {
+            margin-right: 0.5rem;
+        }
 
-    .inheritance-summary-card {
-        background-color: #ffffff;
-        border-radius: 0.5rem;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-        padding: 1.5rem;
-    }
+        .inheritance-summary-card {
+            background-color: #ffffff;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+        }
 
-    .inheritance-summary-card h4 {
-        font-weight: 700;
-        margin-bottom: 1rem;
-        color: #2d3748;
-    }
+        .inheritance-summary-card h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
 
-    .inheritance-summary-card ul li {
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #edf2f7;
-        color: #4a5568;
-        font-size: 0.95rem;
-    }
+        .inheritance-summary-card ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #edf2f7;
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
 
-    .inheritance-summary-card ul li:last-child {
-        border-bottom: none;
-    }
+        .inheritance-summary-card ul li:last-child {
+            border-bottom: none;
+        }
 
-    /* Adjustments for the main content width */
-    .main-content-col {
-        flex: 0 0 66.666667%;
-        /* Equivalent to col-xl-8 */
-        max-width: 66.666667%;
-    }
+        /* Adjustments for the main content width */
+        .main-content-col {
+            flex: 0 0 66.666667%;
+            /* Equivalent to col-xl-8 */
+            max-width: 66.666667%;
+        }
 
-    .sidebar-col {
-        flex: 0 0 33.333333%;
-        /* Equivalent to col-xl-4 */
-        max-width: 33.333333%;
-    }
+        .sidebar-col {
+            flex: 0 0 33.333333%;
+            /* Equivalent to col-xl-4 */
+            max-width: 33.333333%;
+        }
 
-    /* To center content vertically if it's less than full height */
-    .height-equal {
-        min-height: auto;
-        /* Override default to prevent excessive height */
-    }
-</style>
+        /* To center content vertically if it's less than full height */
+        .height-equal {
+            min-height: auto;
+            /* Override default to prevent excessive height */
+        }
+    </style>
 
-<div class="container-fluid default-dashboard">
-    <div class="row widget-grid">
-        <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
-            <div class="row">
-                <div class="col-xl-8 main-content-col"> {{-- Adjusted column width for the main content --}}
-                    <div class="card height-equal">
-                        <div class="card-header">
-                            Inheritors
-                        </div>
-                        <div class="card-body basic-wizard important-validation">
-                            <form action="{{route('partner.will_generator.store_family_friend')}}" method="POST">
-                                @csrf
+    <div class="container-fluid default-dashboard">
+        <div class="row widget-grid">
+            <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
+                <div class="row">
+                    <div class="col-xl-8 main-content-col"> {{-- Adjusted column width for the main content --}}
+                        <div class="card height-equal">
+                            <div class="card-header">
+                                Inheritors
+                            </div>
+                            <div class="card-body basic-wizard important-validation">
+                                <form action="{{ route('partner.will_generator.store_family_friend') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
+                                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
+                                        Who would you like to inherit your estate?
+                                    </h1>
+                                    <p class="text-gray-700 leading-relaxed mb-6">
+                                        You can decide how much each person gets in the next step. You'll
+                                        also be able to choose backups in case any of them die before you.
+                                    </p>
 
-                                <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                                    Who would you like to inherit your estate?
-                                </h1>
-                                <p class="text-gray-700 leading-relaxed mb-6">
-                                    You can decide how much each person gets in the next step. You'll
-                                    also be able to choose backups in case any of them die before you.
-                                </p>
+                                    <h2 class="text-xl font-bold text-gray-800 mb-4">
+                                        Select a person or add someone new
+                                    </h2>
 
-                                <h2 class="text-xl font-bold text-gray-800 mb-4">
-                                    Select a person or add someone new
-                                </h2>
+                                    {{-- Existing People/Charities List --}}
+                                    <div class="space-y-3 mb-6">
 
-                                {{-- Existing People/Charities List --}}
-                                <div class="space-y-3 mb-6">
-
-                                    <div id="existingPartnerList">
-                                        @forelse ($executors as $executor)
-                                        <div class="executor-card">
-                                            <label>
-                                                <input type="checkbox" name="family_friends[]" value="{{ $executor->id }}">
-                                                <div class="executor-details">
-                                                    <span class="executor-name" id="excutor_id_{{$executor->id}}">{{ $executor->first_name }}
-                                                        {{ $executor->last_name }}</span>
-                                                    <span class="executor-contact">{{ $executor->email }}</span>
+                                        <div id="existingPartnerList">
+                                            @forelse ($executors as $executor)
+                                                <div class="executor-card">
+                                                    <label>
+                                                        <input type="checkbox" name="family_friends[]"
+                                                            value="{{ $executor->id }}">
+                                                        <div class="executor-details">
+                                                            <span class="executor-name"
+                                                                id="excutor_id_{{ $executor->id }}">{{ $executor->first_name }}
+                                                                {{ $executor->last_name }}</span>
+                                                            <span class="executor-contact">{{ $executor->email }}</span>
+                                                        </div>
+                                                    </label>
+                                                    <a data-toggle="modal" data-target="#editExecutorModal"
+                                                        data-id="{{ $executor->id }}"
+                                                        data-name="{{ $executor->first_name }}"
+                                                        data-lastname="{{ $executor->last_name }}"
+                                                        data-email="{{ $executor->email }}"
+                                                        data-relationship="{{ $executor->type }}"
+                                                        data-phone_number="{{ $executor->phone }}"
+                                                        data-will_user_id="{{ $executor->will_user_id }}"
+                                                        class="edit-button">Edit</a>
                                                 </div>
-                                            </label>
-                                            <a data-toggle="modal" data-target="#editExecutorModal"
-                                                data-id="{{ $executor->id }}" data-name="{{ $executor->first_name }}"
-                                                data-lastname="{{ $executor->last_name }}"
-                                                data-email="{{ $executor->email }}"
-                                                data-relationship="{{ $executor->type }}"
-                                                data-phone_number="{{ $executor->phone }}" class="edit-button">Edit</a>
+                                            @empty
+                                                <p class="text-gray-600 italic">No friends or family family_friends added
+                                                    yet. Click "Add
+                                                    someone new" to get started.</p>
+                                            @endforelse
                                         </div>
-                                        @empty
-                                        <p class="text-gray-600 italic">No friends or family family_friends added yet. Click "Add
-                                            someone new" to get started.</p>
-                                        @endforelse
+
+
+
                                     </div>
 
-
-
-                                </div>
-
-                                {{-- Add someone new button --}}
-                                <button type="button" class="add-new-button" id="addNewInheritor" data-toggle="modal" data-target="#addExecutorModal">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
-                                    </svg>
-                                    Add someone new
-                                </button>
-
-                                <p class="text-gray-700 leading-relaxed mt-8 mb-4">
-                                    If you'd prefer to leave your estate to charity instead, just save and
-                                    continue to the next page.
-                                </p>
-
-                                <div class="d-flex justify-content-between mt-5">
-                                    <a href="{{ route('partner.will_generator.estates') }}"
-                                        class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
-                                        &larr; Back
-                                    </a>
-
-                                    <button type="submit"
-                                        class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
-                                        Save and continue
+                                    {{-- Add someone new button --}}
+                                    <button type="button" class="add-new-button" id="addNewInheritor" data-toggle="modal"
+                                        data-target="#addExecutorModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
+                                        </svg>
+                                        Add someone new
                                     </button>
-                                </div>
-                            </form>
+
+                                    <p class="text-gray-700 leading-relaxed mt-8 mb-4">
+                                        If you'd prefer to leave your estate to charity instead, just save and
+                                        continue to the next page.
+                                    </p>
+
+                                    <div class="d-flex justify-content-between mt-5">
+                                        <a href="{{ route('partner.will_generator.estates', $will_user_id) }}"
+                                            class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
+                                            &larr; Back
+                                        </a>
+
+                                        <button type="submit"
+                                            class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
+                                            Save and continue
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-xl-4 sidebar-col"> 
-                    <div class="inheritance-summary-card">
-                        <h4>Inheriting your estate:</h4>
-                        <ul id="inheritanceSummaryList">
-                            
-                            
-                        </ul>
+                    <div class="col-xl-4 sidebar-col">
+                        <div class="inheritance-summary-card">
+                            <h4>Inheriting your estate:</h4>
+                            <ul id="inheritanceSummaryList">
+
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
- <div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel">
+    <div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog" aria-labelledby="addExecutorModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -388,6 +395,7 @@
                 <div class="modal-body">
                     <form id="addExecutorForm">
                         @csrf
+                        <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
                         <div class="form-group mb-3">
                             <label for="name">First Name</label>
                             <input type="text" class="form-control" name="first_name" id="first_name"
@@ -446,7 +454,7 @@
                     <form id="editExecutorForm">
                         @csrf
                         <input type="hidden" name="id" id="editExecutorId">
-
+                        <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
                         <div class="form-group mb-3">
                             <label for="edit_name">First Name</label>
                             <input type="text" class="form-control" name="first_name" id="edit_first_name"
@@ -493,12 +501,12 @@
             </div>
         </div>
     </div>
-{{-- Include necessary scripts --}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+    {{-- Include necessary scripts --}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
         $(document).ready(function() {
             // Clear previous error messages
             function clearAddErrors() {
@@ -562,6 +570,7 @@
                 var phone_number = $(this).data('phone_number');
                 var email = $(this).data('email');
                 var relationship = $(this).data('relationship');
+                var will_user_id = $(this).data('will_user_id');
                 // var status = $(this).data('status'); // Removed, as 'status' input is not in your current modal
 
                 $('#editExecutorId').val(id);
@@ -680,38 +689,38 @@
             });
         });
     </script>
-<script>
-    $(document).ready(function() {
-        // Function to update the inheritance summary list
-        function updateInheritanceSummary() {
-            const summaryList = $('#inheritanceSummaryList');
-            summaryList.empty(); // Clear existing list
+    <script>
+        $(document).ready(function() {
+            // Function to update the inheritance summary list
+            function updateInheritanceSummary() {
+                const summaryList = $('#inheritanceSummaryList');
+                summaryList.empty(); // Clear existing list
 
-            // Get checked inheritors from the form
-            $('input[name="family_friends[]"]:checked').each(function() {
-                const personName = $(`#excutor_id_${$(this).val()}`).text();
-                summaryList.append(`<li>${personName}</li>`);
+                // Get checked inheritors from the form
+                $('input[name="family_friends[]"]:checked').each(function() {
+                    const personName = $(`#excutor_id_${$(this).val()}`).text();
+                    summaryList.append(`<li>${personName}</li>`);
+                });
+
+                if ($('input[name="family_friends[]"]:checked').length > 0) {
+
+                } else {
+
+                }
+
+                if (summaryList.children().length === 0) {
+                    summaryList.append('<li>None selected</li>');
+                }
+            }
+
+            updateInheritanceSummary();
+
+
+            $('input[name="family_friends[]"]').on('change', function() {
+                updateInheritanceSummary();
             });
 
-            if ($('input[name="family_friends[]"]:checked').length > 0) {
-                
-            } else {
 
-            }
-
-            if (summaryList.children().length === 0) {
-                summaryList.append('<li>None selected</li>');
-            }
-        }
-
-        updateInheritanceSummary();
-
-
-        $('input[name="family_friends[]"]').on('change', function() {
-            updateInheritanceSummary();
         });
-
-
-    });
-</script>
+    </script>
 @endsection

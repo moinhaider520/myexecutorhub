@@ -26,13 +26,13 @@ class WillGeneratorController extends Controller
     public function index()
     {
         $user_about_infos = WillUserInfo::where('user_id', Auth::id())->get();
-        return view('partner.will_generator.index',compact('user_about_infos'));
+        return view('partner.will_generator.index', compact('user_about_infos'));
     }
 
     public function create($will_user_id)
     {
-        $will_user_info=WillUserInfo::find($will_user_id);
-        return view('partner.will_generator.create',compact('will_user_info'));
+        $will_user_info = WillUserInfo::find($will_user_id);
+        return view('partner.will_generator.create', compact('will_user_info'));
     }
 
 
@@ -56,7 +56,7 @@ class WillGeneratorController extends Controller
             $will_user_id = WillUserInfo::where('id', '=', session('will_user_id'))
                 ->update([
                     'martial_status' => $request->martial_status,
-                    'partner_name' => $will_inherited_people ?($will_inherited_people->first_name . ' ' . $will_inherited_people->last_name):'No partner',
+                    'partner_name' => $will_inherited_people ? ($will_inherited_people->first_name . ' ' . $will_inherited_people->last_name) : 'No partner',
                 ]);
             DB::commit();
             return redirect()->route('partner.will_generator.step4');
@@ -67,7 +67,7 @@ class WillGeneratorController extends Controller
     }
     public function step4()
     {
-        $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','child')->get();
+        $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'child')->get();
         return view('partner.will_generator.step4', ['children' => $children]);
     }
 
@@ -82,7 +82,7 @@ class WillGeneratorController extends Controller
     }
     public function step5()
     {
-        $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','pet')->get();
+        $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'pet')->get();
         return view('partner.will_generator.step5', ['pets' => $pets]);
     }
     public function store_step5(Request $request)
@@ -92,13 +92,13 @@ class WillGeneratorController extends Controller
             ->update([
                 'pets' => $request->pets,
             ]);
-        return redirect()->route('partner.will_generator.create',session('will_user_id'))->with(['success' => 'Your Personal Information has been submitted successfully']);
+        return redirect()->route('partner.will_generator.create', session('will_user_id'))->with(['success' => 'Your Personal Information has been submitted successfully']);
     }
 
-    public function about_you($will_user_id=null)
+    public function about_you($will_user_id = null)
     {
-        $user_info=WillUserInfo::find($will_user_id);
-        return view('partner.will_generator.about_you',compact('user_info'));
+        $user_info = WillUserInfo::find($will_user_id);
+        return view('partner.will_generator.about_you', compact('user_info'));
     }
 
     public function store_about_you(Request $request)
@@ -108,21 +108,23 @@ class WillGeneratorController extends Controller
             DB::beginTransaction();
             $will_user_id = WillUserInfo::updateOrCreate(
                 [
-                    'id'=>$request->will_user_id
-                ],[
-                'legal_name' => $request->legal_name,
-                'user_name' => $request->user_name,
-                'date_of_birth' => $request->date_of_birth,
-                'address_line_1' => $request->address_line_1,
-                'address_line_2' => $request->address_line_2,
-                'city' => $request->city,
-                'post_code' => $request->post_code,
-                'phone_number' => $request->phone_number,
-                'martial_status' => $request->martial_status,
-                'children' => $request->children,
-                'pets' => $request->pets,
-                'user_id' => Auth::user()->id,
-            ]);
+                    'id' => $request->will_user_id
+                ],
+                [
+                    'legal_name' => $request->legal_name,
+                    'user_name' => $request->user_name,
+                    'date_of_birth' => $request->date_of_birth,
+                    'address_line_1' => $request->address_line_1,
+                    'address_line_2' => $request->address_line_2,
+                    'city' => $request->city,
+                    'post_code' => $request->post_code,
+                    'phone_number' => $request->phone_number,
+                    'martial_status' => $request->martial_status,
+                    'children' => $request->children,
+                    'pets' => $request->pets,
+                    'user_id' => Auth::user()->id,
+                ]
+            );
             DB::commit();
             session(['will_user_id' => $will_user_id->id]);
             return redirect()->route('partner.will_generator.step3');
@@ -134,21 +136,19 @@ class WillGeneratorController extends Controller
 
 
 
-    public function delete_about_you($will_user_id){
-        try{
-            $user_info=WillUserInfo::find($will_user_id);
-            if($user_info)
-            {
+    public function delete_about_you($will_user_id)
+    {
+        try {
+            $user_info = WillUserInfo::find($will_user_id);
+            if ($user_info) {
                 DB::beginTransaction();
                 $user_info->delete();
                 DB::commit();
             }
-            return redirect()->back()->with('success','User Info data has been deleted successfully');
-
-        }
-        catch(\Exception $e){
+            return redirect()->back()->with('success', 'User Info data has been deleted successfully');
+        } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['status'=>false,'message'=>$e->getMessage()]);
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
     public function store_user_child(Request $request)
@@ -163,7 +163,7 @@ class WillGeneratorController extends Controller
                 'type' => 'child',
             ]);
             DB::commit();
-            $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','child')->get();
+            $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'child')->get();
 
             $html = view('partner.will_generator.ajax.children_list', ['children' => $children])->render();
             return response()->json(['status' => true, 'message' => 'Child information saved successfully', 'data' => $html]);
@@ -184,7 +184,7 @@ class WillGeneratorController extends Controller
                     'date_of_birth' => $request->edit_child_date_of_birth,
                 ]);
             DB::commit();
-            $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','child')->get();
+            $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'child')->get();
             $html = view('partner.will_generator.ajax.children_list', ['children' => $children])->render();
             return response()->json(['status' => true, 'message' => 'Pet information update successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -206,7 +206,7 @@ class WillGeneratorController extends Controller
                 return response()->json(['status' => false, 'message' => 'No Pet found']);
             }
 
-            $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','child')->get();
+            $children = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'child')->get();
             $html = view('partner.will_generator.ajax.children_list', ['children' => $children])->render();
             return response()->json(['status' => true, 'message' => 'Pet information deleted successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -226,7 +226,7 @@ class WillGeneratorController extends Controller
                 'type' => 'pet',
             ]);
             DB::commit();
-            $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','pet')->get();
+            $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'pet')->get();
 
             $html = view('partner.will_generator.ajax.pet_list', ['pets' => $pets])->render();
             return response()->json(['status' => true, 'message' => 'Pet information saved successfully', 'data' => $html]);
@@ -246,7 +246,7 @@ class WillGeneratorController extends Controller
                     'first_name' => $request->name,
                 ]);
             DB::commit();
-            $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','pet')->get();
+            $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'pet')->get();
             $html = view('partner.will_generator.ajax.pet_list', ['pets' => $pets])->render();
             return response()->json(['status' => true, 'message' => 'Pet information update successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -268,7 +268,7 @@ class WillGeneratorController extends Controller
                 return response()->json(['status' => false, 'message' => 'No Pet found']);
             }
 
-            $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type','pet')->get();
+            $pets = WillInheritedPeople::where('will_user_id', '=', session('will_user_id'))->where('type', 'pet')->get();
             $html = view('partner.will_generator.ajax.pet_list', ['pets' => $pets])->render();
             return response()->json(['status' => true, 'message' => 'Pet information deleted successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -281,16 +281,16 @@ class WillGeneratorController extends Controller
 
     public function account_properties($will_user_id)
     {
-        $assets = WillUserAccountsProperty::where('will_user_id',$will_user_id)->get();
-        return view('partner.will_generator.account_properties', compact('assets','will_user_id'));
+        $assets = WillUserAccountsProperty::where('will_user_id', $will_user_id)->get();
+        return view('partner.will_generator.account_properties', compact('assets', 'will_user_id'));
     }
     public function submit_account_properties($will_user_id)
     {
-        return redirect()->route('partner.will_generator.create',$will_user_id)->with(['success' => 'Your Account Information has been submitted successfully']);
+        return redirect()->route('partner.will_generator.create', $will_user_id)->with(['success' => 'Your Account Information has been submitted successfully']);
     }
 
 
-    public function store_account_properties(Request $request,$will_user_id)
+    public function store_account_properties(Request $request, $will_user_id)
     {
         try {
 
@@ -407,7 +407,7 @@ class WillGeneratorController extends Controller
     {
         try {
             DB::beginTransaction();
-            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            $willUserInfo = WillUserInfo::find($request->will_user_id);
 
             $willUserInfo->beneficiaries()
                 ->where('beneficiable_type', WillInheritedPeople::class)
@@ -428,8 +428,8 @@ class WillGeneratorController extends Controller
             DB::commit();
 
             // Redirect to the charity selection page
-            if (url()->previous() && url()->previous() == route('partner.will_generator.choose_inherited_persons')) {
-                return redirect()->route('partner.will_generator.choose_inherited_charity');
+            if (url()->previous() && url()->previous() == route('partner.will_generator.choose_inherited_persons',$request->will_user_id)) {
+                return redirect()->route('partner.will_generator.choose_inherited_charity',$request->will_user_id);
             } else {
                 return redirect()->route('partner.will_generator.create')->with(['success' => 'Your Executors has been selected successfully']);
             }
@@ -459,32 +459,32 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function your_estate()
+    public function your_estate($will_user_id)
     {
-        return view('partner.will_generator.estate.your_estate');
+        return view('partner.will_generator.estate.your_estate',compact('will_user_id'));
     }
-    public function choose_inherited_persons()
+    public function choose_inherited_persons($will_user_id)
     {
-        $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+
         $executors = WillInheritedPeople::where('will_user_id', '=', $will_user_id)->get();
-        return view('partner.will_generator.estate.choose_inherited_persons', compact('executors'));
+        return view('partner.will_generator.estate.choose_inherited_persons', compact('executors','will_user_id'));
     }
-    public function choose_inherited_charity()
+    public function choose_inherited_charity($will_user_id)
     {
-        $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+
         $inheritedPersons = Beneficiary::where('beneficiable_type', WillInheritedPeople::class)
             ->where('will_user_id', $will_user_id)
             ->get();
-      
+
         $charities = Charity::get();
-        return view('partner.will_generator.estate.choose_inherited_charity', compact('inheritedPersons', 'charities'));
+        return view('partner.will_generator.estate.choose_inherited_charity', compact('inheritedPersons', 'charities','will_user_id'));
     }
 
     public function process_inherited_charity(Request $request)
     {
 
         try {
-            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+            $willUserInfo = WillUserInfo::find($request->will_user_id);
 
             DB::beginTransaction();
             // Remove existing Charity beneficiaries for this will
@@ -520,19 +520,19 @@ class WillGeneratorController extends Controller
 
 
             // Redirect to the next step (e.g., allocating percentages)
-            return redirect()->route('partner.will_generator.share_percentage') // Create this route next
+            return redirect()->route('partner.will_generator.share_percentage',$request->will_user_id) // Create this route next
                 ->with('success', 'Charity beneficiaries saved successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
-    public function share_percentage()
+    public function share_percentage($will_user_id)
     {
         $executors = User::role('executor')->get();
-        $beneficiaries = WillUserInfo::with('beneficiaries')->where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+        $beneficiaries = WillUserInfo::with('beneficiaries')->where('id', $will_user_id)->first();
 
-        return view('partner.will_generator.estate.share_percentage', compact('executors', 'beneficiaries'));
+        return view('partner.will_generator.estate.share_percentage', compact('executors', 'beneficiaries','will_user_id'));
     }
     public function gift($will_user_id)
     {
@@ -544,32 +544,35 @@ class WillGeneratorController extends Controller
                 ->get();
         }
 
-        return view('partner.will_generator.gift', compact('physicalGifts','will_user_id'));
+        return view('partner.will_generator.gift', compact('physicalGifts', 'will_user_id'));
     }
 
 
-    public function show_add_gift($type,$will_user_id)
+    public function show_add_gift($type, $will_user_id)
     {
-       $executors = WillInheritedPeople::where('will_user_id', $will_user_id)
-    ->where(function ($query) {
-        $query->where('type', 'pet')
-            ->orWhere('type', 'partner')
-            ->orWhere('type', 'child');
-    })
-    ->get();
+        $executors = WillInheritedPeople::where('will_user_id', $will_user_id)
+            ->where(function ($query) {
+                $query->where('type', 'pet')
+                    ->orWhere('type', 'partner')
+                    ->orWhere('type', 'child');
+            })
+            ->get();
 
-        return view('partner.will_generator.gift_add', compact('type', 'executors','will_user_id'));
+        return view('partner.will_generator.gift_add', compact('type', 'executors', 'will_user_id'));
     }
     public function edit_add_gift($id)
     {
         try {
-            $gift = WillUserInheritedGift::findOrFail($id);
-            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
 
-            if (is_null($willUserId) || $gift->will_user_id !== $willUserId->id) {
-                return back()->with('error', 'Unauthorized access or gift not found.');
-            }
-            $executors = User::role('executor')->where('created_by', Auth::user()->id)->get();
+            $gift = WillUserInheritedGift::findOrFail($id);
+
+            $executors = WillInheritedPeople::where('will_user_id', $gift->will_user_id)
+                ->where(function ($query) {
+                    $query->where('type', 'pet')
+                        ->orWhere('type', 'partner')
+                        ->orWhere('type', 'child');
+                })
+                ->get();
 
             $selectedRecipientIds = explode(',', $gift->family_inherited_id);
 
@@ -578,7 +581,7 @@ class WillGeneratorController extends Controller
             return back()->with('error', 'An error occurred while trying to edit the gift: ' . $e->getMessage());
         }
     }
-    public function store_add_gift(Request $request,$will_user_id)
+    public function store_add_gift(Request $request, $will_user_id)
     {
         try {
 
@@ -595,7 +598,7 @@ class WillGeneratorController extends Controller
             ]);
             DB::commit();
 
-            return redirect()->route('partner.will_generator.gift',$will_user_id)->with('success', 'Gift added successfully!');
+            return redirect()->route('partner.will_generator.gift', $will_user_id)->with('success', 'Gift added successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -606,13 +609,8 @@ class WillGeneratorController extends Controller
     {
         try {
             $gift = WillUserInheritedGift::findOrFail($id);
-            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
 
-            if (is_null($willUserId) || $gift->will_user_id !== $willUserId->id) {
-                return back()->with('error', 'Unauthorized access or gift not found.');
-            }
-
-            $familyInheritedIdsString = implode(',', $request['recipients']);
+            $familyInheritedIdsString = implode(',', $request['executors']);
 
             DB::beginTransaction();
             $gift->update([
@@ -623,7 +621,7 @@ class WillGeneratorController extends Controller
             ]);
             DB::commit();
 
-            return redirect()->route('partner.will_generator.gift')->with('success', 'Gift updated successfully!');
+            return redirect()->route('partner.will_generator.gift',$gift->will_user_id)->with('success', 'Gift updated successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -742,19 +740,19 @@ class WillGeneratorController extends Controller
     {
         try {
 
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+
             DB::beginTransaction();
             WillInheritedPeople::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'phone' => $request->phone,
                 'email' => $request->email,
-                'will_user_id' => $will_user_id,
+                'will_user_id' => $request->will_user_id,
                 'type' => $request->type,
             ]);
 
             DB::commit();
-            $partners = WillInheritedPeople::where('will_user_id', $will_user_id)->get();
+            $partners = WillInheritedPeople::where('will_user_id', $request->will_user_id)->get();
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
             return response()->json(['status' => true, 'messsage' => 'Partner have been saved successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -767,7 +765,7 @@ class WillGeneratorController extends Controller
     public function edit_user_partner(Request $request)
     {
         try {
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
+
             DB::beginTransaction();
             WillInheritedPeople::where('id', $request->id)
                 ->update([
@@ -778,7 +776,7 @@ class WillGeneratorController extends Controller
                     'type' => $request->relationship,
                 ]);
             DB::commit();
-            $partners = WillInheritedPeople::where('will_user_id', $will_user_id)->get();
+            $partners = WillInheritedPeople::where('will_user_id', $request->will_user_id)->get();
 
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
             return response()->json(['status' => true, 'messsage' => 'Partner have been updated successfully', 'data' => $html]);
@@ -835,14 +833,14 @@ class WillGeneratorController extends Controller
     public function store_share_percentage(Request $request)
     {
         try {
-            $willUserInfo = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
             $inputPercentages = $request->input('percentages');
             DB::beginTransaction();
             foreach ($inputPercentages as $beneficiaryData) {
                 $beneficiaryId = $beneficiaryData['id'];
                 $percentage = $beneficiaryData['percentage'];
                 $beneficiary = Beneficiary::where('id', $beneficiaryId)
-                    ->where('will_user_id', $willUserInfo->id)
+                    ->where('will_user_id', $request->will_user_id)
                     ->first();
                 $beneficiary->share_percentage = $percentage;
                 $beneficiary->save();
@@ -850,7 +848,7 @@ class WillGeneratorController extends Controller
 
             DB::commit();
 
-            return redirect()->route('partner.will_generator.benificaries_death_backup');
+            return redirect()->route('partner.will_generator.benificaries_death_backup',$request->will_user_id);
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Failed to update beneficiary percentages. Please try again.');
@@ -858,23 +856,23 @@ class WillGeneratorController extends Controller
     }
 
 
-    public function benificaries_death_backup(Request $request)
+    public function benificaries_death_backup(Request $request,$will_user_id)
     {
-        $willUserId = WillUserInfo::where('id', session('will_user_id'))->first()->id ?? WillUserInfo::latest()->first()->id;
+
         if ($request->has('beneficiary')) {
 
-            $beneficiary = Beneficiary::where('will_user_id', $willUserId)
+            $beneficiary = Beneficiary::where('will_user_id', $will_user_id)
                 ->where('beneficiable_type', WillInheritedPeople::class)
                 ->where('id', $request->beneficiary)
                 ->first();
         } else {
-            $beneficiary = Beneficiary::where('will_user_id', $willUserId)
+            $beneficiary = Beneficiary::where('will_user_id', $will_user_id)
                 ->where('beneficiable_type', WillInheritedPeople::class)
                 ->first();
         }
 
-        $allBeneficiaries = WillUserInfo::with('beneficiaries')->where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
-        return view('partner.will_generator.estate.benificaries_death', compact('beneficiary', 'allBeneficiaries'));
+        $allBeneficiaries = WillUserInfo::with('beneficiaries')->where('id', $will_user_id)->first();
+        return view('partner.will_generator.estate.benificaries_death', compact('beneficiary', 'allBeneficiaries','will_user_id'));
     }
 
 
@@ -882,14 +880,14 @@ class WillGeneratorController extends Controller
     {
 
         try {
-            $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
+
             DB::beginTransaction();
             $beneficiary = Beneficiary::find($request->input('current_beneficiary_id'));
             $beneficiary->death_backup_plan = $request->input('selected_backup_option');
             $beneficiary->save();
             DB::commit();
 
-            $beneficiaries = Beneficiary::where('will_user_id', $willUserId->id)
+            $beneficiaries = Beneficiary::where('will_user_id', $request->will_user_id)
                 ->where('beneficiable_type', WillInheritedPeople::class)
                 ->orderBy('id')
                 ->get();
@@ -904,10 +902,10 @@ class WillGeneratorController extends Controller
 
             if ($nextBeneficiary) {
 
-                return redirect()->route('partner.will_generator.benificaries_death_backup', ['beneficiary' => $nextBeneficiary]);
+                return redirect()->route('partner.will_generator.benificaries_death_backup', ['beneficiary' => $nextBeneficiary,'will_user_id'=>$request->will_user_id]);
             } else {
 
-                return redirect()->route('partner.will_generator.estate.summary',$willUserId);
+                return redirect()->route('partner.will_generator.estate.summary', $request->will_user_id);
             }
         } catch (\Exception $e) {
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -922,10 +920,11 @@ class WillGeneratorController extends Controller
             ->orderBy('id')
             ->get();
 
-        return view('partner.will_generator.estate.summary', compact('beneficiaries','will_user_id'));
+        return view('partner.will_generator.estate.summary', compact('beneficiaries', 'will_user_id'));
     }
 
-    public function store_estate_summary(Request $request,$will_user_id){
+    public function store_estate_summary(Request $request, $will_user_id)
+    {
         try {
             $willUserId = WillUserInfo::where('id', session('will_user_id'))->first() ?? WillUserInfo::latest()->first();
             DB::beginTransaction();
@@ -938,7 +937,7 @@ class WillGeneratorController extends Controller
 
             DB::commit();
 
-            return redirect()->route('partner.will_generator.create',$will_user_id)->with(['success' => 'Your Estate Summary has been submitted successfully']);
+            return redirect()->route('partner.will_generator.create', $will_user_id)->with(['success' => 'Your Estate Summary has been submitted successfully']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -950,7 +949,7 @@ class WillGeneratorController extends Controller
 
     public function create_pdf($will_user_id)
     {
-        $will_user=WillUserInfo::with('child')->find($will_user_id);
+        $will_user = WillUserInfo::with('child')->find($will_user_id);
 
         $pdf = PDF::loadView('partner.will_generator.will_pdf', ['user_info' => $will_user]);
         return $pdf->download('invoice.pdf');

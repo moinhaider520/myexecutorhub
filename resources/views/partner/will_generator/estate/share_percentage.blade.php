@@ -216,7 +216,7 @@
                         <form id="shareEstateForm" action="{{ route('partner.will_generator.store_share_percentage') }}"
                             method="POST">
                             @csrf
-
+                            <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
                                 How would you like to share your estate?
                             </h1>
@@ -282,7 +282,7 @@
 
 
                             <div class="d-flex justify-content-between mt-8">
-                                <a href="{{ route('partner.will_generator.choose_inherited_charity') }}"
+                                <a href="{{ route('partner.will_generator.choose_inherited_charity',$will_user_id) }}"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                     &larr; Back
                                 </a>

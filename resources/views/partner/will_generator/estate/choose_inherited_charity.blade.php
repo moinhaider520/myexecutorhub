@@ -534,9 +534,10 @@
                                 Charity Gifts
                             </div>
                             <div class="card-body basic-wizard important-validation">
-                                <form action="{{route('partner.will_generator.process_inherited_charity')}}" method="POST">
+                                <form action="{{ route('partner.will_generator.process_inherited_charity',$will_user_id) }}"
+                                    method="POST">
                                     @csrf
-
+                                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
                                     <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
                                         Would you like to leave a gift to charity?
                                     </h1>
@@ -658,16 +659,16 @@
                                         {{-- Other Charities (non-logo based) --}}
                                         <div class="mt-6 space-y-3">
                                             <div id="charity_manual">
-                                            @foreach ($charities as $charity)
-                                                <label for="{{ $charity->name }}" class="charity-text-item">
-                                                    <input type="checkbox" id="{{ $charity->name }}" name="charities[]"
-                                                        value="{{ $charity->id }}" checked>
-                                                    <div class="charity-text-details">
-                                                        <span class="charity-text-name">{{ $charity->name }}</span>
-                                                    </div>
-                                                </label>
-                                            @endforeach
-                                        </div>
+                                                @foreach ($charities as $charity)
+                                                    <label for="{{ $charity->name }}" class="charity-text-item">
+                                                        <input type="checkbox" id="{{ $charity->name }}"
+                                                            name="charities[]" value="{{ $charity->id }}" checked>
+                                                        <div class="charity-text-details">
+                                                            <span class="charity-text-name">{{ $charity->name }}</span>
+                                                        </div>
+                                                    </label>
+                                                @endforeach
+                                            </div>
                                         </div>
 
                                         {{-- Add your own charity button --}}
@@ -682,7 +683,7 @@
                                     </div> {{-- End charitySelectionContainer --}}
 
                                     <div class="d-flex justify-content-between mt-8">
-                                        <a href="{{ route('partner.will_generator.choose_inherited_persons') }}"
+                                        <a href="{{ route('partner.will_generator.choose_inherited_persons', $will_user_id) }}"
                                             class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                             &larr; Back
                                         </a>
@@ -701,10 +702,10 @@
                         <div class="inheritance-summary-card">
                             <h4>Inheriting your estate:</h4>
                             <ul id="inheritanceSummaryList">
-                                @foreach( $inheritedPersons as $person)
+                                @foreach ($inheritedPersons as $person)
                                     <li>{{ $person->name }}</li>
                                 @endforeach
-                                
+
                             </ul>
                         </div>
                     </div>
@@ -802,13 +803,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-      
+
             const yesButton = document.getElementById('yesButton');
             const noButton = document.getElementById('noButton');
             const leaveToCharityInput = document.getElementById('leaveToCharityInput');
             const charitySelectionContainer = document.getElementById('charitySelectionContainer');
             const inheritedPersonsHTML = document.createElement('div');
-        inheritedPersonsHTML.innerHTML = document.getElementById('inheritanceSummaryList').innerHTML;
+            inheritedPersonsHTML.innerHTML = document.getElementById('inheritanceSummaryList').innerHTML;
             if (yesButton && noButton && leaveToCharityInput && charitySelectionContainer) {
                 yesButton.addEventListener('click', function() {
                     yesButton.classList.add('selected');
@@ -836,64 +837,86 @@
             }
 
             document.querySelectorAll('.charity-item, .charity-text-item').forEach(item => {
-            const checkbox = item.querySelector('input[type="checkbox"]');
-            item.addEventListener('click', function(e) {
-                if (e.target !== checkbox) {
-                    checkbox.checked = !checkbox.checked;
-                }
-                updateInheritanceSummary(inheritedPersonsHTML);
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                item.addEventListener('click', function(e) {
+                    if (e.target !== checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                    }
+                    updateInheritanceSummary(inheritedPersonsHTML);
+                });
+                checkbox.addEventListener('change', () => updateInheritanceSummary(inheritedPersonsHTML));
             });
-            checkbox.addEventListener('change', () => updateInheritanceSummary(inheritedPersonsHTML));
-        });
 
             function updateInheritanceSummary(initialList) {
-            const summaryList = document.getElementById('inheritanceSummaryList');
-            if (!summaryList) return;
+                const summaryList = document.getElementById('inheritanceSummaryList');
+                if (!summaryList) return;
 
-            // 1. Clear the entire list first
-            summaryList.innerHTML = '';
-            
-            // 2. Add the inherited persons back
-            summaryList.innerHTML = initialList.innerHTML;
+                // 1. Clear the entire list first
+                summaryList.innerHTML = '';
 
-            // 3. Add all selected charities (both pre-defined and manual)
-            document.querySelectorAll(
-                '.charity-item input[type="checkbox"]:checked, .charity-text-item input[type="checkbox"]:checked'
-            ).forEach(checkbox => {
-                let charityName = 'Unnamed Charity';
-                const parentItem = checkbox.closest('.charity-item, .charity-text-item');
+                // 2. Add the inherited persons back
+                summaryList.innerHTML = initialList.innerHTML;
 
-                if (parentItem) {
-                    const textNameElement = parentItem.querySelector('.charity-text-name');
-                    if (textNameElement) {
-                        charityName = textNameElement.textContent.trim();
-                    } else {
-                        const charityId = checkbox.value;
-                        switch (charityId) {
-                            case 'macmillan': charityName = 'Macmillan Cancer Support'; break;
-                            case 'rnli': charityName = 'The RNLI'; break;
-                            case 'gosh': charityName = 'Great Ormond Street Hospital Charity'; break;
-                            case 'marie_curie': charityName = 'Marie Curie'; break;
-                            case 'shelter': charityName = 'Shelter'; break;
-                            case 'alzheimers': charityName = 'Alzheimer\'s Society'; break;
-                            case 'wwf': charityName = 'WWF'; break;
-                            case 'nspcc': charityName = 'NSPCC'; break;
-                            case 'bhf': charityName = 'British Heart Foundation'; break;
-                            case 'action_for_children': charityName = 'Action for Children'; break;
-                            default: charityName = checkbox.value; break; // Fallback
+                // 3. Add all selected charities (both pre-defined and manual)
+                document.querySelectorAll(
+                    '.charity-item input[type="checkbox"]:checked, .charity-text-item input[type="checkbox"]:checked'
+                ).forEach(checkbox => {
+                    let charityName = 'Unnamed Charity';
+                    const parentItem = checkbox.closest('.charity-item, .charity-text-item');
+
+                    if (parentItem) {
+                        const textNameElement = parentItem.querySelector('.charity-text-name');
+                        if (textNameElement) {
+                            charityName = textNameElement.textContent.trim();
+                        } else {
+                            const charityId = checkbox.value;
+                            switch (charityId) {
+                                case 'macmillan':
+                                    charityName = 'Macmillan Cancer Support';
+                                    break;
+                                case 'rnli':
+                                    charityName = 'The RNLI';
+                                    break;
+                                case 'gosh':
+                                    charityName = 'Great Ormond Street Hospital Charity';
+                                    break;
+                                case 'marie_curie':
+                                    charityName = 'Marie Curie';
+                                    break;
+                                case 'shelter':
+                                    charityName = 'Shelter';
+                                    break;
+                                case 'alzheimers':
+                                    charityName = 'Alzheimer\'s Society';
+                                    break;
+                                case 'wwf':
+                                    charityName = 'WWF';
+                                    break;
+                                case 'nspcc':
+                                    charityName = 'NSPCC';
+                                    break;
+                                case 'bhf':
+                                    charityName = 'British Heart Foundation';
+                                    break;
+                                case 'action_for_children':
+                                    charityName = 'Action for Children';
+                                    break;
+                                default:
+                                    charityName = checkbox.value;
+                                    break; // Fallback
+                            }
                         }
                     }
-                }
-                
-                // Add the charity to the summary list
-                const listItem = document.createElement('li');
-                listItem.textContent = charityName;
-                summaryList.appendChild(listItem);
-            });
-        }
-        
-        // Call the function once on page load to set the initial state
-        updateInheritanceSummary(inheritedPersonsHTML);
+
+                    // Add the charity to the summary list
+                    const listItem = document.createElement('li');
+                    listItem.textContent = charityName;
+                    summaryList.appendChild(listItem);
+                });
+            }
+
+            // Call the function once on page load to set the initial state
+            updateInheritanceSummary(inheritedPersonsHTML);
             const charityModal = document.getElementById('charityModal');
             const closeCharityModalButton = document.getElementById('closeCharityModal');
             const addYourOwnCharityButton = document.getElementById('addYourOwnCharityButton'); // Main page button
@@ -901,7 +924,7 @@
             const searchCharitySection = document.getElementById('searchCharitySection');
             const manualAddCharitySection = document.getElementById('manualAddCharitySection');
             const openManualAddCharityButton = document.getElementById(
-            'openManualAddCharityButton'); // Button inside search modal
+                'openManualAddCharityButton'); // Button inside search modal
             const backToSearchCharityLink = document.getElementById(
                 'backToSearchCharityLink'); // Link inside manual add modal
 
@@ -911,12 +934,12 @@
             const noResultsMessage = searchResults.querySelector('.no-results-message');
 
             function openCharityModal() {
-                charityModal.classList.add('active'); 
-                showSearchCharitySection(); 
+                charityModal.classList.add('active');
+                showSearchCharitySection();
             }
 
             function closeCharityModal() {
-                charityModal.classList.remove('active'); 
+                charityModal.classList.remove('active');
                 charitySearchInput.value = '';
                 document.getElementById('manualCharityName').value = '';
                 document.getElementById('manualRegistrationNumber').value = '';
@@ -924,9 +947,9 @@
                 if (manualCharityEmail) {
                     manualCharityEmail.value = '';
                 }
-               
+
                 noResultsMessage.classList.add('hidden');
-               
+
                 document.getElementById('manual-error-name').textContent = '';
                 document.getElementById('manual-error-registration_number').textContent = '';
                 const manualErrorEmail = document.getElementById('manual-error-email');
@@ -934,7 +957,7 @@
                     manualErrorEmail.textContent = '';
                 }
                 searchResults.innerHTML = '';
-                noResultsMessage.textContent = 'No results returned for ""'; 
+                noResultsMessage.textContent = 'No results returned for ""';
             }
 
             function showSearchCharitySection() {
@@ -947,13 +970,13 @@
             function showManualAddCharitySection() {
                 searchCharitySection.classList.add('hidden');
                 manualAddCharitySection.classList.remove('hidden');
-                modalTitle.textContent = 'Add a new charity'; 
+                modalTitle.textContent = 'Add a new charity';
                 const charityNumberToggle = document.getElementById('charityNumberToggle');
                 const charityNumberDetails = document.querySelector('.charity-number-details');
-                if (charityNumberToggle) { 
+                if (charityNumberToggle) {
                     charityNumberToggle.classList.remove('expanded');
                 }
-                if (charityNumberDetails) { 
+                if (charityNumberDetails) {
                     charityNumberDetails.classList.add('hidden');
                 }
             }
@@ -963,7 +986,7 @@
             closeCharityModalButton.addEventListener('click', closeCharityModal);
             openManualAddCharityButton.addEventListener('click', showManualAddCharitySection);
             backToSearchCharityLink.addEventListener('click', function(e) {
-                e.preventDefault(); 
+                e.preventDefault();
                 showSearchCharitySection();
             });
 
@@ -973,7 +996,7 @@
                 }
             });
 
-         
+
             const charityNumberToggle = document.getElementById('charityNumberToggle');
             const charityNumberDetails = document.querySelector('.charity-number-details');
 
@@ -994,14 +1017,14 @@
                 const charityNameInput = document.getElementById('manualCharityName');
                 const charityRegistrationNumberInput = document.getElementById('manualRegistrationNumber');
                 const charityEmailInput = document.getElementById(
-                'manualCharityEmail'); 
+                    'manualCharityEmail');
 
                 let isValid = true;
 
                 // Clear previous errors
                 $('#manual-error-name').text('');
                 $('#manual-error-registration_number').text('');
-                
+
                 const manualErrorEmailSpan = $('#manual-error-email');
                 if (manualErrorEmailSpan.length) {
                     manualErrorEmailSpan.text('');
@@ -1024,7 +1047,7 @@
                     const charityData = {
                         name: charityNameInput.value.trim(),
                         registration_number: regNumber,
-                       
+
                         email: charityEmailInput ? charityEmailInput.value.trim() : ''
                     };
                     const csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -1043,9 +1066,9 @@
                             $("#charity_manual").html(response.data);
 
                             if (response.charity && response.charity.name) {
-                             
+
                                 updateInheritanceSummary
-                            (); 
+                                    ();
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -1089,7 +1112,7 @@
                     if (query.toLowerCase().includes('dgdg')) {
                         noResultsMessage.classList.remove('hidden');
                         noResultsMessage.textContent =
-                        `No results returned for "${query}"`; // Update message
+                            `No results returned for "${query}"`; // Update message
                     } else if (query.toLowerCase().includes('macmillan')) {
                         // Simulate a found result
                         searchResults.innerHTML = `
@@ -1097,15 +1120,15 @@
                             Macmillan Cancer Support (Registered: 261017)
                         </div>
                     `;
-                        
+
                     }
-                   
+
                 } else {
                     noResultsMessage.classList.add('hidden');
                     searchResults.innerHTML = ''; // Clear results if input is empty
                 }
             });
 
-        }); 
+        });
     </script>
 @endsection

@@ -80,7 +80,7 @@
                                     @else
                                         <p>No pet</p>
                                     @endif
-                                    <a href="{{ route('partner.will_generator.about_you',$will_user_info->id) }}">Edit</a>
+                                    <a href="{{ route('partner.will_generator.about_you', $will_user_info->id) }}">Edit</a>
                                 </div>
                             </div>
                             <div class="card">
@@ -123,7 +123,7 @@
                                         <p class="text-gray-500">No beneficiaries added yet.</p>
                                     @endforelse
 
-                                    <a href="{{ route('partner.will_generator.estates') }}">Edit</a>
+                                    <a href="{{ route('partner.will_generator.estates',$will_user_info->id) }}">Edit</a>
                                 </div>
 
                             </div>
@@ -141,9 +141,24 @@
                                     <h4>Gifts (Optional)</h4>
                                 </div>
                                 <div class="card-body">
-                                    <p>£50000 to Keane Woodward</p>
-                                    <p>My Watch to Keane Woodward</p>
-                                    <a href="{{ route('partner.will_generator.gift',$will_user_info->id) }}">Edit</a>
+                                    @forelse ($will_user_info->gift as $gift)
+                                        <span class="gift-recipient block">
+                                            <p>{{ $gift->gift_name }} to
+                                            @if ($gift->inherited_people->isNotEmpty())
+
+                                                @foreach ($gift->inherited_people as $person)
+                                                    {{ $person->first_name }} {{ $person->last_name }}@if (!$loop->last)
+                                                        ,
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                            </p>
+                                        @empty
+                                            <p class="text-gray-600">No physical gifts added yet.</p>
+                                    @endforelse
+
+
+                                    <a href="{{ route('partner.will_generator.gift', $will_user_info->id) }}">Edit</a>
                                 </div>
                             </div>
                             <div class="card">
@@ -160,7 +175,7 @@
                         </div>
                         <!-- ACTION BUTTONS -->
                         <div class="col-md-6">
-                           {{--  Your Progress
+                            {{--  Your Progress
                             <div class="progress" style="height: 25px;">
                                 <div class="progress-bar bg-success" role="progressbar" id="myProgressBar"
                                     style="width: 0%;" aria-valuemin="0" aria-valuemax="100">
@@ -169,7 +184,7 @@
                             </div> --}}
                             <img
                                 src="https://res.cloudinary.com/dwr27vxv7/image/upload/c_scale,f_auto,q_auto,w_600/illustrations/experts.png" />
-                            <a href="{{ route('partner.will_generator.create_pdf',$will_user_info->id ) }}"
+                            <a href="{{ route('partner.will_generator.create_pdf', $will_user_info->id) }}"
                                 class="btn btn-primary w-100">Download Your Will</a>
                         </div>
                     </div>

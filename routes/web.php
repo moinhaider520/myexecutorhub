@@ -961,14 +961,14 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator/executor/farewill_trustees', [PartnerWillGeneratorController::class, 'farewill_trustees'])->name('will_generator.farewill_trustees');
     Route::post('will_generator/executor/store_farewill_trustees', [PartnerWillGeneratorController::class, 'store_farewill_trustees'])->name('will_generator.store_farewill_trustees');
 
-    Route::get('will_generator/estates',[PartnerWillGeneratorController::class,'your_estate'])->name('will_generator.estates');
-    Route::get('will_generator/choose_inherited_persons',[PartnerWillGeneratorController::class,'choose_inherited_persons'])->name('will_generator.choose_inherited_persons');
-    Route::get('will_generator/choose_inherited_charity',[PartnerWillGeneratorController::class,'choose_inherited_charity'])->name('will_generator.choose_inherited_charity');
-    Route::post('will_generator/process_inherited_charity',[PartnerWillGeneratorController::class,'process_inherited_charity'])->name('will_generator.process_inherited_charity');
+    Route::get('will_generator/estates/{will_user_id}',[PartnerWillGeneratorController::class,'your_estate'])->name('will_generator.estates');
+    Route::get('will_generator/choose_inherited_persons/{will_user_id}',[PartnerWillGeneratorController::class,'choose_inherited_persons'])->name('will_generator.choose_inherited_persons');
+    Route::get('will_generator/choose_inherited_charity/{will_user_id}',[PartnerWillGeneratorController::class,'choose_inherited_charity'])->name('will_generator.choose_inherited_charity');
+    Route::post('will_generator/process_inherited_charity/{will_user_id}',[PartnerWillGeneratorController::class,'process_inherited_charity'])->name('will_generator.process_inherited_charity');
     Route::post('will_generator/charity/store',[PartnerWillGeneratorController::class,'store_charity'])->name('will_generator.store_charity');
-    Route::get('will_generator/share_percentage',[PartnerWillGeneratorController::class,'share_percentage'])->name('will_generator.share_percentage');
+    Route::get('will_generator/share_percentage/{will_user_id}',[PartnerWillGeneratorController::class,'share_percentage'])->name('will_generator.share_percentage');
     Route::post('will_generator/store_share_percentage',[PartnerWillGeneratorController::class,'store_share_percentage'])->name('will_generator.store_share_percentage');
-    Route::get('will_generator/benificaries_death_backup',[PartnerWillGeneratorController::class,'benificaries_death_backup'])->name('will_generator.benificaries_death_backup');
+    Route::get('will_generator/benificaries_death_backup/{will_user_id}',[PartnerWillGeneratorController::class,'benificaries_death_backup'])->name('will_generator.benificaries_death_backup');
     Route::post('will_generator/store_benificaries_death_backup',[PartnerWillGeneratorController::class,'store_benificaries_death_backup'])->name('will_generator.store_benificaries_death_backup');
     Route::get('will_generator/estate/summary/{will_user_id}',[PartnerWillGeneratorController::class,'estate_summary'])->name('will_generator.estate.summary');
     Route::post('will_generator/estate/store_estate_summary/{will_user_id}',[PartnerWillGeneratorController::class,'store_estate_summary'])->name('will_generator.estate.store_estate_summary');

@@ -329,8 +329,8 @@
                                     @forelse ($executors as $executor)
                                         <div class="executor-card">
                                             <label>
-                                               
-                                                <input type="checkbox" name="recipients[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
+
+                                                <input type="checkbox" name="executors[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
                                                     @if(isset($selectedRecipientIds) && in_array($executor->id, $selectedRecipientIds)) checked @endif>
                                                 <div class="executor-details">
                                                     <span class="executor-name">{{ $executor->name }} {{ $executor->lastname }}</span>
@@ -447,7 +447,7 @@
                 event.preventDefault(); // Prevent default form submission initially
 
                 const itemDescription = $('#itemDescription').val();
-                const selectedRecipientIds = $('input[name="recipients[]"]:checked').map(function() {
+                const selectedRecipientIds = $('input[name="executors[]"]:checked').map(function() {
                     return $(this).val();
                 }).get();
                 const message = $('#messageOptional').val();

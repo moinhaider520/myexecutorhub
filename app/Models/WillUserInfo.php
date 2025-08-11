@@ -37,5 +37,8 @@ class WillUserInfo extends Model
         return $this->hasMany(WillUserAccountsProperty::class, 'will_user_id', 'id');
     }
 
-
+    public function gift()
+    {
+        return $this->hasMany(WillUserInheritedGift::class, 'will_user_id', 'id');
+    }
 }

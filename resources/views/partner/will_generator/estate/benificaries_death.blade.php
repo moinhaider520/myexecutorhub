@@ -129,7 +129,7 @@
                     <div class="card-body basic-wizard important-validation">
                         <form id="backupBeneficiaryForm" action="{{route('partner.will_generator.store_benificaries_death_backup')}}" method="POST">
                             @csrf
-
+                             <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
                                 If {{$beneficiary->getNameAttribute()}} dies before you, who should inherit their share of the estate instead?
                             </h1>
