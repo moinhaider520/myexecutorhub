@@ -271,7 +271,7 @@
         <div class="row widget-grid">
             <div class="col-xl-8"> {{-- Main content area --}}
                 <div class="card height-equal">
-                    <form method="POST" action="{{ route('partner.will_generator.gift.store_add_gift',$will_user_id) }}">
+                    <form method="POST" action="{{ route('partner.will_generator.gift.store_add_gift',$will_user_id) }}" id="executorChoiceForm">
                         @csrf {{-- Don't forget the CSRF token! --}}
 
                         {{-- Hidden field to pass the 'type' to the controller --}}
@@ -385,7 +385,7 @@
                                     @forelse ($executors as $executor)
                                         <div class="executor-card">
                                             <label>
-                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}">
+                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}" required>
                                                 <div class="executor-details">
                                                     <span class="executor-name">{{ $executor->first_name }}
                                                         {{ $executor->last_name }}</span>
