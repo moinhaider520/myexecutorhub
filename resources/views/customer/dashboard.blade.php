@@ -11,27 +11,35 @@
         }
     </style>
     <div class="page-body">
+@if($user->referrer)
+<div class="container">
+    <div class="row">
+        <div class="card">
+            <h2 class="p-2">You Are Referred By: {{ $user->referrer->name }}</h2>
+        </div>
+    </div>
+</div>
+@endif
+
         <!-- ONBOARDING SECTION -->
-        @if (!collect($guide)->every(fn($completed) => $completed))
-            <div class="container">
-                <div class="row">
-                    <div class="card">
-                        <h2 class="p-2">Onboarding Guide</h2>
-                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                        <br />
-                        <ol>
-                            @foreach ($guide as $task => $completed)
-                                @if ($completed)
-                                    <li style="color: green;">{{ $task }} (Completed)</li>
-                                @else
-                                    <li style="color: red;">{{ $task }}</li>
-                                @endif
-                            @endforeach
-                        </ol>
-                    </div>
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                    <h2 class="p-2">Onboarding Guide</h2>
+                    <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
+                    <br />
+                    <ol>
+                        @foreach ($guide as $task => $completed)
+                            @if ($completed)
+                                <li style="color: green;">{{ $task }} (Completed)</li>
+                            @else
+                                <li style="color: red;">{{ $task }}</li>
+                            @endif
+                        @endforeach
+                    </ol>
                 </div>
             </div>
-        @endif
+        </div>
         <!-- Container-fluid starts-->
         <div class="container-fluid default-dashboard">
             <div class="row widget-grid">
@@ -270,7 +278,7 @@
         </div>
         <!-- Container-fluid Ends-->
 
-                <!-- GUIDE MODAL -->
+        <!-- GUIDE MODAL -->
         <div class="modal fade" id="guideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
@@ -283,7 +291,8 @@
                         <!-- Step Contents -->
                         <div class="step active" data-audio="{{ asset('assets/customer_guide_audios/audio1.mp3') }}">
                             <h4>Welcome to Executor Hub</h4>
-                            <p>You’re here to manage your loved one’s estate securely, clearly, and at your own pace — with step-by-step guidance every step of the way.</p>
+                            <p>You’re here to manage your loved one’s estate securely, clearly, and at your own pace — with
+                                step-by-step guidance every step of the way.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -301,21 +310,24 @@
                             <ul>
                                 <li>To-Do List: Timeline of executor duties</li>
                                 <li>
-                                                                <img src="{{ asset('assets/customer_guide_images/image2.png') }}"
-                                style="width:100%;height:250px;" />
+                                    <img src="{{ asset('assets/customer_guide_images/image2.png') }}"
+                                        style="width:100%;height:250px;" />
                                 </li>
                                 <li>Vault: Secure uploads (Will, LPA, etc.)</li>
                                 <li>
-                                                                <img src="{{ asset('assets/customer_guide_images/image3.png') }}"
-                                style="width:100%;height:450px;" />
+                                    <img src="{{ asset('assets/customer_guide_images/image3.png') }}"
+                                        style="width:100%;height:450px;" />
                                 </li>
                                 <li>People: Collaborators & advisers</li>
                                 <li>
-                                                                <img src="{{ asset('assets/customer_guide_images/image4.png') }}"
-                                style="width:100%;height:450px;" />
+                                    <img src="{{ asset('assets/customer_guide_images/image4.png') }}"
+                                        style="width:100%;height:450px;" />
                                 </li>
                                 <li>Messages: Leave or receive messages for/from loved ones</li>
                                 <li>Resources: Video guides, checklists, legal explainers</li>
+                                <li>Manage the Pages that your trusted advisers can access</li>
+                                <img src="{{ asset('assets/customer_guide_images/image6.png') }}"
+                                    style="width:100%;height:450px;" />
                             </ul>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
@@ -326,8 +338,8 @@
                                 <li>Live chat / ask an adviser</li>
                                 <li>Book a call with a partner by sending an email to hello@executorhub.co.uk</li>
                                 <li>
-                                                                <img src="{{ asset('assets/customer_guide_images/image5.png') }}"
-                                style="width:100%;height:450px;" />
+                                    <img src="{{ asset('assets/customer_guide_images/image5.png') }}"
+                                        style="width:100%;height:450px;" />
                                 </li>
                             </ol>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>

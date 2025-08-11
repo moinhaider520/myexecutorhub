@@ -170,7 +170,7 @@
             </div>
 
             {{-- Sidebar area (reused from previous design) --}}
-            <div class="lg:w-1/3 mt-8 lg:mt-0">
+            <!-- <div class="lg:w-1/3 mt-8 lg:mt-0">
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
                     <h4 class="text-lg font-semibold text-gray-800 mb-4">Questions?</h4>
                     <p class="text-gray-700 mb-2">
@@ -185,7 +185,7 @@
                         </a>
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

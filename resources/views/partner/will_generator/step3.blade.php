@@ -415,7 +415,7 @@
                             placeholder="Email Address" required>
                         <div class="text-danger" id="error-email"></div>
                     </div>
-                    <
+               
 
 
                     <div class="modal-footer">

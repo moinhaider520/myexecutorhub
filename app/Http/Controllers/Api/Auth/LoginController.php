@@ -28,7 +28,7 @@ class LoginController extends Controller
                         return response()->json(['status' => false, 'message' => 'Please subscribe to continue.'], JsonResponse::HTTP_FORBIDDEN);
                     }
 
-                    if($request->email == "moin.haider.520@gmail.com"){
+                    if($request->email == "moin.haider.520@gmail.com" || $request->email == "nosherwanadil04@gmail.com"){
                                 $token = $user->createToken($request->email)->plainTextToken;
                                 $role = $user->roles->first()->name;
 

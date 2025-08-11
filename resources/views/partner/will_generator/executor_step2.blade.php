@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4"> {{-- Sidebar area (inherited from layout, but explicitly shown here for structure) --}}
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h4>Questions?</h4>
                             </div>
@@ -102,7 +102,7 @@
                                     </a>
                                 </p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
