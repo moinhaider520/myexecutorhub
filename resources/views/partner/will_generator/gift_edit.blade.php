@@ -333,7 +333,7 @@
                                                 <input type="checkbox" name="executors[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
                                                     @if(isset($selectedRecipientIds) && in_array($executor->id, $selectedRecipientIds)) checked @endif>
                                                 <div class="executor-details">
-                                                    <span class="executor-name">{{ $executor->name }} {{ $executor->lastname }}</span>
+                                                    <span class="executor-name">{{ @$executor->first_name }} {{ @$executor->last_name }}</span>
                                                     <span class="executor-contact">{{ $executor->email ?? 'No email available' }}</span>
                                                 </div>
                                             </label>
@@ -393,15 +393,15 @@
                 </div>
             </div>
 
-            <div class="col-xl-4"> {{-- Sidebar area (Common Section) --}}
+            {{-- <div class="col-xl-4">
                 <div class="related-articles-card">
                     <h4>Related articles</h4>
                     <ul>
                         <li><a href="#" class="text-blue-600 hover:underline">Leaving gifts in your will</a></li>
-                        {{-- More related articles would go here --}}
+
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 

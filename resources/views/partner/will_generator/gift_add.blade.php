@@ -385,7 +385,7 @@
                                     @forelse ($executors as $executor)
                                         <div class="executor-card">
                                             <label>
-                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}" required>
+                                                <input type="checkbox" name="executors[]" value="{{ $executor->id }}" >
                                                 <div class="executor-details">
                                                     <span class="executor-name">{{ $executor->first_name }}
                                                         {{ $executor->last_name }}</span>
@@ -448,15 +448,15 @@
                 </div>
             </div>
 
-            <div class="col-xl-4"> {{-- Sidebar area (Common Section) --}}
+            {{-- <div class="col-xl-4">
                 <div class="related-articles-card">
                     <h4>Related articles</h4>
                     <ul>
                         <li><a href="#" class="text-blue-600 hover:underline">Leaving gifts in your will</a></li>
-                        {{-- More related articles would go here --}}
+
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <div class="modal fade" id="addExecutorModal" tabindex="-1" role="dialog"

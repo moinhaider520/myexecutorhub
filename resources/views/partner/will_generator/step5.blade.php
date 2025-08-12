@@ -29,6 +29,7 @@
                                 <form id="msform" class="needs-validation" novalidate
                                     action="{{ route('partner.will_generator.store_step5') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
                                     <script src="https://cdn.tailwindcss.com"></script>
                                     <div class="stepper row g-3 needs-validation custom-input" novalidate="">
                                         <div class="col-sm-12">
@@ -119,8 +120,8 @@
 
                             </div>
                             <div class="wizard-footer d-flex gap-2 justify-content-end m-4">
-                                <button class="btn badge-light-primary" id="backbtn" onclick="backStep()"
-                                    disabled=""> Back</button>
+                                <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled="">
+                                    Back</button>
                                 <button type="submit" class="btn btn-primary" id="nextbtn">Finish</button>
                             </div>
                             </form>
@@ -131,67 +132,64 @@
         </div>
     </div>
     </div>
-<div class="modal" id="addWillPetModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="addWillPetModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <form id="addWillPetForm">
-                                                @csrf
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="addWillPetModalLabel">Add a pet
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="form-group mb-3">
-                                                            <label for="name">Pet Name</label>
-                                                            <input type="text" class="form-control" name="pet_name"
-                                                                id="name" placeholder="Enter Pet Name" required>
-                                                            <div class="text-danger" id="error-name"></div>
-                                                        </div>
+    <div class="modal" id="addWillPetModal" tabindex="-1" role="dialog" aria-labelledby="addWillPetModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="addWillPetForm">
+                @csrf
+                <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addWillPetModalLabel">Add a pet
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label for="name">Pet Name</label>
+                            <input type="text" class="form-control" name="pet_name" id="name"
+                                placeholder="Enter Pet Name" required>
+                            <div class="text-danger" id="error-name"></div>
+                        </div>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary"
-                                                            id="savePetButton">Save changes</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal" id="editWillPetModal" tabindex="-1" role="dialog"
-                                        aria-labelledby="editWillPetModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                            <form id="editWillPetForm">
-                                                @csrf
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="editWillPetModalLabel">Edit a pet
-                                                        </h5>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <input type="hidden" name="pet_id" id="edit_pet_id">
-                                                        <div class="form-group mb-3">
-                                                            <label for="name">Pet Name</label>
-                                                            <input type="text" class="form-control" name="pet_name"
-                                                                id="edit_pet_name" placeholder="Enter Pet Name" required>
-                                                            <div class="text-danger" id="error-name"></div>
-                                                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="savePetButton">Save changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal" id="editWillPetModal" tabindex="-1" role="dialog" aria-labelledby="editWillPetModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="editWillPetForm">
+                @csrf
+                <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editWillPetModalLabel">Edit a pet
+                        </h5>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="pet_id" id="edit_pet_id">
+                        <div class="form-group mb-3">
+                            <label for="name">Pet Name</label>
+                            <input type="text" class="form-control" name="pet_name" id="edit_pet_name"
+                                placeholder="Enter Pet Name" required>
+                            <div class="text-danger" id="error-name"></div>
+                        </div>
 
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-danger"
-                                                            id="deletePetButton">Remove Pet</button>
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary"
-                                                            id="updatePetButton">Update changes</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" id="deletePetButton">Remove Pet</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updatePetButton">Update changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
     <!-- Container-fluid Ends-->
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -267,10 +265,10 @@
                 e.preventDefault();
                 clearAddErrors();
                 var petName = $('#name').val();
-
+                var will_user_id=$("#will_user_id").val();
                 var postData = {
                     name: petName,
-
+                    will_user_id: will_user_id,
                 };
                 $.ajax({
                     url: "{{ route('partner.will_generator.user_pet.store') }}",
@@ -316,10 +314,12 @@
                 e.preventDefault();
                 clearAddErrors();
                 var petName = $('#edit_pet_name').val();
-                var petId = $('#edit_pet_id').val()
+                var petId = $('#edit_pet_id').val();
+                var will_user_id=$("#will_user_id").val();
                 var postData = {
                     name: petName,
                     pet_id: petId,
+                    will_user_id: will_user_id,
 
                 };
                 $.ajax({
@@ -376,9 +376,10 @@
                 e.preventDefault();
                 clearAddErrors();
                 var petId = $('#edit_pet_id').val()
+                var will_user_id=$("#will_user_id").val();
                 var postData = {
                     pet_id: petId,
-
+                    will_user_id: will_user_id,
                 };
                 $.ajax({
                     url: "{{ route('partner.will_generator.user_pet.delete') }}",

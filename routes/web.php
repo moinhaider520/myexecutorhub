@@ -926,11 +926,11 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator/create/{will_user_id}', [PartnerWillGeneratorController::class, 'create'])->name('will_generator.create');
     Route::get('will_generator/about_you/{will_user_id?}', [PartnerWillGeneratorController::class, 'about_you'])->name('will_generator.about_you');
     Route::delete('will_generator/about_you/delete/{will_user_id}', [PartnerWillGeneratorController::class, 'delete_about_you'])->name('will_generator.delete_about_you');
-    Route::get('will_generator/step3', [PartnerWillGeneratorController::class, 'step3'])->name('will_generator.step3');
+    Route::get('will_generator/step3/{will_user_id}', [PartnerWillGeneratorController::class, 'step3'])->name('will_generator.step3');
     Route::post('will_generator/store_step3', [PartnerWillGeneratorController::class, 'store_step3'])->name('will_generator.store_step3');
-    Route::get('will_generator/step4', [PartnerWillGeneratorController::class, 'step4'])->name('will_generator.step4');
+    Route::get('will_generator/step4/{will_user_id}', [PartnerWillGeneratorController::class, 'step4'])->name('will_generator.step4');
     Route::post('will_generator/step4', [PartnerWillGeneratorController::class, 'store_step4'])->name('will_generator.store_step4');
-    Route::get('will_generator/step5', [PartnerWillGeneratorController::class, 'step5'])->name('will_generator.step5');
+    Route::get('will_generator/step5/{will_user_id}', [PartnerWillGeneratorController::class, 'step5'])->name('will_generator.step5');
     Route::post('will_generator/step5', [PartnerWillGeneratorController::class, 'store_step5'])->name('will_generator.store_step5');
     Route::post('will_generator/about_you', [PartnerWillGeneratorController::class, 'store_about_you'])->name('will_generator.store_about_you');
 
