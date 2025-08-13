@@ -80,7 +80,7 @@
                                 @else
                                 <p>No pet</p>
                                 @endif
-                                <a href="{{ route('partner.will_generator.about_you', $will_user_info->id) }}">Edit</a>
+                                <a href="{{ route('customer.will_generator.about_you', @$will_user_info->id) }}">Edit</a>
                             </div>
                         </div>
                         <div class="card">
@@ -88,14 +88,14 @@
                                 <h4>STEP 2 - Accounts and Property</h4>
                             </div>
                             <div class="card-body">
-                                @if ($will_user_info->account_properties)
+                                @if ($will_user_info && $will_user_info->account_properties)
                                 @foreach ($will_user_info->account_properties as $account_property)
                                 <p>{{ $account_property->asset_name }} ({{ @$account_property->asset_type }})
                                 </p>
                                 @endforeach
                                 @endif
                                 <a
-                                    href="{{ route('partner.will_generator.account_properties', $will_user_info->id) }}">Edit</a>
+                                    href="{{ route('customer.will_generator.account_properties', @$will_user_info->id) }}">Edit</a>
                             </div>
                         </div>
                         <div class="card">
@@ -123,7 +123,7 @@
                                 <p class="text-gray-500">No beneficiaries added yet.</p>
                                 @endforelse
 
-                                <a href="{{ route('partner.will_generator.estates',$will_user_info->id) }}">Edit</a>
+                                <a href="{{ route('customer.will_generator.estates',@$will_user_info->id) }}">Edit</a>
                             </div>
 
                         </div>
@@ -143,7 +143,7 @@
                                  @endif
                                     @endforeach
                                 </p>
-                                <a href="{{ route('partner.will_generator.executor',$will_user_info->id) }}">Edit</a>
+                                <a href="{{ route('customer.will_generator.executor',@$will_user_info->id) }}">Edit</a>
                             </div>
                         </div>
                         <div class="card">
@@ -168,7 +168,7 @@
                                     @endforelse
 
 
-                                    <a href="{{ route('partner.will_generator.gift', $will_user_info->id) }}">Edit</a>
+                                    <a href="{{ route('customer.will_generator.gift', @$will_user_info->id) }}">Edit</a>
                             </div>
                         </div>
                         <div class="card">
@@ -189,7 +189,7 @@
                                     the time comes.
                                 </p>
                                 @endif
-                                <a href="{{ route('partner.will_generator.funeral', $will_user_info->id) }}">Edit</a>
+                                <a href="{{ route('customer.will_generator.funeral', $will_user_info->id) }}">Edit</a>
                             </div>
                         </div>
                     </div>

@@ -134,7 +134,7 @@
                         You should <a href="#" class="text-blue-600 hover:underline">read our full terms and conditions</a>. We recommend you print a copy of our terms. If our terms change in the future, we’ll let you know when you next log in to your account.
                     </p>
 
-                    <form id="farewillTrusteesForm" action="{{ route('partner.will_generator.store_executor') }}" method="POST">
+                    <form id="farewillTrusteesForm" action="{{ route('customer.will_generator.store_executor') }}" method="POST">
                         @csrf
                         <input type="hidden" name="farewill_trustees" value="farewill_trustees">
                         <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
@@ -170,7 +170,7 @@
                 </div>
             </div>
 
-            
+
             <!-- <div class="lg:w-1/3 mt-8 lg:mt-0">
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
                     <h4 class="text-lg font-semibold text-gray-800 mb-4">Questions?</h4>

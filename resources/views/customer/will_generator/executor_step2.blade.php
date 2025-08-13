@@ -77,7 +77,7 @@
                                             </svg>
                                             Back
                                         </a>
-                                        <a href="{{route('partner.will_generator.executor_step3',$will_user_id)}}" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
+                                        <a href="{{route('customer.will_generator.executor_step3',$will_user_id)}}" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
                                             Next, choose executors
                                         </a>
                                     </div>

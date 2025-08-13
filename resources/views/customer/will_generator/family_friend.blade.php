@@ -222,7 +222,7 @@
                 </p>
 
                 <form id="executorChoiceForm" class="space-y-6"
-                    action="{{ route('partner.will_generator.store_executor') }}" method="POST">
+                    action="{{ route('customer.will_generator.store_executor') }}" method="POST">
                     @csrf
                     <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
                     <input type="hidden" name="friends_and_family" value="friends_and_family">
@@ -473,7 +473,7 @@
             clearAddErrors(); // Clear previous error messages
 
             $.ajax({
-                url: "{{ route('partner.will_generator.user_partner.store') }}",
+                url: "{{ route('customer.will_generator.user_partner.store') }}",
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -575,7 +575,7 @@
                 will_user_id: will_user_id
             };
             $.ajax({
-                url: "{{ route('partner.will_generator.user_partner.delete') }}",
+                url: "{{ route('customer.will_generator.user_partner.delete') }}",
                 method: 'Delete',
                 data: postData,
                 dataType: 'json',

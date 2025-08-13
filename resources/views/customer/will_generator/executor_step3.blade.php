@@ -84,7 +84,7 @@
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="executorChoiceForm" class="needs-validation" novalidate
-                                    action="{{route('partner.will_generator.get_executor_step3')}}" method="POST">
+                                    action="{{route('customer.will_generator.get_executor_step3')}}" method="POST">
                                     @csrf
 
                                     <script src="https://cdn.tailwindcss.com"></script>

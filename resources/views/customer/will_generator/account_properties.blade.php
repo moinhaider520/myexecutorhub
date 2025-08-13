@@ -102,7 +102,7 @@ input[type="radio"] {
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="msform" class="needs-validation" novalidate
-                                    action="{{ route('partner.will_generator.account_properties',$will_user_id) }}" method="POST">
+                                    action="{{ route('customer.will_generator.account_properties',$will_user_id) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                                     <script src="https://cdn.tailwindcss.com"></script> {{-- Consider moving this to your main layout if used globally --}}
@@ -593,7 +593,7 @@ input[type="radio"] {
             }
 
             $.ajax({
-                url: "{{route('partner.will_generator.account_properties.store','')}}/"+will_user_id,
+                url: "{{route('customer.will_generator.account_properties.store','')}}/"+will_user_id,
                 method: 'POST',
                 data: postData,
                 dataType: 'json',
@@ -720,7 +720,7 @@ input[type="radio"] {
             }
 
             $.ajax({
-                url: "{{route('partner.will_generator.account_properties.update')}}",
+                url: "{{route('customer.will_generator.account_properties.update')}}",
                 method: 'POST',
                 data: postData,
                 dataType: 'json',
@@ -777,7 +777,7 @@ input[type="radio"] {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{route('partner.will_generator.account_properties.delete','')}}/"+assetId , // Correct route with ID
+                        url: "{{route('customer.will_generator.account_properties.delete','')}}/"+assetId , // Correct route with ID
                         method: 'POST', // Use POST for _method: 'DELETE'
                         data: {
                             _token: csrfToken,
@@ -819,7 +819,7 @@ input[type="radio"] {
         // --- Save and Continue Button Logic ---
         $('#saveAndContinueButton').on('click', function(e) {
             e.preventDefault();
-            // This button should typically submit the main form, which has action="{{ route('partner.will_generator.store_step4') }}"
+            // This button should typically submit the main form, which has action="{{ route('customer.will_generator.store_step4') }}"
             $('#msform').submit(); // Submits the main form with CSRF token
         });
     });

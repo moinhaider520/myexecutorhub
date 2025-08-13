@@ -127,7 +127,7 @@
             <div class="w-full xl:w-7/12 p-3"> {{-- Main content area --}}
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
-                        <form id="backupBeneficiaryForm" action="{{route('partner.will_generator.store_benificaries_death_backup')}}" method="POST">
+                        <form id="backupBeneficiaryForm" action="{{route('customer.will_generator.store_benificaries_death_backup')}}" method="POST">
                             @csrf
                              <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
@@ -201,8 +201,8 @@
                          @empty
                             <li>No beneficiaries added yet.</li>
                          @endforelse
-                        
-                       
+
+
                     </ul>
                 </div>
             </div>

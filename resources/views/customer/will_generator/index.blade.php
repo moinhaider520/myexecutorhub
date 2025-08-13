@@ -7,7 +7,7 @@
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
                 <div class="row">
                     <div class="col-md-12 d-flex justify-content-end p-2">
-                        <a href="{{ route('partner.will_generator.about_you','') }}" class="btn btn-primary">
+                        <a href="{{ route('customer.will_generator.about_you','') }}" class="btn btn-primary">
                             Add User Will
                         </a>
                     </div>
@@ -50,13 +50,13 @@
                                                     <td>{{ $user_about_info->martial_status }}</td>
                                                     <td>{{ $user_about_info->phone_number }}</td>
                                                     <td style="display: flex;" class="justify-content-center gap-2">
-                                                        
-                                                        <a href="{{route('partner.will_generator.create',$user_about_info->id)}}"
+
+                                                        <a href="{{route('customer.will_generator.create',$user_about_info->id)}}"
                                                             class="btn btn-warning btn-sm edit-button">Edit</a>
-                                                        <a href="{{ route('partner.will_generator.create_pdf', $user_about_info->id) }}"
+                                                        <a href="{{ route('customer.will_generator.create_pdf', $user_about_info->id) }}"
                                                             class="btn btn-primary w-100">Download</a>
                                                         <form
-                                                            action="{{route('partner.will_generator.delete_about_you',$user_about_info->id)}}"
+                                                            action="{{route('customer.will_generator.delete_about_you',$user_about_info->id)}}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')

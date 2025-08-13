@@ -183,9 +183,9 @@
 
 <div class="container-fluid default-dashboard">
     <div class="row widget-grid">
-        <div class="col-xl-8"> 
+        <div class="col-xl-8">
             <div class="card height-equal">
-                <form method="POST" action="{{ route('partner.will_generator.store_funeral_plan') }}">
+                <form method="POST" action="{{ route('customer.will_generator.store_funeral_plan') }}">
                     @csrf
                     <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
                     <div class="card-body basic-wizard important-validation">

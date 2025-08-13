@@ -96,23 +96,16 @@
             font-size: 0.875rem;
             /* text-sm */
             margin-top: 0.5rem;
-            display: none;
-            /* Hidden by default */
         }
-
-        /* --- End New CSS --- */
-
 
         .percentage-symbol {
             position: absolute;
             right: 0.6rem;
-            /* Adjusted right position slightly to match the screenshot */
             top: 50%;
             transform: translateY(-50%);
             color: #4a5568;
             font-weight: 600;
             pointer-events: none;
-            /* Prevents the symbol from interfering with input clicks/focus */
         }
 
         .beneficiary-name {
@@ -357,9 +350,11 @@
 
                 // This will only show the error message if the total is less than 100
                 if (isLessThanOneHundred) {
+
                     totalPercentageInput.addClass('is-invalid');
                     totalPercentageError.removeClass('hidden');
                 } else {
+
                     totalPercentageInput.removeClass('is-invalid');
                     totalPercentageError.addClass('hidden');
                 }
@@ -367,22 +362,24 @@
                 return isExactlyOneHundred;
             }
 
-            // Attach event listeners to all percentage input fields
             percentageInputs.on('input', validateTotalPercentage);
 
             // Attach event listener to the form submission
             shareEstateForm.on('submit', function(event) {
-                if (!validateTotalPercentage()) {
+                const total = calculateTotalPercentage();
+                if (total !== 100) {
+                    event.preventDefault();
 
+                    totalPercentageInput.addClass('is-invalid');
+                    totalPercentageError.removeClass('hidden');
+                } else {
+
+                    totalPercentageInput.removeClass('is-invalid');
+                    totalPercentageError.addClass('hidden');
                 }
             });
 
-            // Initial validation when the page loads
-            validateTotalPercentage();
 
-            // --- Sidebar Inheritance Summary (Dynamic Population - Placeholder for now) ---
-            // In a real application, you would fetch these beneficiaries from your backend
-            // or pass them from the previous steps.
             function updateInheritanceSummary() {
 
             }

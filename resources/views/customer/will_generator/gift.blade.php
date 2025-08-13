@@ -445,7 +445,7 @@
                         timer: 2000
                     }).then(() => {
 
-                        window.location.href = "{{ route('partner.will_generator.create', '') }}/" +
+                        window.location.href = "{{ route('customer.will_generator.create', '') }}/" +
                             will_user_id;
                     });
                 });

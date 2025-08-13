@@ -96,7 +96,7 @@
             font-size: 0.875rem;
             /* text-sm */
             margin-top: 0.5rem;
-            display: none;
+
             /* Hidden by default */
         }
 
@@ -213,7 +213,7 @@
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
                         {{-- Added ID for the form --}}
-                        <form id="shareEstateForm" action="{{ route('partner.will_generator.store_share_percentage') }}"
+                        <form id="shareEstateForm" action="{{ route('customer.will_generator.store_share_percentage') }}"
                             method="POST">
                             @csrf
                             <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
@@ -282,7 +282,7 @@
 
 
                             <div class="d-flex justify-content-between mt-8">
-                                <a href="{{ route('partner.will_generator.choose_inherited_charity', $will_user_id) }}"
+                                <a href="{{ route('customer.will_generator.choose_inherited_charity', $will_user_id) }}"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                     &larr; Back
                                 </a>
@@ -357,9 +357,11 @@
 
                 // This will only show the error message if the total is less than 100
                 if (isLessThanOneHundred) {
+
                     totalPercentageInput.addClass('is-invalid');
                     totalPercentageError.removeClass('hidden');
                 } else {
+
                     totalPercentageInput.removeClass('is-invalid');
                     totalPercentageError.addClass('hidden');
                 }
@@ -367,22 +369,24 @@
                 return isExactlyOneHundred;
             }
 
-            // Attach event listeners to all percentage input fields
             percentageInputs.on('input', validateTotalPercentage);
 
             // Attach event listener to the form submission
             shareEstateForm.on('submit', function(event) {
-                if (!validateTotalPercentage()) {
+                const total = calculateTotalPercentage();
+                if (total !== 100) {
+                    event.preventDefault();
 
+                    totalPercentageInput.addClass('is-invalid');
+                    totalPercentageError.removeClass('hidden');
+                } else {
+
+                    totalPercentageInput.removeClass('is-invalid');
+                    totalPercentageError.addClass('hidden');
                 }
             });
 
-            // Initial validation when the page loads
-            validateTotalPercentage();
 
-            // --- Sidebar Inheritance Summary (Dynamic Population - Placeholder for now) ---
-            // In a real application, you would fetch these beneficiaries from your backend
-            // or pass them from the previous steps.
             function updateInheritanceSummary() {
 
             }

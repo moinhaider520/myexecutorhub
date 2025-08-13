@@ -271,7 +271,7 @@
         <div class="row widget-grid">
             <div class="col-xl-8"> {{-- Main content area --}}
                 <div class="card height-equal">
-                    <form method="POST" action="{{ route('partner.will_generator.gift.store_add_gift',$will_user_id) }}" id="executorChoiceForm">
+                    <form method="POST" action="{{ route('customer.will_generator.gift.store_add_gift',$will_user_id) }}" id="executorChoiceForm">
                         @csrf {{-- Don't forget the CSRF token! --}}
 
                         {{-- Hidden field to pass the 'type' to the controller --}}
@@ -612,7 +612,7 @@
                 clearAddErrors(); // Clear previous error messages
 
                 $.ajax({
-                    url: "{{ route('partner.will_generator.user_partner.store') }}",
+                    url: "{{ route('customer.will_generator.user_partner.store') }}",
                     method: 'POST',
                     data: $(this).serialize(),
                     success: function(response) {
@@ -717,7 +717,7 @@
 
                 };
                 $.ajax({
-                    url: "{{ route('partner.will_generator.user_partner.delete') }}",
+                    url: "{{ route('customer.will_generator.user_partner.delete') }}",
                     method: 'Delete',
                     data: postData,
                     dataType: 'json',

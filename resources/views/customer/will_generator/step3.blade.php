@@ -312,7 +312,7 @@
                     <h4 class="form-header">About You</h4>
                 </div>
                 <div class="card-body basic-wizard important-validation">
-                    <form id="msform" class="needs-validation" novalidate action="{{ route('partner.will_generator.store_step3') }}" method="POST">
+                    <form id="msform" class="needs-validation" novalidate action="{{ route('customer.will_generator.store_step3') }}" method="POST">
                         @csrf
                         <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                         <div class="row g-4">
@@ -519,7 +519,7 @@
             clearAddErrors(); // Clear previous error messages
 
             $.ajax({
-                url: "{{ route('partner.will_generator.user_partner.store') }}",
+                url: "{{ route('customer.will_generator.user_partner.store') }}",
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -624,7 +624,7 @@
 
             };
             $.ajax({
-                url: "{{ route('partner.will_generator.user_partner.delete') }}",
+                url: "{{ route('customer.will_generator.user_partner.delete') }}",
                 method: 'Delete',
                 data: postData,
                 dataType: 'json',
@@ -669,7 +669,7 @@
         });
     });
 </script>
->
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
