@@ -312,7 +312,7 @@
                                             @forelse ($executors as $executor)
                                                 <div class="executor-card">
                                                     <label>
-                                                        <input type="checkbox" name="family_friends[]"
+                                                        <input type="checkbox" name="executors[]"
                                                             value="{{ $executor->id }}">
                                                         <div class="executor-details">
                                                             <span class="executor-name"
@@ -639,9 +639,10 @@
             $('#deletePersonButton').on('click', function(e) {
                 e.preventDefault();
                 var person_id = $('#editExecutorId').val();
+                var will_user_id = $('#will_user_id').val();
                 var postData = {
                     id: person_id,
-
+                    will_user_id: will_user_id
                 };
                 $.ajax({
                     url: "{{ route('partner.will_generator.user_partner.delete') }}",

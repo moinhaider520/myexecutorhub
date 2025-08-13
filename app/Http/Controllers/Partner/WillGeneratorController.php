@@ -412,7 +412,7 @@ class WillGeneratorController extends Controller
         DB::beginTransaction();
 
         $will_user_id = WillUserInfo::find($request->will_user_id);
-        $executorIds = []; 
+        $executorIds = [];
 
         if ($request->has('friends_and_family')) {
             $executorIds = $request->input('executors', []);
@@ -421,17 +421,17 @@ class WillGeneratorController extends Controller
             $farewillTrustee = WillInheritedPeople::firstOrCreate(
                 ['type' => 'Professional Executor'],
                 [
-                    'first_name' => 'Farewill',
+                    'first_name' => 'Executorhub',
                     'last_name' => 'Trustees',
                     'type' => 'Professional Executor',
                     'will_user_id' => $request->will_user_id,
                 ]
             );
             $executorIds[] = $farewillTrustee->id;
-        
+
         }
 
-        $will_user_id->executors()->sync($executorIds);   
+        $will_user_id->executors()->sync($executorIds);
         DB::commit();
         return redirect()->route('partner.will_generator.create', $request->will_user_id)
                          ->with(['success' => 'Your Executors has been selected successfully']);
@@ -472,7 +472,7 @@ class WillGeneratorController extends Controller
         }
     }
 
-    
+
 
 
     public function your_estate($will_user_id)
@@ -482,7 +482,12 @@ class WillGeneratorController extends Controller
     public function choose_inherited_persons($will_user_id)
     {
 
-        $executors = WillInheritedPeople::where('will_user_id', '=', $will_user_id)->get();
+        $executors = WillInheritedPeople::where('will_user_id', $will_user_id)
+            ->where(function ($query) {
+                $query->orWhere('type', 'partner')
+                    ->orWhere('type', 'child');
+            })
+            ->get();
         return view('partner.will_generator.estate.choose_inherited_persons', compact('executors', 'will_user_id'));
     }
     public function choose_inherited_charity($will_user_id)
@@ -724,6 +729,7 @@ class WillGeneratorController extends Controller
                     ->orWhere('type', 'child');
             })
             ->get();
+
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
             return response()->json(['status' => true, 'messsage' => 'Partner have been saved successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -780,7 +786,7 @@ class WillGeneratorController extends Controller
                     ->orWhere('type', 'child');
             })
             ->get();
-            
+
             $html = view('partner.will_generator.ajax.partner_list', ['partners' => $partners])->render();
             return response()->json(['status' => true, 'message' => 'Partner deleted successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -826,7 +832,7 @@ class WillGeneratorController extends Controller
                     ->first();
                 $beneficiary->share_percentage = $percentage;
                 $beneficiary->save();
-                
+
                 if ($beneficiary->beneficiable_type == WillInheritedPeople::class) {
                     $shouldRedirectToDeathBackup = true;
                 }

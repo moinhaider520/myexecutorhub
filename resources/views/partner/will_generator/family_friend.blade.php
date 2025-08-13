@@ -273,7 +273,7 @@
                                 <label>
                                     <input type="checkbox" name="farewill_trustees[]" value="farewill_trustees">
                                     <div class="executor-details">
-                                        <span class="executor-name">Farewill Trustees</span>
+                                        <span class="executor-name">Executorhub Trustees</span>
                                     </div>
                                 </label>
                                 {{-- No edit button for professional executors based on screenshot --}}
@@ -285,7 +285,7 @@
 
                     {{-- Action buttons --}}
                     <div class="flex justify-between items-center mt-8">
-                        <a href="#" class="back-button">
+                        <a onclick="history.back()" class="back-button">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -498,7 +498,7 @@
         // Handle click on edit button for executor
         $(document).on('click', '.edit-button', function() {
             var id = $(this).data('id');
-           
+
             var name = $(this).data('name');
             var lastname = $(this).data('lastname');
             var phone_number = $(this).data('phone_number');
@@ -514,11 +514,11 @@
             $('#editExecutorModal').click();
         });
 
-     
+
         $('#editExecutorForm').on('submit', function(e) {
             e.preventDefault();
             var id = $('#editExecutorId').val();
-            clearEditErrors(); 
+            clearEditErrors();
 
             $.ajax({
                 url: "/partner/will_generator/user_partner/edit",

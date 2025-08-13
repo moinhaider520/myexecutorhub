@@ -120,7 +120,7 @@
 
                             </div>
                             <div class="wizard-footer d-flex gap-2 justify-content-end m-4">
-                                <button class="btn badge-light-primary" id="backbtn" onclick="history.back()" disabled="">
+                                <button class="btn badge-light-primary" id="backbtn" onclick="history.back()" >
                                     Back</button>
                                 <button type="submit" class="btn btn-primary" id="nextbtn">Finish</button>
                             </div>

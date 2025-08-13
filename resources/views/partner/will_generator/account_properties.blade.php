@@ -588,6 +588,7 @@ input[type="radio"] {
                     break;
                 case 'other':
                     postData.other_description = $('#add_other_description').val();
+                    postData.asset_value = $('#add_other_description').val();
                     break;
             }
 
