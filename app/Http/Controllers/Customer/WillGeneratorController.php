@@ -94,6 +94,16 @@ class WillGeneratorController extends Controller
     public function about_you($will_user_id = null)
     {
         $user_info = WillUserInfo::find($will_user_id);
+        if(!$user_info){
+
+            $already_user_info = WillUserInfo::where('user_id',Auth::user()->id)->first();
+            if($already_user_info){
+
+                return redirect()->route('customer.will_generator.about_you',$already_user_info);
+            }
+
+        }
+
         return view('customer.will_generator.about_you', compact('user_info'));
     }
 
