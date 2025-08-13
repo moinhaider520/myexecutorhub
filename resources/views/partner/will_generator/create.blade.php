@@ -52,7 +52,7 @@
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
                 <div class="row">
                     <!-- STEPS -->
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
                                 <h4>STEP 1 - About You</h4>
@@ -134,7 +134,7 @@
                             <div class="card-body">
                                 <p>
                                     Your Executor'@if($will_user_info->executors->count() > 1)s are
-                                    @else 
+                                    @else
                                     is
                                     @endif
                                     @foreach($will_user_info->executors as $executor)
@@ -194,7 +194,7 @@
                         </div>
                     </div>
                     <!-- ACTION BUTTONS -->
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6"> --}}
                         <!-- {{-- Your Progress
                             <div class="progress" style="height: 25px;">
                                 <div class="progress-bar bg-success" role="progressbar" id="myProgressBar"
@@ -204,7 +204,7 @@
                             </div> --}}
                         <img
                             src="https://res.cloudinary.com/dwr27vxv7/image/upload/c_scale,f_auto,q_auto,w_600/illustrations/experts.png" />
-                        
+
                     </div> -->
                 </div>
             </div>
