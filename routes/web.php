@@ -957,8 +957,9 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator/executor/step3/{will_user_id}', [PartnerWillGeneratorController::class, 'executor_step3'])->name('will_generator.executor_step3');
     Route::get('will_generator/executor/family_friend/{will_user_id}', [PartnerWillGeneratorController::class, 'family_friend'])->name('will_generator.family_friend');
     Route::post('will_generator/executor/get_executor_step3', [PartnerWillGeneratorController::class, 'get_executor_step3'])->name('will_generator.get_executor_step3');
+    Route::post('will_generator/executor/store_executor', [PartnerWillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
     Route::post('will_generator/executor/store_family_friend', [PartnerWillGeneratorController::class, 'store_family_friend'])->name('will_generator.store_family_friend');
-    Route::get('will_generator/executor/farewill_trustees', [PartnerWillGeneratorController::class, 'farewill_trustees'])->name('will_generator.farewill_trustees');
+    Route::get('will_generator/executor/farewill_trustees/{will_user_id}', [PartnerWillGeneratorController::class, 'farewill_trustees'])->name('will_generator.farewill_trustees');
     Route::post('will_generator/executor/store_farewill_trustees', [PartnerWillGeneratorController::class, 'store_farewill_trustees'])->name('will_generator.store_farewill_trustees');
 
     Route::get('will_generator/estates/{will_user_id}',[PartnerWillGeneratorController::class,'your_estate'])->name('will_generator.estates');

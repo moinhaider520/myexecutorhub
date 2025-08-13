@@ -88,7 +88,7 @@
                                     @csrf
 
                                     <script src="https://cdn.tailwindcss.com"></script>
-
+                                    <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
                                     <div class="stepper row g-3 needs-validation custom-input" novalidate="">
                                         <div class="col-sm-12">
                                             {{-- Content from the screenshot starts here --}}

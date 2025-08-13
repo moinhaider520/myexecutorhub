@@ -222,8 +222,10 @@
                     </p>
 
                     <form id="executorChoiceForm" class="space-y-6"
-                        action="{{ route('partner.will_generator.store_family_friend') }}" method="POST">
+                        action="{{ route('partner.will_generator.store_executor') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
+                        <input type="hidden" name="friends_and_family" value="friends_and_family">
                         <div class="mb-8">
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Friends and family</h2>
                             <div class="space-y-3">
@@ -267,8 +269,9 @@
                             <h2 class="text-xl font-semibold text-gray-800 mb-4">Professional executors</h2>
                             <div class="space-y-3">
                                 <div class="executor-card">
+                                    <input type="hidden" name="farewill_trustees" value="farewill_trustees">
                                     <label>
-                                        <input type="checkbox" name="executors[]" value="farewill_trustees">
+                                        <input type="checkbox" name="farewill_trustees[]" value="farewill_trustees">
                                         <div class="executor-details">
                                             <span class="executor-name">Farewill Trustees</span>
                                         </div>

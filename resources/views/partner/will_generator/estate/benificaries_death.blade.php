@@ -131,7 +131,7 @@
                             @csrf
                              <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                                If {{$beneficiary->getNameAttribute()}} dies before you, who should inherit their share of the estate instead?
+                                If {{$beneficiary?@$beneficiary->getNameAttribute():'No Name'}} dies before you, who should inherit their share of the estate instead?
                             </h1>
                             <p class="text-gray-700 leading-relaxed mb-6">
                                 Writing a will is all about being prepared for the unexpected. This is why we also ask you to name back-ups in case your chosen beneficiary dies before you. These are known as secondary beneficiaries.
@@ -155,10 +155,10 @@
                             </div>
 
                             <input type="hidden" name="selected_backup_option" id="selectedBackupOption">
-                            <input type="hidden" name="current_beneficiary_id" value="{{$beneficiary->id}}">
+                            <input type="hidden" name="current_beneficiary_id" value="{{@$beneficiary->id}}">
 
                             <p class="text-gray-600 italic mt-6">
-                                Selecting 'Their children' includes all {{$beneficiary->getNameAttribute()}}'s biological and legally adopted children but not step-children.
+                                Selecting 'Their children' includes all {{$beneficiary?@$beneficiary->getNameAttribute():'No Name'}}'s biological and legally adopted children but not step-children.
                             </p>
 
                             <p class="text-gray-600 italic mt-4">
@@ -185,7 +185,10 @@
                 <div class="inheritance-summary-card">
                     <h4>Inheriting your estate:</h4>
                     <ul id="inheritanceSummaryList">
-                       @forelse ($allBeneficiaries->beneficiaries as $beneficiaries)
+                        @if($allBeneficiaries)
+                        <li class="font-semibold">Beneficiaries:</li>
+                        @endif
+                         @forelse ($allBeneficiaries->beneficiaries as $beneficiaries)
                             <li>
                                 <div class="beneficiary-info">
                                     <span class="beneficiary-name-summary">{{ $beneficiaries->getNameAttribute()}}</span>
@@ -195,9 +198,11 @@
                                 </div>
                                 <span class="beneficiary-percentage-summary">{{ number_format($beneficiaries->share_percentage, 2) }}%</span>
                             </li>
-                        @empty
+                         @empty
                             <li>No beneficiaries added yet.</li>
-                        @endforelse
+                         @endforelse
+                        
+                       
                     </ul>
                 </div>
             </div>
