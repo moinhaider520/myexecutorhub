@@ -718,7 +718,12 @@ class WillGeneratorController extends Controller
             ]);
 
             DB::commit();
-            $partners = WillInheritedPeople::where('will_user_id', $request->will_user_id)->get();
+            $partners = WillInheritedPeople::where('will_user_id', $request->will_user_id)
+            ->where(function ($query) {
+                $query->orWhere('type', 'partner')
+                    ->orWhere('type', 'child');
+            })
+            ->get();
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
             return response()->json(['status' => true, 'messsage' => 'Partner have been saved successfully', 'data' => $html]);
         } catch (\Exception $e) {
@@ -742,7 +747,12 @@ class WillGeneratorController extends Controller
                     'type' => $request->relationship,
                 ]);
             DB::commit();
-            $partners = WillInheritedPeople::where('will_user_id', $request->will_user_id)->get();
+            $partners = WillInheritedPeople::where('will_user_id', $request->will_user_id)
+            ->where(function ($query) {
+                $query->orWhere('type', 'partner')
+                    ->orWhere('type', 'child');
+            })
+            ->get();
 
             $html = view('partner.will_generator.ajax.partner_list', compact('partners'))->render();
             return response()->json(['status' => true, 'messsage' => 'Partner have been updated successfully', 'data' => $html]);
@@ -755,7 +765,6 @@ class WillGeneratorController extends Controller
     public function partner_delete(Request $request)
     {
         try {
-            $will_user_id = session('will_user_id') ?? WillUserInfo::latest()->first()->id;
             $will_inherited_people = WillInheritedPeople::where('id', '=', $request->id)->first();
             if ($will_inherited_people) {
                 DB::beginTransaction();
@@ -765,7 +774,13 @@ class WillGeneratorController extends Controller
                 return response()->json(['status' => false, 'message' => 'No Pet found']);
             }
 
-            $partners = WillInheritedPeople::where('will_user_id', '=', $will_user_id)->get();
+            $partners =WillInheritedPeople::where('will_user_id', $request->will_user_id)
+            ->where(function ($query) {
+                $query->orWhere('type', 'partner')
+                    ->orWhere('type', 'child');
+            })
+            ->get();
+            
             $html = view('partner.will_generator.ajax.partner_list', ['partners' => $partners])->render();
             return response()->json(['status' => true, 'message' => 'Partner deleted successfully', 'data' => $html]);
         } catch (\Exception $e) {
