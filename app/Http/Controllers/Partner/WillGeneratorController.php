@@ -826,7 +826,8 @@ class WillGeneratorController extends Controller
                     ->first();
                 $beneficiary->share_percentage = $percentage;
                 $beneficiary->save();
-                if ($beneficiary->beneficiary_type === 'App\\Models\\InheritedPeople') {
+                
+                if ($beneficiary->beneficiable_type == WillInheritedPeople::class) {
                     $shouldRedirectToDeathBackup = true;
                 }
             }

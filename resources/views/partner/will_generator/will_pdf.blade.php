@@ -296,7 +296,8 @@
                     your executors know where they can find it. Alternatively, for a small fee, you can store a will
                     with the government's Probate Registry. Search for their details online.</p>
                 <p>To invite your friends and family to sort their wills too, visit
-                    <strong>farewill.com/invite</strong>.</p>
+                    <strong>farewill.com/invite</strong>.
+                </p>
             </div>
         </div>
     </div>
@@ -346,18 +347,18 @@
             <span class="clause-number">3</span> I have the following living children:
             @for ($i = 0; $i < count($user_info->child); $i++)
                 @if ($i > 0 && $i == count($user_info->child) - 1)
-                    and
+                and
                 @elseif ($i > 0)
-                    ,
+                ,
                 @endif
                 <strong>{{ $user_info->child[$i]->first_name }} {{ $user_info->child[$i]->last_name }}</strong> born on
                 <strong>{{ $user_info->child[$i]->date_of_birth }}</strong>
-            @endfor
-            .
+                @endfor
+                .
         </div>
 
         <div class="clause">
-            <span class="clause-number">4</span> I wish to be cremated.
+            <span class="clause-number">4</span> I wish my funeral to be {{$user_info->funeral[0]->funeral_type}}.
         </div>
 
         <div class="clause">
@@ -369,8 +370,13 @@
         <div class="section-title">Executors and Trustees</div>
 
         <div class="clause">
-            <span class="clause-number">6</span> I appoint as my executor and trustee <strong>SIAN JOHNSON</strong> of
-            <strong>9 Offington Lane, Worthing, BN14 9RY</strong>.
+            <span class="clause-number">6</span> I appoint as my executor and trustee
+            @foreach($user_info->executors as $executor)
+            <strong>{{ $executor->first_name }} {{ $executor->last_name }} </strong>
+            @if (!$loop->last),
+            @endif
+            @endforeach
+            .
         </div>
 
         <div class="clause">
@@ -383,15 +389,15 @@
         <div class="clause">
             <span class="clause-number">8</span>
             <div class="sub-clause">
-                <strong>a</strong> If <strong>FIONA JOHNS</strong> is under 18 and I am the only living parent with
-                parental responsibility at the date of my death I appoint <strong>SHAZZA CHAPERS</strong> born on
-                <strong>21 August 1960</strong> to be their guardian.
+                @foreach ($user_info->child as $key => $child)
+                @php
+                $letter = chr(97 + $key); // This converts the loop index (0, 1, 2, etc.) to a, b, c, etc.
+                @endphp
+
+                <strong>{{ $letter }}</strong> If <strong>{{ $child->first_name }}</strong> born on <strong>{{ $child->date_of_birth }}</strong> is under 18 and I am the only living parent with parental responsibility at the date of my death I appoint <strong>{{ $user_info->partner_name }}</strong> born on <strong>{{@$user_info->partner[0]->date_of_birth ?? "Date of Birth Not Available"}}</strong> to be their guardian.
+                @endforeach
             </div>
-            <div class="sub-clause">
-                <strong>b</strong> If <strong>RONNIE JOHNS</strong> is under 18 and I am the only living parent with
-                parental responsibility at the date of my death I appoint <strong>SHAZZA CHAPERS</strong> born on
-                <strong>21 August 1960</strong> to be their guardian.
-            </div>
+
         </div>
 
         <div class="page-footer">
@@ -403,7 +409,7 @@
     <div class="page">
         <div class="header" style="margin-bottom: 30px; text-align: left;">
             Last Will And Testament Of<br>
-            JAMES JOHNSON
+            {{ $user_info->legal_name }}
         </div>
 
         <div class="section-title">Pets</div>
@@ -411,8 +417,11 @@
         <div class="clause">
             <span class="clause-number">9</span>
             <div class="sub-clause">
-                <strong>a</strong> If my pet <strong>PINKY</strong> is alive and healthy at the date of my death I give
-                them to <strong>SHAZZA CHAPERS</strong> born on <strong>21 August 1960</strong>. If they cannot afford
+                <strong>a</strong> If my pet <strong>
+                    @foreach ($user_info->pet as $pet)
+                    {{ @$pet->first_name }},
+                    @endforeach</strong> is alive and healthy at the date of my death I give
+                them to <strong>{{ $user_info->partner_name}}</strong> born on <strong>{{@$user_info->partner[0]->date_of_birth}}</strong>. If they cannot afford
                 or refuse to accept the responsibilities of, ownership then I give my Trustees the fullest possible
                 discretion to rehome my pet, in a permanent safe and loving home, as soon as possible.
             </div>
@@ -440,18 +449,23 @@
 
         <div class="clause">
             <span class="clause-number">13</span> I give free of inheritance tax the following:
+            @foreach ($user_info->gift as $key => $gift)
+            @php
+            $letter = chr(97 + $key); // Converts index to a, b, c...
+            @endphp
+
             <div class="sub-clause">
-                <strong>a</strong> To <strong>FIONA JOHNS</strong> born on <strong>08 August 2022</strong> all my 'books
-                at the date of my death'.
+                <strong>{{ $letter }}</strong> To
+                @if ($gift->inherited_people->isNotEmpty())
+                @foreach ($gift->inherited_people as $person)
+                <strong>{{ $person->first_name }} {{ $person->last_name }}</strong> born on <strong>{{ $person->date_of_birth }}</strong>@if (!$loop->last)
+                ,
+                @endif
+                @endforeach
+                @endif
+                my '{{ $gift->gift_name }}'.
             </div>
-            <div class="sub-clause">
-                <strong>b</strong> To <strong>RONNIE JOHNS</strong> born on <strong>01 August 2024</strong> my 'wedding
-                ring'.
-            </div>
-            <div class="sub-clause">
-                <strong>c</strong> To <strong>SHAZZA CHAPERS</strong> born on <strong>21 August 1960</strong> my 'car
-                aa11 1aa'.
-            </div>
+            @endforeach
         </div>
 
         <div class="clause">
@@ -504,10 +518,27 @@
             <span class="clause-number">19</span> I give to my Trustees my estate to hold upon trust to use it to pay my
             debts funeral and testamentary expenses, legacies and inheritance tax on all property which vests in them
             and to hold the remainder ('my residuary estate') to divide as follows:
+
+            @forelse ($user_info->beneficiaries as $key => $beneficiary)
+            @php
+            $letter = chr(97 + $key); // Converts index to a, b, c...
+            @endphp
+
             <div class="sub-clause">
-                <strong>a</strong> 100% to <strong>SIAN JOHNSON</strong> of <strong>9 Offington Lane, Worthing, BN14
-                    9RY</strong> but if they die before me to their children who survive me in equal shares.
+                <strong>{{ $letter }}</strong> {{ number_format($beneficiary->share_percentage, 2) }}% to
+                <strong>
+                    {{ $beneficiary->getNameAttribute() }}
+                    @if (isset($beneficiary->address))
+                    of {{ $beneficiary->address }}
+                    @endif
+                </strong>
+                @if (isset($beneficiary->death_backup_plan))
+                but if they die before me then to {{ $beneficiary->death_backup_plan }}.
+                @endif
             </div>
+            @empty
+            <p class="text-gray-500">No beneficiaries added yet.</p>
+            @endforelse
         </div>
 
         <div class="section-title">General Provisions</div>
@@ -684,7 +715,7 @@
             <p><strong>To RONNIE JOHNS</strong> - about my gift of 'wedding ring':</p>
             <div class="message-box">"enjoy"</div>
 
-            <p><strong>To SHAZZA CHAPERS</strong> - about my gift of 'car aa11 1aa':</p>
+            <p><strong>To {{ $user_info->partner_name}}</strong> - about my gift of 'car aa11 1aa':</p>
             <div class="message-box">"broom broom!"</div>
         </div>
 

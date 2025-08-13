@@ -22,6 +22,11 @@ class WillUserInfo extends Model
         return $this->hasMany(WillInheritedPeople::class, 'will_user_id', 'id')
                     ->where('type', 'child');
     }
+   public function partner()
+    {
+        return $this->hasMany(WillInheritedPeople::class, 'will_user_id', 'id')
+                    ->where('type', 'partner');
+    }
    public function pet()
     {
         return $this->hasMany(WillInheritedPeople::class, 'will_user_id', 'id')
