@@ -534,7 +534,8 @@
                                 Charity Gifts
                             </div>
                             <div class="card-body basic-wizard important-validation">
-                                <form action="{{ route('partner.will_generator.process_inherited_charity',$will_user_id) }}"
+                                <form
+                                    action="{{ route('partner.will_generator.process_inherited_charity', $will_user_id) }}"
                                     method="POST">
                                     @csrf
                                     <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
@@ -563,8 +564,8 @@
                                             <div id="charity_manual">
                                                 @foreach ($charities as $charity)
                                                     <label for="{{ $charity->name }}" class="charity-text-item">
-                                                        <input type="checkbox" id="{{ $charity->name }}"
-                                                            name="charities[]" value="{{ $charity->id }}" checked>
+                                                        <input type="checkbox" id="{{ $charity->name }}" name="charities[]"
+                                                            value="{{ $charity->id }}" checked>
                                                         <div class="charity-text-details">
                                                             <span class="charity-text-name">{{ $charity->name }}</span>
                                                         </div>
@@ -574,8 +575,7 @@
                                         </div>
 
                                         {{-- Add your own charity button --}}
-                                        <button type="button" class="add-own-charity-button"
-                                            id="addYourOwnCharityButton">
+                                        <button type="button" class="add-own-charity-button" id="addYourOwnCharityButton">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                                 viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" />
@@ -819,6 +819,12 @@
 
             // Call the function once on page load to set the initial state
             updateInheritanceSummary(inheritedPersonsHTML);
+
+            $(document).on('change',
+                '.charity-item input[type="checkbox"], .charity-text-item input[type="checkbox"]',
+                function() {
+                    updateInheritanceSummary(inheritedPersonsHTML);
+                });
             const charityModal = document.getElementById('charityModal');
             const closeCharityModalButton = document.getElementById('closeCharityModal');
             const addYourOwnCharityButton = document.getElementById('addYourOwnCharityButton'); // Main page button
@@ -967,11 +973,14 @@
                             closeCharityModal();
                             $("#charity_manual").html(response.data);
 
-                            if (response.charity && response.charity.name) {
+                            updateInheritanceSummary(inheritedPersonsHTML);
 
-                                updateInheritanceSummary
-                                    ();
-                            }
+                            $(document).on('change',
+                                '.charity-item input[type="checkbox"], .charity-text-item input[type="checkbox"]',
+                                function() {
+                                    updateInheritanceSummary(inheritedPersonsHTML);
+                                });
+
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error('Error adding charity:', jqXHR.responseJSON || jqXHR

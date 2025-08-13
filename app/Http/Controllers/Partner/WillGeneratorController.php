@@ -451,7 +451,7 @@ class WillGeneratorController extends Controller
                 ->where('beneficiable_type', WillInheritedPeople::class)
                 ->delete();
 
-            $selectedFamilyFriendsIds = $request->input('family_friends', []);
+            $selectedFamilyFriendsIds = $request->input('executors', []);
 
             foreach ($selectedFamilyFriendsIds as $familyFriendId) {
                 $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);

@@ -698,12 +698,12 @@
                 summaryList.empty(); // Clear existing list
 
                 // Get checked inheritors from the form
-                $('input[name="family_friends[]"]:checked').each(function() {
+                $('input[name="executors[]"]:checked').each(function() {
                     const personName = $(`#excutor_id_${$(this).val()}`).text();
                     summaryList.append(`<li>${personName}</li>`);
                 });
 
-                if ($('input[name="family_friends[]"]:checked').length > 0) {
+                if ($('input[name="executors[]"]:checked').length > 0) {
 
                 } else {
 
@@ -717,9 +717,9 @@
             updateInheritanceSummary();
 
 
-            $('input[name="family_friends[]"]').on('change', function() {
-                updateInheritanceSummary();
-            });
+            $(document).on('change', 'input[name="executors[]"]', function() {
+            updateInheritanceSummary();
+        });
 
 
         });
