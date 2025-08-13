@@ -71,13 +71,13 @@
                                     </div>
 
                                     <div class="d-flex justify-content-between mt-5 items-center">
-                                        <a href="#" class="text-blue-600 hover:underline flex items-center">
+                                        <a onclick="history.back()" class=" hover:underline flex items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                             </svg>
                                             Back
                                         </a>
-                                        <a href="{{route('customer.will_generator.executor_step3')}}" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
+                                        <a href="{{route('partner.will_generator.executor_step3',$will_user_id)}}" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
                                             Next, choose executors
                                         </a>
                                     </div>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="col-xl-4"> {{-- Sidebar area (inherited from layout, but explicitly shown here for structure) --}}
-                        <div class="card">
+                        <!-- <div class="card">
                             <div class="card-header">
                                 <h4>Questions?</h4>
                             </div>
@@ -102,7 +102,7 @@
                                     </a>
                                 </p>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

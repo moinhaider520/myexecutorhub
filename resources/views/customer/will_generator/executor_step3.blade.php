@@ -5,76 +5,74 @@
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <style>
-        /* Custom styles for the radio buttons to make them look like block-level buttons */
-        .executor-option-card {
-            background-color: #f8f8f8; /* Light gray background for options */
-            border: 1px solid #e0e0e0; /* Light border */
-            border-radius: 0.5rem; /* Rounded corners */
-            padding: 1rem 1.5rem;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            display: block; /* Make it a block element */
-            width: 100%;
-            text-align: left; /* Align text to the left */
-        }
+    /* Custom styles for the radio buttons to make them look like block-level buttons */
+    .executor-option-card {
+        background-color: #f8f8f8; /* Light gray background for options */
+        border: 1px solid #e0e0e0; /* Light border */
+        border-radius: 0.5rem; /* Rounded corners */
+        padding: 1rem 1.5rem;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        display: block; /* Make it a block element */
+        width: 100%;
+        text-align: left; /* Align text to the left */
+    }
 
-        .executor-option-card:hover {
-            border-color: #a0aec0; /* Darker border on hover */
-            background-color: #edf2f7; /* Slightly darker background on hover */
-        }
+    .executor-option-card:hover {
+        border-color: #a0aec0; /* Darker border on hover */
+        background-color: #edf2f7; /* Slightly darker background on hover */
+    }
 
-        /* Hide the native radio button input */
-        .executor-option-card input[type="radio"] {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            position: absolute; /* Hide visually but keep accessible */
-            opacity: 0;
-            width: 0;
-            height: 0;
-            pointer-events: none; /* Prevent interaction with hidden input */
-        }
+    /* Hide the native radio button input */
+   .executor-option-card input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
 
-        /* Style the card when its radio button is checked */
-        .executor-option-card input[type="radio"]:checked + span {
-            /* This span holds the visible text */
-            font-weight: bold; /* Make text bold when selected */
-            color: #2d3748;
-            /* Darker text */
-        }
+    /* Style the card when it has the 'selected-card' class (applied by JavaScript) */
+    .executor-option-card.selected-card {
+        background-color: #F6E05E; /* Yellow background for selected card */
+        border-color: #D6BC2B; /* Darker yellow border for selected card */
+    }
 
-        .executor-option-card input[type="radio"]:checked {
-            /* If you want a visual indicator other than bold text, add it here */
-            border-color: #F6E05E; /* Example: yellow border on selected */
-            box-shadow: 0 0 0 2px #F6E05E; /* Example: yellow outline */
-        }
+    /* Style the text inside the selected card to be bold */
+    .executor-option-card.selected-card span {
+        font-weight: bold;
+        color: #2D3748; /* Dark text on yellow background */
+    }
 
-        .hidden {
-            display: none !important;
-        }
+  .executor-option-card input[type="radio"]:checked + span {
+    font-weight: bold;
+    color: #2D3748;
+}
+    .hidden {
+        display: none !important;
+    }
 
-        /* Styles for the "Back" and "Continue" buttons for consistency */
-        .back-button {
-            background: none;
-            border: none;
-            color: #4299e1; /* Blue for links */
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            font-weight: 500;
-            transition: color 0.2s ease-in-out;
-        }
+    /* Styles for the "Back" and "Continue" buttons for consistency */
+    .back-button {
+        background: none;
+        border: none;
+        color: #4299e1; /* Blue for links */
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        font-weight: 500;
+        transition: color 0.2s ease-in-out;
+    }
 
-        .back-button:hover {
-            color: #2b6cb0; /* Darker blue on hover */
-            text-decoration: underline;
-        }
-
-        .continue-button {
-            inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out;
-        }
-    </style>
+    .back-button:hover {
+        color: #2b6cb0; /* Darker blue on hover */
+        text-decoration: underline;
+    }
+</style>
 
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
@@ -86,11 +84,11 @@
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="executorChoiceForm" class="needs-validation" novalidate
-                                    action="{{route('customer.will_generator.get_executor_step3')}}" method="POST">
+                                    action="{{route('partner.will_generator.get_executor_step3')}}" method="POST">
                                     @csrf
 
                                     <script src="https://cdn.tailwindcss.com"></script>
-
+                                    <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
                                     <div class="stepper row g-3 needs-validation custom-input" novalidate="">
                                         <div class="col-sm-12">
                                             {{-- Content from the screenshot starts here --}}
@@ -117,10 +115,10 @@
                                             </ul>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                                                Choosing Farewill Trustees
+                                                Choosing Executorhub Trustees
                                             </h2>
                                             <p class="text-gray-700 leading-relaxed mb-4">
-                                                Farewill Trustees are professional executors. They can:
+                                                Executorhub Trustees are professional executors. They can:
                                             </p>
                                             <ul class="list-disc list-inside text-gray-700 space-y-2 mb-8 ml-5">
                                                 <li>be the sole executor or a co-executor</li>
@@ -130,15 +128,15 @@
                                             </ul>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                                                Choosing friends & family and Farewill Trustees
+                                                Choosing friends & family and Executorhub Trustees
                                             </h2>
                                             <p class="text-gray-700 leading-relaxed mb-4">
-                                                Bringing together people who knew you personally with a professional to take care of the legal and financial paperwork can provide balance and make things less stressful. Farewill Trustees share the work fairly and appropriately based on who is best for each task.
+                                                Bringing together people who knew you personally with a professional to take care of the legal and financial paperwork can provide balance and make things less stressful. Executorhubs Trustees share the work fairly and appropriately based on who is best for each task.
                                             </p>
                                             <p class="text-gray-700 leading-relaxed mb-8">
                                                 <span class="font-bold">No hard commitments</span>
                                                 <br>
-                                                Farewill Trustees will step aside if it’s in the best interest of the estate, and their services aren’t needed. In a few cases, they may not be able to step aside, for example, if there are no other executors.
+                                                Executorhub Trustees will step aside if it’s in the best interest of the estate, and their services aren’t needed. In a few cases, they may not be able to step aside, for example, if there are no other executors.
                                             </p>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
@@ -152,18 +150,18 @@
                                                 </label>
                                                 <label class="executor-option-card">
                                                     <input type="radio" name="executor_type" value="farewill_trustees" required>
-                                                    <span>Farewill Trustees (Professional executors)</span>
+                                                    <span>Executorhub Trustees (Professional executors)</span>
                                                 </label>
                                                 <label class="executor-option-card">
                                                     <input type="radio" name="executor_type" value="friends_family_and_trustees" required>
-                                                    <span>Friends & family and Farewill Trustees</span>
+                                                    <span>Friends & family and Executorhub Trustees</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="d-flex justify-content-between mt-5 items-center">
-                                        <a href="#" class="back-button">
+                                        <a onclick="history.back()" class="back-button">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                             </svg>
@@ -178,7 +176,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4"> {{-- Sidebar area (inherited from layout) --}}
+                    <!-- <div class="col-xl-4"> {{-- Sidebar area (inherited from layout) --}}
                         <div class="card">
                             <div class="card-header">
                                 <h4>Questions?</h4>
@@ -197,7 +195,7 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@
             <label>
                 <input type="checkbox" name="executors[]" value="{{ $executor->id }}">
                 <div class="executor-details">
-                    <span class="executor-name">{{ $executor->first_name }}
+                    <span class="executor-name" id="excutor_id_{{ $executor->id }}">{{ $executor->first_name }}
                         {{ $executor->last_name }}</span>
                     <span class="executor-contact">{{ $executor->email }}</span>
                 </div>

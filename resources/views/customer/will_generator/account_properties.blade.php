@@ -102,8 +102,9 @@ input[type="radio"] {
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="msform" class="needs-validation" novalidate
-                                    action="{{ route('customer.will_generator.account_properties') }}" method="POST">
+                                    action="{{ route('partner.will_generator.account_properties',$will_user_id) }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                                     <script src="https://cdn.tailwindcss.com"></script> {{-- Consider moving this to your main layout if used globally --}}
                                     <div class="stepper row g-3 needs-validation custom-input" novalidate="">
                                         <div class="col-sm-12">
@@ -128,6 +129,7 @@ input[type="radio"] {
 
 
                                             <div id="existingAssetsList">
+
                                                 @forelse ($assets as $asset)
                                                     <div id="assetDetailItem-{{ $asset->id }}"
                                                         class="asset-detail-item bg-white p-4 rounded-lg shadow-md border border-gray-200 mb-8">
@@ -198,7 +200,7 @@ input[type="radio"] {
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <!-- <div class="col-xl-4">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Related articles</h4>
@@ -212,7 +214,7 @@ input[type="radio"] {
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -554,6 +556,7 @@ input[type="radio"] {
 
         // --- Add Asset Form Submission (already good) ---
         $('#addWillAssetForm').on('submit', function(e) {
+            var will_user_id=$("#will_user_id").val();
             e.preventDefault();
             clearAddErrors();
 
@@ -585,11 +588,12 @@ input[type="radio"] {
                     break;
                 case 'other':
                     postData.other_description = $('#add_other_description').val();
+                    postData.asset_value = $('#add_other_description').val();
                     break;
             }
 
             $.ajax({
-                url: "{{route('customer.will_generator.account_properties.store')}}",
+                url: "{{route('partner.will_generator.account_properties.store','')}}/"+will_user_id,
                 method: 'POST',
                 data: postData,
                 dataType: 'json',
@@ -716,7 +720,7 @@ input[type="radio"] {
             }
 
             $.ajax({
-                url: "{{route('customer.will_generator.account_properties.update')}}",
+                url: "{{route('partner.will_generator.account_properties.update')}}",
                 method: 'POST',
                 data: postData,
                 dataType: 'json',
@@ -773,7 +777,7 @@ input[type="radio"] {
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{route('customer.will_generator.account_properties.delete','')}}/"+assetId , // Correct route with ID
+                        url: "{{route('partner.will_generator.account_properties.delete','')}}/"+assetId , // Correct route with ID
                         method: 'POST', // Use POST for _method: 'DELETE'
                         data: {
                             _token: csrfToken,
@@ -815,7 +819,7 @@ input[type="radio"] {
         // --- Save and Continue Button Logic ---
         $('#saveAndContinueButton').on('click', function(e) {
             e.preventDefault();
-            // This button should typically submit the main form, which has action="{{ route('customer.will_generator.store_step4') }}"
+            // This button should typically submit the main form, which has action="{{ route('partner.will_generator.store_step4') }}"
             $('#msform').submit(); // Submits the main form with CSRF token
         });
     });

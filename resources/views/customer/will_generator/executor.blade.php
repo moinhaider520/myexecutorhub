@@ -106,7 +106,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-end mt-5">
-                                        <a href="{{route('customer.will_generator.executor_step2')}}"
+                                        <a href="{{route('partner.will_generator.executor_step2',$will_user_id)}}"
                                             class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-900 bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition duration-150 ease-in-out">
                                             Continue
                                     </a>
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4">
+                    <!-- <div class="col-xl-4">
                         <div class="card">
                             <div class="card-header">
                                 <h4>Questions?</h4>
@@ -137,7 +137,7 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

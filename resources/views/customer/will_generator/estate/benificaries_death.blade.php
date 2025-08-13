@@ -127,11 +127,11 @@
             <div class="w-full xl:w-7/12 p-3"> {{-- Main content area --}}
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
-                        <form id="backupBeneficiaryForm" action="{{route('customer.will_generator.store_benificaries_death_backup')}}" method="POST">
+                        <form id="backupBeneficiaryForm" action="{{route('partner.will_generator.store_benificaries_death_backup')}}" method="POST">
                             @csrf
-
+                             <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
-                                If {{$beneficiary->getNameAttribute()}} dies before you, who should inherit their share of the estate instead?
+                                If {{$beneficiary?@$beneficiary->getNameAttribute():'No Name'}} dies before you, who should inherit their share of the estate instead?
                             </h1>
                             <p class="text-gray-700 leading-relaxed mb-6">
                                 Writing a will is all about being prepared for the unexpected. This is why we also ask you to name back-ups in case your chosen beneficiary dies before you. These are known as secondary beneficiaries.
@@ -155,10 +155,10 @@
                             </div>
 
                             <input type="hidden" name="selected_backup_option" id="selectedBackupOption">
-                            <input type="hidden" name="current_beneficiary_id" value="{{$beneficiary->id}}">
+                            <input type="hidden" name="current_beneficiary_id" value="{{@$beneficiary->id}}">
 
                             <p class="text-gray-600 italic mt-6">
-                                Selecting 'Their children' includes all {{$beneficiary->getNameAttribute()}}'s biological and legally adopted children but not step-children.
+                                Selecting 'Their children' includes all {{$beneficiary?@$beneficiary->getNameAttribute():'No Name'}}'s biological and legally adopted children but not step-children.
                             </p>
 
                             <p class="text-gray-600 italic mt-4">
@@ -166,7 +166,7 @@
                             </p>
 
                             <div class="flex justify-between mt-8">
-                                <a href="#"
+                                <a onclick="history.back()"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                     &larr; Back
                                 </a>
@@ -185,7 +185,10 @@
                 <div class="inheritance-summary-card">
                     <h4>Inheriting your estate:</h4>
                     <ul id="inheritanceSummaryList">
-                       @forelse ($allBeneficiaries->beneficiaries as $beneficiaries)
+                        @if($allBeneficiaries)
+                        <li class="font-semibold">Beneficiaries:</li>
+                        @endif
+                         @forelse ($allBeneficiaries->beneficiaries as $beneficiaries)
                             <li>
                                 <div class="beneficiary-info">
                                     <span class="beneficiary-name-summary">{{ $beneficiaries->getNameAttribute()}}</span>
@@ -195,9 +198,11 @@
                                 </div>
                                 <span class="beneficiary-percentage-summary">{{ number_format($beneficiaries->share_percentage, 2) }}%</span>
                             </li>
-                        @empty
+                         @empty
                             <li>No beneficiaries added yet.</li>
-                        @endforelse
+                         @endforelse
+                        
+                       
                     </ul>
                 </div>
             </div>

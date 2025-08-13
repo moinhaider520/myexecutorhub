@@ -139,7 +139,7 @@
 
             <!-- Excluded Individuals Section -->
             <section class="bg-white p-6 rounded-lg shadow-md mb-8">
-                <form action="{{route('customer.will_generator.estate.store_estate_summary')}}" method="post">
+                <form action="{{route('partner.will_generator.estate.store_estate_summary',$will_user_id)}}" method="post">
                     @csrf
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Is there anyone you've specifically chosen to leave out of your will?</h2>
                 <p class="text-gray-600 mb-4">Such as close family, partners or someone who relies on you financially.</p>
@@ -174,9 +174,7 @@
                 </div>
 
                 <div class="flex justify-between mt-8">
-                    <button class="py-2 px-4 bg-gray-200 text-gray-700 font-semibold rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition ease-in-out duration-150 shadow-sm">
-                        &larr; Back
-                    </button>
+                    
                     <button class="py-2 px-6 bg-yellow-400 text-gray-800 font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-opacity-50 transition ease-in-out duration-150 shadow-sm">
                         Done
                     </button>

@@ -134,9 +134,10 @@
                         You should <a href="#" class="text-blue-600 hover:underline">read our full terms and conditions</a>. We recommend you print a copy of our terms. If our terms change in the future, we’ll let you know when you next log in to your account.
                     </p>
 
-                    <form id="farewillTrusteesForm" action="{{ route('customer.will_generator.store_farewill_trustees') }}" method="POST">
+                    <form id="farewillTrusteesForm" action="{{ route('partner.will_generator.store_executor') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="executors[]" value="1">
+                        <input type="hidden" name="farewill_trustees" value="farewill_trustees">
+                        <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
                         <div class="space-y-4">
                             <div class="custom-checkbox-container">
                                 <input type="checkbox" id="understand_charge" name="acknowledgements[]" value="understand_charge" required>
@@ -155,7 +156,7 @@
                         </div>
 
                         <div class="flex justify-between items-center mt-8">
-                            <a href="#" class="back-button">
+                            <a onclick="history.back()" class="back-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                 </svg>
@@ -169,8 +170,8 @@
                 </div>
             </div>
 
-            {{-- Sidebar area (reused from previous design) --}}
-            <div class="lg:w-1/3 mt-8 lg:mt-0">
+            
+            <!-- <div class="lg:w-1/3 mt-8 lg:mt-0">
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
                     <h4 class="text-lg font-semibold text-gray-800 mb-4">Questions?</h4>
                     <p class="text-gray-700 mb-2">
@@ -185,7 +186,7 @@
                         </a>
                     </p>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

@@ -312,14 +312,15 @@
                     <h4 class="form-header">About You</h4>
                 </div>
                 <div class="card-body basic-wizard important-validation">
-                    <form id="msform" class="needs-validation" novalidate action="{{ route('customer.will_generator.store_step3') }}" method="POST">
+                    <form id="msform" class="needs-validation" novalidate action="{{ route('partner.will_generator.store_step3') }}" method="POST">
                         @csrf
+                        <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                         <div class="row g-4">
                             <div class="col-sm-6 form-section">
                                 <label for="martial_status" class="form-label font-semibold">Marital Status <span class="text-red-500">*</span></label>
                                 <p class="form-helper-text">Select your current legal status, even if you know it's going to change soon. You can always update this later.</p>
                                 <select class="form-control" name="martial_status" id="martial_status" required>
-                                    <option value="" disabled selected>-- Select Marital Status --</option>
+                                    <option value="" disabled>-- Select Marital Status --</option>
                                     <option value="Single">Single</option>
                                     <option value="Living with partner but not married">Living with partner but not married</option>
                                     <option value="Married">Married</option>
@@ -350,7 +351,7 @@
                                         <a data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}"
                                             data-name="{{ $executor->first_name }}" data-lastname="{{ $executor->last_name }}"
                                             data-email="{{ $executor->email }}" data-relationship="{{ $executor->type }}"
-                                            data-phone_number="{{ $executor->phone }}" class="edit-button">Edit</a>
+                                            data-phone_number="{{ $executor->phone }}" data-will_user_id="{{$executor->will_user_id}}" class="edit-button">Edit</a>
                                     </div>
                                     @empty
                                     <p class="text-gray-600 italic">No partner added yet. Click "Add
@@ -372,7 +373,7 @@
                         </div>
 
                         <div class="wizard-footer d-flex gap-2 justify-content-end mt-4">
-                            <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled>Back</button>
+                            <button class="btn badge-light-primary" id="backbtn" onclick="history.back()">Back</button>
                             <button class="btn btn-primary" id="nextbtn">Next</button>
                         </div>
                     </form>
@@ -390,6 +391,7 @@
             <div class="modal-body">
                 <form id="addExecutorForm">
                     @csrf
+                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                     <input type="hidden" name="type" value="partner">
                     <div class="form-group mb-3">
                         <label for="name">First Name</label>
@@ -416,6 +418,7 @@
                             placeholder="Email Address" required>
                         <div class="text-danger" id="error-email"></div>
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
@@ -438,6 +441,7 @@
                 <form id="editExecutorForm">
                     @csrf
                     <input type="hidden" name="id" id="editExecutorId">
+                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                     <input type="hidden" name="type" value="partner">
                     <div class="form-group mb-3">
                         <label for="edit_name">First Name</label>
@@ -515,7 +519,7 @@
             clearAddErrors(); // Clear previous error messages
 
             $.ajax({
-                url: "{{ route('customer.will_generator.user_partner.store') }}",
+                url: "{{ route('partner.will_generator.user_partner.store') }}",
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -546,6 +550,7 @@
             var phone_number = $(this).data('phone_number');
             var email = $(this).data('email');
             var relationship = $(this).data('relationship');
+            var will_user_id = $(this).data('will_user_id');
             // var status = $(this).data('status'); // Removed, as 'status' input is not in your current modal
 
             $('#editExecutorId').val(id);
@@ -619,7 +624,7 @@
 
             };
             $.ajax({
-                url: "{{ route('customer.will_generator.user_partner.delete') }}",
+                url: "{{ route('partner.will_generator.user_partner.delete') }}",
                 method: 'Delete',
                 data: postData,
                 dataType: 'json',
@@ -664,7 +669,7 @@
         });
     });
 </script>
-
+>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

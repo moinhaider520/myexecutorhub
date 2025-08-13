@@ -227,7 +227,7 @@
         <div class="row widget-grid">
             <div class="col-xl-8">
                 <div class="card height-equal">
-                    <form method="POST" action="{{ route('customer.will_generator.gift.update_gift', $gift->id) }}">
+                    <form method="POST" action="{{ route('partner.will_generator.gift.update_gift', $gift->id) }}">
                         @csrf
                         <input type="hidden" name="type" value="{{ $gift->gift_type ?? $type }}">
 
@@ -330,10 +330,10 @@
                                         <div class="executor-card">
                                             <label>
 
-                                                <input type="checkbox" name="recipients[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
+                                                <input type="checkbox" name="executors[]" value="{{$executor->id}}" class="form-checkbox text-indigo-600"
                                                     @if(isset($selectedRecipientIds) && in_array($executor->id, $selectedRecipientIds)) checked @endif>
                                                 <div class="executor-details">
-                                                    <span class="executor-name">{{ $executor->name }} {{ $executor->lastname }}</span>
+                                                    <span class="executor-name">{{ @$executor->first_name }} {{ @$executor->last_name }}</span>
                                                     <span class="executor-contact">{{ $executor->email ?? 'No email available' }}</span>
                                                 </div>
                                             </label>
@@ -393,15 +393,15 @@
                 </div>
             </div>
 
-            <div class="col-xl-4"> {{-- Sidebar area (Common Section) --}}
+            {{-- <div class="col-xl-4">
                 <div class="related-articles-card">
                     <h4>Related articles</h4>
                     <ul>
                         <li><a href="#" class="text-blue-600 hover:underline">Leaving gifts in your will</a></li>
-                        {{-- More related articles would go here --}}
+
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -447,7 +447,7 @@
                 event.preventDefault(); // Prevent default form submission initially
 
                 const itemDescription = $('#itemDescription').val();
-                const selectedRecipientIds = $('input[name="recipients[]"]:checked').map(function() {
+                const selectedRecipientIds = $('input[name="executors[]"]:checked').map(function() {
                     return $(this).val();
                 }).get();
                 const message = $('#messageOptional').val();

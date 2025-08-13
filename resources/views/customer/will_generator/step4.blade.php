@@ -25,8 +25,9 @@
                             </div>
                             <div class="card-body basic-wizard important-validation">
                                 <form id="msform" class="needs-validation" novalidate
-                                    action="{{ route('customer.will_generator.store_step4') }}" method="POST">
+                                    action="{{ route('partner.will_generator.store_step4') }}" method="POST">
                                     @csrf
+                                    <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                                     <script src="https://cdn.tailwindcss.com"></script>
                                     <div class="stepper row g-3 needs-validation custom-input" novariate="">
                                         <div class="col-sm-12">
@@ -71,7 +72,7 @@
                                             <div id="childrenContentWrapper" class="child-details-wrapper">
                                                 <div id="existingChildrenList">
 
-                                                    @include('customer.will_generator.ajax.children_list', ['children' => $children])
+                                                    @include('partner.will_generator.ajax.children_list', ['children' => $children])
                                                 </div>
 
                                                 <div id="addChildButtonContainer">
@@ -99,7 +100,7 @@
 
                             </div>
                             <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
-                                <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled="">
+                                <button class="btn badge-light-primary" id="backbtn" onclick="history.back()" >
                                     Back</button>
                                 <button class="btn btn-primary"
                                     id="nextbtn">Next</button>
@@ -117,6 +118,7 @@
         <div class="modal-dialog" role="document">
             <form id="addWillChildForm">
                 @csrf
+                <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addWillChildModalLabel">Add a child
@@ -131,7 +133,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="date_of_birth">Date Of Birth</label>
-                            <input type="text" class="form-control" name="child_date_of_birth" id="date_of_birth"
+                            <input type="date" class="form-control" name="child_date_of_birth" id="date_of_birth"
                                 placeholder="Enter Date of birth" required>
                             <div class="text-danger" id="error-add-date_of_birth"></div> {{-- Changed ID for clarity --}}
                         </div>
@@ -149,6 +151,7 @@
         <div class="modal-dialog" role="document">
             <form id="editWillChildForm">
                 @csrf
+                <input type="hidden" name="will_user_id" id="will_user_id" value="{{$will_user_id}}">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="editWillChildModalLabel">Edit Child
@@ -164,7 +167,7 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="edit_child_date_of_birth">Date Of Birth</label>
-                            <input type="text" class="form-control" name="edit_child_date_of_birth"
+                            <input type="date" class="form-control" name="edit_child_date_of_birth"
                                 id="edit_child_date_of_birth" placeholder="Enter Date of birth" required>
                             <div class="text-danger" id="error-edit-date_of_birth"></div> {{-- Changed ID for clarity --}}
                         </div>
@@ -338,13 +341,15 @@
                 clearAddErrors(); // Clear previous errors
                 var childName = $('#name').val();
                 var childDateOfBirth = $('#date_of_birth').val();
+                var will_user_id = $('#will_user_id').val();
                 var postData = {
                     name: childName, // 'name' for store action (matches config in controller)
-                    date_of_birth: childDateOfBirth
+                    date_of_birth: childDateOfBirth,
+                    will_user_id: will_user_id
                 };
 
                 performAjaxCall(
-                    "{{ route('customer.will_generator.user_child.store') }}", // Use the existing route name
+                    "{{ route('partner.will_generator.user_child.store') }}", // Use the existing route name
                     'POST',
                     postData,
                     function(response) {
@@ -373,14 +378,16 @@
                 var childName = $('#edit_child_name').val();
                 var childId = $('#edit_child_id').val();
                 var edit_child_date_of_birth = $('#edit_child_date_of_birth').val();
+                var will_user_id=$("#will_user_id").val();
                 var postData = {
                     child_name: childName, // 'child_name' for edit action (matches config in controller)
                     child_id: childId,
                     edit_child_date_of_birth: edit_child_date_of_birth,
+                    will_user_id: will_user_id
                 };
 
                 performAjaxCall(
-                    "{{ route('customer.will_generator.user_child.edit') }}", // Use the existing route name
+                    "{{ route('partner.will_generator.user_child.edit') }}", // Use the existing route name
                     'POST',
                     postData,
                     function(response) {
@@ -432,12 +439,14 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         var childId = $('#edit_child_id').val();
+                        var will_user_id=$("#will_user_id").val();
                         var postData = {
                             child_id: childId, // Matches the expected parameter in the controller
+                            will_user_id: will_user_id,
                         };
 
                         performAjaxCall(
-                            "{{ route('customer.will_generator.user_child.delete') }}", // Use the existing route name
+                            "{{ route('partner.will_generator.user_child.delete') }}", // Use the existing route name
                             'POST',
                             postData,
                             function(response) {

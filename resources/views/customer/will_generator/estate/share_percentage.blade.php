@@ -213,10 +213,10 @@
                 <div class="card height-equal">
                     <div class="card-body basic-wizard important-validation">
                         {{-- Added ID for the form --}}
-                        <form id="shareEstateForm" action="{{ route('customer.will_generator.store_share_percentage') }}"
+                        <form id="shareEstateForm" action="{{ route('partner.will_generator.store_share_percentage') }}"
                             method="POST">
                             @csrf
-
+                            <input type="hidden" name="will_user_id" id="will_user_id" value="{{ $will_user_id }}">
                             <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
                                 How would you like to share your estate?
                             </h1>
@@ -282,7 +282,7 @@
 
 
                             <div class="d-flex justify-content-between mt-8">
-                                <a href="{{ route('customer.will_generator.choose_inherited_charity') }}"
+                                <a href="{{ route('partner.will_generator.choose_inherited_charity', $will_user_id) }}"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                     &larr; Back
                                 </a>
@@ -349,18 +349,22 @@
 
             function validateTotalPercentage() {
                 const total = calculateTotalPercentage();
-                const isValid = (total === 100); // Check for exact 100%
+                const isLessThanOneHundred = (total < 100);
+                const isExactlyOneHundred = (total === 100);
 
-                if (isValid) {
-                    saveAndContinueBtn.prop('disabled', false); // Enable button
-                    totalPercentageInput.removeClass('is-invalid'); // Remove error styling
-                    totalPercentageError.addClass('hidden'); // Hide error message
+                // This will disable the button for anything other than 100
+                saveAndContinueBtn.prop('disabled', !isExactlyOneHundred);
+
+                // This will only show the error message if the total is less than 100
+                if (isLessThanOneHundred) {
+                    totalPercentageInput.addClass('is-invalid');
+                    totalPercentageError.removeClass('hidden');
                 } else {
-                    saveAndContinueBtn.prop('disabled', true); // Disable button
-                    totalPercentageInput.addClass('is-invalid'); // Add error styling
-                    totalPercentageError.removeClass('hidden'); // Show error message
+                    totalPercentageInput.removeClass('is-invalid');
+                    totalPercentageError.addClass('hidden');
                 }
-                return isValid;
+
+                return isExactlyOneHundred;
             }
 
             // Attach event listeners to all percentage input fields
