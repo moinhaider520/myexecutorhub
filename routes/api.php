@@ -88,7 +88,7 @@ use App\Http\Controllers\Api\Customer\PensionController as CustomerPensionContro
 use App\Http\Controllers\Api\Customer\PictureController as CustomerPictureController;
 use App\Http\Controllers\Api\Customer\VideoController as CustomerVideoController;
 use App\Http\Controllers\Api\Customer\OtherTypeofAssetController as CustomerOtherTypeofAssetController;
-
+use App\Http\Controllers\Api\Customer\WillGeneratorController;
 // Executor
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
 use App\Http\Controllers\Api\Executor\DashboardController as ExecutorDashboardController;
@@ -471,8 +471,8 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('will_generator/store_benificaries_death_backup/{will_user_id}', [PartnerWillGeneratorController::class, 'store_benificaries_death_backup'])->name('will_generator.store_benificaries_death_backup');
     Route::get('will_generator/estate/summary/{will_user_id}', [PartnerWillGeneratorController::class, 'estate_summary'])->name('will_generator.estate.summary');
     Route::post('will_generator/estate/store_estate_summary/{will_user_id}', [PartnerWillGeneratorController::class, 'store_estate_summary'])->name('will_generator.estate.store_estate_summary');
-    
-    
+
+
     Route::get('will_generator/executor/{will_user_id}', [PartnerWillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
     Route::post('will_generator/executor/store/{will_user_id}', [PartnerWillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
 
@@ -716,6 +716,70 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     // WILLS
     Route::get('/wills', [CustomerWillController::class, 'view'])->name('wills.view');
+
+    Route::get('/will_generator/partner_about_you', [WillGeneratorController::class, 'partner_about_you'])->name('wills.partner_about_you');
+    Route::get('/will_generator/about_you/{id}', [WillGeneratorController::class, 'about_you'])->name('wills.about_you');
+    Route::post('/will_generator/store_about_you', [WillGeneratorController::class, 'store_about_you'])->name('wills.store_about_you');
+    Route::post('/will_generator/edit_about_you/{id}', [WillGeneratorController::class, 'update_about_you'])->name('will_generator.update_about_you');
+
+    // will generator children and pets
+    Route::get('/will_generator/child/{will_user_id}', [WillGeneratorController::class, 'child'])->name('will_generator.child');
+    Route::post('/will_generator/store_child/{will_user_id}', [WillGeneratorController::class, 'store_user_child'])->name('will_generator.store_child');
+    Route::post('/will_generator/edit_child/{id}', [WillGeneratorController::class, 'edit_user_child'])->name('will_generator.edit_child');
+    Route::delete('/will_generator/delete_child/{id}', [WillGeneratorController::class, 'delete_user_child'])->name('will_generator.delete_child');
+
+    Route::get('/will_generator/pet/{will_user_id}', [WillGeneratorController::class, 'pet'])->name('will_generator.pet');
+    Route::post('/will_generator/store_pet/{will_user_id}', [WillGeneratorController::class, 'store_user_pet'])->name('will_generator.store_pet');
+    Route::post('/will_generator/edit_pet/{id}', [WillGeneratorController::class, 'edit_user_pet'])->name('will_generator.edit_pet');
+    Route::delete('/will_generator/delete_pet/{id}', [WillGeneratorController::class, 'delete_user_pet'])->name('will_generator.delete_pet');
+
+    //will generator partner
+    Route::get('will_generator/user_partner/{will_user_id}', [WillGeneratorController::class, 'user_partner'])->name('will_generator.user_partner');
+    Route::post('will_generator/user_partner/store/{will_user_id}', [WillGeneratorController::class, 'store_user_partner'])->name('will_generator.user_partner.store');
+    Route::post('will_generator/user_partner/edit/{id}', [WillGeneratorController::class, 'edit_user_partner'])->name('will_generator.user_partner.edit');
+    Route::delete('will_generator/user_partner/delete/{id}', [WillGeneratorController::class, 'delete_user_partner'])->name('will_generator.user_partner.delete');
+
+
+    //account properties
+    Route::get('will_generator/account_properties/{will_user_id}', [WillGeneratorController::class, 'account_properties'])->name('will_generator.account_properties');
+    Route::post('will_generator/account_properties/store/{will_user_id}', [WillGeneratorController::class, 'store_account_properties'])->name('will_generator.account_properties.store');
+    Route::post('will_generator/account_properties/update/{id}', [WillGeneratorController::class, 'update_account_properties'])->name('will_generator.account_properties.update');
+    Route::delete('will_generator/account_properties/delete/{id}', [WillGeneratorController::class, 'delete_account_properties'])->name('will_generator.account_properties.delete');
+
+
+    // will generator funeral plan
+    Route::get('will_generator/funeral_plan/{will_user_id}', [WillGeneratorController::class, 'funeral_plan'])->name('will_generator.funeral_plan');
+    Route::post('will_generator/store_funeral_plan/{will_user_id}', [WillGeneratorController::class, 'store_funeral_plan'])->name('will_generator.store_funeral_plan');
+
+
+
+    // will generator gifts
+    Route::get('will_generator/gift/{will_user_id}', [WillGeneratorController::class, 'gift'])->name('will_generator.gift');
+    Route::post('will_generator/gift/store_add_gift/{will_user_id}', [WillGeneratorController::class, 'store_add_gift'])->name('will_generator.gift.store_add_gift');
+    Route::post('will_generator/gift/update_gift/{id}', [WillGeneratorController::class, 'update_gift'])->name('will_generator.gift.update_gift');
+    Route::delete('will_generator/gift/delete/{id}', [WillGeneratorController::class, 'delete_gift'])->name('will_generator.gift.delete_gift');
+
+
+    // will generator step 3
+    Route::get('will_generator/family_friend/{will_user_id}', [WillGeneratorController::class, 'family_friend'])->name('will_generator.family_friend');
+    Route::post('will_generator/executor/store_family_friend/{will_user_id}', [WillGeneratorController::class, 'store_family_friend'])->name('will_generator.store_family_friend');
+
+    // will generator inherited charity
+    Route::get('will_generator/charities', [WillGeneratorController::class, 'charities'])->name('will_generator.charities');
+    Route::get('will_generator/inherited_charity/{will_user_id}', [WillGeneratorController::class, 'inherited_charity'])->name('will_generator.inherited_charity');
+    Route::post('will_generator/charity/store', [WillGeneratorController::class, 'store_charity'])->name('will_generator.store_charity');
+
+    // will generator estate
+    Route::get('will_generator/benificaries_death_backup/{will_user_id}', [WillGeneratorController::class, 'benificaries_death_backup'])->name('will_generator.benificaries_death_backup');
+    Route::post('will_generator/store_benificaries_death_backup/{will_user_id}', [WillGeneratorController::class, 'store_benificaries_death_backup'])->name('will_generator.store_benificaries_death_backup');
+    Route::get('will_generator/estate/summary/{will_user_id}', [WillGeneratorController::class, 'estate_summary'])->name('will_generator.estate.summary');
+    Route::post('will_generator/estate/store_estate_summary/{will_user_id}', [WillGeneratorController::class, 'store_estate_summary'])->name('will_generator.estate.store_estate_summary');
+
+
+    Route::get('will_generator/executor/{will_user_id}', [WillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
+    Route::post('will_generator/executor/store/{will_user_id}', [WillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
+
+
 });
 
 // Executor-specific routes

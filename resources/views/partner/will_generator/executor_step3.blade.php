@@ -115,10 +115,10 @@
                                             </ul>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                                                Choosing Farewill Trustees
+                                                Choosing Executorhub Trustees
                                             </h2>
                                             <p class="text-gray-700 leading-relaxed mb-4">
-                                                Farewill Trustees are professional executors. They can:
+                                                Executorhub Trustees are professional executors. They can:
                                             </p>
                                             <ul class="list-disc list-inside text-gray-700 space-y-2 mb-8 ml-5">
                                                 <li>be the sole executor or a co-executor</li>
@@ -128,15 +128,15 @@
                                             </ul>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                                                Choosing friends & family and Farewill Trustees
+                                                Choosing friends & family and Executorhub Trustees
                                             </h2>
                                             <p class="text-gray-700 leading-relaxed mb-4">
-                                                Bringing together people who knew you personally with a professional to take care of the legal and financial paperwork can provide balance and make things less stressful. Farewill Trustees share the work fairly and appropriately based on who is best for each task.
+                                                Bringing together people who knew you personally with a professional to take care of the legal and financial paperwork can provide balance and make things less stressful. Executorhubs Trustees share the work fairly and appropriately based on who is best for each task.
                                             </p>
                                             <p class="text-gray-700 leading-relaxed mb-8">
                                                 <span class="font-bold">No hard commitments</span>
                                                 <br>
-                                                Farewill Trustees will step aside if it’s in the best interest of the estate, and their services aren’t needed. In a few cases, they may not be able to step aside, for example, if there are no other executors.
+                                                Executorhub Trustees will step aside if it’s in the best interest of the estate, and their services aren’t needed. In a few cases, they may not be able to step aside, for example, if there are no other executors.
                                             </p>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">
@@ -150,11 +150,11 @@
                                                 </label>
                                                 <label class="executor-option-card">
                                                     <input type="radio" name="executor_type" value="farewill_trustees" required>
-                                                    <span>Farewill Trustees (Professional executors)</span>
+                                                    <span>Executorhub Trustees (Professional executors)</span>
                                                 </label>
                                                 <label class="executor-option-card">
                                                     <input type="radio" name="executor_type" value="friends_family_and_trustees" required>
-                                                    <span>Friends & family and Farewill Trustees</span>
+                                                    <span>Friends & family and Executorhub Trustees</span>
                                                 </label>
                                             </div>
                                         </div>
