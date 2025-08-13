@@ -183,13 +183,12 @@
 
 <div class="container-fluid default-dashboard">
     <div class="row widget-grid">
-        <div class="col-xl-8"> {{-- Main content area --}}
+        <div class="col-xl-8"> 
             <div class="card height-equal">
                 <form method="POST" action="{{ route('partner.will_generator.store_funeral_plan') }}">
                     @csrf
+                    <input type="hidden" name="will_user_id" value="{{ $will_user_id }}">
                     <div class="card-body basic-wizard important-validation">
-
-                        {{-- 1. Do you have a pre-paid funeral plan? --}}
                         <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4">
                             Do you have a pre-paid funeral plan?
                         </h1>
@@ -426,113 +425,109 @@
 
 <script>
     $(document).ready(function() {
-    // Radio button groups - Correctly defined outside of any function
-    const prePaidPlanRadios = $('input[name="pre_paid_plan"]');
-    const includeWishesRadios = $('input[name="include_funeral_wishes"]');
-    const funeralTypeRadios = $('input[name="funeral_type_choice"]');
-    const funeralGuideRadios = $('input[name="funeral_guide_wish"]'); // <-- THIS IS CORRECT
+        // Radio button groups
+        const prePaidPlanRadios = $('input[name="pre_paid_plan"]');
+        const includeWishesRadios = $('input[name="include_funeral_wishes"]');
+        const funeralTypeRadios = $('input[name="funeral_type_choice"]');
+        const directCremationRadios = $('input[name="direct_cremation_wish"]');
+        const funeralGuideRadios = $('input[name="funeral_guide_wish"]');
 
-    // Conditional sections
-    const funeralPlanDetails = $('#funeralPlanDetails');
-    const funeralGuideWishSection = $('#funeralGuideWishSection');
-    const funeralTypeSection = $('#funeralTypeSection');
-    const directCremationSection = $('#directCremationSection');
+        // Conditional sections
+        const funeralPlanDetails = $('#funeralPlanDetails');
+        const funeralGuideWishSection = $('#funeralGuideWishSection');
+        const funeralTypeSection = $('#funeralTypeSection');
+        const directCremationSection = $('#directCremationSection');
 
-    // Function to update visibility of all sections based on current selections
-    function updateAllVisibility() {
-        const selectedPrePaidPlan = prePaidPlanRadios.filter(':checked').val();
-        const selectedIncludeWishes = includeWishesRadios.filter(':checked').val();
-        const selectedFuneralType = funeralTypeRadios.filter(':checked').val();
-        // REMOVE THIS LINE: const funeralGuideRadios = $('input[name="funeral_guide_wish"]');
-        
-        // 1. Pre-paid funeral plan section
-        if (selectedPrePaidPlan === 'yes') {
-            funeralPlanDetails.removeClass('hidden');
-            funeralGuideWishSection.addClass('hidden');
-        } else if (selectedPrePaidPlan === 'no') {
-            funeralPlanDetails.addClass('hidden');
-            funeralGuideWishSection.removeClass('hidden');
-        } else {
-            funeralPlanDetails.addClass('hidden');
-            funeralGuideWishSection.addClass('hidden');
-        }
+        // Function to update visibility of all sections based on current selections
+        function updateAllVisibility() {
+            const selectedPrePaidPlan = prePaidPlanRadios.filter(':checked').val();
+            const selectedIncludeWishes = includeWishesRadios.filter(':checked').val();
+            const selectedFuneralType = funeralTypeRadios.filter(':checked').val();
 
-        // 2. Include funeral wishes section
-        if (selectedIncludeWishes === 'yes') {
-            funeralTypeSection.removeClass('hidden');
-            // Check if direct cremation needs to be shown within this section
-            if (selectedFuneralType === 'cremation') {
-                directCremationSection.removeClass('hidden');
+            // 1. Pre-paid funeral plan section
+            if (selectedPrePaidPlan === 'yes') {
+                funeralPlanDetails.removeClass('hidden');
+                funeralGuideWishSection.addClass('hidden');
+            } else if (selectedPrePaidPlan === 'no') {
+                funeralPlanDetails.addClass('hidden');
+                funeralGuideWishSection.removeClass('hidden');
             } else {
+                funeralPlanDetails.addClass('hidden');
+                funeralGuideWishSection.addClass('hidden');
+            }
+
+            // 2. Include funeral wishes section
+            if (selectedIncludeWishes === 'yes') {
+                funeralTypeSection.removeClass('hidden');
+                if (selectedFuneralType === 'cremation') {
+                    directCremationSection.removeClass('hidden');
+                } else {
+                    directCremationSection.addClass('hidden');
+                }
+            } else {
+                funeralTypeSection.addClass('hidden');
                 directCremationSection.addClass('hidden');
             }
-        } else {
-            funeralTypeSection.addClass('hidden');
-            directCremationSection.addClass('hidden'); // Also hide direct cremation if wishes not included
+
+            // Ensure direct cremation is hidden if funeral type changes from cremation
+            if (selectedFuneralType !== 'cremation') {
+                directCremationSection.addClass('hidden');
+            }
         }
 
-        // Ensure direct cremation is hidden if funeral type changes from cremation
-        if (selectedFuneralType !== 'cremation') {
-            directCremationSection.addClass('hidden');
+        // Function to apply selected class to radio option containers
+        function applyRadioSelectionStyling() {
+            $('.radio-group-container input[type="radio"]').each(function() {
+                if ($(this).is(':checked')) {
+                    $(this).closest('.radio-option').addClass('selected');
+                } else {
+                    $(this).closest('.radio-option').removeClass('selected');
+                }
+            });
         }
-    }
 
-    // Function to apply selected class to radio option containers
-    function applyRadioSelectionStyling() {
-        $('.radio-group-container input[type="radio"]').each(function() {
-            if ($(this).is(':checked')) {
-                $(this).closest('.radio-option').addClass('selected');
-            } else {
-                $(this).closest('.radio-option').removeClass('selected');
+        // Initial visibility and styling on page load
+        updateAllVisibility();
+        applyRadioSelectionStyling();
+
+        // Event listener for the radio option containers
+        // This is the core change for better responsiveness
+        $('.radio-option').on('click', function() {
+            // Find the radio button inside the clicked div and check it
+            const radioInput = $(this).find('input[type="radio"]');
+            if (radioInput.length) {
+                radioInput.prop('checked', true);
             }
+            // Now, apply styling and update visibility based on the new state
+            applyRadioSelectionStyling();
+            updateAllVisibility();
         });
-    }
 
-    // Initial visibility and styling on page load
-    updateAllVisibility();
-    applyRadioSelectionStyling();
+        // Event listeners on the radios themselves for programatic changes
+        prePaidPlanRadios.on('change', updateAllVisibility);
+        includeWishesRadios.on('change', updateAllVisibility);
+        funeralTypeRadios.on('change', updateAllVisibility);
+        directCremationRadios.on('change', updateAllVisibility);
+        funeralGuideRadios.on('change', updateAllVisibility);
 
-    // Event listeners for radio button changes
-    prePaidPlanRadios.on('change', function() {
-        updateAllVisibility();
-        applyRadioSelectionStyling();
-    });
+        // Handle form submission with SweetAlert
+        $('form').on('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
 
-    includeWishesRadios.on('change', function() {
-        updateAllVisibility();
-        applyRadioSelectionStyling();
-    });
-
-    funeralTypeRadios.on('change', function() {
-        updateAllVisibility();
-        applyRadioSelectionStyling();
-    });
-
-    // Event listener for the "funeral guide" radio buttons
-    funeralGuideRadios.on('change', function() {
-        updateAllVisibility();
-        applyRadioSelectionStyling();
-    });
-
-    // Handle form submission with SweetAlert
-    $('form').on('submit', function(event) {
-        event.preventDefault(); // Prevent default form submission
-
-        Swal.fire({
-            icon: 'info',
-            title: 'Saving Funeral Plan...',
-            text: 'Your funeral plan details are being saved.',
-            showConfirmButton: false,
-            timer: 1500, // Short timer before actual submission
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            }
-        }).then(() => {
-            // Now, submit the form programmatically
-            this.submit();
+            Swal.fire({
+                icon: 'info',
+                title: 'Saving Funeral Plan...',
+                text: 'Your funeral plan details are being saved.',
+                showConfirmButton: false,
+                timer: 1500,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            }).then(() => {
+                this.submit();
+            });
         });
     });
-});
 </script>
 @endsection

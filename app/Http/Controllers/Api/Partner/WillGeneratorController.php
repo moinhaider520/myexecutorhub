@@ -576,12 +576,49 @@ class WillGeneratorController extends Controller
 
             DB::commit();
 
+            DB::beginTransaction();
+            // Remove existing Charity beneficiaries for this will
+            $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', Charity::class)
+                ->delete();
+
+            if ($request->input('leave_to_charity') === 'yes') {
+                // Process pre-defined/logo charities (ensure their values are Charity IDs)
+                $selectedLogoCharityIds = $request->input('charities', []);
+                foreach ($selectedLogoCharityIds as $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity), // App\Models\Charity
+                        'share_percentage' => 0.00, // Default
+                    ]);
+                }
+
+                // Process manually added charities (their values are already Charity IDs)
+                $selectedManualCharityIds = $request->input('charities_manual', []);
+                foreach ($selectedManualCharityIds as $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity), // App\Models\Charity
+                        'share_percentage' => 0.00, // Default
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            $beneficiaries = $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', Charity::class)->get();
+
             return response()->json([
                 'status' => true,
                 'message' => 'Family and friends beneficiaries processed successfully.',
                 'family_friends' => $willUserInfo->beneficiaries()
                     ->where('beneficiable_type', WillInheritedPeople::class)
-                    ->get()
+                    ->get(),
+                'charities' => $beneficiaries
+
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -650,10 +687,26 @@ class WillGeneratorController extends Controller
             }
 
             DB::commit();
-
             $beneficiaries = $willUserInfo->beneficiaries()
                 ->where('beneficiable_type', Charity::class)->get();
-            // Redirect to the next step (e.g., allocating percentages)
+
+            $inputPercentages = $request->input('percentages');
+            DB::beginTransaction();
+            if ($request->has('percentages')) {
+
+                foreach ($inputPercentages as $beneficiaryData) {
+                    $beneficiaryId = $beneficiaryData['id'];
+                    $percentage = $beneficiaryData['percentage'];
+                    $beneficiary = Beneficiary::where('id', $beneficiaryId)
+                        ->where('will_user_id', $willUserInfo->id)
+                        ->first();
+                    $beneficiary->share_percentage = $percentage;
+                    $beneficiary->save();
+                }
+
+                DB::commit();
+            }
+            
             return response()->json([
                 'status' => true,
                 'message' => 'Charity beneficiaries processed successfully.',
@@ -702,11 +755,10 @@ class WillGeneratorController extends Controller
             }
 
             DB::commit();
-
-            return redirect()->back()->with('success', 'Beneficiary percentages updated successfully!');
+            return response()->json(['status'=>true,'Beneficiary percentages updated successfully!', 'data' => $willUserInfo->beneficiaries()->get()]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', 'Failed to update beneficiary percentages. Please try again.');
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
     }
 
@@ -822,11 +874,11 @@ class WillGeneratorController extends Controller
     public function store_executor(Request $request, $will_user_id)
     {
         try {
-            
+
             DB::beginTransaction();
             $will_user_info = WillUserInfo::find($will_user_id);
             $will_user_info->executors()->sync($request->executor_id);
-            
+
             DB::commit();
             $will_user_info = WillUserInfo::find($will_user_id);
             $will_user_info->refresh()->load('executors');

@@ -100,7 +100,7 @@
 
                             </div>
                             <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
-                                <button class="btn badge-light-primary" id="backbtn" onclick="backStep()" disabled="">
+                                <button class="btn badge-light-primary" id="backbtn" onclick="history.back()" disabled="">
                                     Back</button>
                                 <button class="btn btn-primary"
                                     id="nextbtn">Next</button>

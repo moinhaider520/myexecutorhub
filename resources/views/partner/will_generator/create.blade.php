@@ -166,10 +166,20 @@
                                     <h4>Funeral wishes (Optional)</h4>
                                 </div>
                                 <div class="card-body">
+                                    @if ($will_user_info->funeral->isNotEmpty())
+                                        @foreach ($will_user_info->funeral as $funeral)
+                                            <p>I want my funeral to <strong>{{ $funeral->funeral_type }}</strong></p>
+                                            @if ($funeral->funeral_wish== 'yes')
+                                                You have added wishes about your funeral.
+                                           </p>
+                                           @endif
+                                        @endforeach
+                                    @else
                                     <p>Give your family less to worry about. Add your wishes so they know what to do when
                                         the time comes.
                                     </p>
-                                    <a href="{{ route('partner.will_generator.funeral') }}">Edit</a>
+                                    @endif
+                                    <a href="{{ route('partner.will_generator.funeral', $will_user_info->id) }}">Edit</a>
                                 </div>
                             </div>
                         </div>

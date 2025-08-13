@@ -1,4 +1,4 @@
-@if(session('error') || session('success'))
+
 <script>
     $(document).ready(function() {
         @if(session('error'))
@@ -14,4 +14,4 @@
         @endif
     });
 </script>
-@endif
+

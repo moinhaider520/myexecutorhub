@@ -464,9 +464,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     // will generator inherited charity
     Route::get('will_generator/charities', [PartnerWillGeneratorController::class, 'charities'])->name('will_generator.charities');
     Route::get('will_generator/inherited_charity/{will_user_id}', [PartnerWillGeneratorController::class, 'inherited_charity'])->name('will_generator.inherited_charity');
-    Route::post('will_generator/process_inherited_charity/{will_user_id}', [PartnerWillGeneratorController::class, 'process_inherited_charity'])->name('will_generator.process_inherited_charity');
     Route::post('will_generator/charity/store', [PartnerWillGeneratorController::class, 'store_charity'])->name('will_generator.store_charity');
-    Route::post('will_generator/store_share_percentage/{will_user_id}', [PartnerWillGeneratorController::class, 'store_share_percentage'])->name('will_generator.store_share_percentage');
 
     // will generator estate
     Route::get('will_generator/benificaries_death_backup/{will_user_id}', [PartnerWillGeneratorController::class, 'benificaries_death_backup'])->name('will_generator.benificaries_death_backup');

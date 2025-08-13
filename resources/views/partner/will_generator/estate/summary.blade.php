@@ -174,9 +174,7 @@
                 </div>
 
                 <div class="flex justify-between mt-8">
-                    <button class="py-2 px-4 bg-gray-200 text-gray-700 font-semibold rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 transition ease-in-out duration-150 shadow-sm">
-                        &larr; Back
-                    </button>
+                    
                     <button class="py-2 px-6 bg-yellow-400 text-gray-800 font-semibold rounded-md hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-opacity-50 transition ease-in-out duration-150 shadow-sm">
                         Done
                     </button>

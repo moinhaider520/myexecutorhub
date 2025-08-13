@@ -166,7 +166,7 @@
                             </p>
 
                             <div class="flex justify-between mt-8">
-                                <a href="#"
+                                <a onclick="history.back()"
                                     class="inline-flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out">
                                     &larr; Back
                                 </a>

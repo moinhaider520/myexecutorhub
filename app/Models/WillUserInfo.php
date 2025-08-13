@@ -41,4 +41,9 @@ class WillUserInfo extends Model
     {
         return $this->hasMany(WillUserInheritedGift::class, 'will_user_id', 'id');
     }
+
+    public function funeral()
+    {
+        return $this->hasMany(WillUserFuneral::class, 'will_user_id', 'id');
+    }
 }

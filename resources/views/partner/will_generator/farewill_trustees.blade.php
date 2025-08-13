@@ -155,7 +155,7 @@
                         </div>
 
                         <div class="flex justify-between items-center mt-8">
-                            <a href="#" class="back-button">
+                            <a onclick="history.back()" class="back-button">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                                 </svg>
@@ -169,7 +169,7 @@
                 </div>
             </div>
 
-            {{-- Sidebar area (reused from previous design) --}}
+            
             <!-- <div class="lg:w-1/3 mt-8 lg:mt-0">
                 <div class="bg-white shadow-sm sm:rounded-lg p-6">
                     <h4 class="text-lg font-semibold text-gray-800 mb-4">Questions?</h4>
