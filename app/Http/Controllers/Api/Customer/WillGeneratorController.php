@@ -839,7 +839,7 @@ class WillGeneratorController extends Controller
     public function estate_summary($will_user_id)
     {
 
-        $beneficiaries = Beneficiary::with('willUser')->where('will_user_id', $will_user_id)
+        $beneficiaries = Beneficiary::with('willUser','beneficiable')->where('will_user_id', $will_user_id)
             ->orderBy('id')
             ->get();
 
