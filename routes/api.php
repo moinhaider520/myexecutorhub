@@ -151,6 +151,7 @@ Route::post('/send_reset_password_email', [ForgetPasswordController::class, 'sen
 // Route to update the expo token
 Route::post('/expo/update-token/{id}', [ExpoController::class, 'updateExpoToken'])->name('expo.update-token');
 
+    Route::get('will_generator/create_pdf/{will_user_id}',[PartnerWillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
 // Routes for user profile (available for all authenticated users)
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/{id}', [ProfileController::class, 'user_details'])->name('profile');
@@ -475,7 +476,6 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
 
     Route::get('will_generator/executor/{will_user_id}', [PartnerWillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
     Route::post('will_generator/executor/store/{will_user_id}', [PartnerWillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
-    Route::get('will_generator/create_pdf/{will_user_id}',[PartnerWillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
 });
 
 // Customer-specific routes
@@ -779,8 +779,6 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     Route::get('will_generator/executor/{will_user_id}', [WillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
     Route::post('will_generator/executor/store/{will_user_id}', [WillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
-    Route::get('will_generator/create_pdf/{will_user_id}',[WillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
-
 });
 
 // Executor-specific routes
