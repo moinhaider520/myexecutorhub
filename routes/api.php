@@ -475,7 +475,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
 
     Route::get('will_generator/executor/{will_user_id}', [PartnerWillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
     Route::post('will_generator/executor/store/{will_user_id}', [PartnerWillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
-
+    Route::get('will_generator/create_pdf/{will_user_id}',[PartnerWillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
 });
 // Customer-specific routes
 Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(function () {
@@ -778,7 +778,7 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     Route::get('will_generator/executor/{will_user_id}', [WillGeneratorController::class, 'executors'])->name('will_generator.estate.store_estate_summary');
     Route::post('will_generator/executor/store/{will_user_id}', [WillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
-
+    Route::get('will_generator/create_pdf/{will_user_id}',[WillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
 
 });
 

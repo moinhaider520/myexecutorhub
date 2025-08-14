@@ -15,6 +15,7 @@ use App\Models\WillUserInheritedGift;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade\Pdf;
 class WillGeneratorController extends Controller
 {
     public function partner_about_you()
@@ -886,6 +887,14 @@ class WillGeneratorController extends Controller
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
+    }
+
+    public function create_pdf($will_user_id)
+    {
+        $will_user = WillUserInfo::with('child')->find($will_user_id);
+
+        $pdf = PDF::loadView('partner.will_generator.will_pdf', ['user_info' => $will_user]);
+        return $pdf->download('invoice.pdf');
     }
 }
 
