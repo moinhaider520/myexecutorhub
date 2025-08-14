@@ -553,78 +553,77 @@ class WillGeneratorController extends Controller
     }
 
     public function store_family_friend(Request $request, $will_user_id)
-    {
-        try {
-            DB::beginTransaction();
-            $willUserInfo = WillUserInfo::find($will_user_id);
+{
+    try {
+        DB::beginTransaction();
 
-            $willUserInfo->beneficiaries()
-                ->where('beneficiable_type', WillInheritedPeople::class)
-                ->delete();
+        $willUserInfo = WillUserInfo::findOrFail($will_user_id);
 
-            $selectedFamilyFriendsIds = $request->input('family_friends', []);
+        // Remove existing family/friends
+        $willUserInfo->beneficiaries()
+            ->where('beneficiable_type', WillInheritedPeople::class)
+            ->delete();
 
-            foreach ($selectedFamilyFriendsIds as $familyFriendId) {
-                $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);
+        $selectedFamilyFriendsIds = $request->input('family_friends', []);
+        $selectedFamilyFriendsPercentages = $request->input('family_friends_percentages', []);
+
+        foreach ($selectedFamilyFriendsIds as $index => $familyFriendId) {
+            $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);
+
+            $willUserInfo->beneficiaries()->create([
+                'beneficiable_id'   => $familyFriend->id,
+                'beneficiable_type' => get_class($familyFriend),
+                'share_percentage'  => isset($selectedFamilyFriendsPercentages[$index])
+                    ? (float) $selectedFamilyFriendsPercentages[$index]
+                    : 0.00,
+            ]);
+        }
+
+        DB::commit();
+        DB::beginTransaction();
+
+        // Remove existing charities
+        $willUserInfo->beneficiaries()
+            ->where('beneficiable_type', Charity::class)
+            ->delete();
+
+        if ($request->input('leave_to_charity') === 'yes') {
+
+            $selectedManualCharityIds = $request->input('charities_manual', []);
+            $selectedManualCharityPercentages = $request->input('charities_manual_percentages', []);
+
+            foreach ($selectedManualCharityIds as $index => $charityId) {
+                $charity = Charity::findOrFail($charityId);
 
                 $willUserInfo->beneficiaries()->create([
-                    'beneficiable_id' => $familyFriend->id,
-                    'beneficiable_type' => get_class($familyFriend), // App\Models\FamilyFriend
-                    'share_percentage' => 0.00, // Default, to be set in a later step
+                    'beneficiable_id'   => $charity->id,
+                    'beneficiable_type' => get_class($charity),
+                    'share_percentage'  => isset($selectedManualCharityPercentages[$index])
+                        ? (float) $selectedManualCharityPercentages[$index]
+                        : 0.00,
                 ]);
             }
-
-            DB::commit();
-
-            DB::beginTransaction();
-            // Remove existing Charity beneficiaries for this will
-            $willUserInfo->beneficiaries()
-                ->where('beneficiable_type', Charity::class)
-                ->delete();
-
-            if ($request->input('leave_to_charity') === 'yes') {
-                // Process pre-defined/logo charities (ensure their values are Charity IDs)
-                $selectedLogoCharityIds = $request->input('charities', []);
-                foreach ($selectedLogoCharityIds as $charityId) {
-                    $charity = Charity::findOrFail($charityId);
-                    $willUserInfo->beneficiaries()->create([
-                        'beneficiable_id' => $charity->id,
-                        'beneficiable_type' => get_class($charity), // App\Models\Charity
-                        'share_percentage' => 0.00, // Default
-                    ]);
-                }
-
-                // Process manually added charities (their values are already Charity IDs)
-                $selectedManualCharityIds = $request->input('charities_manual', []);
-                foreach ($selectedManualCharityIds as $charityId) {
-                    $charity = Charity::findOrFail($charityId);
-                    $willUserInfo->beneficiaries()->create([
-                        'beneficiable_id' => $charity->id,
-                        'beneficiable_type' => get_class($charity), // App\Models\Charity
-                        'share_percentage' => 0.00, // Default
-                    ]);
-                }
-            }
-
-            DB::commit();
-
-            $beneficiaries = $willUserInfo->beneficiaries()
-                ->where('beneficiable_type', Charity::class)->get();
-
-            return response()->json([
-                'status' => true,
-                'message' => 'Family and friends beneficiaries processed successfully.',
-                'family_friends' => $willUserInfo->beneficiaries()
-                    ->where('beneficiable_type', WillInheritedPeople::class)
-                    ->get(),
-                'charities' => $beneficiaries
-
-            ]);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
         }
+
+        DB::commit();
+
+        return response()->json([
+            'status'         => true,
+            'message'        => 'Family, friends, and charities processed successfully.',
+            'family_friends' => $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->get(),
+            'charities'      => $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', Charity::class)
+                ->get(),
+        ]);
+
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['status' => false, 'message' => $e->getMessage()]);
     }
+}
+
 
     public function charities()
     {

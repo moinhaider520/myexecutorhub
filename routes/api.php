@@ -477,6 +477,7 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('will_generator/executor/store/{will_user_id}', [PartnerWillGeneratorController::class, 'store_executor'])->name('will_generator.store_executor');
     Route::get('will_generator/create_pdf/{will_user_id}',[PartnerWillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
 });
+
 // Customer-specific routes
 Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(function () {
     Route::get('/profile', [CustomerProfileController::class, 'user_details'])->name('profile');
