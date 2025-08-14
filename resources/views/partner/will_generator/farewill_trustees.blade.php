@@ -1,6 +1,6 @@
 @extends('layouts.will_generator')
 
-@section('title', 'Farewill Trustees')
+@section('title', 'Executor Hub Trustees')
 
 @section('content')
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -122,13 +122,13 @@
             <div class="lg:w-2/3">
                 <div class="content-card">
                     <h1 class="text-3xl font-bold text-gray-800 mb-4">
-                        Farewill Trustees
+                        Executor Hub Trustees
                     </h1>
                     <p class="text-gray-700 leading-relaxed mb-4">
-                        As a professional executor and part of the Farewill group, Farewill Trustees believes in absolute transparency over how the service works.
+                        As a professional executor and part of the Executor Hub group, Executor Hub Trustees believes in absolute transparency over how the service works.
                     </p>
                     <p class="text-gray-700 leading-relaxed mb-6">
-                        For this reason, we want you to confirm you understand how Farewill Trustees do things.
+                        For this reason, we want you to confirm you understand how Executor Hub Trustees do things.
                     </p>
                     <p class="text-gray-700 leading-relaxed mb-8">
                         You should <a href="#" class="text-blue-600 hover:underline">read our full terms and conditions</a>. We recommend you print a copy of our terms. If our terms change in the future, we’ll let you know when you next log in to your account.
@@ -146,12 +146,12 @@
 
                             <div class="custom-checkbox-container">
                                 <input type="checkbox" id="no_fees_until_die" name="acknowledgements[]" value="no_fees_until_die" required>
-                                <label for="no_fees_until_die">I understand that no fees are paid from my estate to Farewill Trustees until after I die</label>
+                                <label for="no_fees_until_die">I understand that no fees are paid from my estate to Executor Hub Trustees until after I die</label>
                             </div>
 
                             <div class="custom-checkbox-container">
                                 <input type="checkbox" id="read_terms" name="acknowledgements[]" value="read_terms" required>
-                                <label for="read_terms">I have read Farewill Trustees’ current terms and understand that their terms at the date of my death will apply</label>
+                                <label for="read_terms">I have read Executor Hub Trustees’ current terms and understand that their terms at the date of my death will apply</label>
                             </div>
                         </div>
 

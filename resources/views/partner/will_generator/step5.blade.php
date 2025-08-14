@@ -35,7 +35,7 @@
                                         <div class="col-sm-12">
 
                                             <h1 id="PetQuestion" class="text-2xl sm:text-2xl font-bold text-gray-800 mb-4">
-                                                Do you have any pets?<span class="txt-danger">*</span>
+                                                Do you have any pets?
                                             </h1>
                                             <p class="text-gray-600 mb-2">
                                                 You can choose guardians for your pets in the next section.
@@ -120,8 +120,8 @@
 
                             </div>
                             <div class="wizard-footer d-flex gap-2 justify-content-end m-4">
-                                <button class="btn badge-light-primary" id="backbtn" onclick="history.back()" >
-                                    Back</button>
+                                <a class="btn badge-light-primary" id="backbtn" href="{{ route('partner.will_generator.step4', ['will_user_id' => $will_user_id]) }}">
+                                    Back</a>
                                 <button type="submit" class="btn btn-primary" id="nextbtn">Finish</button>
                             </div>
                             </form>

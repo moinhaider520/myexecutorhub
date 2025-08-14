@@ -34,7 +34,7 @@
 
                                             <h1 id="childrenQuestion"
                                                 class="text-2xl sm:text-2xl font-bold text-gray-800 mb-4">
-                                                Do you have any children?<span class="txt-danger">*</span>
+                                                Do you have any children?
                                             </h1>
                                             <p class="text-gray-600 mb-2">
                                                 If your first child is on the way, select "No" for now. You can always
@@ -100,8 +100,8 @@
 
                             </div>
                             <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
-                                <button class="btn badge-light-primary" id="backbtn" onclick="history.back()" >
-                                    Back</button>
+                                <a class="btn badge-light-primary" id="backbtn" href="{{ route('partner.will_generator.step3', ['will_user_id' => $will_user_id]) }}">
+                                    Back</a>
                                 <button class="btn btn-primary"
                                     id="nextbtn">Next</button>
                             </div>

@@ -242,7 +242,7 @@
         <h1>You've nearly finished your will.<br>Here's how to make it legal.</h1>
 
         <div class="contact-info">
-            <strong>Any questions? Email us on hello@farewill.com</strong>
+            <strong>Any questions? Email us on hello@executor_hub.com</strong>
         </div>
 
         <div class="step">
@@ -250,7 +250,7 @@
             <div class="step-content">
                 <h2>Read your will and print it in black and white</h2>
                 <p><strong>Order a printed copy for just £6</strong><br>
-                    You can order a printed copy of your will at any time, in your Farewill account.</p>
+                    You can order a printed copy of your will at any time, in your Executor Hub account.</p>
                 <ul>
                     <li>Read it carefully and make sure you understand it. If anything is unclear, contact us.</li>
                     <li>Staple it securely in the top left corner. You don't need to include this instruction page, but
@@ -296,7 +296,7 @@
                     your executors know where they can find it. Alternatively, for a small fee, you can store a will
                     with the government's Probate Registry. Search for their details online.</p>
                 <p>To invite your friends and family to sort their wills too, visit
-                    <strong>farewill.com/invite</strong>.
+                    <strong>executor_hub.com/invite</strong>.
                 </p>
             </div>
         </div>
@@ -313,9 +313,9 @@
 
         <div class="contact-info">
             <strong>Has {{ $user_info->legal_name }} died?</strong><br>
-            Please contact Farewill where we will:<br><br>
+            Please contact Executor Hub where we will:<br><br>
             <strong>Call:</strong> 020 3695 1713<br>
-            <strong>Email:</strong> bereavement@farewill.com<br><br>
+            <strong>Email:</strong> bereavement@executor_hub.com<br><br>
             • Help you understand what to do next<br>
             • Provide free guidance on bereavement services, arranging a funeral and dealing with probate
         </div>
@@ -725,7 +725,7 @@
             <p>Your will contains provisions relating to the responsibilities of your executors and trustees. These
                 provisions are under the heading General Provisions.</p>
 
-            <p>At Farewill we include a set of general provisions, that have been professionally drafted and approved by
+            <p>At Executor Hub we include a set of general provisions, that have been professionally drafted and approved by
                 STEP, and are used widely by other professional will writers and solicitors. STEP is the Society of
                 Trust and Estate Practitioners, a global professional association that promotes high professional
                 standards in this area of law.</p>

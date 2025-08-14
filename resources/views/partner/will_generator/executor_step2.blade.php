@@ -40,20 +40,20 @@
                                             </ul>
 
                                             <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                                                Appointing a professional executor through Farewill
+                                                Appointing a professional executor through Executor Hub
                                             </h2>
                                             <p class="text-gray-700 leading-relaxed mb-8">
-                                                Farewill Trustees is a professional executor service available to everyone who writes a will with us. Founded on the same principles as Farewill, Farewill Trustees use technology and expertise to keep things simple and affordable.
+                                                Executor Hub Trustees is a professional executor service available to everyone who writes a will with us. Founded on the same principles as Executor Hub, Executor Hub Trustees use technology and expertise to keep things simple and affordable.
                                             </p>
 
-                                            {{-- Farewill Trustees Card --}}
+                                            {{-- Executor Hub Trustees Card --}}
                                             <div class="bg-white p-6 rounded-lg shadow border border-gray-200 mb-8">
-                                                <h3 class="text-xl font-bold text-gray-800 mb-4">Farewill Trustees</h3>
+                                                <h3 class="text-xl font-bold text-gray-800 mb-4">Executor Hub Trustees</h3>
                                                 <div class="space-y-4 text-gray-700">
                                                     <div>
                                                         <h4 class="font-semibold mb-1">Legal expertise for peace of mind</h4>
-                                                        <p>Farewill Trustees can act as co-executors to support either friends or family through the process.</p>
-                                                        <p class="mt-2">When the time comes, if the other executors you’ve chosen find they don’t need professional support, and it’s in the best interest of the estate, Farewill Trustees will step aside. In a few cases, they may not be able to step aside, for example, if there are no other executors.</p>
+                                                        <p>Executor Hub Trustees can act as co-executors to support either friends or family through the process.</p>
+                                                        <p class="mt-2">When the time comes, if the other executors you’ve chosen find they don’t need professional support, and it’s in the best interest of the estate, Executor Hub Trustees will step aside. In a few cases, they may not be able to step aside, for example, if there are no other executors.</p>
                                                     </div>
                                                     <div>
                                                         <h4 class="font-semibold mb-1">No upfront payments</h4>
@@ -61,7 +61,7 @@
                                                     </div>
                                                     <div>
                                                         <h4 class="font-semibold mb-1">Support every step of the way</h4>
-                                                        <p>Farewill Trustees take on the legal responsibility of administering your estate to remove the burden from your loved ones.</p>
+                                                        <p>Executor Hub Trustees take on the legal responsibility of administering your estate to remove the burden from your loved ones.</p>
                                                     </div>
                                                 </div>
                                             </div>

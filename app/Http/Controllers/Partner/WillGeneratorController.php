@@ -120,8 +120,8 @@ class WillGeneratorController extends Controller
                     'post_code' => $request->post_code,
                     'phone_number' => $request->phone_number,
                     'martial_status' => $request->martial_status,
-                    'children' => $request->children,
-                    'pets' => $request->pets,
+                    'children' => $request->children ?? 'no',
+                    'pets' => $request->pets?? 'no',
                     'user_id' => Auth::user()->id,
                 ]
             );

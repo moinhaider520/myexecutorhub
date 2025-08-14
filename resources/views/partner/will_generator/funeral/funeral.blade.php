@@ -250,9 +250,9 @@
                             <p class="text-gray-700 leading-relaxed mb-6">
                                 Even if you're not ready to set up a plan just yet, we can send you our
                                 free guide and keep you up to date with any tips, discounts and news
-                                from Farewill Funerals in the future.
+                                from Executor Hub Funerals in the future.
                                 <br><br>
-                                As a Farewill customer, you will also receive &pound;150 off your funeral plan.
+                                As a Executor Hub customer, you will also receive &pound;150 off your funeral plan.
                             </p>
                             <div class="mb-6">
                                 <div class="radio-group-container">
@@ -339,7 +339,7 @@
                             {{-- Conditional: Direct cremation wish (if funeral_type_choice is 'cremation') --}}
                             <div id="directCremationSection" class="hidden">
                                 <h2 class="text-2xl font-bold text-gray-800 mb-4">
-                                    Would you like to suggest a Farewill direct cremation in your will?
+                                    Would you like to suggest a Executor Hub direct cremation in your will?
                                 </h2>
                                 <p class="text-gray-700 leading-relaxed mb-6">
                                     A direct cremation is a cremation without a service at the crematorium.
