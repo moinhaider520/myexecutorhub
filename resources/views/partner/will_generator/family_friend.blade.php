@@ -362,7 +362,7 @@
                         <select class="form-control" name="type" id="relationship">
                             <option value="partner">Partner</option>
                             <option value="child">Child</option>
-                            <option value="Other">Other</option>
+                            <!-- <option value="Other">Other</option> -->
                         </select>
                         <div class="text-danger" id="error-relationship"></div>
                     </div>
@@ -421,7 +421,7 @@
                         <select class="form-control" name="relationship" id="edit_relationship">
                             <option value="partner">Partner</option>
                             <option value="child">Child</option>
-                            <option value="Other">Other</option>
+                            <!-- <option value="Other">Other</option> -->
                         </select>
                         <div class="text-danger" id="edit-error-relationship"></div>
                     </div>
