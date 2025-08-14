@@ -124,6 +124,7 @@ use App\Http\Controllers\Api\Executor\PensionController as ExecutorPensionContro
 use App\Http\Controllers\Api\Executor\PictureController as ExecutorPictureController;
 use App\Http\Controllers\Api\Executor\VideoController as ExecutorVideoController;
 use App\Http\Controllers\Api\Executor\OtherTypeofAssetController as ExecutorOtherTypeofAssetController;
+use App\Http\Controllers\Api\Executor\WillGeneratorController as ExecutorWillGeneratorController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -842,4 +843,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
 
     // WILLS
     Route::get('/wills', [ExecutorWillController::class, 'view'])->name('wills.view');
+
+    // WILL GENERATOR
+     Route::get('/will_generator/partner_about_you', [ExecutorWillGeneratorController::class, 'partner_about_you'])->name('wills.partner_about_you');
 });
