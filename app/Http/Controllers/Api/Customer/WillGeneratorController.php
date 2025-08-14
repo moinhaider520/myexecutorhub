@@ -553,76 +553,76 @@ class WillGeneratorController extends Controller
     }
 
     public function store_family_friend(Request $request, $will_user_id)
-{
-    try {
-        DB::beginTransaction();
+    {
+        try {
+            DB::beginTransaction();
 
-        $willUserInfo = WillUserInfo::findOrFail($will_user_id);
+            $willUserInfo = WillUserInfo::findOrFail($will_user_id);
 
-        // Remove existing family/friends
-        $willUserInfo->beneficiaries()
-            ->where('beneficiable_type', WillInheritedPeople::class)
-            ->delete();
+            // Remove existing family/friends
+            $willUserInfo->beneficiaries()
+                ->where('beneficiable_type', WillInheritedPeople::class)
+                ->delete();
 
-        $selectedFamilyFriendsIds = $request->input('family_friends', []);
-        $selectedFamilyFriendsPercentages = $request->input('family_friends_percentages', []);
+            $selectedFamilyFriendsIds = $request->input('family_friends', []);
+            $selectedFamilyFriendsPercentages = $request->input('family_friends_percentages', []);
 
-        foreach ($selectedFamilyFriendsIds as $index => $familyFriendId) {
-            $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);
-
-            $willUserInfo->beneficiaries()->create([
-                'beneficiable_id'   => $familyFriend->id,
-                'beneficiable_type' => get_class($familyFriend),
-                'share_percentage'  => isset($selectedFamilyFriendsPercentages[$index])
-                    ? (float) $selectedFamilyFriendsPercentages[$index]
-                    : 0.00,
-            ]);
-        }
-
-        DB::commit();
-        DB::beginTransaction();
-
-        // Remove existing charities
-        $willUserInfo->beneficiaries()
-            ->where('beneficiable_type', Charity::class)
-            ->delete();
-
-        if ($request->input('leave_to_charity') === 'yes') {
-
-            $selectedManualCharityIds = $request->input('charities_manual', []);
-            $selectedManualCharityPercentages = $request->input('charities_manual_percentages', []);
-
-            foreach ($selectedManualCharityIds as $index => $charityId) {
-                $charity = Charity::findOrFail($charityId);
+            foreach ($selectedFamilyFriendsIds as $index => $familyFriendId) {
+                $familyFriend = WillInheritedPeople::findOrFail($familyFriendId);
 
                 $willUserInfo->beneficiaries()->create([
-                    'beneficiable_id'   => $charity->id,
-                    'beneficiable_type' => get_class($charity),
-                    'share_percentage'  => isset($selectedManualCharityPercentages[$index])
-                        ? (float) $selectedManualCharityPercentages[$index]
+                    'beneficiable_id' => $familyFriend->id,
+                    'beneficiable_type' => get_class($familyFriend),
+                    'share_percentage' => isset($selectedFamilyFriendsPercentages[$index])
+                        ? (float) $selectedFamilyFriendsPercentages[$index]
                         : 0.00,
                 ]);
             }
-        }
 
-        DB::commit();
+            DB::commit();
+            DB::beginTransaction();
 
-        return response()->json([
-            'status'         => true,
-            'message'        => 'Family, friends, and charities processed successfully.',
-            'family_friends' => $willUserInfo->beneficiaries()
-                ->where('beneficiable_type', WillInheritedPeople::class)
-                ->get(),
-            'charities'      => $willUserInfo->beneficiaries()
+            // Remove existing charities
+            $willUserInfo->beneficiaries()
                 ->where('beneficiable_type', Charity::class)
-                ->get(),
-        ]);
+                ->delete();
 
-    } catch (\Exception $e) {
-        DB::rollBack();
-        return response()->json(['status' => false, 'message' => $e->getMessage()]);
+            if ($request->input('leave_to_charity') === 'yes') {
+
+                $selectedManualCharityIds = $request->input('charities_manual', []);
+                $selectedManualCharityPercentages = $request->input('charities_manual_percentages', []);
+
+                foreach ($selectedManualCharityIds as $index => $charityId) {
+                    $charity = Charity::findOrFail($charityId);
+
+                    $willUserInfo->beneficiaries()->create([
+                        'beneficiable_id' => $charity->id,
+                        'beneficiable_type' => get_class($charity),
+                        'share_percentage' => isset($selectedManualCharityPercentages[$index])
+                            ? (float) $selectedManualCharityPercentages[$index]
+                            : 0.00,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Family, friends, and charities processed successfully.',
+                'family_friends' => $willUserInfo->beneficiaries()
+                    ->where('beneficiable_type', WillInheritedPeople::class)
+                    ->get(),
+                'charities' => $willUserInfo->beneficiaries()
+                    ->where('beneficiable_type', Charity::class)
+                    ->get(),
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        }
     }
-}
 
 
     public function charities()
@@ -754,7 +754,7 @@ class WillGeneratorController extends Controller
             }
 
             DB::commit();
-            return response()->json(['status'=>true,'Beneficiary percentages updated successfully!', 'data' => $willUserInfo->beneficiaries()->get()]);
+            return response()->json(['status' => true, 'Beneficiary percentages updated successfully!', 'data' => $willUserInfo->beneficiaries()->get()]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);
@@ -788,13 +788,33 @@ class WillGeneratorController extends Controller
 
     public function store_benificaries_death_backup(Request $request, $will_user_id)
     {
-
         try {
-
             DB::beginTransaction();
-            $beneficiary = Beneficiary::find($request->input('current_beneficiary_id'));
-            $beneficiary->death_backup_plan = $request->input('selected_backup_option');
-            $beneficiary->save();
+
+            $ids = $request->input('current_beneficiary_id');
+            $options = $request->input('selected_backup_option');
+
+            // Normalize to arrays
+            if (!is_array($ids)) {
+                $ids = [$ids];
+            }
+            if (!is_array($options)) {
+                $options = [$options];
+            }
+
+            foreach ($ids as $index => $id) {
+                $beneficiary = Beneficiary::where('will_user_id', $will_user_id)
+                    ->where('id', $id)
+                    ->first();
+
+                if (!$beneficiary) {
+                    continue; // Skip if not found
+                }
+
+                $beneficiary->death_backup_plan = $options[$index] ?? null;
+                $beneficiary->save();
+            }
+
             DB::commit();
 
             $beneficiaries = Beneficiary::where('will_user_id', $will_user_id)
@@ -802,22 +822,17 @@ class WillGeneratorController extends Controller
                 ->orderBy('id')
                 ->get();
 
-
-            $currentBeneficiaryIndex = $beneficiaries->search(function ($item) use ($beneficiary) {
-
-                return $item->id == $beneficiary->id;
-            });
-
-            $nextBeneficiary = $beneficiaries->get($currentBeneficiaryIndex + 1);
-
             return response()->json([
                 'status' => true,
-                'message' => 'Beneficiary death backup plan updated successfully.',
-                'beneficiary' => $beneficiary,
-                'next_beneficiary' => $nextBeneficiary
+                'message' => 'Beneficiary death backup plan(s) updated successfully.',
+                'beneficiaries' => $beneficiaries
             ]);
-        } catch (\Exception $e) {
-            return response()->json(['status' => false, 'message' => $e->getMessage()]);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'status' => false,
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
