@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Last Will And Testament Of {{ $user_info->legal_name }}</title>
+    <title>Last Will And Testament Of {{ @$user_info->legal_name }}</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Playfair+Display:wght@400;600;700&display=swap"
         rel="stylesheet">
@@ -306,13 +306,13 @@
     <div class="page">
         <div class="will-title">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
         <div style="margin: 120px 0;"></div>
 
         <div class="contact-info">
-            <strong>Has {{ $user_info->legal_name }} died?</strong><br>
+            <strong>Has {{ @$user_info->legal_name }} died?</strong><br>
             Please contact Executor Hub where we will:<br><br>
             <strong>Call:</strong> 020 3695 1713<br>
             <strong>Email:</strong> bereavement@executor_hub.com<br><br>
@@ -325,40 +325,40 @@
     <div class="page">
         <div class="header">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
-        <p><strong>I {{ $user_info->legal_name }}</strong> born on <strong>{{ $user_info->date_of_birth }}</strong>
-            revoke all earlier Wills made by me so far as they relate to my property in the {{ $user_info->city }} and
+        <p><strong>I {{ @$user_info->legal_name }}</strong> born on <strong>{{ @$user_info->date_of_birth }}</strong>
+            revoke all earlier Wills made by me so far as they relate to my property in the {{ @$user_info->city }} and
             declare this to be my last Will.</p>
 
         <div class="section-title">Preliminary Declarations</div>
 
         <div class="clause">
-            <span class="clause-number">1</span> I am married to <strong>{{ $user_info->partner_name }}</strong>.
+            <span class="clause-number">1</span> I am married to <strong>{{ @$user_info->partner_name }}</strong>.
         </div>
 
         <div class="clause">
-            <span class="clause-number">2</span> This Will relates only to my property in the {{ $user_info->city }} and
+            <span class="clause-number">2</span> This Will relates only to my property in the {{ @$user_info->city }} and
             does not affect any other property.
         </div>
 
         <div class="clause">
             <span class="clause-number">3</span> I have the following living children:
-            @for ($i = 0; $i < count($user_info->child); $i++)
-                @if ($i > 0 && $i == count($user_info->child) - 1)
+            @for ($i = 0; $i < count(@$user_info->child); $i++)
+                @if ($i > 0 && $i == count(@$user_info->child) - 1)
                 and
                 @elseif ($i > 0)
                 ,
                 @endif
-                <strong>{{ $user_info->child[$i]->first_name }} {{ $user_info->child[$i]->last_name }}</strong> born on
-                <strong>{{ $user_info->child[$i]->date_of_birth }}</strong>
+                <strong>{{ @$user_info->child[$i]->first_name }} {{ @$user_info->child[$i]->last_name }}</strong> born on
+                <strong>{{ @$user_info->child[$i]->date_of_birth }}</strong>
                 @endfor
                 .
         </div>
 
         <div class="clause">
-            <span class="clause-number">4</span> I wish my funeral to be {{$user_info->funeral[0]->funeral_type}}.
+            <span class="clause-number">4</span> I wish my funeral to be {{@$user_info->funeral[0]->funeral_type}}.
         </div>
 
         <div class="clause">
@@ -372,7 +372,7 @@
         <div class="clause">
             <span class="clause-number">6</span> I appoint as my executor and trustee
             @foreach($user_info->executors as $executor)
-            <strong>{{ $executor->first_name }} {{ $executor->last_name }} </strong>
+            <strong>{{ @$executor->first_name }} {{ @$executor->last_name }} </strong>
             @if (!$loop->last),
             @endif
             @endforeach
@@ -389,12 +389,12 @@
         <div class="clause">
             <span class="clause-number">8</span>
             <div class="sub-clause">
-                @foreach ($user_info->child as $key => $child)
+                @foreach (@$user_info->child as $key => $child)
                 @php
                 $letter = chr(97 + $key); // This converts the loop index (0, 1, 2, etc.) to a, b, c, etc.
                 @endphp
 
-                <strong>{{ $letter }}</strong> If <strong>{{ $child->first_name }}</strong> born on <strong>{{ $child->date_of_birth }}</strong> is under 18 and I am the only living parent with parental responsibility at the date of my death I appoint <strong>{{ $user_info->partner_name }}</strong> born on <strong>{{@$user_info->partner[0]->date_of_birth ?? "Date of Birth Not Available"}}</strong> to be their guardian.
+                <strong>{{ $letter }}</strong> If <strong>{{ @$child->first_name }}</strong> born on <strong>{{ @$child->date_of_birth }}</strong> is under 18 and I am the only living parent with parental responsibility at the date of my death I appoint <strong>{{ @$user_info->partner_name }}</strong> born on <strong>{{@$user_info->partner[0]->date_of_birth ?? "Date of Birth Not Available"}}</strong> to be their guardian.
                 @endforeach
             </div>
 
@@ -409,7 +409,7 @@
     <div class="page">
         <div class="header" style="margin-bottom: 30px; text-align: left;">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
         <div class="section-title">Pets</div>
@@ -418,10 +418,10 @@
             <span class="clause-number">9</span>
             <div class="sub-clause">
                 <strong>a</strong> If my pet <strong>
-                    @foreach ($user_info->pet as $pet)
+                    @foreach (@$user_info->pet as $pet)
                     {{ @$pet->first_name }},
                     @endforeach</strong> is alive and healthy at the date of my death I give
-                them to <strong>{{ $user_info->partner_name}}</strong> born on <strong>{{@$user_info->partner[0]->date_of_birth}}</strong>. If they cannot afford
+                them to <strong>{{ @$user_info->partner_name}}</strong> born on <strong>{{@$user_info->partner[0]->date_of_birth}}</strong>. If they cannot afford
                 or refuse to accept the responsibilities of, ownership then I give my Trustees the fullest possible
                 discretion to rehome my pet, in a permanent safe and loving home, as soon as possible.
             </div>
@@ -456,14 +456,14 @@
 
             <div class="sub-clause">
                 <strong>{{ $letter }}</strong> To
-                @if ($gift->inherited_people->isNotEmpty())
-                @foreach ($gift->inherited_people as $person)
-                <strong>{{ $person->first_name }} {{ $person->last_name }}</strong> born on <strong>{{ $person->date_of_birth }}</strong>@if (!$loop->last)
+                @if (@$gift->inherited_people->isNotEmpty())
+                @foreach (@$gift->inherited_people as $person)
+                <strong>{{ @$person->first_name }} {{ @$person->last_name }}</strong> born on <strong>{{ @$person->date_of_birth }}</strong>@if (!$loop->last)
                 ,
                 @endif
                 @endforeach
                 @endif
-                my '{{ $gift->gift_name }}'.
+                my '{{ @$gift->gift_name }}'.
             </div>
             @endforeach
         </div>
@@ -494,7 +494,7 @@
     <div class="page">
         <div class="header" style="margin-bottom: 30px; text-align: left;">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
         <div class="section-title">Gifts of money</div>
@@ -519,21 +519,21 @@
             debts funeral and testamentary expenses, legacies and inheritance tax on all property which vests in them
             and to hold the remainder ('my residuary estate') to divide as follows:
 
-            @forelse ($user_info->beneficiaries as $key => $beneficiary)
+            @forelse (@$user_info->beneficiaries as $key => $beneficiary)
             @php
             $letter = chr(97 + $key); // Converts index to a, b, c...
             @endphp
 
             <div class="sub-clause">
-                <strong>{{ $letter }}</strong> {{ number_format($beneficiary->share_percentage, 2) }}% to
+                <strong>{{ $letter }}</strong> {{ number_format(@$beneficiary->share_percentage, 2) }}% to
                 <strong>
-                    {{ $beneficiary->getNameAttribute() }}
-                    @if (isset($beneficiary->address))
-                    of {{ $beneficiary->address }}
+                    {{ @$beneficiary->getNameAttribute() }}
+                    @if (isset(@$beneficiary->address))
+                    of {{ @$beneficiary->address }}
                     @endif
                 </strong>
-                @if (isset($beneficiary->death_backup_plan))
-                but if they die before me then to {{ $beneficiary->death_backup_plan }}.
+                @if (isset(@$beneficiary->death_backup_plan))
+                but if they die before me then to {{ @$beneficiary->death_backup_plan }}.
                 @endif
             </div>
             @empty
@@ -580,7 +580,7 @@
     <div class="page">
         <div class="header" style="margin-bottom: 30px; text-align: left;">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
         <div class="section-title">Signatures and Witnesses</div>
@@ -592,13 +592,13 @@
         </div>
 
         <div class="clause">
-            <span class="clause-number">24</span> This will is signed by me <strong>{{ $user_info->legal_name }}</strong> born on
-            <strong>{{ $user_info->date_of_birth }}</strong> in the presence of the two witnesses named below who were each present at the
+            <span class="clause-number">24</span> This will is signed by me <strong>{{ @$user_info->legal_name }}</strong> born on
+            <strong>{{ @$user_info->date_of_birth }}</strong> in the presence of the two witnesses named below who were each present at the
             same time, and who have each signed this will in my presence.
         </div>
 
         <div class="signature-section">
-            <strong>Signature of {{ $user_info->legal_name }}</strong>
+            <strong>Signature of {{ @$user_info->legal_name }}</strong>
             <div class="signature-box"></div>
             <strong>Date (DD / MM / YYYY)</strong>
             <div class="signature-box"></div>
@@ -650,7 +650,7 @@
     <div class="page">
         <div class="header" style="margin-bottom: 30px; text-align: left;">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
         <div class="section-title">Appendix</div>
@@ -705,7 +705,7 @@
     <div class="page">
         <div class="header" style="margin-bottom: 30px; text-align: left;">
             Last Will And Testament Of<br>
-            {{ $user_info->legal_name }}
+            {{ @$user_info->legal_name }}
         </div>
 
         <div class="appendix-section">
@@ -715,7 +715,7 @@
             <p><strong>To RONNIE JOHNS</strong> - about my gift of 'wedding ring':</p>
             <div class="message-box">"enjoy"</div>
 
-            <p><strong>To {{ $user_info->partner_name}}</strong> - about my gift of 'car aa11 1aa':</p>
+            <p><strong>To {{ @$user_info->partner_name}}</strong> - about my gift of 'car aa11 1aa':</p>
             <div class="message-box">"broom broom!"</div>
         </div>
 
