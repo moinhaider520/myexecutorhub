@@ -908,6 +908,6 @@ class WillGeneratorController extends Controller
         $will_user = WillUserInfo::with('child')->find($will_user_id);
 
         $pdf = PDF::loadView('partner.will_generator.will_pdf', ['user_info' => $will_user]);
-        return $pdf->download('invoice.pdf');
+        return $pdf->stream('will_generated.pdf');
     }
 }
