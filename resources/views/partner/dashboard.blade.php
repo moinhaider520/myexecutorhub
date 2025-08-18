@@ -12,6 +12,17 @@
     </style>
     <div class="page-body">
 
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                    <video id="earningVideo" style="width:100%;height:450px;" controls>
+    <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+                </div>
+            </div>
+        </div>
         <!-- ONBOARDING SECTION -->
         <div class="container">
             <div class="row">
@@ -33,7 +44,7 @@
         </div>
         <!-- Coupon Section -->
         <div class="container">
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col text-center">
                     <h5>Your Coupon Code:</h5>
                     <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
@@ -46,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <!-- Coupon Section end-->
+
         <!-- Container-fluid starts-->
         <div class="container-fluid default-dashboard">
             <div class="row widget-grid">
@@ -115,7 +126,7 @@
                                 <h5 class="card-header">Users Referred with Your Coupon</h5>
                                 <div class="card-body">
                                     @if($referredUsers->isEmpty())
-                                        <p>No users have used your coupon yet.</p>
+                                        <p>No Users have used your coupon yet.</p>
                                     @else
                                         <div class="table-responsive theme-scrollbar">
                                             <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
@@ -146,173 +157,6 @@
                                         </div>
                                     @endif
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <div>
-                                <h4>Location of My Documents</h4>
-                                <span>Add and manage storage locations</span>
-                            </div>
-                            <form method="POST" action="{{ route('partner.dashboard.store-location') }}" class="d-flex">
-                                @csrf
-                                <input type="text" name="location" class="form-control me-2" placeholder="Add new location"
-                                    required>
-                                @error('location')
-                                    <div class="invalid-feedback d-block">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                                <button type="submit" class="btn btn-primary">Add</button>
-                            </form>
-                        </div>
-                        <div class="card-body">
-                            @if($documentLocations->isEmpty())
-                                <p>No locations added yet.</p>
-                            @else
-                                <div class="table-responsive theme-scrollbar">
-                                    <table class="display dataTable no-footer" id="document-locations-table">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Location</th>
-                                                <th>Added At</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($documentLocations as $index => $location)
-                                                <tr>
-                                                    <td>{{ $index + 1 }}</td>
-                                                    <td>{{ $location->location }}</td>
-                                                    <td>{{ $location->created_at->format('d M Y, H:i') }}</td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-warning edit-location-button"
-                                                            data-toggle="modal" data-target="#editLocationModal"
-                                                            data-id="{{ $location->id }}"
-                                                            data-location="{{ $location->location }}">Edit</button>
-
-                                                        <form
-                                                            action="{{ route('partner.dashboard.delete-location', $location->id) }}"
-                                                            method="POST" style="display: inline-block;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-sm btn-danger"
-                                                                onclick="return confirm('Are you sure you want to delete this location?')">Delete</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- EDIT LOCATION MODAL -->
-        <div class="modal fade" id="editLocationModal" tabindex="-1" role="dialog" aria-labelledby="editLocationModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editLocationModalLabel">Edit Location</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form id="editLocationForm">
-                            @csrf
-                            @method('POST')
-                            <input type="hidden" name="id" id="editLocationId">
-                            <div class="form-group mb-2">
-                                <label for="editLocation">Location</label>
-                                <input type="text" class="form-control" name="location" id="editLocation"
-                                    placeholder="Enter location" required>
-                                <span class="text-danger" id="edit_location_error"></span>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateLocation">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Document Reminders Section -->
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Document Status & Reminders</h4>
-                            <span>Get reminders for documents you need to upload</span>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive theme-scrollbar">
-                                <table class="display dataTable no-footer" id="document-reminders-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Document Type</th>
-                                            <th>Status</th>
-                                            <th>Reminder Frequency</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($allDocumentTypes as $documentType)
-                                            <tr>
-                                                <td>{{ $documentType }}</td>
-                                                <td>
-                                                    @if(isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'not_required')
-                                                        <span class="badge badge-secondary">Not Required</span>
-                                                    @elseif(in_array($documentType, $uploadedDocumentTypes))
-                                                        <span class="badge badge-success">Uploaded</span>
-                                                    @else
-                                                        <span class="badge badge-danger">Not Uploaded</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    <select class=" reminder-frequency" data-document-type="{{ $documentType }}"
-                                                        {{ in_array($documentType, $uploadedDocumentTypes) ? 'disabled' : '' }}>
-                                                        <option value="not_required" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'not_required' ? 'selected' : '' }}>Not Required</option>
-                                                        <option value="weekly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'weekly' ? 'selected' : '' }}>
-                                                            Weekly</option>
-                                                        <option value="fortnightly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'fortnightly' ? 'selected' : '' }}>Fortnightly</option>
-                                                        <option value="monthly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'monthly' ? 'selected' : '' }}>
-                                                            Monthly</option>
-                                                        <option value="quarterly" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'quarterly' ? 'selected' : '' }}>
-                                                            Quarterly</option>
-                                                        <option value="annually" {{ isset($documentReminders[$documentType]) && $documentReminders[$documentType] == 'annually' ? 'selected' : '' }}>
-                                                            Annually</option>
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    @if(!in_array($documentType, $uploadedDocumentTypes))
-                                                        <a href="{{ route('partner.documents.view') }}"
-                                                            class="btn btn-success btn-sm">
-                                                            Upload Document
-                                                        </a>
-                                                    @else
-                                                        <a href="{{ route('partner.documents.view') }}" class="btn btn-info btn-sm">
-                                                            View Document
-                                                        </a>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
@@ -354,7 +198,7 @@
                                 style="width:100%;height:450px;" />
 
                             <h5>How to view my referrals? (Click on the Video to Pause/UnPause)</h5>
-                            <video id="referralsVideo"style="width:100%;height:450px;">
+                            <video id="referralsVideo" style="width:100%;height:450px;">
                                 <source src="{{ asset('assets/view_refferals.mkv') }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -668,6 +512,18 @@
 
     <script>
         const video = document.getElementById('referralsVideo');
+
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+    </script>
+
+    <script>
+        const video = document.getElementById('earningVideo');
 
         video.addEventListener('click', () => {
             if (video.paused) {

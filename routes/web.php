@@ -54,6 +54,7 @@ use App\Http\Controllers\Partner\WillController as PartnerWillController;
 use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
 use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeController;
 use App\Http\Controllers\Partner\WillGeneratorController as PartnerWillGeneratorController;
+use App\Http\Controllers\Partner\UsefulContactsController as PartnerUsefulContactsController;
 // Role Customer Controller
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
@@ -95,6 +96,7 @@ use App\Http\Controllers\Customer\LPAController;
 use App\Http\Controllers\Customer\WillController;
 use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
+use App\Http\Controllers\Customer\UsefulContactsController;
 
 // Role Executor Controller
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
@@ -581,6 +583,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::post('/funeral_wake/update/{id}', [FuneralWakeController::class, 'update'])->name('funeral_wake.update');
     Route::delete('/funeral_wake/destroy/{id}', [FuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
 
+    // Useful Contacts
+    Route::get('/useful_contacts/view', [UsefulContactsController::class, 'index'])->name('useful_contacts.index');
+
 
 
 
@@ -656,6 +661,10 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
 Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')->group(function () {
     Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+
+    // Useful Contacts
+    Route::get('/useful_contacts/view', [PartnerUsefulContactsController::class, 'index'])->name('useful_contacts.index');
+
 
     Route::post('/dashboard/update-reminder', [PartnerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');
     Route::post('/dashboard/store-location', [PartnerDashboardController::class, 'storeDocumentLocation'])->name('dashboard.store-location');

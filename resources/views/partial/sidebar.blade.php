@@ -31,7 +31,7 @@
                     </li>
                     <li class="sidebar-main-title">
                         <div>
-                            <h6 class="lan-1">General</h6>
+                            <h6>Getting Started</h6>
                         </div>
                     </li>
                     <li class="sidebar-list">
@@ -45,11 +45,6 @@
                             </svg>
                             <span class="">Dashboard </span>
                         </a>
-                    </li>
-                    <li class="sidebar-main-title">
-                        <div>
-                            <h6 class="lan-8">Menu</h6>
-                        </div>
                     </li>
                     @role('admin')
                         <li class="sidebar-list">
@@ -95,7 +90,6 @@
                                 <li><a href="{{ route('admin.partners.send_invite') }}">Send Invite</a></li>
                             </ul>
                         </li>
-
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -152,7 +146,6 @@
                                 <span>Assets & Liabilities </span>
                             </a>
                             <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.bank_accounts.view') }}">Bank Accounts</a></li>
                                 <li><a href="{{ route('partner.investment_accounts.view') }}">Investment Accounts</a></li>
                                 <li><a href="{{ route('partner.properties.view') }}">Property <span
                                             style="all: unset; text-transform: lowercase;">(ies)</span> Owned</a></li>
@@ -160,7 +153,6 @@
                                 <li><a href="{{ route('partner.business_interests.view') }}">Business Interests</a></li>
                                 <li><a href="{{ route('partner.insurance_policies.view') }}">Insurance Policies</a></li>
                                 <li><a href="{{ route('partner.debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
-                                <li><a href="{{ route('partner.digital_assets.view') }}">Digital Assets</a></li>
                                 <li><a href="{{ route('partner.intellectual_properties.view') }}">Intellectual
                                         Properties</a></li>
                                 <li><a href="{{ route('partner.foreign_assets.view') }}">Foreign assets</a></li>
@@ -175,18 +167,77 @@
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                </svg>
+                                <span>Executors </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.executors.view') }}">Manage Executors</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                </svg>
+                                <span>Advisors </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.advisors.view') }}">Manage Advisers</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="{{ route('partner.bank_accounts.view') }}">
+                                <svg class="stroke-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
                                 </svg>
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                                 </svg>
-                                <span>Capacity Proof Video (LPA) </span>
+                                <span>Bank Accounts</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="{{ route('partner.digital_assets.view') }}">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                </svg>
+                                <span>Digital Assets</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Legal & Proof</h6>
+                        </div>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                </svg>
+                                <span>Will Generator</span>
                             </a>
                             <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.lpa.create') }}">Create</a></li>
-                                <li><a href="{{ route('partner.lpa.index') }}">View</a></li>
+                                <li><a href="{{ route('partner.will_generator.index') }}">View</a></li>
                             </ul>
-                        </li>
+                        </li>                        
 
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -212,116 +263,11 @@
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                                 </svg>
-                                <span>Will Generator</span>
+                                <span>Capacity Proof Video (LPA) </span>
                             </a>
                             <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.will_generator.index') }}">View</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
-                                </svg>
-                                <span>Notifications</span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.notifications.index') }}">View Notifications</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                                </svg>
-                                <span>Executors </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.executors.view') }}">Manage Executors</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
-                                </svg>
-                                <span>Inbox </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.messages.view') }}">Manage Inbox</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
-                                </svg>
-                                <span>Executor Hub AI </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.openai.view') }}">AI Assistant</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                                </svg>
-                                <span>Advisors </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.advisors.view') }}">Manage Advisers</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
-                                </svg>
-                                <span>Documents </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.documents.view') }}">Manage Documents</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
-                                </svg>
-                                <span>Pictures & Videos </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.pictures.view') }}">Manage Pictures</a></li>
-                                <li><a href="{{ route('partner.videos.view') }}">Manage Videos</a></li>
+                                <li><a href="{{ route('partner.lpa.create') }}">Create</a></li>
+                                <li><a href="{{ route('partner.lpa.index') }}">View</a></li>
                             </ul>
                         </li>
 
@@ -356,6 +302,13 @@
                             </ul>
                         </li>
 
+                        
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Guidance & Instructions</h6>
+                        </div>
+                        </li>
+
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -374,32 +327,15 @@
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
                                 </svg>
                                 <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
                                 </svg>
-                                <span>Tasks </span>
+                                <span>Funeral</span>
                             </a>
                             <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.tasks.index') }}">Manage Tasks</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
-                                </svg>
-                                <span>Life Remembered </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.life_remembered.view') }}">Manage Pictures</a></li>
-                                <li><a href="{{ route('partner.life_remembered_videos.view') }}">Manage Videos</a></li>
-                                <li><a href="{{ route('partner.voice_notes.view') }}">Manage Voice Notes</a></li>
+                                <li><a href="{{ route('partner.funeral_wake.view') }}">Manage</a></li>
                             </ul>
                         </li>
 
@@ -433,6 +369,148 @@
                             </ul>
                         </li>
 
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Documents & Media</h6>
+                        </div>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                                </svg>
+                                <span>Documents </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.documents.view') }}">Manage Documents</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                                </svg>
+                                <span>Pictures & Videos </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.pictures.view') }}">Manage Pictures</a></li>
+                                <li><a href="{{ route('partner.videos.view') }}">Manage Videos</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
+                                </svg>
+                                <span>Life Remembered </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.life_remembered.view') }}">Manage Pictures</a></li>
+                                <li><a href="{{ route('partner.life_remembered_videos.view') }}">Manage Videos</a></li>
+                                <li><a href="{{ route('partner.voice_notes.view') }}">Manage Voice Notes</a></li>
+                            </ul>
+                        </li>
+
+                        
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Ongoing Management</h6>
+                        </div>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                </svg>
+                                <span>Inbox </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.messages.view') }}">Manage Inbox</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
+                                </svg>
+                                <span>Executor Hub AI </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.openai.view') }}">AI Assistant</a></li>
+                            </ul>
+                        </li>
+                        
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
+                                </svg>
+                                <span>Tasks </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.tasks.index') }}">Manage Tasks</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                    </svg>
+                                    <span>Useful Contatcs</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('partner.useful_contacts.index') }}">View</a></li>
+                                </ul>
+                            </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                </svg>
+                                <span>Notifications</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('partner.notifications.index') }}">View Notifications</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Account & Membership</h6>
+                        </div>
+                        </li>
+
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -449,20 +527,7 @@
                             </ul>
                         </li>
 
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
-                                </svg>
-                                <span>Funeral</span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('partner.funeral_wake.view') }}">Manage</a></li>
-                            </ul>
-                        </li>
+                        
                     @endrole
 
                     @php
@@ -481,7 +546,6 @@
                                     <span>Assets & Liabilities </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.bank_accounts.view') }}">Bank Accounts</a></li>
                                     <li><a href="{{ route('customer.investment_accounts.view') }}">Investment
                                             Accounts</a></li>
                                     <li><a href="{{ route('customer.properties.view') }}">Property <span
@@ -494,7 +558,6 @@
                                     </li>
                                     <li><a href="{{ route('customer.debt_and_liabilities.view') }}">Debt &
                                             Liabilities</a></li>
-                                    <li><a href="{{ route('customer.digital_assets.view') }}">Digital Assets</a></li>
                                     <li><a href="{{ route('customer.intellectual_properties.view') }}">Intellectual
                                             Properties</a></li>
                                     <li><a href="{{ route('customer.foreign_assets.view') }}">Foreign assets</a></li>
@@ -507,55 +570,69 @@
                             </li>
 
                             <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <a class="sidebar-link sidebar-title" href="{{ route('customer.bank_accounts.view') }}">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                                     </svg>
-                                    <span>Notifications</span>
+                                    <span>Bank Accounts </span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="{{ route('customer.digital_assets.view') }}">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                    </svg>
+                                    <span>Digital Assets </span>
+                                </a>
+                            </li>
+
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                    </svg>
+                                    <span>Executors </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.notifications.index') }}">View Notifications</a></li>
+                                    <li><a href="{{ route('customer.executors.view') }}">Manage Executors</a></li>
                                 </ul>
                             </li>
                         @endif
+
+                        @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                    </svg>
+                                    <span>Advisors </span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.advisors.view') }}">Manage Advisers</a></li>
+                                </ul>
+                            </li>
+                        @endif
+
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Legal & Proof</h6>
+                        </div>
+                        </li>
 
                         @if (in_array($package, ['Premium', 'free_trial']))
-                            <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
-                                    </svg>
-                                    <span>Capacity Proof Video (LPA) </span>
-                                </a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.lpa.create') }}">Create</a></li>
-                                    <li><a href="{{ route('customer.lpa.index') }}">View</a></li>
-                                </ul>
-                            </li>
-                            <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
-                                    </svg>
-                                    <span>Capacity Proof Video (Will) </span>
-                                </a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.wills.create') }}">Create</a></li>
-                                    <li><a href="{{ route('customer.wills.index') }}">View</a></li>
-                                </ul>
-                            </li>
-                        @endif
-
-                        @if (in_array($package, ['Basic', 'Standard', 'Premium', 'free_trial']))
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
@@ -588,71 +665,138 @@
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                                     </svg>
-                                    <span>Executors </span>
+                                    <span>Capacity Proof Video (Will) </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.executors.view') }}">Manage Executors</a></li>
+                                    <li><a href="{{ route('customer.wills.create') }}">Create</a></li>
+                                    <li><a href="{{ route('customer.wills.index') }}">View</a></li>
                                 </ul>
                             </li>
-                        @endif
-
-                        @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
                                     </svg>
-                                    <span>Inbox </span>
+                                    <span>Capacity Proof Video (LPA) </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.messages.view') }}">Manage Inbox</a></li>
+                                    <li><a href="{{ route('customer.lpa.create') }}">Create</a></li>
+                                    <li><a href="{{ route('customer.lpa.index') }}">View</a></li>
+                                </ul>
+                            </li>    
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                                    </svg>
+                                    <span>Trust Wishes </span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.wishes.view') }}">Manage Trust Wishes</a></li>
                                 </ul>
                             </li>
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                                    </svg>
+                                    <span>Memorandum of Wishes</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.memorandum_wishes.view') }}">Manage Memorandum
+                                            Wishes</a></li>
+                                </ul>
+                            </li>                         
                         @endif
+
 
                         @if (in_array($package, ['Premium', 'free_trial']))
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Guidance & Instructions</h6>
+                        </div>
+                        </li>
+
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
                                     </svg>
-                                    <span>Executor Hub AI </span>
+                                    <span>Guidance For Guardians</span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.openai.view') }}">AI Assisstant</a></li>
+                                    <li><a href="{{ route('customer.guidance.view') }}">Guidance For Guardians</a></li>
                                 </ul>
                             </li>
-                        @endif
-
-                        @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
+                            <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
+                                </svg>
+                                <span>Funeral</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('customer.funeral_wake.view') }}">Manage</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-permissions') }}"></use>
+                                    </svg>
+                                    <span>Permissions</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.assign_permissions') }}">Assign Permissions</a></li>
+                                </ul>
+                            </li> 
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
                                     </svg>
-                                    <span>Advisors </span>
+                                    <span>Donations </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.advisors.view') }}">Manage Advisers</a></li>
+                                    <li><a href="{{ route('customer.organs_donation.view') }}">Organ Donations</a></li>
                                 </ul>
                             </li>
+                                                       
                         @endif
 
+                        
                         @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Documents & Media</h6>
+                        </div>
+                        </li>
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
@@ -682,66 +826,6 @@
                                     <li><a href="{{ route('customer.videos.view') }}">Manage Videos</a></li>
                                 </ul>
                             </li>
-                        @endif
-                        @if (in_array($package, ['Premium', 'free_trial']))
-                            <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
-                                    </svg>
-                                    <span>Trust Wishes </span>
-                                </a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.wishes.view') }}">Manage Trust Wishes</a></li>
-                                </ul>
-                            </li>
-                            <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
-                                    </svg>
-                                    <span>Memorandum of Wishes</span>
-                                </a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.memorandum_wishes.view') }}">Manage Memorandum
-                                            Wishes</a></li>
-                                </ul>
-                            </li>
-                            <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
-                                    </svg>
-                                    <span>Guidance For Guardians</span>
-                                </a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.guidance.view') }}">Guidance For Guardians</a></li>
-                                </ul>
-                            </li>
-                            <li class="sidebar-list">
-                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                    <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
-                                    </svg>
-                                    <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
-                                    </svg>
-                                    <span>Tasks </span>
-                                </a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.tasks.index') }}">Manage Tasks</a></li>
-                                </ul>
-                            </li>
-
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
@@ -758,51 +842,95 @@
                                     </li>
                                     <li><a href="{{ route('customer.voice_notes.view') }}">Manage Voice Notes</a></li>
                                 </ul>
+                            </li> 
+                        @endif
+
+                        
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Ongoing Management</h6>
+                        </div>
+                        </li>
+                        @if (in_array($package, ['Premium', 'free_trial']))                        
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
+                                    </svg>
+                                    <span>Executor Hub AI </span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.openai.view') }}">AI Assisstant</a></li>
+                                </ul>
                             </li>
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calendar') }}"></use>
                                     </svg>
-                                    <span>Donations </span>
+                                    <span>Tasks </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.organs_donation.view') }}">Organ Donations</a></li>
+                                    <li><a href="{{ route('customer.tasks.index') }}">Manage Tasks</a></li>
                                 </ul>
                             </li>
-                        @endif
-                        @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
                             <li class="sidebar-list">
                                 <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                     <svg class="stroke-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
                                     </svg>
                                     <svg class="fill-icon">
-                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-permissions') }}"></use>
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
                                     </svg>
-                                    <span>Permissions</span>
+                                    <span>Inbox </span>
                                 </a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('customer.assign_permissions') }}">Assign Permissions</a></li>
+                                    <li><a href="{{ route('customer.messages.view') }}">Manage Inbox</a></li>
                                 </ul>
                             </li>
-                        @endif
+                        @endif   
+
+                                               
                         <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
-                                </svg>
-                                <span>Funeral</span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('customer.funeral_wake.view') }}">Manage</a></li>
-                            </ul>
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                    </svg>
+                                    <span>Notifications</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.notifications.index') }}">View Notifications</a></li>
+                                </ul>
+                            </li>
+                        
+                            <li class="sidebar-list">
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                    </svg>
+                                    <span>Useful Contatcs</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('customer.useful_contacts.index') }}">View</a></li>
+                                </ul>
+                            </li>
+
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Account & Membership</h6>
+                        </div>
                         </li>
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="{{ route('customer.membership.view') }}">
@@ -832,7 +960,6 @@
                                 <span>Assets & Liabilities </span>
                             </a>
                             <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.bank_accounts.view') }}">Bank Accounts</a></li>
                                 <li><a href="{{ route('executor.investment_accounts.view') }}">Investment Accounts</a>
                                 </li>
                                 <li><a href="{{ route('executor.properties.view') }}">Property <span
@@ -842,7 +969,6 @@
                                 <li><a href="{{ route('executor.insurance_policies.view') }}">Insurance Policies</a></li>
                                 <li><a href="{{ route('executor.debt_and_liabilities.view') }}">Debt & Liabilities</a>
                                 </li>
-                                <li><a href="{{ route('executor.digital_assets.view') }}">Digital Assets</a></li>
                                 <li><a href="{{ route('executor.intellectual_properties.view') }}">Intellectual
                                         Properties</a></li>
                                 <li><a href="{{ route('executor.foreign_assets.view') }}">Foreign assets</a></li>
@@ -854,65 +980,27 @@
                             </ul>
                         </li>
                         <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
-                                </svg>
-                                <span>Inbox </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.messages.view') }}">Manage Inbox</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
-                                </svg>
-                                <span>Capacity Proof Video (LPA) </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.lpa.index') }}">View</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
-                                </svg>
-                                <span>Capacity Proof Video (Will) </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.wills.index') }}">View</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <a class="sidebar-link sidebar-title" href="{{ route('executor.bank_accounts.view') }}">
                                 <svg class="stroke-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
                                 </svg>
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                                 </svg>
-                                <span>Will Generator</span>
+                                <span>Bank Accounts </span>
                             </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.will_generator.index') }}">View</a></li>
-                            </ul>
                         </li>
-
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="{{ route('executor.digital_assets.view') }}">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                </svg>
+                                <span>Digital Assets </span>
+                            </a>
+                        </li>
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -942,6 +1030,111 @@
                             </ul>
                         </li>
 
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Legal & Proof</h6>
+                        </div>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                                </svg>
+                                <span>Will Generator</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.will_generator.index') }}">View</a></li>
+                            </ul>
+                        </li> 
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                                </svg>
+                                <span>Capacity Proof Video (Will) </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.wills.index') }}">View</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                                </svg>
+                                <span>Capacity Proof Video (LPA) </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.lpa.index') }}">View</a></li>
+                            </ul>
+                        </li>
+
+                        
+                          
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Guidance & Instructions</h6>
+                        </div>
+                        </li>
+
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                                </svg>
+                                <span>Guidance For Guardians</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.guidance.view') }}">Guidance For Guardians</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
+                                </svg>
+                                <span>Funeral</span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.funeral_wake.view') }}">Manage</a></li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
+                                </svg>
+                                <span>Donations </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.organs_donation.view') }}">Organ Donations</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Documents & Media</h6>
+                        </div>
+                        </li>
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -985,6 +1178,7 @@
                                 <li><a href="{{ route('executor.wishes.view') }}">Manage Trust Wishes</a></li>
                             </ul>
                         </li>
+
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -1003,15 +1197,37 @@
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
                                 </svg>
                                 <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
                                 </svg>
-                                <span>Guidance For Guardians</span>
+                                <span>Life Remembered </span>
                             </a>
                             <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.guidance.view') }}">Guidance For Guardians</a></li>
+                                <li><a href="{{ route('executor.life_remembered.view') }}">Manage Pictures</a></li>
+                                <li><a href="{{ route('executor.life_remembered_videos.view') }}">Manage Videos</a></li>
+                                <li><a href="{{ route('executor.voice_notes.view') }}">Manage Voice Notes</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-main-title">
+                        <div>
+                            <h6>Ongoing Management</h6>
+                        </div>
+                        </li>
+                        <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                </svg>
+                                <span>Inbox </span>
+                            </a>
+                            <ul class="sidebar-submenu">
+                                <li><a href="{{ route('executor.messages.view') }}">Manage Inbox</a></li>
                             </ul>
                         </li>
 
@@ -1031,50 +1247,21 @@
                         </li>
 
                         <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-ui-kits') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-ui-kits') }}"></use>
-                                </svg>
-                                <span>Life Remembered </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.life_remembered.view') }}">Manage Pictures</a></li>
-                                <li><a href="{{ route('executor.life_remembered_videos.view') }}">Manage Videos</a></li>
-                                <li><a href="{{ route('executor.voice_notes.view') }}">Manage Voice Notes</a></li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
-                                </svg>
-                                <span>Donations </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.organs_donation.view') }}">Organ Donations</a></li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-layout') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-layout') }}"></use>
-                                </svg>
-                                <span>Funeral</span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('executor.funeral_wake.view') }}">Manage</a></li>
-                            </ul>
-                        </li>
-                    @endrole
+                                <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                                    <svg class="stroke-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
+                                    </svg>
+                                    <svg class="fill-icon">
+                                        <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
+                                    </svg>
+                                    <span>Useful Contatcs</span>
+                                </a>
+                                <ul class="sidebar-submenu">
+                                    <li><a href="{{ route('executor.useful_contacts.index') }}">View</a></li>
+                                </ul>
+                            </li>
+                                        
+                        @endrole
 
                     @if (Auth::user()->hasAnyRole(['Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers']))
                         <li class="sidebar-list">
