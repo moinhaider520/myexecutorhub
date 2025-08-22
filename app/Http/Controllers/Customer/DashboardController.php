@@ -53,13 +53,38 @@ class DashboardController extends Controller
         $documentLocations = DocumentLocation::where('created_by', $user->id)->get();
 
         $guide = [
-            'Add at Least One Executor' => $progress->executor_added ?? false,
-            'Add at Least One Bank Account' => $progress->bank_account_added ?? false,
-            'Add at Least One Digital Asset' => $progress->digital_asset_added ?? false,
-            'Add at Least One Property Owned' => $progress->property_added ?? false,
-            'Upload at Least One Document' => $progress->document_uploaded ?? false,
-            'Upload at Least One Picture' => $progress->picture_uploaded ?? false,
+            [
+                'label' => 'Add at Least One Executor',
+                'completed' => $progress->executor_added ?? false,
+                'url' => route('customer.executors.view'), // example route
+            ],
+            [
+                'label' => 'Add at Least One Bank Account',
+                'completed' => $progress->bank_account_added ?? false,
+                'url' => route('customer.bank_accounts.view'),
+            ],
+            [
+                'label' => 'Add at Least One Digital Asset',
+                'completed' => $progress->digital_asset_added ?? false,
+                'url' => route('customer.digital_assets.view'),
+            ],
+            [
+                'label' => 'Add at Least One Property Owned',
+                'completed' => $progress->property_added ?? false,
+                'url' => route('customer.properties.view'),
+            ],
+            [
+                'label' => 'Upload at Least One Document',
+                'completed' => $progress->document_uploaded ?? false,
+                'url' => route('customer.documents.view'),
+            ],
+            [
+                'label' => 'Upload at Least One Picture',
+                'completed' => $progress->picture_uploaded ?? false,
+                'url' => route('customer.pictures.view'),
+            ],
         ];
+
 
         // Get all document types (system defined + user custom types)
         $defaultTypes = [

@@ -16,9 +16,9 @@
             <div class="row">
                 <div class="card">
                     <video id="earningVideo" style="width:100%;height:450px;" controls>
-    <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
-    Your browser does not support the video tag.
-</video>
+                        <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
 
                 </div>
             </div>
@@ -31,12 +31,14 @@
                     <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
                     <br />
                     <ol>
-                        @foreach ($guide as $task => $completed)
-                            @if ($completed)
-                                <li style="color: green;">{{ $task }} (Completed)</li>
-                            @else
-                                <li style="color: red;">{{ $task }}</li>
-                            @endif
+                        @foreach ($guide as $task)
+                            <li style="color: {{ $task['completed'] ? 'green' : 'red' }}">
+                                {{ $task['label'] }}
+                                @if ($task['completed'])
+                                    (Completed)
+                                @endif
+                                - <a href="{{ $task['url'] }}">View Page</a>
+                            </li>
                         @endforeach
                     </ol>
                 </div>
@@ -176,28 +178,76 @@
                     <div class="modal-body">
                         <!-- Step Contents -->
                         <div class="step active" data-audio="{{ asset('assets/partner_guide_audios/audio1.mp3') }}">
-                            <h4>Welcome to Executor Hub for Partners</h4>
-                            <p>You’re joining a digital platform built to simplify estate administration for your clients
-                                and grow your business with passive income opportunities. Let's get started.</p>
+                            <h4>Step 1 – Welcome</h4>
+                            <p>Welcome to Executor Hub for Partners.</p>
+                            <p>You’re joining a platform that simplifies estate administration for your clients — while
+                                creating a steady stream of passive income for you.</p>
+                            <p>We’ll get you set up in a few quick steps so you can start earning today.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio2.mp3') }}">
-                            <h4>Account Setup</h4>
-                            <p>Please go to the Advisers Tab from the sidemenu. Click on Add Adviser and choose your partner
-                                type. For example an Adviser, Will Writer or a Solicitor. Enter your Partner details and
-                                click on save to send them an invite.</p>
-                            <h5>Step 1:</h5>
-                            <img src="{{ asset('assets/partner_guide_images/image1.png') }}"
-                                style="width:100%;height:450px;" />
-                            <h5>Step 2:</h5>
-                            <img src="{{ asset('assets/partner_guide_images/image2.png') }}"
-                                style="width:100%;height:450px;" />
-                            <h5>Step 3:</h5>
-                            <img src="{{ asset('assets/partner_guide_images/image3.png') }}"
-                                style="width:100%;height:450px;" />
+                            <h4>Step 2 – Dashboard Overview</h4>
+                            <p>From your Dashboard you can:</p>
+                            <ol>
+                                <li>See your total, active, and inactive customers</li>
+                                <li>View your revenue this month</li>
+                                <li>Monitor referrals and client activity</li>
+                                <li>Receive notifications when clients upload documents</li>
+                            </ol>
+                            <p>Tip: This is your home base — check here regularly to track earnings and follow up with
+                                clients.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
 
-                            <h5>How to view my referrals? (Click on the Video to Pause/UnPause)</h5>
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio3.mp3') }}">
+                            <h4>Step 3 – Invite Other Partners & Advisers</h4>
+                            <ol>
+                                <li>Go to Partners in the left menu.</li>
+                                <li>Click Add Partner.</li>
+                                <li>Enter their name, email, and role.</li>
+                                <li>Click Send Invite.</li>
+                            </ol>
+                            <p>Why? You’ll earn commission from the clients they refer — building a passive income stream.
+                            </p>
+                            <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without
+                                you signing up those clients yourself.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio4.mp3') }}">
+                            <h4>Step 4 – Add Your Bank Details</h4>
+                            <ol>
+                                <li>Click Withdrawals in the left menu.</li>
+                                <li>Enter your bank details securely.</li>
+                                <li>Save changes.</li>
+                            </ol>
+                            <p>Why? Without this step, we can’t pay your commission. Set it up now to avoid delays.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio5.mp3') }}">
+                            <h4>Step 5 – Invite Your First Clients</h4>
+                            <ol>
+                                <li>Click Invite Friends in the left menu.</li>
+                                <li>Copy your affiliate link or coupon code.</li>
+                                <li>Share it by email, text, or social media.</li>
+                            </ol>
+                            <p>Tip: Only clients who sign up using your link or code will be counted for your commission.
+                            </p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio6.mp3') }}">
+                            <h4>Step 6 – Manage Your Customers</h4>
+                            <ol>
+                                <li>Click Customers in the menu.</li>
+                                <li>Use the list to follow up with clients.</li>
+                                <li>Re-engage inactive customers to increase platform usage.</li>
+                            </ol>
+                            <p>Why? The more active your clients are, the more opportunities you have to offer services — and earn.
+                            </p>
+                            <h5>How to view my Customers? (Click on the Video to Pause/UnPause)</h5>
                             <video id="referralsVideo" style="width:100%;height:450px;">
                                 <source src="{{ asset('assets/view_refferals.mkv') }}" type="video/mp4">
                                 Your browser does not support the video tag.
@@ -205,47 +255,24 @@
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
-                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio3.mp3') }}">
-                            <h4>Your Dashboard</h4>
-                            <p>Your Dashboard gives you an overview of your networth, documents uploaded, executors and
-                                tasks that need to be completed. You can have an overview of the commission you've earned
-                                and see your coupon code that you can use to invite clients.</p>
-                            <img src="{{ asset('assets/partner_guide_images/image4.png') }}"
-                                style="width:100%;height:450px;" />
-
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio7.mp3') }}">
+                            <h4>Step 7 – Track Activity & Earnings</h4>
+                            <ol>
+                                <li>Notifications: Alerts you when clients upload key documents.</li>
+                                <li>Revenue This Month: Shows your current earnings in real time.</li>
+                            </ol>
+                            <p>Tip: Use notifications as prompts to offer extra services or schedule reviews.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
-                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio4.mp3') }}">
-                            <h4>Invite Your First Client</h4>
-                            <ul>
-                                <p>You can copy your coupon code from your main dashboard and share it with your clients via
-                                    email, text or any other platform. Your client can then enter the coupon code at the
-                                    time of sign up allowing you to earn your commission.</p>
-                                <img src="{{ asset('assets/partner_guide_images/image5.png') }}"
-                                    style="width:100%;height:450px;" />
-                            </ul>
-                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
-                        </div>
-
-                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio5.mp3') }}">
-                            <h4>Benefits Overview</h4>
-                            <ul>
-                                <p>You can get automated email notifications when your client uploads a key document. You
-                                    can access your annual review of documents, LPA's and investment prompts. Your Digital
-                                    journey is aligned with UK digital ID plans (Wallet-ready)</p>
-                            </ul>
-                            <h4>See why professionals are partnering with Executor Hub</h4>
-                            <div class="row justify-content-center">
-                                <div class="col">
-                                    <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
-                                        <video width="100%" controls poster="optional-poster.jpg">
-                                            <source src="{{ asset('assets/frontend/partner.mp4') }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio8.mp3') }}">
+                            <h4>Step 8 – You’re Ready to Go 🚀</h4>
+                            <ol>
+                                <li>Partner profile set up</li>
+                                <li>Bank details saved</li>
+                                <li>First client invite ready</li>
+                            </ol>
+                            <p>Next step: Invite as many clients as you see appropriate and start earning whilst giving them peace of mind .</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 

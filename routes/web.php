@@ -135,6 +135,7 @@ use App\Http\Controllers\Executor\WillController as ExecutorWillController;
 use App\Http\Controllers\Executor\TaskController as ExecutorTaskController;
 use App\Http\Controllers\Executor\FuneralWakeController as ExecutorFuneralWakeController;
 use App\Http\Controllers\Executor\WillGeneratorController as ExecutorWillGeneratorController;
+use App\Http\Controllers\Executor\UsefulContactsController as ExecutorUsefulContactsController;
 
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
@@ -1005,7 +1006,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
 // Executors  Routes
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
-
+    Route::get('/useful_contacts/view', [UsefulContactsController::class, 'index'])->name('useful_contacts.index');
     // Dashboard
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/update-todo', [ExecutorDashboardController::class, 'updateTodoStatus'])->name('dashboard.update-todo');

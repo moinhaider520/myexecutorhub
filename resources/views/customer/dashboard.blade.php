@@ -11,15 +11,15 @@
         }
     </style>
     <div class="page-body">
-@if($user->referrer)
-<div class="container">
-    <div class="row">
-        <div class="card">
-            <h2 class="p-2">You Are Referred By: {{ $user->referrer->name }}</h2>
-        </div>
-    </div>
-</div>
-@endif
+        @if($user->referrer)
+            <div class="container">
+                <div class="row">
+                    <div class="card">
+                        <h2 class="p-2">You Are Referred By: {{ $user->referrer->name }}</h2>
+                    </div>
+                </div>
+            </div>
+        @endif
 
         <!-- ONBOARDING SECTION -->
         <div class="container">
@@ -29,12 +29,14 @@
                     <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
                     <br />
                     <ol>
-                        @foreach ($guide as $task => $completed)
-                            @if ($completed)
-                                <li style="color: green;">{{ $task }} (Completed)</li>
-                            @else
-                                <li style="color: red;">{{ $task }}</li>
-                            @endif
+                        @foreach ($guide as $task)
+                            <li style="color: {{ $task['completed'] ? 'green' : 'red' }}">
+                                {{ $task['label'] }}
+                                @if ($task['completed'])
+                                    (Completed)
+                                @endif
+                                - <a href="{{ $task['url'] }}">View Page</a>
+                            </li>
                         @endforeach
                     </ol>
                 </div>
@@ -290,74 +292,87 @@
                     <div class="modal-body">
                         <!-- Step Contents -->
                         <div class="step active" data-audio="{{ asset('assets/customer_guide_audios/audio1.mp3') }}">
-                            <h4>Welcome to Executor Hub</h4>
-                            <p>You’re here to manage your loved one’s estate securely, clearly, and at your own pace — with
-                                step-by-step guidance every step of the way.</p>
+                            <h4>Welcome & Get Set Up</h4>
+                            <p>Welcome to Executor Hub!</p>
+                            <p>Before you start, download our mobile app for easy access anywhere, anytime.</p>
+                            <p>Enable notifications so you never miss a reminder or update.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio2.mp3') }}">
-                            <h4>Profile Setup</h4>
-                            <p>Nominate your Executors by entering name, email, and relation under the Executor Tab.</p>
-                            <img src="{{ asset('assets/customer_guide_images/image1.png') }}"
-                                style="width:100%;height:450px;" />
-
+                            <h4>Your Portal</h4>
+                            <p>This is your Customer Portal — it’s not for managing an estate (that’s the Executor Portal).
+                            </p>
+                            <p>Here, you’ll record important details, documents, and wishes to make the process as easy as
+                                possible for those left behind.</p>
+                            <p>It’s one of the most thoughtful things you can do for your executor.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio3.mp3') }}">
-                            <h4>Guided Tour of Your Hub</h4>
+                            <h4>Your Onboarding Steps</h4>
+                            <p>Follow the Onboarding Guide:</p>
                             <ul>
-                                <li>To-Do List: Timeline of executor duties</li>
-                                <li>
-                                    <img src="{{ asset('assets/customer_guide_images/image2.png') }}"
-                                        style="width:100%;height:250px;" />
-                                </li>
-                                <li>Vault: Secure uploads (Will, LPA, etc.)</li>
-                                <li>
-                                    <img src="{{ asset('assets/customer_guide_images/image3.png') }}"
-                                        style="width:100%;height:450px;" />
-                                </li>
-                                <li>People: Collaborators & advisers</li>
-                                <li>
-                                    <img src="{{ asset('assets/customer_guide_images/image4.png') }}"
-                                        style="width:100%;height:450px;" />
-                                </li>
-                                <li>Messages: Leave or receive messages for/from loved ones</li>
-                                <li>Resources: Video guides, checklists, legal explainers</li>
-                                <li>Manage the Pages that your trusted advisers can access</li>
-                                <img src="{{ asset('assets/customer_guide_images/image6.png') }}"
-                                    style="width:100%;height:450px;" />
+                                <li>Navigate using the left-hand menu or click the steps listed.</li>
+                                <li>Take your time and complete each section as thoroughly as possible.</li>
+                                <li>You can set your own reminder frequency to keep everything up to date.</li>
+                                <li>Each tab has extra help available if you need it.</li>
                             </ul>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio4.mp3') }}">
-                            <h4>Support Options</h4>
-                            <ol>
-                                <li>Live chat / ask an adviser</li>
-                                <li>Book a call with a partner by sending an email to hello@executorhub.co.uk</li>
-                                <li>
-                                    <img src="{{ asset('assets/customer_guide_images/image5.png') }}"
-                                        style="width:100%;height:450px;" />
-                                </li>
-                            </ol>
+                            <h4>Capacity Proof Videos</h4>
+                            <p>Complete your Capacity Proof Videos — short, guided recordings that help show you had full
+                                mental capacity when making your plans.</p>
+                            <p>This extra step can be invaluable for protecting your wishes.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio5.mp3') }}">
-                            <h4>Personalisation</h4>
-                            <ul>
-                                <li>Choose reminders (email/SMS)</li>
-                                <li>Save backup contacts</li>
-                                <li>Save Assets & Liabilities</li>
-                                <li>Save Life Moments & Voice Notes</li>
-                            </ul>
+                            <h4>Trusted Advisors</h4>
+                            <p>Add your Trusted Advisors — professionals or loved ones who can help manage your affairs if
+                                needed.</p>
+                            <p>You control what they can see and do by setting their permissions.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
+
                         <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio6.mp3') }}">
-                            <h4>Final Tip</h4>
-                            <p>“You can access this anywhere, anytime. Bookmark your dashboard now.”</p>
+                            <h4>Life Remembered</h4>
+                            <p>This is your personal memory vault.</p>
+                            <p>Store photos, videos, and voice notes here to share treasured memories, messages, or final
+                                words with loved ones.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio7.mp3') }}">
+                            <h4>Save & Return Anytime</h4>
+                            <p>You don’t need to complete everything in one go.</p>
+                            <p>Your progress is saved automatically — come back anytime to add or update information.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio8.mp3') }}">
+                            <h4>Getting Help</h4>
+                            <p>If you need assistance:</p>
+                            <p>Use the Live Chat button</p>
+                            <p>Email us at hello@executorhub.co.uk</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio9.mp3') }}">
+                            <h4>Review Regularly</h4>
+                            <p>Keep your information up to date.</p>
+                            <p>We recommend reviewing your portal at least once a year or whenever there’s a major life
+                                change.</p>
+                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/customer_guide_audios/audio10.mp3') }}">
+                            <h4>Share the Gift</h4>
+                            <p>Tell your loved ones about Executor Hub and encourage them to subscribe.</p>
+                            <p>It’s a simple way for them to give the same thoughtful gift of preparation to their
+                                executors.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
