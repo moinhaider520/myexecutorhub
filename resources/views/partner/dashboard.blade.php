@@ -180,8 +180,7 @@
                         <div class="step active" data-audio="{{ asset('assets/partner_guide_audios/audio1.mp3') }}">
                             <h4>Step 1 – Welcome</h4>
                             <p>Welcome to Executor Hub for Partners.</p>
-                            <p>You’re joining a platform that simplifies estate administration for your clients — while
-                                creating a steady stream of passive income for you.</p>
+                            <p>You’re joining a platform that simplifies estate administration for your clients — while creating a steady stream of passive income for you.</p>
                             <p>We’ll get you set up in a few quick steps so you can start earning today.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
@@ -195,8 +194,7 @@
                                 <li>Monitor referrals and client activity</li>
                                 <li>Receive notifications when clients upload documents</li>
                             </ol>
-                            <p>Tip: This is your home base — check here regularly to track earnings and follow up with
-                                clients.</p>
+                            <p>Tip: This is your home base — check here regularly to track earnings and follow up with clients.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -208,10 +206,8 @@
                                 <li>Enter their name, email, and role.</li>
                                 <li>Click Send Invite.</li>
                             </ol>
-                            <p>Why? You’ll earn commission from the clients they refer — building a passive income stream.
-                            </p>
-                            <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without
-                                you signing up those clients yourself.</p>
+                            <p>Why? You’ll earn commission from the clients they refer — building a passive income stream.</p>
+                            <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without you signing up those clients yourself.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
