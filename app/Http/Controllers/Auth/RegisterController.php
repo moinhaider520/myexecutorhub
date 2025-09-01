@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CouponUsage;
 use App\Models\User;
 use App\Notifications\WelcomeEmail;
 use Http;
@@ -80,6 +81,16 @@ class RegisterController extends Controller
     {
         $couponCode = $data['name'] . strtoupper(uniqid());
 
+        $coupon = $data['coupon_code'];
+
+        $couponOwner = User::where('coupon_code', $coupon)->first();
+   if (!$couponOwner || !$couponOwner->hasRole('partner')) {
+        // Redirect back with error
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            'coupon_code' => ['Invalid or unauthorized coupon code.'],
+        ]);
+    }
+
         // Create the user and store it in a variable
         $user = User::create([
             'name' => $data['name'],
@@ -88,9 +99,13 @@ class RegisterController extends Controller
             'trial_ends_at' => now()->addDays(14),
             'subscribed_package' => "free_trial",
             'user_role' => 'customer',
+            'hear_about_us' => $data['hear_about_us'],
             'coupon_code' => $couponCode,
         ]);
-
+        CouponUsage::create([
+            'partner_id' => $couponOwner->id,
+            'user_id' => $user->id,
+        ]);
         // Assign role to the user
         $user->assignRole('customer');
 

@@ -53,6 +53,8 @@ class PartnerRegistationController extends Controller
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
                 'user_role' => 'partner',
+                'profession' => $request->profession,
+                'hear_about_us' => $request->hear_about_us,
                 'password' => Hash::make($request->password),
             ]);
 

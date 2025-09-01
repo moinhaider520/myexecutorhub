@@ -65,6 +65,7 @@
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
 </head>
 <script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
+
 <body>
     <!-- PRELOADER SPINNER
 		============================================= -->
@@ -141,7 +142,11 @@
                         <!-- INNER PAGE TITLE -->
                         <div class="inner-page-title">
                             <h2 class="s-52 w-700">Executor Hub Privacy Policy</h2>
-                            <p class="p-lg">Welcome to Executor Hub. We are committed to protecting and respecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your information when you use our platform. By using Executor Hub, you agree to the collection and use of your information in accordance with this policy. For more details on the terms governing your use of our platform, please review our Terms of Use.</p>
+                            <p class="p-lg">Welcome to Executor Hub. We are committed to protecting and respecting your
+                                privacy. This Privacy Policy outlines how we collect, use, and safeguard your
+                                information when you use our platform. By using Executor Hub, you agree to the
+                                collection and use of your information in accordance with this policy. For more details
+                                on the terms governing your use of our platform, please review our Terms of Use.</p>
                         </div>
 
 
@@ -153,17 +158,21 @@
                             <h4 class="s-30 w-700"><span>1.</span> Who We Are</h4>
 
                             <!-- Text -->
-                            <p>Executor Hub (“we,” “our,” “us”) provides a secure digital platform designed to assist executors, estate planners, and individuals in managing estate administration efficiently.</p>
+                            <p>Executor Hub (“we,” “our,” “us”) provides a secure digital platform designed to assist
+                                executors, estate planners, and individuals in managing estate administration
+                                efficiently.</p>
 
 
                             <!-- Title -->
                             <h4 class="s-30 w-700"><span>2.</span> Information We Collect</h4>
-                            <p>We collect different types of information to provide and improve our services, including:</p>
+                            <p>We collect different types of information to provide and improve our services, including:
+                            </p>
                             <!-- List -->
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>Personal Information: Name, email address, phone number, and other contact details.</p>
+                                    <p>Personal Information: Name, email address, phone number, and other contact
+                                        details.</p>
                                 </li>
 
                                 <li class="list-item">
@@ -171,22 +180,27 @@
                                 </li>
 
                                 <li class="list-item">
-                                    <p>Estate & Legal Documents: Wills, trusts, LPAs, statements of assets, and other sensitive documents uploaded by users.</p>
+                                    <p>Estate & Legal Documents: Wills, trusts, LPAs, statements of assets, and other
+                                        sensitive documents uploaded by users.</p>
                                 </li>
                                 <li class="list-item">
                                     <p>Financial Information: If applicable, payment details for subscriptions.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Communication Data: Correspondence with our support team or chatbot interactions.</p>
+                                    <p>Communication Data: Correspondence with our support team or chatbot interactions.
+                                    </p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Usage Data: How you interact with the platform (e.g., pages visited, features used).</p>
+                                    <p>Usage Data: How you interact with the platform (e.g., pages visited, features
+                                        used).</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Device Information: IP address, browser type, operating system, and other technical details.</p>
+                                    <p>Device Information: IP address, browser type, operating system, and other
+                                        technical details.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Cookies & Tracking Technologies: Used to improve functionality, enhance security, and personalize your experience.</p>
+                                    <p>Cookies & Tracking Technologies: Used to improve functionality, enhance security,
+                                        and personalize your experience.</p>
                                 </li>
                             </ul>
 
@@ -209,13 +223,15 @@
                                 </li>
 
                                 <li class="list-item">
-                                    <p>To Communicate with You: Provide updates, respond to inquiries, and send notifications.</p>
+                                    <p>To Communicate with You: Provide updates, respond to inquiries, and send
+                                        notifications.</p>
                                 </li>
                                 <li class="list-item">
                                     <p>For Legal Compliance: Ensure compliance with applicable laws and regulations.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>For Security & Fraud Prevention: Protect accounts and prevent unauthorized access.</p>
+                                    <p>For Security & Fraud Prevention: Protect accounts and prevent unauthorized
+                                        access.</p>
                                 </li>
                             </ul>
 
@@ -223,20 +239,24 @@
                             <h4 class="s-30 w-700"><span>4.</span> Sharing Your Information</h4>
 
                             <!-- Text -->
-                            <p>We do not sell or rent your personal information. However, we may share information in the following situations:</p>
+                            <p>We do not sell or rent your personal information. However, we may share information in
+                                the following situations:</p>
 
                             <!-- List -->
                             <ul class="simple-list">
 
                                 <li class="list-item">
-                                    <p>With Service Providers: Trusted third-party providers assisting with hosting, payment processing, or security.</p>
+                                    <p>With Service Providers: Trusted third-party providers assisting with hosting,
+                                        payment processing, or security.</p>
                                 </li>
 
                                 <li class="list-item">
-                                    <p>With Legal Authorities: When required by law, to enforce our Terms of Use, or to protect rights and safety.</p>
+                                    <p>With Legal Authorities: When required by law, to enforce our Terms of Use, or to
+                                        protect rights and safety.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>With Authorized Users: If you grant access to executors, solicitors, or family members.</p>
+                                    <p>With Authorized Users: If you grant access to executors, solicitors, or family
+                                        members.</p>
                                 </li>
                             </ul>
 
@@ -245,7 +265,8 @@
                             <h4 class="s-30 w-700"><span>5.</span> Data Security</h4>
 
                             <!-- Text -->
-                            <p>We take data security seriously and implement industry-standard measures to protect your information, including:</p>
+                            <p>We take data security seriously and implement industry-standard measures to protect your
+                                information, including:</p>
 
                             <ul class="simple-list">
 
@@ -261,8 +282,79 @@
                                 </li>
                             </ul>
 
-                            <p>However, no method of transmission over the internet is 100% secure. We encourage users to take precautions when sharing sensitive information online.</p>
+                            <p>However, no method of transmission over the internet is 100% secure. We encourage users
+                                to take precautions when sharing sensitive information online.</p>
 
+                            <p>Executor Hub is committed to protecting the confidentiality, integrity, and availability
+                                of all personal data processed on our platform. This statement outlines the technical
+                                and organisational measures we currently have in place, in alignment with UK GDPR and
+                                industry best practices.</p>
+                            <h5>Hosting & Data Residency</h5>
+                            <p>Executor Hub is hosted on secure servers provided by Hostinger, with data centres based
+                                in the United Kingdom. This ensures all personal data remains within the UK and is
+                                managed under UK data protection law.</p>
+
+                            <h5>Encryption & Secure Transmission</h5>
+                            <p>We apply strong encryption measures to protect user data:</p>
+                            <ul>
+                                <li>In transit: All data is transmitted over encrypted connections using SSL/TLS
+                                    protocols.</li>
+                                <li>At rest: Data stored on our servers is encrypted to prevent unauthorised access.
+                                </li>
+                            </ul>
+                            <p>These measures are applied universally across user documents, communications, and account
+                                data.</p>
+
+                            <h5>Authentication & Access Controls</h5>
+                            <p>To prevent unauthorised access to user accounts and administrative systems:</p>
+                            <ul>
+                                <li>Executor Hub supports Two-Factor Authentication (2FA) for all user accounts.</li>
+                                <li>Passwords must comply with our custom Regex security policy, ensuring high
+                                    complexity and resistance to brute force attacks.</li>
+                                <li>Only authorised Developer and Admin roles have access to the full database. All
+                                    access is fully logged for auditing and traceability purposes.</li>
+                            </ul>
+
+                            <h5>Data Backup & Disaster Recovery</h5>
+                            <ul>
+                                <li>Our hosting provider manages monthly backups of platform data.</li>
+                                <li>In the event of a serious system failure or data loss, our Recovery Time Objective
+                                    (RTO) is approximately 48 hours.</li>
+                                <li>All backups are securely stored and encrypted.</li>
+                            </ul>
+
+                            <h5>Data Breach Response Protocol</h5>
+                            <p>Executor Hub maintains a formal Data Breach Response Protocol, which includes:</p>
+
+                            <ul>
+                                <li>Immediate logging and investigation of any breach</li>
+                                <li>Risk assessment and containment</li>
+                                <li>ICO notification within 72 hours, where required</li>
+                                <li>User notification where there is a high risk to their rights or freedoms</li>
+                                <li>Root cause analysis and preventive action</li>
+                            </ul>
+
+                            <p>All incidents are recorded in our Breach Register, and lessons learned are integrated
+                                into security improvements.</p>
+
+                            <h5>Penetration Testing & Vulnerability Management</h5>
+                            <p>While we have not yet conducted formal third-party penetration tests or engaged an
+                                external security firm, we are actively reviewing our risk posture and plan to implement
+                                both automated and manual vulnerability assessments in line with industry growth and
+                                partner requirements.</p>
+
+                            <h5>Third-Party APIs & Integrations</h5>
+                            <p>Executor Hub does not use any third-party APIs to store or process client data.
+                                External APIs are used solely for limited platform features (e.g. notifications,
+                                calendar integrations) and do not interact with user-submitted estate planning data.
+                                All integrations are reviewed for security compliance and minimised to reduce exposure.
+                            </p>
+
+                            <h5>Regulatory & Compliance Information</h5>
+                            <ul>
+                                <li>Executor Hub is registered with the UK Information Commissioner’s Office (ICO) under registration number ZB932381.</li>
+                                <li>We act as the Data Controller for personal data submitted to the platform, whether entered by users directly or by an authorised partner acting on their behalf.</li>
+                            </ul>
                             <!-- Title -->
                             <h4 class="s-30 w-700"><span>6.</span> Your Rights & Choices</h4>
 
@@ -279,7 +371,8 @@
                                     <p>Data Deletion: Request deletion of your account and associated data.</p>
                                 </li>
                                 <li class="list-item">
-                                    <p>Opt-Out of Communications: Unsubscribe from marketing emails and notifications.</p>
+                                    <p>Opt-Out of Communications: Unsubscribe from marketing emails and notifications.
+                                    </p>
                                 </li>
                                 <li class="list-item">
                                     <p>Manage Cookies: Adjust browser settings to control cookies.</p>
@@ -287,28 +380,34 @@
                             </ul>
 
                             <p>To exercise these rights, contact us at hello@executorhub.co.uk.</p>
-                            
+
 
                             <h4 class="s-30 w-700"><span>7.</span> Data Retention</h4>
 
                             <!-- Text -->
-                            <p>We retain personal data only as long as necessary for legal, contractual, or operational reasons. Upon request, we will delete or anonymize your data where possible.</p>
+                            <p>We retain personal data only as long as necessary for legal, contractual, or operational
+                                reasons. Upon request, we will delete or anonymize your data where possible.</p>
 
                             <h4 class="s-30 w-700"><span>8.</span> Third-Party Links</h4>
 
                             <!-- Text -->
-                            <p>Executor Hub may contain links to third-party websites. We are not responsible for their privacy practices and encourage you to review their policies.</p>
+                            <p>Executor Hub may contain links to third-party websites. We are not responsible for their
+                                privacy practices and encourage you to review their policies.</p>
 
-     
+
                             <h4 class="s-30 w-700"><span>9.</span>International Data Transfers</h4>
-                            <p>If you access Executor Hub from outside the UK, your data may be transferred and processed in the UK or other jurisdictions with different data protection laws.</p>
+                            <p>If you access Executor Hub from outside the UK, your data may be transferred and
+                                processed in the UK or other jurisdictions with different data protection laws.</p>
 
                             <h4 class="s-30 w-700"><span>10.</span> Changes to This Privacy Policy</h4>
-                            <p>We may update this policy from time to time. Any changes will be posted on this page, and significant updates will be communicated via email or platform notifications.</p>
+                            <p>We may update this policy from time to time. Any changes will be posted on this page, and
+                                significant updates will be communicated via email or platform notifications.</p>
 
                             <h4 class="s-30 w-700"><span>11.</span> Contact Us</h4>
-                            <p>If you have questions about this Privacy Policy, please contact us at:h ello@executorhub.co.uk</p>
-                            <p>By using Executor Hub, you acknowledge that you have read and understood this Privacy Policy. For further details, please review our Terms of Use.</p>
+                            <p>If you have questions about this Privacy Policy, please contact us at:h
+                                ello@executorhub.co.uk</p>
+                            <p>By using Executor Hub, you acknowledge that you have read and understood this Privacy
+                                Policy. For further details, please review our Terms of Use.</p>
 
                         </div> <!-- END TEXT BLOCK -->
 

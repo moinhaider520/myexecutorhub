@@ -175,6 +175,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Customer\WillGeneratorController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\PartnerRegistationController;
+use App\Http\Controllers\KnowledgebaseController;
 use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
@@ -662,6 +663,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
 Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')->group(function () {
     Route::get('/dashboard', [PartnerDashboardController::class, 'index'])->name('dashboard');
+
+    // Knowledgebase
+    Route::get('/knowledgebase/index', [KnowledgebaseController::class, 'index'])->name('knowledgebase.index');
 
     // Useful Contacts
     Route::get('/useful_contacts/view', [PartnerUsefulContactsController::class, 'index'])->name('useful_contacts.index');

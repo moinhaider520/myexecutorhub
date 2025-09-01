@@ -59,6 +59,33 @@
                                         name="password_confirmation" required autocomplete="new-password"
                                         placeholder="*********">
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">What is Your Profession?</label>
+                                    <select class="form-control" name="profession" required>
+                                        <option value="" selected disabled>Choose Profession</option>
+                                        <option value="General Audience">General Audience</option>
+                                        <option value="Solicitors">Solicitors</option>
+                                        <option value="Will writers">Will writers</option>
+                                        <option value="Estate planners">Estate planners</option>
+                                        <option value="Financial advisers">Financial advisers</option>
+                                        <option value="Ifas">Ifas</option>
+                                        <option value="Life insurance specialists">Life insurance specialists</option>
+                                        <option value="Accountants">Accountants</option>
+                                        <option value="Networks">Networks</option>
+                                        <option value="Societies">Societies</option>
+                                        <option value="Regulatory bodies">Regulatory bodies</option>
+                                        <option value="Institutes">Institutes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Where Did You Hear About Us?</label>
+                                    <select class="form-control" name="hear_about_us" required>
+                                        <option value="">Choose Option</option>
+                                        <option value="Social Media">Social Media</option>
+                                        <option value="Email">Email</option>
+                                        <option value="Friend & Family">Friend & Family</option>
+                                    </select>
+                                </div>
                                 <!-- Email notifications checkbox -->
                                 <div class="form-group">
                                     <div>

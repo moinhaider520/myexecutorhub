@@ -49,6 +49,8 @@ return new class extends Migration {
             $table->string('stripe_subscription_id')->nullable();
             $table->string('paypal_subscription_id')->nullable();
             $table->string('reffered_by')->nullable();
+            $table->string('profession')->nullable();
+            $table->string('hear_about_us')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

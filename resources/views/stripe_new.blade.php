@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <style type="text/css">
         #card-element {
@@ -56,31 +56,31 @@
                         <h3 class="text-center mb-4">Choose Your Subscription Plan</h3>
 
                         @if (session('success'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('success') }}
-                        </div>
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
                         @endif
 
                         @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
 
                         @if (session('stripe_error'))
-                        <div class="alert alert-danger">
-                            {{ session('stripe_error') }}
-                        </div>
+                            <div class="alert alert-danger">
+                                {{ session('stripe_error') }}
+                            </div>
                         @endif
 
                         @if (session('paypal_error'))
-                        <div class="alert alert-danger">
-                            {{ session('paypal_error') }}
-                        </div>
+                            <div class="alert alert-danger">
+                                {{ session('paypal_error') }}
+                            </div>
                         @endif
 
                         <!-- User Information Form -->
@@ -89,38 +89,45 @@
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <strong>Name:</strong>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter Name" required>
+                                    <input type="text" class="form-control" name="name" id="name"
+                                        placeholder="Enter Name" required>
                                 </div>
                                 <div class="col-md-6">
                                     <strong>Email:</strong>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email" required>
+                                    <input type="email" class="form-control" name="email" id="email"
+                                        placeholder="Enter Email" required>
                                 </div>
                             </div>
 
                             <div class="mt-3">
                                 <strong>Password:</strong>
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" required>
+                                <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="Enter Password" required>
                             </div>
 
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <strong>Address Line 1:</strong>
-                                    <input type="text" class="form-control" name="address_line1" id="address_line1" placeholder="Enter Address Line 1" required>
+                                    <input type="text" class="form-control" name="address_line1" id="address_line1"
+                                        placeholder="Enter Address Line 1" required>
                                 </div>
                                 <div class="col-md-6">
                                     <strong>City:</strong>
-                                    <input type="text" class="form-control" name="city" id="city" placeholder="Enter City" required>
+                                    <input type="text" class="form-control" name="city" id="city"
+                                        placeholder="Enter City" required>
                                 </div>
                             </div>
 
                             <div class="row mt-3">
                                 <div class="col-md-6">
                                     <strong>Postal Code:</strong>
-                                    <input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="Enter Postal Code" required>
+                                    <input type="text" class="form-control" name="postal_code" id="postal_code"
+                                        placeholder="Enter Postal Code" required>
                                 </div>
                                 <div class="col-md-6">
                                     <strong>Country:</strong>
-                                    <input type="text" class="form-control" name="country" id="country" placeholder="Enter Country" required>
+                                    <input type="text" class="form-control" name="country" id="country"
+                                        placeholder="Enter Country" required>
                                 </div>
                             </div>
 
@@ -138,7 +145,18 @@
 
                             <div class="mb-3 mt-3">
                                 <strong>Use Coupon Code (Optional):</strong>
-                                <input type="text" class="form-control" name="coupon_code" id="coupon_code" placeholder="Enter Coupon Code">
+                                <input type="text" class="form-control" name="coupon_code" id="coupon_code"
+                                    placeholder="Enter Coupon Code">
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-form-label">Where Did You Hear About Us?</label>
+                                <select class="form-control" name="hear_about_us" required>
+                                    <option value="">Choose Option</option>
+                                    <option value="Social Media">Social Media</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Friend & Family">Friend & Family</option>
+                                </select>
                             </div>
                         </form>
 
@@ -150,7 +168,8 @@
                                 <div class="col-md-6">
                                     <div class="payment-option border p-3 rounded" data-method="stripe">
                                         <div class="d-flex align-items-center">
-                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" class="payment-logo me-3" style="height: 40px;">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
+                                                alt="Stripe" class="payment-logo me-3" style="height: 40px;">
                                             <div>
                                                 <h6 class="mb-1">Pay with Stripe</h6>
                                                 <small class="text-muted">Secure credit/debit card payment</small>
@@ -163,7 +182,8 @@
                                 <div class="col-md-6">
                                     <div class="payment-option border p-3 rounded" data-method="paypal">
                                         <div class="d-flex align-items-center">
-                                            <img src="https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg" alt="PayPal" class="payment-logo me-3" style="height: 40px;">
+                                            <img src="https://www.paypalobjects.com/webstatic/i/logo/rebrand/ppcom.svg"
+                                                alt="PayPal" class="payment-logo me-3" style="height: 40px;">
                                             <div>
                                                 <h6 class="mb-1">Pay with PayPal</h6>
                                                 <small class="text-muted">Pay safely with your PayPal account</small>
@@ -200,9 +220,9 @@
     </div>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Payment method selection
-            $('.payment-option').click(function() {
+            $('.payment-option').click(function () {
                 $('.payment-option').removeClass('active');
                 $('.payment-buttons').removeClass('active');
 
@@ -235,7 +255,7 @@
             }
 
             // Stripe form submission
-            $('#stripe-form').submit(function(e) {
+            $('#stripe-form').submit(function (e) {
                 if (!validateForm()) {
                     e.preventDefault();
                     return false;
@@ -255,7 +275,7 @@
             });
 
             // PayPal form submission
-            $('#paypal-form').submit(function(e) {
+            $('#paypal-form').submit(function (e) {
                 if (!validateForm()) {
                     e.preventDefault();
                     return false;

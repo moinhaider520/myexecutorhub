@@ -59,6 +59,21 @@
                                         name="password_confirmation" required autocomplete="new-password"
                                         placeholder="*********">
                                 </div>
+
+                                <div class="mb-3 mt-3">
+                                    <strong>Use Coupon Code (Optional):</strong>
+                                    <input type="text" class="form-control" name="coupon_code" id="coupon_code"
+                                        placeholder="Enter Coupon Code">
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Where Did You Hear About Us?</label>
+                                    <select class="form-control" name="hear_about_us" required>
+                                        <option value="">Choose Option</option>
+                                        <option value="Social Media">Social Media</option>
+                                        <option value="Email">Email</option>
+                                        <option value="Friend & Family">Friend & Family</option>
+                                    </select>
+                                </div>
                                 <!-- Email notifications checkbox -->
                                 <div class="form-group">
                                     <div>

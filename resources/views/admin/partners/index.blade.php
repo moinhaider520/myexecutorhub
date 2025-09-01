@@ -26,6 +26,8 @@
                                                         <th>Address</th>
                                                         <th>Contact Number</th>
                                                         <th>Access Type</th> <!-- New Column -->
+                                                        <th>Profession</th>
+                                                        <th>Heard From?</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
@@ -38,6 +40,8 @@
                                                             <td>{{ $partner->address ?? 'N/A' }}</td>
                                                             <td>{{ $partner->phone_number ?? 'N/A' }}</td>
                                                             <td>{{ $partner->access_type ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->profession ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->hear_about_us ?? 'N/A' }}</td>
                                                             <td>
                                                                 <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
                                                                     class="btn btn-primary btn-sm">View Refferals</a>

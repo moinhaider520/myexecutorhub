@@ -4,6 +4,19 @@
 <div class="page-body">
   <!-- Container-fluid starts-->
   <div class="page-body">
+    <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="text-center pt-2 pb-2">
+                            Download the App on App Store -
+                            <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
+                                    class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- Container-fluid starts-->
     <div class="container-fluid default-dashboard">
     <div class="row widget-grid">

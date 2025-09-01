@@ -460,6 +460,17 @@
                                         <input type="text" class="form-control" name="coupon_code" id="coupon_code"
                                             placeholder="Enter Coupon Code" readonly>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label class="col-form-label">Where Did You Hear About Us?</label>
+                                        <select class="form-control" name="hear_about_us" required>
+                                            <option value="">Choose Option</option>
+                                            <option value="Social Media">Social Media</option>
+                                            <option value="Email">Email</option>
+                                            <option value="Friend & Family">Friend & Family</option>
+                                        </select>
+                                    </div>
+                                    
                                 </form>
 
                                 <!-- Payment Method Selection -->
@@ -1652,20 +1663,20 @@
         }
     </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const couponCode = urlParams.get('coupon_code');
-    const assignedTo = urlParams.get('assigned_to');
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const couponCode = urlParams.get('coupon_code');
+            const assignedTo = urlParams.get('assigned_to');
 
-    if (couponCode) {
-        document.getElementById('coupon_code').value = couponCode;
-    }
-    if (assignedTo) {
-        document.getElementById('assigned_to').value = assignedTo;
-    }
-});
-</script>
+            if (couponCode) {
+                document.getElementById('coupon_code').value = couponCode;
+            }
+            if (assignedTo) {
+                document.getElementById('assigned_to').value = assignedTo;
+            }
+        });
+    </script>
 
 
 </body>

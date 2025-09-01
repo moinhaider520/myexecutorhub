@@ -79,12 +79,33 @@
                                                     & Family</option>
                                                 <option value="Direct Partners" {{ old('access_type', $partner->access_type) == 'Direct Partners' ? 'selected' : '' }}>Direct
                                                     Partners</option>
-                                                <option value="Will Power Staff" {{ old('access_type', $partner->access_type) == 'Will Power Staff' ? 'selected' : '' }}>Will Power Staff</option>
-                                                <option value="Partner Organisations" {{ old('access_type', $partner->access_type) == 'Partner Organisations' ? 'selected' : '' }}>Partner Organisations</option>
+                                                <option value="Will Power Staff" {{ old('access_type', $partner->access_type) == 'Will Power Staff' ? 'selected' : '' }}>Will
+                                                    Power Staff</option>
+                                                <option value="Partner Organisations" {{ old('access_type', $partner->access_type) == 'Partner Organisations' ? 'selected' : '' }}>
+                                                    Partner Organisations</option>
                                             </select>
                                             @error('access_type')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
+                                        </div>
+                                        <div class="form-group mb-4">
+                                            <label class="col-form-label">What is Your Profession?</label>
+                                            <select class="form-control" name="profession" required>
+                                                <option value="" selected disabled>Choose Profession</option>
+                                                <option value="General Audience" {{ old('profession', $partner->profession) == 'General Audience' ? 'selected' : '' }}>General Audience</option>
+                                                <option value="Solicitors" {{ old('profession', $partner->profession) == 'Solicitors' ? 'selected' : '' }}>Solicitors</option>
+                                                <option value="Will writers" {{ old('profession', $partner->profession) == 'Will writers' ? 'selected' : '' }}>Will writers</option>
+                                                <option value="Estate planners" {{ old('profession', $partner->profession) == 'Estate planners' ? 'selected' : '' }}>Estate planners</option>
+                                                <option value="Financial advisers" {{ old('profession', $partner->profession) == 'Financial advisers' ? 'selected' : '' }}>Financial advisers</option>
+                                                <option value="Ifas" {{ old('profession', $partner->profession) == 'Ifas' ? 'selected' : '' }}>Ifas</option>
+                                                <option value="Life insurance specialists" {{ old('profession', $partner->profession) == 'Life insurance specialists' ? 'selected' : '' }}>Life insurance specialists
+                                                </option>
+                                                <option value="Accountants" {{ old('profession', $partner->profession) == 'Accountants' ? 'selected' : '' }}>Accountants</option>
+                                                <option value="Networks" {{ old('profession', $partner->profession) == 'Networks' ? 'selected' : '' }}>Networks</option>
+                                                <option value="Societies" {{ old('profession', $partner->profession) == 'Societies' ? 'selected' : '' }}>Societies</option>
+                                                <option value="Regulatory bodies" {{ old('profession', $partner->profession) == 'Regulatory bodies' ? 'selected' : '' }}>Regulatory bodies</option>
+                                                <option value="Institutes" {{ old('profession', $partner->profession) == 'Institutes' ? 'selected' : '' }}>Institutes</option>
+                                            </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Update</button>
                                         <a href="{{ route('admin.partners.index') }}" class="btn btn-secondary">Cancel</a>

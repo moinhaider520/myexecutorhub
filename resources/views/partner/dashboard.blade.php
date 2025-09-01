@@ -11,10 +11,23 @@
         }
     </style>
     <div class="page-body">
-
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="text-center pt-2 pb-2">
+                            Download the App on App Store -
+                            <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
+                                    class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container">
             <div class="row">
                 <div class="card">
+                    <h2 class="p-2">Executor Hub - Earn with us!</h2>
                     <video id="earningVideo" style="width:100%;height:450px;" controls>
                         <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
                         Your browser does not support the video tag.
@@ -180,7 +193,8 @@
                         <div class="step active" data-audio="{{ asset('assets/partner_guide_audios/audio1.mp3') }}">
                             <h4>Step 1 – Welcome</h4>
                             <p>Welcome to Executor Hub for Partners.</p>
-                            <p>You’re joining a platform that simplifies estate administration for your clients — while creating a steady stream of passive income for you.</p>
+                            <p>You’re joining a platform that simplifies estate administration for your clients — while
+                                creating a steady stream of passive income for you.</p>
                             <p>We’ll get you set up in a few quick steps so you can start earning today.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
@@ -194,7 +208,8 @@
                                 <li>Monitor referrals and client activity</li>
                                 <li>Receive notifications when clients upload documents</li>
                             </ol>
-                            <p>Tip: This is your home base — check here regularly to track earnings and follow up with clients.</p>
+                            <p>Tip: This is your home base — check here regularly to track earnings and follow up with
+                                clients.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -206,8 +221,10 @@
                                 <li>Enter their name, email, and role.</li>
                                 <li>Click Send Invite.</li>
                             </ol>
-                            <p>Why? You’ll earn commission from the clients they refer — building a passive income stream.</p>
-                            <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without you signing up those clients yourself.</p>
+                            <p>Why? You’ll earn commission from the clients they refer — building a passive income stream.
+                            </p>
+                            <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without
+                                you signing up those clients yourself.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -241,10 +258,11 @@
                                 <li>Use the list to follow up with clients.</li>
                                 <li>Re-engage inactive customers to increase platform usage.</li>
                             </ol>
-                            <p>Why? The more active your clients are, the more opportunities you have to offer services — and earn.
+                            <p>Why? The more active your clients are, the more opportunities you have to offer services —
+                                and earn.
                             </p>
                             <h5>How to view my Customers? (Click on the Video to Pause/UnPause)</h5>
-                            <video id="referralsVideo" style="width:100%;height:450px;">
+                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
                                 <source src="{{ asset('assets/view_refferals.mkv') }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -268,8 +286,131 @@
                                 <li>Bank details saved</li>
                                 <li>First client invite ready</li>
                             </ol>
-                            <p>Next step: Invite as many clients as you see appropriate and start earning whilst giving them peace of mind .</p>
+                            <p>Next step: Invite as many clients as you see appropriate and start earning whilst giving them
+                                peace of mind .</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+                        </div>
+
+                        <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio9.mp3') }}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <h2 class="p-2">Video Title: Partner Welcome</h2>
+                                        <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                            <source src="{{ asset('assets/knowledgebase/video1.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <h2 class="p-2">Title: How to Introduce Executor Hub to Clients</h2>
+                                        @if(auth()->user()->profession == "General")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/video2.mp4') }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Solicitors")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/solicitor.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Will writers")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/willwriters.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Estate planners")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/estate_planners.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Financial advisers")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/financial_advisers.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Ifas")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/ifas.mp4') }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Life insurance specialists")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/life_insurance_specialists.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Accountants")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/accountants.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Networks")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/networks.mp4') }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Societies")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/socities.mp4') }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+
+                                        @elseif(auth()->user()->profession == "Regulatory bodies")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/regulators.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        @elseif(auth()->user()->profession == "Institutes")
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/institues.mp4') }}"
+                                                    type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        @else
+                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                                <source src="{{ asset('assets/knowledgebase/video2.mp4') }}" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <h2 class="p-2">Video Title: Client Explainer</h2>
+                                        <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                            <source src="{{ asset('assets/knowledgebase/video3.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <h2 class="p-2">Video Title: Partner Success & Commission</h2>
+                                        <video id="earningVideo" style="width:100%;height:390px;" controls>
+                                            <source src="{{ asset('assets/knowledgebase/video4.mp4') }}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

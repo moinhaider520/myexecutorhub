@@ -24,6 +24,7 @@
                                                     <th>Email</th>
                                                     <th>Address</th>
                                                     <th>Contact Number</th>
+                                                    <th>Hear From?</th>
                                                     <th>Plan</th>
                                                     <th>Joining Date and Time</th>
                                                     <th>Access Until</th>
@@ -38,6 +39,7 @@
                                                         <td>{{ $customer->email ?? 'N/A' }}</td>
                                                         <td>{{ $customer->address ?? 'N/A' }}</td>
                                                         <td>{{ $customer->contact_number ?? 'N/A' }}</td>
+                                                        <td>{{ $partner->hear_about_us ?? 'N/A' }}</td>
                                                         <td>
           @if ($customer->subscribed_package === 'free_trial')
         Free Trial

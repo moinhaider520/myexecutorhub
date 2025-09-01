@@ -80,6 +80,7 @@ class PartnerController extends Controller
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
                 'access_type' => $request->access_type, 
+                'profession' => $request->profession, 
                 'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
@@ -195,6 +196,8 @@ class PartnerController extends Controller
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
                 'access_type' => $request->access_type, 
+                'profession' => $request->profession, 
+                
             ]);
 
             DB::commit();

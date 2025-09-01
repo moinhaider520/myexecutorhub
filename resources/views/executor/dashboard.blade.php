@@ -13,11 +13,42 @@
     <div class="page-body">
         <div class="container">
             <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="text-center pt-2 pb-2">
+                            Download the App on App Store -
+                            <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
+                                    class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
                 <div class="card">
                     <h2 class="p-2">Onboarding Guide</h2>
                     <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                                                <h2 class="p-2">Access The Gazette Website - <a href="https://www.thegazette.co.uk"
-                                    target="_blank">Gazette Website</a></h2>
+                    <h3 class="p-2">Access The Gazette Website - <a href="https://www.thegazette.co.uk"
+                    target="_blank">Gazette Website</a></h3>
+                    <h3 class="p-2">Access The NWR Website - <a href="https://nwr.org.uk/"
+                    target="_blank">NWR Website</a></h3>
+                    <h3 class="p-2">Access The Tell Us Once Website - <a href="https://www.lbhf.gov.uk/"
+                    target="_blank">Tell Us Once Website</a></h3>
+                    <h3 class="p-2">Access The Estate Search Website - <a href="https://www.estatesearch.co.uk/"
+                    target="_blank">Estate Search Website</a></h3>
+                    <h3 class="p-2">Access The Probate Registry Website - <a href="https://nwr.org.uk/"
+                    target="_blank">Probate Registry Website</a></h3>
+                    <h3 class="p-2">Access The Probate Registry Website - <a href="https://probatesearch.service.gov.uk/"
+                    target="_blank">Probate Registry Website</a></h3>
+                    <h3 class="p-2">Access The DWP Website - <a href="https://findajob.dwp.gov.uk/search"
+                    target="_blank">DWP Website</a></h3>
+                    <h3 class="p-2">Access The DVLA Website - <a href="https://dvladigital.blog.gov.uk/"
+                    target="_blank">DVLA Website</a></h3>
+                    <h3 class="p-2">Access The Royal Mail Website - <a href="https://www.royalmail.com/"
+                    target="_blank">Royal Mail Website</a></h3>
+                    <h3 class="p-2">Access The Land Registry Website - <a href="https://www.gov.uk/government/organisations/land-registry"
+                    target="_blank">Land Registry Website</a></h3>
                 </div>
             </div>
         </div>

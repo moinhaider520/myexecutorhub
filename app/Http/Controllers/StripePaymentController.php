@@ -91,6 +91,7 @@ class StripePaymentController extends Controller
                 'user_country' => $request->country,
                 'coupon_code' => $request->coupon_code ?? '',
                 'reffered_by' => $request->assigned_to ?? '',
+                'hear_about_us' => $request->hear_about_us ?? '',
             ],
             'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
         ]);
@@ -129,6 +130,7 @@ class StripePaymentController extends Controller
             'user_role' => 'customer',
             'coupon_code' => $couponCode,
             'reffered_by' => $session->metadata->reffered_by,
+            'hear_about_us' => $session->metadata->hear_about_us,
         ])->assignRole('customer');
 
         // Process coupon code if provided
