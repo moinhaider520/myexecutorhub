@@ -79,17 +79,22 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $couponCode = $data['name'] . strtoupper(uniqid());
 
         $coupon = $data['coupon_code'];
 
-        $couponOwner = User::where('coupon_code', $coupon)->first();
-   if (!$couponOwner || !$couponOwner->hasRole('partner')) {
-        // Redirect back with error
-        throw \Illuminate\Validation\ValidationException::withMessages([
-            'coupon_code' => ['Invalid or unauthorized coupon code.'],
-        ]);
-    }
+        // Check coupon validity and role in one query
+        $couponOwner = User::where('coupon_code', $coupon)
+            ->whereHas('roles', function ($query) {
+                $query->where('name', 'partner');
+            })
+            ->first();
+
+
+        if (!$couponOwner) {
+            return redirect()->back()->withErrors([
+                'coupon_code' => 'Invalid or unauthorized coupon code.',
+            ])->withInput();
+        }
 
         // Create the user and store it in a variable
         $user = User::create([
@@ -100,7 +105,6 @@ class RegisterController extends Controller
             'subscribed_package' => "free_trial",
             'user_role' => 'customer',
             'hear_about_us' => $data['hear_about_us'],
-            'coupon_code' => $couponCode,
         ]);
         CouponUsage::create([
             'partner_id' => $couponOwner->id,
@@ -115,5 +119,4 @@ class RegisterController extends Controller
         // Return the user
         return $user;
     }
-
 }
