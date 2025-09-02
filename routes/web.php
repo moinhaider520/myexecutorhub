@@ -55,6 +55,8 @@ use App\Http\Controllers\Partner\TaskController as PartnerTaskController;
 use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeController;
 use App\Http\Controllers\Partner\WillGeneratorController as PartnerWillGeneratorController;
 use App\Http\Controllers\Partner\UsefulContactsController as PartnerUsefulContactsController;
+use App\Http\Controllers\Partner\GeneratePartnerController as PartnerGeneratePartnerController;
+
 // Role Customer Controller
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
 use App\Http\Controllers\Customer\SettingController as CustomerSettingController;
@@ -675,6 +677,15 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/dashboard/store-location', [PartnerDashboardController::class, 'storeDocumentLocation'])->name('dashboard.store-location');
     Route::post('/dashboard/update-location/{id}', [PartnerDashboardController::class, 'updateLocation'])->name('dashboard.update-location');
     Route::delete('/dashboard/delete-location/{id}', [PartnerDashboardController::class, 'deleteLocation'])->name('dashboard.delete-location');
+
+    // Partner Management
+    Route::get('/partners', [PartnerGeneratePartnerController::class, 'index'])->name('partners.index');
+    Route::get('/partners/create', [PartnerGeneratePartnerController::class, 'create'])->name('partners.create');
+    Route::post('/partners/store', [PartnerGeneratePartnerController::class, 'store'])->name('partners.store');
+    Route::get('/partners/{id}/edit', [PartnerGeneratePartnerController::class, 'edit'])->name('partners.edit');
+    Route::put('/partners/{id}', [PartnerGeneratePartnerController::class, 'update'])->name('partners.update');
+    Route::delete('/partners/{id}', [PartnerGeneratePartnerController::class, 'destroy'])->name('partners.destroy');
+
     // LPA
     Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');

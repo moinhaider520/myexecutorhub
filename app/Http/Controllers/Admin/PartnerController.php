@@ -79,8 +79,8 @@ class PartnerController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
-                'access_type' => $request->access_type, 
-                'profession' => $request->profession, 
+                'access_type' => $request->access_type,
+                'profession' => $request->profession,
                 'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
@@ -89,6 +89,7 @@ class PartnerController extends Controller
 
             // Assign 'partner' role to the newly created user
             $partner->assignRole('partner');
+
 
             DB::commit();
             return redirect()->route('admin.partners.index')->with('success', 'Partner created successfully.');
@@ -195,9 +196,9 @@ class PartnerController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
-                'access_type' => $request->access_type, 
-                'profession' => $request->profession, 
-                
+                'access_type' => $request->access_type,
+                'profession' => $request->profession,
+
             ]);
 
             DB::commit();

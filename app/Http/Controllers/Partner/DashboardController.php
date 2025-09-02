@@ -61,32 +61,32 @@ class DashboardController extends Controller
             [
                 'label' => 'Add at Least One Executor',
                 'completed' => $progress->executor_added ?? false,
-                'url' => route('customer.executors.view'), // example route
+                'url' => route('partner.executors.view'), // example route
             ],
             [
                 'label' => 'Add at Least One Bank Account',
                 'completed' => $progress->bank_account_added ?? false,
-                'url' => route('customer.bank_accounts.view'),
+                'url' => route('partner.bank_accounts.view'),
             ],
             [
                 'label' => 'Add at Least One Digital Asset',
                 'completed' => $progress->digital_asset_added ?? false,
-                'url' => route('customer.digital_assets.view'),
+                'url' => route('partner.digital_assets.view'),
             ],
             [
                 'label' => 'Add at Least One Property Owned',
                 'completed' => $progress->property_added ?? false,
-                'url' => route('customer.properties.view'),
+                'url' => route('partner.properties.view'),
             ],
             [
                 'label' => 'Upload at Least One Document',
                 'completed' => $progress->document_uploaded ?? false,
-                'url' => route('customer.documents.view'),
+                'url' => route('partner.documents.view'),
             ],
             [
                 'label' => 'Upload at Least One Picture',
                 'completed' => $progress->picture_uploaded ?? false,
-                'url' => route('customer.pictures.view'),
+                'url' => route('partner.pictures.view'),
             ],
         ];
 
