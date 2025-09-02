@@ -179,6 +179,11 @@ if (!empty($session->metadata->coupon_code)) {
             }
 
             $couponOwner->increment('commission_amount', $commissionAmount);
+
+
+             // Give rest to admin
+            $adminCommission = $planAmount - $commissionAmount;
+            User::role('admin')->first()?->increment('commission_amount', $adminCommission);
         }
 
         // Log coupon usage
