@@ -233,7 +233,7 @@ return [
          *
          * @var bool
          */
-        'enable_php' => false,
+        'enable_php' => true,
 
         /**
          * Rnable inline JavaScript
@@ -282,7 +282,7 @@ return [
          * @var array|null
          */
         'allowed_remote_hosts' => null,
-
+        'isPhpEnabled' => true,
         /**
          * A ratio applied to the fonts height to be more like browsers' line height
          */

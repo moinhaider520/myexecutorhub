@@ -22,10 +22,9 @@
         .page {
             max-width: 210mm;
             margin: 20px auto;
-            padding: 40mm 30mm;
             background: white;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            page-break-after: always;
+
             min-height: 250mm;
         }
 
@@ -61,48 +60,52 @@
             font-weight: 600;
         }
 
-        .step-number {
-            background: linear-gradient(135deg, #2c5aa0, #3d6bb3);
-            color: white;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin-right: 20px;
-            font-size: 14pt;
-            box-shadow: 0 2px 8px rgba(44, 90, 160, 0.3);
+        .step {
+            display: table;
+            width: 100%;
+            margin: 5pt 0;
         }
 
-        .step {
-            margin: 35px 0;
-            display: flex;
-            align-items: flex-start;
+        .step-number {
+            display: inline-block;
+            width: 26pt;
+            vertical-align: 2pt;
+            text-align: center;
+            color: #fff;
+            background: #3d6bb3;
+            /* solid instead of gradient */
+            border: 1px solid #2c5aa0;
+            border-radius: 50%;
+            font-weight: 700;
+            line-height: 28pt;
+            /* centers the number */
+            /* remove shadows */
+            box-shadow: none !important;
         }
 
         .step-content {
-            flex: 1;
+            display: table-cell;
+            padding-left: 10pt;
+
         }
 
         ul {
-            margin: 15px 0;
-            padding-left: 25px;
+            margin: 8pt 0 8pt 22pt;
+            padding: 0;
         }
 
         li {
-            margin: 8px 0;
+            margin: 4pt 0;
         }
 
         .contact-info {
-            background: linear-gradient(135deg, #f8f9fb, #e8f4f8);
-            padding: 25px;
-            border-radius: 12px;
-            margin: 30px 0;
+            background: #eaf4fb !important;
+            /* solid light blue */
+            border: 1px solid #e1e8ed !important;
+            border-radius: 8px;
+            padding: 16pt;
             text-align: center;
-            border: 1px solid #e1e8ed;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            box-shadow: none !important;
         }
 
         .will-title {
@@ -218,18 +221,31 @@
             text-align: justify;
         }
 
+        @page {
+            size: A4;
+            /* top right bottom left */
+            margin: 25mm 20mm 22mm 20mm;
+        }
+
+        /* 2) In print, remove .page padding so margins aren't doubled */
         @media print {
             body {
                 margin: 0;
                 padding: 0;
-                background: white;
+                background: #fff;
             }
 
             .page {
-                box-shadow: none;
-                margin: 0;
-                page-break-after: always;
-                background: white;
+                margin: 0 !important;
+                /* no outer margin */
+                padding: 0 !important;
+                /* no inner padding (prevents double margins) */
+                width: 100% !important;
+                /* fill printable width */
+                box-shadow: none !important;
+                /* shadows can trigger shrink-to-fit */
+                background: #fff;
+                box-sizing: border-box;
             }
         }
     </style>
@@ -348,15 +364,15 @@
             <span class="clause-number">3</span> I have the following living children:
             @for ($i = 0; $i < count(@$user_info->child); $i++)
                 @if ($i > 0 && $i == count(@$user_info->child) - 1)
-                    and
+                and
                 @elseif ($i > 0)
-                    ,
+                ,
                 @endif
                 <strong>{{ @$user_info->child[$i]->first_name }} {{ @$user_info->child[$i]->last_name }}</strong> born
                 on
                 <strong>{{ @$user_info->child[$i]->date_of_birth }}</strong>
-            @endfor
-            .
+                @endfor
+                .
         </div>
 
         <div class="clause">
@@ -375,10 +391,10 @@
             <span class="clause-number">6</span> I appoint as my executor and trustee
             @if($user_info->executors)
             @foreach ($user_info->executors as $executor)
-                <strong>{{ @$executor->first_name }} {{ @$executor->last_name }} </strong>
-                @if (!$loop->last)
-                    ,
-                @endif
+            <strong>{{ @$executor->first_name }} {{ @$executor->last_name }} </strong>
+            @if (!$loop->last)
+            ,
+            @endif
             @endforeach
             @endif
             .
@@ -395,27 +411,27 @@
             <span class="clause-number">8</span>
             <div class="sub-clause">
                 @if ($user_info->child)
-                    @foreach ($user_info->child as $key => $child)
-                        @php
-                            $letter = chr(97 + $key); // This converts the loop index (0, 1, 2, etc.) to a, b, c, etc.
-                        @endphp
+                @foreach ($user_info->child as $key => $child)
+                @php
+                $letter = chr(97 + $key); // This converts the loop index (0, 1, 2, etc.) to a, b, c, etc.
+                @endphp
 
-                        <strong>{{ $letter }}</strong> If <strong>{{ @$child->first_name }}</strong> born on
-                        <strong>{{ @$child->date_of_birth }}</strong> is under 18 and I am the only living parent with
-                        parental responsibility at the date of my death I appoint
-                        <strong>{{ @$user_info->partner_name }}</strong> born on
-                        <strong>{{ @$user_info->partner[0]->date_of_birth ?? 'Date of Birth Not Available' }}</strong>
-                        to be their guardian.
-                    @endforeach
+                <strong>{{ $letter }}</strong> If <strong>{{ @$child->first_name }}</strong> born on
+                <strong>{{ @$child->date_of_birth }}</strong> is under 18 and I am the only living parent with
+                parental responsibility at the date of my death I appoint
+                <strong>{{ @$user_info->partner_name }}</strong> born on
+                <strong>{{ @$user_info->partner[0]->date_of_birth ?? 'Date of Birth Not Available' }}</strong>
+                to be their guardian.
+                @endforeach
                 @endif
 
             </div>
 
         </div>
 
-        <div class="page-footer">
+        <!-- <div class="page-footer">
             Page 1 of 6
-        </div>
+        </div> -->
     </div>
 
     <!-- Will Content Page 2 -->
@@ -431,16 +447,16 @@
             <span class="clause-number">9</span>
             <div class="sub-clause">
                 @if ($user_info->pet)
-                    <strong>a</strong> If my pet <strong>
+                <strong>a</strong> If my pet <strong>
 
-                        @foreach ($user_info->pet as $pet)
-                            {{ @$pet->first_name }},
-                        @endforeach
-                    </strong> is alive and healthy at the date of my death I give
-                    them to <strong>{{ @$user_info->partner_name }}</strong> born on
-                    <strong>{{ @$user_info->partner[0]->date_of_birth }}</strong>. If they cannot afford
-                    or refuse to accept the responsibilities of, ownership then I give my Trustees the fullest possible
-                    discretion to rehome my pet, in a permanent safe and loving home, as soon as possible.
+                    @foreach ($user_info->pet as $pet)
+                    {{ @$pet->first_name }},
+                    @endforeach
+                </strong> is alive and healthy at the date of my death I give
+                them to <strong>{{ @$user_info->partner_name }}</strong> born on
+                <strong>{{ @$user_info->partner[0]->date_of_birth }}</strong>. If they cannot afford
+                or refuse to accept the responsibilities of, ownership then I give my Trustees the fullest possible
+                discretion to rehome my pet, in a permanent safe and loving home, as soon as possible.
                 @endif
 
             </div>
@@ -469,25 +485,25 @@
         <div class="clause">
             <span class="clause-number">13</span> I give free of inheritance tax the following:
             @if ($user_info->gift)
-                @foreach ($user_info->gift as $key => $gift)
-                    @php
-                        $letter = chr(97 + $key); // Converts index to a, b, c...
-                    @endphp
+            @foreach ($user_info->gift as $key => $gift)
+            @php
+            $letter = chr(97 + $key); // Converts index to a, b, c...
+            @endphp
 
-                    <div class="sub-clause">
-                        <strong>{{ $letter }}</strong> To
-                        @if (@$gift->inherited_people->isNotEmpty())
-                            @foreach (@$gift->inherited_people as $person)
-                                <strong>{{ @$person->first_name }} {{ @$person->last_name }}</strong> born on
-                                <strong>{{ @$person->date_of_birth }}</strong>
-                                @if (!$loop->last)
-                                    ,
-                                @endif
-                            @endforeach
-                        @endif
-                        my '{{ @$gift->gift_name }}'.
-                    </div>
+            <div class="sub-clause">
+                <strong>{{ $letter }}</strong> To
+                @if (@$gift->inherited_people->isNotEmpty())
+                @foreach (@$gift->inherited_people as $person)
+                <strong>{{ @$person->first_name }} {{ @$person->last_name }}</strong> born on
+                <strong>{{ @$person->date_of_birth }}</strong>
+                @if (!$loop->last)
+                ,
+                @endif
                 @endforeach
+                @endif
+                my '{{ @$gift->gift_name }}'.
+            </div>
+            @endforeach
             @endif
 
         </div>
@@ -508,10 +524,10 @@
             to be included in my residuary estate.
         </div>
 
-
+        <!-- 
         <div class="page-footer">
             Page 2 of 6
-        </div>
+        </div> -->
     </div>
 
     <!-- Will Content Page 3 -->
@@ -544,24 +560,24 @@
             and to hold the remainder ('my residuary estate') to divide as follows:
 
             @forelse (@$user_info->beneficiaries as $key => $beneficiary)
-                @php
-                    $letter = chr(97 + $key); // Converts index to a, b, c...
-                @endphp
+            @php
+            $letter = chr(97 + $key); // Converts index to a, b, c...
+            @endphp
 
-                <div class="sub-clause">
-                    <strong>{{ $letter }}</strong> {{ number_format(@$beneficiary->share_percentage, 2) }}% to
-                    <strong>
-                        {{ @$beneficiary->getNameAttribute() }}
-                        @if (isset($beneficiary->address))
-                            of {{ @$beneficiary->address }}
-                        @endif
-                    </strong>
-                    @if (isset($beneficiary->death_backup_plan))
-                        but if they die before me then to {{ @$beneficiary->death_backup_plan }}.
+            <div class="sub-clause">
+                <strong>{{ $letter }}</strong> {{ number_format(@$beneficiary->share_percentage, 2) }}% to
+                <strong>
+                    {{ @$beneficiary->getNameAttribute() }}
+                    @if (isset($beneficiary->address))
+                    of {{ @$beneficiary->address }}
                     @endif
-                </div>
+                </strong>
+                @if (isset($beneficiary->death_backup_plan))
+                but if they die before me then to {{ @$beneficiary->death_backup_plan }}.
+                @endif
+            </div>
             @empty
-                <p class="text-gray-500">No beneficiaries added yet.</p>
+            <p class="text-gray-500">No beneficiaries added yet.</p>
             @endforelse
         </div>
 
@@ -595,9 +611,9 @@
             </div>
         </div>
 
-        <div class="page-footer">
+        <!-- <div class="page-footer">
             Page 3 of 6
-        </div>
+        </div> -->
     </div>
 
     <!-- Signatures Page -->
@@ -668,9 +684,9 @@
             The rest of this document does not form part of my will.
         </div>
 
-        <div class="page-footer">
+        <!-- <div class="page-footer">
             Page 4 of 6
-        </div>
+        </div> -->
     </div>
 
     <!-- Appendix Page -->
@@ -723,9 +739,9 @@
                 availability.</p>
         </div>
 
-        <div class="page-footer">
+        <!-- <div class="page-footer">
             Page 5 of 6
-        </div>
+        </div> -->
     </div>
 
     <!-- Final Page -->
@@ -767,10 +783,23 @@
                 provisions.</p>
         </div>
 
-        <div class="page-footer">
-            Page 6 of 6
-        </div>
+
     </div>
+    <script type="text/php">
+        if (isset($pdf)) {
+    $text = "Page {PAGE_NUM} of {PAGE_COUNT}";
+    $size = 9;
+    $font = $fontMetrics->get_font("DejaVu Sans", "normal");
+
+    // distance from right margin
+    $x = $pdf->get_width() - 115;
+    // distance from bottom margin
+    $y = $pdf->get_height() - 40;
+
+    $pdf->page_text($x, $y, $text, $font, $size, [0.40, 0.40, 0.40]);
+}
+</script>
+
 
 </body>
 
