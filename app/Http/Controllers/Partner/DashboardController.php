@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Models\CouponUsage;
+use App\Models\PartnerRelationship;
 use App\Models\User;
 use App\Models\OnboardingProgress;
 use App\Models\Document;
@@ -56,6 +57,23 @@ class DashboardController extends Controller
             ->where('partner_id', $user->id)
             ->latest()
             ->get();
+
+        $subpartners = PartnerRelationship::where('parent_partner_id', Auth::id())->count();
+        $customers_invited = CouponUsage::where('partner_id', Auth::id())->count();
+        $subscribed_customers_invited = CouponUsage::with('user')
+            ->where('partner_id', Auth::id())
+            ->whereHas('user', function ($q) {
+                $q->whereNotNull('stripe_subscription_id');
+            })
+            ->count();
+
+        $free_trial_customers_invited = CouponUsage::with('user')
+            ->where('partner_id', Auth::id())
+            ->whereHas('user', function ($q) {
+                $q->whereNull('stripe_subscription_id');
+            })
+            ->count();
+
 
         $guide = [
             [
@@ -139,7 +157,11 @@ class DashboardController extends Controller
             'allDocumentTypes',
             'uploadedDocumentTypes',
             'documentReminders',
-            'documentLocations'
+            'documentLocations',
+            'subpartners',
+            'customers_invited',
+            'subscribed_customers_invited',
+            'free_trial_customers_invited'
         ));
     }
 

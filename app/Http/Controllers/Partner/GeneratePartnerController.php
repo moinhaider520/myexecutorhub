@@ -38,6 +38,15 @@ class GeneratePartnerController extends Controller
         return view('partner.partners.create');
     }
 
+    public function view_refferals($id)
+    {
+        $referredUsers = PartnerRelationship::with('user')
+            ->where('parent_partner_id', $id)
+            ->latest()
+            ->get();
+        return view('partner.partners.view_refferals', compact('referredUsers'));
+    }
+
     /**
      * Store a newly created partner in the database.
      *

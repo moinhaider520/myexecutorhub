@@ -56,6 +56,7 @@ use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeCont
 use App\Http\Controllers\Partner\WillGeneratorController as PartnerWillGeneratorController;
 use App\Http\Controllers\Partner\UsefulContactsController as PartnerUsefulContactsController;
 use App\Http\Controllers\Partner\GeneratePartnerController as PartnerGeneratePartnerController;
+use App\Http\Controllers\Partner\BankDetailsController as PartnerBankDetailsController;
 
 // Role Customer Controller
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
@@ -297,6 +298,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/partners', [PartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
     Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
     Route::get('/partners/{id}/view_refferals', [PartnerController::class, 'view_refferals'])->name('partners.view_refferals');
+    Route::get('/partners/{id}/view_bank_accounts', [PartnerController::class, 'view_bank_accounts'])->name('partners.view_bank_accounts');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');
 
@@ -681,6 +683,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     // Partner Management
     Route::get('/partners', [PartnerGeneratePartnerController::class, 'index'])->name('partners.index');
     Route::get('/partners/create', [PartnerGeneratePartnerController::class, 'create'])->name('partners.create');
+    Route::get('/partners/{id}/view_refferals', [PartnerGeneratePartnerController::class, 'view_refferals'])->name('partners.view_refferals');
     Route::post('/partners/store', [PartnerGeneratePartnerController::class, 'store'])->name('partners.store');
     Route::get('/partners/{id}/edit', [PartnerGeneratePartnerController::class, 'edit'])->name('partners.edit');
     Route::put('/partners/{id}', [PartnerGeneratePartnerController::class, 'update'])->name('partners.update');
@@ -1017,6 +1020,11 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('will_generator/funeral/{will_user_id}', [PartnerWillGeneratorController::class, 'funeral'])->name('will_generator.funeral');
     Route::post('will_generator/store_funeral_plan', [PartnerWillGeneratorController::class, 'store_funeral_plan'])->name('will_generator.store_funeral_plan');
     Route::get('will_generator/create_pdf/{will_user_id}', [PartnerWillGeneratorController::class, 'create_pdf'])->name('will_generator.create_pdf');
+
+    Route::get('/bank_account', [PartnerBankDetailsController::class, 'index'])->name('bank_account.index');
+    Route::post('/bank_account/store', [PartnerBankDetailsController::class, 'store'])->name('bank_account.store');
+    Route::post('/bank_account/update/{id}', [PartnerBankDetailsController::class, 'update'])->name('bank_account.update');
+    Route::delete('/bank_account/destroy/{id}', [PartnerBankDetailsController::class, 'destroy'])->name('bank_account.destroy');
 });
 
 // Executors  Routes

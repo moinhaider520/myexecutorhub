@@ -43,7 +43,8 @@
                                                             <td>{{ $partner->profession ?? 'N/A' }}</td>
                                                             <td>{{ $partner->hear_about_us ?? 'N/A' }}</td>
                                                             <td>
-                                                               
+                                                                <a href="{{ route('partner.partners.view_refferals', $partner->id) }}"
+                                                                    class="btn btn-primary btn-sm">View Refferals</a>
                                                                 <a href="{{ route('partner.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"
                                                                     class="btn btn-primary btn-sm">Edit</a>
                                                                 <form

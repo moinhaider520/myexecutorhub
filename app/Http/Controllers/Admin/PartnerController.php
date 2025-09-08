@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
 use App\Models\CouponUsage;
+use App\Models\UserBankDetails;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Helpers\EncryptionHelper;
@@ -32,6 +33,15 @@ class PartnerController extends Controller
             ->latest()
             ->get();
         return view('admin.partners.view_refferals', compact('referredUsers'));
+    }
+
+    public function view_bank_accounts($id)
+    {
+        $bankAccounts = UserBankDetails::with('user')
+            ->where('user_id', $id)
+            ->latest()
+            ->get();
+        return view('admin.partners.view_bank_accounts', compact('bankAccounts'));
     }
 
     public function send_invite()

@@ -26,37 +26,38 @@
         </div>
         <div class="container">
             <div class="row">
-                <div class="card">
-                    <h2 class="p-2">Executor Hub - Earn with us!</h2>
-                    <video id="earningVideo" style="width:100%;height:450px;" controls>
-                        <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h2 class="p-2">Onboarding Guide</h2>
+                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
+                        <br />
+                        <ol>
+                            @foreach ($guide as $task)
+                                <li style="color: {{ $task['completed'] ? 'green' : 'red' }}">
+                                    {{ $task['label'] }}
+                                    @if ($task['completed'])
+                                        (Completed)
+                                    @endif
+                                    - <a href="{{ $task['url'] }}">View Page</a>
+                                </li>
+                            @endforeach
+                        </ol>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h2 class="p-2">Executor Hub - Earn with us!</h2>
+                        <video id="earningVideo" style="width:100%;height:210px;" controls>
+                            <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
 
+                    </div>
                 </div>
+                
             </div>
         </div>
-        <!-- ONBOARDING SECTION -->
-        <div class="container">
-            <div class="row">
-                <div class="card">
-                    <h2 class="p-2">Onboarding Guide</h2>
-                    <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                    <br />
-                    <ol>
-                        @foreach ($guide as $task)
-                            <li style="color: {{ $task['completed'] ? 'green' : 'red' }}">
-                                {{ $task['label'] }}
-                                @if ($task['completed'])
-                                    (Completed)
-                                @endif
-                                - <a href="{{ $task['url'] }}">View Page</a>
-                            </li>
-                        @endforeach
-                    </ol>
-                </div>
-            </div>
-        </div>
+
         <!-- Coupon Section -->
         <div class="container">
             <div class="row mb-4">
@@ -83,10 +84,10 @@
                                 <div class="card-body student">
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
-                                            <h2>£{{ number_format($totalBankBalance, 2) }}</h2>
-                                            <p class="mb-0 text-truncate"> Total Assets Networth</p>
+                                            <h2>{{ $subpartners }}</h2>
+                                            <p class="mb-0 text-truncate">Invited Partners</p>
                                         </div>
-                                        <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
+                                        <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
                                     </div>
                                 </div>
@@ -97,10 +98,10 @@
                                 <div class="card-body student-2">
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
-                                            <h2>£{{ number_format($totalDebt, 2) }}</h2>
-                                            <p class="mb-0 text-truncate"> Liabilities Net Worth</p>
+                                            <h2>{{ $customers_invited }}</h2>
+                                            <p class="mb-0 text-truncate">Invited Customers</p>
                                         </div>
-                                        <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png"
+                                        <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
                                     </div>
                                 </div>
@@ -111,10 +112,10 @@
                                 <div class="card-body student-3">
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
-                                            <h2>{{ $totalDocuments }}</h2>
-                                            <p class="mb-0 text-truncate"> Documents Uploaded</p>
+                                            <h2>{{ $subscribed_customers_invited }}</h2>
+                                            <p class="mb-0 text-truncate"> Customers with Subscription</p>
                                         </div>
-                                        <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/invoice.png"
+                                        <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
                                     </div>
                                 </div>
@@ -125,8 +126,8 @@
                                 <div class="card-body student-4">
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
-                                            <h2>{{ $totalExecutors }}</h2>
-                                            <p class="mb-0 text-truncate"> Executors </p>
+                                            <h2>{{ $free_trial_customers_invited }}</h2>
+                                            <p class="mb-0 text-truncate">Customers on Free Trial </p>
                                         </div>
                                         <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>

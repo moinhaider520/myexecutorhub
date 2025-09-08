@@ -550,6 +550,20 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
                             </svg>
+                            <span>Bank Account </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.bank_account.index') }}">Bank Account</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
+                            </svg>
                             <span>Withdraw </span>
                         </a>
                         <ul class="sidebar-submenu">

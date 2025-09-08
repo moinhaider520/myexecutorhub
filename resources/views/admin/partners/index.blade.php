@@ -45,6 +45,8 @@
                                                             <td>
                                                                 <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
                                                                     class="btn btn-primary btn-sm">View Refferals</a>
+                                                                    <a href="{{ route('admin.partners.view_bank_accounts', $partner->id) }}"
+                                                                    class="btn btn-primary btn-sm">View Bank Accounts</a>
                                                                 <a href="{{ route('admin.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"
                                                                     class="btn btn-primary btn-sm">Edit</a>
                                                                 <form
