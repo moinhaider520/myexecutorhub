@@ -61,7 +61,7 @@ class StripePaymentController extends Controller
         $couponOwner = null;
         if ($request->filled('coupon_code')) {
             $couponOwner = User::where('coupon_code', $request->input('coupon_code'))->first();
-            
+
             if (!$couponOwner) {
                 return back()->with('stripe_error', 'Invalid Coupon.');
             }
@@ -134,65 +134,64 @@ class StripePaymentController extends Controller
             'hear_about_us' => $session->metadata->hear_about_us,
         ])->assignRole('customer');
 
-       // Process coupon code if provided
-if (!empty($session->metadata->coupon_code)) {
-    $couponOwner = User::where('coupon_code', $session->metadata->coupon_code)->first();
+        // Process coupon code if provided
+        if (!empty($session->metadata->coupon_code)) {
+            $couponOwner = User::where('coupon_code', $session->metadata->coupon_code)->first();
 
-    if ($couponOwner) {
-        // Get plan amount
-        $subscriptions = Subscription::all(['customer' => $session->customer]);
-        $subscription = $subscriptions->data[0] ?? null;
+            if ($couponOwner) {
+                // Get plan amount
+                $subscriptions = Subscription::all(['customer' => $session->customer]);
+                $subscription = $subscriptions->data[0] ?? null;
 
-        $planAmount = 0;
-        if ($subscription) {
-            $priceId = $subscription->items->data[0]->price->id;
-            $plans = [
-                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
-                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
-                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
-            ];
-            $planAmount = $plans[$priceId] ?? 0;
-        }
+                $planAmount = 0;
+                if ($subscription) {
+                    $priceId = $subscription->items->data[0]->price->id;
+                    $plans = [
+                        'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
+                        'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
+                        'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
+                    ];
+                    $planAmount = $plans[$priceId] ?? 0;
+                }
 
-        // Find parent partner (if exists)
-        $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
+                // Find parent partner (if exists)
+                $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
 
-        if ($relationship) {
-            // Sub-partner case (partner created by another partner)
-            $ownerCommission = $planAmount * 0.30;   // 30% → coupon owner
-            $parentCommission = $planAmount * 0.20;  // 20% → parent partner
-            $adminCommission  = $planAmount * 0.50;  // 50% → admin
+                if ($relationship) {
+                    // Sub-partner case (partner created by another partner)
+                    $ownerCommission = $planAmount * 0.30;   // 30% → coupon owner
+                    $parentCommission = $planAmount * 0.20;  // 20% → parent partner
+                    $adminCommission  = $planAmount * 0.50;  // 50% → admin
 
-            // Credit commissions
-            $couponOwner->increment('commission_amount', $ownerCommission);
-            $relationship->parent->increment('commission_amount', $parentCommission);
-            User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                    // Credit commissions
+                    $couponOwner->increment('commission_amount', $ownerCommission);
+                    $relationship->parent->increment('commission_amount', $parentCommission);
+                    User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                } else {
+                    // Original affiliate commission calculation
+                    $affiliateCount = CouponUsage::where('partner_id', $couponOwner->id)->count();
 
-        } else {
-            // Original affiliate commission calculation
-            $affiliateCount = CouponUsage::where('partner_id', $couponOwner->id)->count();
+                    if ($affiliateCount <= 50) {
+                        $commissionAmount = $planAmount * 0.20;  // 20%
+                    } else {
+                        $commissionAmount = $planAmount * 0.30;  // 30%
+                    }
 
-            if ($affiliateCount <= 50) {
-                $commissionAmount = $planAmount * 0.20;  // 20%
-            } else {
-                $commissionAmount = $planAmount * 0.30;  // 30%
+                    $couponOwner->increment('commission_amount', $commissionAmount);
+
+
+                    // Give rest to admin
+                    $adminCommission = $planAmount - $commissionAmount;
+                    User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                }
+
+                // Log coupon usage
+                CouponUsage::create([
+                    'partner_id' => $couponOwner->id,
+                    'user_id'    => $user->id,
+                ]);
             }
-
-            $couponOwner->increment('commission_amount', $commissionAmount);
-
-
-             // Give rest to admin
-            $adminCommission = $planAmount - $commissionAmount;
-            User::role('admin')->first()?->increment('commission_amount', $adminCommission);
         }
-
-        // Log coupon usage
-        CouponUsage::create([
-            'partner_id' => $couponOwner->id,
-            'user_id'    => $user->id,
-        ]);
-    }
-}
 
 
         // Retrieve Subscription ID and update user subscription details
