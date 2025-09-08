@@ -134,26 +134,26 @@ class StripePaymentController extends Controller
             'hear_about_us' => $session->metadata->hear_about_us,
         ])->assignRole('customer');
 
+        // Get Stripe subscription to extract plan amount
+        $subscriptions = Subscription::all(['customer' => $session->customer]);
+        $subscription = $subscriptions->data[0] ?? null;
+
+        $planAmount = 0;
+        if ($subscription) {
+            $priceId = $subscription->items->data[0]->price->id;
+            $plans = [
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
+            ];
+            $planAmount = $plans[$priceId] ?? 0;
+        }
+
         // Process coupon code if provided
         if (!empty($session->metadata->coupon_code)) {
             $couponOwner = User::where('coupon_code', $session->metadata->coupon_code)->first();
 
             if ($couponOwner) {
-                // Get plan amount
-                $subscriptions = Subscription::all(['customer' => $session->customer]);
-                $subscription = $subscriptions->data[0] ?? null;
-
-                $planAmount = 0;
-                if ($subscription) {
-                    $priceId = $subscription->items->data[0]->price->id;
-                    $plans = [
-                        'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
-                        'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
-                        'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
-                    ];
-                    $planAmount = $plans[$priceId] ?? 0;
-                }
-
                 // Find parent partner (if exists)
                 $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
 
@@ -179,7 +179,6 @@ class StripePaymentController extends Controller
 
                     $couponOwner->increment('commission_amount', $commissionAmount);
 
-
                     // Give rest to admin
                     $adminCommission = $planAmount - $commissionAmount;
                     User::role('admin')->first()?->increment('commission_amount', $adminCommission);
@@ -191,13 +190,14 @@ class StripePaymentController extends Controller
                     'user_id'    => $user->id,
                 ]);
             }
+        } else {
+            // No coupon → 100% commission goes to admin
+            if ($planAmount > 0) {
+                User::role('admin')->first()?->increment('commission_amount', $planAmount);
+            }
         }
 
-
-        // Retrieve Subscription ID and update user subscription details
-        $subscriptions = Subscription::all(['customer' => $session->customer]);
-        $subscription = $subscriptions->data[0] ?? null;
-
+        // Save subscription details in the user record
         if ($subscription) {
             $priceId = $subscription->items->data[0]->price->id;
 
@@ -320,15 +320,61 @@ class StripePaymentController extends Controller
         if ($subscription) {
             $priceId = $subscription->items->data[0]->price->id;
 
-            // Map Stripe Price ID to plan names
+            // Map Stripe Price ID to plan names + amounts
             $plans = [
-                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 'Basic',
-                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 'Standard',
-                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 'Premium',
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => ['name' => 'Basic', 'amount' => 5.99],
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => ['name' => 'Standard', 'amount' => 11.99],
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => ['name' => 'Premium', 'amount' => 19.99],
             ];
 
-            $planName = $plans[$priceId] ?? 'Unknown';
+            $planName   = $plans[$priceId]['name']   ?? 'Unknown';
+            $planAmount = $plans[$priceId]['amount'] ?? 0;
 
+            // --- Commission Calculation ---
+            $couponUsage = CouponUsage::where('user_id', $user->id)->first();
+
+            if ($couponUsage) {
+                $couponOwner = User::find($couponUsage->partner_id);
+
+                if ($couponOwner) {
+                    // Check if couponOwner is a sub-partner
+                    $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
+
+                    if ($relationship) {
+                        // Sub-partner case
+                        $ownerCommission  = $planAmount * 0.30;  // 30%
+                        $parentCommission = $planAmount * 0.20;  // 20%
+                        $adminCommission  = $planAmount * 0.50;  // 50%
+
+                        $couponOwner->increment('commission_amount', $ownerCommission);
+                        $relationship->parent->increment('commission_amount', $parentCommission);
+                        User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                    } else {
+                        // Regular partner affiliate tier
+                        $affiliateCount = CouponUsage::where('partner_id', $couponOwner->id)->count();
+
+                        if ($affiliateCount <= 50) {
+                            $commissionAmount = $planAmount * 0.20; // 20%
+                        } else {
+                            $commissionAmount = $planAmount * 0.30; // 30%
+                        }
+
+                        $couponOwner->increment('commission_amount', $commissionAmount);
+
+                        // Rest goes to admin
+                        $adminCommission = $planAmount - $commissionAmount;
+                        User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                    }
+                }
+            } else {
+                // No coupon used → 100% goes to admin
+                if ($planAmount > 0) {
+                    User::role('admin')->first()?->increment('commission_amount', $planAmount);
+                }
+            }
+            // --- End Commission Calculation ---
+
+            // Update user subscription
             $user->update([
                 'stripe_subscription_id' => $subscription->id,
                 'subscribed_package' => $planName,
