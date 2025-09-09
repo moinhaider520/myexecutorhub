@@ -9,10 +9,10 @@
                     <div class="row">
                         <div class="col">
                             <div class="card">
-                                <h5 class="card-header">Users Referred with Your Coupon</h5>
+                                <h5 class="card-header">Customers Referred with {{ $subpartner->name }} Coupon Code</h5>
                                 <div class="card-body">
                                     @if($referredUsers->isEmpty())
-                                        <p>No users have used your coupon yet.</p>
+                                        <p>No customer has used {{ $subpartner->name }} coupon code yet.</p>
                                     @else
                                         <div class="table-responsive theme-scrollbar">
                                             <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
@@ -23,7 +23,9 @@
                                                             <th>#</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
-                                                            <th>Signup Date</th>                                                            
+                                                            <th>Package Name</th>
+                                                            <th>Signup Date</th>       
+                                                            <th>Renewal Date</th>                                                     
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -32,7 +34,12 @@
                                                                 <td>{{ $index + 1 }}</td>
                                                                 <td>{{ $referral->user->name ?? '-' }}</td>
                                                                 <td>{{ $referral->user->email ?? '-' }}</td>
+                                                                <td>{{ $referral->user->subscribed_package ?? '-' }} Package</td>
                                                                 <td>{{ $referral->created_at->format('d M Y') }}</td>
+                                                                <td @if($referral->user && $referral->user->trial_ends_at && \Carbon\Carbon::parse($referral->user->trial_ends_at)->lt(now()))
+                                                                style="color:red;" @endif>
+                                                                    {{ $referral->user->trial_ends_at ? \Carbon\Carbon::parse($referral->user->trial_ends_at)->format('Y-m-d') : '-' }}
+                                                                </td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

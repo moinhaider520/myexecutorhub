@@ -40,11 +40,12 @@ class GeneratePartnerController extends Controller
 
     public function view_refferals($id)
     {
+        $subpartner = User::find($id);
         $referredUsers = PartnerRelationship::with('user')
             ->where('parent_partner_id', $id)
             ->latest()
             ->get();
-        return view('partner.partners.view_refferals', compact('referredUsers'));
+        return view('partner.partners.view_refferals', compact('referredUsers','subpartner'));
     }
 
     /**

@@ -11,7 +11,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     <h4>Partners List</h4>
-                                    <span>List of all the Registered Partners.</span>
+                                    <span>List of all the Registered Partners through your reference.</span>
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive theme-scrollbar">
@@ -45,16 +45,7 @@
                                                             <td>
                                                                 <a href="{{ route('partner.partners.view_refferals', $partner->id) }}"
                                                                     class="btn btn-primary btn-sm">View Refferals</a>
-                                                                <a href="{{ route('partner.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"
-                                                                    class="btn btn-primary btn-sm">Edit</a>
-                                                                <form
-                                                                    action="{{ route('partner.partners.destroy', $partner->id) }}"
-                                                                    method="POST" style="display:inline;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger btn-sm">Delete</button>
-                                                                </form>
+
                                                             </td>
                                                         </tr>
                                                     @endforeach

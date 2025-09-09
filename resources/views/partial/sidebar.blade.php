@@ -209,6 +209,21 @@
                             <li><a href="{{ route('partner.partners.index') }}">View All</a></li>
                         </ul>
                     </li>
+
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Customers </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.customers.index') }}">View All</a></li>
+                        </ul>
+                    </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="{{ route('partner.bank_accounts.view') }}">
                             <svg class="stroke-icon">

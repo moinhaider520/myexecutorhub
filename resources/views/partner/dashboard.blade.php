@@ -54,7 +54,7 @@
 
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
@@ -139,10 +139,10 @@
                     <div class="row">
                         <div class="col">
                             <div class="card">
-                                <h5 class="card-header">Users Referred with Your Coupon</h5>
+                                <h5 class="card-header">Customers Referred with Your Coupon Code (Directly)</h5>
                                 <div class="card-body">
                                     @if($referredUsers->isEmpty())
-                                        <p>No Users have used your coupon yet.</p>
+                                        <p>No customer has used your coupon code yet.</p>
                                     @else
                                         <div class="table-responsive theme-scrollbar">
                                             <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
@@ -153,6 +153,7 @@
                                                             <th>#</th>
                                                             <th>Name</th>
                                                             <th>Email</th>
+                                                            <th>Package</th>
                                                             <th>Signup Date</th>
                                                             <th>Reffered By</th>
                                                         </tr>
@@ -163,6 +164,7 @@
                                                                 <td>{{ $index + 1 }}</td>
                                                                 <td>{{ $referral->user->name ?? '-' }}</td>
                                                                 <td>{{ $referral->user->email ?? '-' }}</td>
+                                                                <td>{{ $referral->user->subscribed_package ?? '-' }} Package</td>
                                                                 <td>{{ $referral->created_at->format('d M Y') }}</td>
                                                                 <td>{{ $referral->user->reffered_by ?? '-' }}</td>
                                                             </tr>
@@ -226,6 +228,10 @@
                             </p>
                             <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without
                                 you signing up those clients yourself.</p>
+                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
+                                <source src="{{ asset('assets/invite_partners.mkv') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -237,6 +243,10 @@
                                 <li>Save changes.</li>
                             </ol>
                             <p>Why? Without this step, we can’t pay your commission. Set it up now to avoid delays.</p>
+                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
+                                <source src="{{ asset('assets/add_bank_account.mkv') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -249,6 +259,10 @@
                             </ol>
                             <p>Tip: Only clients who sign up using your link or code will be counted for your commission.
                             </p>
+                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
+                                <source src="{{ asset('assets/invite_customers.mkv') }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -262,9 +276,8 @@
                             <p>Why? The more active your clients are, the more opportunities you have to offer services —
                                 and earn.
                             </p>
-                            <h5>How to view my Customers? (Click on the Video to Pause/UnPause)</h5>
-                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
-                                <source src="{{ asset('assets/view_refferals.mkv') }}" type="video/mp4">
+                            <video id="customersVideo" style="width:100%;height:450px;" autoplay muted playsinline>
+                                <source src="{{ asset('assets/view_customers.mkv') }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
@@ -677,6 +690,18 @@
 
     <script>
         const video = document.getElementById('referralsVideo');
+
+        video.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        });
+    </script>
+
+    <script>
+        const video = document.getElementById('customersVideo');
 
         video.addEventListener('click', () => {
             if (video.paused) {

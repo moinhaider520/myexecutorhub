@@ -56,6 +56,7 @@ use App\Http\Controllers\Partner\FuneralWakeController as PartnerFuneralWakeCont
 use App\Http\Controllers\Partner\WillGeneratorController as PartnerWillGeneratorController;
 use App\Http\Controllers\Partner\UsefulContactsController as PartnerUsefulContactsController;
 use App\Http\Controllers\Partner\GeneratePartnerController as PartnerGeneratePartnerController;
+use App\Http\Controllers\Partner\CustomerController as PartnerCustomerController;
 use App\Http\Controllers\Partner\BankDetailsController as PartnerBankDetailsController;
 
 // Role Customer Controller
@@ -689,6 +690,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::put('/partners/{id}', [PartnerGeneratePartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerGeneratePartnerController::class, 'destroy'])->name('partners.destroy');
 
+    // Customers
+    Route::get('/customers', [PartnerCustomerController::class, 'index'])->name('customers.index');
     // LPA
     Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');
