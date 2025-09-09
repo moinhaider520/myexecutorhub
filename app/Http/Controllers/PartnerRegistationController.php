@@ -34,7 +34,19 @@ class PartnerRegistationController extends Controller
             'coupon_code' => 'required|string', // Coupon code is required
             'profession' => 'required|string|max:255',
             'hear_about_us' => 'required|string|max:255',
-         
+            'g-recaptcha-response' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                        'secret' => config('services.recaptcha.secret_key'),
+                        'response' => $value,
+                    ]);
+
+                    if (!$response->json('success')) {
+                        $fail('Captcha validation failed.');
+                    }
+                }
+            ],
         ]);
 
         // Check coupon validity and role in one query
