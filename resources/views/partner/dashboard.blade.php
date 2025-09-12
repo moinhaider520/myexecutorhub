@@ -11,52 +11,6 @@
         }
     </style>
     <div class="page-body">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="card">
-                        <h3 class="text-center pt-2 pb-2">
-                            Download the App on App Store -
-                            <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
-                                    class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Onboarding Guide</h2>
-                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                        <br />
-                        <ol>
-                            @foreach ($guide as $task)
-                                <li style="color: {{ $task['completed'] ? 'green' : 'red' }}">
-                                    {{ $task['label'] }}
-                                    @if ($task['completed'])
-                                        (Completed)
-                                    @endif
-                                    - <a href="{{ $task['url'] }}">View Page</a>
-                                </li>
-                            @endforeach
-                        </ol>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Executor Hub - Earn with us!</h2>
-                        <video id="earningVideo" style="width:100%;height:210px;" controls>
-                            <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
 
         <!-- Coupon Section -->
         <div class="container">
@@ -66,10 +20,6 @@
                     <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
                     <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#assignModal">Copy Affiliate
                         Link</button>
-                </div>
-                <div class="col text-center">
-                    <h5>Your Commission Amount:</h5>
-                    <p class="lead">£{{ number_format(auth()->user()->commission_amount, 2) }}</p>
                 </div>
             </div>
         </div>
@@ -85,7 +35,7 @@
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
                                             <h2>{{ $subpartners }}</h2>
-                                            <p class="mb-0 text-truncate">Invited Partners</p>
+                                            <p class="mb-0 text-truncate">Total Partners</p>
                                         </div>
                                         <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
@@ -99,7 +49,7 @@
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
                                             <h2>{{ $customers_invited }}</h2>
-                                            <p class="mb-0 text-truncate">Invited Customers</p>
+                                            <p class="mb-0 text-truncate">Total Customers</p>
                                         </div>
                                         <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
@@ -113,7 +63,7 @@
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
                                             <h2>{{ $subscribed_customers_invited }}</h2>
-                                            <p class="mb-0 text-truncate"> Customers with Subscription</p>
+                                            <p class="mb-0 text-truncate">Active customers</p>
                                         </div>
                                         <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
@@ -126,8 +76,8 @@
                                 <div class="card-body student-4">
                                     <div class="d-flex gap-2 align-items-end">
                                         <div class="flex-grow-1">
-                                            <h2>{{ $free_trial_customers_invited }}</h2>
-                                            <p class="mb-0 text-truncate">Customers on Free Trial </p>
+                                            <h2>£{{ number_format(auth()->user()->commission_amount, 2) }}</h2>
+                                            <p class="mb-0 text-truncate">Revenue </p>
                                         </div>
                                         <div class="flex-shrink-0"><img src="../assets/images/dashboard-4/icon/teacher.png"
                                                 alt=""></div>
@@ -315,6 +265,13 @@
                                             Your browser does not support the video tag.
                                         </video>
                                     </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h2 class="p-2">Title: Earn with us!</h2>
+                                    <video id="earningVideo" style="width:100%;height:210px;" controls>
+                                        <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card">

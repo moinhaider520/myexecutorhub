@@ -689,6 +689,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('/partners/{id}/edit', [PartnerGeneratePartnerController::class, 'edit'])->name('partners.edit');
     Route::put('/partners/{id}', [PartnerGeneratePartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerGeneratePartnerController::class, 'destroy'])->name('partners.destroy');
+    Route::get('/partners/send_invite', [PartnerGeneratePartnerController::class, 'send_invite'])->name('partners.send_invite');
+    Route::post('/partners', [PartnerGeneratePartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
 
     // Customers
     Route::get('/customers', [PartnerCustomerController::class, 'index'])->name('customers.index');

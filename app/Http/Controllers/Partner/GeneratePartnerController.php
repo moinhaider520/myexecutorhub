@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CustomEmail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PartnerRelationship;
 use App\Helpers\EncryptionHelper;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 class GeneratePartnerController extends Controller
 {
@@ -45,7 +47,47 @@ class GeneratePartnerController extends Controller
             ->where('parent_partner_id', $id)
             ->latest()
             ->get();
-        return view('partner.partners.view_refferals', compact('referredUsers','subpartner'));
+        return view('partner.partners.view_refferals', compact('referredUsers', 'subpartner'));
+    }
+
+    public function send_invite()
+    {
+        return view('partner.partners.send_invite');
+    }
+
+    public function send_invite_email(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+        ]);
+
+        $couponCode = $request->name . strtoupper(uniqid());
+
+        try {
+            DB::beginTransaction();
+
+            $message = "
+            <h2>Hello {$request->name},</h2>
+            <p>You’ve been invited to use <strong>Executor Hub</strong>!</p>
+            <p>Register to Executor Hub Using the Following Link:</p>
+            <p><a href='https://executorhub.co.uk/partner_registration?coupon_code={$request->coupon_code}'>Click here to log in</a></p>
+            <p>Enjoy access to the Premium Features in a few steps, courtesy of your invitation!</p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+            Mail::to($request->email)->send(new CustomEmail(
+                [
+                    'subject' => 'You Have Been Invited to Executor Hub.',
+                    'message' => $message,
+                ],
+                'You Have Been Invited to Executor Hub.'
+            ));
+            return redirect()->route('partner.partners.index')->with('success', 'Invitation Sent Successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -57,13 +99,13 @@ class GeneratePartnerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'          => 'required',
-            'email'         => 'required|email|unique:users,email',
-            'address'       => 'required',
-            'city'          => 'required',
-            'postal_code'   => 'required',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
             'contact_number' => 'required',
-            'access_type'   => 'required',
+            'access_type' => 'required',
         ]);
 
         $couponCode = $request->name . strtoupper(uniqid());
@@ -72,25 +114,25 @@ class GeneratePartnerController extends Controller
             DB::beginTransaction();
 
             $partner = User::create([
-                'name'              => $request->name,
-                'email'             => $request->email,
-                'address'           => $request->address,
-                'city'              => $request->city,
-                'postal_code'       => $request->postal_code,
-                'phone_number'      => $request->contact_number,
-                'access_type'       => $request->access_type,
-                'profession'        => $request->profession,
-                'coupon_code'       => $couponCode,
-                'trial_ends_at'     => now()->addYears(10),
+                'name' => $request->name,
+                'email' => $request->email,
+                'address' => $request->address,
+                'city' => $request->city,
+                'postal_code' => $request->postal_code,
+                'phone_number' => $request->contact_number,
+                'access_type' => $request->access_type,
+                'profession' => $request->profession,
+                'coupon_code' => $couponCode,
+                'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
-                'password'          => bcrypt('1234'),
+                'password' => bcrypt('1234'),
             ]);
 
             $partner->assignRole('partner');
 
             PartnerRelationship::create([
                 'parent_partner_id' => auth()->id(),
-                'sub_partner_id'    => $partner->id,
+                'sub_partner_id' => $partner->id,
             ]);
 
             DB::commit();
@@ -124,13 +166,13 @@ class GeneratePartnerController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'          => 'required',
-            'email'         => 'required|email|unique:users,email,' . $id,
-            'address'       => 'required',
-            'city'          => 'required',
-            'postal_code'   => 'required',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'address' => 'required',
+            'city' => 'required',
+            'postal_code' => 'required',
             'contact_number' => 'required',
-            'access_type'   => 'required',
+            'access_type' => 'required',
         ]);
 
         try {
@@ -138,14 +180,14 @@ class GeneratePartnerController extends Controller
 
             $partner = User::findOrFail($id);
             $partner->update([
-                'name'         => $request->name,
-                'email'        => $request->email,
-                'address'      => $request->address,
-                'city'         => $request->city,
-                'postal_code'  => $request->postal_code,
+                'name' => $request->name,
+                'email' => $request->email,
+                'address' => $request->address,
+                'city' => $request->city,
+                'postal_code' => $request->postal_code,
                 'phone_number' => $request->contact_number,
-                'access_type'  => $request->access_type,
-                'profession'   => $request->profession,
+                'access_type' => $request->access_type,
+                'profession' => $request->profession,
             ]);
 
             DB::commit();

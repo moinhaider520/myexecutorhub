@@ -10,6 +10,7 @@ use Http;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -55,7 +56,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'g-recaptcha-response' => [
+                        'g-recaptcha-response' => [
                 'required',
                 function ($attribute, $value, $fail) {
                     $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
@@ -78,45 +79,44 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
+{
+    $couponOwner = null;
 
-        $coupon = $data['coupon_code'];
-
-        // Check coupon validity and role in one query
-        $couponOwner = User::where('coupon_code', $coupon)
-            ->whereHas('roles', function ($query) {
-                $query->where('name', 'partner');
-            })
+    // Only validate coupon if user entered one
+    if (!empty($data['coupon_code'])) {
+        $couponOwner = User::where('coupon_code', $data['coupon_code'])
+            ->whereHas('roles', fn($q) => $q->where('name', 'partner'))
             ->first();
 
-
         if (!$couponOwner) {
-            return redirect()->back()->withErrors([
+            throw ValidationException::withMessages([
                 'coupon_code' => 'Invalid or unauthorized coupon code.',
-            ])->withInput();
+            ]);
         }
+    }
 
-        // Create the user and store it in a variable
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'trial_ends_at' => now()->addDays(14),
-            'subscribed_package' => "free_trial",
-            'user_role' => 'customer',
-            'hear_about_us' => $data['hear_about_us'],
-        ]);
+    // Always create the user
+    $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'trial_ends_at' => now()->addDays(14),
+        'subscribed_package' => "free_trial",
+        'user_role' => 'customer',
+        'hear_about_us' => $data['hear_about_us'],
+    ]);
+
+    // If valid coupon, log usage
+    if ($couponOwner) {
         CouponUsage::create([
             'partner_id' => $couponOwner->id,
             'user_id' => $user->id,
         ]);
-        // Assign role to the user
-        $user->assignRole('customer');
-
-        // Send the welcome email notification
-        $user->notify(new WelcomeEmail($user));
-
-        // Return the user
-        return $user;
     }
+
+    $user->assignRole('customer');
+    // $user->notify(new WelcomeEmail($user));
+
+    return $user; // ✅ always returns a User
+}
 }
