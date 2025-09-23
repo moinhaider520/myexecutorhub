@@ -115,7 +115,7 @@ class RegisterController extends Controller
     }
 
     $user->assignRole('customer');
-    // $user->notify(new WelcomeEmail($user));
+    $user->notify(new WelcomeEmail($user));
 
     return $user; // ✅ always returns a User
 }

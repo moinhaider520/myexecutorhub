@@ -10,4 +10,30 @@ class KnowledgebaseController extends Controller
     {
         return view('knowledgebase.index');
     }
+
+    public function email_templates()
+    {
+        return view('knowledgebase.email_templates');
+    }
+    public function suggested_scripts()
+    {
+        return view('knowledgebase.suggested_scripts');
+    }
+
+    public function short_call_openers()
+    {
+        return view('knowledgebase.short_call_openers');
+    }
+    public function whatsapp_texts()
+    {
+        return view('knowledgebase.whatsapp_texts');
+    }
+    public function social_media_direct_messages()
+    {
+        return view('knowledgebase.social_media_direct_messages');
+    }
+    public function social_media_posts()
+    {
+        return view('knowledgebase.social_media_posts');
+    }   
 }

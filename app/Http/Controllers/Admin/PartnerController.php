@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
 use App\Models\CouponUsage;
 use App\Models\UserBankDetails;
+use App\Notifications\WelcomeEmailPartner;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Helpers\EncryptionHelper;
@@ -93,6 +94,7 @@ class PartnerController extends Controller
                 'profession' => $request->profession,
                 'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => now()->addYears(10),
+                'user_role' => 'partner',
                 'subscribed_package' => 'Premium',
                 'password' => bcrypt('1234'),
             ]);
@@ -102,6 +104,8 @@ class PartnerController extends Controller
 
 
             DB::commit();
+
+            $partner->notify(new WelcomeEmailPartner($partner));
             return redirect()->route('admin.partners.index')->with('success', 'Partner created successfully.');
         } catch (\Exception $e) {
             DB::rollback();
@@ -128,6 +132,7 @@ class PartnerController extends Controller
                 'coupon_code' => $couponCode, // Store the generated coupon code
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
+                'user_role' => 'partner',
                 'password' => $tempPassword,
             ]);
 
@@ -156,6 +161,8 @@ class PartnerController extends Controller
                 ],
                 'You Have Been Invited to Executor Hub.'
             ));
+
+            $partner->notify(new WelcomeEmailPartner($partner));
             return redirect()->route('admin.partners.index')->with('success', 'Invitation Sent Successfully.');
         } catch (\Exception $e) {
             DB::rollback();

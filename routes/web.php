@@ -671,6 +671,12 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Knowledgebase
     Route::get('/knowledgebase/index', [KnowledgebaseController::class, 'index'])->name('knowledgebase.index');
+    Route::get('/knowledgebase/email_templates', [KnowledgebaseController::class, 'email_templates'])->name('knowledgebase.email_templates');
+    Route::get('/knowledgebase/suggested_scripts', [KnowledgebaseController::class, 'suggested_scripts'])->name('knowledgebase.suggested_scripts');
+    Route::get('/knowledgebase/short_call_openers', [KnowledgebaseController::class, 'short_call_openers'])->name('knowledgebase.short_call_openers');
+    Route::get('/knowledgebase/whatsapp_texts', [KnowledgebaseController::class, 'whatsapp_texts'])->name('knowledgebase.whatsapp_texts');
+    Route::get('/knowledgebase/social_media_direct_messages', [KnowledgebaseController::class, 'social_media_direct_messages'])->name('knowledgebase.social_media_direct_messages');
+    Route::get('/knowledgebase/social_media_posts', [KnowledgebaseController::class, 'social_media_posts'])->name('knowledgebase.social_media_posts');
 
     // Useful Contacts
     Route::get('/useful_contacts/view', [PartnerUsefulContactsController::class, 'index'])->name('useful_contacts.index');

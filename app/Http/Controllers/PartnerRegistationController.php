@@ -96,7 +96,7 @@ class PartnerRegistationController extends Controller
             DB::commit();
 
             // Send welcome email
-            $partner->notify(new WelcomeEmail($partner));
+            $partner->notify(new WelcomeEmailPartner($partner));
 
             // Authenticate new partner
             Auth::login($partner);

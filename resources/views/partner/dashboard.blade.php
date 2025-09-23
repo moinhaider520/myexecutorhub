@@ -11,18 +11,29 @@
         }
     </style>
     <div class="page-body">
-
-        <!-- Coupon Section -->
+        <!-- Onboarding Video -->
         <div class="container">
             <div class="row mb-4">
-                <div class="col text-center">
-                    <h5>Your Coupon Code:</h5>
-                    <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
-                    <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#assignModal">Copy Affiliate
-                        Link</button>
+                <div class="col-md-6">
+                    <div class="col text-center">
+                        <h5>Your Coupon Code:</h5>
+                        <p class="lead" id="couponCode">{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}</p>
+                        <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#assignModal">Copy
+                            Affiliate
+                            Link</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="col text-center">
+                        <h5>Onboarding Guide:</h5>
+                        <p class="lead">View the Onboarding Guide by clicking the button below.</p>
+                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
+                    </div>
                 </div>
             </div>
         </div>
+
+
 
         <!-- Container-fluid starts-->
         <div class="container-fluid default-dashboard">

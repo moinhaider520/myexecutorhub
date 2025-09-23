@@ -35,8 +35,8 @@ class WelcomeEmailPartner extends Notification
         $this->notifyAdminForNewCustomer();
 
         return (new MailMessage)
-            ->subject('Welcome to Our Service!')
-            ->markdown('emails.welcome', [
+            ->subject('Welcome aboard — start earning in 15 minutes 🚀')
+            ->markdown('emails.welcome_partner', [
                 'user' => $this->user,
                 'date' => $this->user->created_at->format('F j, Y'), // Registration date
             ]);

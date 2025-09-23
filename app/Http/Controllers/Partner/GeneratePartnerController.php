@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
+use App\Notifications\WelcomeEmailPartner;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\PartnerRelationship;
@@ -123,6 +124,7 @@ class GeneratePartnerController extends Controller
                 'access_type' => $request->access_type,
                 'profession' => $request->profession,
                 'coupon_code' => $couponCode,
+                'user_role' => 'partner',
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
                 'password' => bcrypt('1234'),
@@ -136,6 +138,8 @@ class GeneratePartnerController extends Controller
             ]);
 
             DB::commit();
+
+            $partner->notify(new WelcomeEmailPartner($partner));
             return redirect()->route('partner.partners.index')->with('success', 'Partner created successfully.');
         } catch (\Exception $e) {
             DB::rollback();

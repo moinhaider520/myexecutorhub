@@ -16,6 +16,15 @@
                 </div>
                 <div class="col-md-6">
                     <div class="card">
+                        <h2 class="p-2">Video Title: Earn With Us</h2>
+                        <video id="earningVideo" style="width:100%;height:390px;" controls>
+                            <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
                         <h2 class="p-2">Title: How to Introduce Executor Hub to Clients</h2>
                         @if(auth()->user()->profession == "General")
                             <video id="earningVideo" style="width:100%;height:390px;" controls>
