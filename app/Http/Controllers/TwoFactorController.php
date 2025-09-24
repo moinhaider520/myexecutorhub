@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TwoFactorCode;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Mail;
 
 class TwoFactorController extends Controller
 {
@@ -50,5 +52,31 @@ class TwoFactorController extends Controller
         } else {
             return redirect()->route('dashboard');
         }
+    }
+
+    public function resend(Request $request)
+    {
+        // fetch the email we stored earlier in session
+        $email = session('two_factor_email');
+
+        if (!$email) {
+            return redirect()->route('login')->with('status', 'Session expired, please log in again.');
+        }
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return redirect()->route('login')->with('status', 'User not found.');
+        }
+
+        // regenerate code and send again
+        $user->update([
+            'two_factor_code' => mt_rand(100000, 999999),
+            'two_factor_expires_at' => now()->addMinutes(10),
+        ]);
+
+        Mail::to($user->email)->send(new TwoFactorCode($user));
+
+        return back()->with('status', 'A new verification code has been sent to your email.');
     }
 }

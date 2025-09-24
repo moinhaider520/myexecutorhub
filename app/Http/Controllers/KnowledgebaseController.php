@@ -49,6 +49,11 @@ class KnowledgebaseController extends Controller
     {
         return view('knowledgebase.client_reactivation');
     }
+    public function entry_example()
+    {
+        return view('knowledgebase.entry_example');
+    }
+    
     
 
 

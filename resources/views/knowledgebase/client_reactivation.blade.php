@@ -59,17 +59,6 @@
                         <p>“Would it be okay if I check in next week to see if you’ve had a chance to set it up?”</p>
                         <p>•	Even if only a small % sign up, this adds up quickly because it’s recurring income and strengthens your relationship with existing clients.</p>
 
-                        <!-- TEMPLATE 3 -->
-                        <h2 class="mb-4">Knowledgebase Entry Example</h2>
-                        <p>Title: Executor Hub Logo Files</p>
-                        <p>Body Copy:</p>
-                        <p>We’ve provided official Executor Hub logos for you to use in your emails, newsletters, presentations, and social posts. Using the official logo ensures a consistent and professional brand presence.</p>
-                        <p>Downloads Available:</p>
-                        <p>•	PNG (transparent)</p>
-                        <p>•	JPEG (standard)</p>
-                        <p>•	SVG/EPS (high-resolution for print)</p>
-                        <p>👉 Please use the logo exactly as provided — do not stretch, change colours, or crop it.</p>
-                        <p>💡 Bonus Tip: If you also create a small “Powered by Executor Hub” badge, partners can drop it at the bottom of their own materials — subtle but powerful brand awareness.</p>
                     </div>
                 </div>
             </div>

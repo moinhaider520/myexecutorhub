@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\CouponUsage;
 use App\Models\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
@@ -18,4 +19,12 @@ class CustomerController extends Controller
 
         return view('partner.customers.index', compact('customers'));
     }
+
+    public function invite_customers()
+    {
+        $user = Auth::user();
+        return view('partner.customers.invite_customers',compact('user'));
+
+    }
+
 }

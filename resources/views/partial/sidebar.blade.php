@@ -146,6 +146,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.customers.index') }}">View All</a></li>
+                            <li><a href="{{ route('partner.customers.invite_customers') }}">Invite Customer</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -185,7 +186,9 @@
                             <li><a href="{{ route('partner.knowledgebase.social_media_direct_messages') }}">SM Direct Messages(DM)</a></li>
                             <li><a href="{{ route('partner.knowledgebase.social_media_posts') }}">Social Media Posts</a></li>
                             <li><a href="{{ route('partner.knowledgebase.best_practices') }}">FAQ's & Best Practices</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.client_reactivation') }}">Client Reactivation Templates</a></li>                                                                                    
+                            <li><a href="{{ route('partner.knowledgebase.client_reactivation') }}">Client Reactivation Templates</a></li>
+                            <li><a href="{{ route('partner.knowledgebase.entry_example') }}">Entry Example</a></li>
+                            
         
                         </ul>
                     </li>

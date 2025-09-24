@@ -184,6 +184,7 @@ use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
 Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
+Route::post('two-factor/resend', [TwoFactorController::class, 'resend'])->name('two-factor.resend');
 
 
 Route::get('partner-registration', [PartnerRegistationController::class, 'index'])->name('partner-registration.index');
@@ -680,7 +681,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('/knowledgebase/quick_start_guide', [KnowledgebaseController::class, 'quick_start_guide'])->name('knowledgebase.quick_start_guide');
     Route::get('/knowledgebase/best_practices', [KnowledgebaseController::class, 'best_practices'])->name('knowledgebase.best_practices');
     Route::get('/knowledgebase/client_reactivation', [KnowledgebaseController::class, 'client_reactivation'])->name('knowledgebase.client_reactivation');
-    
+    Route::get('/knowledgebase/entry_example', [KnowledgebaseController::class, 'entry_example'])->name('knowledgebase.entry_example');
+
 
     // Useful Contacts
     Route::get('/useful_contacts/view', [PartnerUsefulContactsController::class, 'index'])->name('useful_contacts.index');
@@ -704,6 +706,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Customers
     Route::get('/customers', [PartnerCustomerController::class, 'index'])->name('customers.index');
+        Route::get('/customers/invite_customers', [PartnerCustomerController::class, 'invite_customers'])->name('customers.invite_customers');
     // LPA
     Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');
