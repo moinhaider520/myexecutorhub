@@ -677,6 +677,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('/knowledgebase/whatsapp_texts', [KnowledgebaseController::class, 'whatsapp_texts'])->name('knowledgebase.whatsapp_texts');
     Route::get('/knowledgebase/social_media_direct_messages', [KnowledgebaseController::class, 'social_media_direct_messages'])->name('knowledgebase.social_media_direct_messages');
     Route::get('/knowledgebase/social_media_posts', [KnowledgebaseController::class, 'social_media_posts'])->name('knowledgebase.social_media_posts');
+    Route::get('/knowledgebase/quick_start_guide', [KnowledgebaseController::class, 'quick_start_guide'])->name('knowledgebase.quick_start_guide');
+    Route::get('/knowledgebase/best_practices', [KnowledgebaseController::class, 'best_practices'])->name('knowledgebase.best_practices');
+    Route::get('/knowledgebase/client_reactivation', [KnowledgebaseController::class, 'client_reactivation'])->name('knowledgebase.client_reactivation');
+    
 
     // Useful Contacts
     Route::get('/useful_contacts/view', [PartnerUsefulContactsController::class, 'index'])->name('useful_contacts.index');

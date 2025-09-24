@@ -35,5 +35,21 @@ class KnowledgebaseController extends Controller
     public function social_media_posts()
     {
         return view('knowledgebase.social_media_posts');
-    }   
+    }
+
+    public function quick_start_guide()
+    {
+        return view('knowledgebase.quick_start_guide');
+    }
+    public function best_practices()
+    {
+        return view('knowledgebase.best_practices');
+    }
+    public function client_reactivation()
+    {
+        return view('knowledgebase.client_reactivation');
+    }
+    
+
+
 }

@@ -176,13 +176,17 @@
                             <span>Knowledgebase</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.knowledgebase.index') }}">Learning Videos</a></li>
+                        <li><a href="{{ route('partner.knowledgebase.quick_start_guide') }}">Quick Start Guide</a></li>    
+                        <li><a href="{{ route('partner.knowledgebase.index') }}">Learning Videos</a></li>
                             <li><a href="{{ route('partner.knowledgebase.email_templates') }}">Email Templates</a></li>
                             <li><a href="{{ route('partner.knowledgebase.suggested_scripts') }}">Suggested Scripts</a></li>
                             <li><a href="{{ route('partner.knowledgebase.short_call_openers') }}">Short Call Openers</a></li>
                             <li><a href="{{ route('partner.knowledgebase.whatsapp_texts') }}">Whatsapp/Texts</a></li>
                             <li><a href="{{ route('partner.knowledgebase.social_media_direct_messages') }}">SM Direct Messages(DM)</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.social_media_posts') }}">Social Media Posts</a></li>                                                                                    
+                            <li><a href="{{ route('partner.knowledgebase.social_media_posts') }}">Social Media Posts</a></li>
+                            <li><a href="{{ route('partner.knowledgebase.best_practices') }}">FAQ's & Best Practices</a></li>
+                            <li><a href="{{ route('partner.knowledgebase.client_reactivation') }}">Client Reactivation Templates</a></li>                                                                                    
+        
                         </ul>
                     </li>
 
