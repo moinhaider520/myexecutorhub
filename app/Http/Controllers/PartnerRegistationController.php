@@ -31,7 +31,6 @@ class PartnerRegistationController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'coupon_code' => 'required|string', // Coupon code is required
             'profession' => 'required|string|max:255',
             'hear_about_us' => 'required|string|max:255',
             'g-recaptcha-response' => [
@@ -49,19 +48,20 @@ class PartnerRegistationController extends Controller
             ],
         ]);
 
-        // Check coupon validity and role in one query
-        $couponOwner = User::where('coupon_code', $request->coupon_code)
-            ->whereHas('roles', function ($query) {
-                $query->where('name', 'partner');
-            })
-            ->first();
+        if ($request->coupon_code) {
+            // Check coupon validity and role in one query
+            $couponOwner = User::where('coupon_code', $request->coupon_code)
+                ->whereHas('roles', function ($query) {
+                    $query->where('name', 'partner');
+                })
+                ->first();
 
-        if (!$couponOwner) {
-            return redirect()->back()->withErrors([
-                'coupon_code' => 'Invalid or unauthorized coupon code.',
-            ])->withInput();
+            if (!$couponOwner) {
+                return redirect()->back()->withErrors([
+                    'coupon_code' => 'Invalid or unauthorized coupon code.',
+                ])->withInput();
+            }
         }
-
 
         // Generate new coupon code for this partner
         $newCouponCode = $request->name . strtoupper(uniqid());
@@ -87,11 +87,14 @@ class PartnerRegistationController extends Controller
             // Assign 'partner' role
             $partner->assignRole('partner');
 
-            // Save parent-child relationship
-            PartnerRelationship::create([
-                'parent_partner_id' => $couponOwner->id,
-                'sub_partner_id' => $partner->id,
-            ]);
+            if ($request->coupon_code) {
+                // Save parent-child relationship
+                PartnerRelationship::create([
+                    'parent_partner_id' => $couponOwner->id,
+                    'sub_partner_id' => $partner->id,
+                ]);
+            }
+
 
             DB::commit();
 

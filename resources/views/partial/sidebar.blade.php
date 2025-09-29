@@ -187,7 +187,7 @@
                             <li><a href="{{ route('partner.knowledgebase.social_media_posts') }}">Social Media Posts</a></li>
                             <li><a href="{{ route('partner.knowledgebase.best_practices') }}">FAQ's & Best Practices</a></li>
                             <li><a href="{{ route('partner.knowledgebase.client_reactivation') }}">Client Reactivation Templates</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.entry_example') }}">Entry Example</a></li>
+                            <li><a href="{{ route('partner.knowledgebase.entry_example') }}">Logos</a></li>
                             
         
                         </ul>

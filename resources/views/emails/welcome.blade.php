@@ -53,10 +53,10 @@
                     <tr>
                         <td style="background-color: #f1f1f1; text-align: center; padding: 20px;">
                             <p style="color: #888888; font-size: 14px;">
-                                Best regards,<br>My Executor Hub Team
+                                Best regards,<br>Executor Hub Team
                             </p>
                             <p style="color: #888888; font-size: 12px;">
-                                © {{ date('Y') }} My Executor Hub. All rights reserved.
+                                © {{ date('Y') }}Executor Hub. All rights reserved.
                             </p>
                             <p style="color: #888888; font-size: 12px;">
                                 <a href="{{ url('/privacy-policy') }}" style="color: #007bff; text-decoration: none;">Privacy Policy</a>

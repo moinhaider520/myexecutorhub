@@ -14,6 +14,26 @@
         <!-- Onboarding Video -->
         <div class="container">
             <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Executor Hub – what is it?</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <p>Executor Hub is your personal vault and instruction manual for the people you leave behind.
+                                It stores your important documents securely, helps your executors know exactly what to do,
+                                and gives your loved ones clarity when they need it most.</p>
+                            <p>Rather than leaving them to play detective at a difficult time, Executor Hub gives you the
+                                peace of mind that everything’s organised, accessible, and explained.</p>
+                            <p>It’s not just storage – it’s guidance, structure, and a helping hand for the people you care
+                                about most. It can save time, money, stress – and even help avoid family fallouts.</p>
+                            <p>It’s one of the most thoughtful things you can leave behind.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="col text-center">
                         <h5>Your Coupon Code:</h5>
