@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Document Successfully Stored</title>
 </head>
+
 <body>
     <p>Hi {{ $data['first_name'] }},</p>
 
-    <p>Great job! You’ve successfully uploaded your <strong>{{ $data['document_name'] }}</strong> to Executor Hub. Taking this step ensures your important documents are secure and accessible when needed.</p>
+    <p>Great job! You’ve successfully uploaded your <strong>{{ $data['document_name'] }}</strong> to Executor Hub.
+        Taking this step ensures your important documents are secure and accessible when needed.</p>
 
     <p>🔍 <strong>What’s next?</strong></p>
     <ul>
@@ -21,5 +24,17 @@
 
     <p>Best,</p>
     <p><strong>Executor Hub Team</strong></p>
+
+    <br /><br />
+    <p><b>Executor Hub Team</b></p>
+    <p><b>Executor Hub Ltd</b></p>
+    <p><b>Empowering Executors, Ensuring Legacies</b></p>
+    <p><b>Email: hello@executorhub.co.uk</b></p>
+    <p><b>Website: https://executorhub.co.uk</b></p>
+    <p><b>ICO Registration: ZB932381</b></p>
+    <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+    <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+    <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
 </body>
+
 </html>
