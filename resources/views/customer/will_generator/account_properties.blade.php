@@ -80,14 +80,14 @@ input[type="radio"] {
     }
 
     </style>
-    @php
+     @php
     $assetTypeMap = [
-        'bankAccount' => 'Bank Account',
-        'pension' => 'Pension',
-        'lifeInsurance' => 'Life Insurance',
-        'stocksAndShares' => 'Stocks and Shares',
-        'property' => 'Property',
-        'other' => 'Other',
+        'Bank Account' => 'Bank Account',
+        'Pension' => 'Pension',
+        'Life Insurance' => 'Life Insurance',
+        'Stocks and Shares' => 'Stocks and Shares',
+        'Property' => 'Property',
+        'Other' => 'Other',
     ];
 @endphp
 
@@ -240,12 +240,12 @@ input[type="radio"] {
                     <label for="add_asset_type_select">Asset type</label>
                     <select class="form-control" id="add_asset_type_select" name="asset_type">
                         <option value="select">Select...</option>
-                        <option value="bankAccount">Bank account</option>
-                        <option value="pension">Pension</option>
-                        <option value="lifeInsurance">Life insurance</option>
-                        <option value="stocksAndShares">Stocks and shares</option>
-                        <option value="property">Property</option>
-                        <option value="other">Other</option>
+                        <option value="Bank Account">Bank account</option>
+                        <option value="Pension">Pension</option>
+                        <option value="Life Insurance">Life insurance</option>
+                        <option value="Stocks and Shares">Stocks and shares</option>
+                        <option value="Property">Property</option>
+                        <option value="Other">Other</option>
                     </select>
                     <div class="text-danger" id="error-add_asset_type"></div>
                 </div>
@@ -346,12 +346,12 @@ input[type="radio"] {
                             <label for="edit_asset_type_select">Asset type</label>
                             <select class="form-control" id="edit_asset_type_select" name="asset_type">
                                 <option value="select">Select...</option>
-                                <option value="bankAccount">Bank account</option>
-                                <option value="pension">Pension</option>
-                                <option value="lifeInsurance">Life insurance</option>
-                                <option value="stocksAndShares">Stocks and shares</option>
-                                <option value="property">Property</option>
-                                <option value="other">Other</option>
+                                <option value="Bank Account">Bank account</option>
+                                <option value="Pension">Pension</option>
+                                <option value="Life Insurance">Life insurance</option>
+                                <option value="Stocks and Shares">Stocks and shares</option>
+                                <option value="Property">Property</option>
+                                <option value="Other">Other</option>
                             </select>
                             <div class="text-danger" id="error-edit_asset_type"></div>
                         </div>
@@ -498,22 +498,22 @@ input[type="radio"] {
             }
 
             // Show the relevant container(s) based on the selected value
-            if (selectedValue === 'bankAccount') {
+            if (selectedValue === 'Bank Account') {
                 $(`#${typePrefix}BankAccountFields`).removeClass('hidden');
                 if (valueContainer.length) valueContainer.removeClass('hidden');
-            } else if (selectedValue === 'pension') {
+            } else if (selectedValue === 'Pension') {
                 $(`#${typePrefix}PensionFields`).removeClass('hidden');
                 if (valueContainer.length) valueContainer.removeClass('hidden');
-            } else if (selectedValue === 'lifeInsurance') {
+            } else if (selectedValue === 'Life Insurance') {
                 $(`#${typePrefix}LifeInsuranceFields`).removeClass('hidden');
                 if (valueContainer.length) valueContainer.removeClass('hidden');
-            } else if (selectedValue === 'stocksAndShares') {
+            } else if (selectedValue === 'Stocks and Shares') {
                 $(`#${typePrefix}StocksAndSharesFields`).removeClass('hidden');
                 if (valueContainer.length) valueContainer.removeClass('hidden');
-            } else if (selectedValue === 'property') {
+            } else if (selectedValue === 'Property') {
                 $(`#${typePrefix}PropertyFields`).removeClass('hidden');
                 if (valueContainer.length) valueContainer.removeClass('hidden');
-            } else if (selectedValue === 'other') {
+            } else if (selectedValue === 'Other') {
                 $(`#${typePrefix}OtherFields`).removeClass('hidden');
                 if (valueContainer.length) valueContainer.removeClass('hidden');
             }
@@ -569,29 +569,28 @@ input[type="radio"] {
 
             // Add specific fields based on asset type
             switch (assetType) {
-                case 'bankAccount':
+                case 'Bank Account':
                     postData.asset_value = $('#add_bank_name').val();
                     break;
-                case 'pension':
+                case 'Pension':
                     postData.asset_value = $('#add_pension_provider').val();
                     break;
-                case 'lifeInsurance':
+                case 'Life Insurance':
                     postData.asset_value = $('#add_life_insurance_provider').val();
                     break;
-                case 'stocksAndShares':
+                case 'Stocks and Shares':
                     postData.asset_value = $('#add_company_name').val();
                     break;
-                case 'property':
+                case 'Property':
                     postData.asset_value = $('#add_property_address').val();
                     postData.has_mortgage = $('input[name="add_has_mortgage"]:checked').val(); // Ensure input names are distinct for add/edit
                     postData.ownership_type = $('input[name="add_ownership_type"]:checked').val(); // Ensure input names are distinct for add/edit
                     break;
-                case 'other':
+                case 'Other':
                     postData.other_description = $('#add_other_description').val();
                     postData.asset_value = $('#add_other_description').val();
                     break;
             }
-
             $.ajax({
                 url: "{{route('customer.will_generator.account_properties.store','')}}/"+will_user_id,
                 method: 'POST',
@@ -650,19 +649,19 @@ input[type="radio"] {
 
             // Then populate specific fields based on the type
             switch (type) {
-                case 'bankAccount':
+                case 'Bank Account':
                     $('#edit_bank_name').val(value); // 'name' could be the bank name
                     break;
-                case 'pension':
+                case 'Pension':
                     $('#edit_pension_provider').val(value); // 'name' could be the provider
                     break;
-                case 'lifeInsurance':
+                case 'Life Insurance':
                     $('#edit_life_insurance_provider').val(value); // 'name' could be the provider
                     break;
-                case 'stocksAndShares':
+                case 'Stocks and Shares':
                     $('#edit_company_name').val(value); // 'name' could be the company name
                     break;
-                case 'property':
+                case 'Property':
                     $('#edit_property_address').val(value); // 'name' could be the address
                     // Set radio buttons for property
                     if (hasMortgage !== undefined) {
@@ -672,7 +671,7 @@ input[type="radio"] {
                         $(`input[name="edit_ownership_type"][value="${ownershipType}"]`).prop('checked', true);
                     }
                     break;
-                case 'other':
+                case 'Other':
                     $('#edit_other_description').val(value); // 'name' could be the description
                     break;
             }
@@ -697,24 +696,24 @@ input[type="radio"] {
 
             // Add specific fields based on asset type for update
             switch (assetType) {
-                case 'bankAccount':
+                case 'Bank Account':
                     postData.asset_value = $('#edit_bank_name').val(); // Ensure you're sending the correct value for asset_value
                     break;
-                case 'pension':
+                case 'Pension':
                     postData.asset_value = $('#edit_pension_provider').val();
                     break;
-                case 'lifeInsurance':
+                case 'Life Insurance':
                     postData.asset_value = $('#edit_life_insurance_provider').val();
                     break;
-                case 'stocksAndShares':
+                case 'Stocks and Shares':
                     postData.asset_value = $('#edit_company_name').val();
                     break;
-                case 'property':
+                case 'Property':
                     postData.asset_value = $('#edit_property_address').val();
                     postData.has_mortgage = $('input[name="edit_has_mortgage"]:checked').val();
                     postData.ownership_type = $('input[name="edit_ownership_type"]:checked').val();
                     break;
-                case 'other':
+                case 'Other':
                     postData.other_description = $('#edit_other_description').val();
                     break;
             }
