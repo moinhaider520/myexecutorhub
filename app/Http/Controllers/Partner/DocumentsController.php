@@ -14,7 +14,7 @@ use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
-
+use Illuminate\Support\Facades\Http;
 class DocumentsController extends Controller
 {
     use ImageUpload;
@@ -42,7 +42,7 @@ class DocumentsController extends Controller
             DB::beginTransaction();
 
             $path = $this->imageUpload($request->file('file'), 'documents');
-
+            $extractedText = $this->extract($request);
             $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
@@ -89,6 +89,24 @@ class DocumentsController extends Controller
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    public function extract(Request $request)
+    {
+        $uploaded = $request->file('file'); // from your HTML form field name="file"
+
+        $resp = Http::asMultipart()
+            ->attach('file', fopen($uploaded->getRealPath(), 'r'), $uploaded->getClientOriginalName())
+            ->post('http://16.171.35.45:8000/extract', [
+                'lang'               => 'eng',
+                'dpi'                => 300,
+                'ocr_psm'            => 3,
+                'force_ocr'          => false,
+                'ocr_on_empty_only'  => true,
+                'include_text_preview' => false,
+            ]);
+
+        return response()->json($resp->json(), $resp->status());
     }
 
     public function update(Request $request, $id)

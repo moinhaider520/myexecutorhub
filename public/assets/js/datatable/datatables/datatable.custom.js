@@ -2,7 +2,14 @@
     $(document).ready(function() {
         $("product-list").DataTable();
         // Basic table example
-        $("#basic-1").DataTable();
+         $('#basic-1').DataTable({
+            columnDefs: [{
+                targets: [5],
+                visible: false,
+                searchable: true
+            } // adjust index to match file_text col
+            ]
+        });
         $("#basic-2").DataTable({
             paging: true,
             ordering: false,

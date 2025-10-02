@@ -32,6 +32,7 @@
                 <th>Download Link</th>
                 <th>Reminder Date</th>
                 <th>Reviews</th>
+                <th style="display:none;">Extracted Text</th>
                 <th>Action</th>
               </tr>
               </thead>
@@ -41,6 +42,7 @@
           <td>{{ $loop->iteration }}</td>
           <td>{{ $document->document_type }}</td>
           <td>{{ $document->description }}</td>
+          <td style="display:none;">{{ $document->textpdf }}</td>
           <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}"
             target="_blank">Download</a></td>
           <td>
@@ -49,6 +51,7 @@
           <td><button type="button" class="btn btn-secondary btn-sm edit-button" data-toggle="modal"
             data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
           <td>
+            
           <button type="button" class="btn btn-primary btn-sm edit-button" data-toggle="modal"
             data-target="#AddReviewModal" data-id="{{ $document->id }}">Add Reviews</button>
           <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"

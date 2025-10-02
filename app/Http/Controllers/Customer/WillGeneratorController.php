@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class WillGeneratorController extends Controller
 {
     public function index()
@@ -94,20 +95,19 @@ class WillGeneratorController extends Controller
     public function about_you($will_user_id = null)
     {
         $user_info = WillUserInfo::find($will_user_id);
-        if(!$user_info){
+        if (!$user_info) {
 
-            $already_user_info = WillUserInfo::where('user_id',Auth::user()->id)->first();
-            if($already_user_info){
+            $already_user_info = WillUserInfo::where('user_id', Auth::user()->id)->first();
+            if ($already_user_info) {
 
-                return redirect()->route('customer.will_generator.about_you',$already_user_info);
+                return redirect()->route('customer.will_generator.about_you', $already_user_info);
             }
-
         }
 
         return view('customer.will_generator.about_you', compact('user_info'));
     }
 
-    public function store_about_you(Request $request)
+    public function store_about_you(Request $request, $internalCall = false)
     {
         try {
 
@@ -132,7 +132,9 @@ class WillGeneratorController extends Controller
                 ]
             );
             DB::commit();
-
+            if ($internalCall) {
+                return $will_user_id;
+            }
             return redirect()->route('customer.will_generator.step3', $request->will_user_id ?? $will_user_id->id);
         } catch (\Exception $e) {
             DB::rollBack();
