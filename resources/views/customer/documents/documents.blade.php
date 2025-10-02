@@ -357,36 +357,59 @@
   <script>
     $(document).ready(function () {
     // Handle Add Document form submission
-    $('#addDocumentForm').on('submit', function (e) {
-      e.preventDefault();
+ $('#addDocumentForm').on('submit', function (e) {
+    e.preventDefault();
 
-      clearErrors(); // Clear previous error messages
+    clearErrors(); // Clear previous error messages
 
-      var formData = new FormData(this);
+    var formData = new FormData(this);
 
-      $.ajax({
-      url: "{{ route('customer.documents.store') }}",
-      type: "POST",
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function (response) {
-        if (response.success) {
-        location.reload();
-        } else {
-        alert('An error occurred while adding the document.');
+    $.ajax({
+        url: "{{ route('customer.documents.store') }}",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+        // Show SweetAlert loader before request starts
+        beforeSend: function () {
+            Swal.fire({
+                title: 'Please wait...',
+                text: 'Uploading your document',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+        },
+
+        success: function (response) {
+            if (response.success) {
+                Swal.close(); // Close loader
+                location.reload();
+            } else {
+                Swal.fire('Error', 'An error occurred while adding the document.', 'error');
+            }
+        },
+
+        error: function (xhr) {
+            Swal.close(); // Close loader on error too
+            if (xhr.status === 422) {
+                var errors = xhr.responseJSON.errors;
+                displayErrors(errors);
+            } else {
+                Swal.fire('Error', 'An error occurred. Please try again.', 'error');
+            }
+        },
+
+        complete: function () {
+            // Optional: ensures Swal closes if something unexpected happens
+            Swal.close();
         }
-      },
-      error: function (xhr) {
-        if (xhr.status === 422) {
-        var errors = xhr.responseJSON.errors;
-        displayErrors(errors);
-        } else {
-        alert('An error occurred. Please try again.');
-        }
-      }
-      });
     });
+});
+
 
     // Handle Edit Document button click
     $('.edit-button').on('click', function () {
