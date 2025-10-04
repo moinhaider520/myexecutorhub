@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('documents', function (Blueprint $table) {
             $table->text('textpdf')->nullable()->after('reminder_type');
-            $table->json('json_response')->nullable()->after('textpdf');
         });
     }
 
