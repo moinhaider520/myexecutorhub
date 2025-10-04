@@ -177,7 +177,7 @@
                             <span>Knowledgebase</span>
                         </a>
                         <ul class="sidebar-submenu">
-                        <li><a href="{{ route('partner.knowledgebase.quick_start_guide') }}">Quick Start Guide</a></li>    
+                        <li><a href="{{ route('partner.knowledgebase.quick_start_guide') }}">Quick Start Guide</a></li>
                         <li><a href="{{ route('partner.knowledgebase.index') }}">Learning Videos</a></li>
                             <li><a href="{{ route('partner.knowledgebase.email_templates') }}">Email Templates</a></li>
                             <li><a href="{{ route('partner.knowledgebase.suggested_scripts') }}">Suggested Scripts</a></li>
@@ -188,8 +188,8 @@
                             <li><a href="{{ route('partner.knowledgebase.best_practices') }}">FAQ's & Best Practices</a></li>
                             <li><a href="{{ route('partner.knowledgebase.client_reactivation') }}">Client Reactivation Templates</a></li>
                             <li><a href="{{ route('partner.knowledgebase.entry_example') }}">Logos</a></li>
-                            
-        
+
+
                         </ul>
                     </li>
 
@@ -388,7 +388,7 @@
                                         <a href="{{ route('customer.will_generator.create', $will_user_info->id) }}">Edit
                                             Will</a>
                                     @else
-                                        <a href="{{ route('customer.will_generator.about_you') }}">Create Will</a>
+                                        <a href="{{ route('customer.will_generator.create_will') }}">Create Will</a>
                                     @endif
                                 </li>
                             </ul>
