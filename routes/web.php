@@ -600,9 +600,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // WILL GENERATOR
 
-    Route::get('will_generator/create_will', function(){
-    return view('customer.will_generator.new_will');
-})->name('will_generate.create_will');
+    Route::get('will_generator/create_will',[WillGeneratorController::class,'create_will'])->name('will_generator.create_will');
+    Route::post('will_generator/will_pdf_generate_ai',[WillGeneratorController::class,'will_pdf_generate_ai'])->name('will_generator.will_pdf_generate_ai');
+
     Route::get('will_generator', [WillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create/{will_user_id}', [WillGeneratorController::class, 'create'])->name('will_generator.create');
     Route::get('will_generator/about_you/{will_user_id?}', [WillGeneratorController::class, 'about_you'])->name('will_generator.about_you');

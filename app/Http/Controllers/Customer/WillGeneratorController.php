@@ -12,6 +12,7 @@ use App\Models\WillUserEstates;
 use App\Models\WillUserFuneral;
 use App\Models\WillUserInfo;
 use App\Models\WillUserInheritedGift;
+use App\Traits\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Http;
 class WillGeneratorController extends Controller
 {
+    use ImageUpload;
     public function index()
     {
         $user_about_infos = WillUserInfo::where('user_id', Auth::id())->get();
@@ -957,14 +959,15 @@ class WillGeneratorController extends Controller
     }
 
 
-
+    public function create_will(){
+        return view('customer.will_generator.new_will');
+    }
     public function will_pdf_generate_ai(Request $request){
 
         $path = $this->imageUpload($request->file('file'), 'documents');
         $fullPath = public_path('assets/upload/' . $path);
         $extractedText = $this->extract($fullPath, $path);
         $data = $extractedText['data'];
-        if ($request->document_type == "Will") {
 
                 $willRequest = new Request([
                     'will_user_id' => $request->will_user_id ?? null,
@@ -1020,7 +1023,7 @@ class WillGeneratorController extends Controller
                         // ensure $gift is an array
                         if (!is_array($gift)) {
                             // optionally log and skip
-                            \Log::warning('Skipping non-array gift item', ['gift' => $gift]);
+                            \Exception::warning('Skipping non-array gift item', ['gift' => $gift]);
                             continue;
                         }
 
@@ -1053,7 +1056,7 @@ class WillGeneratorController extends Controller
                             $willController->store_add_gift($giftRequest, $will_user_id);
                     }
                 }
-            }
+                return redirect()->route('customer.will_generator.create',$will_user_id);
     }
     private function extract(string $fullPath, string $filename)
     {
@@ -1113,6 +1116,7 @@ class WillGeneratorController extends Controller
         }
 
         $resp = Http::asMultipart()
+            ->timeout(60)
             ->attach('file', fopen($fullPath, 'r'), $filename)
             ->post('http://16.171.35.45:8000/extract', [
                 'lang'                => 'eng',
