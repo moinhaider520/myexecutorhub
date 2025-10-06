@@ -49,6 +49,10 @@
     <!-- Container-fluid starts-->
     <div class="container-fluid default-dashboard">
         <div class="row widget-grid">
+            <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5 d-flex mb-3 justify-content-end">
+            <a href="{{ route('customer.will_generator.create_pdf', @$will_user_info->id) }}"
+                                                            class="btn btn-primary w-25 ">Download</a>
+            </div>
             <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
                 <div class="row">
                     <!-- STEPS -->
