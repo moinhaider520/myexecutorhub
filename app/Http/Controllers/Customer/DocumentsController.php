@@ -43,36 +43,58 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
 
+            // 1) store uploaded file and get relative path (same as your imageUpload)
             $path = $this->imageUpload($request->file('file'), 'documents');
-            $fullPath = public_path('assets/upload/' . $path);    // now we have the full path
-          
+            $originalFullPath = public_path('assets/upload/' . $path); // original uploaded file path
+
             $file = $request->file('file');
-            $extension = $file->getClientOriginalExtension();
-            if($extension === 'doc' || $extension === 'docx') {
-               $domPdfPath = base_path('vendor/dompdf/dompdf');
+            $extension = strtolower($file->getClientOriginalExtension());
 
-            \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
-            \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-            $Content = \PhpOffice\PhpWord\IOFactory::load($fullPath);
-            $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content, 'PDF');
-            $PDFWriter->save($fullPath);
+            // Build a PDF path but keep original file (do NOT overwrite)
+            $basename = pathinfo($path, PATHINFO_FILENAME);
+            $pdfRelative = $basename . '.pdf';
+            $pdfFullPath = public_path('assets/upload/' . $pdfRelative);
+
+            if ($extension === 'doc' || $extension === 'docx') {
+                // Set DomPDF renderer (ensure dompdf is installed and path is correct)
+                $domPdfPath = base_path('vendor/dompdf/dompdf'); // adjust if needed
+                \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
+                \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
+
+                // Load the Word document from the ORIGINAL file
+                $phpWord = \PhpOffice\PhpWord\IOFactory::load($originalFullPath);
+
+                // Create PDF writer and save to the NEW PDF path (don't overwrite the .docx)
+                $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
+                $pdfWriter->save($pdfFullPath);
+            } elseif ($extension === 'pdf') {
+                // If already PDF, just use the uploaded file path as pdfFullPath
+                $pdfFullPath = $originalFullPath;
+                $pdfRelative = $path;
             }
-
-            $text = (new Pdf("C:\Program Files\Git\mingw64\bin\pdftotext.exe"))
-                ->setPdf($fullPath)
-                ->text();
-
+            $pdftotextBin = 'C:\\Program Files\\Git\\mingw64\\bin\\pdftotext.exe';
+            $command = escapeshellarg($pdftotextBin) . ' ' . escapeshellarg($pdfFullPath) . ' -'; 
+            $text = null;
+            $output = null;
+            $returnVar = null;
+            exec($command, $output, $returnVar);
+            if ($returnVar === 0) {
+              
+                $text = implode("\n", $output);
+            } else {
+                $text = null;
+            }
             $document = Document::create([
                 'document_type' => $request->document_type,
-                'description' => $request->description,
-                'file_path' => $path,
-                'created_by' => Auth::id(),
+                'description'   => $request->description,
+                'file_path'     => $path,       
+                'created_by'    => Auth::id(),
                 'reminder_date' => $request->reminder_date,
                 'reminder_type' => $request->reminder_type,
-                'textpdf' =>null,
+                'textpdf'       => mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null,
             ]);
 
-            // Check if onboarding_progress exists for the user
+            // Update onboarding progress
             $progress = OnboardingProgress::firstOrCreate(
                 ['user_id' => Auth::id()],
                 ['document_uploaded' => true]
