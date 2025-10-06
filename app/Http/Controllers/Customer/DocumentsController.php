@@ -14,6 +14,7 @@ use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
+use Spatie\PdfToText\Pdf;
 
 
 class DocumentsController extends Controller
@@ -44,7 +45,22 @@ class DocumentsController extends Controller
 
             $path = $this->imageUpload($request->file('file'), 'documents');
             $fullPath = public_path('assets/upload/' . $path);    // now we have the full path
-
+            
+            
+            $domPdfPath = base_path('vendor/dompdf/dompdf');
+  
+         \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
+         \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF'); 
+         $Content = \PhpOffice\PhpWord\IOFactory::load($fullPath); 
+         $PDFWriter = \PhpOffice\PhpWord\IOFactory::createWriter($Content,'PDF');
+  
+         $pdfFileName = "doc_".time().'.pdf';
+         $PDFWriter->save(public_path('uploads/'.$pdfFileName)); 
+         dd($pdfFileName);
+            $text = (new Pdf("C:\Program Files\Git\mingw64\bin\pdftotext.exe"))
+            ->setPdf($fullPath)
+            ->text();
+         
             $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
@@ -52,9 +68,10 @@ class DocumentsController extends Controller
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
                 'reminder_type' => $request->reminder_type,
-                'textpdf' =>'this is just testing',
+                'textpdf' =>mb_convert_encoding($text, 'UTF-8', 'UTF-8')
+,
             ]);
-
+      
             // Check if onboarding_progress exists for the user
             $progress = OnboardingProgress::firstOrCreate(
                 ['user_id' => Auth::id()],
