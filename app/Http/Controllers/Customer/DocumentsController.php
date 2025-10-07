@@ -14,6 +14,7 @@ use App\Traits\ImageUpload;
 use App\Models\DocumentTypes;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
+use Smalot\PdfParser\Parser;
 use Spatie\PdfToText\Pdf;
 
 
@@ -41,53 +42,45 @@ class DocumentsController extends Controller
         ]);
 
         try {
-            DB::beginTransaction();
+             DB::beginTransaction();
 
-            // 1) store uploaded file and get relative path (same as your imageUpload)
             $path = $this->imageUpload($request->file('file'), 'documents');
-            $originalFullPath = public_path('assets/upload/' . $path); // original uploaded file path
+            $originalFullPath = public_path('assets/upload/' . $path);
 
             $file = $request->file('file');
             $extension = strtolower($file->getClientOriginalExtension());
+            if ($extension === 'doc' || $extension === 'docx' || $extension === 'pdf') {
+                $basename = pathinfo($path, PATHINFO_FILENAME);
+                $pdfRelative = $basename . '.pdf';
+                $pdfFullPath = public_path('assets/upload/' . $pdfRelative);
 
-            // Build a PDF path but keep original file (do NOT overwrite)
-            $basename = pathinfo($path, PATHINFO_FILENAME);
-            $pdfRelative = $basename . '.pdf';
-            $pdfFullPath = public_path('assets/upload/' . $pdfRelative);
+                if ($extension === 'doc' || $extension === 'docx') {
+                    // Convert Word to PDF
+                    $domPdfPath = base_path('vendor/dompdf/dompdf'); // adjust if needed
+                    \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
+                    \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
 
-            if ($extension === 'doc' || $extension === 'docx') {
-                // Set DomPDF renderer (ensure dompdf is installed and path is correct)
-                $domPdfPath = base_path('vendor/dompdf/dompdf'); // adjust if needed
-                \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
-                \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-
-                // Load the Word document from the ORIGINAL file
-                $phpWord = \PhpOffice\PhpWord\IOFactory::load($originalFullPath);
-
-                // Create PDF writer and save to the NEW PDF path (don't overwrite the .docx)
-                $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
-                $pdfWriter->save($pdfFullPath);
-            } elseif ($extension === 'pdf') {
-                // If already PDF, just use the uploaded file path as pdfFullPath
-                $pdfFullPath = $originalFullPath;
-                $pdfRelative = $path;
-            }
-            $pdftotextBin = 'C:\\Program Files\\Git\\mingw64\\bin\\pdftotext.exe';
-            $command = escapeshellarg($pdftotextBin) . ' ' . escapeshellarg($pdfFullPath) . ' -'; 
-            $text = null;
-            $output = null;
-            $returnVar = null;
-            exec($command, $output, $returnVar);
-            if ($returnVar === 0) {
-              
-                $text = implode("\n", $output);
+                    $phpWord = \PhpOffice\PhpWord\IOFactory::load($originalFullPath);
+                    $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
+                    $pdfWriter->save($pdfFullPath);
+                } elseif ($extension === 'pdf') {
+                    $pdfFullPath = $originalFullPath;
+                    $pdfRelative = $path;
+                }
+                $parser = new Parser();
+                $pdf = $parser->parseFile($pdfFullPath);
+                $text = $pdf->getText();
             } else {
                 $text = null;
             }
+
+            // Extract text from PDF using Smalot PdfParser
+
+
             $document = Document::create([
                 'document_type' => $request->document_type,
                 'description'   => $request->description,
-                'file_path'     => $path,       
+                'file_path'     => $path,
                 'created_by'    => Auth::id(),
                 'reminder_date' => $request->reminder_date,
                 'reminder_type' => $request->reminder_type,
