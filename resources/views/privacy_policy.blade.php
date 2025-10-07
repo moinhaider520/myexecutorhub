@@ -352,8 +352,10 @@
 
                             <h5>Regulatory & Compliance Information</h5>
                             <ul>
-                                <li>Executor Hub is registered with the UK Information Commissioner’s Office (ICO) under registration number ZB932381.</li>
-                                <li>We act as the Data Controller for personal data submitted to the platform, whether entered by users directly or by an authorised partner acting on their behalf.</li>
+                                <li>Executor Hub is registered with the UK Information Commissioner’s Office (ICO) under
+                                    registration number ZB932381.</li>
+                                <li>We act as the Data Controller for personal data submitted to the platform, whether
+                                    entered by users directly or by an authorised partner acting on their behalf.</li>
                             </ul>
                             <!-- Title -->
                             <h4 class="s-30 w-700"><span>6.</span> Your Rights & Choices</h4>
@@ -399,11 +401,17 @@
                             <p>If you access Executor Hub from outside the UK, your data may be transferred and
                                 processed in the UK or other jurisdictions with different data protection laws.</p>
 
-                            <h4 class="s-30 w-700"><span>10.</span> Changes to This Privacy Policy</h4>
+                            <h4 class="s-30 w-700"><span>10.</span>Disaster Management and Data Recovery</h4>
+                            <p>At Executor Hub, we take the security and integrity of our users’ data very seriously. In the unlikely event of a security breach or hacking incident, we have robust disaster management and recovery protocols in place to ensure minimal disruption and complete data protection.</p>
+                            <p>Our system maintains automatic and encrypted backups of all essential data, including user accounts, subscription details, and service-related information. These backups are created at regular intervals and stored securely in separate locations to prevent data loss.</p>
+                            <p>If the portal is ever compromised, our immediate response will involve isolating and deleting the affected system to prevent further damage. We will then redeploy the most recent secure backup to restore all services swiftly and safely. This ensures that your access to subscriptions, features, and services will remain uninterrupted.</p>
+                            <p>We also want to assure our users that personal and financial information remains secure, as all sensitive data is encrypted and protected according to industry standards. Executor Hub does not store any payment card details directly on its servers, ensuring an additional layer of protection.</p>
+
+                            <h4 class="s-30 w-700"><span>11.</span> Changes to This Privacy Policy</h4>
                             <p>We may update this policy from time to time. Any changes will be posted on this page, and
                                 significant updates will be communicated via email or platform notifications.</p>
 
-                            <h4 class="s-30 w-700"><span>11.</span> Contact Us</h4>
+                            <h4 class="s-30 w-700"><span>12.</span> Contact Us</h4>
                             <p>If you have questions about this Privacy Policy, please contact us at:h
                                 ello@executorhub.co.uk</p>
                             <p>By using Executor Hub, you acknowledge that you have read and understood this Privacy

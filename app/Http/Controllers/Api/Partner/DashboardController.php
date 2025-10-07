@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Partner;
 
 use App\Http\Controllers\Controller;
 use App\Models\CouponUsage;
+use App\Models\PartnerRelationship;
 use App\Models\User;
 use App\Models\Document;
 use App\Models\BankAccount;
@@ -58,6 +59,15 @@ class DashboardController extends Controller
                 'Upload at Least One Document' => $progress->document_uploaded ?? false,
             ];
 
+            $subpartners = PartnerRelationship::where('parent_partner_id', Auth::id())->count();
+            $customers_invited = CouponUsage::where('partner_id', Auth::id())->count();
+            $subscribed_customers_invited = CouponUsage::with('user')
+                ->where('partner_id', Auth::id())
+                ->whereHas('user', function ($q) {
+                    $q->whereNotNull('stripe_subscription_id');
+                })
+                ->count();
+
             return response()->json([
                 'success' => true,
                 'data' => [
@@ -67,7 +77,10 @@ class DashboardController extends Controller
                     'total_debt' => $totalDebt,
                     'guide' => $guide,
                     'referredUsers' => $referredUsers,
-                    'document_locations' => $documentLocations
+                    'document_locations' => $documentLocations,
+                    'subpartners' => $subpartners,
+                    'customers_invited' => $customers_invited,
+                    'subscribed_customers_invited' => $subscribed_customers_invited
                 ]
             ], 200);
         } catch (\Exception $e) {

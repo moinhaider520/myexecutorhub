@@ -32,6 +32,19 @@
                     </div>
                 </div>
             </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><strong>🔒 Data Security: </strong>“Encrypted & protected at all times”</p>
+                            <p><strong>💾 Weekly Backups: </strong>“Automatic secure backups every 7 days”</p>
+                            <p><strong>⚡ Fast Recovery: </strong>“Service restored within 24–48 hours”</p>
+                            <p><strong>💳 Subscription Protection: </strong>“Your payments & access remain uninterrupted”</p>
+                            <p><strong>🛡️ Peace of Mind: </strong>“Disaster recovery plan always in place”</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col">
                     <div class="card">

@@ -57,7 +57,8 @@
                             <span>Customers </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('admin.customers.index') }}">View All</a></li>
+                        <li><a href="{{ route('admin.customers.create') }}">Provide Free Access</a></li>    
+                        <li><a href="{{ route('admin.customers.index') }}">View All</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">

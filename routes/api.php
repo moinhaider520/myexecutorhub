@@ -49,6 +49,9 @@ use App\Http\Controllers\Api\Partner\PensionController as PartnerPensionControll
 use App\Http\Controllers\Api\Partner\PictureController as PartnerPictureController;
 use App\Http\Controllers\Api\Partner\VideoController as PartnerVideoController;
 use App\Http\Controllers\Api\Partner\OtherTypeofAssetController as PartnerOtherTypeofAssetController;
+use App\Http\Controllers\Api\Partner\CustomerController as PartnerCustomerController;
+use App\Http\Controllers\Api\Partner\PartnerController as PartnerPartnerController;
+use App\Http\Controllers\Api\Partner\WithdrawalBankAccountController as PartnerWithdrawalBankAccountController;
 
 // Customer
 use App\Http\Controllers\Api\Customer\ProfileController as CustomerProfileController;
@@ -152,7 +155,7 @@ Route::post('/send_reset_password_email', [ForgetPasswordController::class, 'sen
 // Route to update the expo token
 Route::post('/expo/update-token/{id}', [ExpoController::class, 'updateExpoToken'])->name('expo.update-token');
 
-    Route::get('will_generator/create_pdf/{will_user_id}',[PartnerWillGeneratorController::class,'create_pdf'])->name('will_generator.create_pdf');
+Route::get('will_generator/create_pdf/{will_user_id}', [PartnerWillGeneratorController::class, 'create_pdf'])->name('will_generator.create_pdf');
 // Routes for user profile (available for all authenticated users)
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/{id}', [ProfileController::class, 'user_details'])->name('profile');
@@ -209,6 +212,19 @@ Route::middleware(['auth:sanctum', 'role:partner'])->prefix('partner')->group(fu
     Route::post('/executors/update/{id}', [PartnerExecutorsController::class, 'update'])->name('executors.update');
     Route::delete('/executors/destroy/{id}', [PartnerExecutorsController::class, 'destroy'])->name('executors.destroy');
 
+    // Partner Customers
+    Route::get('/customers/view', [PartnerCustomerController::class, 'view'])->name('customers.view');
+
+    // Partner Partners
+    Route::get('/partner/view', [PartnerPartnerController::class, 'view'])->name('partner.view');
+    Route::get('/partner/view_refferals/{id}', [PartnerPartnerController::class, 'view_refferals'])->name('partner.view_refferals');
+    Route::post('/partner/store', [PartnerPartnerController::class, 'store'])->name('partner.store');
+
+    // Partner Bank Details
+    Route::get('/bank_withdrawal/view', [PartnerWithdrawalBankAccountController::class, 'view'])->name('bank_withdrawal.view');
+    Route::post('/bank_withdrawal/store', [PartnerWithdrawalBankAccountController::class, 'store'])->name('bank_withdrawal.store');
+    Route::post('/bank_withdrawal/update/{id}', [PartnerWithdrawalBankAccountController::class, 'update'])->name('bank_withdrawal.update');
+    Route::delete('/bank_withdrawal/destroy/{id}', [PartnerWithdrawalBankAccountController::class, 'destroy'])->name('bank_withdrawal.destroy');
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [PartnerDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
     // Partner Documents
@@ -845,5 +861,5 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/wills', [ExecutorWillController::class, 'view'])->name('wills.view');
 
     // WILL GENERATOR
-     Route::get('/will_generator/partner_about_you', [ExecutorWillGeneratorController::class, 'partner_about_you'])->name('wills.partner_about_you');
+    Route::get('/will_generator/partner_about_you', [ExecutorWillGeneratorController::class, 'partner_about_you'])->name('wills.partner_about_you');
 });

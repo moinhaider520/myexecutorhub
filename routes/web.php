@@ -289,6 +289,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Customers
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
+    Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
@@ -600,8 +602,8 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // WILL GENERATOR
 
-    Route::get('will_generator/create_will',[WillGeneratorController::class,'create_will'])->name('will_generator.create_will');
-    Route::post('will_generator/will_pdf_generate_ai',[WillGeneratorController::class,'will_pdf_generate_ai'])->name('will_generator.will_pdf_generate_ai');
+    Route::get('will_generator/create_will', [WillGeneratorController::class, 'create_will'])->name('will_generator.create_will');
+    Route::post('will_generator/will_pdf_generate_ai', [WillGeneratorController::class, 'will_pdf_generate_ai'])->name('will_generator.will_pdf_generate_ai');
 
     Route::get('will_generator', [WillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create/{will_user_id}', [WillGeneratorController::class, 'create'])->name('will_generator.create');
@@ -711,7 +713,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Customers
     Route::get('/customers', [PartnerCustomerController::class, 'index'])->name('customers.index');
-        Route::get('/customers/invite_customers', [PartnerCustomerController::class, 'invite_customers'])->name('customers.invite_customers');
+    Route::get('/customers/invite_customers', [PartnerCustomerController::class, 'invite_customers'])->name('customers.invite_customers');
     // LPA
     Route::get('lpa', [PartnerLPAController::class, 'index'])->name('lpa.index');
     Route::get('lpa/create', [PartnerLPAController::class, 'create'])->name('lpa.create');
