@@ -105,6 +105,27 @@ class PartnerController extends Controller
 
             DB::commit();
 
+            $message = "
+            <h2>Hello {$partner->name},</h2>
+            <p>You’ve been invited to use <strong>Executor Hub</strong>!</p>
+            <p>Your account has been created. Use the following credentials to log in:</p>
+            <ul>
+                <li>Email: {$partner->email}</li>
+                <li>Password: 1234</li>
+            </ul>
+            <p><a href='https://executorhub.co.uk/login'>Click here to log in</a></p>
+            <p>Enjoy free access to the Premium plan, courtesy of your invitation!</p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+            Mail::to($request->email)->send(new CustomEmail(
+                [
+                    'subject' => 'You Have Been Invited to Executor Hub.',
+                    'message' => $message,
+                ],
+                'You Have Been Invited to Executor Hub.'
+            ));
+
             $partner->notify(new WelcomeEmailPartner($partner));
             return redirect()->route('admin.partners.index')->with('success', 'Partner created successfully.');
         } catch (\Exception $e) {
@@ -149,7 +170,7 @@ class PartnerController extends Controller
                 <li>Email: {$partner->email}</li>
                 <li>Password: {$tempPassword}</li>
             </ul>
-            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+            <p><a href='https://executorhub.co.uk/login'>Click here to log in</a></p>
             <p>Enjoy free access to the Premium plan, courtesy of your invitation!</p>
             <p>Regards,<br>Executor Hub Team</p>
         ";

@@ -16,7 +16,7 @@
                             <div class="card-body">
                                 <form action="{{ route('partner.partners.send_invite_email') }}" method="POST">
                                     @csrf
-                                    <input type="text" name="coupon_code" value="{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}">
+                                    <input type="hidden" name="coupon_code" value="{{ auth()->user()->coupon_code ?? 'No Coupon Code Available' }}">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Full Name</label>
                                         <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" placeholder="Enter full name" required>

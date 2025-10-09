@@ -81,6 +81,8 @@ class PartnerRegistationController extends Controller
                 'user_role' => 'partner',
                 'profession' => $request->profession,
                 'hear_about_us' => $request->hear_about_us,
+                'other_hear_about_us' => $request->other_hear_about_us,
+                'email_notifications' => $request->email_notifications  ?? 0,                
                 'password' => Hash::make($request->password),
             ]);
 

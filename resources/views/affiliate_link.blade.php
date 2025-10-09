@@ -462,14 +462,34 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="col-form-label">Where Did You Hear About Us?</label>
-                                        <select class="form-control" name="hear_about_us" required>
-                                            <option value="">Choose Option</option>
-                                            <option value="Social Media">Social Media</option>
-                                            <option value="Email">Email</option>
-                                            <option value="Friend & Family">Friend & Family</option>
-                                        </select>
-                                    </div>
+                                    <label class="col-form-label">Where Did You Hear About Us?</label>
+                                    <select class="form-control" name="hear_about_us" id="hear_about_us" required>
+                                        <option value="">Choose Option</option>
+                                        <option value="Social Media">Social Media (Facebook, Instagram, LinkedIn, etc.)
+                                        </option>
+                                        <option value="Google Search">Google Search</option>
+                                        <option value="Adviser / Estate Planner">Adviser / Estate Planner</option>
+                                        <option value="Solicitor / Law Firm">Solicitor / Law Firm</option>
+                                        <option value="Financial Adviser / IFA">Financial Adviser / IFA</option>
+                                        <option value="Trade Union / Membership Group">Trade Union / Membership Group
+                                        </option>
+                                        <option value="Employer / Workplace Benefit">Employer / Workplace Benefit
+                                        </option>
+                                        <option value="Friend or Family">Friend or Family</option>
+                                        <option value="Webinar / Event / Presentation">Webinar / Event / Presentation
+                                        </option>
+                                        <option value="Email Campaign">Email Campaign</option>
+                                        <option value="Partner Referral">Partner Referral</option>
+                                        <option value="Press / News Article">Press / News Article</option>
+                                        <option value="Other">Other (please specify)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="otherFieldDiv" style="display: none;">
+                                    <label class="col-form-label">Please specify:</label>
+                                    <input type="text" class="form-control" name="other_hear_about_us"
+                                        placeholder="Enter details">
+                                </div>
                                     
                                 </form>
 
@@ -1678,7 +1698,17 @@
         });
     </script>
 
-
+<script>
+        document.getElementById('hear_about_us').addEventListener('change', function () {
+            const otherFieldDiv = document.getElementById('otherFieldDiv');
+            if (this.value === 'Other') {
+                otherFieldDiv.style.display = 'block';
+            } else {
+                otherFieldDiv.style.display = 'none';
+                otherFieldDiv.querySelector('input').value = ''; // clear field if hidden
+            }
+        });
+    </script>
 </body>
 
 </html>

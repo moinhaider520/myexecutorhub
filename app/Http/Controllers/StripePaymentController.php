@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CustomEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Stripe;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -93,6 +95,7 @@ class StripePaymentController extends Controller
                 'coupon_code' => $request->coupon_code ?? '',
                 'reffered_by' => $request->assigned_to ?? '',
                 'hear_about_us' => $request->hear_about_us ?? '',
+                'other_hear_about_us' => $request->other_hear_about_us ?? '',
             ],
             'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
         ]);
@@ -132,6 +135,7 @@ class StripePaymentController extends Controller
             'coupon_code' => $couponCode,
             'reffered_by' => $session->metadata->reffered_by,
             'hear_about_us' => $session->metadata->hear_about_us,
+            'other_hear_about_us' => $session->metadata->other_hear_about_us,            
         ])->assignRole('customer');
 
         // Get Stripe subscription to extract plan amount
@@ -223,6 +227,39 @@ class StripePaymentController extends Controller
                     'subscribed_package' => $planName,
                     'trial_ends_at' => now()->addMonth(),
                 ]);
+
+$name = $session->metadata->user_name;
+$email = $session->metadata->user_email;
+                        $message = "
+            <h2>Hello $name,</h2>
+            <p>Thank you for joining Executor Hub — we’re thrilled to have you on board!</p>
+            <p>Your secure space to organise, protect, and share your important documents begins now.</p>
+            <p>👉 Click below to access your personal dashboard and start exploring:</p>
+            <p><a href='https://executorhub.co.uk/customer/dashboard'>[Go to My Dashboard]<a></p>
+            <p>Need help? Our support team is always here — just reply to this email.</p>
+            <br/><br/>
+            <p>Regards,<br>The Executor Hub Team</p>
+            <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+
+            <br /><br />
+    <p><b>Executor Hub Team</b></p>
+    <p><b>Executor Hub Ltd</b></p>
+    <p><b>Empowering Executors, Ensuring Legacies</b></p>
+    <p><b>Email: hello@executorhub.co.uk</b></p>
+    <p><b>Website: https://executorhub.co.uk</b></p>
+    <p><b>ICO Registration: ZB932381</b></p>
+    <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+    <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+    <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
+        ";
+
+        Mail::to(email)->send(new CustomEmail(
+            [
+                'subject' => 'Welcome to Executor Hub — let’s tick off your first step today',
+                'message' => $message,
+            ],
+            'You Have Been Invited to Executor Hub.'
+        ));
 
             // Send welcome email
             $user->notify(new WelcomeEmail($user));

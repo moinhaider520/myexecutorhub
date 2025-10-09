@@ -10,7 +10,7 @@
         <div class="row">
           <div class="col-md-12 d-flex justify-content-end p-2">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addFuneralWakeModal">
-              Add Funeral
+              Add Funeral Wishes & Notes
             </button>
           </div>
         </div>
@@ -68,7 +68,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addFuneralWakeModalLabel">Add Funeral</h5>
+        <h5 class="modal-title" id="addFuneralWakeModalLabel">Add Funeral Wishes & Notes</h5>
       </div>
       <div class="modal-body">
         <form id="addFuneralWakeForm">
@@ -85,7 +85,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary">Add Funeral Wishes & Notes</button>
           </div>
         </form>
       </div>
@@ -98,7 +98,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editFuneralWakeModalLabel">Edit Funeral</h5>
+        <h5 class="modal-title" id="editFuneralWakeModalLabel">Edit Funeral Wishes & Notes</h5>
       </div>
       <div class="modal-body">
         <form id="editFuneralWakeForm">
@@ -116,7 +116,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-primary">Update Funeral Wishes & Notes</button>
           </div>
         </form>
       </div>

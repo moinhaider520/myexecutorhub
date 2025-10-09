@@ -106,6 +106,8 @@ class RegisterController extends Controller
             'subscribed_package' => "free_trial",
             'user_role' => 'customer',
             'hear_about_us' => $data['hear_about_us'],
+            'other_hear_about_us' => $data['other_hear_about_us'],
+            'email_notifications' => $data['email_notifications'] ?? 0,
         ]);
 
         // If valid coupon, log usage
@@ -120,13 +122,26 @@ class RegisterController extends Controller
 
         $name = $data['name'];
         $message = "
-            <h2>Hi $name,</h2>
-            <p>Welcome 👋 — you’ve just taken the most important step in protecting your family’s future.</p>
-            <p>Today, let’s tick off your first onboarding item:</p>
-            <p>✅ Upload one document (your will, insurance, or bank statement).</p>
-            <p><a href='https://executorhub.co.uk/login'>👉 [Upload your first document now]</a></p>
-            <p>🔒 Peace of mind: Everything you add is protected with bank-grade encryption and stored securely, only visible to you (and later, your chosen executors).</p>
-            <p>Regards,<br>Executor Hub Team</p>
+            <h2>Hello $name,</h2>
+            <p>Thank you for joining Executor Hub — we’re thrilled to have you on board!</p>
+            <p>Your secure space to organise, protect, and share your important documents begins now.</p>
+            <p>👉 Click below to access your personal dashboard and start exploring:</p>
+            <p><a href='https://executorhub.co.uk/customer/dashboard'>[Go to My Dashboard]<a></p>
+            <p>Need help? Our support team is always here — just reply to this email.</p>
+            <br/><br/>
+            <p>Regards,<br>The Executor Hub Team</p>
+            <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+
+            <br /><br />
+    <p><b>Executor Hub Team</b></p>
+    <p><b>Executor Hub Ltd</b></p>
+    <p><b>Empowering Executors, Ensuring Legacies</b></p>
+    <p><b>Email: hello@executorhub.co.uk</b></p>
+    <p><b>Website: https://executorhub.co.uk</b></p>
+    <p><b>ICO Registration: ZB932381</b></p>
+    <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+    <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+    <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
         ";
 
         Mail::to($data['email'])->send(new CustomEmail(

@@ -322,7 +322,7 @@
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                                 </svg>
-                                <span>Digital Assets </span>
+                                <span>Digital Assets & SM Acc.. </span>
                             </a>
                         </li>
 
@@ -513,7 +513,7 @@
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
                                 </svg>
-                                <span>Donations </span>
+                                <span>Organ Donation </span>
                             </a>
                             <ul class="sidebar-submenu">
                                 <li><a href="{{ route('customer.organs_donation.view') }}">Organ Donations</a></li>
@@ -730,7 +730,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Digital Assets </span>
+                            <span>Digital Assets & SM Acc.. </span>
                         </a>
                     </li>
                     <li class="sidebar-list">
@@ -1022,7 +1022,7 @@
                         'view insurance policies',
                         'view debt and liabilities',
                         'view
-                                    digital assets',
+                                    Digital Assets & SM Acc..',
                         'view intellectual properties',
                         'view other assets',
                         'view other type of assets',
@@ -1066,8 +1066,8 @@
                             @can('view debt and liabilities')
                                 <li><a href="{{ route('debt_and_liabilities.view') }}">Debt & Liabilities</a></li>
                             @endcan
-                            @can('view digital assets')
-                                <li><a href="{{ route('digital_assets.view') }}">Digital Assets</a></li>
+                            @can('view Digital Assets & SM Acc..')
+                                <li><a href="{{ route('digital_assets.view') }}">Digital Assets & SM Acc..</a></li>
                             @endcan
                             @can('view intellectual properties')
                                 <li><a href="{{ route('intellectual_properties.view') }}">Intellectual Properties</a>

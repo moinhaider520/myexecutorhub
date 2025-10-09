@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to My Executor Hub</title>
+    <title>Welcome to Executor Hub</title>
 </head>
 
 <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;">
@@ -20,7 +20,7 @@
                     <!-- Header -->
                     <tr>
                         <td style="background-color: #000000; padding: 20px; text-align: center; color: #ffffff;">
-                            <h1 style="margin: 0; font-size: 24px;">Welcome to My Executor Hub!</h1>
+                            <h1 style="margin: 0; font-size: 24px;">Welcome to Executor Hub!</h1>
                         </td>
                     </tr>
 
@@ -30,7 +30,7 @@
                             <h2 style="color: #333333; font-size: 20px;">Hello, {{ $user->name }}!</h2>
                             <p style="color: #555555; font-size: 16px; line-height: 1.6;">
                                 Thank you for registering with us. We are thrilled to have you on board! Your journey
-                                with My Executor Hub starts here.
+                                with Executor Hub starts here.
                             </p>
                             <p style="color: #555555; font-size: 16px; line-height: 1.6;">
                                 Please click the button below to access your dashboard and explore our features.

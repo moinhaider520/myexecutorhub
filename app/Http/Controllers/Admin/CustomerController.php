@@ -50,7 +50,7 @@ class CustomerController extends Controller
                 'trial_ends_at' => now()->addYears(10),
                 'subscribed_package' => 'Premium',
                 'user_role' => 'customer',
-                'password' => $tempPassword,
+                'password' => bcrypt($tempPassword),
             ]);
 
             $customer->assignRole('customer');
@@ -65,7 +65,7 @@ class CustomerController extends Controller
                 <li>Email: {$customer->email}</li>
                 <li>Password: {$tempPassword}</li>
             </ul>
-            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+            <p><a href='https://executorhub.co.uk/login'>Click here to log in</a></p>
             <p>Enjoy free access to the Premium plan, courtesy of your invitation!</p>
             <p>Regards,<br>Executor Hub Team</p>
         ";

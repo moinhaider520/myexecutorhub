@@ -39,7 +39,8 @@
                             <p><strong>🔒 Data Security: </strong>“Encrypted & protected at all times”</p>
                             <p><strong>💾 Weekly Backups: </strong>“Automatic secure backups every 7 days”</p>
                             <p><strong>⚡ Fast Recovery: </strong>“Service restored within 24–48 hours”</p>
-                            <p><strong>💳 Subscription Protection: </strong>“Your payments & access remain uninterrupted”</p>
+                            <p><strong>💳 Subscription Protection: </strong>“Your payments & access remain uninterrupted”
+                            </p>
                             <p><strong>🛡️ Peace of Mind: </strong>“Disaster recovery plan always in place”</p>
                         </div>
                     </div>
@@ -343,6 +344,12 @@
                             <p>Welcome to Executor Hub!</p>
                             <p>Before you start, download our mobile app for easy access anywhere, anytime.</p>
                             <p>Enable notifications so you never miss a reminder or update.</p>
+
+                            <h3 class="text-center pt-2 pb-2">
+                                Download the App on App Store -
+                                <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
+                                        class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
+                            </h3>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -403,7 +410,7 @@
                             <h4>Getting Help</h4>
                             <p>If you need assistance:</p>
                             <p>Use the Live Chat button</p>
-                            <p>Email us at hello@executorhub.co.uk</p>
+                            <p>Email us at hello@executorhub.co.uk or contact the adviser that recommended Executor Hub.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -421,6 +428,14 @@
                             <p>It’s a simple way for them to give the same thoughtful gift of preparation to their
                                 executors.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
+
+                            <!-- 🆕 Copy Link Button -->
+                            <button type="button" id="copyLinkBtn" class="btn btn-outline-primary mt-2">
+                                Copy Link
+                            </button>
+
+                            <!-- Optional: Success message -->
+                            <small id="copyMsg" class="text-success ms-2" style="display:none;">Link copied!</small>
                         </div>
 
                     </div>
@@ -637,5 +652,24 @@
         });
 
     </script>
+
+    <script>
+    document.getElementById('copyLinkBtn').addEventListener('click', function() {
+        // Replace this with your actual link (can also be dynamic)
+        const linkToCopy = "{{ url('/') }}/register";  
+
+        // Copy to clipboard
+        navigator.clipboard.writeText(linkToCopy).then(() => {
+            // Show a quick success message
+            const msg = document.getElementById('copyMsg');
+            msg.style.display = 'inline';
+            msg.textContent = 'Link copied!';
+            setTimeout(() => msg.style.display = 'none', 2000);
+        }).catch(err => {
+            alert('Failed to copy link');
+            console.error(err);
+        });
+    });
+</script>
 
 @endsection

@@ -1839,29 +1839,29 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form id="contact-form" class="row contact-form" method="POST" action="{{ route('partner-registration.store') }}">
+                            <form id="contact-form" class="row contact-form" method="POST"
+                                action="{{ route('partner-registration.store') }}">
                                 @csrf
                                 <div class="col-md-12">
                                     <p class="p-lg">Name:</p>
                                     <span>Enter your name:</span>
-                                    <input type="text" name="name" class="form-control"
-                                        placeholder="Name*" required />
+                                    <input type="text" name="name" class="form-control" placeholder="Name*" required />
                                 </div>
 
 
                                 <div class="col-md-12">
                                     <p class="p-lg">Email:</p>
                                     <span>Please enter a valid email address:</span>
-                                    <input type="email" name="email" class="form-control"
-                                        placeholder="Email Address*" required />
+                                    <input type="email" name="email" class="form-control" placeholder="Email Address*"
+                                        required />
                                 </div>
 
                                 <!-- Contact Number Input -->
                                 <div class="col-md-12">
-                                    <p class="p-lg">Password:</p>
+                                    <p class="p-lg">Create Password:</p>
                                     <span>Enter your password:</span>
-                                    <input type="password" name="password" class="form-control"
-                                        placeholder="******" required />
+                                    <input type="password" name="password" class="form-control" placeholder="******"
+                                        required />
                                 </div>
                                 <div class="col-md-12">
                                     <p class="p-lg">Confirm Password:</p>
@@ -1869,11 +1869,61 @@
                                     <input type="password" name="password_confirmation" class="form-control"
                                         placeholder="******" required />
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-form-label">What is Your Profession?</label>
+                                    <select class="form-control" name="profession" required>
+                                        <option value="" selected disabled>Choose Profession</option>
+                                        <option value="General Audience">General Audience</option>
+                                        <option value="Solicitors">Solicitors</option>
+                                        <option value="Will writers">Will writers</option>
+                                        <option value="Estate planners">Estate planners</option>
+                                        <option value="Financial advisers">Financial advisers</option>
+                                        <option value="Ifas">Ifas</option>
+                                        <option value="Life insurance specialists">Life insurance specialists</option>
+                                        <option value="Accountants">Accountants</option>
+                                        <option value="Networks">Networks</option>
+                                        <option value="Societies">Societies</option>
+                                        <option value="Regulatory bodies">Regulatory bodies</option>
+                                        <option value="Institutes">Institutes</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">Where Did You Hear About Us?</label>
+                                    <select class="form-control" name="hear_about_us" id="hear_about_us" required>
+                                        <option value="">Choose Option</option>
+                                        <option value="Social Media">Social Media (Facebook, Instagram, LinkedIn, etc.)
+                                        </option>
+                                        <option value="Google Search">Google Search</option>
+                                        <option value="Adviser / Estate Planner">Adviser / Estate Planner</option>
+                                        <option value="Solicitor / Law Firm">Solicitor / Law Firm</option>
+                                        <option value="Financial Adviser / IFA">Financial Adviser / IFA</option>
+                                        <option value="Trade Union / Membership Group">Trade Union / Membership Group
+                                        </option>
+                                        <option value="Employer / Workplace Benefit">Employer / Workplace Benefit
+                                        </option>
+                                        <option value="Friend or Family">Friend or Family</option>
+                                        <option value="Webinar / Event / Presentation">Webinar / Event / Presentation
+                                        </option>
+                                        <option value="Email Campaign">Email Campaign</option>
+                                        <option value="Partner Referral">Partner Referral</option>
+                                        <option value="Press / News Article">Press / News Article</option>
+                                        <option value="Other">Other (please specify)</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group" id="otherFieldDiv" style="display: none;">
+                                    <label class="col-form-label">Please specify:</label>
+                                    <input type="text" class="form-control" name="other_hear_about_us"
+                                        placeholder="Enter details">
+                                </div>
+
+
                                 <!-- Email notifications checkbox -->
                                 <div class="form-group">
                                     <div>
-                                        <input class="" type="checkbox" name="email_notifications" id="email_notifications"
-                                            value="1" {{ old('email_notifications') ? 'checked' : '' }}>
+                                        <input class="" type="checkbox" name="email_notifications"
+                                            id="email_notifications" value="1" {{ old('email_notifications') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="email_notifications">
                                             Opt in to email notifications?
                                         </label>
@@ -1881,8 +1931,8 @@
                                 </div>
                                 <div class="form-group">
                                     <div>
-                                        <input class="" type="checkbox" name="privacy_policy" id="privacy_policy" value="1"
-                                            {{ old('privacy_policy') ? 'checked' : '' }}>
+                                        <input class="" type="checkbox" name="privacy_policy" id="privacy_policy"
+                                            value="1" {{ old('privacy_policy') ? 'checked' : '' }}>
                                         <label class="form-check-label" for="privacy_policy">
                                             Do you agree with our terms and privacy policy?
                                         </label>
@@ -1899,7 +1949,8 @@
                                 </div>
                                 <!-- Submit Button -->
                                 <div class="col-md-12 mt-15 form-btn text-right">
-                                    <button type="submit" class="btn btn--theme hover--theme">Sign Up as a Partner</button>
+                                    <button type="submit" class="btn btn--theme hover--theme">Sign Up as a
+                                        Partner</button>
                                 </div>
                             </form>
                         </div>
@@ -2375,6 +2426,18 @@
             localStorage.setItem("welcomePopupShown", "true");
         }
 
+    </script>
+
+    <script>
+        document.getElementById('hear_about_us').addEventListener('change', function () {
+            const otherFieldDiv = document.getElementById('otherFieldDiv');
+            if (this.value === 'Other') {
+                otherFieldDiv.style.display = 'block';
+            } else {
+                otherFieldDiv.style.display = 'none';
+                otherFieldDiv.querySelector('input').value = ''; // clear field if hidden
+            }
+        });
     </script>
 </body>
 
