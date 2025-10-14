@@ -147,6 +147,12 @@ class DashboardController extends Controller
             ->pluck('frequency', 'document_type')
             ->toArray();
 
+        $partners = User::whereIn('id', function ($query) {
+            $query->select('sub_partner_id')
+                ->from('partner_relationships')
+                ->where('parent_partner_id', auth()->id());
+        })->get();
+
         return view('partner.dashboard', compact(
             'totalExecutors',
             'totalDocuments',
@@ -161,7 +167,8 @@ class DashboardController extends Controller
             'subpartners',
             'customers_invited',
             'subscribed_customers_invited',
-            'free_trial_customers_invited'
+            'free_trial_customers_invited',
+            'partners'
         ));
     }
 

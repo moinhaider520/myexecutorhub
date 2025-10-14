@@ -303,6 +303,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/partners', [PartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
     Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
     Route::get('/partners/{id}/view_refferals', [PartnerController::class, 'view_refferals'])->name('partners.view_refferals');
+        Route::get('/partners/{id}/view_partners', [PartnerController::class, 'view_partners'])->name('partners.view_partners');
     Route::get('/partners/{id}/view_bank_accounts', [PartnerController::class, 'view_bank_accounts'])->name('partners.view_bank_accounts');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');

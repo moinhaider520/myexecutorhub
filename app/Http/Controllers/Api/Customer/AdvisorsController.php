@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class AdvisorsController extends Controller
 {
@@ -40,22 +41,32 @@ class AdvisorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request)
+        public function store(Request $request)
     {
-        $request->validate([
-            'adviser_type' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'practice_name' => 'required|string|max:255',
-            'practice_address' => 'required|string|max:255',
-            'email_address' => 'required|email|max:255|unique:users,email',
-            'phone_number' => 'required|unique:users,contact_number',
-        ]);
+        try {
+            // ✅ Validation with proper JSON response
+            $request->validate([
+                'adviser_type' => 'required|string|max:255',
+                'name' => 'required|string|max:255',
+                'practice_name' => 'required|string|max:255',
+                'practice_address' => 'required|string|max:255',
+                'email_address' => 'required|email|max:255|unique:users,email',
+                'phone_number' => 'required|unique:users,contact_number',
+            ]);
+        } catch (ValidationException $e) {
+            // ✅ Return validation errors as JSON (422)
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors(),
+            ], 422);
+        }
 
         $couponCode = 'COUPON-' . strtoupper(uniqid());
 
         try {
             DB::beginTransaction();
 
+            // ✅ Create the adviser user
             $advisor = User::create([
                 'name' => $request->name,
                 'practice_name' => $request->practice_name,
@@ -64,7 +75,7 @@ class AdvisorsController extends Controller
                 'contact_number' => $request->phone_number,
                 'password' => bcrypt('1234'),
                 'created_by' => Auth::id(),
-                'coupon_code' => $couponCode, // Store the generated coupon code
+                'coupon_code' => $couponCode,
                 'trial_ends_at' => Auth::user()->trial_ends_at,
                 'subscribed_package' => Auth::user()->subscribed_package,
             ]);
@@ -74,10 +85,16 @@ class AdvisorsController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Advisor added successfully.'], 200);
+            return response()->json([
+                'success' => true,
+                'message' => 'Adviser added successfully.',
+            ], 200);
         } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to add adviser: ' . $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -88,38 +105,61 @@ class AdvisorsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(Request $request, $id)
+        public function update(Request $request, $id)
     {
-        $request->validate([
-            'adviser_type' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'practice_name' => 'required|string|max:255',
-            'practice_address' => 'required|string|max:255',
-            'email_address' => 'required|email|max:255|unique:users,email,' . $id,
-            'phone_number' => 'required|unique:users,contact_number,' . $id,
-        ]);
+        try {
+            // ✅ Validation with proper JSON return
+            $request->validate([
+                'adviser_type' => 'required|string|max:255',
+                'name' => 'required|string|max:255',
+                'practice_name' => 'required|string|max:255',
+                'practice_address' => 'required|string|max:255',
+                'email_address' => 'required|email|max:255|unique:users,email,' . $id,
+                'phone_number' => 'required|unique:users,contact_number,' . $id,
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors(),
+            ], 422);
+        }
 
         try {
             DB::beginTransaction();
 
             $advisor = User::findOrFail($id);
+
             $advisor->update([
                 'name' => $request->name,
                 'practice_name' => $request->practice_name,
                 'practice_address' => $request->practice_address,
                 'email' => $request->email_address,
                 'contact_number' => $request->phone_number,
+                // optionally remove password reset here if not needed
                 'password' => bcrypt('1234'),
             ]);
 
-            // Reassign role
+            // ✅ Sync roles (reassign)
             $advisor->syncRoles([$request->adviser_type]);
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Advisor updated successfully.'], 200);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Adviser updated successfully.',
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Adviser not found.',
+            ], 404);
         } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update adviser: ' . $e->getMessage(),
+            ], 500);
         }
     }
 

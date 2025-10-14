@@ -1246,6 +1246,18 @@
                             </ul>
                         </li>
                     @endcan
+
+                    <li class="sidebar-list">
+                            <a class="sidebar-link sidebar-title" href="javascript:void(0)"  onclick="document.getElementById('logout_form').submit();">
+                                <svg class="stroke-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
+                                </svg>
+                                <svg class="fill-icon">
+                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
+                                </svg>
+                                <span>Logout</span>
+                            </a>
+                        </li>
                 </ul>
             </div>
             <div class="right-arrow" id="right-arrow"><i data-feather="arrow-right"></i></div>

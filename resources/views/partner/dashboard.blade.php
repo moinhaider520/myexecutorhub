@@ -159,6 +159,59 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4>Partners List</h4>
+                                    <span>List of all the Registered Partners through your reference.</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive theme-scrollbar">
+                                        <div id="basic-2_wrapper" class="dataTables_wrapper no-footer">
+                                            <table class="display dataTable no-footer" id="basic-2" role="grid"
+                                                aria-describedby="basic-2_info">
+                                                <thead>
+                                                    <tr role="row">
+                                                        <th>Sr</th>
+                                                        <th>Partner Name</th>
+                                                        <th>Email</th>
+                                                        <th>Address</th>
+                                                        <th>Contact Number</th>
+                                                        <th>Access Type</th> <!-- New Column -->
+                                                        <th>Profession</th>
+                                                        <th>Heard From?</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($partners as $partner)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $partner->name ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->email ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->address ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->phone_number ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->access_type ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->profession ?? 'N/A' }}</td>
+                                                            <td>{{ $partner->hear_about_us ?? 'N/A' }}</td>
+                                                            <td>
+                                                                <a href="{{ route('partner.partners.view_refferals', $partner->id) }}"
+                                                                    class="btn btn-primary btn-sm">View Refferals</a>
+
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

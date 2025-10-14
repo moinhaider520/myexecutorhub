@@ -10,8 +10,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Edit Customer Profile</h4>
-                                <span>Edit the details of the customer.</span>
+                                <h4>Customer Free Access</h4>
+                                <span>Create a Free Access Account By Filling the Form.</span>
                             </div>
                             <div class="card-body">
                                 <form action="{{ route('admin.customers.store')}}" method="POST">

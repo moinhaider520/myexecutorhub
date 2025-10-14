@@ -36,6 +36,18 @@ class PartnerController extends Controller
         return view('admin.partners.view_refferals', compact('referredUsers'));
     }
 
+    public function view_partners($id)
+    {
+        $partners = User::whereIn('id', function ($query) use ($id) {
+            $query->select('sub_partner_id')
+                ->from('partner_relationships')
+                ->where('parent_partner_id', $id);
+        })->get();
+
+        return view('admin.partners.view_partners', compact('partners'));
+    }
+
+
     public function view_bank_accounts($id)
     {
         $bankAccounts = UserBankDetails::with('user')

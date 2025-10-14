@@ -25,8 +25,6 @@
                                                         <th>Email</th>
                                                         <th>Address</th>
                                                         <th>Contact Number</th>
-                                                        <th>Access Type</th> <!-- New Column -->
-                                                        <th>Profession</th>
                                                         <th>Heard From?</th>
                                                         <th>Action</th>
                                                     </tr>
@@ -39,13 +37,13 @@
                                                             <td>{{ $partner->email ?? 'N/A' }}</td>
                                                             <td>{{ $partner->address ?? 'N/A' }}</td>
                                                             <td>{{ $partner->phone_number ?? 'N/A' }}</td>
-                                                            <td>{{ $partner->access_type ?? 'N/A' }}</td>
-                                                            <td>{{ $partner->profession ?? 'N/A' }}</td>
                                                             <td>{{ $partner->hear_about_us ?? 'N/A' }}</td>
                                                             <td>
                                                                 <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
-                                                                    class="btn btn-primary btn-sm">View Refferals</a>
-                                                                    <a href="{{ route('admin.partners.view_bank_accounts', $partner->id) }}"
+                                                                    class="btn btn-primary btn-sm">View Customers</a>
+                                                                <a href="{{ route('admin.partners.view_partners', $partner->id) }}"
+                                                                    class="btn btn-primary btn-sm">View Partners</a>
+                                                                <a href="{{ route('admin.partners.view_bank_accounts', $partner->id) }}"
                                                                     class="btn btn-primary btn-sm">View Bank Accounts</a>
                                                                 <a href="{{ route('admin.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"
                                                                     class="btn btn-primary btn-sm">Edit</a>
