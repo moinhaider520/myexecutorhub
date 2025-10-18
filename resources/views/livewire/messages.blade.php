@@ -16,10 +16,10 @@
                         </ul>
                         <div class="tab-content" id="chat-options-tabContent">
                             <div class="tab-pane fade show active" id="chats" role="tabpanel" aria-labelledby="chats-tab">
-                                <ul class="chats-user" style="align-items:flex-start;">
+                                <ul class="chats-user" >
                                     @foreach ($users as $user)
                                     @if ($user->id !== auth()->id())
-                                        <li class="common-space" wire:click="getUser({{ $user->id }})">
+                                        <li  wire:click="getUser({{ $user->id }})">
                                             <div class="chat-time">
                                                 <div class="active-profile"><img class="img-fluid rounded-circle" src="{{ $user->profile_image ? asset('assets/upload/'.$user->profile_image) : asset('assets/images/dashboard/profile.png') }}" alt="user">
                                                     @if ($user->is_online)

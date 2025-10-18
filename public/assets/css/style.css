@@ -33,7 +33,7 @@
         2.18 Forms CSS
         2.19 Icons CSS
         2.20 List CSS
-        2.21 Loader CSS 
+        2.21 Loader CSS
         2.22 Modal CSS
         2.23 Popover CSS
         2.24 Print CSS
@@ -60,7 +60,7 @@
         3.7 Comingsoon CSS
         3.8 Contacts CSS
         3.9 Dashboard_2 CSS
-        3.10 Dashboard_3 CSS 
+        3.10 Dashboard_3 CSS
         3.11 Dashboard_4 CSS
         3.12 Dashboard_5 CSS
         3.13 Dashboard_default CSS
@@ -21251,6 +21251,7 @@ p.data-attributes svg {
 }
 
 .left-sidebar-wrapper {
+    height: 754px;
     padding: 20px;
     border-radius: 10px 0 0 10px;
     z-index: 1;
@@ -21397,7 +21398,6 @@ p.data-attributes svg {
 
 .left-sidebar-wrapper .advance-options .chats-user {
     border-bottom: unset;
-    height: 559px;
     overflow-y: auto;
 }
 
@@ -37636,7 +37636,7 @@ ul.dot-group li {
     --bs-progress-bar-bg: rgba($val, 0.1);
 }
 
-/**=====================	
+/**=====================
    3.34 Progress CSS Ends
 ==========================**/
 

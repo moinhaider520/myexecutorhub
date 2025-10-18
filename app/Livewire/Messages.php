@@ -22,6 +22,7 @@ class Messages extends Component
         $roles = ['executor', 'Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers'];
 
         if (Auth::user()->hasRole('customer')) {
+
             $user = Auth::user();
             $users = User::with('roles')
                 ->where('created_by', $user->id)
@@ -29,6 +30,8 @@ class Messages extends Component
                     $query->whereIn('name', $roles);
                 })
                 ->get();
+            $adminUsers = User::role('Admin')->get();
+            $users = $users->merge($adminUsers);
         } elseif (Auth::user()->hasRole('partner')) {
             $user = Auth::user();
             $users = User::with('roles')
