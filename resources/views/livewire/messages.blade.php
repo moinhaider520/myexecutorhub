@@ -6,7 +6,7 @@
                 <div class="left-sidebar-wrapper card">
                     <div class="left-sidebar-chat">
                         <div class="input-group"><span class="input-group-text"><i class="search-icon text-gray" data-feather="search"></i></span>
-                            <input class="form-control" type="text" placeholder="Search here..">
+                            <input class="form-control" type="text" placeholder="Search here.." wire:model.live="search">
                         </div>
                     </div>
                     <div class="advance-options">

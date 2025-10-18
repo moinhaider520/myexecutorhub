@@ -319,6 +319,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // EMAILS
     Route::get('emails/create', [AdminEmailController::class, 'create'])->name('emails.create');
     Route::post('emails/send', [AdminEmailController::class, 'send'])->name('emails.send');
+    Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
@@ -1051,6 +1052,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/bank_account/store', [PartnerBankDetailsController::class, 'store'])->name('bank_account.store');
     Route::post('/bank_account/update/{id}', [PartnerBankDetailsController::class, 'update'])->name('bank_account.update');
     Route::delete('/bank_account/destroy/{id}', [PartnerBankDetailsController::class, 'destroy'])->name('bank_account.destroy');
+    Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
 });
 
 // Executors  Routes

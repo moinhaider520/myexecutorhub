@@ -21257,6 +21257,7 @@ p.data-attributes svg {
     z-index: 1;
     border: 2px solid var(--white);
     border-right: unset;
+    overflow-y: auto;
     /* ===== Scrollbar CSS ===== */
     /* Firefox */
     /* Chrome, Edge, and Safari */

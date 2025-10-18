@@ -16,43 +16,65 @@ class Messages extends Component
     public $allmessages;
     public $sender;
     public $file;
+    public $search = '';
 
     public function render()
     {
         $roles = ['executor', 'Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers'];
+        $user = Auth::user();
+        $baseQuery = User::query()->with('roles');
+        if ($this->search) {
+            $baseQuery->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
+            });
+        }
 
-        if (Auth::user()->hasRole('customer')) {
+        $users = collect([]);
 
-            $user = Auth::user();
-            $users = User::with('roles')
+        if ($user->hasRole('customer')) {
+
+            $customerQuery = clone $baseQuery;
+
+            $users = $customerQuery
                 ->where('created_by', $user->id)
-                ->whereHas('roles', function ($query) use ($roles) {
-                    $query->whereIn('name', $roles);
+                ->whereHas('roles', function ($q) use ($roles) {
+                    $q->whereIn('name', $roles);
                 })
                 ->get();
-            $adminUsers = User::role('Admin')->get();
+
+            $adminUsers = User::role('admin')
+                ->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%');
+                })
+                ->get();
             $users = $users->merge($adminUsers);
-        } elseif (Auth::user()->hasRole('partner')) {
-            $user = Auth::user();
-            $users = User::with('roles')
-                ->where('created_by', $user->id)
-                ->whereHas('roles', function ($query) use ($roles) {
-                    $query->whereIn('name', $roles);
+        } elseif ($user->hasRole('partner')) {
+
+            $users =  User::role('admin')
+                ->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%');
                 })
                 ->get();
-        } else if (Auth::user()->hasAnyRole($roles)) {
-            // For users with any of the specified roles
-            $user = Auth::user();
+        } else if ($user->hasAnyRole($roles)) {
             $users = User::where('id', $user->created_by)->get();
         } else {
-            // For users who don't match any of the conditions above
-            $users = User::all();
+            $users = User::whereHas('roles', function ($query) {
+                $query->whereIn('name', ['customer', 'partner']);
+            })
+                ->where(function ($q) {
+                    $q->where('name', 'like', '%' . $this->search . '%')
+                        ->orWhere('email', 'like', '%' . $this->search . '%');
+                })
+                ->get();
         }
+
         $sender = $this->sender;
         $this->allmessages;
         return view('livewire.messages', compact('users', 'sender'));
     }
-
     public function mountdata()
     {
 
