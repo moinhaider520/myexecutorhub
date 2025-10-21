@@ -40,13 +40,18 @@ class EmailController extends Controller
         foreach ($users as $user) {
             Mail::to($user->email)->send(new CustomEmail(
                 [
-                    'subject' => $request->title, 
+                    'subject' => $request->title,
                     'message' => $request->message,
-                ], 
-                $request->title 
+                ],
+                $request->title
             ));
         }
 
         return redirect()->back()->with('success', 'Emails sent successfully.');
+    }
+
+    public function email_using_template()
+    {
+        return view('admin.emails.email_using_template');
     }
 }

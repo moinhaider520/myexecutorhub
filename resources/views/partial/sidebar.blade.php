@@ -145,7 +145,9 @@
                             </a>
                             <ul class="sidebar-submenu">
                                 <li><a href="{{ route('admin.emails.create') }}">Send Email</a></li>
+                                <li><a href="{{ route('admin.emails.email_using_template') }}">Send Email Using Template</a></li>
                             </ul>
+
                         </li>
                     @endrole
 
