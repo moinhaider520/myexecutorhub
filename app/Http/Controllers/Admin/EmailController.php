@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Mail\CustomEmail;
 use Illuminate\Support\Facades\Mail;
 use App\Models\User;
-
+use App\Mail\DynamicEmail;
+use App\Models\EmailSchedule;
+use Carbon\Carbon;
 class EmailController extends Controller
 {
     public function create()
@@ -53,5 +55,63 @@ class EmailController extends Controller
     public function email_using_template()
     {
         return view('admin.emails.email_using_template');
+    }
+
+
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'recipient_type' => 'required|string',
+            'title' => 'required|string',
+            'message' => 'required|string',
+            'action' => 'required|string',
+        ]);
+
+        // Fetch recipients from database
+        $recipients = $this->getRecipients($request->recipient_type);
+
+        if ($recipients->isEmpty()) {
+            return back()->with('error', 'No recipients found.');
+        }
+
+        if ($request->action === 'send') {
+            // Send immediately
+            foreach ($recipients as $recipient) {
+                Mail::to($recipient->email)->send(new DynamicEmail(
+                    $request->title,
+                    $request->message,
+                    $recipient->name ?? 'User'
+                ));
+            }
+
+            return back()->with('success', 'Emails sent successfully!');
+        }
+
+        if ($request->action === 'schedule') {
+            // Save in schedule table
+            foreach ($recipients as $recipient) {
+                EmailSchedule::create([
+                    'recipient_email' => $recipient->email,
+                    'subject' => $request->title,
+                    'body' => $request->message,
+                    'recipient_type' => $request->recipient_type,
+                    'status' => 'pending',
+                    'scheduled_for' => Carbon::now()->addHours(2), // example delay
+                ]);
+            }
+
+            return back()->with('success', 'Emails scheduled successfully!');
+        }
+    }
+
+    private function getRecipients($type)
+    {
+        if ($type === 'partners') {
+            return User::role('partner')->get();
+        } elseif ($type === 'customers') {
+            return  User::role('customer')->get();
+        }
+        return collect();
     }
 }
