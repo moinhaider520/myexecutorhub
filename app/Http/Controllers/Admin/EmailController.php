@@ -19,14 +19,12 @@ class EmailController extends Controller
 
     public function send(Request $request)
     {
-        // Validate form inputs
         $request->validate([
             'recipient_type' => 'required|string',
             'title' => 'required|string',
             'message' => 'required|string',
         ]);
 
-        // Initialize an empty collection to hold users
         $users = collect();
 
         // Determine recipients based on selection
@@ -38,7 +36,6 @@ class EmailController extends Controller
             $users = User::role(['customer', 'partner'])->get();
         }
 
-        // Send email to each recipient
         foreach ($users as $user) {
             Mail::to($user->email)->send(new CustomEmail(
                 [
@@ -68,7 +65,6 @@ class EmailController extends Controller
             'action' => 'required|string',
         ]);
 
-        // Fetch recipients from database
         $recipients = $this->getRecipients($request->recipient_type);
 
         if ($recipients->isEmpty()) {
@@ -76,7 +72,6 @@ class EmailController extends Controller
         }
 
         if ($request->action === 'send') {
-            // Send immediately
             foreach ($recipients as $recipient) {
                 Mail::to($recipient->email)->send(new DynamicEmail(
                     $request->title,
@@ -89,7 +84,7 @@ class EmailController extends Controller
         }
 
         if ($request->action === 'schedule') {
-            // Save in schedule table
+
             foreach ($recipients as $recipient) {
                 EmailSchedule::create([
                     'recipient_email' => $recipient->email,
