@@ -16,7 +16,7 @@
                                 <span>Select recipient type, choose a template or write your own, and choose whether to send now or schedule.</span>
                             </div>
                             <div class="card-body">
-                                <form action="#" method="POST" id="email-form">
+                                <form action="{{route('admin.emails.store')}}" method="POST" id="email-form">
                                     @csrf
 
                                     {{-- Recipient Type --}}

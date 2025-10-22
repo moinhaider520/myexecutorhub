@@ -321,6 +321,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('emails/email_using_template', [AdminEmailController::class, 'email_using_template'])->name('emails.email_using_template');
     Route::post('emails/send', [AdminEmailController::class, 'send'])->name('emails.send');
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
+
+
+
+    Route::post('emails/store', [AdminEmailController::class, 'store'])->name('emails.store');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
