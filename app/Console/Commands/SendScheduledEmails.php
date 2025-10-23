@@ -7,42 +7,46 @@ use App\Models\EmailSchedule;
 use App\Mail\DynamicEmail;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SendScheduledEmails extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'emails:send-scheduled';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Send scheduled emails when their time comes';
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
+        $currentTimeLocal = Carbon::now('Asia/Karachi');
         $emails = EmailSchedule::where('status', 'pending')
-            ->where('scheduled_for', '<=', Carbon::now())
+            ->where('scheduled_for', '<=', $currentTimeLocal)
             ->get();
 
-        foreach ($emails as $email) {
-            Mail::to($email->recipient_email)->send(new DynamicEmail(
-                $email->subject,
-                $email->body,
-                $email->recipient_email
-            ));
 
-            $email->update(['status' => 'sent']);
+        $sentCount = 0;
+        $failedCount = 0;
+
+        foreach ($emails as $email) {
+            try {
+                Mail::to($email->recipient_email)->send(new DynamicEmail(
+                    $email->subject,
+                    $email->body,
+                    $email->recipient_email
+                ));
+
+                $email->update(['status' => 'sent']);
+                $sentCount++;
+            } catch (\Exception $e) {
+                $email->update(['status' => 'failed', 'error_message' => $e->getMessage()]);
+
+                Log::error("Failed to send scheduled email ID: {$email->id}. Error: {$e->getMessage()}");
+                $failedCount++;
+            }
         }
 
-        $this->info(count($emails) . ' scheduled emails sent.');
+        $this->info("{$sentCount} scheduled emails sent successfully.");
+        if ($failedCount > 0) {
+            $this->error("{$failedCount} scheduled emails failed to send. Check logs.");
+        }
     }
 }

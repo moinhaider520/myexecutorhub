@@ -69,12 +69,24 @@
                                             <textarea name="message" id="message" hidden>{{ old('message') }}</textarea>
                                         </div>
 
+                                        {{-- ⭐ NEW: Schedule Date/Time Picker ⭐ --}}
+                                        <div class="mb-3" id="schedule_datetime_selection" style="display: none;">
+                                            <label for="scheduled_at" class="form-label">Schedule Date & Time</label>
+                                            <input type="datetime-local" name="scheduled_at" id="scheduled_at" class="form-control"
+                                                min="{{ now()->format('Y-m-d\TH:i') }}" value="{{ old('scheduled_at') }}">
+                                        </div>
+                                        {{-- ⬆️ END NEW FIELD ⬆️ --}}
+
                                         {{-- Action Buttons --}}
                                         <div class="mt-4 d-flex gap-3">
                                             <button type="submit" name="action" value="send"
-                                                class="btn btn-primary">Send Now</button>
-                                            <button type="submit" name="action" value="schedule"
-                                                class="btn btn-secondary">Schedule</button>
+                                                class="btn btn-primary" id="send-now-btn">Send Now</button>
+                                            <button type="button"
+                                                class="btn btn-secondary" id="schedule-btn">Schedule</button>
+
+                                            {{-- ⭐ NEW: Hidden action input to capture button click ⭐ --}}
+                                            <input type="hidden" name="action" id="action-input" value="send">
+                                            {{-- ⬆️ END NEW FIELD ⬆️ --}}
                                         </div>
                                     </form>
                                 </div>
@@ -87,16 +99,16 @@
     </div>
 
     <script>
+        // ... (Your existing JavaScript variables: quill, partnerTemplates, customerTemplates, etc.) ...
+
         var quill = new Quill('#quill-editor', {
             theme: 'snow',
             placeholder: 'Type your email body here...'
         });
 
-        // Load old content
         var oldMessage = document.getElementById('message').value;
         if (oldMessage) quill.root.innerHTML = oldMessage;
 
-        // Auto-fill subject and body when template selected
         const partnerTemplates = {
 
             "Day 1": {
@@ -358,124 +370,191 @@
       <p>— Executor Hub</p>`
             }
         };
+
         let usersLoaded = false;
         const specificUserDiv = document.getElementById('specific_user_selection');
         const specificUserSelect = document.getElementById('specific_user_id');
-function loadSpecificUsers() {
-        if (usersLoaded) return;
 
-        // Use jQuery for AJAX, as it is widely used in Blade/Bootstrap setups
-        $.ajax({
-            url: "{{ route('admin.users.list') }}",
-            method: 'GET',
-            beforeSend: function() {
-                specificUserSelect.innerHTML =
-                    '<option value="" disabled selected>Loading users...</option>';
-            },
-            success: function(response) {
-                specificUserSelect.innerHTML = '<option value="" disabled selected>Select a user</option>';
-                response.users.forEach(user => {
-
-                    const opt = document.createElement('option');
-                    opt.value = user.id;
-                    opt.textContent = `${user.name} (${user.email}) - ${user.roles[0]?.name || 'N/A'}`;
-                    opt.setAttribute('data-role', user.roles[0]?.name);
-                    specificUserSelect.appendChild(opt);
-                });
-                usersLoaded = true;
-            },
-            error: function() {
-                specificUserSelect.innerHTML =
-                    '<option value="" disabled selected>Failed to load users.</option>';
-                console.error("Failed to load users from AJAX request.");
-            }
-        });
-    }
+        // ⭐ NEW DOM ELEMENTS ⭐
+        const scheduleDiv = document.getElementById('schedule_datetime_selection');
+        const scheduleInput = document.getElementById('scheduled_at');
+        const sendNowBtn = document.getElementById('send-now-btn');
+        const scheduleBtn = document.getElementById('schedule-btn');
+        const actionInput = document.getElementById('action-input');
+        const emailForm = document.getElementById('email-form');
+        // ⬆️ END NEW DOM ELEMENTS ⬆️
 
 
-    document.getElementById('recipient_type').addEventListener('change', function() {
-        const templateSelect = document.getElementById('template');
-        const val = this.value;
-        templateSelect.innerHTML = '<option value="">-- Custom Message --</option>';
+        // ===== Function to load users via AJAX =====
+        function loadSpecificUsers() {
+            if (usersLoaded) return;
 
-        // Handle specific user selection UI
-        if (val === 'select_specific_user') {
-            specificUserDiv.style.display = 'block';
-            loadSpecificUsers();
-        } else {
-            specificUserDiv.style.display = 'none';
+            $.ajax({
+                url: "{{ route('admin.users.list') }}",
+                method: 'GET',
+                beforeSend: function() {
+                    specificUserSelect.innerHTML =
+                        '<option value="" disabled selected>Loading users...</option>';
+                },
+                success: function(response) {
+                    specificUserSelect.innerHTML = '<option value="" disabled selected>Select a user</option>';
+                    response.users.forEach(user => {
+                        const opt = document.createElement('option');
+                        opt.value = user.id;
+                        // Assuming role is nested in an array 'roles'
+                        const roleName = user.roles && user.roles.length > 0 ? user.roles[0].name : 'N/A';
+                        opt.textContent = `${user.name} (${user.email}) - ${roleName}`;
+                        opt.setAttribute('data-role', roleName);
+                        specificUserSelect.appendChild(opt);
+                    });
+                    usersLoaded = true;
+                },
+                error: function() {
+                    specificUserSelect.innerHTML =
+                        '<option value="" disabled selected>Failed to load users.</option>';
+                    console.error("Failed to load users from AJAX request.");
+                }
+            });
         }
 
-        // Handle Partners/Customers selection (template population)
-        const data = val === 'partners' ? partnerTemplates : val === 'customers' ? customerTemplates : null;
 
-        if (data) {
-            Object.keys(data).forEach(day => {
+        // ===== When recipient type changes (Existing logic) =====
+        document.getElementById('recipient_type').addEventListener('change', function() {
+            const templateSelect = document.getElementById('template');
+            const val = this.value;
+            templateSelect.innerHTML = '<option value="">-- Custom Message --</option>';
+            if (val === 'select_specific_user') {
+                specificUserDiv.style.display = 'block';
+                loadSpecificUsers();
+            } else {
+                specificUserDiv.style.display = 'none';
+            }
+
+            const data = val === 'partners' ? partnerTemplates : val === 'customers' ? customerTemplates : null;
+
+            if (data) {
+                Object.keys(data).forEach(day => {
+                    const opt = document.createElement('option');
+                    opt.value = day;
+                    opt.textContent = day;
+                    templateSelect.appendChild(opt);
+                });
+            }
+
+            // Reset fields
+            document.getElementById('title').value = '';
+            quill.root.innerHTML = '';
+        });
+
+        // ===== When a Specific User is Selected (Existing logic) =====
+        document.getElementById('specific_user_id').addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            const userRole = selectedOption.getAttribute('data-role');
+            const templateSelect = document.getElementById('template');
+            templateSelect.innerHTML = '<option value="">-- Custom Message --</option>';
+
+            let templatesToUse = {};
+            if (userRole === 'partner') {
+                templatesToUse = partnerTemplates;
+            } else if (userRole === 'customer') {
+                templatesToUse = customerTemplates;
+            }
+
+            Object.keys(templatesToUse).forEach(day => {
                 const opt = document.createElement('option');
                 opt.value = day;
                 opt.textContent = day;
                 templateSelect.appendChild(opt);
             });
-        }
-
-        // Reset fields
-        document.getElementById('title').value = '';
-        quill.root.innerHTML = '';
-    });
-    document.getElementById('specific_user_id').addEventListener('change', function() {
-        const selectedOption = this.options[this.selectedIndex];
-        const userRole = selectedOption.getAttribute('data-role');
-        const templateSelect = document.getElementById('template');
-        templateSelect.innerHTML = '<option value="">-- Custom Message --</option>';
-
-        let templatesToUse = {};
-        if (userRole === 'partner') {
-            templatesToUse = partnerTemplates;
-        } else if (userRole === 'customer') {
-            templatesToUse = customerTemplates;
-        }
-
-
-        Object.keys(templatesToUse).forEach(day => {
-            const opt = document.createElement('option');
-            opt.value = day;
-            opt.textContent = day;
-            templateSelect.appendChild(opt);
-        });
-        document.getElementById('title').value = '';
-        quill.root.innerHTML = '';
-    });
-
-    document.getElementById('template').addEventListener('change', function() {
-        const recipientType = document.getElementById('recipient_type').value;
-        const selected = this.value;
-        let data = {};
-
-        if (recipientType === 'partners') {
-            data = partnerTemplates;
-        } else if (recipientType === 'customers') {
-            data = customerTemplates;
-        } else if (recipientType === 'select_specific_user') {
-            const selectedUserOption = specificUserSelect.options[specificUserSelect.selectedIndex];
-            const userRole = selectedUserOption ? selectedUserOption.getAttribute('data-role') : null;
-
-            if (userRole === 'partner') {
-                data = partnerTemplates;
-            } else if (userRole === 'customer') {
-                data = customerTemplates;
-            }
-        }
-
-        if (selected && data[selected]) {
-            document.getElementById('title').value = data[selected].subject;
-            quill.root.innerHTML = data[selected].body;
-        } else {
             document.getElementById('title').value = '';
             quill.root.innerHTML = '';
-        }
-    });
-    document.getElementById('email-form').addEventListener('submit', function() {
-        document.getElementById('message').value = quill.root.innerHTML.trim();
-    });
-</script>
+        });
+
+        // ===== When template changes (Existing logic) =====
+        document.getElementById('template').addEventListener('change', function() {
+            const recipientType = document.getElementById('recipient_type').value;
+            const selected = this.value;
+            let data = {};
+
+            if (recipientType === 'partners') {
+                data = partnerTemplates;
+            } else if (recipientType === 'customers') {
+                data = customerTemplates;
+            } else if (recipientType === 'select_specific_user') {
+                const selectedUserOption = specificUserSelect.options[specificUserSelect.selectedIndex];
+                const userRole = selectedUserOption ? selectedUserOption.getAttribute('data-role') : null;
+
+                if (userRole === 'partner') {
+                    data = partnerTemplates;
+                } else if (userRole === 'customer') {
+                    data = customerTemplates;
+                }
+            }
+
+            if (selected && data[selected]) {
+                document.getElementById('title').value = data[selected].subject;
+                quill.root.innerHTML = data[selected].body;
+            } else {
+                document.getElementById('title').value = '';
+                quill.root.innerHTML = '';
+            }
+        });
+
+        // ------------------------------------
+        // ⭐ NEW: Scheduling Logic ⭐
+        // ------------------------------------
+        scheduleBtn.addEventListener('click', function() {
+            // 1. Show the date picker and require input
+            scheduleDiv.style.display = 'block';
+            scheduleInput.setAttribute('required', 'required');
+
+            // 2. Set the hidden action input value to 'schedule'
+            actionInput.value = 'schedule';
+
+            // 3. Change 'Schedule' button to 'Confirm Schedule' button
+            this.textContent = 'Confirm Schedule';
+            this.type = 'submit'; // Change type to submit the form
+
+            // 4. Temporarily hide 'Send Now' button
+            //    (Optional: depends on desired UI, hiding prevents confusion)
+            sendNowBtn.style.display = 'none';
+        });
+
+        // Add a reset to "Send Now" if the recipient type changes after schedule was initiated
+        document.getElementById('recipient_type').addEventListener('change', function() {
+            // ... (existing logic) ...
+
+            // Reset schedule UI
+            scheduleDiv.style.display = 'none';
+            scheduleInput.removeAttribute('required');
+            scheduleInput.value = '';
+            actionInput.value = 'send';
+            scheduleBtn.textContent = 'Schedule';
+            scheduleBtn.type = 'button';
+            sendNowBtn.style.display = 'inline-block';
+        });
+
+        // ------------------------------------
+        // Final form submission sync
+        // ------------------------------------
+        emailForm.addEventListener('submit', function(event) {
+            // Sync Quill editor content to the hidden textarea
+            document.getElementById('message').value = quill.root.innerHTML.trim();
+
+            // Special handling for 'Send Now' button (since its type is submit)
+            // If the schedule button hasn't been clicked, the action is 'send'.
+            if (actionInput.value === 'send') {
+                 scheduleInput.removeAttribute('required');
+                 scheduleInput.value = ''; // Ensure no schedule time is sent if sending now
+            }
+
+            // If the action is 'schedule' and the date is empty, the form's built-in
+            // 'required' validation will handle it.
+        });
+
+        // Ensure the initial action is correctly set to 'send'
+        sendNowBtn.addEventListener('click', function() {
+            actionInput.value = 'send';
+        });
+    </script>
 @endsection

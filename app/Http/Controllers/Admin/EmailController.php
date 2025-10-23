@@ -53,21 +53,32 @@ class EmailController extends Controller
         return view('admin.emails.email_using_template');
     }
 
-
-
     public function store(Request $request)
     {
-        $request->validate([
+        $validationRules = [
             'recipient_type' => 'required|string',
             'title' => 'required|string',
             'message' => 'required|string',
             'action' => 'required|string',
-        ]);
+        ];
 
-        $recipients = $this->getRecipients($request->recipient_type);
+        if ($request->action === 'schedule') {
+            $validationRules['scheduled_at'] = 'required|date|after:now';
+        }
+
+        if ($request->recipient_type === 'select_specific_user') {
+            $validationRules['specific_user_id'] = 'required|exists:users,id';
+        }
+
+        $request->validate($validationRules);
+
+        $recipients = $this->getRecipients(
+            $request->recipient_type,
+            $request->specific_user_id
+        );
 
         if ($recipients->isEmpty()) {
-            return back()->with('error', 'No recipients found.');
+            return back()->with('error', 'No recipients found for the selected type.');
         }
 
         if ($request->action === 'send') {
@@ -83,7 +94,8 @@ class EmailController extends Controller
         }
 
         if ($request->action === 'schedule') {
-
+            $localScheduledTime = Carbon::parse($request->scheduled_at);
+            $scheduledTimeUtc = $localScheduledTime->copy()->setTimezone('UTC');
             foreach ($recipients as $recipient) {
                 EmailSchedule::create([
                     'recipient_email' => $recipient->email,
@@ -91,24 +103,26 @@ class EmailController extends Controller
                     'body' => $request->message,
                     'recipient_type' => $request->recipient_type,
                     'status' => 'pending',
-                    'scheduled_for' => Carbon::now()->addHours(2), // example delay
+                    'scheduled_for' => $scheduledTimeUtc,
                 ]);
             }
-
-            return back()->with('success', 'Emails scheduled successfully!');
+            return back()->with('success', 'Emails scheduled successfully for ' . $localScheduledTime->format('Y-m-d H:i') . '!');
         }
     }
 
-    private function getRecipients($type)
+    private function getRecipients($type, $specificUserId = null)
     {
         if ($type === 'partners') {
             return User::role('partner')->get();
         } elseif ($type === 'customers') {
-            return  User::role('customer')->get();
+            return User::role('customer')->get();
+        } elseif ($type === 'select_specific_user' && $specificUserId) {
+            $user = User::find($specificUserId);
+            return $user ? collect([$user]) : collect();
         }
+
         return collect();
     }
-
 
     public function users_list(){
         try{
@@ -121,6 +135,6 @@ class EmailController extends Controller
         }
         catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
-}
 }
