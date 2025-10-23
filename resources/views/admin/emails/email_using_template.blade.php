@@ -114,7 +114,7 @@
             "Day 1": {
                 subject: "Partners are already earning — here’s how 💷",
                 body: `
-        Hi Everyone,<br><br>
+        <br>
         Yesterday, a new partner joined Executor Hub.<br>
         By the afternoon, they had already referred a client and secured 30% commission — all from one conversation.<br><br>
         Here’s what they did:<br>
@@ -132,7 +132,7 @@
             "Day 3": {
                 subject: "3 ways to introduce Executor Hub in under 30 seconds ⏱️",
                 body: `
-            Hi $name,<br><br>
+            <br>
             Not sure what to say to clients? We’ve got you covered.<br><br>
             Here are 3 easy lines partners are using right now:<br>
             1. “One of the most thoughtful things you can leave your family is clarity. I can set you up with Executor Hub today.”<br>
@@ -178,7 +178,7 @@
             "Day 14": {
                 subject: "Turn 25 clients into £1,000+ a year — recurring 📈",
                 body: `
-            Hi $name,<br><br>
+            <br>
             Here’s what partners are building right now:<br>
             • 25 clients referred → £90/month recurring (£1,080/year).<br>
             • 50 clients referred → £180/month recurring (£2,160/year).<br>
@@ -193,7 +193,7 @@
             "Day 21": {
                 subject: "Ready to scale your growing monthly income? 🚀",
                 body: `
-            Hi $name,<br><br>
+            <br>
             You’ve seen how quick and simple referrals are — and here’s the real power: your income grows every single month as clients stay subscribed.<br><br>
             💷 Each client = £3.60/month recurring.<br>
             💷 25 clients = £90/month.<br>
@@ -210,7 +210,6 @@
             "Day 1": {
                 subject: "The most important step: add your executor today",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Executors often spend dozens of hours searching for documents (Exizent 2023, Legal Services Board). Executor Hub cuts this down to a fraction of the time.</p>
       <p>✅ Today’s step: Add your executor.</p>
       <p>This unlocks their personal step-by-step guide — the heart of Executor Hub.</p>
@@ -222,7 +221,6 @@
             "Day 2": {
                 subject: "Save your executor hours — add one bank account securely",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Executors can spend weeks just tracking down bank details. Let’s prevent that today.</p>
       <p>✅ Add your first bank account in Executor Hub.</p>
       <a href='https://executorhub.co.uk/'>👉 [Add a bank account now]</a>
@@ -233,7 +231,6 @@
             "Day 3": {
                 subject: "Imagine your family hearing your voice ❤️",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Executor Hub isn’t just about paperwork. It’s about love, memories, and guidance.</p>
       <p>✅ Today’s step: Record your first video or message.</p>
       <a href='https://executorhub.co.uk/'>👉 [Record your first message]</a>
@@ -244,7 +241,6 @@
             "Day 5": {
                 subject: "Guidance for guardians — your voice in their future",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Executor Hub lets you leave clear guidance for guardians — advice, routines, values.</p>
       <p>✅ Today’s step: Add your first note for guardians.</p>
       <a href='https://executorhub.co.uk/'>👉 [Leave guardian guidance now]</a>
@@ -255,7 +251,6 @@
             "Day 6": {
                 subject: "You’re halfway there — families like Sarah’s save months",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Your vault is already taking shape 🎉.</p>
       <p>Families without Executor Hub often spend months searching for paperwork (Exizent 2023). With everything in one secure vault, it’s reduced to days.</p>
       <p>✅ Check your dashboard and complete one more item today.</p>
@@ -267,7 +262,6 @@
             "Day 7": {
                 subject: "1 week in — keep peace of mind for less than £3/week",
                 body: `
-      <p>Hi Everyone,</p>
       <p>You’ve completed a week 🎉. Already, you’ve:</p>
       <p>✔ Uploaded documents</p>
       <p>✔ Nominated an executor</p>
@@ -285,7 +279,6 @@
             "Day 8": {
                 subject: "Review your property details — keep them up to date",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Quick check-in on your property details.</p>
       <p>✅ Today’s step: Review your property entry and add any missing info (title number, mortgage, insurer).</p>
       <a href='https://executorhub.co.uk/'>👉 [Review property now]</a>
@@ -296,7 +289,6 @@
             "Day 9": {
                 subject: "Your annual capacity proof is due — record in 30 seconds",
                 body: `
-      <p>Hi Everyone,</p>
       <p>🔒 All recordings are encrypted, time-stamped, and stored securely to protect you against future challenges.</p>
       <p>— Executor Hub</p>`
             },
@@ -304,7 +296,6 @@
             "Day 10": {
                 subject: "Don’t lose what you’ve built",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Your executor’s guide is active. Your family’s vault is filling. Your legacy messages are stored.</p>
       <p>In just 4 days, your trial ends. Without a plan, you’ll lose access to it all.</p>
       <a href='https://executorhub.co.uk/'>👉 [Continue for just £5.99/month]</a>
@@ -315,7 +306,6 @@
             "Day 11": {
                 subject: "Your trial ends in 3 days — keep your vault safe",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Your free trial ends soon. Here’s what you’ll keep:</p>
       <p>- Your secure vault</p>
       <p>- Executor’s step-by-step guide</p>
@@ -330,7 +320,6 @@
             "Day 12": {
                 subject: "Almost there — complete your onboarding guide",
                 body: `
-      <p>Hi Everyone,</p>
       <p>You’re nearly there 👏. Here’s what’s left to finish your setup:</p>
       <ul>
         <li>• Add a digital asset (social media, streaming, crypto)</li>
@@ -348,7 +337,6 @@
             "Day 13": {
                 subject: "Last chance: don’t lose your vault tomorrow",
                 body: `
-      <p>Hi Everyone,</p>
       <p>This is your final reminder — tomorrow your trial ends.</p>
       <p>Don’t lose access to the vault, guides, and priceless messages you’ve built.</p>
       <a href='https://executorhub.co.uk/'>👉 [Continue your plan today]</a>
@@ -359,7 +347,6 @@
             "Day 14": {
                 subject: "Keep everything you’ve built — for less than 2 coffees a month",
                 body: `
-      <p>Hi Everyone,</p>
       <p>Your free trial ends today. Unless you continue, you’ll lose access to your vault, executor’s guide, and legacy features.</p>
       <a href='https://executorhub.co.uk/stripe'>👉 [Keep my Executor Hub active for £5.99/month]</a>
       <p>or</p>

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\EmailSchedule;
 use App\Mail\DynamicEmail;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -28,10 +29,11 @@ class SendScheduledEmails extends Command
 
         foreach ($emails as $email) {
             try {
+                $name=User::where('email',$email->recipient_email)->value('name');
                 Mail::to($email->recipient_email)->send(new DynamicEmail(
                     $email->subject,
                     $email->body,
-                    $email->recipient_email
+                    $name
                 ));
 
                 $email->update(['status' => 'sent']);
