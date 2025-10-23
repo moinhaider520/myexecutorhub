@@ -325,6 +325,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 
     Route::post('emails/store', [AdminEmailController::class, 'store'])->name('emails.store');
+    Route::get('users/list', [AdminEmailController::class, 'users_list'])->name('users.list');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {

@@ -27,7 +27,6 @@ class EmailController extends Controller
 
         $users = collect();
 
-        // Determine recipients based on selection
         if ($request->recipient_type === 'customers') {
             $users = User::role('customer')->get();
         } elseif ($request->recipient_type === 'partners') {
@@ -109,4 +108,19 @@ class EmailController extends Controller
         }
         return collect();
     }
+
+
+    public function users_list(){
+        try{
+            $users=User::whereHas('roles',function($q){
+                $q->where('name','customer')
+                ->orWhere('name','partner');
+            })->with('roles')->get();
+            return response()->json(['users'=>$users], 200);
+
+        }
+        catch(\Exception $e){
+            return response()->json(['error' => $e->getMessage()], 404);
+    }
+}
 }
