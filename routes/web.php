@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PartnerController;
+use App\Http\Controllers\Admin\MoveCustomerController;
 use App\Http\Controllers\LPAController as LPAControllerMobile;
 use App\Http\Controllers\WillController as WillControllerMobile;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
@@ -303,7 +304,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/partners', [PartnerController::class, 'send_invite_email'])->name('partners.send_invite_email');
     Route::get('/partners/{id}/edit', [PartnerController::class, 'edit'])->name('partners.edit');
     Route::get('/partners/{id}/view_refferals', [PartnerController::class, 'view_refferals'])->name('partners.view_refferals');
-        Route::get('/partners/{id}/view_partners', [PartnerController::class, 'view_partners'])->name('partners.view_partners');
+    Route::get('/partners/{id}/view_partners', [PartnerController::class, 'view_partners'])->name('partners.view_partners');
     Route::get('/partners/{id}/view_bank_accounts', [PartnerController::class, 'view_bank_accounts'])->name('partners.view_bank_accounts');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');
@@ -326,6 +327,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::post('emails/store', [AdminEmailController::class, 'store'])->name('emails.store');
     Route::get('users/list', [AdminEmailController::class, 'users_list'])->name('users.list');
+
+    // Move Customers
+    Route::get('/move-customers', [MoveCustomerController::class, 'index'])->name('move_customers.index');
+    Route::post('move-customers/assign', [MoveCustomerController::class, 'assignPartner'])->name('move_customers.assign');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
