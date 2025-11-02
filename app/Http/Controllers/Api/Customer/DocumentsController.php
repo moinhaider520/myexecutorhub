@@ -73,66 +73,51 @@ class DocumentsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'document_type' => 'required|string|max:255',
-            'description' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
-            'reminder_date' => 'nullable|date',
-        ]);
-
         try {
+            $request->validate([
+                'document_type' => 'required|string|max:255',
+                'description' => 'required|string',
+                'file.*' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+                'reminder_date' => 'nullable|date',
+            ]);
+
             DB::beginTransaction();
 
-            $path = $this->imageUpload($request->file('file'), 'documents');
+            $files = [];
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $path = $this->imageUpload($file, 'documents');
+                    $files[] = $path;
+                }
+            } else {
+                return response()->json(['success' => false, 'message' => 'No files uploaded'], 400);
+            }
 
             $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
-                'file_path' => $path,
+                'file_path' => json_encode($files),
                 'reminder_type' => $request->reminder_type,
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
             ]);
 
-            // Check if onboarding_progress exists for the user
-            $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
-                ['document_uploaded' => true]
-            );
-
-            if (!$progress->document_uploaded) {
-                $progress->document_uploaded = true;
-                $progress->save();
-            }
-
             DB::commit();
 
-            // Send email
-            $user = Auth::user();
-            $data = [
-                'first_name' => $user->name,
-                'document_name' => $document->document_type,
-            ];
-
-
-            // Send push notification
-            if ($user->expo_token) {
-                $expo = new Expo();
-                $message = new ExpoMessage([
-                    'title' => 'New Document Uploaded',
-                    'body' => "Your document '{$document->document_type}' has been successfully uploaded.",
-                ]);
-                $expo->send($message)->to($user->expo_token)->push();
-            }
-
-            Mail::to($user->email)->send(new DocumentMail($data));
-
-            return response()->json(['success' => true, 'message' => 'Document added successfully.']);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+            return response()->json(['success' => true, 'message' => 'Document added successfully']);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            // Log and return the actual error message to the client for debugging
+            \Log::error('Document store failed: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ], 500);
         }
     }
+
+
 
     /**
      * Update the specified document.
@@ -145,8 +130,8 @@ class DocumentsController extends Controller
     {
         $request->validate([
             'document_type' => 'required|string|max:255',
-            'description' => 'required',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
+            'description' => 'required|string',
+            'file' => 'nullable',
             'reminder_date' => 'nullable|date',
         ]);
 
@@ -154,22 +139,22 @@ class DocumentsController extends Controller
             DB::beginTransaction();
 
             $document = Document::findOrFail($id);
-
             $document->document_type = $request->document_type;
             $document->description = $request->description;
             $document->reminder_type = $request->reminder_type;
             $document->created_by = Auth::id();
 
-            if ($request->hasFile('file')) {
-                $filePath = public_path('assets/upload/' . basename($document->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
+            $existingFiles = json_decode($document->file_path ?? '[]', true);
 
-                $path = $this->imageUpload($request->file('file'), 'documents');
-                $document->file_path = $path;
+            // If new files are uploaded, append to the array
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $path = $this->imageUpload($file, 'documents');
+                    $existingFiles[] = $path;
+                }
             }
 
+            $document->file_path = json_encode($existingFiles);
             $document->reminder_date = $request->reminder_date;
             $document->save();
 
@@ -180,6 +165,7 @@ class DocumentsController extends Controller
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+
 
     /**
      * Remove the specified document.

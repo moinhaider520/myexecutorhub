@@ -37,54 +37,43 @@ class DocumentsController extends Controller
         $request->validate([
             'document_type' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png',
+            'files' => 'required',
+            'files.*' => 'file|max:20480', // up to 20MB per file
             'reminder_date' => 'nullable|date',
         ]);
 
         try {
-             DB::beginTransaction();
+            DB::beginTransaction();
 
-            $path = $this->imageUpload($request->file('file'), 'documents');
-            $originalFullPath = public_path('assets/upload/' . $path);
+            $storedFiles = [];
+            $text = null;
 
-            $file = $request->file('file');
-            $extension = strtolower($file->getClientOriginalExtension());
-            if ($extension === 'doc' || $extension === 'docx' || $extension === 'pdf') {
-                $basename = pathinfo($path, PATHINFO_FILENAME);
-                $pdfRelative = $basename . '.pdf';
-                $pdfFullPath = public_path('assets/upload/' . $pdfRelative);
+            foreach ($request->file('files') as $file) {
+                $path = $this->imageUpload($file, 'documents');
+                $storedFiles[] = $path;
 
-                if ($extension === 'doc' || $extension === 'docx') {
-                    // Convert Word to PDF
-                    $domPdfPath = base_path('vendor/dompdf/dompdf'); // adjust if needed
-                    \PhpOffice\PhpWord\Settings::setPdfRendererPath($domPdfPath);
-                    \PhpOffice\PhpWord\Settings::setPdfRendererName('DomPDF');
-
-                    $phpWord = \PhpOffice\PhpWord\IOFactory::load($originalFullPath);
-                    $pdfWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
-                    $pdfWriter->save($pdfFullPath);
-                } elseif ($extension === 'pdf') {
-                    $pdfFullPath = $originalFullPath;
-                    $pdfRelative = $path;
+                // Optional text extraction for PDFs
+                $extension = strtolower($file->getClientOriginalExtension());
+                if ($extension === 'pdf') {
+                    try {
+                        $parser = new \Smalot\PdfParser\Parser();
+                        $pdf = $parser->parseFile(public_path('assets/upload/' . $path));
+                        $text .= "\n" . $pdf->getText();
+                    } catch (\Exception $e) {
+                        // skip text extraction errors silently
+                    }
                 }
-                $parser = new Parser();
-                $pdf = $parser->parseFile($pdfFullPath);
-                $text = $pdf->getText();
-            } else {
-                $text = null;
             }
 
-            // Extract text from PDF using Smalot PdfParser
-
-
+            // Store JSON array of file paths
             $document = Document::create([
                 'document_type' => $request->document_type,
-                'description'   => $request->description,
-                'file_path'     => $path,
-                'created_by'    => Auth::id(),
+                'description' => $request->description,
+                'file_path' => json_encode($storedFiles),
+                'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
                 'reminder_type' => $request->reminder_type,
-                'textpdf'       => mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null,
+                'textpdf' => mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null,
             ]);
 
             // Update onboarding progress
@@ -97,75 +86,108 @@ class DocumentsController extends Controller
                 $progress->document_uploaded = true;
                 $progress->save();
             }
+
             DB::commit();
-            // Send email
+
+            // Send email + push
             $user = Auth::user();
             $data = [
                 'first_name' => $user->name,
                 'document_name' => $document->document_type,
             ];
 
-            // Send push notification
             if ($user->expo_token) {
-                $expo = new Expo();
-                $message = new ExpoMessage([
+                $expo = new \ExpoSDK\Expo();
+                $message = new \ExpoSDK\ExpoMessage([
                     'title' => 'New Document Uploaded',
-                    'body' => "Your document '{$document->document_type}' has been successfully uploaded.",
+                    'body' => "Your documents for '{$document->document_type}' have been uploaded.",
                 ]);
                 $expo->send($message)->to($user->expo_token)->push();
             }
 
-            Mail::to($user->email)->send(new DocumentMail($data));
+            \Mail::to($user->email)->send(new \App\Mail\DocumentMail($data));
 
-            return response()->json(['success' => true, 'message' => 'Document added successfully.']);
+            return response()->json(['success' => true, 'message' => 'Documents uploaded successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
+
 
 
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'document_type' => 'required|string|max:255',
-            'description' => 'required',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
-            'reminder_date' => 'nullable|date',
-        ]);
+{
+    $request->validate([
+        'document_type' => 'required|string|max:255',
+        'description' => 'required',
+        'files' => 'nullable',
+        'files.*' => 'file|max:20480', // up to 20MB per file
+        'reminder_date' => 'nullable|date',
+    ]);
 
-        try {
-            DB::beginTransaction();
+    try {
+        DB::beginTransaction();
 
-            $document = Document::findOrFail($id);
+        $document = Document::findOrFail($id);
 
-            $document->document_type = $request->document_type;
-            $document->description = $request->description;
-            $document->reminder_type = $request->edit_reminder_type;
+        $document->document_type = $request->document_type;
+        $document->description = $request->description;
+        $document->reminder_type = $request->edit_reminder_type;
+        $document->created_by = Auth::id();
+        $document->reminder_date = $request->reminder_date;
 
-            $document->created_by = Auth::id();
+        $storedFiles = [];
+        $text = null;
 
-            if ($request->hasFile('file')) {
-                // Delete the file from the public/assets/upload directory
-                $filePath = public_path('assets/upload/' . basename($document->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
+        // If new files are uploaded, replace old ones
+        if ($request->hasFile('files')) {
+            // Delete previous uploaded files (if exist)
+            if (!empty($document->file_path)) {
+                $oldFiles = json_decode($document->file_path, true);
+                if (is_array($oldFiles)) {
+                    foreach ($oldFiles as $oldFile) {
+                        $filePath = public_path('assets/upload/' . $oldFile);
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                    }
                 }
-
-                $path = $this->imageUpload($request->file('file'), 'documents');
-                $document->file_path = $path;
             }
 
-            $document->reminder_date = $request->reminder_date;
-            $document->save();
+            // Upload and store new files
+            foreach ($request->file('files') as $file) {
+                $path = $this->imageUpload($file, 'documents');
+                $storedFiles[] = $path;
 
-            DB::commit();
-            return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+                // Optional: extract text from PDFs
+                $extension = strtolower($file->getClientOriginalExtension());
+                if ($extension === 'pdf') {
+                    try {
+                        $parser = new \Smalot\PdfParser\Parser();
+                        $pdf = $parser->parseFile(public_path('assets/upload/' . $path));
+                        $text .= "\n" . $pdf->getText();
+                    } catch (\Exception $e) {
+                        // skip text extraction errors silently
+                    }
+                }
+            }
+
+            $document->file_path = json_encode($storedFiles);
+            $document->textpdf = mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null;
         }
+
+        $document->save();
+
+        DB::commit();
+
+        return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
+    } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
     }
+}
+
 
     public function destroy($id)
     {

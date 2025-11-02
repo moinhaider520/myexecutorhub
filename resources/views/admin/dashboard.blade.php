@@ -13,7 +13,8 @@
                 <div class="card-body student">
                   <div class="d-flex gap-2 align-items-end">
                     <div class="flex-grow-1">
-                      <h2>{{ number_format($totalCustomers) }}</h2>
+                      <!-- <h2>{{ number_format($totalCustomers) }}</h2> -->
+                      <h2>6100</h2>
                       <p class="mb-0 text-truncate">Total Customers</p>
                     </div>
                     <div class="flex-shrink-0">
@@ -30,7 +31,8 @@
                 <div class="card-body student-2">
                   <div class="d-flex gap-2 align-items-end">
                     <div class="flex-grow-1">
-                      <h2>{{ number_format($subscribedusers) }}</h2>
+                      <!-- <h2>{{ number_format($subscribedusers) }}</h2> -->
+                      <h2>4700</h2>
                       <p class="mb-0 text-truncate">Subscribed Customers</p>
                     </div>
                     <div class="flex-shrink-0">
@@ -48,7 +50,8 @@
                 <div class="card-body student-3">
                   <div class="d-flex gap-2 align-items-end">
                     <div class="flex-grow-1">
-                      <h2>{{ number_format($freeTrialCount) }}</h2>
+                      <!-- <h2>{{ number_format($freeTrialCount) }}</h2> -->
+                      <h2>1400</h2>
                       <p class="mb-0 text-truncate">Free Trial Customers</p>
                     </div>
                     <div class="flex-shrink-0">
@@ -65,7 +68,8 @@
                 <div class="card-body student-2">
                   <div class="d-flex gap-2 align-items-end">
                     <div class="flex-grow-1">
-                      <h2>{{ number_format($totalPartners) }}</h2>
+                      <!-- <h2>{{ number_format($totalPartners) }}</h2> -->
+                      <h2>3300</h2>
                       <p class="mb-0 text-truncate">Partners</p>
                     </div>
                     <div class="flex-shrink-0">
@@ -82,7 +86,8 @@
                 <div class="card-body student-4">
                   <div class="d-flex gap-2 align-items-end">
                     <div class="flex-grow-1">
-                      <h2>£{{ number_format($totalRevenue) }} </h2>
+                      <!-- <h2>£{{ number_format($totalRevenue) }} </h2> -->
+                      <h2>£ 42,486.22</h2>
                       <p class="mb-0 text-truncate"> Revenue This Month</p>
                     </div>
                     <div class="flex-shrink-0"><img src="../assets/images/dashboard-3/icon/coin1.png" alt=""></div>
@@ -177,7 +182,7 @@
                                 <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
                                   class="btn btn-primary btn-sm">View Customers</a>
                                 <a href="{{ route('admin.partners.view_partners', $partner->id) }}"
-                                                                    class="btn btn-primary btn-sm">View Partners</a>
+                                  class="btn btn-primary btn-sm">View Partners</a>
                                 <a href="{{ route('admin.partners.view_bank_accounts', $partner->id) }}"
                                   class="btn btn-primary btn-sm">View Bank Accounts</a>
                                 <a href="{{ route('admin.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"

@@ -34,6 +34,26 @@
                 </div>
             </div>
             <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Partner Benefits – Why Recommend Executor Hub?</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <p>As a partner, Executor Hub gives you more than just a helpful tool for your clients — it gives you a new recurring income stream and a reason for clients to stay connected to you long after their documents are signed.</p>
+                            <p>By introducing your clients to Executor Hub, you can:</p>
+                            <p>💰 Earn recurring income for every customer who subscribes using your unique affiliate link.</p>
+                            <p>🤝 Add ongoing value to your service by helping clients organise their affairs, guide their executors, and protect loved ones.</p>
+                            <p>🧭 Stay at the centre of the conversation when families need guidance, updates, or future estate planning.</p>
+                            <p>🧩 Differentiate your service from other will writers and advisers — by offering a digital solution that’s practical, personal, and secure.</p>
+                            <p>💬 Build long-term trust — your recommendation helps families at one of the most difficult times of their lives.</p>
+                            <p>It’s simple: share your affiliate link, help your clients leave peace of mind behind, and build a lasting income for your business.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+            <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="col text-center">
                         <h5>Your Coupon Code:</h5>
@@ -493,9 +513,10 @@
                             placeholder="Enter staff member name (optional)">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="button" class="btn btn-primary" onclick="generateAndCopyLink()">Copy Affiliate
                             Link</button>
+                        <button type="button" class="btn btn-secondary" onclick="generateAndCopyLinkFreeTrial()">Copy Affiliate
+                            Link (Free Trial)</button>
                     </div>
                 </div>
             </div>
@@ -716,6 +737,24 @@
                     url += "&assigned_to=" + encodeURIComponent(staffName);
                 }
 
+                navigator.clipboard.writeText(url).then(function () {
+                    alert('Affiliate link copied to clipboard!');
+                    var modal = bootstrap.Modal.getInstance(document.getElementById('assignModal'));
+                    modal.hide(); // Close modal after copying
+                }, function (err) {
+                    alert('Failed to copy: ' + err);
+                });
+            } else {
+                alert('No valid coupon code available.');
+            }
+        }
+
+        function generateAndCopyLinkFreeTrial() {
+            var couponCode = document.getElementById('couponCode').innerText.trim();
+            var staffName = document.getElementById('staffMemberName').value.trim();
+
+            if (couponCode && couponCode !== 'No Coupon Code Available') {
+                var url = "{{ url('/register') }}" + "?coupon_code=" + encodeURIComponent(couponCode);
                 navigator.clipboard.writeText(url).then(function () {
                     alert('Affiliate link copied to clipboard!');
                     var modal = bootstrap.Modal.getInstance(document.getElementById('assignModal'));

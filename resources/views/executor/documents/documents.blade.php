@@ -37,8 +37,16 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $document->document_type }}</td>
                 <td>{{ $document->description }}</td>
-                <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}"
-                  target="_blank">Download</a></td>
+                <td>
+                                @php
+                                  $files = json_decode($document->file_path, true);
+                                @endphp
+                                @foreach($files as $file)
+                                  <a href="{{ asset('assets/upload/' . $file) }}" target="_blank">
+                                    View File
+                                  </a><br>
+                                @endforeach
+                              </td>
                 <td><button type="button" class="btn btn-secondary btn-sm edit-button" id="viewReviewsButton"
                 data-toggle="modal" data-target="#ReviewModal" data-id="{{ $document->id }}">View Reviews</button></td>
                 <td>

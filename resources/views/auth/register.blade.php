@@ -159,4 +159,17 @@
         });
     </script>
 
+    <script>
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get coupon_code value (if available)
+    const couponCode = urlParams.get('coupon_code');
+
+    // Populate the input field if value exists
+    if (couponCode) {
+        document.getElementById('coupon_code').value = couponCode;
+    }
+</script>
+
 @endsection
