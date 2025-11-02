@@ -8,13 +8,7 @@
                 <div class="card">
                     <h5 class="card-header">Move Customers</h5>
                     <div class="card-body">
-                        @if(session('success'))
-                            <div class="alert alert-success">{{ session('success') }}</div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger">{{ session('error') }}</div>
-                        @endif
-
+            
                         <div class="table-responsive theme-scrollbar">
                             <table class="display dataTable no-footer" id="basic-1">
                                 <thead>
