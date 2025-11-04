@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('user_bank_details', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
+            
+            $table->string('account_name')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('iban')->nullable();
             $table->string('sort_code')->nullable();

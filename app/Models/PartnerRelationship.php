@@ -22,4 +22,9 @@ class PartnerRelationship extends Model
     {
         return $this->belongsTo(User::class, 'sub_partner_id');
     }
+
+    public function parentPartner()
+    {
+        return $this->belongsTo(User::class, 'parent_partner_id');
+    }
 }

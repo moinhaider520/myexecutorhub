@@ -29,6 +29,7 @@ class BankDetailsController extends Controller
 
             UserBankDetails::create([
                 'bank_name' => $request->bank_name,
+                'account_name' => $request->account_name,
                 'sort_code' => $request->sort_code,
                 'iban' => $request->iban,
                 'user_id' => Auth::id()
@@ -55,6 +56,7 @@ class BankDetailsController extends Controller
             $bankAccount = UserBankDetails::findOrFail($id);
 
             $bankAccount->bank_name = $request->bank_name;
+            $bankAccount->account_name = $request->account_name;
             $bankAccount->sort_code = $request->sort_code;
             $bankAccount->iban = $request->iban;
             $bankAccount->user_id = Auth::id();

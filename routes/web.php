@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\MoveCustomerController;
+use App\Http\Controllers\Admin\MovePartnerController;
 use App\Http\Controllers\LPAController as LPAControllerMobile;
 use App\Http\Controllers\WillController as WillControllerMobile;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
@@ -331,6 +332,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Move Customers
     Route::get('/move-customers', [MoveCustomerController::class, 'index'])->name('move_customers.index');
     Route::post('move-customers/assign', [MoveCustomerController::class, 'assignPartner'])->name('move_customers.assign');
+
+    // Move Partners
+    Route::get('/move-partners', [MovePartnerController::class, 'index'])->name('move_partners.index');
+    Route::post('move-partners/assign', [MovePartnerController::class, 'assignPartner'])->name('move_partners.assign');
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {

@@ -59,7 +59,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(CouponUsage::class, 'partner_id');
     }
-    
+
     public function referrer()
     {
         return $this->belongsTo(User::class, 'reffered_by');
@@ -70,6 +70,37 @@ class User extends Authenticatable
         return $this->hasOne(CouponUsage::class, 'user_id');
     }
 
+    public function parentPartnerRelation()
+    {
+        return $this->hasOne(PartnerRelationship::class, 'sub_partner_id');
+    }
 
-    
+    // Relationship to get the actual parent partner user
+    public function parentPartner()
+    {
+        return $this->hasOneThrough(
+            User::class,
+            PartnerRelationship::class,
+            'sub_partner_id', // Foreign key on PartnerRelationship
+            'id', // Foreign key on User
+            'id', // Local key on current User
+            'parent_partner_id' // Local key on PartnerRelationship
+        );
+    }
+
+    // Relationship to get all sub-partners under this partner
+    public function subPartners()
+    {
+        return $this->hasManyThrough(
+            User::class,
+            PartnerRelationship::class,
+            'parent_partner_id', // Foreign key on PartnerRelationship
+            'id', // Foreign key on User
+            'id', // Local key on current User
+            'sub_partner_id' // Local key on PartnerRelationship
+        );
+    }
+
+
+
 }

@@ -115,29 +115,44 @@
                             <th>Address</th>
                             <th>Contact Number</th>
                             <th>Plan</th>
+                            <th>Registered Under Partner</th>
                             <th>Joining Date and Time</th>
                             <th>Access Until</th>
                           </tr>
                         </thead>
                         <tbody>
                           @foreach ($customers as $index => $customer)
-                            <tr role="row" class="odd">
-                              <td>{{ $index + 1 }}</td>
-                              <td>{{ $customer->name }}</td>
-                              <td>{{ $customer->email }}</td>
-                              <td>{{ $customer->address ?? 'N/A'  }}</td>
-                              <td>{{ $customer->contact_number ?? 'N/A' }}</td>
-                              <td>
-                                @if ($customer->subscribed_package === 'free_trial')
-                                  Free Trial
-                                @else
-                                  {{ $customer->subscribed_package ?? 'N/A' }}
-                                @endif
-                              </td>
-                              <td>{{ $customer->created_at ?? 'N/A' }}</td>
-                              <td>{{ $customer->trial_ends_at ?? 'N/A' }}</td>
-                            </tr>
-                          @endforeach
+  @php
+    $partner = $customer->usedCouponFrom?->partner;
+    $partnerName = $partner ? $partner->name : 'Direct Registration';
+  @endphp
+  <tr role="row" class="odd">
+    <td>{{ $index + 1 }}</td>
+    <td>{{ $customer->name }}</td>
+    <td>{{ $customer->email }}</td>
+    <td>{{ $customer->address ?? 'N/A' }}</td>
+    <td>{{ $customer->contact_number ?? 'N/A' }}</td>
+    <td>
+      @if ($customer->subscribed_package === 'free_trial')
+        Free Trial
+      @else
+        {{ $customer->subscribed_package ?? 'N/A' }}
+      @endif
+    </td>
+    <td>
+      @if($partner)
+        <span class="badge badge-info">
+          {{ $partner->name }}
+        </span>
+        <br>
+      @else
+        <span class="badge badge-secondary">Direct Registration</span>
+      @endif
+    </td>
+    <td>{{ $customer->created_at ? $customer->created_at->format('M d, Y h:i A') : 'N/A' }}</td>
+    <td>{{ $customer->trial_ends_at ? $customer->trial_ends_at : 'N/A' }}</td>
+  </tr>
+@endforeach
                         </tbody>
                       </table>
                     </div>

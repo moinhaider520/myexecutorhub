@@ -105,6 +105,20 @@
                             <li><a href="{{ route('admin.move_customers.index') }}">View Partners</a></li>
                         </ul>
                     </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Move Partners</span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('admin.move_partners.index') }}">View Partners</a></li>
+                        </ul>
+                    </li>
 
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -245,20 +259,6 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.messages.view') }}">Manage Inbox</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg>
-                            <span>Invite Friends </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.partners.send_invite') }}">Send Invite</a></li>
                         </ul>
                     </li>
 

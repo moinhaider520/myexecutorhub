@@ -28,8 +28,8 @@ class DashboardController extends Controller
 
         $customers = User::role('customer')
             ->select('id', 'name', 'email', 'address', 'contact_number', 'status', 'created_at', 'subscribed_package', 'trial_ends_at')
+            ->with(['usedCouponFrom.partner']) // Eager load the partner
             ->get();
-
 
         // Subscription Plan Counts
         $basicPlanCount = User::role('customer')
@@ -59,10 +59,10 @@ class DashboardController extends Controller
             })
             ->count();
 
-            $subscribedusers = $premiumPlanCount + $standardPlanCount + $basicPlanCount;
+        $subscribedusers = $premiumPlanCount + $standardPlanCount + $basicPlanCount;
 
-             $freeTrialCount = User::role('customer')
-            ->where('subscribed_package', 'free_trial')            
+        $freeTrialCount = User::role('customer')
+            ->where('subscribed_package', 'free_trial')
             ->count();
 
         // Calculate Total Revenue

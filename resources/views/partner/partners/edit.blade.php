@@ -79,8 +79,6 @@
                                                     & Family</option>
                                                 <option value="Direct Partners" {{ old('access_type', $partner->access_type) == 'Direct Partners' ? 'selected' : '' }}>Direct
                                                     Partners</option>
-                                                <option value="Will Power Staff" {{ old('access_type', $partner->access_type) == 'Will Power Staff' ? 'selected' : '' }}>Will
-                                                    Power Staff</option>
                                                 <option value="Partner Organisations" {{ old('access_type', $partner->access_type) == 'Partner Organisations' ? 'selected' : '' }}>
                                                     Partner Organisations</option>
                                             </select>

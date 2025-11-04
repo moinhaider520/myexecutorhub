@@ -28,7 +28,8 @@
                           <tr role="row">
                             <th>Sr</th>
                             <th>Bank Name</th>
-                            <th>IBAN Number</th>
+                            <th>Account Name</th>
+                            <th>Account Number</th>
                             <th>Sort Code</th>
                             <th>Action</th>
                           </tr>
@@ -38,12 +39,15 @@
                             <tr>
                               <td>{{ $loop->iteration }}</td>
                               <td>{{ $bankAccount->bank_name }}</td>
+                              <td>{{ $bankAccount->account_name }}</td>
+                              
                               <td>{{ $bankAccount->iban }}</td>
                               <td>{{ $bankAccount->sort_code }}</td>
                               <td>
                                 <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
                                   data-target="#editBankAccountModal" data-id="{{ $bankAccount->id }}"
                                   data-bank_name="{{ $bankAccount->bank_name }}"
+                                  data-account_name="{{ $bankAccount->account_name }}"
                                   data-sort_code="{{ $bankAccount->sort_code }}"
                                   data-iban="{{ $bankAccount->iban }}">Edit</button>
                                 <form action="{{ route('partner.bank_account.destroy', $bankAccount->id) }}" method="POST"
@@ -87,8 +91,14 @@
               <span class="text-danger" id="bank_name_error"></span>
             </div>
             <div class="form-group mb-2">
-              <label for="Iban">IBAN Number</label>
-              <input type="text" class="form-control" name="iban" id="Iban" placeholder="Enter IBAN Number" required>
+              <label for="accountName">Account Name</label>
+              <input type="text" class="form-control" name="account_name" id="accountName" placeholder="Enter Account name"
+                required>
+              <span class="text-danger" id="account_name_error"></span>
+            </div>
+            <div class="form-group mb-2">
+              <label for="Iban">Account Number</label>
+              <input type="text" class="form-control" name="iban" id="Iban" placeholder="Enter Account Number" required>
               <span class="text-danger" id="iban_error"></span>
             </div>
             <div class="form-group mb-2">
@@ -127,8 +137,14 @@
               <span class="text-danger" id="edit_bank_name_error"></span>
             </div>
             <div class="form-group mb-2">
-              <label for="editIban">Iban Number</label>
-              <input type="text" class="form-control" name="iban" id="editIban" placeholder="Enter IBAN Number" required>
+              <label for="editAccountName">Account Name</label>
+              <input type="text" class="form-control" name="account_name" id="editAccountName" placeholder="Enter Account name"
+                required>
+              <span class="text-danger" id="edit_account_name_error"></span>
+            </div>
+            <div class="form-group mb-2">
+              <label for="editIban">Account Number</label>
+              <input type="text" class="form-control" name="iban" id="editIban" placeholder="Enter Account Number" required>
               <span class="text-danger" id="edit_iban_error"></span>
             </div>
             <div class="form-group mb-2">
@@ -162,6 +178,7 @@
           error: function (response) {
             var errors = response.responseJSON.errors;
             if (errors.bank_name) $('#bank_name_error').text(errors.bank_name[0]);
+            if (errors.account_name) $('#account_name_error').text(errors.account_name[0]);
             if (errors.sort_code) $('#sort_code_error').text(errors.sort_code[0]);
             if (errors.iban) $('#iban_error').text(errors.iban[0]);
           }
@@ -171,11 +188,13 @@
       $('.edit-button').on('click', function () {
         var id = $(this).data('id');
         var bank_name = $(this).data('bank_name');
+        var account_name = $(this).data('account_name');
         var sort_code = $(this).data('sort_code');
         var iban = $(this).data('iban');
 
         $('#editBankAccountId').val(id);
         $('#editBankName').val(bank_name);
+        $('#editAccountName').val(account_name);
         $('#editSortCode').val(sort_code);
         $('#editIban').val(iban);
       });
@@ -192,6 +211,7 @@
           error: function (response) {
             var errors = response.responseJSON.errors;
             if (errors.bank_name) $('#edit_bank_name_error').text(errors.bank_name[0]);
+            if (errors.account_name) $('#edit_account_name_error').text(errors.account_name[0]);
             if (errors.sort_code) $('#edit_sort_code_error').text(errors.sort_code[0]);
             if (errors.iban) $('#edit_iban_error').text(errors.iban[0]);
           }
