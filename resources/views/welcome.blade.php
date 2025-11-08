@@ -1162,6 +1162,149 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="row justify-content-center mt-60">
+                    <div class="col-lg-10">
+                        <div class="lifetime-subscription-form bg--white-100 block-shadow r-12 p-40">
+                            <h3 class="s-32 w-700 mb-30 text-center">Lifetime Subscription</h3>
+
+                            @if ($errors->lifetime->any())
+                                <div class="alert alert-danger" role="alert">
+                                    <ul class="mb-0 ps-3">
+                                        @foreach ($errors->lifetime->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form method="POST" action="{{ route('stripe.lifetime') }}" class="row g-3 needs-validation" novalidate style="padding:10px;">
+                                @csrf
+
+                                <div class="col-md-6">
+                                    <label for="lifetimeName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="lifetimeName" name="name"
+                                        value="{{ old('name') }}" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="lifetimeEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="lifetimeEmail" name="email"
+                                        value="{{ old('email') }}" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="lifetimePassword" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="lifetimePassword" name="password"
+                                        minlength="8" required>
+                                    <small class="form-text text-muted">Minimum 8 characters.</small>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="lifetimeDob" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" id="lifetimeDob" name="date_of_birth"
+                                        value="{{ old('date_of_birth') }}" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="lifetimeAddress" class="form-label">Address</label>
+                                    <input type="text" class="form-control" id="lifetimeAddress" name="address"
+                                        value="{{ old('address') }}" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="lifetimeCity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="lifetimeCity" name="city"
+                                        value="{{ old('city') }}" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="lifetimePostalCode" class="form-label">Postal Code</label>
+                                    <input type="text" class="form-control" id="lifetimePostalCode" name="postal_code"
+                                        value="{{ old('postal_code') }}" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="lifetimeCountry" class="form-label">Country</label>
+                                    <input type="text" class="form-control" id="lifetimeCountry" name="country"
+                                        value="{{ old('country') }}" required>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label d-block mb-2">Choose Lifetime Plan</label>
+                                    <div class="d-flex flex-column flex-md-row gap-3">
+                                        @php
+                                            $lifetimePlan = old('plan_tier', 'standard');
+                                        @endphp
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="plan_tier" id="planBasic"
+                                                value="basic" {{ $lifetimePlan === 'basic' ? 'checked' : '' }} required>
+                                            <label class="form-check-label" for="planBasic">
+                                                Basic
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="plan_tier" id="planStandard"
+                                                value="standard" {{ $lifetimePlan === 'standard' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="planStandard">
+                                                Standard
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="plan_tier" id="planPremium"
+                                                value="premium" {{ $lifetimePlan === 'premium' ? 'checked' : '' }}>
+                                            <label class="form-check-label" for="planPremium">
+                                                Premium
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="lifetimeCoupon" class="form-label">Coupon Code (Optional)</label>
+                                    <input type="text" class="form-control" id="lifetimeCoupon" name="coupon_code"
+                                        value="{{ old('coupon_code') }}">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="lifetimeHearAboutUs" class="form-label">Where did you hear about us?</label>
+                                    <select class="form-select" id="lifetimeHearAboutUs" name="hear_about_us">
+                                        <option value="" selected disabled>Select an option</option>
+                                        @php
+                                            $hearAboutOptions = [
+                                                'Friend or Family',
+                                                'Social Media',
+                                                'Events or Conferences',
+                                                'Search Engine',
+                                                'News or Media',
+                                                'Other',
+                                            ];
+                                            $selectedHearAbout = old('hear_about_us');
+                                        @endphp
+                                        @foreach ($hearAboutOptions as $option)
+                                            <option value="{{ $option }}" {{ $selectedHearAbout === $option ? 'selected' : '' }}>
+                                                {{ $option }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-12" id="lifetimeHearAboutOtherWrapper"
+                                    style="display: {{ old('hear_about_us') === 'Other' ? 'block' : 'none' }};">
+                                    <label for="lifetimeHearAboutOther" class="form-label">Please specify</label>
+                                    <input type="text" class="form-control" id="lifetimeHearAboutOther"
+                                        name="other_hear_about_us" value="{{ old('other_hear_about_us') }}">
+                                </div>
+
+                                <div class="col-12 text-center mt-3">
+                                    <button type="submit" class="btn btn--theme btn-lg r-04">
+                                        Proceed to Secure Checkout
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- End container -->
         </section>
@@ -2426,6 +2569,32 @@
             localStorage.setItem("welcomePopupShown", "true");
         }
 
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const hearSelect = document.getElementById('lifetimeHearAboutUs');
+            const otherWrapper = document.getElementById('lifetimeHearAboutOtherWrapper');
+            const otherInput = document.getElementById('lifetimeHearAboutOther');
+
+            if (!hearSelect || !otherWrapper) {
+                return;
+            }
+
+            const toggleOtherField = () => {
+                if (hearSelect.value === 'Other') {
+                    otherWrapper.style.display = 'block';
+                } else {
+                    otherWrapper.style.display = 'none';
+                    if (otherInput) {
+                        otherInput.value = '';
+                    }
+                }
+            };
+
+            hearSelect.addEventListener('change', toggleOtherField);
+            toggleOtherField();
+        });
     </script>
 
     <script>

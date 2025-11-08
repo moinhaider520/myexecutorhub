@@ -315,10 +315,16 @@
                     @endrole
 
                     @php
-                    $package = Auth::user()->subscribed_package; // Retrieve the subscribed package of the logged-in user
+                        $package = Auth::user()->subscribed_package;
+                        $lifetimePackages = ['Lifetime Basic', 'Lifetime Standard', 'Lifetime Premium'];
+                        $basicPackages = array_merge(['Basic', 'Standard', 'Premium', 'free_trial'], $lifetimePackages);
+                        $standardPackages = array_merge(['Standard', 'Premium', 'free_trial'], ['Lifetime Standard', 'Lifetime Premium']);
+                        $premiumPackages = array_merge(['Premium', 'free_trial'], ['Lifetime Premium']);
+                        $membershipLabel = in_array($package, $lifetimePackages, true) ? 'Lifetime Membership' : 'Membership';
+                        $membershipSubLabel = in_array($package, $lifetimePackages, true) ? 'Lifetime Benefits' : 'Pricing Plans';
                     @endphp
                     @role('customer')
-                    @if (in_array($package, ['Basic', 'Standard', 'Premium', 'free_trial']))
+                    @if (in_array($package, $basicPackages, true))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -393,7 +399,7 @@
                     </li>
                     @endif
 
-                    @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
+                    @if (in_array($package, $standardPackages, true))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -416,7 +422,7 @@
                         </div>
                     </li>
 
-                    @if (in_array($package, ['Premium', 'free_trial']))
+                    @if (in_array($package, $premiumPackages, true))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -507,7 +513,7 @@
                     @endif
 
 
-                    @if (in_array($package, ['Premium', 'free_trial']))
+                    @if (in_array($package, $premiumPackages, true))
                     <li class="sidebar-main-title">
                         <div>
                             <h6>Guidance & Instructions</h6>
@@ -573,7 +579,7 @@
                     @endif
 
 
-                    @if (in_array($package, ['Standard', 'Premium', 'free_trial']))
+                    @if (in_array($package, $standardPackages, true))
                     <li class="sidebar-main-title">
                         <div>
                             <h6>Documents & Media</h6>
@@ -633,7 +639,7 @@
                             <h6>Ongoing Management</h6>
                         </div>
                     </li>
-                    @if (in_array($package, ['Premium', 'free_trial']))
+                    @if (in_array($package, $premiumPackages, true))
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -722,10 +728,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
                             </svg>
-                            <span>Membership</span>
+                            <span>{{ $membershipLabel }}</span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('customer.membership.view') }}">Pricing Plans</a></li>
+                            <li><a href="{{ route('customer.membership.view') }}">{{ $membershipSubLabel }}</a></li>
                         </ul>
                     </li>
                     @endrole

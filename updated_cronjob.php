@@ -25,15 +25,21 @@ if ($mysqli->connect_error) {
 }
 
 
-// Fetch all subscribed users
-// Fetch all subscribed users
-$sql = "SELECT id, stripe_subscription_id, subscribed_package FROM users WHERE stripe_subscription_id IS NOT NULL";
+// Fetch all subscribed users on recurring Stripe subscriptions (exclude lifetime packages)
+$sql = "SELECT id, stripe_subscription_id, subscribed_package 
+        FROM users 
+        WHERE stripe_subscription_id IS NOT NULL 
+          AND (subscribed_package IS NULL OR subscribed_package NOT LIKE 'Lifetime%')";
 $result = $mysqli->query($sql);
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $userId = $row['id'];
         $subscribedPackage = $row['subscribed_package'];
+
+        if ($subscribedPackage && stripos($subscribedPackage, 'Lifetime') !== false) {
+            continue;
+        }
 
         // -------------------------
         // 1. Update trial_ends_at

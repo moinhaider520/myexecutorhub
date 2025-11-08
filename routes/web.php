@@ -197,6 +197,8 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
     Route::get('stripe_mobile', 'stripe_mobile')->name('stripe_mobile');
     Route::post('stripe', 'stripePost')->name('stripe.post');
+    Route::post('stripe/lifetime', 'lifetimeCheckout')->name('stripe.lifetime');
+    Route::get('stripe/lifetime/success', 'lifetimeSuccess')->name('stripe.lifetime.success');
     Route::post('stripe/resubscribe', 'resubscribe')->name('stripe.resubscribe');
     Route::get('stripe/success', 'success')->name('stripe.success');
     Route::get('stripe/resubscribesuccess', 'resubscribesuccess')->name('stripe.resubscribesuccess');
