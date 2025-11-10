@@ -26,6 +26,7 @@ class WithdrawalBankAccountController extends Controller
             $validated = $request->validate([
                 'bank_name' => 'required|string|max:255',
                 'sort_code' => 'required|string|max:255',
+                'account_name' => 'required|string|max:255',
                 'iban' => 'required|string|max:255',
             ]);
 
@@ -34,6 +35,7 @@ class WithdrawalBankAccountController extends Controller
             $bank = UserBankDetails::create([
                 'bank_name' => $validated['bank_name'],
                 'sort_code' => $validated['sort_code'],
+                'account_name' => $validated['account_name'],
                 'iban' => $validated['iban'],
                 'user_id' => Auth::id(),
             ]);
@@ -69,6 +71,7 @@ class WithdrawalBankAccountController extends Controller
             $validated = $request->validate([
                 'bank_name' => 'required|string|max:255',
                 'sort_code' => 'required|string|max:255',
+                'account_name' => 'required|string|max:255',
                 'iban' => 'required|string|max:255',
             ]);
 
