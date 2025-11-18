@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 use Stripe;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
 use Stripe\Checkout\Session;
 use Stripe\Customer;
 use Stripe\Exception\CardException;
@@ -106,12 +107,136 @@ class StripePaymentController extends Controller
     }
 
     /**
+     * Handle step 1 of lifetime subscription - collect DOB and Plan.
+     */
+    public function lifetimeStep1(Request $request): RedirectResponse
+    {
+        try {
+            $validated = $request->validateWithBag('lifetime', [
+                'date_of_birth' => 'required|date|before:today',
+                'plan_tier' => 'required|in:basic,standard,premium',
+            ]);
+
+            // Redirect to step 2 with URL parameters instead of session
+            return redirect()->route('stripe.lifetime.step2', [
+                'date_of_birth' => $validated['date_of_birth'],
+                'plan_tier' => $validated['plan_tier'],
+            ]);
+        } catch (ValidationException $e) {
+            // On validation failure, redirect back with errors
+            return redirect(route('home') . '#pricing-1')
+                ->withErrors($e->errors(), 'lifetime')
+                ->withInput($request->all());
+        }
+    }
+
+    /**
+     * Display step 2 of lifetime subscription with calculated rates.
+     */
+    public function lifetimeStep2(Request $request): View|RedirectResponse
+    {
+        // Validate URL parameters instead of session
+
+        $dateOfBirth = $request->query('date_of_birth');
+        $planTier = $request->query('plan_tier');
+
+        if (!$dateOfBirth || !$planTier) {
+            return redirect()->route('home')
+                ->with('error', 'Please complete step 1 first.')
+                ->withInput();
+        }
+
+        try {
+            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            $age = Carbon::parse($dateOfBirth)->age;
+            $ageGroup = match (true) {
+                $age < 50 => 'under_50',
+                $age <= 65 => '50_65',
+                default => '65_plus',
+            };
+
+            $priceMap = [
+                'basic' => [
+                    'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
+                    '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
+                    '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                ],
+                'standard' => [
+                    'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
+                    '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
+                    '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                ],
+                'premium' => [
+                    'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
+                    '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
+                    '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                ],
+            ];
+
+            $priceId = $priceMap[$planTier][$ageGroup] ?? null;
+
+            if (!$priceId) {
+                \Log::error('Lifetime Step2: Unable to determine price ID', [
+                    'plan_tier' => $planTier,
+                    'age_group' => $ageGroup,
+                    'age' => $age,
+                ]);
+                return redirect()->route('home')
+                    ->with('error', 'Unable to determine the correct plan. Please try again.')
+                    ->withInput();
+            }
+
+            // Retrieve price from Stripe to get the amount
+            try {
+                $price = \Stripe\Price::retrieve($priceId);
+                $amount = $price->unit_amount / 100; // Convert from cents to currency units
+                $currency = strtoupper($price->currency);
+            } catch (\Exception $e) {
+                \Log::error('Lifetime Step2: Stripe API error', [
+                    'error' => $e->getMessage(),
+                    'price_id' => $priceId,
+                ]);
+                return redirect()->route('home')
+                    ->with('error', 'Unable to retrieve pricing information. Please try again later.')
+                    ->withInput();
+            }
+
+            $planLabel = match ($planTier) {
+                'basic' => 'Lifetime Basic',
+                'standard' => 'Lifetime Standard',
+                'premium' => 'Lifetime Premium',
+            };
+
+            return view('lifetime.step2', [
+                'date_of_birth' => $dateOfBirth,
+                'plan_tier' => $planTier,
+                'plan_label' => $planLabel,
+                'age' => $age,
+                'age_group' => $ageGroup,
+                'amount' => $amount,
+                'currency' => $currency,
+                'price_id' => $priceId,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Lifetime Step2: Unexpected error', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            return redirect()->route('home')
+                ->with('error', 'An error occurred. Please try again.')
+                ->withInput();
+        }
+    }
+
+    /**
      * Handle lifetime plan checkout (one-time payment).
      */
     public function lifetimeCheckout(Request $request): RedirectResponse
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
+        // Validate all fields including step 1 data from request
         $validated = $request->validateWithBag('lifetime', [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',

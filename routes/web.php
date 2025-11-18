@@ -182,6 +182,7 @@ use App\Http\Controllers\Customer\WillGeneratorController;
 use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\PartnerRegistationController;
 use App\Http\Controllers\KnowledgebaseController;
+use App\Http\Controllers\CaseStudyController;
 use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
@@ -197,6 +198,8 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe');
     Route::get('stripe_mobile', 'stripe_mobile')->name('stripe_mobile');
     Route::post('stripe', 'stripePost')->name('stripe.post');
+    Route::post('stripe/lifetime/step1', 'lifetimeStep1')->name('stripe.lifetime.step1');
+    Route::get('stripe/lifetime/step2', 'lifetimeStep2')->name('stripe.lifetime.step2');
     Route::post('stripe/lifetime', 'lifetimeCheckout')->name('stripe.lifetime');
     Route::get('stripe/lifetime/success', 'lifetimeSuccess')->name('stripe.lifetime.success');
     Route::post('stripe/resubscribe', 'resubscribe')->name('stripe.resubscribe');
@@ -252,6 +255,8 @@ Route::get('/cancellation_policy', function () {
 Route::get('/pricing_policy', function () {
     return view('pricing_policy');
 })->name('pricing_policy');
+
+Route::get('/case-study/{slug}', [CaseStudyController::class, 'show'])->name('case-study.show');
 
 
 

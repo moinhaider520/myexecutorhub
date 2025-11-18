@@ -29,25 +29,21 @@
                 <div class="card">
                     <h2 class="p-2">Onboarding Guide</h2>
                     <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                    <h3 class="p-2">Access The Gazette Website - <a href="https://www.thegazette.co.uk"
+                    <h3 class="p-2">Access The Gazette Website - <a href="https://www.thegazette.co.uk/wills-and-probate/place-a-deceased-estates-notice"
                     target="_blank">Gazette Website</a></h3>
-                    <h3 class="p-2">Access The NWR Website - <a href="https://nwr.org.uk/"
+                    <h3 class="p-2">Access The NWR Website - <a href="https://www.nationalwillregister.co.uk/"
                     target="_blank">NWR Website</a></h3>
-                    <h3 class="p-2">Access The Tell Us Once Website - <a href="https://www.lbhf.gov.uk/"
+                    <h3 class="p-2">Access The Tell Us Once Website - <a href="https://www.gov.uk/after-a-death/organisations-you-need-to-contact-and-tell-us-once"
                     target="_blank">Tell Us Once Website</a></h3>
-                    <h3 class="p-2">Access The Estate Search Website - <a href="https://www.estatesearch.co.uk/"
+                    <h3 class="p-2">Access The Estate Search Website - <a href="https://www.gov.uk/search-property-information-land-registry"
                     target="_blank">Estate Search Website</a></h3>
-                    <h3 class="p-2">Access The Probate Registry Website - <a href="https://nwr.org.uk/"
+                    <h3 class="p-2">Access The Probate Registry Website - <a href="https://www.gov.uk/applying-for-probate/apply-for-probate"
                     target="_blank">Probate Registry Website</a></h3>
-                    <h3 class="p-2">Access The Probate Registry Website - <a href="https://probatesearch.service.gov.uk/"
-                    target="_blank">Probate Registry Website</a></h3>
-                    <h3 class="p-2">Access The DWP Website - <a href="https://findajob.dwp.gov.uk/search"
-                    target="_blank">DWP Website</a></h3>
-                    <h3 class="p-2">Access The DVLA Website - <a href="https://dvladigital.blog.gov.uk/"
+                    <h3 class="p-2">Access The DVLA Website - <a href="https://www.gov.uk/tell-dvla-about-bereavement"
                     target="_blank">DVLA Website</a></h3>
-                    <h3 class="p-2">Access The Royal Mail Website - <a href="https://www.royalmail.com/"
+                    <h3 class="p-2">Access The Royal Mail Website - <a href="https://help.royalmail.com/personal/s/article/Redirecting-mail-on-behalf-of-someone-else"
                     target="_blank">Royal Mail Website</a></h3>
-                    <h3 class="p-2">Access The Land Registry Website - <a href="https://www.gov.uk/government/organisations/land-registry"
+                    <h3 class="p-2">Access The Land Registry Website - <a href="https://www.gov.uk/update-property-records-someone-dies"
                     target="_blank">Land Registry Website</a></h3>
                 </div>
             </div>

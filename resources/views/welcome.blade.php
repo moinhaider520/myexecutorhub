@@ -299,7 +299,7 @@
                 <div id="welcomePopup" class="popup">
                     <div class="popup-content">
                         <h2>Welcome to Executor Hub!</h2>
-                        <p>We’re thrilled to have you here! 😊</p>
+                        <p>We're thrilled to have you here! 😊</p>
                         <p><strong>Important:</strong> Our emails might land in your <b>Spam/Junk</b> folder. Please
                             check and mark them as **Secure** to receive important updates!</p>
                         <button onclick="closePopup()">Got it! 👍</button>
@@ -356,11 +356,15 @@
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact
                                         Us</a></li>
-                                <li class="nl-simple" aria-haspopup="true"><a href="#contacts-2" class="h-link">Work
-                                        With
-                                        Us</a></li>
-                                <li class="nl-simple" aria-haspopup="true"><a href="#digitallegacy"
-                                        class="h-link">Digital Legacy</a>
+                                
+                                <!-- DROPDOWN MENU FOR ADDITIONAL ITEMS -->
+                                <li aria-haspopup="true">
+                                    <a href="#" class="h-link">More</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#case-studies">Case Studies</a></li>
+                                        <li><a href="#digitallegacy">Digital Legacy</a></li>
+                                        <li><a href="#contacts-2">Work With Us</a></li>
+                                    </ul>
                                 </li>
                                 @guest
                                     <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
@@ -1066,7 +1070,7 @@
                 <!-- PRICING TABLES -->
                 <div class="pricing-1-wrapper">
                     <div class="row row-cols-1 row-cols-md-3">
-                        <!-- STARTER PLAN -->
+                        <!-- BASIC PLAN -->
                         <div class="col">
                             <div id="pt-1-1"
                                 class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
@@ -1077,87 +1081,123 @@
                                         <sup class="color--black">£</sup>
                                         <span class="color--black">5.99</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
-                                        <p class="color--grey">
-                                        <ol>
-                                            <li>Assign Executors</li>
-                                            <li>Record Assets & Liabilities</li>
-                                        </ol>
-                                        </p>
+                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Essential digital vault</p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get
+                                    
+                                    <!-- Features -->
+                                    <div class="pricing-features-wrapper mt-3">
+                                        <h6 class="s-18 w-700 mb-3">Features:</h6>
+                                        <ul class="pricing-features color--black ico-10 ico--green" style="list-style: none; padding-left: 0;">
+                                            <li class="mb-2">• Assign Executors</li>
+                                            <li class="mb-2">• Record Assets & Liabilities</li>
+                                            <li class="mb-2">• Upload & Store Key Documents</li>
+                                            <li class="mb-2">• Add Notes to Assets</li>
+                                            <li class="mb-2">• Download a Simple Executor Summary</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Best For -->
+                                    <div class="mt-3 mb-3">
+                                        <p class="s-16 w-700 color--black mb-1"><strong>Best for:</strong></p>
+                                        <p class="s-14 color--grey">People who want their key information organised safely in one place without extra features.</p>
+                                    </div>
+                                    
+                                    <!-- Why -->
+                                    <div class="mt-3 mb-3">
+                                        <p class="s-16 w-700 color--black mb-1"><strong>Why £5.99?</strong></p>
+                                        <p class="s-14 color--grey">A secure, organised digital vault with document uploads — the simplest, most affordable way to get your affairs in order.</p>
+                                    </div>
+                                    
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
                                         Started</a>
                                 </div>
-                                <!-- PRICING FEATURES -->
-                                <ul class="pricing-features color--black ico-10 ico--green mt-25">
-                                    <!-- Features here -->
-                                </ul>
                             </div>
                         </div>
-                        <!-- BASIC PLAN -->
+                        <!-- STANDARD PLAN -->
                         <div class="col">
                             <div id="pt-1-2"
-                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp" style="border: 2px solid #007bff;">
                                 <div class="pricing-table-header">
-                                    <h5 class="s-24">Standard</h5>
+                                    <h5 class="s-24 w-700">Standard <span class="badge bg-primary ms-2">Most Popular</span></h5>
                                     <div class="price">
-                                        <div class="price2" style="display: block;">
-                                            <sup class="color--black">£</sup>
-                                            <span class="color--black">11.99</span>
-                                            <sup class="validity color--grey">&nbsp;/mo</sup>
-                                        </div>
-                                        <p class="color--grey">
-                                        <ol>
-                                            <li>Assign Executors</li>
-                                            <li>Assign Advisers</li>
-                                            <li>Document Uploads</li>
-                                            <li>Record Assets & Liabilities</li>
-                                            <li>Access to Secure Messaging System</li>
-                                        </ol>
-                                        </p>
+                                        <sup class="color--black">£</sup>
+                                        <span class="color--black">11.99</span>
+                                        <sup class="validity color--grey">&nbsp;/mo</sup>
+                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Guided estate organisation + adviser access</p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get
+                                    
+                                    <!-- Features -->
+                                    <div class="pricing-features-wrapper mt-3">
+                                        <h6 class="s-18 w-700 mb-3">Features:</h6>
+                                        <ul class="pricing-features color--black ico-10 ico--green" style="list-style: none; padding-left: 0;">
+                                            <li class="mb-2"><strong>Everything in Basic</strong></li>
+                                            <li class="mb-2">• Assign Advisers</li>
+                                            <li class="mb-2">• Secure Document Sharing</li>
+                                            <li class="mb-2">• Step-by-Step Guidance & Checklists</li>
+                                            <li class="mb-2">• Smart Review Reminders</li>
+                                            <li class="mb-2">• Secure In-App Messaging</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Best For -->
+                                    <div class="mt-3 mb-3">
+                                        <p class="s-16 w-700 color--black mb-1"><strong>Best for:</strong></p>
+                                        <p class="s-14 color--grey">Anyone who wants guidance and adviser support to stay fully organised and up to date.</p>
+                                    </div>
+                                    
+                                    <!-- Why -->
+                                    <div class="mt-3 mb-3">
+                                        <p class="s-16 w-700 color--black mb-1"><strong>Why £11.99?</strong></p>
+                                        <p class="s-14 color--grey">Adds professional collaboration and clear guidance — helping you get everything right, first time, without overwhelm.</p>
+                                    </div>
+                                    
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
                                         Started</a>
                                 </div>
-                                <!-- PRICING FEATURES -->
-                                <ul class="pricing-features color--black ico-10 ico--green mt-25">
-                                    <!-- Features here -->
-                                </ul>
                             </div>
                         </div>
-                        <!-- ADVANCED PLAN -->
+                        <!-- PREMIUM PLAN -->
                         <div class="col">
                             <div id="pt-1-3"
                                 class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp">
                                 <div class="pricing-table-header">
-                                    <h5 class="s-24">Premium</h5>
+                                    <h5 class="s-24 w-700">Premium</h5>
                                     <div class="price">
-                                        <div class="price2" style="display: block;">
-                                            <sup class="color--black">£</sup>
-                                            <span class="color--black">19.99</span>
-                                            <sup class="validity color--grey">&nbsp;/mo</sup>
-                                        </div>
-                                        <p class="color--grey">
-                                        <ol>
-                                            <li>Assign Executors</li>
-                                            <li>Assign Advisers</li>
-                                            <li>Document Uploads</li>
-                                            <li>Record Assets & Liabilities</li>
-                                            <li>Access to Secure Messaging System</li>
-                                            <li>Record Donations</li>
-                                            <li>Record Life Notes</li>
-                                            <li>Record Wishes</li>
-                                            <li>Access to Executor Hub AI</li>
-                                            <li>Capacity Proof Videos</li>
-                                        </ol>
-                                        </p>
+                                        <sup class="color--black">£</sup>
+                                        <span class="color--black">19.99</span>
+                                        <sup class="validity color--grey">&nbsp;/mo</sup>
+                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Complete legacy planning & executor support</p>
                                     </div>
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme">Get
+                                    
+                                    <!-- Features -->
+                                    <div class="pricing-features-wrapper mt-3">
+                                        <h6 class="s-18 w-700 mb-3">Features:</h6>
+                                        <ul class="pricing-features color--black ico-10 ico--green" style="list-style: none; padding-left: 0;">
+                                            <li class="mb-2"><strong>Everything in Standard</strong></li>
+                                            <li class="mb-2">• Record Donations & Gifts</li>
+                                            <li class="mb-2">• Record Life Notes & Personal Messages</li>
+                                            <li class="mb-2">• Record Detailed Wishes (funeral, guardians, digital accounts)</li>
+                                            <li class="mb-2">• Executor Hub AI Access</li>
+                                            <li class="mb-2">• Capacity-Proof Video Vault</li>
+                                            <li class="mb-2">• Priority Executor Support</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <!-- Best For -->
+                                    <div class="mt-3 mb-3">
+                                        <p class="s-16 w-700 color--black mb-1"><strong>Best for:</strong></p>
+                                        <p class="s-14 color--grey">Those who want full legacy protection — personal messages, advanced wishes, and complete support for their executors.</p>
+                                    </div>
+                                    
+                                    <!-- Why -->
+                                    <div class="mt-3 mb-3">
+                                        <p class="s-16 w-700 color--black mb-1"><strong>Why £19.99?</strong></p>
+                                        <p class="s-14 color--grey">The most comprehensive experience, combining emotional legacy, advanced planning tools, and AI + video protection for your family.</p>
+                                    </div>
+                                    
+                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
                                         Started</a>
                                 </div>
-                                <!-- PRICING FEATURES -->
-                                <ul class="pricing-features color--black ico-10 ico--green mt-25">
-                                    <!-- Features here -->
-                                </ul>
                             </div>
                         </div>
                     </div>
@@ -1178,60 +1218,20 @@
                                 </div>
                             @endif
 
-                            <form method="POST" action="{{ route('stripe.lifetime') }}" class="row g-3 needs-validation" novalidate style="padding:10px;">
+                            <form id="lifetimeStep1Form" method="POST" action="{{ route('stripe.lifetime.step1') }}" class="row g-3" style="padding:10px;">
                                 @csrf
 
-                                <div class="col-md-6">
-                                    <label for="lifetimeName" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="lifetimeName" name="name"
-                                        value="{{ old('name') }}" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimeEmail" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="lifetimeEmail" name="email"
-                                        value="{{ old('email') }}" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimePassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="lifetimePassword" name="password"
-                                        minlength="8" required>
-                                    <small class="form-text text-muted">Minimum 8 characters.</small>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimeDob" class="form-label">Date of Birth</label>
+                                <div class="col-12">
+                                    <label for="lifetimeDob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
                                     <input type="date" class="form-control" id="lifetimeDob" name="date_of_birth"
                                         value="{{ old('date_of_birth') }}" required>
+                                    @error('date_of_birth', 'lifetime')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12">
-                                    <label for="lifetimeAddress" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="lifetimeAddress" name="address"
-                                        value="{{ old('address') }}" required>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lifetimeCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="lifetimeCity" name="city"
-                                        value="{{ old('city') }}" required>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lifetimePostalCode" class="form-label">Postal Code</label>
-                                    <input type="text" class="form-control" id="lifetimePostalCode" name="postal_code"
-                                        value="{{ old('postal_code') }}" required>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lifetimeCountry" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="lifetimeCountry" name="country"
-                                        value="{{ old('country') }}" required>
-                                </div>
-
-                                <div class="col-12">
-                                    <label class="form-label d-block mb-2">Choose Lifetime Plan</label>
+                                    <label class="form-label d-block mb-2">Choose Lifetime Plan <span class="text-danger">*</span></label>
                                     <div class="d-flex flex-column flex-md-row gap-3">
                                         @php
                                             $lifetimePlan = old('plan_tier', 'standard');
@@ -1245,60 +1245,27 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="plan_tier" id="planStandard"
-                                                value="standard" {{ $lifetimePlan === 'standard' ? 'checked' : '' }}>
+                                                value="standard" {{ $lifetimePlan === 'standard' ? 'checked' : '' }} required>
                                             <label class="form-check-label" for="planStandard">
                                                 Standard
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="plan_tier" id="planPremium"
-                                                value="premium" {{ $lifetimePlan === 'premium' ? 'checked' : '' }}>
+                                                value="premium" {{ $lifetimePlan === 'premium' ? 'checked' : '' }} required>
                                             <label class="form-check-label" for="planPremium">
                                                 Premium
                                             </label>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimeCoupon" class="form-label">Coupon Code (Optional)</label>
-                                    <input type="text" class="form-control" id="lifetimeCoupon" name="coupon_code"
-                                        value="{{ old('coupon_code') }}">
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimeHearAboutUs" class="form-label">Where did you hear about us?</label>
-                                    <select class="form-select" id="lifetimeHearAboutUs" name="hear_about_us">
-                                        <option value="" selected disabled>Select an option</option>
-                                        @php
-                                            $hearAboutOptions = [
-                                                'Friend or Family',
-                                                'Social Media',
-                                                'Events or Conferences',
-                                                'Search Engine',
-                                                'News or Media',
-                                                'Other',
-                                            ];
-                                            $selectedHearAbout = old('hear_about_us');
-                                        @endphp
-                                        @foreach ($hearAboutOptions as $option)
-                                            <option value="{{ $option }}" {{ $selectedHearAbout === $option ? 'selected' : '' }}>
-                                                {{ $option }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-12" id="lifetimeHearAboutOtherWrapper"
-                                    style="display: {{ old('hear_about_us') === 'Other' ? 'block' : 'none' }};">
-                                    <label for="lifetimeHearAboutOther" class="form-label">Please specify</label>
-                                    <input type="text" class="form-control" id="lifetimeHearAboutOther"
-                                        name="other_hear_about_us" value="{{ old('other_hear_about_us') }}">
+                                    @error('plan_tier', 'lifetime')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-12 text-center mt-3">
                                     <button type="submit" class="btn btn--theme btn-lg r-04">
-                                        Proceed to Secure Checkout
+                                        Proceed
                                     </button>
                                 </div>
                             </form>
@@ -1677,11 +1644,72 @@
         </section>
         <!-- END FAQs-3 -->
 
+        <!-- CASE STUDIES
+			============================================= -->
+        <section id="case-studies" class="pt-100 pb-100 case-studies-section division">
+            <div class="container">
+                <!-- SECTION TITLE -->
+                <div class="row justify-content-center">
+                    <div class="col-md-10 col-lg-9">
+                        <div class="section-title mb-80">
+                            <!-- Title -->
+                            <h2 class="s-50 w-700">Case Studies</h2>
 
+                            <!-- Text -->
+                            <p class="s-21 color--grey">Real-world examples of how Executor Hub protects families and saves executors time.</p>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- CASE STUDIES CARDS -->
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <!-- CASE STUDY 1 -->
+                    <div class="col">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <h5 class="card-title s-24 w-700 mb-3">Preventing a 5-Year Will Challenge</h5>
+                                <p class="card-text color--grey">A grandfather wrote a will leaving his entire estate to his grandson. His son (the grandson's father) was explicitly excluded from inheriting. Following the grandfather's death, the son launched a serious legal challenge...</p>
+                                <p class="card-text"><small class="text-muted">Learn how Executor Hub could have prevented years of litigation and saved hundreds of thousands in legal fees.</small></p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ route('case-study.show', 'preventing-5-year-will-challenge') }}" class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- CASE STUDY 2 -->
+                    <div class="col">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <h5 class="card-title s-24 w-700 mb-3">Saving Executors 30-60 Hours of Work</h5>
+                                <p class="card-text color--grey">Acting as an executor is legally demanding, emotionally draining, and extremely time-consuming. Research consistently shows that executors underestimate the workload...</p>
+                                <p class="card-text"><small class="text-muted">Discover how Executor Hub reduces executor workload by 40-75 hours per estate.</small></p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ route('case-study.show', 'saving-executors-30-60-hours') }}" class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
 
-
+                    <!-- CASE STUDY 3 -->
+                    <div class="col">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <h5 class="card-title s-24 w-700 mb-3">The £400,000 "Hidden Asset"</h5>
+                                <p class="card-text color--grey">Three executors were appointed to administer the estate of a late parent. They believed they had identified all assets and liabilities and proceeded to apply for probate. Two months later, a previously unknown £400,000 investment account was discovered...</p>
+                                <p class="card-text"><small class="text-muted">See how Executor Hub prevents missed assets and rescinded grants.</small></p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ route('case-study.show', '400000-hidden-asset') }}" class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END CASE STUDIES CARDS -->
+            </div>
+            <!-- End container -->
+        </section>
+        <!-- END CASE STUDIES -->
 
         <section id="contacts-1" class="pb-50 inner-page-hero contacts-section division">
             <div class="container">
@@ -2610,6 +2638,43 @@
             } else {
                 otherFieldDiv.style.display = 'none';
                 otherFieldDiv.querySelector('input').value = ''; // clear field if hidden
+            }
+        });
+    </script>
+
+    <script>
+        // Handle lifetime subscription step 1 form submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const lifetimeForm = document.getElementById('lifetimeStep1Form');
+            if (lifetimeForm) {
+                lifetimeForm.addEventListener('submit', function(e) {
+                    // Show loading state only if form is valid
+                    const submitBtn = lifetimeForm.querySelector('button[type="submit"]');
+                    
+                    // Basic validation - if HTML5 validation passes, proceed
+                    if (lifetimeForm.checkValidity()) {
+                        // Show loading state
+                        if (submitBtn) {
+                            submitBtn.disabled = true;
+                            const originalText = submitBtn.textContent;
+                            submitBtn.textContent = 'Processing...';
+                            
+                            // Re-enable after 5 seconds as fallback (in case redirect fails)
+                            setTimeout(function() {
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = originalText;
+                            }, 5000);
+                        }
+                        // Allow form to submit normally - don't prevent default
+                        return true;
+                    } else {
+                        // HTML5 validation failed - prevent submission and show errors
+                        e.preventDefault();
+                        e.stopPropagation();
+                        lifetimeForm.classList.add('was-validated');
+                        return false;
+                    }
+                });
             }
         });
     </script>
