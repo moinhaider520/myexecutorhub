@@ -151,11 +151,12 @@
 
                             <div class="form-group">
                                 <label class="col-form-label">Where Did You Hear About Us?</label>
-                                <select class="form-control" name="hear_about_us" required>
+                                <select class="form-control" name="hear_about_us" id="hear_about_us" required>
                                     <option value="">Choose Option</option>
                                     <option value="Social Media">Social Media</option>
                                     <option value="Email">Email</option>
                                     <option value="Friend & Family">Friend & Family</option>
+                                    <option value="My adviser recommended me">My adviser recommended me</option>
                                 </select>
                             </div>
                         </form>
@@ -190,6 +191,14 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <p>Use forever — every future update included.</p>
+                                    <p>Your adviser will continue to support you using Executor Hub.</p>
+                                    <p>Secure. ICO registered. Trusted by professionals across the UK.</p>
+                                    <iframe
+                                src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                                style="border:none;height:132px;width:132px;"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -272,6 +281,20 @@
                 };
 
                 $(this).find('[name="plan"]').val(stripePlans[planValue]);
+            });
+
+                // Handle "Where Did You Hear About Us" selection
+            $('#hear_about_us').change(function () {
+                const couponField = $('#coupon_code');
+                const indicator = $('#coupon-required-indicator');
+
+                if ($(this).val() === 'My adviser recommended me') {
+                    couponField.attr('required', true);
+                    indicator.removeClass('text-muted').addClass('text-danger').text('(Required)');
+                } else {
+                    couponField.removeAttr('required');
+                    indicator.removeClass('text-danger').addClass('text-muted').text('(Optional)');
+                }
             });
 
             // PayPal form submission

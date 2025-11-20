@@ -13,6 +13,14 @@
     <div class="page-body">
         <div class="container">
             <div class="row">
+                <div class="col-md-11"></div>
+                <div class="col-md-1">
+                    <iframe
+                        src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                        style="border:none;height:132px;width:132px;"></iframe>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col">
                     <div class="card">
                         <h3 class="text-center pt-2 pb-2">

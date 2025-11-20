@@ -114,13 +114,11 @@ class StripePaymentController extends Controller
         try {
             $validated = $request->validateWithBag('lifetime', [
                 'date_of_birth' => 'required|date|before:today',
-                'plan_tier' => 'required|in:basic,standard,premium',
             ]);
 
-            // Redirect to step 2 with URL parameters instead of session
+            // Redirect to step 2 with URL parameters (only DOB)
             return redirect()->route('stripe.lifetime.step2', [
                 'date_of_birth' => $validated['date_of_birth'],
-                'plan_tier' => $validated['plan_tier'],
             ]);
         } catch (ValidationException $e) {
             // On validation failure, redirect back with errors
@@ -131,16 +129,14 @@ class StripePaymentController extends Controller
     }
 
     /**
-     * Display step 2 of lifetime subscription with calculated rates.
+     * Display step 2 of lifetime subscription with plan selection and calculated rates.
      */
     public function lifetimeStep2(Request $request): View|RedirectResponse
     {
-        // Validate URL parameters instead of session
-
+        // Validate URL parameters - only DOB is required
         $dateOfBirth = $request->query('date_of_birth');
-        $planTier = $request->query('plan_tier');
 
-        if (!$dateOfBirth || !$planTier) {
+        if (!$dateOfBirth) {
             return redirect()->route('home')
                 ->with('error', 'Please complete step 1 first.')
                 ->withInput();
@@ -174,49 +170,58 @@ class StripePaymentController extends Controller
                 ],
             ];
 
-            $priceId = $priceMap[$planTier][$ageGroup] ?? null;
+            // Retrieve prices for all three plans
+            $plans = [];
+            foreach (['basic', 'standard', 'premium'] as $planTier) {
+                $priceId = $priceMap[$planTier][$ageGroup] ?? null;
+                
+                if (!$priceId) {
+                    \Log::error('Lifetime Step2: Unable to determine price ID', [
+                        'plan_tier' => $planTier,
+                        'age_group' => $ageGroup,
+                        'age' => $age,
+                    ]);
+                    continue;
+                }
 
-            if (!$priceId) {
-                \Log::error('Lifetime Step2: Unable to determine price ID', [
-                    'plan_tier' => $planTier,
-                    'age_group' => $ageGroup,
-                    'age' => $age,
-                ]);
-                return redirect()->route('home')
-                    ->with('error', 'Unable to determine the correct plan. Please try again.')
-                    ->withInput();
+                try {
+                    $price = \Stripe\Price::retrieve($priceId);
+                    $amount = $price->unit_amount / 100; // Convert from cents to currency units
+                    $currency = strtoupper($price->currency);
+                    
+                    $planLabel = match ($planTier) {
+                        'basic' => 'Lifetime Basic',
+                        'standard' => 'Lifetime Standard',
+                        'premium' => 'Lifetime Premium',
+                    };
+
+                    $plans[$planTier] = [
+                        'label' => $planLabel,
+                        'tier' => $planTier,
+                        'amount' => $amount,
+                        'currency' => $currency,
+                        'price_id' => $priceId,
+                    ];
+                } catch (\Exception $e) {
+                    \Log::error('Lifetime Step2: Stripe API error', [
+                        'error' => $e->getMessage(),
+                        'price_id' => $priceId,
+                        'plan_tier' => $planTier,
+                    ]);
+                }
             }
 
-            // Retrieve price from Stripe to get the amount
-            try {
-                $price = \Stripe\Price::retrieve($priceId);
-                $amount = $price->unit_amount / 100; // Convert from cents to currency units
-                $currency = strtoupper($price->currency);
-            } catch (\Exception $e) {
-                \Log::error('Lifetime Step2: Stripe API error', [
-                    'error' => $e->getMessage(),
-                    'price_id' => $priceId,
-                ]);
+            if (empty($plans)) {
                 return redirect()->route('home')
                     ->with('error', 'Unable to retrieve pricing information. Please try again later.')
                     ->withInput();
             }
 
-            $planLabel = match ($planTier) {
-                'basic' => 'Lifetime Basic',
-                'standard' => 'Lifetime Standard',
-                'premium' => 'Lifetime Premium',
-            };
-
             return view('lifetime.step2', [
                 'date_of_birth' => $dateOfBirth,
-                'plan_tier' => $planTier,
-                'plan_label' => $planLabel,
                 'age' => $age,
                 'age_group' => $ageGroup,
-                'amount' => $amount,
-                'currency' => $currency,
-                'price_id' => $priceId,
+                'plans' => $plans,
             ]);
         } catch (\Exception $e) {
             \Log::error('Lifetime Step2: Unexpected error', [
@@ -247,6 +252,7 @@ class StripePaymentController extends Controller
             'country' => 'required|string|max:255',
             'plan_tier' => 'required|in:basic,standard,premium',
             'date_of_birth' => 'required|date|before:today',
+            'price_id' => 'nullable|string',
             'coupon_code' => 'nullable|string',
             'hear_about_us' => 'nullable|string|max:255',
             'other_hear_about_us' => 'nullable|string|max:255|required_if:hear_about_us,Other',
@@ -276,37 +282,43 @@ class StripePaymentController extends Controller
             }
         }
 
-        $age = Carbon::parse($validated['date_of_birth'])->age;
-        $ageGroup = match (true) {
-            $age < 50 => 'under_50',
-            $age <= 65 => '50_65',
-            default => '65_plus',
-        };
-
-        $priceMap = [
-            'basic' => [
-                'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
-                '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
-                '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
-            ],
-            'standard' => [
-                'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
-                '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
-                '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
-            ],
-            'premium' => [
-                'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
-                '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
-                '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
-            ],
-        ];
-
-        $priceId = $priceMap[$validated['plan_tier']][$ageGroup] ?? null;
-
+        // Use price_id from form if provided, otherwise calculate it
+        $priceId = $validated['price_id'] ?? null;
+        
         if (!$priceId) {
-            return back()
-                ->withInput()
-                ->withErrors(['plan_tier' => 'Unable to determine the correct plan for the provided information.'], 'lifetime');
+            // Fallback: Calculate price_id based on DOB and plan_tier
+            $age = Carbon::parse($validated['date_of_birth'])->age;
+            $ageGroup = match (true) {
+                $age < 50 => 'under_50',
+                $age <= 65 => '50_65',
+                default => '65_plus',
+            };
+
+            $priceMap = [
+                'basic' => [
+                    'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
+                    '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
+                    '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                ],
+                'standard' => [
+                    'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
+                    '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
+                    '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                ],
+                'premium' => [
+                    'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
+                    '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
+                    '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                ],
+            ];
+
+            $priceId = $priceMap[$validated['plan_tier']][$ageGroup] ?? null;
+
+            if (!$priceId) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['plan_tier' => 'Unable to determine the correct plan for the provided information.'], 'lifetime');
+            }
         }
 
         $planLabel = match ($validated['plan_tier']) {

@@ -63,6 +63,52 @@
 
     <!-- RESPONSIVE CSS -->
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
+    <style>
+        .pricing-type-btn {
+            padding: 12px 24px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #007bff !important;
+        }
+
+        .pricing-type-btn.active {
+            background-color: #007bff !important;
+            color: white !important;
+            border-color: #007bff !important;
+        }
+
+        .pricing-type-btn:not(.active) {
+            background-color: white !important;
+            color: #007bff !important;
+        }
+
+        .pricing-type-btn:not(.active):hover {
+            background-color: #f8f9fa !important;
+        }
+
+        .pricing-type-selector {
+            margin-bottom: 40px;
+        }
+
+        .pricing-toggle-buttons {
+            display: flex;
+            gap: 0;
+        }
+
+        .pricing-toggle-buttons .btn {
+            border-radius: 0;
+        }
+
+        .pricing-toggle-buttons .btn:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .pricing-toggle-buttons .btn:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+    </style>
 </head>
 <style>
     .exit-popup {
@@ -333,14 +379,25 @@
                                 <li aria-haspopup="true"><a href="#hero-3" class="h-link">Home</a></li>
 
                                 <!-- SIMPLE NAVIGATION LINK -->
-                                <li class="nl-simple" aria-haspopup="true"><a href="#features-11"
-                                        class="h-link">Features</a></li>
+                                <li class="nl-simple" aria-haspopup="true"><a href="#features-11" class="h-link">How It
+                                        Works</a></li>
 
-                                <li class="nl-simple" aria-haspopup="true"><a href="#roles" class="h-link">Roles</a>
-                                </li>
 
                                 <li class="nl-simple" aria-haspopup="true"><a href="#benefits-11"
                                         class="h-link">Benefits</a></li>
+
+                                <li class="nl-simple" aria-haspopup="true"><a href="#case-studies" class="h-link">Case
+                                        Studies</a></li>
+
+                                <!-- DROPDOWN MENU FOR ADDITIONAL ITEMS -->
+                                <li aria-haspopup="true">
+                                    <a href="#" class="h-link">For Professionals</a>
+                                    <ul class="sub-menu">
+                                        <li><a href="#contacts-1">Partner Program</a></li>
+                                        <li><a href="#contacts-2">Enterprise solutions </a></li>
+                                        <li><a href="#digitallegacy">Digital Legacies</a></li>
+                                    </ul>
+                                </li>
 
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#pricing-1"
@@ -354,18 +411,10 @@
 
 
                                 <!-- SIMPLE NAVIGATION LINK -->
-                                <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1" class="h-link">Contact
-                                        Us</a></li>
-                                
-                                <!-- DROPDOWN MENU FOR ADDITIONAL ITEMS -->
-                                <li aria-haspopup="true">
-                                    <a href="#" class="h-link">More</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="#case-studies">Case Studies</a></li>
-                                        <li><a href="#digitallegacy">Digital Legacy</a></li>
-                                        <li><a href="#contacts-2">Work With Us</a></li>
-                                    </ul>
-                                </li>
+                                <li class="nl-simple" aria-haspopup="true"><a href="#contacts-1"
+                                        class="h-link">Contact</a></li>
+
+
                                 @guest
                                     <li class="nl-simple reg-fst-link mobile-last-link" aria-haspopup="true">
                                         <a href="{{route('login')}}" class="h-link">Sign in</a>
@@ -408,6 +457,9 @@
                             <p class="p-lg">Executor Hub is a secure web application designed to help individuals
                                 organize and store important financial documents, social media passwords, and asset
                                 information in one central, encrypted location.</p>
+                            <iframe
+                                src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                                style="border:none;height:132px;width:132px;"></iframe>
                             <br />
                             <a href="{{route('register')}}" class="btn r-04 btn--theme hover--tra-white last-link">Start
                                 Free Trial</a>
@@ -1067,8 +1119,33 @@
                 </div>
                 <!-- END SECTION TITLE -->
 
-                <!-- PRICING TABLES -->
-                <div class="pricing-1-wrapper">
+                <!-- PRICING TYPE SELECTOR -->
+                <div class="row justify-content-center mb-50">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="pricing-type-selector bg--white-100 block-shadow r-12 p-30 text-center"
+                            style="padding:25px;">
+                            <h4 class="s-24 w-700 mb-4">Choose Your Subscription Type</h4>
+                            <div class="btn-group pricing-toggle-buttons" role="group" style="width: 100%;">
+                                <button type="button" class="btn btn-lg pricing-type-btn btn-primary active"
+                                    data-type="monthly" style="flex: 1;">
+                                    Monthly Subscription
+                                </button>
+                                <button type="button" class="btn btn-lg pricing-type-btn btn-outline-primary"
+                                    data-type="lifetime" style="flex: 1;">
+                                    Lifetime Subscription
+                                    <!-- <span class="badge bg-success ms-2">Save Money</span> -->
+                                </button>
+                            </div>
+                            <p class="mt-3 mb-0 text-muted" id="pricingTypeDescription">
+                                Flexible monthly payments with the option to cancel anytime.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PRICING TYPE SELECTOR -->
+
+                <!-- MONTHLY PRICING TABLES -->
+                <div class="pricing-1-wrapper" id="monthlyPricing">
                     <div class="row row-cols-1 row-cols-md-3">
                         <!-- BASIC PLAN -->
                         <div class="col">
@@ -1083,11 +1160,12 @@
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
                                         <p class="s-18 w-600 color--theme mt-3 mb-3">Essential digital vault</p>
                                     </div>
-                                    
+
                                     <!-- Features -->
                                     <div class="pricing-features-wrapper mt-3">
                                         <h6 class="s-18 w-700 mb-3">Features:</h6>
-                                        <ul class="pricing-features color--black ico-10 ico--green" style="list-style: none; padding-left: 0;">
+                                        <ul class="pricing-features color--black ico-10 ico--green"
+                                            style="list-style: none; padding-left: 0;">
                                             <li class="mb-2">• Assign Executors</li>
                                             <li class="mb-2">• Record Assets & Liabilities</li>
                                             <li class="mb-2">• Upload & Store Key Documents</li>
@@ -1095,20 +1173,24 @@
                                             <li class="mb-2">• Download a Simple Executor Summary</li>
                                         </ul>
                                     </div>
-                                    
+
                                     <!-- Best For -->
                                     <div class="mt-3 mb-3">
                                         <p class="s-16 w-700 color--black mb-1"><strong>Best for:</strong></p>
-                                        <p class="s-14 color--grey">People who want their key information organised safely in one place without extra features.</p>
+                                        <p class="s-14 color--grey">People who want their key information organised
+                                            safely in one place without extra features.</p>
                                     </div>
-                                    
+
                                     <!-- Why -->
                                     <div class="mt-3 mb-3">
                                         <p class="s-16 w-700 color--black mb-1"><strong>Why £5.99?</strong></p>
-                                        <p class="s-14 color--grey">A secure, organised digital vault with document uploads — the simplest, most affordable way to get your affairs in order.</p>
+                                        <p class="s-14 color--grey">A secure, organised digital vault with document
+                                            uploads — the simplest, most affordable way to get your affairs in order.
+                                        </p>
                                     </div>
-                                    
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
+
+                                    <a href="{{ route('stripe') }}"
+                                        class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
                                         Started</a>
                                 </div>
                             </div>
@@ -1116,20 +1198,24 @@
                         <!-- STANDARD PLAN -->
                         <div class="col">
                             <div id="pt-1-2"
-                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp" style="border: 2px solid #007bff;">
+                                class="p-table pricing-1-table bg--white-100 block-shadow r-12 wow fadeInUp"
+                                style="border: 2px solid #007bff;">
                                 <div class="pricing-table-header">
-                                    <h5 class="s-24 w-700">Standard <span class="badge bg-primary ms-2">Most Popular</span></h5>
+                                    <h5 class="s-24 w-700">Standard <span class="badge bg-primary ms-2">Most
+                                            Popular</span></h5>
                                     <div class="price">
                                         <sup class="color--black">£</sup>
                                         <span class="color--black">11.99</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
-                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Guided estate organisation + adviser access</p>
+                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Guided estate organisation +
+                                            adviser access</p>
                                     </div>
-                                    
+
                                     <!-- Features -->
                                     <div class="pricing-features-wrapper mt-3">
                                         <h6 class="s-18 w-700 mb-3">Features:</h6>
-                                        <ul class="pricing-features color--black ico-10 ico--green" style="list-style: none; padding-left: 0;">
+                                        <ul class="pricing-features color--black ico-10 ico--green"
+                                            style="list-style: none; padding-left: 0;">
                                             <li class="mb-2"><strong>Everything in Basic</strong></li>
                                             <li class="mb-2">• Assign Advisers</li>
                                             <li class="mb-2">• Secure Document Sharing</li>
@@ -1138,20 +1224,23 @@
                                             <li class="mb-2">• Secure In-App Messaging</li>
                                         </ul>
                                     </div>
-                                    
+
                                     <!-- Best For -->
                                     <div class="mt-3 mb-3">
                                         <p class="s-16 w-700 color--black mb-1"><strong>Best for:</strong></p>
-                                        <p class="s-14 color--grey">Anyone who wants guidance and adviser support to stay fully organised and up to date.</p>
+                                        <p class="s-14 color--grey">Anyone who wants guidance and adviser support to
+                                            stay fully organised and up to date.</p>
                                     </div>
-                                    
+
                                     <!-- Why -->
                                     <div class="mt-3 mb-3">
                                         <p class="s-16 w-700 color--black mb-1"><strong>Why £11.99?</strong></p>
-                                        <p class="s-14 color--grey">Adds professional collaboration and clear guidance — helping you get everything right, first time, without overwhelm.</p>
+                                        <p class="s-14 color--grey">Adds professional collaboration and clear guidance —
+                                            helping you get everything right, first time, without overwhelm.</p>
                                     </div>
-                                    
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
+
+                                    <a href="{{ route('stripe') }}"
+                                        class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
                                         Started</a>
                                 </div>
                             </div>
@@ -1166,47 +1255,62 @@
                                         <sup class="color--black">£</sup>
                                         <span class="color--black">19.99</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
-                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Complete legacy planning & executor support</p>
+                                        <p class="s-18 w-600 color--theme mt-3 mb-3">Complete legacy planning & executor
+                                            support</p>
                                     </div>
-                                    
+
                                     <!-- Features -->
                                     <div class="pricing-features-wrapper mt-3">
                                         <h6 class="s-18 w-700 mb-3">Features:</h6>
-                                        <ul class="pricing-features color--black ico-10 ico--green" style="list-style: none; padding-left: 0;">
+                                        <ul class="pricing-features color--black ico-10 ico--green"
+                                            style="list-style: none; padding-left: 0;">
                                             <li class="mb-2"><strong>Everything in Standard</strong></li>
                                             <li class="mb-2">• Record Donations & Gifts</li>
                                             <li class="mb-2">• Record Life Notes & Personal Messages</li>
-                                            <li class="mb-2">• Record Detailed Wishes (funeral, guardians, digital accounts)</li>
+                                            <li class="mb-2">• Record Detailed Wishes (funeral, guardians, digital
+                                                accounts)</li>
                                             <li class="mb-2">• Executor Hub AI Access</li>
                                             <li class="mb-2">• Capacity-Proof Video Vault</li>
                                             <li class="mb-2">• Priority Executor Support</li>
                                         </ul>
                                     </div>
-                                    
+
                                     <!-- Best For -->
                                     <div class="mt-3 mb-3">
                                         <p class="s-16 w-700 color--black mb-1"><strong>Best for:</strong></p>
-                                        <p class="s-14 color--grey">Those who want full legacy protection — personal messages, advanced wishes, and complete support for their executors.</p>
+                                        <p class="s-14 color--grey">Those who want full legacy protection — personal
+                                            messages, advanced wishes, and complete support for their executors.</p>
                                     </div>
-                                    
+
                                     <!-- Why -->
                                     <div class="mt-3 mb-3">
                                         <p class="s-16 w-700 color--black mb-1"><strong>Why £19.99?</strong></p>
-                                        <p class="s-14 color--grey">The most comprehensive experience, combining emotional legacy, advanced planning tools, and AI + video protection for your family.</p>
+                                        <p class="s-14 color--grey">The most comprehensive experience, combining
+                                            emotional legacy, advanced planning tools, and AI + video protection for
+                                            your family.</p>
                                     </div>
-                                    
-                                    <a href="{{ route('stripe') }}" class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
+
+                                    <a href="{{ route('stripe') }}"
+                                        class="pt-btn btn r-04 btn--theme hover--theme mt-4">Get
                                         Started</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- END MONTHLY PRICING TABLES -->
 
-                <div class="row justify-content-center mt-60">
-                    <div class="col-lg-10">
+                <!-- LIFETIME SUBSCRIPTION -->
+                <div class="row justify-content-center" id="lifetimePricing" style="display: none;">
+                    <div class="col-lg-12">
                         <div class="lifetime-subscription-form bg--white-100 block-shadow r-12 p-40">
-                            <h3 class="s-32 w-700 mb-30 text-center">Lifetime Subscription</h3>
+                            <div class="text-center mb-30">
+                                <h3 class="s-32 w-700 mb-3">Lifetime Subscription</h3>
+                                <p class="s-18 color--theme mb-2">💰 Can work out up to 80% cheaper than paying monthly
+                                    long-term.</p>
+                                <p class="s-16 color--grey">Get lifetime access to all features with a one-time payment.
+                                    No recurring fees, no hassle.</p>
+                            </div>
 
                             @if ($errors->lifetime->any())
                                 <div class="alert alert-danger" role="alert">
@@ -1218,49 +1322,20 @@
                                 </div>
                             @endif
 
-                            <form id="lifetimeStep1Form" method="POST" action="{{ route('stripe.lifetime.step1') }}" class="row g-3" style="padding:10px;">
+                            <form id="lifetimeStep1Form" method="POST" action="{{ route('stripe.lifetime.step1') }}"
+                                class="row g-3" style="padding:10px;">
                                 @csrf
 
                                 <div class="col-12">
-                                    <label for="lifetimeDob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                                    <label for="lifetimeDob" class="form-label">Date of Birth <span
+                                            class="text-danger">*</span></label>
                                     <input type="date" class="form-control" id="lifetimeDob" name="date_of_birth"
                                         value="{{ old('date_of_birth') }}" required>
                                     @error('date_of_birth', 'lifetime')
                                         <div class="text-danger small mt-1">{{ $message }}</div>
                                     @enderror
-                                </div>
-
-                                <div class="col-12">
-                                    <label class="form-label d-block mb-2">Choose Lifetime Plan <span class="text-danger">*</span></label>
-                                    <div class="d-flex flex-column flex-md-row gap-3">
-                                        @php
-                                            $lifetimePlan = old('plan_tier', 'standard');
-                                        @endphp
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="plan_tier" id="planBasic"
-                                                value="basic" {{ $lifetimePlan === 'basic' ? 'checked' : '' }} required>
-                                            <label class="form-check-label" for="planBasic">
-                                                Basic
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="plan_tier" id="planStandard"
-                                                value="standard" {{ $lifetimePlan === 'standard' ? 'checked' : '' }} required>
-                                            <label class="form-check-label" for="planStandard">
-                                                Standard
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="plan_tier" id="planPremium"
-                                                value="premium" {{ $lifetimePlan === 'premium' ? 'checked' : '' }} required>
-                                            <label class="form-check-label" for="planPremium">
-                                                Premium
-                                            </label>
-                                        </div>
-                                    </div>
-                                    @error('plan_tier', 'lifetime')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
+                                    <small class="form-text text-muted">Select your date of birth to see pricing
+                                        options.</small>
                                 </div>
 
                                 <div class="col-12 text-center mt-3">
@@ -1656,7 +1731,8 @@
                             <h2 class="s-50 w-700">Case Studies</h2>
 
                             <!-- Text -->
-                            <p class="s-21 color--grey">Real-world examples of how Executor Hub protects families and saves executors time.</p>
+                            <p class="s-21 color--grey">Real-world examples of how Executor Hub protects families and
+                                saves executors time.</p>
                         </div>
                     </div>
                 </div>
@@ -1668,11 +1744,17 @@
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">Preventing a 5-Year Will Challenge</h5>
-                                <p class="card-text color--grey">A grandfather wrote a will leaving his entire estate to his grandson. His son (the grandson's father) was explicitly excluded from inheriting. Following the grandfather's death, the son launched a serious legal challenge...</p>
-                                <p class="card-text"><small class="text-muted">Learn how Executor Hub could have prevented years of litigation and saved hundreds of thousands in legal fees.</small></p>
+                                <p class="card-text color--grey">A grandfather wrote a will leaving his entire estate to
+                                    his grandson. His son (the grandson's father) was explicitly excluded from
+                                    inheriting. Following the grandfather's death, the son launched a serious legal
+                                    challenge...</p>
+                                <p class="card-text"><small class="text-muted">Learn how Executor Hub could have
+                                        prevented years of litigation and saved hundreds of thousands in legal
+                                        fees.</small></p>
                             </div>
                             <div class="card-footer bg-transparent border-0 pt-0">
-                                <a href="{{ route('case-study.show', 'preventing-5-year-will-challenge') }}" class="btn btn--theme hover--tra-white r-04">Read More</a>
+                                <a href="{{ route('case-study.show', 'preventing-5-year-will-challenge') }}"
+                                    class="btn btn--theme hover--tra-white r-04">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -1682,11 +1764,15 @@
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">Saving Executors 30-60 Hours of Work</h5>
-                                <p class="card-text color--grey">Acting as an executor is legally demanding, emotionally draining, and extremely time-consuming. Research consistently shows that executors underestimate the workload...</p>
-                                <p class="card-text"><small class="text-muted">Discover how Executor Hub reduces executor workload by 40-75 hours per estate.</small></p>
+                                <p class="card-text color--grey">Acting as an executor is legally demanding, emotionally
+                                    draining, and extremely time-consuming. Research consistently shows that executors
+                                    underestimate the workload...</p>
+                                <p class="card-text"><small class="text-muted">Discover how Executor Hub reduces
+                                        executor workload by 40-75 hours per estate.</small></p>
                             </div>
                             <div class="card-footer bg-transparent border-0 pt-0">
-                                <a href="{{ route('case-study.show', 'saving-executors-30-60-hours') }}" class="btn btn--theme hover--tra-white r-04">Read More</a>
+                                <a href="{{ route('case-study.show', 'saving-executors-30-60-hours') }}"
+                                    class="btn btn--theme hover--tra-white r-04">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -1696,11 +1782,16 @@
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">The £400,000 "Hidden Asset"</h5>
-                                <p class="card-text color--grey">Three executors were appointed to administer the estate of a late parent. They believed they had identified all assets and liabilities and proceeded to apply for probate. Two months later, a previously unknown £400,000 investment account was discovered...</p>
-                                <p class="card-text"><small class="text-muted">See how Executor Hub prevents missed assets and rescinded grants.</small></p>
+                                <p class="card-text color--grey">Three executors were appointed to administer the estate
+                                    of a late parent. They believed they had identified all assets and liabilities and
+                                    proceeded to apply for probate. Two months later, a previously unknown £400,000
+                                    investment account was discovered...</p>
+                                <p class="card-text"><small class="text-muted">See how Executor Hub prevents missed
+                                        assets and rescinded grants.</small></p>
                             </div>
                             <div class="card-footer bg-transparent border-0 pt-0">
-                                <a href="{{ route('case-study.show', '400000-hidden-asset') }}" class="btn btn--theme hover--tra-white r-04">Read More</a>
+                                <a href="{{ route('case-study.show', '400000-hidden-asset') }}"
+                                    class="btn btn--theme hover--tra-white r-04">Read More</a>
                             </div>
                         </div>
                     </div>
@@ -1893,20 +1984,96 @@
                         <!-- SECTION TITLE -->
                         <div class="row justify-content-center">
                             <div class="col-md-11 col-lg-9">
-                                <div class="section-title wow fadeInUp mb-60">
+                                <div class="wow fadeInUp mb-60">
                                     <!-- Title -->
-                                    <h2 class="s-50 w-700">Work With Us</h2>
+                                    <h2 class="s-50 w-700 text-center">Enterprise Solutions</h2>
+                                    <p class="text-center">Transforming estate administration for families — at scale.</p>
 
                                     <!-- Text -->
-                                    <p class="p-xl">At Executor Hub, we’re committed to simplifying estate
-                                        administration for everyone involved—from executors to families. Join our
-                                        affiliate program and unlock new revenue opportunities for your business while
-                                        providing clients with a valuable, streamlined solution for managing their
-                                        estates.</p>
+                                    <p class="p-xl">Executor Hub is the modern digital platform that helps families
+                                        manage estates with clarity, confidence, and support. We partner with
+                                        forward-thinking organisations that want to improve client outcomes, enhance
+                                        brand reputation, and unlock new recurring revenue streams — without building
+                                        technology themselves.</p>
+                                    <p class="text-left">🚀 Why Leading Organisations Choose Executor Hub</p>
+                                    <p>Estate administration is one of the most stressful and fragmented experiences
+                                        people ever face.
+                                        Executor Hub solves these challenges by empowering executors with:</p>
+                                    <p>✔ A guided step-by-step workflow</p>
+                                    <p>✔ Secure document storage & sharing</p>
+                                    <p>✔ Clear instructions and educational videos</p>
+                                    <p>✔ Easy communication with family and professionals</p>
+                                    <p>✔ Instant access from anywhere</p>
+                                    <p>✔ Complete organisation of assets, liabilities & key contacts</p>
+                                    <p>The result?</p>
+                                    <p>▶ Faster resolutions</p>
+                                    <p>▶ Fewer errors and delays</p>
+                                    <p>▶ Happier clients & fewer complaints</p>
+                                    <p>▶ Stronger relationships for life</p>
+                                    <p>You lead the client relationship.</p>
+                                    <p>We power the digital experience.</p>
+                                    <p>💼 Partnership Models Built for Growth</p>
+                                    <p>We offer commercial models designed for scaling to hundreds or thousands of clients:</p>
+                                    <p>1️⃣ Revenue-Share Partnership</p>
+                                    <p>Offer Executor Hub as an add-on or bundled service.Earn recurring commission from every subscription or lifetime plan.Perfect for:</p>
+                                    <p>•	Adviser networks</p>
+                                    <p>•	Estate planning teams</p>
+                                    <p>•	Professional services firms</p>
+                                    <p>2️⃣ Bulk Licensing</p>
+                                    <p>Purchase licences at a discounted enterprise rate and distribute under your brand umbrella. Ideal For:</p>
+                                    <p>•	Premium estate planning packages</p>
+                                    <p>•	Funeral plan enhancements</p>
+                                    <p>•	Insurance policies & employee benefit offerings</p>
+                                    <p>Strong upfront revenue and guaranteed client upgrade value.</p>
+                                    <p>3️⃣ White-Label & Co-Branded Solutions</p>
+                                    <p>Deliver a digital executor platform as your own product. Fully customisable:</p>
+                                    <p>•	Logo, branding, URL</p>
+                                    <p>•	On-platform messaging</p>
+                                    <p>•	Feature permissions</p>
+                                    <p>•	Service pathways</p>
+                                    <p>•	Client support workflow</p>
+                                    <p>The power of Executor Hub — with your identity front and centre.</p>
+                                    <p>🧩 Who We Partner With</p>
+                                    <p>•	National law firms & probate providers</p>
+                                    <p>•	Financial advisers & wealth managers</p>
+                                    <p>•	Funeral care & bereavement groups</p>
+                                    <p>•	Later-life care organisations</p>
+                                    <p>•	Insurance companies & membership benefits</p>
+                                    <p>•	Estate technology innovators</p>
+
+                                    <p>If you support families before or after a loss — Executor Hub strengthens your value.</p>
+                                    <p>📈 Proven Results for Families & Businesses</p>
+                                    <p>Executors using Executor Hub report:</p>
+                                    <p>•	50–80 hours saved in admin workload</p>
+                                    <p>•	Up to 80% fewer delays & errors</p>
+                                    <p>•	Reduced stress, increased confidence, improved outcomes</p>
+                                    <p>Business benefits include:</p>
+                                    <p>•	Higher client retention & referrals</p>
+                                    <p>•	Stronger brand trust & goodwill</p>
+                                    <p>•	Increased revenue per client</p>
+                                    <p>•	Reduced support burden for staff</p>
+                                    <p>•	Compliance-ready processes & full audit trail</p>
+                                    <p>•	Improved professional reputation at a critical moment</p>
+                                    <p>Executors feel supported. Families feel cared for. Your brand earns loyalty that lasts generations.</p>
+                                    <p>🔐 Security & Compliance You Can Trust</p>
+                                    <p>Executor Hub protects the most sensitive family information with enterprise-level safeguards:</p>
+                                    <p>✔ Cyber Essentials Certified</p>
+                                    <p>✔ UK-based hosting & full GDPR compliance</p>
+                                    <p>✔ Encrypted storage for documents & passwords</p>
+                                    <p>✔ Multi-factor authentication</p>
+                                    <p>✔ Role-based access control</p>
+                                    <p>✔ Audit logs & document version tracking</p>
+                                    <p>✔ Incident-response & data governance framework</p>
+                                    <p>Your risk is reduced — and your brand is protected.</p>
+                                    <p>🤝 Let’s Elevate Support for Families — Together</p>
+                                    <p>Executor Hub is the future of estate administration — and the opportunity to lead that future begins now.</p>
+                                    <p>📩 Submit Your Partnership Enquiry</p>
+                                    <p>→ One of our enterprise consultants will contact you to discuss your goals and arrange a demonstration.</p>
+                                    <p>Executor Hub — empowering executors, and the professionals who support them.</p>
                                 </div>
                             </div>
                         </div>
-                        <h4 class="text-center">See why professionals are partnering with Executor Hub</h4>
+                        <h4 class="text-center mb-4">See why professionals are partnering with Executor Hub</h4>
                         <!-- IMAGE BLOCK -->
                         <div class="row justify-content-center">
                             <div class="col">
@@ -1957,16 +2124,43 @@
                             style="visibility: visible; animation-name: fadeInLeft;">
 
                             <!-- Section ID -->
-                            <span class="section-id">WORK WITH US</span>
+                            <span class="section-id">🤝 Partner Program</span>
 
                             <!-- Title -->
-                            <h2 class="s-46 w-700">Why Partner with Executor Hub?</h2>
+                            <h2 class="s-46 w-700">Help families. Grow your business. Earn more — every month.</h2>
 
-                            <p>Our affiliate program is designed with estate planners, solicitors, and financial
-                                professionals in mind. As an affiliate, you’ll introduce Executor Hub to your clients,
-                                empowering them to manage their estates with ease. In return, your business will benefit
-                                from a generous, ongoing commission with every new subscription you bring in.</p>
-
+                            <p>Executor Hub lets you support families during one of the hardest moments in life — while giving you a powerful new way to increase your income.</p>
+                            <p>Our partnership program is designed for estate planners, will writers, financial advisers, funeral directors, and professionals who want to deliver more value without more work.</p>
+                            <p>🌟 Why Join the Partner Program?</p>
+                            <p>✔ Add an innovative digital service to your offering</p>
+                            <p>✔ Strengthen client relationships & referrals</p>
+                            <p>✔ Create immediate cashflow and long-term recurring income</p>
+                            <p>✔ No cost to join, no technical experience needed</p>
+                            <p>✔ Start earning today</p>
+                            <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
+                            <p>💰 How You Earn — Three Powerful Income Streams</p>
+                            <p>Every time you refer a customer using your unique link, you earn:</p>
+                            <p>1- Income Stream</p>
+                            <p>2- Your Earnings</p>
+                            <p>3- Monthly subscriptions</p>
+                            <p>4- 30% every month</p>
+                            <p>5- Lifetime plans</p>
+                            <p>6- 30% one-off upfront</p>
+                            <p>7- Team referrals</p>
+                            <p>8- 20% from partners you recruit</p>
+                            <p>That means you earn from:</p>
+                            <p>•	Your own clients</p>
+                            <p>•	People they refer</p>
+                            <p>•	Partners you introduce</p>
+                            <p>•	Their clients too</p>
+                            <p>Build your network → multiply your income.</p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
+                            <p></p>
                         </div>
                     </div> <!-- END TEXT BLOCK -->
 
@@ -2041,6 +2235,12 @@
                                         placeholder="******" required />
                                 </div>
 
+                                <div class="col-md-12">
+                                    <p class="p-lg">Referred by a partner?</p>
+                                    <span>Enter Code Here (Optional):</span>
+                                    <input type="text" name="coupon_code" id="coupon_code" class="form-control" />
+                                </div>
+
                                 <div class="form-group">
                                     <label class="col-form-label">What is Your Profession?</label>
                                     <select class="form-control" name="profession" required>
@@ -2079,6 +2279,7 @@
                                         <option value="Email Campaign">Email Campaign</option>
                                         <option value="Partner Referral">Partner Referral</option>
                                         <option value="Press / News Article">Press / News Article</option>
+                                        <option value="My adviser recommended me">My adviser recommended me</option>
                                         <option value="Other">Other (please specify)</option>
                                     </select>
                                 </div>
@@ -2087,6 +2288,15 @@
                                     <label class="col-form-label">Please specify:</label>
                                     <input type="text" class="form-control" name="other_hear_about_us"
                                         placeholder="Enter details">
+                                </div>
+
+                                <div class="col-md-12">
+                                    <p>Use forever — every future update included.</p>
+                                    <p>Your adviser will continue to support you using Executor Hub.</p>
+                                    <p>Secure. ICO registered. Trusted by professionals across the UK.</p>
+                                    <iframe
+                                        src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                                        style="border:none;height:132px;width:132px;"></iframe>
                                 </div>
 
 
@@ -2431,10 +2641,16 @@
                                 </li>
                             </ul>
                         </div>
+                        <div class="col">
+
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
-                            <iframe src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent" style="border:none;height:132px;width:132px;"></iframe>
+                        <div class="col-md-11"></div>
+                        <div class="col-md-1">
+                            <iframe
+                                src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                                style="border:none;height:132px;width:132px;"></iframe>
                         </div>
                     </div>
                     <!-- End row -->
@@ -2631,26 +2847,107 @@
     </script>
 
     <script>
-        document.getElementById('hear_about_us').addEventListener('change', function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            const hearAboutUsSelect = document.getElementById('hear_about_us');
+            const couponCodeInput = document.getElementById('coupon_code');
             const otherFieldDiv = document.getElementById('otherFieldDiv');
-            if (this.value === 'Other') {
-                otherFieldDiv.style.display = 'block';
-            } else {
-                otherFieldDiv.style.display = 'none';
-                otherFieldDiv.querySelector('input').value = ''; // clear field if hidden
+            const otherInput = document.querySelector('input[name="other_hear_about_us"]');
+
+            // Function to handle the conditional required logic
+            function handleHearAboutUsChange() {
+                const selectedValue = hearAboutUsSelect.value;
+
+                // Handle "My adviser recommended me" option
+                if (selectedValue === 'My adviser recommended me') {
+                    couponCodeInput.setAttribute('required', 'required');
+                    // Add visual indicator (optional)
+                    const couponLabel = couponCodeInput.closest('.col-md-12').querySelector('span');
+                    if (couponLabel && !couponLabel.textContent.includes('*')) {
+                        couponLabel.textContent = couponLabel.textContent.replace('(Optional)', '(Required*)');
+                    }
+                } else {
+                    couponCodeInput.removeAttribute('required');
+                    // Remove visual indicator (optional)
+                    const couponLabel = couponCodeInput.closest('.col-md-12').querySelector('span');
+                    if (couponLabel) {
+                        couponLabel.textContent = couponLabel.textContent.replace('(Required*)', '(Optional)');
+                    }
+                }
+
+                // Handle "Other" option for showing additional text field
+                if (selectedValue === 'Other') {
+                    otherFieldDiv.style.display = 'block';
+                    otherInput.setAttribute('required', 'required');
+                } else {
+                    otherFieldDiv.style.display = 'none';
+                    otherInput.removeAttribute('required');
+                }
             }
+
+            // Listen for changes on the select element
+            hearAboutUsSelect.addEventListener('change', handleHearAboutUsChange);
+
+            // Run on page load in case there's a pre-selected value
+            handleHearAboutUsChange();
+
+            // Add form validation feedback
+            const form = document.getElementById('contact-form');
+            form.addEventListener('submit', function (e) {
+                if (hearAboutUsSelect.value === 'My adviser recommended me' && !couponCodeInput.value.trim()) {
+                    e.preventDefault();
+                    alert('Please enter a referral code since you were recommended by an adviser.');
+                    couponCodeInput.focus();
+                    return false;
+                }
+            });
         });
     </script>
 
     <script>
+        // Handle pricing type toggle (Monthly vs Lifetime)
+        document.addEventListener('DOMContentLoaded', function () {
+            const pricingTypeButtons = document.querySelectorAll('.pricing-type-btn');
+            const monthlyPricing = document.getElementById('monthlyPricing');
+            const lifetimePricing = document.getElementById('lifetimePricing');
+            const pricingTypeDescription = document.getElementById('pricingTypeDescription');
+
+            pricingTypeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const type = this.getAttribute('data-type');
+
+                    // Update button states
+                    pricingTypeButtons.forEach(btn => {
+                        btn.classList.remove('active', 'btn-primary');
+                        btn.classList.add('btn-outline-primary');
+                    });
+                    this.classList.add('active', 'btn-primary');
+                    this.classList.remove('btn-outline-primary');
+
+                    // Toggle visibility
+                    if (type === 'monthly') {
+                        monthlyPricing.style.display = 'block';
+                        lifetimePricing.style.display = 'none';
+                        pricingTypeDescription.textContent = 'Flexible monthly payments with the option to cancel anytime.';
+                    } else {
+                        monthlyPricing.style.display = 'none';
+                        lifetimePricing.style.display = 'block';
+                        pricingTypeDescription.textContent = 'Can work out up to 80% cheaper than paying monthly long-term.';
+                    }
+
+                    // Smooth scroll to pricing section
+                    document.getElementById('pricing-1').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        });
+
         // Handle lifetime subscription step 1 form submission
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const lifetimeForm = document.getElementById('lifetimeStep1Form');
             if (lifetimeForm) {
-                lifetimeForm.addEventListener('submit', function(e) {
+                lifetimeForm.addEventListener('submit', function (e) {
                     // Show loading state only if form is valid
                     const submitBtn = lifetimeForm.querySelector('button[type="submit"]');
-                    
+
                     // Basic validation - if HTML5 validation passes, proceed
                     if (lifetimeForm.checkValidity()) {
                         // Show loading state
@@ -2658,9 +2955,9 @@
                             submitBtn.disabled = true;
                             const originalText = submitBtn.textContent;
                             submitBtn.textContent = 'Processing...';
-                            
+
                             // Re-enable after 5 seconds as fallback (in case redirect fails)
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 submitBtn.disabled = false;
                                 submitBtn.textContent = originalText;
                             }, 5000);

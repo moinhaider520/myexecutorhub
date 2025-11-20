@@ -63,8 +63,34 @@
 
     <!-- RESPONSIVE CSS -->
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
+    <style>
+        .plan-option {
+            transition: all 0.3s ease;
+        }
+        .plan-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .plan-option.border-primary {
+            box-shadow: 0 5px 20px rgba(0,123,255,0.3);
+        }
+    </style>
 </head>
 <script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
+<style>
+    .plan-option {
+    transition: all 0.3s ease;
+    border: 2px solid #e0e0e0 !important;
+}
+.plan-option:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+.plan-option.border-primary {
+    border-color: #007bff !important;
+    box-shadow: 0 5px 20px rgba(0,123,255,0.3) !important;
+}
+</style>
 <body>
     <!-- PRELOADER SPINNER
 		============================================= -->
@@ -141,23 +167,73 @@
                             <p class="p-lg">Complete your information to proceed to secure checkout</p>
                         </div>
 
-                        <!-- PRICING SUMMARY -->
-                        <div class="pricing-summary bg--white-100 block-shadow r-12 p-40 mb-40">
-                            <h4 class="s-30 w-700 mb-3">Your Selected Plan</h4>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="mb-2"><strong>Plan:</strong> {{ $plan_label }}</p>
-                                    <p class="mb-2"><strong>Date of Birth:</strong> {{ \Carbon\Carbon::parse($date_of_birth)->format('d/m/Y') }}</p>
-                                    <p class="mb-2"><strong>Age:</strong> {{ $age }} years</p>
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <p class="s-32 w-700 color--theme mb-0">
-                                        {{ $currency }} {{ number_format($amount, 2) }}
-                                    </p>
-                                    <p class="text-muted">One-time payment</p>
-                                </div>
+                        <!-- PLAN SELECTION -->
+                        <!-- PLAN SELECTION -->
+<div class="plan-selection bg--white-100 block-shadow r-12 p-40 mb-40">
+    <h4 class="s-30 w-700 mb-3">Select Your Lifetime Plan</h4>
+    <p class="mb-4">Date of Birth: <strong>{{ \Carbon\Carbon::parse($date_of_birth)->format('d/m/Y') }}</strong> | Age: <strong>{{ $age }} years</strong></p>
+    
+    <div class="row g-4 mb-4">
+        @foreach($plans as $index => $plan)
+        <div class="col-md-4">
+            <div class="plan-option card h-100 position-relative {{ old('plan_tier') === $plan['tier'] ? 'border-primary border-2' : '' }}" 
+                 style="cursor: pointer; transition: all 0.3s; border: 2px solid #e0e0e0;" 
+                 onclick="selectPlan('{{ $plan['tier'] }}', '{{ $plan['label'] }}', {{ $plan['amount'] }}, '{{ $plan['currency'] }}', '{{ $plan['price_id'] }}', this)">
+                
+                @if($plan['tier'] === 'standard')
+                <span style="position: absolute; top: -12px; right: 20px; background: #ffc107; color: #000; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;">Most Popular</span>
+                @endif
+                
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <div style="font-size: 32px; margin-bottom: 10px;">⭐</div>
+                        <h5 class="s-22 w-700 mb-3">{{ $plan['label'] }}</h5>
+                        <p class="s-32 w-700 color--theme mb-2">
+                            {{ $plan['currency'] }} {{ number_format($plan['amount'], 2) }}
+                        </p>
+                        <p class="text-muted small mb-0">One-time payment</p>
+                    </div>
+                    
+                    <div style="text-align: left; font-size: 14px; line-height: 1.6;">
+                        @if($plan['tier'] === 'basic')
+                            <p><strong>Protect what matters most — safely stored and always accessible.</strong></p>
+                            <p class="mb-3">Includes all essential tools to organise your key documents, list your assets and liabilities, and ensure your executors can easily find everything when the time comes.</p>
+                            <p class="mb-2"><strong>Perfect for:</strong></p>
+                            <p class="mb-3">Anyone who wants a secure digital vault for their most important documents — without extra features.</p>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0; text-align: center;">
+                                <p class="mb-0 small">🔒 <strong>One-time payment. No recurring fees.</strong></p>
                             </div>
-                        </div>
+                        @elseif($plan['tier'] === 'standard')
+                            <p><strong>Everything you need to get organised properly — with professional support.</strong></p>
+                            <p class="mb-3">Includes everything in Basic plus secure collaboration with your adviser, step-by-step checklists, guided estate organisation, and smart reminders to keep everything up to date.</p>
+                            <p class="mb-2"><strong>Perfect for:</strong></p>
+                            <p class="mb-3">People who want confidence and guidance to get it right, first time — without overwhelm.</p>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0; text-align: center;">
+                                <p class="mb-1 small">📌 <strong>Best value for most families.</strong></p>
+                                <p class="mb-0 small">🔒 <strong>One-time payment. No recurring fees.</strong></p>
+                            </div>
+                        @elseif($plan['tier'] === 'premium')
+                            <p><strong>Complete peace of mind for your loved ones — with full legacy protection.</strong></p>
+                            <p class="mb-3">Everything in Standard plus: advanced wishes, personal messages, life notes, gifts and donations, and priority support for your executors. Plan beyond paperwork and leave a lasting legacy.</p>
+                            <p class="mb-2"><strong>Perfect for:</strong></p>
+                            <p class="mb-3">Those who want their family fully protected — and want their wishes to be perfectly understood.</p>
+                            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #e0e0e0; text-align: center;">
+                                <p class="mb-1 small">💙 <strong>Save your family stress, time and uncertainty.</strong></p>
+                                <p class="mb-0 small">🔒 <strong>One-time payment. No recurring fees.</strong></p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    </div>
+    
+    <div id="selectedPlanSummary" class="alert alert-info" style="display: none;">
+        <h6 class="mb-2">Selected Plan: <span id="selectedPlanLabel"></span></h6>
+        <p class="mb-0">Price: <strong id="selectedPlanPrice"></strong> (One-time payment)</p>
+    </div>
+</div>
 
                         @if ($errors->lifetime->any())
                             <div class="alert alert-danger" role="alert">
@@ -176,131 +252,146 @@
                         @endif
 
                         <!-- FORM -->
-                        <div class="lifetime-subscription-form bg--white-100 block-shadow r-12 p-40">
-                            <form method="POST" action="{{ route('stripe.lifetime') }}" class="row g-3 needs-validation" novalidate style="padding:10px;">
-                                @csrf
-                                
-                                <!-- Hidden fields for step 1 data -->
-                                <input type="hidden" name="date_of_birth" value="{{ $date_of_birth }}">
-                                <input type="hidden" name="plan_tier" value="{{ $plan_tier }}">
+                        <div class="lifetime-subscription-form bg--white-100 block-shadow r-12 p-40" id="checkoutForm" style="display: none;">
+    <h4 class="s-30 w-700 mb-3">Complete Your Information</h4>
+    <form method="POST" action="{{ route('stripe.lifetime') }}" class="row g-3 needs-validation" novalidate style="padding:10px;">
+        @csrf
+        
+        <!-- Hidden fields for step 1 data and selected plan -->
+        <input type="hidden" name="date_of_birth" id="formDateOfBirth" value="{{ $date_of_birth }}">
+        <input type="hidden" name="plan_tier" id="formPlanTier" value="{{ old('plan_tier', '') }}" required>
+        <input type="hidden" name="price_id" id="formPriceId" value="">
 
-                                <div class="col-md-6">
-                                    <label for="lifetimeName" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="lifetimeName" name="name"
-                                        value="{{ old('name') }}" required>
-                                    @error('name', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
+        <div class="col-md-6">
+            <label for="lifetimeName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="lifetimeName" name="name"
+                value="{{ old('name') }}" required>
+            @error('name', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-6">
+            <label for="lifetimeEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="lifetimeEmail" name="email"
+                value="{{ old('email') }}" required>
+            @error('email', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-6">
+            <label for="lifetimePassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="lifetimePassword" name="password"
+                minlength="8" value="{{ old('password') }}" required>
+            <small class="form-text text-muted">Minimum 8 characters.</small>
+            @error('password', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-6">
+            <label for="lifetimeCoupon" class="form-label">
+                Coupon Code <span id="couponRequired" style="display: none; color: red;">*</span>
+                <span style="font-weight: normal;">(Optional)</span>
+            </label>
+            <input type="text" class="form-control" id="lifetimeCoupon" name="coupon_code"
+                value="{{ old('coupon_code') }}">
+            @error('coupon_code', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-12">
+            <label for="lifetimeAddress" class="form-label">Address</label>
+            <input type="text" class="form-control" id="lifetimeAddress" name="address"
+                value="{{ old('address') }}" required>
+            @error('address', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4">
+            <label for="lifetimeCity" class="form-label">City</label>
+            <input type="text" class="form-control" id="lifetimeCity" name="city"
+                value="{{ old('city') }}" required>
+            @error('city', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4">
+            <label for="lifetimePostalCode" class="form-label">Postal Code</label>
+            <input type="text" class="form-control" id="lifetimePostalCode" name="postal_code"
+                value="{{ old('postal_code') }}" required>
+            @error('postal_code', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-4">
+            <label for="lifetimeCountry" class="form-label">Country</label>
+            <input type="text" class="form-control" id="lifetimeCountry" name="country"
+                value="{{ old('country') }}" required>
+            @error('country', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-6">
+            <label for="lifetimeHearAboutUs" class="form-label">Where did you hear about us?</label>
+            <select class="form-select" id="lifetimeHearAboutUs" name="hear_about_us">
+                <option value="" selected disabled>Select an option</option>
+                @php
+                    $hearAboutOptions = [
+                        'Friend or Family',
+                        'Social Media',
+                        'Events or Conferences',
+                        'Search Engine',
+                        'News or Media',
+                        'My adviser recommended me',
+                        'Other',
+                    ];
+                    $selectedHearAbout = old('hear_about_us');
+                @endphp
+                @foreach ($hearAboutOptions as $option)
+                    <option value="{{ $option }}" {{ $selectedHearAbout === $option ? 'selected' : '' }}>
+                        {{ $option }}
+                    </option>
+                @endforeach
+            </select>
+            @error('hear_about_us', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-12" id="lifetimeHearAboutOtherWrapper"
+            style="display: {{ old('hear_about_us') === 'Other' ? 'block' : 'none' }};">
+            <label for="lifetimeHearAboutOther" class="form-label">Please specify</label>
+            <input type="text" class="form-control" id="lifetimeHearAboutOther"
+                name="other_hear_about_us" value="{{ old('other_hear_about_us') }}">
+            @error('other_hear_about_us', 'lifetime')
+                <div class="text-danger small">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="col-md-12">
+                                    <p>Use forever — every future update included.</p>
+                                    <p>Your adviser will continue to support you using Executor Hub.</p>
+                                    <p>Secure. ICO registered. Trusted by professionals across the UK.</p>
+                                    <iframe
+                                src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                                style="border:none;height:132px;width:132px;"></iframe>
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label for="lifetimeEmail" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="lifetimeEmail" name="email"
-                                        value="{{ old('email') }}" required>
-                                    @error('email', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimePassword" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="lifetimePassword" name="password"
-                                        minlength="8" value="{{ old('password') }}" required>
-                                    <small class="form-text text-muted">Minimum 8 characters.</small>
-                                    @error('password', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimeCoupon" class="form-label">Coupon Code (Optional)</label>
-                                    <input type="text" class="form-control" id="lifetimeCoupon" name="coupon_code"
-                                        value="{{ old('coupon_code') }}">
-                                    @error('coupon_code', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="lifetimeAddress" class="form-label">Address</label>
-                                    <input type="text" class="form-control" id="lifetimeAddress" name="address"
-                                        value="{{ old('address') }}" required>
-                                    @error('address', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lifetimeCity" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="lifetimeCity" name="city"
-                                        value="{{ old('city') }}" required>
-                                    @error('city', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lifetimePostalCode" class="form-label">Postal Code</label>
-                                    <input type="text" class="form-control" id="lifetimePostalCode" name="postal_code"
-                                        value="{{ old('postal_code') }}" required>
-                                    @error('postal_code', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-4">
-                                    <label for="lifetimeCountry" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="lifetimeCountry" name="country"
-                                        value="{{ old('country') }}" required>
-                                    @error('country', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lifetimeHearAboutUs" class="form-label">Where did you hear about us?</label>
-                                    <select class="form-select" id="lifetimeHearAboutUs" name="hear_about_us">
-                                        <option value="" selected disabled>Select an option</option>
-                                        @php
-                                            $hearAboutOptions = [
-                                                'Friend or Family',
-                                                'Social Media',
-                                                'Events or Conferences',
-                                                'Search Engine',
-                                                'News or Media',
-                                                'Other',
-                                            ];
-                                            $selectedHearAbout = old('hear_about_us');
-                                        @endphp
-                                        @foreach ($hearAboutOptions as $option)
-                                            <option value="{{ $option }}" {{ $selectedHearAbout === $option ? 'selected' : '' }}>
-                                                {{ $option }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('hear_about_us', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12" id="lifetimeHearAboutOtherWrapper"
-                                    style="display: {{ old('hear_about_us') === 'Other' ? 'block' : 'none' }};">
-                                    <label for="lifetimeHearAboutOther" class="form-label">Please specify</label>
-                                    <input type="text" class="form-control" id="lifetimeHearAboutOther"
-                                        name="other_hear_about_us" value="{{ old('other_hear_about_us') }}">
-                                    @error('other_hear_about_us', 'lifetime')
-                                        <div class="text-danger small">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 text-center mt-3">
-                                    <a href="{{ route('home') }}#pricing-1" class="btn btn-outline-secondary btn-lg r-04 me-3">Back</a>
-                                    <button type="submit" class="btn btn--theme btn-lg r-04">
-                                        Proceed to Secure Checkout
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+        <div class="col-12 text-center mt-3">
+            <button type="button" onclick="goBack()" class="btn btn-outline-secondary btn-lg r-04 me-3">Back</button>
+            <button type="submit" class="btn btn--theme btn-lg r-04">
+                Proceed to Secure Checkout
+            </button>
+        </div>
+    </form>
+</div>
                     </div>
                 </div> <!-- End row -->
             </div> <!-- End container -->
@@ -503,7 +594,102 @@
     </script>
     <script src="{{ asset('assets/frontend/js/changer.js') }}"></script>
     <script defer src="{{ asset('assets/frontend/js/styleswitch.js') }}"></script>
+    
+    <script>
+        function selectPlan(tier, label, amount, currency, priceId, element) {
+            // Update hidden form fields
+            document.getElementById('formPlanTier').value = tier;
+            document.getElementById('formPriceId').value = priceId;
+            
+            // Update selected plan summary
+            document.getElementById('selectedPlanLabel').textContent = label;
+            document.getElementById('selectedPlanPrice').textContent = currency + ' ' + amount.toFixed(2);
+            document.getElementById('selectedPlanSummary').style.display = 'block';
+            
+            // Highlight selected plan card
+            document.querySelectorAll('.plan-option').forEach(card => {
+                card.classList.remove('border-primary', 'border-2');
+            });
+            if (element) {
+                element.classList.add('border-primary', 'border-2');
+            }
+            
+            // Show checkout form
+            document.getElementById('checkoutForm').style.display = 'block';
+            
+            // Scroll to form
+            document.getElementById('checkoutForm').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        function goBack() {
+            window.location.href = '{{ route("home") }}#pricing-1';
+        }
+        
+        // Validate form submission - ensure plan is selected
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form[action="{{ route("stripe.lifetime") }}"]');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const planTier = document.getElementById('formPlanTier').value;
+                    if (!planTier) {
+                        e.preventDefault();
+                        alert('Please select a plan before proceeding.');
+                        return false;
+                    }
+                });
+            }
+        });
+        
+        // If plan_tier is already set (from old input), auto-select it
+        @if(old('plan_tier'))
+            document.addEventListener('DOMContentLoaded', function() {
+                const planTier = '{{ old("plan_tier") }}';
+                @foreach($plans as $plan)
+                    @if($plan['tier'] === old('plan_tier'))
+                        const planElement = document.querySelector('.plan-option[onclick*="{{ $plan['tier'] }}"]');
+                        selectPlan('{{ $plan['tier'] }}', '{{ $plan['label'] }}', {{ $plan['amount'] }}, '{{ $plan['currency'] }}', '{{ $plan['price_id'] }}', planElement);
+                    @endif
+                @endforeach
+            });
+        @endif
+    </script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const hearAboutSelect = document.getElementById('lifetimeHearAboutUs');
+    const otherWrapper = document.getElementById('lifetimeHearAboutOtherWrapper');
+    const couponInput = document.getElementById('lifetimeCoupon');
+    const couponRequired = document.getElementById('couponRequired');
+    
+    function updateCouponRequirement() {
+        const selectedValue = hearAboutSelect.value;
+        
+        // Show/hide "Other" field
+        if (selectedValue === 'Other') {
+            otherWrapper.style.display = 'block';
+        } else {
+            otherWrapper.style.display = 'none';
+        }
+        
+        // Make coupon required if "My adviser recommended me" is selected
+        if (selectedValue === 'My adviser recommended me') {
+            couponInput.setAttribute('required', 'required');
+            couponRequired.style.display = 'inline';
+        } else {
+            couponInput.removeAttribute('required');
+            couponRequired.style.display = 'none';
+        }
+    }
+    
+    // Initialize on page load
+    updateCouponRequirement();
+    
+    // Listen for changes
+    hearAboutSelect.addEventListener('change', updateCouponRequirement);
+});
+</script>
 </body>
 
 </html>
+
 

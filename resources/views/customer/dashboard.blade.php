@@ -12,6 +12,14 @@
     </style>
     <div class="page-body">
         <div class="container">
+            <div class="row">
+                <div class="col-md-11"></div>
+                <div class="col-md-1">
+                    <iframe
+                        src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                        style="border:none;height:132px;width:132px;"></iframe>
+                </div>
+            </div>
             <div class="row mb-4">
                 <div class="col-md-12">
                     <div class="card">
@@ -654,22 +662,22 @@
     </script>
 
     <script>
-    document.getElementById('copyLinkBtn').addEventListener('click', function() {
-        // Replace this with your actual link (can also be dynamic)
-        const linkToCopy = "{{ url('/') }}/register";  
+        document.getElementById('copyLinkBtn').addEventListener('click', function () {
+            // Replace this with your actual link (can also be dynamic)
+            const linkToCopy = "{{ url('/') }}/register";
 
-        // Copy to clipboard
-        navigator.clipboard.writeText(linkToCopy).then(() => {
-            // Show a quick success message
-            const msg = document.getElementById('copyMsg');
-            msg.style.display = 'inline';
-            msg.textContent = 'Link copied!';
-            setTimeout(() => msg.style.display = 'none', 2000);
-        }).catch(err => {
-            alert('Failed to copy link');
-            console.error(err);
+            // Copy to clipboard
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                // Show a quick success message
+                const msg = document.getElementById('copyMsg');
+                msg.style.display = 'inline';
+                msg.textContent = 'Link copied!';
+                setTimeout(() => msg.style.display = 'none', 2000);
+            }).catch(err => {
+                alert('Failed to copy link');
+                console.error(err);
+            });
         });
-    });
-</script>
+    </script>
 
 @endsection

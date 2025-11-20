@@ -13,6 +13,11 @@
                                     style="width:200px;">
                             </a>
                         </div>
+                        <center>
+                            <iframe
+                                src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
+                                style="border:none;height:132px;width:132px;"></iframe>
+                        </center>
                         <div class="login-main">
                             <form method="POST" action="{{ route('register') }}" class="theme-form">
                                 @csrf
