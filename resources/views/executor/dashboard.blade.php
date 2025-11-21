@@ -43,7 +43,7 @@
                     target="_blank">NWR Website</a></h3>
                     <h3 class="p-2">Access The Tell Us Once Website - <a href="https://www.gov.uk/after-a-death/organisations-you-need-to-contact-and-tell-us-once"
                     target="_blank">Tell Us Once Website</a></h3>
-                    <h3 class="p-2">Access The Estate Search Website - <a href="https://www.gov.uk/search-property-information-land-registry"
+                    <h3 class="p-2">Access The Estate Search Website - <a href="https://www.estatesearch.co.uk/"
                     target="_blank">Estate Search Website</a></h3>
                     <h3 class="p-2">Access The Probate Registry Website - <a href="https://www.gov.uk/applying-for-probate/apply-for-probate"
                     target="_blank">Probate Registry Website</a></h3>

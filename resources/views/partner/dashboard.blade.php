@@ -256,244 +256,215 @@
                     <div class="modal-body">
                         <!-- Step Contents -->
                         <div class="step active" data-audio="{{ asset('assets/partner_guide_audios/audio1.mp3') }}">
-                            <h4>Step 1 – Welcome</h4>
+                            <h4>STEP 1 — Welcome 🎉</h4>
                             <p>Welcome to Executor Hub for Partners.</p>
-                            <p>You’re joining a platform that simplifies estate administration for your clients — while
-                                creating a steady stream of passive income for you.</p>
-                            <p>We’ll get you set up in a few quick steps so you can start earning today.</p>
+                            <p>You’re joining a platform that helps families stay organised and prepared, while giving you a powerful opportunity to build recurring and passive income.</p>
+                            <p>This onboarding takes just a few minutes.</p>
+                            <p>By the end, you will be able to:</p>
+                            <p>1. Sign your first customers</p>
+                            <p>2. Recruit partners</p>
+                            <p>3. Grow ongoing revenue</p>
+                            <p>4. Use the full toolset to maximise your success</p>
+                            <p>Let’s begin.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio2.mp3') }}">
-                            <h4>Step 2 – Dashboard Overview</h4>
-                            <p>From your Dashboard you can:</p>
+                            <h4>STEP 2 — Your Dashboard Overview</h4>
+                            <p>Your dashboard is your main control centre.</p>
+                            <p>Here, you can:</p>
                             <ol>
-                                <li>See your total, active, and inactive customers</li>
-                                <li>View your revenue this month</li>
-                                <li>Monitor referrals and client activity</li>
-                                <li>Receive notifications when clients upload documents</li>
+                                <li>See all your customers (active & inactive)</li>
+                                <li>Track your revenue this month</li>
+                                <li>View partners you’ve referred</li>
+                                <li>Monitor customers your partners sign up</li>
+                                <li>Access scripts, templates, guides, and tools</li>
+                                <li>Review your growth at a glance</li>
                             </ol>
-                            <p>Tip: This is your home base — check here regularly to track earnings and follow up with
-                                clients.</p>
+                            <p>TIP: Check your dashboard regularly — it shows you exactly where your opportunities are.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio3.mp3') }}">
-                            <h4>Step 3 – Invite Other Partners & Advisers</h4>
+                            <h4>STEP 3 — Download the Partner App 📱 (Highly Recommended)</h4>
+                            <p>To make everything faster and easier, we strongly recommend downloading the Executor Hub Partner App.</p>
+                            <p>The app lets you:</p>
                             <ol>
-                                <li>Go to Partners in the left menu.</li>
-                                <li>Click Add Partner.</li>
-                                <li>Enter their name, email, and role.</li>
-                                <li>Click Send Invite.</li>
+                                <li>Copy your partner link instantly</li>
+                                <li>Invite customers in seconds</li>
+                                <li>Track your earnings.</li>
+                                <li>Manage customers and partners</li>
+                                <li>Receive important updates</li>
+                                <li>Work from your phone at any time</li>
                             </ol>
-                            <p>Why? You’ll earn commission from the clients they refer — building a passive income stream.
-                            </p>
-                            <p>Example: Invite 5 partners who each sign up 10 clients = extra commission every month without
-                                you signing up those clients yourself.</p>
-                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
-                                <source src="{{ asset('assets/invite_partners.mkv') }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <p>You’ll use the app daily.</p>
+                            <a href="https://apps.apple.com/us/app/executor-hub-partners/id6753773146" target="_blank">Download Partner App</a>
+                            <br/>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio4.mp3') }}">
-                            <h4>Step 4 – Add Your Bank Details</h4>
+                            <h4>STEP 4 — Your Partner Link & How Earnings Are Tracked</h4>
+                            <p>Your partner link and coupon code (shown clearly on your dashboard) are how Executor Hub tracks every referral you make — both customers and partners.</p>
+                            <p>Anyone who signs up using your link or your coupon code is instantly assigned to you.</p>
+                            <p><b>Do This Now</b></p>
                             <ol>
-                                <li>Click Withdrawals in the left menu.</li>
-                                <li>Enter your bank details securely.</li>
-                                <li>Save changes.</li>
+                                <li>✔ Click Copy Affiliate Link</li>
+                                <li>✔ No need to save it — your link and code are always visible and can be copied anytime</li>
                             </ol>
-                            <p>Why? Without this step, we can’t pay your commission. Set it up now to avoid delays.</p>
-                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
-                                <source src="{{ asset('assets/add_bank_account.mkv') }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <p>You’ll use this link in Step 6.</p>
+                            <p>Your link and coupon code are the foundation of all your earnings.</p>
+                            <p><b>How to Add New Partners (Two Options)</b></p>
+                            <p>There are two ways to recruit partners — both track correctly to you.</p>
+                            <p><b>OPTION 1 — Add a Partner Through Your Dashboard</b></p>
+                            <p>1.Click Partners</p>
+                            <p>2.Click Create Partner</p>
+                            <p>3.Enter their name, email, and role</p>
+                            <p>4.Send the invite</p>
+                            <p>They will receive the same welcome emails and onboarding steps you received.</p>
+                            <p><b>OPTION 2 — They Sign Up Using Your Coupon Code</b></p>
+                            <p>Partners can join directly from the public partner sign-up page.</p>
+                            <p>They must enter your coupon code so the system assigns them to you.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio5.mp3') }}">
-                            <h4>Step 5 – Invite Your First Clients</h4>
+                            <h4>STEP 5 — Add Your Bank Details (So We Can Pay You)</h4>
+                            <p>Before you can receive any commissions, add your bank details:</p>
                             <ol>
-                                <li>Click Invite Friends in the left menu.</li>
-                                <li>Copy your affiliate link or coupon code.</li>
-                                <li>Share it by email, text, or social media.</li>
+                                <li>Click Withdrawals</li>
+                                <li>Enter your bank information securely</li>
+                                <li>Save</li>
                             </ol>
-                            <p>Tip: Only clients who sign up using your link or code will be counted for your commission.
-                            </p>
-                            <video id="referralsVideo" style="width:100%;height:450px;" autoplay muted playsinline>
-                                <source src="{{ asset('assets/invite_customers.mkv') }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <p>This only needs to be done once.</p>
+                            <p>Commission payments require this step.</p>
+                            <a href="{{ route('partner.bank_account.index') }}">Add My Bank Details</a>
+                            <br/>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio6.mp3') }}">
-                            <h4>Step 6 – Manage Your Customers</h4>
+                            <h4>STEP 6 — Sign Your First Customers (Talk-First Method)</h4>
+                            <p><b>The BEST way to sign customers is to TALK to them.</b></p>
+                            <p>A phone call, Zoom call or face-to-face meeting converts far better than messages alone.</p>
+                            <p>Executor Hub works best when it’s explained personally.</p>
+                            <p><b>How to Introduce Executor Hub</b></p>
+                            <p>Keep it simple:</p>
                             <ol>
-                                <li>Click Customers in the menu.</li>
-                                <li>Use the list to follow up with clients.</li>
-                                <li>Re-engage inactive customers to increase platform usage.</li>
+                                <li>Executor Hub stores all their important documents</li>
+                                <li>It guides their executors step-by-step</li>
+                                <li>Setup takes only 10–15 minutes</li>
+                                <li>It gives their family true peace of mind</li>
                             </ol>
-                            <p>Why? The more active your clients are, the more opportunities you have to offer services —
-                                and earn.
-                            </p>
-                            <video id="customersVideo" style="width:100%;height:450px;" autoplay muted playsinline>
-                                <source src="{{ asset('assets/view_customers.mkv') }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+                            <p>For proven call scripts, openers, meetings frameworks and objection handling:</p>
+                            <p><b>After the Conversation — Send the Link</b></p>
+                            <p>Follow up using:</p>
+                            <p>Email</p>
+                            <p>Templates are in the Knowledgebase.</p>
+                            <p>WhatsApp (from your phone)</p>
+                            <p>WhatsApp messages must be sent from mobile.</p>
+                            <p>Templates are in the Knowledgebase.</p>
+                            <p>Direct Link Sharing</p>
+                            <p>Copy your link and send via SMS, Messenger, CRM, or social media.</p>
+                            <p><b>FOLLOW-UP IS CRUCIAL</b></p>
+                            <p>Most customers sign up after receiving the follow-up message.</p>
+                            <p>Even if they show interest:</p>
+                            <p>👉 Always follow up</p>
+                            <p>👉 Always send the link</p>
+                            <p>👉 Follow up again if needed</p>
+                            <p>Following up often turns:</p>
+                            <p>❌ “I’ll do it later” into ✅ “I’ve signed up”</p>
+                            <p>Consistent follow-up dramatically boosts conversions.</p>
+                            <p><b>Goal for Today</b></p>
+                            <p>⭐ Speak to 5–10 customers</p>
+                            <p>⭐ Follow up after the conversation</p>
+                            <p>⭐ Mention the partner opportunity to at least one person</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio7.mp3') }}">
-                            <h4>Step 7 – Track Activity & Earnings</h4>
-                            <ol>
-                                <li>Notifications: Alerts you when clients upload key documents.</li>
-                                <li>Revenue This Month: Shows your current earnings in real time.</li>
-                            </ol>
-                            <p>Tip: Use notifications as prompts to offer extra services or schedule reviews.</p>
+                            <h4>STEP 7 — Manage, Follow Up & Support Your Customers</h4>
+                            <p>Your Customers page shows:</p>
+                            <p>1. Customer name</p>
+                            <p>2. Package selected</p>
+                            <p>3. Date they signed up</p>
+                            <p>4. When their free trial ends</p>
+                            <p>5. This lets you see where each customer is in their journey.</p>
+
+                            <p><b>Automated Support Built In</b></p>
+                            <p>1. Executor Hub automatically sends:</p>
+                            <p>2. Setup reminders</p>
+                            <p>3. Benefit reminders</p>
+                            <p>4. Trial-ending reminders</p>
+                            <p>5. Subscription prompts</p>
+                            <p>All designed to give you the best possible chance of conversion.</p>
+                            <p>You don’t need to do anything — it’s all done for you.</p>
+
+                            <p><b>Optional Personal Follow-Up</b></p>
+                            <p>If you know the customer well or feel it’s appropriate, you may want to reach out personally before the free trial ends.</p>
+                            <p>If you choose to follow up:</p>
+                            <p>👉 Use the scripts in the Knowledgebase</p>
+                            <p>(Phone, WhatsApp, SMS, re-engagement emails)</p>
+
+                            <p><b>If You Don’t Want to Follow Up</b></p>
+                            <p>No problem — Executor Hub continues automatically sending reminders to maximise conversions.</p>
+                            <p><b>Goal for This Week</b></p>
+                            <p>⭐ Check your Customers page</p>
+                            <p>⭐ Reach out if appropriate</p>
+                            <p>⭐ Let the automated system do the rest</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio8.mp3') }}">
-                            <h4>Step 8 – You’re Ready to Go 🚀</h4>
+                            <h4>STEP 8 — Explore the Knowledgebase (Your Shortcut to Success)</h4>
+                            <p>Inside the Knowledgebase, you’ll find:</p>
                             <ol>
-                                <li>Partner profile set up</li>
-                                <li>Bank details saved</li>
-                                <li>First client invite ready</li>
+                                <li>Quick Start Guide</li>
+                                <li>Learning Videos</li>
+                                <li>Phone Scripts</li>
+                                <li>WhatsApp & SMS Templates</li>
+                                <li>Email Templates</li>
+                                <li>Social Media Posts</li>
+                                <li>FAQs</li>
+                                <li>Best Practices</li>
+                                <li>Customer Re-Engagement Templates</li>
+                                <li>Logos & Marketing Assets</li>
                             </ol>
-                            <p>Next step: Invite as many clients as you see appropriate and start earning whilst giving them
-                                peace of mind .</p>
+                            <p>These tools help you:</p>
+                            <ol>
+                                <li>Explain Executor Hub easily</li>
+                                <li>Sign customers consistently</li>
+                                <li>Recruit partners</li>
+                                <li>Handle objections</li>
+                                <li>Build confidence</li>
+                                <li>Grow your income faster</li>
+                            </ol>
+                            <p>We strongly recommend exploring it today.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio9.mp3') }}">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <h2 class="p-2">Video Title: Partner Welcome</h2>
-                                        <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                            <source src="{{ asset('assets/knowledgebase/video1.mp4') }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <h2 class="p-2">Title: Earn with us!</h2>
-                                    <video id="earningVideo" style="width:100%;height:210px;" controls>
-                                        <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <h2 class="p-2">Title: How to Introduce Executor Hub to Clients</h2>
-                                        @if(auth()->user()->profession == "General")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/video2.mp4') }}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Solicitors")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/solicitor.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Will writers")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/willwriters.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Estate planners")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/estate_planners.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Financial advisers")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/financial_advisers.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Ifas")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/ifas.mp4') }}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Life insurance specialists")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/life_insurance_specialists.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Accountants")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/accountants.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Networks")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/networks.mp4') }}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Societies")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/socities.mp4') }}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-
-                                        @elseif(auth()->user()->profession == "Regulatory bodies")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/regulators.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        @elseif(auth()->user()->profession == "Institutes")
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/institues.mp4') }}"
-                                                    type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        @else
-                                            <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                                <source src="{{ asset('assets/knowledgebase/video2.mp4') }}" type="video/mp4">
-                                                Your browser does not support the video tag.
-                                            </video>
-                                        @endif
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <h2 class="p-2">Video Title: Client Explainer</h2>
-                                        <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                            <source src="{{ asset('assets/knowledgebase/video3.mp4') }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <h2 class="p-2">Video Title: Partner Success & Commission</h2>
-                                        <video id="earningVideo" style="width:100%;height:390px;" controls>
-                                            <source src="{{ asset('assets/knowledgebase/video4.mp4') }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                </div>
-                            </div>
+                            <h4>STEP 9 — You’re Ready to Go 🚀</h4>
+                            <p>You are now fully set up:</p>
+                            <p>✔ Bank details added</p>
+                            <p>✔ Partner link ready</p>
+                            <p>✔ App downloaded</p>
+                            <p>✔ First conversations done</p>
+                            <p>✔ Follow-ups sent</p>
+                            <p>✔ Dashboard understood</p>
+                            <p>✔ Knowledgebase explored</p>
+                            <p>Your next steps:</p>
+                            <p>Today</p>
+                            <p>⭐ Speak to 5–10 customers</p>
+                            <p>⭐ Send follow-up messages</p>
+                            <p>⭐ Use the app for quick link sharing</p>
+                            <p>⭐ Mention the partner opportunity</p>
+                            <p>This Week</p>
+                            <p>⭐ Sign 2–3 customers</p>
+                            <p>⭐ Recruit your first partner</p>
+                            <p>⭐ Check upcoming trial endings</p>
+                            <p>⭐ Stay active in the app</p>
+                            <p>Welcome to Executor Hub — let’s build something powerful together.</p>
                         </div>
 
                     </div>
