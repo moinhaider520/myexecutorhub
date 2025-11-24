@@ -393,7 +393,7 @@
                                 <li aria-haspopup="true">
                                     <a href="#" class="h-link">For Professionals</a>
                                     <ul class="sub-menu">
-                                        <li><a href="#contacts-1">Partner Program</a></li>
+                                        <li><a href="#lnk-3">Partner Program</a></li>
                                         <li><a href="#contacts-2">Enterprise solutions </a></li>
                                         <li><a href="#digitallegacy">Digital Legacies</a></li>
                                     </ul>
@@ -1896,6 +1896,7 @@
                 </div>
             </div>
         </section>
+        
 
 
 
@@ -2118,51 +2119,161 @@
                     </div>
 
 
-                    <!-- TEXT BLOCK -->
+
                     <div class="col-md-6">
-                        <div class="txt-block right-column wow fadeInLeft"
-                            style="visibility: visible; animation-name: fadeInLeft;">
+    <div class="txt-block right-column wow fadeInLeft"
+        style="visibility: visible; animation-name: fadeInLeft;">
 
-                            <!-- Section ID -->
-                            <span class="section-id">🤝 Partner Program</span>
+        <!-- Section ID -->
+        <span class="section-id">🤝 Partner Program</span>
 
-                            <!-- Title -->
-                            <h2 class="s-46 w-700">Help families. Grow your business. Earn more — every month.</h2>
+        <!-- Title -->
+        <h2 class="s-46 w-700">Help families. Grow your business. Earn more — every month.</h2>
 
-                            <p>Executor Hub lets you support families during one of the hardest moments in life — while giving you a powerful new way to increase your income.</p>
-                            <p>Our partnership program is designed for estate planners, will writers, financial advisers, funeral directors, and professionals who want to deliver more value without more work.</p>
-                            <p>🌟 Why Join the Partner Program?</p>
-                            <p>✔ Add an innovative digital service to your offering</p>
-                            <p>✔ Strengthen client relationships & referrals</p>
-                            <p>✔ Create immediate cashflow and long-term recurring income</p>
-                            <p>✔ No cost to join, no technical experience needed</p>
-                            <p>✔ Start earning today</p>
-                            <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
-                            <p>💰 How You Earn — Three Powerful Income Streams</p>
-                            <p>Every time you refer a customer using your unique link, you earn:</p>
-                            <p>1- Income Stream</p>
-                            <p>2- Your Earnings</p>
-                            <p>3- Monthly subscriptions</p>
-                            <p>4- 30% every month</p>
-                            <p>5- Lifetime plans</p>
-                            <p>6- 30% one-off upfront</p>
-                            <p>7- Team referrals</p>
-                            <p>8- 20% from partners you recruit</p>
-                            <p>That means you earn from:</p>
-                            <p>•	Your own clients</p>
-                            <p>•	People they refer</p>
-                            <p>•	Partners you introduce</p>
-                            <p>•	Their clients too</p>
-                            <p>Build your network → multiply your income.</p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                            <p></p>
-                        </div>
-                    </div> <!-- END TEXT BLOCK -->
+        <p>Executor Hub lets you support families during one of the hardest moments in life — while giving you a powerful new way to increase your income.</p>
+        <p>Our partnership program is designed for estate planners, will writers, financial advisers, funeral directors, and professionals who want to deliver more value without more work.</p>
+
+        <p>🌟 Why Join the Partner Program?</p>
+        <p>✔ Add an innovative digital service to your offering</p>
+        <p>✔ Strengthen client relationships & referrals</p>
+        <p>✔ Create immediate cashflow and long-term recurring income</p>
+        <p>✔ No cost to join, no technical experience needed</p>
+        <p>✔ Start earning today</p>
+        <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
+
+        <p>💰 How You Earn — Three Powerful Income Streams</p>
+        <p>Every time you refer a customer using your unique link, you earn:</p>
+        <p>1- Income Stream</p>
+        <p>2- Your Earnings</p>
+        <p>3- Monthly subscriptions</p>
+        <p>4- 30% every month</p>
+        <p>5- Lifetime plans</p>
+        <p>6- 30% one-off upfront</p>
+        <p>7- Team referrals</p>
+        <p>8- 20% from partners you recruit</p>
+
+        <p>That means you earn from:</p>
+        <p>• Your own clients</p>
+        <p>• People they refer</p>
+        <p>• Partners you introduce</p>
+        <p>• Their clients too</p>
+        <p>Build your network → multiply your income.</p>
+
+        <!-- NEW CONTENT STARTS HERE -->
+
+        <hr>
+
+        <h4>📈 What You Can Earn (Realistic Examples)</h4>
+
+        <p><strong>Example 1 — Small start, great side income</strong><br>
+        5 clients subscribe monthly + 1 lifetime<br>
+        → Earn £400–£600/month</p>
+
+        <p><strong>Example 2 — 10 partners recruited, each helping 4 clients</strong><br>
+        (10 × 4 = 40 clients)<br>
+        → Earn £1,500–£2,500/month</p>
+
+        <p><strong>Example 3 — A growing team</strong><br>
+        You help 20 partners get started<br>
+        Partners collectively serve 100 families<br>
+        → Earn £5,000–£8,000+/month</p>
+
+        <hr>
+
+        <h4>🔥 Want a big win fast?</h4>
+
+        <p>Sell 2 lifetime plans + recruit 2 partners this week:</p>
+        <p>💷 Approx £1,000–£1,500 in upfront income<br>
+        🔥 Plus ongoing subscription revenue long-term</p>
+
+        <p>A few messages, a couple of conversations — real earnings.</p>
+
+        <hr>
+
+        <h4>🚀 Everything You Need to Succeed</h4>
+
+        <p>We give you:</p>
+        <p>✔ Marketing materials & client leaflets</p>
+        <p>✔ Ready-made scripts, emails & social posts</p>
+        <p>✔ Demo videos & objection handling</p>
+        <p>✔ Partner dashboard to track sales and income</p>
+        <p>✔ Ongoing support and coaching</p>
+        <p>We make success easy.</p>
+
+        <hr>
+
+        <h4>🎯 Who Makes the Best Partners?</h4>
+
+        <p>If you talk to clients about:</p>
+        <ul>
+            <li>Wills, trusts or probate</li>
+            <li>Finances & estate planning</li>
+            <li>Funeral plans or later-life care</li>
+            <li>Insurance & protection</li>
+            <li>Membership benefits</li>
+        </ul>
+
+        <p>…then Executor Hub fits perfectly into what you already do.</p>
+
+        <hr>
+
+        <h4>❤️ Your Clients Will Thank You</h4>
+
+        <p>Executors often spend:</p>
+        <ul>
+            <li>50–80 hours on admin</li>
+            <li>Months chasing information</li>
+            <li>Thousands in preventable delays</li>
+        </ul>
+
+        <p>You become the professional who made the hardest time easier.</p>
+
+        <p>That means more:<br>
+        ✔ 5-star reviews<br>
+        ✔ referrals<br>
+        ✔ lifetime value<br>
+        ✔ trust</p>
+
+        <hr>
+
+        <h4>⭐ Simple. Lucrative. Impactful.</h4>
+
+        <p>You decide:<br>
+        • How much you help<br>
+        • How quickly you grow<br>
+        • How much you earn</p>
+
+        <p>We’ll help you every step of the way.</p>
+
+        <hr>
+
+        <h4>Ready to join the fastest-growing estate support network?</h4>
+
+        <p>📩 <strong>Become a Partner Today</strong><br>
+        — it takes less than 30 seconds.</p>
+
+        <p>Start helping more families.<br>
+        Start building residual income.<br>
+        Start winning more business.</p>
+
+        <p><strong>Executor Hub — empowering executors, and the professionals who support them.</strong></p>
+
+        <hr>
+
+        <h4>Why this is the highest-conversion version</h4>
+
+        <p>✔ Shows exactly how money is made</p>
+        <p>✔ Gives real earning examples and vision</p>
+        <p>✔ Appeals to purpose + profit</p>
+        <p>✔ Simple language and strong CTAs</p>
+        <p>✔ Removes friction and barriers to joining</p>
+        <p>✔ Positions Executor Hub as MUST-HAVE tool</p>
+
+        <!-- NEW CONTENT ENDS HERE -->
+
+    </div>
+</div>
+
 
 
                 </div> <!-- END SECTION CONTENT (ROW) -->

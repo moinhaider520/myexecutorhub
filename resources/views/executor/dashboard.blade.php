@@ -398,166 +398,119 @@
                     <div class="modal-body">
                         <!-- Step Contents -->
                         <div class="step active" data-audio="{{ asset('assets/executor_guide_audios/audio1.mp3') }}">
-                            <h4>Step 1 – Welcome & Getting Started</h4>
-                            <p>Welcome to Executor Hub!</p>
-                            <p>You’ve been given access because you are acting as an executor for an estate. This dashboard is your central control panel to guide you through every stage of the process — keeping you organised, compliant, and in control.</p>
-                            <p>Before you start:</p>
-                            <ul>
-                                <li>Download the Executor Hub app from the App Store (iOS) or Google Play (Android) so you can access everything on the go.</li>
-                                <li>Log in from your computer, tablet, or mobile.</li>
-                                <li>Enable notifications so we can remind you about important deadlines.</li>
-                                <li>Familiarise yourself with the menu on the left-hand side — this is how you’ll navigate between sections.</li>
-                            </ul>
+                            <h4>Welcome & Getting Started</h4>
+                            <p>Welcome to Executor Hub</p>
+                            <p>Your guided assistant for managing an estate — every task, deadline & document in one secure place.</p>
+                            <p>We’ll take this step-by-step together ❤️</p>
+                            <p>Click Next to Get Started</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio2.mp3') }}">
-                            <h4>Step 2 – Understanding Your Dashboard</h4>
-                            <p>When you log in, your Dashboard gives you a clear snapshot of the estate’s progress, including:</p>
+                            <h4>Step 1 – Confirm Authority</h4>
+                            <p>First things first — we’ll secure your legal right to act.</p>
+                            <p>You’ll do 3 key actions:</p>
                             <ul>
-                                <li>Total assets and liabilities recorded so far.</li>
-                                <li>Number of documents uploaded.</li>
-                                <li>Your executor to-do lists:
-                                    <ul>
-                                        <li>Standard Executor To-Do List – for simpler estates.</li>
-                                        <li>Advanced Executor To-Do List – for more complex estates.</li>
-                                    </ul>
-                                </li>
-                                <li>Progress tracking – see how many tasks are completed and what’s still outstanding.</li>
-                                <li>Quick action buttons – upload documents, add assets, or invite advisors with a single click.</li>
+                                <li>Confirm who has authority</li>
+                                <li>Upload the will (if there is one)</li>
+                                <li>Upload the death certificate</li>
                             </ul>
+                            <p>Once confirmed, the correct tasks will unlock automatically.</p>
+                            <p>🎯 Goal of this step</p>
+                            <p>➜ Secure authority → unlock the estate roadmap</p>
+                            <p>[ Upload Will ] [ Upload Death Certificate ]</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio3.mp3') }}">
-                            <h4>Step 3 – Your To-Do Lists</h4>
-                            <p>Your to-do lists are step-by-step roadmaps to guide you through the executor process in the right order.</p>
-                            <p>Standard Executor To-Do List (for straightforward estates):</p>
-                            <ul>
-                                <li>Immediately After Death</li>
-                                <li>Legal Authority</li>
-                                <li>Notify & Collect</li>
-                                <li>Pay Debts & Liabilities</li>
-                                <li>Distribute the Estate</li>
-                            </ul>
-                            <p>Advanced Executor To-Do List (for complex estates):</p>
-                            <ul>
-                                <li>A.Immediate Legal & Personal Tasks</li>
-                                <li>B.Estate Valuation & Notifications</li>
-                                <li>C.Inheritance Tax & Probate</li>
-                                <li>D.Estate Administration</li>
-                                <li>E.Final Accounting & Distribution</li>
-                                <li>F.Final Compliance</li>
-                            </ul>
-                            <p>Tip: Click each stage to expand tasks. You can:</p>
-                            <ul>
-                                <li>Mark tasks as complete.</li>
-                                <li>Add notes.</li>
-                                <li>Upload related documents.</li>
-                            </ul>
+                            <h4>Step 2 – Your Executor Checklist</h4>
+                            <p>This is your personalised roadmap — in the correct legal order.</p>
+                            <p>You’ll see Milestones such as:</p>
+                            <p>A. Secure Authority</p>
+                            <p>B. Notify & Protect</p>
+                            <p>C. Estate Valuation</p>
+                            <p>D. Probate Application</p>
+                            <p>E. Administration</p>
+                            <p>F. Final Distribution</p>
+                            <p>Each task includes:</p>
+                            <p>🔗 Correct website links</p>
+                            <p>📄 Auto-generated letters & email templates</p>
+                            <p>⬆ Upload proof</p>
+                            <p>✔ Mark complete</p>
+                            <p>You’re never alone — we guide every click.</p>
+                            <p>💬 Need help? Watch quick videos & FAQs along the way.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio4.mp3') }}">
-                            <h4>Step 4 – Adding Assets & Liabilities</h4>
-                            <p>The Assets & Liabilities section is where you record everything in the estate, including:</p>
-                            <ul>
-                                <li>Bank accounts</li>
-                                <li>Property and land</li>
-                                <li>Investments and shares</li>
-                                <li>Insurance policies</li>
-                                <li>Business interests</li>
-                                <li>Debts and liabilities</li>
-                                <li>Digital and foreign assets</li>
-                            </ul>
-                            <p>Adding this information early will make valuations, tax calculations, and distributions much smoother.</p>
+                            <h4>Step 3 – Notify All Organisations</h4>
+                            <p>We’ll help you handle every notification quickly and correctly.</p>
+                            <p>Categories include:</p>
+                            <p>🏦 Banks & investments</p>
+                            <p>🏡 Property & utilities</p>
+                            <p>🏥 Health & care providers</p>
+                            <p>📩 Government services</p>
+                            <p>📱 Digital accounts & social media</p>
+                            <p>📰 Gazette notice</p>
+                            <p>Every notification supports:</p>
+                            <p>📄 Auto-filled documents</p>
+                            <p>✉ Email send + response tracking</p>
+                            <p>⬆ Upload proof received</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio5.mp3') }}">
-                            <h4>Step 5 – Uploading Documents & Media</h4>
-                            <p>Keep everything safe and in one place by uploading:</p>
-                            <ul>
-                                <li>Wills, trusts, and legal documents</li>
-                                <li>Death certificates</li>
-                                <li>Valuations and financial statements</li>
-                                <li>Photos and videos of assets</li>
-                            </ul>
-                            <p>You can store these under:</p>
-                            <ul>
-                                <li>Documents</li>
-                                <li>Pictures & Videos</li>
-                                <li>Life Remembered – for preserving personal memories through photos, videos, and voice notes.</li>
-                            </ul>
+                            <h4>Step 4 – Secure and Upload Information</h4>
+                            <p>Keep everything safe, organised, and backed up forever.</p>
+                            <p>Add:</p>
+                            <p>🧾 Financial documents</p>
+                            <p>📸 Photos of property & assets</p>
+                            <p>🏷️ Proof of notifications</p>
+                            <p>🪪 ID & authority documents</p>
+                            <p>📁 Final statements later</p>
+                            <p>The system tags items automatically so you can instantly find them.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio6.mp3') }}">
-                            <h4>Step 6 – Managing Executors & Advisors</h4>
-                            <p>You can add and manage the people helping with the estate:</p>
-                            <ul>
-                                <li>Executors – add co-executors, assign roles, and control permissions.</li>
-                                <li>Advisors – invite solicitors, accountants, or other professionals to securely view or update relevant sections.</li>
-                            </ul>
+                            <h4>Step 5 – Invite Others (Optional)</h4>
+                            <p>You can add people to help…</p>
+                            <p>👥 Co-Executors — share workload</p>
+                            <p>📚 Professionals — solicitors / accountants</p>
+                            <p>👨‍👩‍👧 Beneficiary view (read-only)</p>
+                            <p>You stay in full control of what each person sees.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio7.mp3') }}">
-                            <h4>Step 7 – Wishes, Guidance & Funeral Preferences</h4>
-                            <p>Capture the deceased’s personal wishes in dedicated sections:</p>
-                            <ul>
-                                <li>Trust Wishes</li>
-                                <li>Memorandum of Wishes</li>
-                                <li>Guidance for Guardians</li>
-                                <li>Funeral & Donations</li>
-                            </ul>
-                            <p>This ensures nothing important is missed and all preferences are respected.</p>
+                            <h4>Step 6 – Stay on Track</h4>
+                            <p>You’ll see:</p>
+                            <p>📊 Progress %</p>
+                            <p>⭐ Confidence Rating</p>
+                            <p>⚠️ Deadline Alerts</p>
+                            <p>📝 Tasks waiting for action</p>
+                            <p>🔔 Gentle reminders when something stalls</p>
+                            <p>We’ll guide the timing — you control the decisions.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio8.mp3') }}">
-                            <h4>Step 8 – Staying On Track</h4>
-                            <ul>
-                                <li>Your progress updates automatically when tasks are marked complete.</li>
-                                <li>Set reminders to prompt you if a task hasn’t been updated for a while.</li>
-                                <li>The system highlights important legal or tax deadlines so you never miss them.</li>
-                            </ul>
+                            <h4>Step 7 – Help When You Need It</h4>
+                            <p>Support includes:</p>
+                            <p>💬 Live chat</p>
+                            <p>🎥 60-second task explainer videos</p>
+                            <p>❓ FAQs for every item</p>
+                            <p>👨‍💼 Ask your professional adviser</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio9.mp3') }}">
-                            <h4>Step 9 – Support & Help</h4>
-                            <ul>
-                                <li>Use the “Chat with Us” button on the right for instant help.</li>
-                                <li>Look for “?” icons for built-in explanations and tips.</li>
-                                <li>Contact your professional advisor directly through the platform if you need expert guidance.</li>
-                            </ul>
+                            <h4>💙 You’re Ready</h4>
+                            <p>That’s everything you need to make a strong start.</p>
+                            <p>We’ll guide each step as you go.</p>
+                            <p>Let’s begin with the first task.</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
-
-                        <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio10.mp3') }}">
-                            <h4>Step 10 – Final Compliance & Closing the Estate</h4>
-                            <p>When everything is complete:</p>
-                            <ul>
-                                <li>Submit any final tax returns (if required).</li>
-                                <li>Reconcile all accounts and prepare final statements.</li>
-                                <li>Upload all documents to Executor Hub to keep a permanent record.</li>
-                            </ul>
-                            <p>Once archived, you’ll have a complete and secure record of the estate administration.</p>                            
-                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
-                        </div>
-
-                        <div class="step" data-audio="{{ asset('assets/executor_guide_audios/audio11.mp3') }}">
-                            <h4>Final Reminder – Stay Connected</h4>
-                            <p>To make things even easier, download the Executor Hub app if you haven’t already.</p>
-                            <ul>
-                                <li>App Store (iOS) – search “Executor Hub”</li>
-                                <li>Google Play (Android) – search “Executor Hub”</li>
-                            </ul>
-                            <p>With the app, you can manage tasks, upload documents, and get reminders anywhere, anytime.</p>                            
-                            <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
-                        </div>
-
                     </div>
 
                     <div class="modal-footer">
