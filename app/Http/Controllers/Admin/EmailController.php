@@ -12,6 +12,13 @@ use App\Models\EmailSchedule;
 use Carbon\Carbon;
 class EmailController extends Controller
 {
+    public function index()
+    {
+        $emails = EmailSchedule::orderBy('created_at', 'desc')->get();
+        return view('admin.emails.index', compact('emails'));
+    }
+
+
     public function create()
     {
         return view('admin.emails.create');
@@ -124,16 +131,16 @@ class EmailController extends Controller
         return collect();
     }
 
-    public function users_list(){
-        try{
-            $users=User::whereHas('roles',function($q){
-                $q->where('name','customer')
-                ->orWhere('name','partner');
+    public function users_list()
+    {
+        try {
+            $users = User::whereHas('roles', function ($q) {
+                $q->where('name', 'customer')
+                    ->orWhere('name', 'partner');
             })->with('roles')->get();
-            return response()->json(['users'=>$users], 200);
+            return response()->json(['users' => $users], 200);
 
-        }
-        catch(\Exception $e){
+        } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 404);
         }
     }

@@ -63,7 +63,10 @@
 
     <!-- RESPONSIVE CSS -->
     <link href="{{ asset('assets/frontend/css/responsive.css') }}" rel="stylesheet" />
+
+    <!-- CUSTOM STYLES -->
     <style>
+        /* Pricing Type Button Styles */
         .pricing-type-btn {
             padding: 12px 24px;
             font-weight: 600;
@@ -108,189 +111,175 @@
             border-top-right-radius: 8px;
             border-bottom-right-radius: 8px;
         }
+
+        /* Exit Popup Styles */
+        .exit-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+
+        .exit-popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            width: 50%;
+        }
+
+        .exit-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Button Primary Styles */
+        .btn-primary {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        /* Cookie Popup Styles */
+        .cookie-popup {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1000;
+        }
+
+        .cookie-popup-content p {
+            margin: 0 0 10px;
+        }
+
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .manage-cookies-btn,
+        .decline-cookies-btn,
+        .accept-cookies-btn {
+            padding: 8px 12px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .accept-cookies-btn {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .decline-cookies-btn {
+            background: #dc3545;
+            color: #fff;
+        }
+
+        .manage-cookies-btn {
+            background: #007bff;
+            color: #fff;
+        }
+
+        /* Manage Cookies Modal */
+        .cookie-settings {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            width: 300px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+        }
+
+        .cookie-settings-content label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .cookie-settings-buttons {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* Welcome Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 700px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-content h2 {
+            margin: 0 0 10px;
+        }
+
+        .popup-content p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .popup-content button {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .popup-content button:hover {
+            background: #218838;
+        }
     </style>
 </head>
-<style>
-    .exit-popup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        z-index: 9999;
-    }
-
-    .exit-popup-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        text-align: center;
-        border-radius: 10px;
-        width: 50%;
-    }
-
-    .exit-close {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    .btn-primary {
-        display: inline-block;
-        padding: 10px 20px;
-        color: #fff;
-        background-color: #007bff;
-        text-decoration: none;
-        border-radius: 5px;
-        margin-top: 10px;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    /* Cookie Popup Styles */
-    .cookie-popup {
-        display: none;
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        background: #fff;
-        padding: 15px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        border-radius: 8px;
-        z-index: 1000;
-    }
-
-    .cookie-popup-content p {
-        margin: 0 0 10px;
-    }
-
-    .cookie-buttons {
-        display: flex;
-        gap: 10px;
-    }
-
-    .manage-cookies-btn,
-    .decline-cookies-btn,
-    .accept-cookies-btn {
-        padding: 8px 12px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .accept-cookies-btn {
-        background: #28a745;
-        color: #fff;
-    }
-
-    .decline-cookies-btn {
-        background: #dc3545;
-        color: #fff;
-    }
-
-    .manage-cookies-btn {
-        background: #007bff;
-        color: #fff;
-    }
-
-    /* Manage Cookies Modal */
-    .cookie-settings {
-        display: none;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff;
-        padding: 20px;
-        width: 300px;
-        border-radius: 8px;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-        z-index: 1001;
-    }
-
-    .cookie-settings-content label {
-        display: block;
-        margin: 10px 0;
-    }
-
-    .cookie-settings-buttons {
-        text-align: center;
-        margin-top: 10px;
-    }
-</style>
-<style>
-    .btn-primary {
-        display: inline-block;
-        padding: 10px 20px;
-        color: #fff;
-        background-color: #007bff;
-        text-decoration: none;
-        border-radius: 5px;
-        margin-top: 10px;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
-
-    /* Popup Styles */
-    .popup {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-
-    .popup-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #fff;
-        padding: 20px;
-        text-align: center;
-        width: 90%;
-        max-width: 700px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .popup-content h2 {
-        margin: 0 0 10px;
-    }
-
-    .popup-content p {
-        margin: 10px 0;
-        font-size: 16px;
-    }
-
-    .popup-content button {
-        background: #28a745;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        margin-top: 10px;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-    .popup-content button:hover {
-        background: #218838;
-    }
-</style>
 <script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
 
 <body>
@@ -406,8 +395,6 @@
                                 <!-- SIMPLE NAVIGATION LINK -->
                                 <li class="nl-simple" aria-haspopup="true"><a href="#faqs-3" class="h-link">FAQs</a>
                                 </li>
-
-
 
 
                                 <!-- SIMPLE NAVIGATION LINK -->
@@ -1738,9 +1725,9 @@
                 </div>
 
                 <!-- CASE STUDIES CARDS -->
-                <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="row g-4">
                     <!-- CASE STUDY 1 -->
-                    <div class="col">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">Preventing a 5-Year Will Challenge</h5>
@@ -1760,7 +1747,7 @@
                     </div>
 
                     <!-- CASE STUDY 2 -->
-                    <div class="col">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">Saving Executors 30-60 Hours of Work</h5>
@@ -1778,7 +1765,7 @@
                     </div>
 
                     <!-- CASE STUDY 3 -->
-                    <div class="col">
+                    <div class="col-lg-4 col-md-6">
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">The £400,000 "Hidden Asset"</h5>
@@ -1792,6 +1779,74 @@
                             <div class="card-footer bg-transparent border-0 pt-0">
                                 <a href="{{ route('case-study.show', '400000-hidden-asset') }}"
                                     class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CASE STUDY 4 -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <h5 class="card-title s-24 w-700 mb-3">Preventing Executor Mistakes Through Automation</h5>
+                                <p class="card-text color--grey">A family discovered after death that several important documents were missing: the updated will, property valuations, insurance details, and statements for a small investment account. Documents were stored in multiple places causing delays, arguments, and additional legal fees...</p>
+                                <p class="card-text"><small class="text-muted">How Executor Hub avoids confusion, missing paperwork, and costly delays.</small></p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ route('case-study.show', 'preventing-executor-mistakes-automation') }}"
+                                    class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CASE STUDY 5 -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <h5 class="card-title s-24 w-700 mb-3">Cutting Delays From Banks, HMRC & DWP</h5>
+                                <p class="card-text color--grey">Executors for a modest estate spent over three months waiting on responses from banks, pension providers, HMRC, and the DWP. Most delays were caused by sending wrong forms, missing information, and being asked to provide the same documents repeatedly...</p>
+                                <p class="card-text"><small class="text-muted">How Executor Hub eliminates the administrative drag executors face.</small></p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ route('case-study.show', 'cutting-delays-banks-hmrc-dwp') }}"
+                                    class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CASE STUDY 6 -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <h5 class="card-title s-24 w-700 mb-3">Capacity Recording & Golden Rule Compliance</h5>
+                                <p class="card-text color--grey">A will was drafted for an elderly lady with early signs of memory decline. When she died, one child challenged the will, arguing she lacked capacity and didn't understand the changes. There was no record explaining why she made her decisions...</p>
+                                <p class="card-text"><small class="text-muted">How Executor Hub helps avoid legal challenges to capacity and knowledge & approval.</small></p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0 pt-0">
+                                <a href="{{ route('case-study.show', 'capacity-recording-golden-rule-compliance') }}"
+                                    class="btn btn--theme hover--tra-white r-04">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CASE STUDY 7 -->
+                    <div class="col-lg-12">
+                        <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <h5 class="card-title s-24 w-700 mb-3">The Hospital Will: A Complex Family Situation Made Simple</h5>
+                                        <p class="card-text color--grey">A man in hospital decided to update his will due to a turbulent marriage with allegations of domestic abuse, children from a previous relationship, and complex financial arrangements. After his death, his wife challenged the will and reported the matter to police, creating accusations, family breakdown, and significant legal costs...</p>
+                                        <p class="card-text"><small class="text-muted">How a capacity video and recorded explanation could have prevented a painful dispute.</small></p>
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <div class="text-center w-100">
+                                            <span class="badge bg-warning text-dark mb-3 p-2">Featured Case Study</span>
+                                            <br>
+                                            <a href="{{ route('case-study.show', 'hospital-will-complex-family-situation') }}"
+                                                class="btn btn--theme hover--tra-white r-04 btn-lg">Read Full Story</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1896,7 +1951,6 @@
                 </div>
             </div>
         </section>
-        
 
 
 
@@ -1904,9 +1958,6 @@
 
         <!-- DIVIDER LINE -->
         <hr class="divider" />
-
-
-
 
         <!-- MODAL WINDOW (REQUEST FORM)
 			============================================= -->
@@ -2118,168 +2169,281 @@
                         </div>
                     </div>
 
-
-
+                    <!-- TEXT BLOCK -->
                     <div class="col-md-6">
-    <div class="txt-block right-column wow fadeInLeft"
-        style="visibility: visible; animation-name: fadeInLeft;">
+                        <div class="txt-block right-column wow fadeInLeft"
+                            style="visibility: visible; animation-name: fadeInLeft;">
 
-        <!-- Section ID -->
-        <span class="section-id">🤝 Partner Program</span>
+                            <!-- Section ID -->
+                            <span class="section-id">🤝 Partner Program</span>
 
-        <!-- Title -->
-        <h2 class="s-46 w-700">Help families. Grow your business. Earn more — every month.</h2>
+                            <!-- Title -->
+                            <h2 class="s-46 w-700">Help families. Grow your business. Earn more — every month.</h2>
 
-        <p>Executor Hub lets you support families during one of the hardest moments in life — while giving you a powerful new way to increase your income.</p>
-        <p>Our partnership program is designed for estate planners, will writers, financial advisers, funeral directors, and professionals who want to deliver more value without more work.</p>
+                            <p>Executor Hub lets you support families during one of the hardest moments in life — while giving you a powerful new way to increase your income.</p>
+                            <p>Our partnership program is designed for estate planners, will writers, financial advisers, funeral directors, and professionals who want to deliver more value without more work.</p>
 
-        <p>🌟 Why Join the Partner Program?</p>
-        <p>✔ Add an innovative digital service to your offering</p>
-        <p>✔ Strengthen client relationships & referrals</p>
-        <p>✔ Create immediate cashflow and long-term recurring income</p>
-        <p>✔ No cost to join, no technical experience needed</p>
-        <p>✔ Start earning today</p>
-        <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
+                            <p>🌟 Why Join the Partner Program?</p>
+                            <p>✔ Add an innovative digital service to your offering</p>
+                            <p>✔ Strengthen client relationships & referrals</p>
+                            <p>✔ Create immediate cashflow and long-term recurring income</p>
+                            <p>✔ No cost to join, no technical experience needed</p>
+                            <p>✔ Start earning today</p>
+                            <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
 
-        <p>💰 How You Earn — Three Powerful Income Streams</p>
-        <p>Every time you refer a customer using your unique link, you earn:</p>
-        <p>1- Income Stream</p>
-        <p>2- Your Earnings</p>
-        <p>3- Monthly subscriptions</p>
-        <p>4- 30% every month</p>
-        <p>5- Lifetime plans</p>
-        <p>6- 30% one-off upfront</p>
-        <p>7- Team referrals</p>
-        <p>8- 20% from partners you recruit</p>
+                            <p>💰 How You Earn — Three Powerful Income Streams</p>
+                            <p>Every time you refer a customer using your unique link, you earn:</p>
+                            <p>1- Income Stream</p>
+                            <p>2- Your Earnings</p>
+                            <p>3- Monthly subscriptions</p>
+                            <p>4- 30% every month</p>
+                            <p>5- Lifetime plans</p>
+                            <p>6- 30% one-off upfront</p>
+                            <p>7- Team referrals</p>
+                            <p>8- 20% from partners you recruit</p>
 
-        <p>That means you earn from:</p>
-        <p>• Your own clients</p>
-        <p>• People they refer</p>
-        <p>• Partners you introduce</p>
-        <p>• Their clients too</p>
-        <p>Build your network → multiply your income.</p>
+                            <p>That means you earn from:</p>
+                            <p>• Your own clients</p>
+                            <p>• People they refer</p>
+                            <p>• Partners you introduce</p>
+                            <p>• Their clients too</p>
+                            <p>Build your network → multiply your income.</p>
 
-        <!-- NEW CONTENT STARTS HERE -->
+                            <hr>
 
-        <hr>
+<h4>What You Can Earn (Realistic Examples)</h4>
 
-        <h4>📈 What You Can Earn (Realistic Examples)</h4>
+<p>These examples show what’s possible if you talk to a steady flow of clients and follow our simple process.<br>
+They’re based on:</p>
 
-        <p><strong>Example 1 — Small start, great side income</strong><br>
-        5 clients subscribe monthly + 1 lifetime<br>
-        → Earn £400–£600/month</p>
+<ul>
+    <li>70% of clients choosing a lifetime plan</li>
+    <li>30% choosing a monthly subscription</li>
+    <li>30% commission on your own clients</li>
+    <li>20% commission on clients of partners you recruit</li>
+</ul>
 
-        <p><strong>Example 2 — 10 partners recruited, each helping 4 clients</strong><br>
-        (10 × 4 = 40 clients)<br>
-        → Earn £1,500–£2,500/month</p>
+<p><em>Actual results will vary – this is not a guarantee of income.</em></p>
 
-        <p><strong>Example 3 — A growing team</strong><br>
-        You help 20 partners get started<br>
-        Partners collectively serve 100 families<br>
-        → Earn £5,000–£8,000+/month</p>
+<h5>Layout Idea</h5>
+<p>Each example is a card:</p>
+<ul>
+    <li>Top line: Example name + headline earnings</li>
+    <li>Sub-line: short description (small start / strong start / growing team)</li>
+    <li>Button: “Show me how” (reveals the breakdown underneath)</li>
+</ul>
 
-        <hr>
+<hr>
 
-        <h4>🔥 Want a big win fast?</h4>
+<!-- Example 1 -->
+<h4>Example 1 – Small Start</h4>
 
-        <p>Sell 2 lifetime plans + recruit 2 partners this week:</p>
-        <p>💷 Approx £1,000–£1,500 in upfront income<br>
-        🔥 Plus ongoing subscription revenue long-term</p>
+<p><strong>Example 1 – Small Start, No Recruitment</strong><br>
+Help 3–5 clients get set up with Executor Hub.</p>
 
-        <p>A few messages, a couple of conversations — real earnings.</p>
+<ul>
+    <li><strong>Estimated Month 1 income:</strong> £350–£700</li>
+    <li><strong>Ongoing income:</strong> around £4–£7/month</li>
+</ul>
 
-        <hr>
+<button type="button" class="show-how btn btn-primary">Show me how</button>
 
-        <h4>🚀 Everything You Need to Succeed</h4>
+<div class="hidden-breakdown" style="display:none; margin-top:10px;">
+    <h5>How this is worked out</h5>
+    <ul>
+        <li>3–5 clients choose Executor Hub</li>
+        <li>70% choose a lifetime plan → commission £178.50 each</li>
+        <li>30% choose monthly → commission £3.60/month each</li>
+    </ul>
 
-        <p>We give you:</p>
-        <p>✔ Marketing materials & client leaflets</p>
-        <p>✔ Ready-made scripts, emails & social posts</p>
-        <p>✔ Demo videos & objection handling</p>
-        <p>✔ Partner dashboard to track sales and income</p>
-        <p>✔ Ongoing support and coaching</p>
-        <p>We make success easy.</p>
+    <h6>Lifetime commissions</h6>
+    <p>2–4 lifetime clients → £357 – £714 in one-off income</p>
 
-        <hr>
+    <h6>Monthly commissions</h6>
+    <p>1–2 monthly clients → £3.60 – £7.20/month</p>
 
-        <h4>🎯 Who Makes the Best Partners?</h4>
+    <p>You don’t recruit anyone yet in this example – it’s just you and your clients.</p>
 
-        <p>If you talk to clients about:</p>
-        <ul>
-            <li>Wills, trusts or probate</li>
-            <li>Finances & estate planning</li>
-            <li>Funeral plans or later-life care</li>
-            <li>Insurance & protection</li>
-            <li>Membership benefits</li>
-        </ul>
-
-        <p>…then Executor Hub fits perfectly into what you already do.</p>
-
-        <hr>
-
-        <h4>❤️ Your Clients Will Thank You</h4>
-
-        <p>Executors often spend:</p>
-        <ul>
-            <li>50–80 hours on admin</li>
-            <li>Months chasing information</li>
-            <li>Thousands in preventable delays</li>
-        </ul>
-
-        <p>You become the professional who made the hardest time easier.</p>
-
-        <p>That means more:<br>
-        ✔ 5-star reviews<br>
-        ✔ referrals<br>
-        ✔ lifetime value<br>
-        ✔ trust</p>
-
-        <hr>
-
-        <h4>⭐ Simple. Lucrative. Impactful.</h4>
-
-        <p>You decide:<br>
-        • How much you help<br>
-        • How quickly you grow<br>
-        • How much you earn</p>
-
-        <p>We’ll help you every step of the way.</p>
-
-        <hr>
-
-        <h4>Ready to join the fastest-growing estate support network?</h4>
-
-        <p>📩 <strong>Become a Partner Today</strong><br>
-        — it takes less than 30 seconds.</p>
-
-        <p>Start helping more families.<br>
-        Start building residual income.<br>
-        Start winning more business.</p>
-
-        <p><strong>Executor Hub — empowering executors, and the professionals who support them.</strong></p>
-
-        <hr>
-
-        <h4>Why this is the highest-conversion version</h4>
-
-        <p>✔ Shows exactly how money is made</p>
-        <p>✔ Gives real earning examples and vision</p>
-        <p>✔ Appeals to purpose + profit</p>
-        <p>✔ Simple language and strong CTAs</p>
-        <p>✔ Removes friction and barriers to joining</p>
-        <p>✔ Positions Executor Hub as MUST-HAVE tool</p>
-
-        <!-- NEW CONTENT ENDS HERE -->
-
-    </div>
+    <p><small>These figures are illustrations only. Your income depends on how many clients you speak to and how you promote the service. Earnings are not guaranteed.</small></p>
 </div>
 
+<hr>
 
+<!-- Example 2 -->
+<h4>Example 2 – Strong Start</h4>
 
-                </div> <!-- END SECTION CONTENT (ROW) -->
+<p><strong>Example 2 – Strong Start, 1 Partner Recruited</strong><br>
+Help 10–15 clients yourself and introduce 1 partner who also starts selling.</p>
 
+<ul>
+    <li><strong>Estimated Month 1 income:</strong> £1,600–£2,400</li>
+    <li><strong>Ongoing income:</strong> around £13–£23/month</li>
+</ul>
 
-            </div> <!-- End container -->
+<button type="button" class="show-how btn btn-primary">Show me how</button>
+
+<div class="hidden-breakdown" style="display:none; margin-top:10px;">
+    <h5>Your own clients</h5>
+    <ul>
+        <li>10–15 clients choose Executor Hub</li>
+        <li>70% choose lifetime = 7–11 lifetime plans</li>
+        <li>30% choose monthly = 3–5 monthly plans</li>
+    </ul>
+
+    <h6>Your direct commissions (30%)</h6>
+    <ul>
+        <li>Lifetimes: £1,249.50 – £1,963.50</li>
+        <li>Monthlies: £10.80 – £18.00/month</li>
+    </ul>
+
+    <h5>Your partner’s clients (recruitment income, 20%)</h5>
+    <ul>
+        <li>Partner signs up 5 clients</li>
+        <li>3–4 lifetime plans → £357 – £476</li>
+        <li>1–2 monthly plans → £2.40 – £4.80/month</li>
+    </ul>
+
+    <p><strong>Total Month 1:</strong> about £1,606 – £2,439<br>
+    <strong>Total ongoing monthly:</strong> about £13.20 – £22.80/month</p>
+
+    <p><small>These figures are illustrations only. Your income depends on your activity and your partner’s activity. Earnings are not guaranteed.</small></p>
+</div>
+
+<hr>
+
+<!-- Example 3 -->
+<h4>Example 3 – Growing Team</h4>
+
+<p><strong>Example 3 – Growing Team, 4 Active Partners</strong><br>
+You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
+
+<ul>
+    <li><strong>Estimated Month 1 income:</strong> £3,600–£4,200</li>
+    <li><strong>Ongoing income:</strong> around £29–£36/month</li>
+</ul>
+
+<button type="button" class="show-how btn btn-primary">Show me how</button>
+
+<div class="hidden-breakdown" style="display:none; margin-top:10px;">
+    <h5>Your own clients</h5>
+    <ul>
+        <li>15–20 clients</li>
+        <li>70% lifetime → 11–14 lifetime plans</li>
+        <li>30% monthly → 4–6 monthly plans</li>
+    </ul>
+
+    <h6>Direct commissions (30%)</h6>
+    <ul>
+        <li>Lifetimes: £1,963 – £2,499</li>
+        <li>Monthlies: £14.40 – £21.60/month</li>
+    </ul>
+
+    <h5>Your partner team</h5>
+    <ul>
+        <li>4 partners × 5 clients = 20 clients</li>
+        <li>70% lifetime = 14 lifetime plans</li>
+        <li>30% monthly = 6 monthly plans</li>
+    </ul>
+
+    <h6>Recruitment commissions (20%)</h6>
+    <ul>
+        <li>Lifetimes: 14 × £119 = £1,666</li>
+        <li>Monthlies: 6 × £2.40 = £14.40/month</li>
+    </ul>
+
+    <p><strong>Total Month 1:</strong> about £3,629 – £4,165<br>
+    <strong>Total ongoing monthly:</strong> about £28.80 – £36/month</p>
+
+    <p><small>These figures are illustrations only. Your income depends on client activity and partner performance. Earnings are not guaranteed.</small></p>
+</div>
+
+                            <hr>
+
+                            <h4>🔥 Want a big win fast?</h4>
+
+                            <p>Sell 2 lifetime plans + recruit 2 partners this week:</p>
+                            <p>💷 Approx £1,000–£1,500 in upfront income<br>
+                            🔥 Plus ongoing subscription revenue long-term</p>
+
+                            <p>A few messages, a couple of conversations — real earnings.</p>
+
+                            <hr>
+
+                            <h4>🚀 Everything You Need to Succeed</h4>
+
+                            <p>We give you:</p>
+                            <p>✔ Marketing materials</p>
+                            <p>✔ Ready-made scripts, emails & social posts</p>
+                            <p>✔ Demo videos & objection handling</p>
+                            <p>✔ Partner dashboard to track sales and income</p>
+                            <p>✔ Ongoing support and coaching</p>
+                            <p>We make success easy.</p>
+
+                            <hr>
+
+                            <h4>🎯 Who Makes the Best Partners?</h4>
+
+                            <p>If you talk to clients about:</p>
+                            <ul>
+                                <li>Wills, trusts or probate</li>
+                                <li>Finances & estate planning</li>
+                                <li>Funeral plans or later-life care</li>
+                                <li>Insurance & protection</li>
+                                <li>Membership benefits</li>
+                            </ul>
+
+                            <p>…then Executor Hub fits perfectly into what you already do.</p>
+
+                            <hr>
+
+                            <h4>❤️ Your Clients Will Thank You</h4>
+
+                            <p>Executors often spend:</p>
+                            <ul>
+                                <li>✔ 50–80 hours on admin (Law Society & industry averages)</li>
+                                <li>✔ Months chasing documents and information (HMCTS probate timelines)</li>
+                                <li>✔ Thousands lost due to delays, missing documents or interest charges (STEP & probate provider data)</li>
+                            </ul>
+                            <p>(Sources: Law Society, HMCTS probate statistics, STEP, Co-op Legal Services.)</p>
+
+                            <p>You become the professional who made the hardest time easier.</p>
+
+                            <p>That means more:<br>
+                            ✔ 5-star reviews<br>
+                            ✔ referrals<br>
+                            ✔ lifetime value<br>
+                            ✔ trust</p>
+
+                            <hr>
+
+                            <h4>⭐ Simple. Lucrative. Impactful.</h4>
+
+                            <p>You decide:<br>
+                            • How much you help<br>
+                            • How quickly you grow<br>
+                            • How much you earn</p>
+
+                            <p>We'll help you every step of the way.</p>
+
+                            <hr>
+
+                            <h4>Ready to join the fastest-growing estate support network?</h4>
+
+                            <p>📩 <strong>Become a Partner Today</strong><br>
+                            — it takes less than 30 seconds.</p>
+
+                            <p>Start helping more families.<br>
+                            Start building residual income.<br>
+                            Start winning more business.</p>
+
+                            <p><strong>Executor Hub — empowering executors, and the professionals who support them.</strong></p>
+                        </div>
+                    </div>
+                    <!-- END TEXT BLOCK -->
+                </div>
+                <!-- END SECTION CONTENT (ROW) -->
+            </div>
+            <!-- End container -->
         </section>
 
 
@@ -2807,6 +2971,7 @@
     <script src="{{ asset('assets/frontend/js/custom.js') }}"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+    <!-- Exit Intent Popup Script -->
     <script>
         $(document).ready(function () {
             let exitPopupShown = false;
@@ -2828,7 +2993,7 @@
         });
     </script>
 
-
+    <!-- Theme Switcher Script -->
     <script>
         $(function () {
             $(".switch").click(function () {
@@ -2840,9 +3005,7 @@
                 }
             });
         });
-    </script>
 
-    <script>
         $(document).ready(function () {
             if ($("body").hasClass("theme--dark")) {
                 $(".switch").text("Light Mode");
@@ -2851,9 +3014,11 @@
             }
         });
     </script>
+    <!-- Style Switcher Scripts -->
     <script src="{{ asset('assets/frontend/js/changer.js') }}"></script>
     <script defer src="{{ asset('assets/frontend/js/styleswitch.js') }}"></script>
 
+    <!-- Digital Legacy Selector Script -->
     <script>
         function selectItem(item) {
             let text = "";
@@ -2875,6 +3040,8 @@
             document.getElementById('displayText').innerText = text;
         }
     </script>
+
+    <!-- Cookie Management Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             let cookiePopup = document.getElementById("cookie-popup");
@@ -2914,9 +3081,9 @@
                 cookiePopup.style.display = "none";
             });
         });
-
     </script>
 
+    <!-- Welcome Popup Script -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             if (!localStorage.getItem("welcomePopupShown")) {
@@ -2928,9 +3095,9 @@
             document.getElementById("welcomePopup").style.display = "none";
             localStorage.setItem("welcomePopupShown", "true");
         }
-
     </script>
 
+    <!-- Lifetime Subscription Form Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const hearSelect = document.getElementById('lifetimeHearAboutUs');
@@ -2957,6 +3124,7 @@
         });
     </script>
 
+    <!-- Partner Registration Form Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const hearAboutUsSelect = document.getElementById('hear_about_us');
@@ -3014,6 +3182,7 @@
         });
     </script>
 
+    <!-- Pricing Toggle Script -->
     <script>
         // Handle pricing type toggle (Monthly vs Lifetime)
         document.addEventListener('DOMContentLoaded', function () {
@@ -3086,6 +3255,25 @@
             }
         });
     </script>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("button.show-how").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            const breakdown = btn.nextElementSibling;
+
+            if (breakdown.style.display === "none" || breakdown.style.display === "") {
+                breakdown.style.display = "block";
+                btn.textContent = "Hide details";
+            } else {
+                breakdown.style.display = "none";
+                btn.textContent = "Show me how";
+            }
+        });
+    });
+});
+</script>
+
 </body>
 
 </html>

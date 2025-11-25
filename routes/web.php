@@ -326,6 +326,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('notifications/send', [AdminNotificationController::class, 'send'])->name('notifications.send');
 
     // EMAILS
+    Route::get('emails/index', [AdminEmailController::class, 'index'])->name('emails.index');
     Route::get('emails/create', [AdminEmailController::class, 'create'])->name('emails.create');
     Route::get('emails/email_using_template', [AdminEmailController::class, 'email_using_template'])->name('emails.email_using_template');
     Route::post('emails/send', [AdminEmailController::class, 'send'])->name('emails.send');

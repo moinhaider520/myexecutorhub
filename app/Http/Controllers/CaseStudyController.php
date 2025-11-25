@@ -12,6 +12,10 @@ class CaseStudyController extends Controller
             'preventing-5-year-will-challenge' => 'case-studies.preventing-5-year-will-challenge',
             'saving-executors-30-60-hours' => 'case-studies.saving-executors-30-60-hours',
             '400000-hidden-asset' => 'case-studies.400000-hidden-asset',
+            'preventing-executor-mistakes-automation' => 'case-studies.preventing-executor-mistakes-automation',
+            'cutting-delays-banks-hmrc-dwp' => 'case-studies.cutting-delays-banks-hmrc-dwp',
+            'capacity-recording-golden-rule-compliance' => 'case-studies.capacity-recording-golden-rule-compliance',
+            'hospital-will-complex-family-situation' => 'case-studies.hospital-will-complex-family-situation',
         ];
 
         if (!isset($caseStudies[$slug])) {
@@ -21,6 +25,7 @@ class CaseStudyController extends Controller
         return view($caseStudies[$slug], compact('slug'));
     }
 }
+
 
 
 
