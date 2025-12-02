@@ -253,7 +253,18 @@
 
                         <!-- FORM -->
                         <div class="lifetime-subscription-form bg--white-100 block-shadow r-12 p-40" id="checkoutForm" style="display: none;">
-    <h4 class="s-30 w-700 mb-3">Complete Your Information</h4>
+    <h4 class="s-30 w-700 mb-3">
+        @if(isset($is_upgrade) && $is_upgrade)
+            Upgrade to Lifetime Subscription
+        @else
+            Complete Your Information
+        @endif
+    </h4>
+    @if(isset($is_upgrade) && $is_upgrade)
+        <div class="alert alert-info mb-3">
+            <strong>Upgrading your account:</strong> Your existing information has been pre-filled. You can update your password if you wish, or leave it blank to keep your current password.
+        </div>
+    @endif
     <form method="POST" action="{{ route('stripe.lifetime') }}" class="row g-3 needs-validation" novalidate style="padding:10px;">
         @csrf
         
@@ -265,7 +276,7 @@
         <div class="col-md-6">
             <label for="lifetimeName" class="form-label">Full Name</label>
             <input type="text" class="form-control" id="lifetimeName" name="name"
-                value="{{ old('name') }}" required>
+                value="{{ old('name', isset($user) ? $user->name : '') }}" required>
             @error('name', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
             @enderror
@@ -274,16 +285,26 @@
         <div class="col-md-6">
             <label for="lifetimeEmail" class="form-label">Email</label>
             <input type="email" class="form-control" id="lifetimeEmail" name="email"
-                value="{{ old('email') }}" required>
+                value="{{ old('email', isset($user) ? $user->email : '') }}" 
+                {{ isset($is_upgrade) && $is_upgrade ? 'readonly' : '' }} required>
             @error('email', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
             @enderror
+            @if(isset($is_upgrade) && $is_upgrade)
+                <small class="form-text text-muted">Email cannot be changed during upgrade.</small>
+            @endif
         </div>
 
         <div class="col-md-6">
-            <label for="lifetimePassword" class="form-label">Password</label>
+            <label for="lifetimePassword" class="form-label">
+                Password
+                @if(isset($is_upgrade) && $is_upgrade)
+                    <span class="text-muted">(Optional - leave blank to keep current password)</span>
+                @endif
+            </label>
             <input type="password" class="form-control" id="lifetimePassword" name="password"
-                minlength="8" value="{{ old('password') }}" required>
+                minlength="8" value="{{ old('password') }}" 
+                {{ isset($is_upgrade) && $is_upgrade ? '' : 'required' }}>
             <small class="form-text text-muted">Minimum 8 characters.</small>
             @error('password', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
@@ -305,7 +326,7 @@
         <div class="col-12">
             <label for="lifetimeAddress" class="form-label">Address</label>
             <input type="text" class="form-control" id="lifetimeAddress" name="address"
-                value="{{ old('address') }}" required>
+                value="{{ old('address', isset($user) ? $user->address : '') }}" required>
             @error('address', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
             @enderror
@@ -314,7 +335,7 @@
         <div class="col-md-4">
             <label for="lifetimeCity" class="form-label">City</label>
             <input type="text" class="form-control" id="lifetimeCity" name="city"
-                value="{{ old('city') }}" required>
+                value="{{ old('city', isset($user) ? $user->city : '') }}" required>
             @error('city', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
             @enderror
@@ -323,7 +344,7 @@
         <div class="col-md-4">
             <label for="lifetimePostalCode" class="form-label">Postal Code</label>
             <input type="text" class="form-control" id="lifetimePostalCode" name="postal_code"
-                value="{{ old('postal_code') }}" required>
+                value="{{ old('postal_code', isset($user) ? $user->postal_code : '') }}" required>
             @error('postal_code', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
             @enderror
@@ -332,7 +353,7 @@
         <div class="col-md-4">
             <label for="lifetimeCountry" class="form-label">Country</label>
             <input type="text" class="form-control" id="lifetimeCountry" name="country"
-                value="{{ old('country') }}" required>
+                value="{{ old('country', isset($user) && isset($user->country) ? $user->country : 'United Kingdom') }}" required>
             @error('country', 'lifetime')
                 <div class="text-danger small">{{ $message }}</div>
             @enderror

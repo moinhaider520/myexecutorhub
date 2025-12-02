@@ -2191,23 +2191,57 @@
                             <p>✔ Start earning today</p>
                             <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
 
-                            <p>💰 How You Earn — Three Powerful Income Streams</p>
-                            <p>Every time you refer a customer using your unique link, you earn:</p>
-                            <p>1- Income Stream</p>
-                            <p>2- Your Earnings</p>
-                            <p>3- Monthly subscriptions</p>
-                            <p>4- 30% every month</p>
-                            <p>5- Lifetime plans</p>
-                            <p>6- 30% one-off upfront</p>
-                            <p>7- Team referrals</p>
-                            <p>8- 20% from partners you recruit</p>
+                            <p><strong>How You Earn — Three Powerful Income Streams</strong></p>
 
-                            <p>That means you earn from:</p>
-                            <p>• Your own clients</p>
-                            <p>• People they refer</p>
-                            <p>• Partners you introduce</p>
-                            <p>• Their clients too</p>
-                            <p>Build your network → multiply your income.</p>
+<p>Every time you refer a customer using your unique link, you earn in three ways:</p>
+
+<p><strong>1️⃣ Monthly Subscriptions — 30% Every Month</strong></p>
+
+<p>Customers paying £11.99/month give you 30% recurring income.</p>
+<p>You earn £3.60/month on average per subscriber.</p>
+<p>Build a base over time and your monthly revenue grows automatically.</p>
+<p>⚠️ Figures are averages. Actual earnings may be lower or higher.</p>
+
+<p><strong>2️⃣ Lifetime Plans — 30% Upfront</strong></p>
+
+<p>Most customers choose a lifetime plan.</p>
+<p>Average lifetime fee: £595 (varies by age).</p>
+
+<p>You earn 30% upfront:</p>
+<p>• £295 plan → £88.50</p>
+<p>• £595 plan → £178.50</p>
+<p>• £795 plan → £238.50</p>
+<p>• £895 plan → £268.50</p>
+
+<p>⚠️ Amounts vary depending on the customer’s age and chosen plan.</p>
+
+<p><strong>3️⃣ Team Referrals — 20% from Partners You Recruit</strong></p>
+
+<p>Introduce a partner and you earn 20% of their sales.</p>
+
+<p>You earn from:</p>
+<p>• Your own clients</p>
+<p>• Clients your partners refer</p>
+<p>• Partners you introduce</p>
+<p>• Their clients too</p>
+
+<p>This creates a powerful, growing income stream.</p>
+<p>⚠️ Earnings depend on your partners’ activity.</p>
+
+<p><strong>⭐ Build Your Network → Multiply Your Income</strong></p>
+
+<p>You can earn three ways at the same time:</p>
+<p>✔ Ongoing monthly commissions</p>
+<p>✔ Upfront lifetime plan payouts</p>
+<p>✔ Team income from partners you bring in</p>
+
+<p>Your earning potential grows as your network grows.</p>
+
+<p><strong>⚠️ Required Disclaimer for Accuracy</strong></p>
+
+<p>All examples shown are based on average customer fees and typical partner activity.</p>
+<p>Your actual earnings may be lower or higher depending on customer choices, age bands, and sales volume.</p>
+
 
                             <hr>
 
@@ -2224,14 +2258,6 @@ They’re based on:</p>
 </ul>
 
 <p><em>Actual results will vary – this is not a guarantee of income.</em></p>
-
-<h5>Layout Idea</h5>
-<p>Each example is a card:</p>
-<ul>
-    <li>Top line: Example name + headline earnings</li>
-    <li>Sub-line: short description (small start / strong start / growing team)</li>
-    <li>Button: “Show me how” (reveals the breakdown underneath)</li>
-</ul>
 
 <hr>
 

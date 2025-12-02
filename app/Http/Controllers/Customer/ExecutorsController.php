@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CustomEmail;
 use App\Models\User;
 use App\Models\OnboardingProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Mail;
 
 
 class ExecutorsController extends Controller
@@ -69,6 +71,23 @@ class ExecutorsController extends Controller
             }
 
             DB::commit();
+$authname = Auth::user()->name;
+            $message = "
+            <h2>Hello {$request->name},</h2>
+            <p>You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.</p>
+            <p>Please use the following password and your email to login to the portal.</p>
+            <p>Password:{$request->password}</p>
+            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+            Mail::to($request->email)->send(new CustomEmail(
+                [
+                    'subject' => 'You Have Been Invited to Executor Hub.',
+                    'message' => $message,
+                ],
+                'You Have Been Invited to Executor Hub.'
+            ));
             return response()->json(['success' => true, 'message' => 'Executor added successfully.']);
         } catch (\Exception $e) {
             DB::rollback();

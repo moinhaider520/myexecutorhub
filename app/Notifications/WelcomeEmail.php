@@ -56,7 +56,7 @@ class WelcomeEmail extends Notification
     // Function to notify admin about new customer registration
     protected function notifyAdminForNewCustomer()
     {
-        Mail::raw("A new user has signed up for a free trial of Executor Hub.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
+        Mail::raw("A new user has signed up for {$this->user->subscribed_package} of Executor Hub.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
             $message->to('hello@executorhub.co.uk')
                 ->subject('New User Registered');
         });

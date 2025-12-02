@@ -400,22 +400,22 @@
                         </li>
                     @endif
 
-                    @if (in_array($package, $standardPackages, true))
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                                </svg>
-                                <span>Advisors </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('customer.advisors.view') }}">Manage Advisers</a></li>
-                            </ul>
-                        </li>
-                    @endif
+@if (in_array($package, $standardPackages, true) || Auth::user()->email === 'rshah93@hotmail.com')
+    <li class="sidebar-list">
+        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+            <svg class="stroke-icon">
+                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+            </svg>
+            <svg class="fill-icon">
+                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+            </svg>
+            <span>Advisors </span>
+        </a>
+        <ul class="sidebar-submenu">
+            <li><a href="{{ route('customer.advisors.view') }}">Manage Advisers</a></li>
+        </ul>
+    </li>
+@endif
 
                     <li class="sidebar-main-title">
                         <div>
@@ -513,6 +513,23 @@
                         </li>
                     @endif
 
+                    @if (in_array($package, $premiumPackages, true) || Auth::user()->email === 'rshah93@hotmail.com')
+    <li class="sidebar-list">
+        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+            <svg class="stroke-icon">
+                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+            </svg>
+            <svg class="fill-icon">
+                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-permissions') }}"></use>
+            </svg>
+            <span>Permissions</span>
+        </a>
+        <ul class="sidebar-submenu">
+            <li><a href="{{ route('customer.assign_permissions') }}">Assign Permissions</a></li>
+        </ul>
+    </li>
+@endif
+
 
                     @if (in_array($package, $premiumPackages, true))
                         <li class="sidebar-main-title">
@@ -548,21 +565,7 @@
                             <ul class="sidebar-submenu">
                                 <li><a href="{{ route('customer.funeral_wake.view') }}">Manage</a></li>
                             </ul>
-                        </li>
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-permissions') }}"></use>
-                                </svg>
-                                <span>Permissions</span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('customer.assign_permissions') }}">Assign Permissions</a></li>
-                            </ul>
-                        </li>
+                        </li>                        
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">
@@ -1146,21 +1149,6 @@
                             @endcan
                         </ul>
                     </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
-                            </svg>
-                            <span>Withdraw </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('withdraw.view') }}">Withdrawal</a></li>
-                            <li><a href="{{ route('withdraw.history') }}">Withdrawal History</a></li>
-                        </ul>
-                    </li>
                     @endcan
 
                     @can('view otherss')
@@ -1172,7 +1160,7 @@
                                 <svg class="fill-icon">
                                     <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
                                 </svg>
-                                <span>otherss</span>
+                                <span>Others</span>
                             </a>
                             <ul class="sidebar-submenu">
                                 <li><a href="{{ route('otherss.view') }}">Manage others</a></li>

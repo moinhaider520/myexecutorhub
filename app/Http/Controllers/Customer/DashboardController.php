@@ -136,7 +136,6 @@ class DashboardController extends Controller
             'documentReminders',
             'documentLocations',
             'user'
-
         ));
     }
 

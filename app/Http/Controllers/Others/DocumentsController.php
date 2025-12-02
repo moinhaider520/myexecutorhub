@@ -19,6 +19,7 @@ class DocumentsController extends Controller
         $documentTypes = DocumentTypes::where('created_by', $user->created_by)->get();
         $documents = Document::where('created_by', $user->created_by)->get();
         
+        
         return view('others.documents.documents', compact('documents', 'documentTypes'));
     }
 }

@@ -20,6 +20,7 @@ use App\Notifications\WelcomeEmail;
 use Carbon\Carbon;
 use Stripe\Subscription;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
 
 class StripePaymentController extends Controller
 {
@@ -116,15 +117,29 @@ class StripePaymentController extends Controller
                 'date_of_birth' => 'required|date|before:today',
             ]);
 
-            // Redirect to step 2 with URL parameters (only DOB)
-            return redirect()->route('stripe.lifetime.step2', [
+            // Check if user is authenticated (upgrade scenario)
+            $isUpgrade = Auth::check();
+            $redirectParams = [
                 'date_of_birth' => $validated['date_of_birth'],
-            ]);
+            ];
+            
+            if ($isUpgrade) {
+                $redirectParams['upgrade'] = '1';
+            }
+
+            // Always redirect to step 2 (for both new users and upgrades)
+            return redirect(route('stripe.lifetime.step2') . '?' . http_build_query($redirectParams));
         } catch (ValidationException $e) {
             // On validation failure, redirect back with errors
-            return redirect(route('home') . '#pricing-1')
-                ->withErrors($e->errors(), 'lifetime')
-                ->withInput($request->all());
+            if (Auth::check()) {
+                return redirect()->route('membership.view')
+                    ->withErrors($e->errors(), 'lifetime')
+                    ->withInput($request->all());
+            } else {
+                return redirect(route('home') . '#pricing-1')
+                    ->withErrors($e->errors(), 'lifetime')
+                    ->withInput($request->all());
+            }
         }
     }
 
@@ -135,9 +150,14 @@ class StripePaymentController extends Controller
     {
         // Validate URL parameters - only DOB is required
         $dateOfBirth = $request->query('date_of_birth');
+        $isUpgrade = $request->query('upgrade') === '1' && Auth::check();
 
         if (!$dateOfBirth) {
-            return redirect()->route('home')
+            $redirectRoute = $isUpgrade 
+                ? route('customer.membership.view') 
+                : route('home');
+            
+            return redirect($redirectRoute)
                 ->with('error', 'Please complete step 1 first.')
                 ->withInput();
         }
@@ -217,11 +237,19 @@ class StripePaymentController extends Controller
                     ->withInput();
             }
 
+            // Get user data if this is an upgrade
+            $user = null;
+            if ($isUpgrade) {
+                $user = Auth::user();
+            }
+
             return view('lifetime.step2', [
                 'date_of_birth' => $dateOfBirth,
                 'age' => $age,
                 'age_group' => $ageGroup,
                 'plans' => $plans,
+                'is_upgrade' => $isUpgrade,
+                'user' => $user,
             ]);
         } catch (\Exception $e) {
             \Log::error('Lifetime Step2: Unexpected error', [
@@ -241,11 +269,14 @@ class StripePaymentController extends Controller
     {
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        // Validate all fields including step 1 data from request
-        $validated = $request->validateWithBag('lifetime', [
+        // Check if this is an upgrade (user is authenticated)
+        $isUpgrade = Auth::check();
+        $currentUser = $isUpgrade ? Auth::user() : null;
+
+        // Validation rules - password is optional for upgrades
+        $validationRules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'password' => 'required|string|min:8',
             'address' => 'required|string|max:500',
             'city' => 'required|string|max:255',
             'postal_code' => 'required|string|max:20',
@@ -256,13 +287,32 @@ class StripePaymentController extends Controller
             'coupon_code' => 'nullable|string',
             'hear_about_us' => 'nullable|string|max:255',
             'other_hear_about_us' => 'nullable|string|max:255|required_if:hear_about_us,Other',
-        ]);
+        ];
 
-        $existingUser = User::where('email', $validated['email'])->first();
-        if ($existingUser) {
-            return back()
-                ->withInput()
-                ->withErrors(['email' => 'User with this email already exists.'], 'lifetime');
+        // Password is required for new users, optional for upgrades
+        if (!$isUpgrade) {
+            $validationRules['password'] = 'required|string|min:8';
+        } else {
+            $validationRules['password'] = 'nullable|string|min:8';
+        }
+
+        $validated = $request->validateWithBag('lifetime', $validationRules);
+
+        // For upgrades, ensure email matches authenticated user
+        if ($isUpgrade && $currentUser) {
+            if ($validated['email'] !== $currentUser->email) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['email' => 'Email must match your account email.'], 'lifetime');
+            }
+        } else {
+            // For new users, check if email already exists
+            $existingUser = User::where('email', $validated['email'])->first();
+            if ($existingUser) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['email' => 'User with this email already exists.'], 'lifetime');
+            }
         }
 
         $couponOwner = null;
@@ -327,7 +377,15 @@ class StripePaymentController extends Controller
             'premium' => 'Lifetime Premium',
         };
 
-        $hashedPassword = bcrypt($validated['password']);
+        // For upgrades, use existing password if new password not provided
+        $hashedPassword = null;
+        if ($isUpgrade && $currentUser) {
+            $hashedPassword = !empty($validated['password']) 
+                ? bcrypt($validated['password']) 
+                : $currentUser->password;
+        } else {
+            $hashedPassword = bcrypt($validated['password']);
+        }
 
         $session = Session::create([
             'payment_method_types' => ['card'],
@@ -342,9 +400,10 @@ class StripePaymentController extends Controller
             ],
             'metadata' => [
                 'checkout_type' => 'lifetime',
+                'is_upgrade' => $isUpgrade ? '1' : '0',
+                'user_id' => $isUpgrade && $currentUser ? $currentUser->id : '',
                 'plan_tier' => $validated['plan_tier'],
                 'plan_label' => $planLabel,
-                'age_group' => $ageGroup,
                 'user_name' => $validated['name'],
                 'user_email' => $validated['email'],
                 'user_password' => $hashedPassword,
@@ -387,6 +446,114 @@ class StripePaymentController extends Controller
             return redirect()->route('home')->with('error', 'Invalid session.');
         }
 
+        // Check if this is an upgrade
+        $isUpgrade = ($session->metadata->is_upgrade ?? '0') === '1';
+        $userId = !empty($session->metadata->user_id) ? $session->metadata->user_id : null;
+        
+        if ($isUpgrade && $userId) {
+            // Handle upgrade - update existing user
+            $user = User::find($userId);
+            if (!$user) {
+                return redirect()->route('home')->with('error', 'User not found.');
+            }
+            
+            // Verify email matches
+            if ($user->email !== $session->metadata->user_email) {
+                return redirect()->route('home')->with('error', 'Email mismatch.');
+            }
+            
+            // Update user subscription
+            $planLabel = $session->metadata->plan_label ?? 'Lifetime Plan';
+            $user->update([
+                'subscribed_package' => $planLabel,
+                'trial_ends_at' => now()->addYears(10),
+                'stripe_customer_id' => $session->customer,
+                'stripe_subscription_id' => null, // Lifetime has no subscription
+            ]);
+            
+            // Cancel existing Stripe subscription if any
+            if ($user->stripe_subscription_id) {
+                try {
+                    $subscription = Subscription::retrieve($user->stripe_subscription_id);
+                    $subscription->cancel();
+                } catch (\Exception $e) {
+                    \Log::error('Error canceling subscription during upgrade: ' . $e->getMessage());
+                }
+            }
+            
+            // Update password if provided
+            if (!empty($session->metadata->user_password) && $session->metadata->user_password !== $user->password) {
+                $user->update(['password' => $session->metadata->user_password]);
+            }
+            
+            $planAmount = ($session->amount_total ?? 0) / 100;
+            
+            // Handle coupon/commission logic for upgrades
+            if (!empty($session->metadata->coupon_code)) {
+                $couponOwner = User::where('coupon_code', $session->metadata->coupon_code)->first();
+                
+                if ($couponOwner) {
+                    $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
+                    
+                    if ($relationship) {
+                        $ownerCommission = $planAmount * 0.30;
+                        $parentCommission = $planAmount * 0.20;
+                        $adminCommission = $planAmount * 0.50;
+                        
+                        $couponOwner->increment('commission_amount', $ownerCommission);
+                        $relationship->parent->increment('commission_amount', $parentCommission);
+                        User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                    } else {
+                        $affiliateCount = CouponUsage::where('partner_id', $couponOwner->id)->count();
+                        
+                        $commissionAmount = $affiliateCount <= 50
+                            ? $planAmount * 0.20
+                            : $planAmount * 0.30;
+                        
+                        $couponOwner->increment('commission_amount', $commissionAmount);
+                        $adminCommission = $planAmount - $commissionAmount;
+                        User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                    }
+                    
+                    // Create coupon usage record if it doesn't exist
+                    if (!CouponUsage::where('partner_id', $couponOwner->id)->where('user_id', $user->id)->exists()) {
+                        CouponUsage::create([
+                            'partner_id' => $couponOwner->id,
+                            'user_id' => $user->id,
+                        ]);
+                    }
+                }
+            } elseif ($planAmount > 0) {
+                User::role('admin')->first()?->increment('commission_amount', $planAmount);
+            }
+            
+            // Send upgrade confirmation email
+            $name = $user->name;
+            $email = $user->email;
+            $message = "
+                <h2>Hello $name,</h2>
+                <p>Thank you for upgrading to a Lifetime Subscription!</p>
+                <p>Your account has been successfully upgraded to {$planLabel}.</p>
+                <p>You now have lifetime access to all features with no recurring fees.</p>
+                <p>👉 <a href='https://executorhub.co.uk/customer/dashboard'>Access Your Dashboard</a></p>
+                <p>Need help? Our support team is always here — just reply to this email.</p>
+                <br/><br/>
+                <p>Regards,<br>The Executor Hub Team</p>
+                <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+            ";
+            
+            Mail::to($email)->send(new CustomEmail(
+                [
+                    'subject' => 'Lifetime Subscription Activated - Executor Hub',
+                    'message' => $message,
+                ],
+                'Lifetime Subscription Activated'
+            ));
+            
+            return redirect()->route('customer.dashboard')->with('success', 'Successfully upgraded to Lifetime Subscription!');
+        }
+        
+        // Handle new user registration
         if (User::where('email', $session->metadata->user_email)->exists()) {
             return redirect()->route('login')->with('error', 'An account with this email already exists.');
         }

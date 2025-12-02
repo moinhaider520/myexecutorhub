@@ -32,32 +32,40 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach($documents as $document)
-                            <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $document->document_type }}</td>
-                              <td>{{ $document->description }}</td>
-                              <td>
-                                @php
-                                  $files = json_decode($document->file_path, true);
-                                @endphp
-                                @foreach($files as $file)
-                                  <a href="{{ asset('assets/upload/' . $file) }}" target="_blank">
-                                    View File
-                                  </a><br>
-                                @endforeach
-                              </td>
-                              <td><button type="button" class="btn btn-secondary btn-sm edit-button" id="viewReviewsButton"
-                                  data-toggle="modal" data-target="#ReviewModal" data-id="{{ $document->id }}">View
-                                  Reviews</button></td>
-                              <td>
-                                <button type="button" class="btn btn-primary btn-sm edit-button" id="launchModalButton"
-                                  data-toggle="modal" data-target="#AddReviewModal" data-id="{{ $document->id }}">Add
-                                  Reviews</button>
-                              </td>
-                            </tr>
-                          @endforeach
-                        </tbody>
+  @foreach($documents as $document)
+    <tr>
+      <td>{{ $loop->iteration }}</td>
+      <td>{{ $document->document_type }}</td>
+      <td>{{ $document->description }}</td>
+      <td>
+        @php
+          $files = json_decode($document->file_path, true) ?? [];
+        @endphp
+        @if(count($files) > 0)
+          @foreach($files as $file)
+            <a href="{{ asset('assets/upload/' . $file) }}" target="_blank">
+              View File
+            </a><br>
+          @endforeach
+        @else
+          <span class="text-muted">No files available</span>
+        @endif
+      </td>
+      <td>
+        <button type="button" class="btn btn-secondary btn-sm edit-button" id="viewReviewsButton"
+          data-toggle="modal" data-target="#ReviewModal" data-id="{{ $document->id }}">
+          View Reviews
+        </button>
+      </td>
+      <td>
+        <button type="button" class="btn btn-primary btn-sm edit-button" id="launchModalButton"
+          data-toggle="modal" data-target="#AddReviewModal" data-id="{{ $document->id }}">
+          Add Reviews
+        </button>
+      </td>
+    </tr>
+  @endforeach
+</tbody>
                       </table>
                     </div>
                   </div>

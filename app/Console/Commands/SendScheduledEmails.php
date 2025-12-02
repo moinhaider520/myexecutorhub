@@ -18,7 +18,7 @@ class SendScheduledEmails extends Command
 
     public function handle()
     {
-        $currentTimeLocal = Carbon::now('Asia/Karachi');
+        $currentTimeLocal = Carbon::now('Europe/London');
         $emails = EmailSchedule::where('status', 'pending')
             ->where('scheduled_for', '<=', $currentTimeLocal)
             ->get();
