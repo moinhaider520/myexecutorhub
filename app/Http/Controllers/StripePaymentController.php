@@ -390,6 +390,7 @@ class StripePaymentController extends Controller
         $session = Session::create([
             'payment_method_types' => ['card'],
             'mode' => 'payment',
+            'allow_promotion_codes' => true,
             'customer_email' => $validated['email'],
             'customer_creation' => 'always',
             'line_items' => [

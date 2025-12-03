@@ -42,11 +42,27 @@ class EmailController extends Controller
             $users = User::role(['customer', 'partner'])->get();
         }
 
+        $signature = '
+        <br><br>
+        <p><b>Executor Hub Team</b></p>
+        <p><b>Executor Hub Ltd</b></p>
+        <p><b>Empowering Executors, Ensuring Legacies</b></p>
+        <p><b>Email: hello@executorhub.co.uk</b></p>
+        <p><b>Website: https://executorhub.co.uk</b></p>
+        <p><b>ICO Registration: ZB932381</b></p>
+        <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+        <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+        <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
+        <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email">
+            <img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/>
+        </a>
+    ';
+
         foreach ($users as $user) {
             Mail::to($user->email)->send(new CustomEmail(
                 [
                     'subject' => $request->title,
-                    'message' => $request->message,
+                    'message' => $request->message . $signature,
                 ],
                 $request->title
             ));
@@ -61,61 +77,79 @@ class EmailController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $validationRules = [
-            'recipient_type' => 'required|string',
-            'title' => 'required|string',
-            'message' => 'required|string',
-            'action' => 'required|string',
-        ];
+{
+    $validationRules = [
+        'recipient_type' => 'required|string',
+        'title' => 'required|string',
+        'message' => 'required|string',
+        'action' => 'required|string',
+    ];
 
-        if ($request->action === 'schedule') {
-            $validationRules['scheduled_at'] = 'required|date|after:now';
-        }
-
-        if ($request->recipient_type === 'select_specific_user') {
-            $validationRules['specific_user_id'] = 'required|exists:users,id';
-        }
-
-        $request->validate($validationRules);
-
-        $recipients = $this->getRecipients(
-            $request->recipient_type,
-            $request->specific_user_id
-        );
-
-        if ($recipients->isEmpty()) {
-            return back()->with('error', 'No recipients found for the selected type.');
-        }
-
-        if ($request->action === 'send') {
-            foreach ($recipients as $recipient) {
-                Mail::to($recipient->email)->send(new DynamicEmail(
-                    $request->title,
-                    $request->message,
-                    $recipient->name ?? 'User'
-                ));
-            }
-
-            return back()->with('success', 'Emails sent successfully!');
-        }
-
-        if ($request->action === 'schedule') {
-            $localScheduledTime = Carbon::parse($request->scheduled_at);
-            $scheduledTimeUtc = $localScheduledTime->copy()->setTimezone('UTC');
-            foreach ($recipients as $recipient) {
-                EmailSchedule::create([
-                    'recipient_email' => $recipient->email,
-                    'subject' => $request->title,
-                    'body' => $request->message,
-                    'recipient_type' => $request->recipient_type,
-                    'status' => 'pending',
-                    'scheduled_for' => $scheduledTimeUtc,
-                ]);
-            }
-            return back()->with('success', 'Emails scheduled successfully for ' . $localScheduledTime->format('Y-m-d H:i') . '!');
-        }
+    if ($request->action === 'schedule') {
+        $validationRules['scheduled_at'] = 'required|date|after:now';
     }
+
+    if ($request->recipient_type === 'select_specific_user') {
+        $validationRules['specific_user_id'] = 'required|exists:users,id';
+    }
+
+    $request->validate($validationRules);
+
+    $recipients = $this->getRecipients(
+        $request->recipient_type,
+        $request->specific_user_id
+    );
+
+    if ($recipients->isEmpty()) {
+        return back()->with('error', 'No recipients found for the selected type.');
+    }
+
+    $signature = '
+        <br><br>
+        <p><b>Executor Hub Team</b></p>
+        <p><b>Executor Hub Ltd</b></p>
+        <p><b>Empowering Executors, Ensuring Legacies</b></p>
+        <p><b>Email: hello@executorhub.co.uk</b></p>
+        <p><b>Website: https://executorhub.co.uk</b></p>
+        <p><b>ICO Registration: ZB932381</b></p>
+        <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+        <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+        <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
+        <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email">
+            <img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/>
+        </a>
+    ';
+
+    $messageWithSignature = $request->message . $signature;
+
+    if ($request->action === 'send') {
+        foreach ($recipients as $recipient) {
+            Mail::to($recipient->email)->send(new DynamicEmail(
+                $request->title,
+                $messageWithSignature,
+                $recipient->name ?? 'User'
+            ));
+        }
+
+        return back()->with('success', 'Emails sent successfully!');
+    }
+
+    if ($request->action === 'schedule') {
+        $localScheduledTime = Carbon::parse($request->scheduled_at);
+        $scheduledTimeUtc = $localScheduledTime->copy()->setTimezone('UTC');
+        foreach ($recipients as $recipient) {
+            EmailSchedule::create([
+                'recipient_email' => $recipient->email,
+                'subject' => $request->title,
+                'body' => $messageWithSignature,
+                'recipient_type' => $request->recipient_type,
+                'status' => 'pending',
+                'scheduled_for' => $scheduledTimeUtc,
+            ]);
+        }
+        return back()->with('success', 'Emails scheduled successfully for ' . $localScheduledTime->format('Y-m-d H:i') . '!');
+    }
+}
 
     private function getRecipients($type, $specificUserId = null)
     {

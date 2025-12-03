@@ -114,51 +114,27 @@
 
             "Day 1": {
                 subject: "Partners are already earning — here’s how 💷",
-                body: `Yesterday, a new partner joined Executor Hub.<br>By the afternoon, they had already referred a client and secured 30% commission — all from one conversation.<br><br>Here’s what they did:<br>✅ Logged into their portal.<br>✅ Used the referral one-liner from our template.<br>✅ invited their client to use the service.<br><br>That was it.<br><br>💡 You can do the same in your next meeting today.<br><a href='https://executorhub.co.uk/'>Log in now and refer your first client</a><br><br>Why leave money on the table? Your clients need this, and you’re perfectly placed to help them.<br><br>Cheers,<br>The Executor Hub Team
-                        <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-            <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-            <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-            <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                body: `Yesterday, a new partner joined Executor Hub.<br>By the afternoon, they had already referred a client and secured 30% commission — all from one conversation.<br><br>Here’s what they did:<br>✅ Logged into their portal.<br>✅ Used the referral one-liner from our template.<br>✅ invited their client to use the service.<br><br>That was it.<br><br>💡 You can do the same in your next meeting today.<br><a href='https://executorhub.co.uk/'>Log in now and refer your first client</a><br><br>Why leave money on the table? Your clients need this, and you’re perfectly placed to help them.<br><br>Cheers,<br>The Executor Hub Team`
             },
             "Day 3": {
                 subject: "3 ways to introduce Executor Hub in under 30 seconds ⏱️",
-                body: `Not sure what to say to clients? We’ve got you covered.<br><br>Here are 3 easy lines partners are using right now:<br>1. “One of the most thoughtful things you can leave your family is clarity. I can set you up with Executor Hub today.”<br>2. “Executor Hub helps your executors avoid stress — and it only takes a few minutes to get started.”<br>3. “Think of it as a secure digital vault for your Will, Trusts, LPAs, and more — all in one place.”<br><br>👉 Copy, paste, and drop into your next client call or meeting.<br><a href='https://executorhub.co.uk/'>Refer a client now</a><br><br>Every client you speak to is a chance to add value AND grow your income. Start with one today.<br><br>Best,<br>The Executor Hub Team
-                            <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-            <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-            <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-            <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                body: `Not sure what to say to clients? We’ve got you covered.<br><br>Here are 3 easy lines partners are using right now:<br>1. “One of the most thoughtful things you can leave your family is clarity. I can set you up with Executor Hub today.”<br>2. “Executor Hub helps your executors avoid stress — and it only takes a few minutes to get started.”<br>3. “Think of it as a secure digital vault for your Will, Trusts, LPAs, and more — all in one place.”<br><br>👉 Copy, paste, and drop into your next client call or meeting.<br><a href='https://executorhub.co.uk/'>Refer a client now</a><br><br>Every client you speak to is a chance to add value AND grow your income. Start with one today.<br><br>Best,<br>The Executor Hub Team`
             },
             "Day 5": {
                 subject: "Your Partner Portal builds recurring income for you 📂",
-                body: `Hi Everyone!,<br>You don’t need to learn a new system.<br>Your Partner Portal already has everything:<br>• Simple referral links.<br>• Ready-to-use email scripts.<br>• Step-by-step client guides.<br>• Knowledge base for any questions.<br><br>All you need to do? Log in and refer.<br><a href='https://executorhub.co.uk/'>Explore your Partner Portal now</a><br><br>With every client you add, your monthly commission grows. Aim for just one referral this week and watch how quickly it stacks up.<br><br>Talk soon,<br>The Executor Hub Team
-                            <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-            <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-            <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-            <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                body: `Hi Everyone!,<br>You don’t need to learn a new system.<br>Your Partner Portal already has everything:<br>• Simple referral links.<br>• Ready-to-use email scripts.<br>• Step-by-step client guides.<br>• Knowledge base for any questions.<br><br>All you need to do? Log in and refer.<br><a href='https://executorhub.co.uk/'>Explore your Partner Portal now</a><br><br>With every client you add, your monthly commission grows. Aim for just one referral this week and watch how quickly it stacks up.<br><br>Talk soon,<br>The Executor Hub Team`
             },
             "Day 10": {
                 subject: "Don’t miss your first £90 a month (and growing) 💸",
-                body: `Hi Everyone!,<br>Partners who act in their first week are the ones who build the fastest recurring income.<br><br>Here’s the maths, based on the Standard plan (£11.99/month):<br>• Each client = £3.60 every month for you.<br>• 25 clients = £90/month recurring (£1,080 a year).<br>• 50 clients = £180/month recurring (£2,160 a year).<br><br>And it doesn’t stop there — every time you add a new client, your monthly income grows automatically.<br><a href='https://executorhub.co.uk/'>Submit your first client today</a><br><br>Imagine having a monthly income that builds with every referral. Start now and your commissions will keep stacking month after month.<br><br>Your first £90/month is waiting.<br><br>To your success,<br>The Executor Hub Team
-                            <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-            <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-            <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-            <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                body: `Hi Everyone!,<br>Partners who act in their first week are the ones who build the fastest recurring income.<br><br>Here’s the maths, based on the Standard plan (£11.99/month):<br>• Each client = £3.60 every month for you.<br>• 25 clients = £90/month recurring (£1,080 a year).<br>• 50 clients = £180/month recurring (£2,160 a year).<br><br>And it doesn’t stop there — every time you add a new client, your monthly income grows automatically.<br><a href='https://executorhub.co.uk/'>Submit your first client today</a><br><br>Imagine having a monthly income that builds with every referral. Start now and your commissions will keep stacking month after month.<br><br>Your first £90/month is waiting.<br><br>To your success,<br>The Executor Hub Team`
             },
             "Day 14": {
                 subject: "Turn 25 clients into £1,000+ a year — recurring 📈",
-                body: `Here’s what partners are building right now:<br>• 25 clients referred → £90/month recurring (£1,080/year).<br>• 50 clients referred → £180/month recurring (£2,160/year).<br>• 100 clients referred → £360/month recurring (£4,320/year).<br><br>And remember — this isn’t a one-off.<br>Executor Hub subscriptions renew every month, so your income grows as you keep adding clients.<br><a href='https://executorhub.co.uk/'>Log in and add your next client now</a><br><br>All it takes is making Executor Hub part of your standard client conversation. The partners who hit 25 clients quickly are the ones who unlock consistent recurring income.<br><br>Best regards,<br>The Executor Hub Team
-                        <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-            <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-            <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-            <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                body: `Here’s what partners are building right now:<br>• 25 clients referred → £90/month recurring (£1,080/year).<br>• 50 clients referred → £180/month recurring (£2,160/year).<br>• 100 clients referred → £360/month recurring (£4,320/year).<br><br>And remember — this isn’t a one-off.<br>Executor Hub subscriptions renew every month, so your income grows as you keep adding clients.<br><a href='https://executorhub.co.uk/'>Log in and add your next client now</a><br><br>All it takes is making Executor Hub part of your standard client conversation. The partners who hit 25 clients quickly are the ones who unlock consistent recurring income.<br><br>Best regards,<br>The Executor Hub Team`
             },
             "Day 21": {
                 subject: "Ready to scale your growing monthly income? 🚀",
-                body: `You’ve seen how quick and simple referrals are — and here’s the real power: your income grows every single month as clients stay subscribed.<br><br>💷 Each client = £3.60/month recurring.<br>💷 25 clients = £90/month.<br>💷 50 clients = £180/month.<br>💷 100 clients = £360/month.<br><br>That income repeats every month — and increases every time you add a new client.<br><a href='https://executorhub.co.uk/'>Log in and add your next client now</a><br><br>Now it’s time to scale. Set yourself a simple target (10, 25, 50 clients) and watch your income snowball.<br><br>On your side,<br>The Executor Hub Team
-                        <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-            <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-            <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-            <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                body: `You’ve seen how quick and simple referrals are — and here’s the real power: your income grows every single month as clients stay subscribed.<br><br>💷 Each client = £3.60/month recurring.<br>💷 25 clients = £90/month.<br>💷 50 clients = £180/month.<br>💷 100 clients = £360/month.<br><br>That income repeats every month — and increases every time you add a new client.<br><a href='https://executorhub.co.uk/'>Log in and add your next client now</a><br><br>Now it’s time to scale. Set yourself a simple target (10, 25, 50 clients) and watch your income snowball.<br><br>On your side,<br>The Executor Hub Team`
             }
         };
         const customerTemplates = {
@@ -169,11 +145,7 @@
                               <p>This unlocks their personal step-by-step guide — the heart of Executor Hub.</p>
                               <a href='https://executorhub.co.uk/'>👉 [Nominate your executor now]</a>
                               <p>🔒 Executors will only ever see the guidance you approve — your sensitive data stays private until you allow it to be shared.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 2": {
@@ -182,11 +154,7 @@
                               <p>✅ Add your first bank account in Executor Hub.</p>
                               <a href='https://executorhub.co.uk/'>👉 [Add a bank account now]</a>
                               <p>🔒 Executor Hub uses bank-grade security. Details stored here cannot be used to access or move money — they’re only for your records and to guide your executor when the time comes.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 3": {
@@ -195,11 +163,7 @@
                               <p>✅ Today’s step: Record your first video or message.</p>
                               <a href='https://executorhub.co.uk/'>👉 [Record your first message]</a>
                               <p>🔒 All recordings are encrypted and stored securely, only visible to the loved ones you choose.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 5": {
@@ -208,11 +172,7 @@
                               <p>✅ Today’s step: Add your first note for guardians.</p>
                               <a href='https://executorhub.co.uk/'>👉 [Leave guardian guidance now]</a>
                               <p>🔒 Stored securely and only shared with those you authorise.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 6": {
@@ -222,11 +182,7 @@
                               <p>✅ Check your dashboard and complete one more item today.</p>
                               <a href='https://executorhub.co.uk/'>👉 [See your progress]</a>
                               <p>🔒 All your data is protected with AES-256 bank-grade encryption.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 7": {
@@ -242,11 +198,7 @@
                               <p>- Guardian guidance & wishes</p>
                               <a href='https://executorhub.co.uk/'>👉 [Continue after your trial — get 2 months free on annual plan]</a>
                               <p>🔒 Executors only ever see data you approve — and your financial details can never be used to move money.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 8": {
@@ -255,21 +207,13 @@
                               <p>✅ Today’s step: Review your property entry and add any missing info (title number, mortgage, insurer).</p>
                               <a href='https://executorhub.co.uk/'>👉 [Review property now]</a>
                               <p>🔒 Details are stored securely and cannot be accessed by anyone unless you authorise it.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 9": {
                 subject: "Your annual capacity proof is due — record in 30 seconds",
                 body: `<p>🔒 All recordings are encrypted, time-stamped, and stored securely to protect you against future challenges.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 10": {
@@ -278,11 +222,7 @@
                               <p>In just 4 days, your trial ends. Without a plan, you’ll lose access to it all.</p>
                               <a href='https://executorhub.co.uk/'>👉 [Continue for just £5.99/month]</a>
                               <p>🔒 All the progress you’ve made is stored under bank-grade security. Keep it safe by continuing your plan.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 11": {
@@ -295,11 +235,7 @@
                               <a href='https://executorhub.co.uk/'>👉 [Secure your vault now for £5.99/month]</a>
                               <p>🎁 Add your partner for just £2.99/month.</p>
                               <p>🔒 All data stays encrypted and private — your executor will only ever see what you approve.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 12": {
@@ -315,11 +251,7 @@
                               </ul>
                               <a href='https://executorhub.co.uk/'>👉 [Open your dashboard to complete the final steps]</a>
                               <p>🔒 Everything you add is protected with bank-grade encryption and only visible to people you authorise.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 13": {
@@ -328,11 +260,7 @@
                               <p>Don’t lose access to the vault, guides, and priceless messages you’ve built.</p>
                               <a href='https://executorhub.co.uk/'>👉 [Continue your plan today]</a>
                               <p>🔒 Keep everything you’ve secured safe, encrypted, and available when it matters.</p>
-                              <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>`
+                              <p>— Executor Hub</p>`
             },
 
             "Day 14": {
@@ -345,10 +273,6 @@
                               <p>🔒 Your data will always remain protected with bank-grade security — but only active plans keep your vault available to executors.</p>
                               <p>This is the simplest, most powerful gift you can leave your loved ones.</p>
                               <p>— Executor Hub</p>
-                              <br /><br /><p><b>Executor Hub Team</b></p><p><b>Executor Hub Ltd</b></p><p><b>Empowering Executors, Ensuring Legacies</b></p>
-                <p><b>Email: hello@executorhub.co.uk</b></p><p><b>Website: https://executorhub.co.uk</b></p><p><b>ICO Registration: ZB932381</b></p>    
-                <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p><p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p><p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>    
-                <a href="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/active/?source=email"><img alt="Cyber Essentials logo" src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/email-image/?width=153&height=153" width="153" height="153" oncontextmenu="return false;"/></a>
                 `
             }
         };
