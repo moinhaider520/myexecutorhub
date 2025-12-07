@@ -1,223 +1,119 @@
 @extends('layouts.master')
 
 @section('content')
-  <div class="page-body">
-    <!-- Container-fluid starts-->
+<div class="page-body">
     <div class="container-fluid default-dashboard">
-      <div class="row widget-grid">
-        <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
-          <div class="row">
-            <div class="col-md-12 d-flex justify-content-end p-2">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
-                Add Bank Account
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header">
-                  <h4>Bank Account</h4>
-                  <span>Details of Bank Accounts.</span>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive theme-scrollbar">
-                    <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                      <table class="display dataTable no-footer" id="basic-1" role="grid" aria-describedby="basic-1_info">
-                        <thead>
-                          <tr role="row">
-                            <th>Sr</th>
-                            <th>Bank Name</th>
-                            <th>Account Name</th>
-                            <th>Account Number</th>
-                            <th>Sort Code</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach($bankdetails as $bankAccount)
-                            <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>{{ $bankAccount->bank_name }}</td>
-                              <td>{{ $bankAccount->account_name }}</td>
-                              
-                              <td>{{ $bankAccount->iban }}</td>
-                              <td>{{ $bankAccount->sort_code }}</td>
-                              <td>
-                                <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"
-                                  data-target="#editBankAccountModal" data-id="{{ $bankAccount->id }}"
-                                  data-bank_name="{{ $bankAccount->bank_name }}"
-                                  data-account_name="{{ $bankAccount->account_name }}"
-                                  data-sort_code="{{ $bankAccount->sort_code }}"
-                                  data-iban="{{ $bankAccount->iban }}">Edit</button>
-                                <form action="{{ route('partner.bank_account.destroy', $bankAccount->id) }}" method="POST"
-                                  style="display:inline;">
-                                  @csrf
-                                  @method('DELETE')
-                                  <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                              </td>
-                            </tr>
-                          @endforeach
-                        </tbody>
-                      </table>
+
+        <div class="row widget-grid">
+            <div class="col-xl-12 box-col-12">
+
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4>Stripe Payout Account</h4>
                     </div>
-                  </div>
+
+                    <div class="card-body">
+
+                        @if(!$user->stripe_connect_account_id)
+                            <div class="alert alert-info">
+                                <strong>Setup Required</strong><br>
+                                Connect your Stripe payout account.
+                            </div>
+
+                            <a href="{{ route('partner.bank_details.connect') }}" class="btn btn-primary">
+                                <i class="fa fa-link"></i> Connect Stripe Account
+                            </a>
+                        @endif
+
+                        @if($user->stripe_connect_account_id && !$user->payouts_enabled)
+                            <div class="alert alert-warning">
+                                <strong>You're almost done!</strong><br>
+                                Stripe account created, verification incomplete.
+                            </div>
+
+                            <a href="{{ route('partner.bank_details.connect') }}" class="btn btn-warning">
+                                <i class="fa fa-exclamation-circle"></i> Continue Verification
+                            </a>
+
+                            <table class="table table-bordered mt-4">
+                                <tr>
+                                    <th>Stripe Account ID</th>
+                                    <td>{{ $user->stripe_connect_account_id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Payout Status</th>
+                                    <td><span class="badge badge-warning">Pending Verification</span></td>
+                                </tr>
+                            </table>
+                        @endif
+
+                        @if($user->stripe_connect_account_id && $user->payouts_enabled)
+                            <div class="alert alert-success">
+                                <strong>Payouts Enabled</strong><br>
+                                Commissions will be transferred automatically.
+                            </div>
+
+                            <table class="table table-bordered mt-4">
+                                <tr>
+                                    <th>Stripe Account ID</th>
+                                    <td>{{ $user->stripe_connect_account_id }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Default Bank Last 4</th>
+                                    <td>{{ $user->default_bank_last4 ?? 'N/A' }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <td><span class="badge badge-success">Active</span></td>
+                                </tr>
+                            </table>
+
+                            <a href="{{ route('partner.bank_details.connect') }}" class="btn btn-info mt-3">
+                                <i class="fa fa-edit"></i> Update Bank Details
+                            </a>
+
+                            @if(isset($stripe_banks) && count($stripe_banks) > 0)
+                                <h5 class="mt-4">Connected Bank Accounts</h5>
+
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Bank</th>
+                                            <th>Account Holder</th>
+                                            <th>Last 4</th>
+                                            <th>Currency</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($stripe_banks as $bank)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ strtoupper($bank->bank_name ?? 'N/A') }}</td>
+                                                <td>{{ $bank->account_holder_name ?? 'N/A' }}</td>
+                                                <td>**** {{ $bank->last4 }}</td>
+                                                <td>{{ strtoupper($bank->currency) }}</td>
+                                                <td>
+                                                    @if($bank->default_for_currency)
+                                                        <span class="badge badge-success">Default</span>
+                                                    @else
+                                                        <span class="badge badge-secondary">Available</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @endif
+                        @endif
+
+                    </div>
                 </div>
-              </div>
+
             </div>
-          </div>
         </div>
-      </div>
+
     </div>
-    <!-- Container-fluid Ends-->
-  </div>
-
-  <!-- ADD BANK ACCOUNT -->
-  <div class="modal fade" id="addBankAccountModal" tabindex="-1" role="dialog" aria-labelledby="addBankAccountModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addBankAccountModalLabel">Add Bank Account</h5>
-        </div>
-        <div class="modal-body">
-          <form id="addBankAccountForm">
-            @csrf
-            <div class="form-group mb-2">
-              <label for="bankName">Bank Name</label>
-              <input type="text" class="form-control" name="bank_name" id="bankName" placeholder="Enter Bank name"
-                required>
-              <span class="text-danger" id="bank_name_error"></span>
-            </div>
-            <div class="form-group mb-2">
-              <label for="accountName">Account Name</label>
-              <input type="text" class="form-control" name="account_name" id="accountName" placeholder="Enter Account name"
-                required>
-              <span class="text-danger" id="account_name_error"></span>
-            </div>
-            <div class="form-group mb-2">
-              <label for="Iban">Account Number</label>
-              <input type="text" class="form-control" name="iban" id="Iban" placeholder="Enter Account Number" required>
-              <span class="text-danger" id="iban_error"></span>
-            </div>
-            <div class="form-group mb-2">
-              <label for="sortCode">Sort Code</label>
-              <input type="text" class="form-control" name="sort_code" id="sortCode" placeholder="Enter Sort Code"
-                required>
-              <span class="text-danger" id="sort_code_error"></span>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="saveBankAccount">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EDIT BANK ACCOUNT -->
-  <div class="modal fade" id="editBankAccountModal" tabindex="-1" role="dialog"
-    aria-labelledby="editBankAccountModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="editBankAccountModalLabel">Edit Bank Account</h5>
-        </div>
-        <div class="modal-body">
-          <form id="editBankAccountForm">
-            @csrf
-            @method('POST')
-            <input type="hidden" name="id" id="editBankAccountId">
-            <div class="form-group mb-2">
-              <label for="editBankName">Bank Name</label>
-              <input type="text" class="form-control" name="bank_name" id="editBankName" placeholder="Enter Bank name"
-                required>
-              <span class="text-danger" id="edit_bank_name_error"></span>
-            </div>
-            <div class="form-group mb-2">
-              <label for="editAccountName">Account Name</label>
-              <input type="text" class="form-control" name="account_name" id="editAccountName" placeholder="Enter Account name"
-                required>
-              <span class="text-danger" id="edit_account_name_error"></span>
-            </div>
-            <div class="form-group mb-2">
-              <label for="editIban">Account Number</label>
-              <input type="text" class="form-control" name="iban" id="editIban" placeholder="Enter Account Number" required>
-              <span class="text-danger" id="edit_iban_error"></span>
-            </div>
-            <div class="form-group mb-2">
-              <label for="editSortCode">Sort Code</label>
-              <input type="text" class="form-control" name="sort_code" id="editSortCode" placeholder="Enter Sort Code"
-                required>
-              <span class="text-danger" id="edit_sort_code_error"></span>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="updateBankAccount">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      $('#saveBankAccount').on('click', function () {
-        $.ajax({
-          type: 'POST',
-          url: "{{ route('partner.bank_account.store') }}",
-          data: $('#addBankAccountForm').serialize(),
-          success: function (response) {
-            location.reload();
-          },
-          error: function (response) {
-            var errors = response.responseJSON.errors;
-            if (errors.bank_name) $('#bank_name_error').text(errors.bank_name[0]);
-            if (errors.account_name) $('#account_name_error').text(errors.account_name[0]);
-            if (errors.sort_code) $('#sort_code_error').text(errors.sort_code[0]);
-            if (errors.iban) $('#iban_error').text(errors.iban[0]);
-          }
-        });
-      });
-
-      $('.edit-button').on('click', function () {
-        var id = $(this).data('id');
-        var bank_name = $(this).data('bank_name');
-        var account_name = $(this).data('account_name');
-        var sort_code = $(this).data('sort_code');
-        var iban = $(this).data('iban');
-
-        $('#editBankAccountId').val(id);
-        $('#editBankName').val(bank_name);
-        $('#editAccountName').val(account_name);
-        $('#editSortCode').val(sort_code);
-        $('#editIban').val(iban);
-      });
-
-      $('#updateBankAccount').on('click', function () {
-        var id = $('#editBankAccountId').val();
-        $.ajax({
-          type: 'POST',
-          url: '/partner/bank_account/update/' + id,
-          data: $('#editBankAccountForm').serialize(),
-          success: function (response) {
-            location.reload();
-          },
-          error: function (response) {
-            var errors = response.responseJSON.errors;
-            if (errors.bank_name) $('#edit_bank_name_error').text(errors.bank_name[0]);
-            if (errors.account_name) $('#edit_account_name_error').text(errors.account_name[0]);
-            if (errors.sort_code) $('#edit_sort_code_error').text(errors.sort_code[0]);
-            if (errors.iban) $('#edit_iban_error').text(errors.iban[0]);
-          }
-        });
-      });
-
-    });
-  </script>
+</div>
 @endsection

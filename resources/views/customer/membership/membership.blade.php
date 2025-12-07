@@ -59,7 +59,7 @@
           <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
           @csrf
           <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1R6CY5A22YOnjf5ZrChFVLg2">
+          <input type="hidden" name="plan" value="price_1SbHDHPEGGZ0nEjmonVkxxQL">
           <button id='pay-btn' class="btn btn-success mt-3" type="submit"
           style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
           </form>
@@ -82,7 +82,7 @@
           <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
           @csrf
           <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1R6CZDA22YOnjf5ZUEFGbQOE">
+          <input type="hidden" name="plan" value="price_1SbHWsPEGGZ0nEjmTAg6neQY">
           <button id='pay-btn' class="btn btn-success mt-3" type="submit"
           style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
           </form>
@@ -109,7 +109,7 @@
           <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
           @csrf
           <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1R6CaeA22YOnjf5Z0sW3CZ9F">
+          <input type="hidden" name="plan" value="price_1SbHY6PEGGZ0nEjmJOsA4h41">
           <button id='pay-btn' class="btn btn-success mt-3" type="submit"
           style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
           </form>
@@ -123,7 +123,7 @@
             <div class="col-md-12">
               <h5 class="mb-3">💰 Lifetime Subscription</h5>
               <p class="mb-3">Can work out up to 80% cheaper than paying monthly long-term. Get lifetime access to all features with a one-time payment. No recurring fees, no hassle.</p>
-              
+
               @if ($errors->lifetime->any())
                 <div class="alert alert-danger" role="alert">
                   <ul class="mb-0 ps-3">
@@ -158,7 +158,7 @@
       <div class="row mb-3">
       <div class="col-md-12">
       <p>You are Currently on {{ Auth::user()->subscribed_package }} and it will automatically renew on
-        {{ Auth::user()->trial_ends_at }}. 
+        {{ Auth::user()->trial_ends_at }}.
       </p>
       <p>You can cancel your monthly subscription or switch to a lifetime subscription below.</p>
       <p class="text-muted"><small>Please Note that when you cancel your subscription you can still use Executor Hub until the expiry date of the purchased plan.</small></p>
@@ -179,7 +179,7 @@
           <div class="col-md-12">
             <h5 class="mb-3">💰 Switch to Lifetime Subscription</h5>
             <p class="mb-3">Save money long-term! Switch from monthly payments to a one-time lifetime payment. Can work out up to 80% cheaper than paying monthly long-term.</p>
-            
+
             @if ($errors->lifetime->any())
               <div class="alert alert-danger" role="alert">
                 <ul class="mb-0 ps-3">
@@ -224,12 +224,12 @@
     // Handle lifetime subscription form submission
     document.addEventListener('DOMContentLoaded', function () {
       const lifetimeForms = document.querySelectorAll('#lifetimeStep1Form, #lifetimeStep1FormActive');
-      
+
       lifetimeForms.forEach(function(form) {
         if (form) {
           form.addEventListener('submit', function(e) {
             const submitBtn = form.querySelector('button[type="submit"]');
-            
+
             // Basic validation - if HTML5 validation passes, proceed
             if (form.checkValidity()) {
               // Show loading state

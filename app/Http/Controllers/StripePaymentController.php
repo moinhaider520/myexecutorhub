@@ -122,7 +122,7 @@ class StripePaymentController extends Controller
             $redirectParams = [
                 'date_of_birth' => $validated['date_of_birth'],
             ];
-            
+
             if ($isUpgrade) {
                 $redirectParams['upgrade'] = '1';
             }
@@ -153,10 +153,10 @@ class StripePaymentController extends Controller
         $isUpgrade = $request->query('upgrade') === '1' && Auth::check();
 
         if (!$dateOfBirth) {
-            $redirectRoute = $isUpgrade 
-                ? route('customer.membership.view') 
+            $redirectRoute = $isUpgrade
+                ? route('customer.membership.view')
                 : route('home');
-            
+
             return redirect($redirectRoute)
                 ->with('error', 'Please complete step 1 first.')
                 ->withInput();
@@ -194,7 +194,7 @@ class StripePaymentController extends Controller
             $plans = [];
             foreach (['basic', 'standard', 'premium'] as $planTier) {
                 $priceId = $priceMap[$planTier][$ageGroup] ?? null;
-                
+
                 if (!$priceId) {
                     \Log::error('Lifetime Step2: Unable to determine price ID', [
                         'plan_tier' => $planTier,
@@ -208,7 +208,7 @@ class StripePaymentController extends Controller
                     $price = \Stripe\Price::retrieve($priceId);
                     $amount = $price->unit_amount / 100; // Convert from cents to currency units
                     $currency = strtoupper($price->currency);
-                    
+
                     $planLabel = match ($planTier) {
                         'basic' => 'Lifetime Basic',
                         'standard' => 'Lifetime Standard',
@@ -334,7 +334,7 @@ class StripePaymentController extends Controller
 
         // Use price_id from form if provided, otherwise calculate it
         $priceId = $validated['price_id'] ?? null;
-        
+
         if (!$priceId) {
             // Fallback: Calculate price_id based on DOB and plan_tier
             $age = Carbon::parse($validated['date_of_birth'])->age;
@@ -380,8 +380,8 @@ class StripePaymentController extends Controller
         // For upgrades, use existing password if new password not provided
         $hashedPassword = null;
         if ($isUpgrade && $currentUser) {
-            $hashedPassword = !empty($validated['password']) 
-                ? bcrypt($validated['password']) 
+            $hashedPassword = !empty($validated['password'])
+                ? bcrypt($validated['password'])
                 : $currentUser->password;
         } else {
             $hashedPassword = bcrypt($validated['password']);
@@ -450,19 +450,19 @@ class StripePaymentController extends Controller
         // Check if this is an upgrade
         $isUpgrade = ($session->metadata->is_upgrade ?? '0') === '1';
         $userId = !empty($session->metadata->user_id) ? $session->metadata->user_id : null;
-        
+
         if ($isUpgrade && $userId) {
             // Handle upgrade - update existing user
             $user = User::find($userId);
             if (!$user) {
                 return redirect()->route('home')->with('error', 'User not found.');
             }
-            
+
             // Verify email matches
             if ($user->email !== $session->metadata->user_email) {
                 return redirect()->route('home')->with('error', 'Email mismatch.');
             }
-            
+
             // Update user subscription
             $planLabel = $session->metadata->plan_label ?? 'Lifetime Plan';
             $user->update([
@@ -471,7 +471,7 @@ class StripePaymentController extends Controller
                 'stripe_customer_id' => $session->customer,
                 'stripe_subscription_id' => null, // Lifetime has no subscription
             ]);
-            
+
             // Cancel existing Stripe subscription if any
             if ($user->stripe_subscription_id) {
                 try {
@@ -481,41 +481,41 @@ class StripePaymentController extends Controller
                     \Log::error('Error canceling subscription during upgrade: ' . $e->getMessage());
                 }
             }
-            
+
             // Update password if provided
             if (!empty($session->metadata->user_password) && $session->metadata->user_password !== $user->password) {
                 $user->update(['password' => $session->metadata->user_password]);
             }
-            
+
             $planAmount = ($session->amount_total ?? 0) / 100;
-            
+
             // Handle coupon/commission logic for upgrades
             if (!empty($session->metadata->coupon_code)) {
                 $couponOwner = User::where('coupon_code', $session->metadata->coupon_code)->first();
-                
+
                 if ($couponOwner) {
                     $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
-                    
+
                     if ($relationship) {
                         $ownerCommission = $planAmount * 0.30;
                         $parentCommission = $planAmount * 0.20;
                         $adminCommission = $planAmount * 0.50;
-                        
+
                         $couponOwner->increment('commission_amount', $ownerCommission);
                         $relationship->parent->increment('commission_amount', $parentCommission);
                         User::role('admin')->first()?->increment('commission_amount', $adminCommission);
                     } else {
                         $affiliateCount = CouponUsage::where('partner_id', $couponOwner->id)->count();
-                        
+
                         $commissionAmount = $affiliateCount <= 50
                             ? $planAmount * 0.20
                             : $planAmount * 0.30;
-                        
+
                         $couponOwner->increment('commission_amount', $commissionAmount);
                         $adminCommission = $planAmount - $commissionAmount;
                         User::role('admin')->first()?->increment('commission_amount', $adminCommission);
                     }
-                    
+
                     // Create coupon usage record if it doesn't exist
                     if (!CouponUsage::where('partner_id', $couponOwner->id)->where('user_id', $user->id)->exists()) {
                         CouponUsage::create([
@@ -527,7 +527,7 @@ class StripePaymentController extends Controller
             } elseif ($planAmount > 0) {
                 User::role('admin')->first()?->increment('commission_amount', $planAmount);
             }
-            
+
             // Send upgrade confirmation email
             $name = $user->name;
             $email = $user->email;
@@ -542,7 +542,7 @@ class StripePaymentController extends Controller
                 <p>Regards,<br>The Executor Hub Team</p>
                 <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
             ";
-            
+
             Mail::to($email)->send(new CustomEmail(
                 [
                     'subject' => 'Lifetime Subscription Activated - Executor Hub',
@@ -550,10 +550,10 @@ class StripePaymentController extends Controller
                 ],
                 'Lifetime Subscription Activated'
             ));
-            
+
             return redirect()->route('customer.dashboard')->with('success', 'Successfully upgraded to Lifetime Subscription!');
         }
-        
+
         // Handle new user registration
         if (User::where('email', $session->metadata->user_email)->exists()) {
             return redirect()->route('login')->with('error', 'An account with this email already exists.');
@@ -696,7 +696,7 @@ class StripePaymentController extends Controller
             'coupon_code' => $couponCode,
             'reffered_by' => $session->metadata->reffered_by,
             'hear_about_us' => $session->metadata->hear_about_us,
-            'other_hear_about_us' => $session->metadata->other_hear_about_us,            
+            'other_hear_about_us' => $session->metadata->other_hear_about_us,
         ])->assignRole('customer');
 
         // Get Stripe subscription to extract plan amount
@@ -707,9 +707,9 @@ class StripePaymentController extends Controller
         if ($subscription) {
             $priceId = $subscription->items->data[0]->price->id;
             $plans = [
-                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
-                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
-                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
+                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 5.99,
+                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 11.99,
+                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 19.99,
             ];
             $planAmount = $plans[$priceId] ?? 0;
         }
@@ -768,9 +768,9 @@ class StripePaymentController extends Controller
 
             // Map Stripe Price ID to plan names
             $plans = [
-                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 'Basic',
-                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 'Standard',
-                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 'Premium',
+                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 'Basic',
+                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 'Standard',
+                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 'Premium',
             ];
 
             $planName = $plans[$priceId] ?? 'Unknown';
@@ -789,9 +789,9 @@ class StripePaymentController extends Controller
                     'trial_ends_at' => now()->addMonth(),
                 ]);
 
-$name = $session->metadata->user_name;
-$email = $session->metadata->user_email;
-                        $message = "
+            $name = $session->metadata->user_name;
+            $email = $session->metadata->user_email;
+            $message = "
             <h2>Hello $name,</h2>
             <p>Thank you for joining Executor Hub — we’re thrilled to have you on board!</p>
             <p>Your secure space to organise, protect, and share your important documents begins now.</p>
@@ -814,13 +814,13 @@ $email = $session->metadata->user_email;
     <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
         ";
 
-        Mail::to(email)->send(new CustomEmail(
-            [
-                'subject' => 'Welcome to Executor Hub — let’s tick off your first step today',
-                'message' => $message,
-            ],
-            'You Have Been Invited to Executor Hub.'
-        ));
+            Mail::to($email)->send(new CustomEmail(
+                [
+                    'subject' => 'Welcome to Executor Hub — let’s tick off your first step today',
+                    'message' => $message,
+                ],
+                'You Have Been Invited to Executor Hub.'
+            ));
 
             // Send welcome email
             $user->notify(new WelcomeEmail($user));
@@ -859,6 +859,7 @@ $email = $session->metadata->user_email;
 
     public function resubscribe(Request $request): RedirectResponse
     {
+
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
         $request->validate([
@@ -920,9 +921,9 @@ $email = $session->metadata->user_email;
 
             // Map Stripe Price ID to plan names + amounts
             $plans = [
-                'price_1R6CY5A22YOnjf5ZrChFVLg2' => ['name' => 'Basic', 'amount' => 5.99],
-                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => ['name' => 'Standard', 'amount' => 11.99],
-                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => ['name' => 'Premium', 'amount' => 19.99],
+                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => ['name' => 'Basic', 'amount' => 5.99],
+                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => ['name' => 'Standard', 'amount' => 11.99],
+                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => ['name' => 'Premium', 'amount' => 19.99],
             ];
 
             $planName   = $plans[$priceId]['name']   ?? 'Unknown';

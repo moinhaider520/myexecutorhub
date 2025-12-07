@@ -872,7 +872,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Customer Bank
     Route::get('/bank_accounts/view', [PartnerBankAccountController::class, 'view'])->name('bank_accounts.view');
-    Route::post('/bank_accounts/store', [PartnerBankAccountController::class, 'store'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/store', [PartnerBankAccountController::class, 'connect'])->name('bank_accounts.store');
     Route::post('/bank_accounts/update/{id}', [PartnerBankAccountController::class, 'update'])->name('bank_accounts.update');
     Route::delete('/bank_accounts/destroy/{id}', [PartnerBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
 
@@ -1076,6 +1076,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::post('/bank_account/store', [PartnerBankDetailsController::class, 'store'])->name('bank_account.store');
     Route::post('/bank_account/update/{id}', [PartnerBankDetailsController::class, 'update'])->name('bank_account.update');
     Route::delete('/bank_account/destroy/{id}', [PartnerBankDetailsController::class, 'destroy'])->name('bank_account.destroy');
+    Route::get('bank-details', [PartnerBankDetailsController::class, 'index'])->name('bank_details.index');
+    Route::get('bank-details/connect', [PartnerBankDetailsController::class, 'connect'])->name('bank_details.connect');
+    Route::get('bank-details/refresh', [PartnerBankDetailsController::class, 'refresh'])->name('bank_details.refresh');
+    Route::get('bank-details/success', [PartnerBankDetailsController::class, 'success'])->name('bank_details.success');
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
 });
 
