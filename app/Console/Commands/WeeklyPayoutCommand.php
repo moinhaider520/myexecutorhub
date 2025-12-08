@@ -26,14 +26,20 @@ class WeeklyPayoutCommand extends Command
 
             $amount = intval($partner->commission_amount * 100);
 
-            if ($amount < 50) continue;
+            if ($amount < 1000) continue;
 
             try {
-                Transfer::create([
+                $transfer = Transfer::create([
                     'amount'      => $amount,
                     'currency'    => 'gbp',
                     'destination' => $partner->stripe_connect_account_id,
-                    'description' => "Commission payout to {$partner->name}",
+                ]);
+
+                $partner->payouts()->create([
+                    'amount' => $amount / 100,
+                    'stripe_transfer_id' => $transfer->id,
+                    'type' => 'weekly',
+                    'status' => 'sent'
                 ]);
 
                 $partner->update([
@@ -41,7 +47,6 @@ class WeeklyPayoutCommand extends Command
                 ]);
 
                 Log::info("Transfer sent to partner {$partner->id} for £" . ($amount / 100));
-
             } catch (\Exception $e) {
                 Log::error("Payout failed for partner {$partner->id}: " . $e->getMessage());
             }

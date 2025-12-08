@@ -20,14 +20,32 @@ class BankDetailsController extends Controller
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $accounts = \Stripe\Account::allExternalAccounts(
-            $user->stripe_connect_account_id,
-            ['object' => 'bank_account']
-        );
+        $accounts = [];
+
+        // If user has NO Stripe Connect Account, return page with empty bank list
+        if (!$user->stripe_connect_account_id) {
+            return view('partner.bank_details.index', [
+                'stripe_banks' => [],
+                'user' => $user,
+            ]);
+        }
+
+        // If user HAS a Stripe Connect Account → Fetch external bank accounts
+        try {
+            $result = \Stripe\Account::allExternalAccounts(
+                $user->stripe_connect_account_id,
+                ['object' => 'bank_account']
+            );
+
+            $accounts = $result->data ?? [];
+        } catch (\Exception $e) {
+
+            $accounts = [];
+        }
 
         return view('partner.bank_details.index', [
-            'stripe_banks' => $accounts->data,
-            'user'=>$user,
+            'stripe_banks' => $accounts,
+            'user' => $user,
         ]);
     }
 

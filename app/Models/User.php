@@ -101,6 +101,14 @@ class User extends Authenticatable
         );
     }
 
+    public function payouts()
+    {
+        return $this->hasMany(Payout::class, 'user_id');
+    }
 
 
+    public function weeklySummaries()
+    {
+        return $this->hasMany(PartnerWeeklySummary::class, 'created_by');
+    }
 }

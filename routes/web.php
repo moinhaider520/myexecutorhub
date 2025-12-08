@@ -183,6 +183,7 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\PartnerRegistationController;
 use App\Http\Controllers\KnowledgebaseController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\Partner\SummaryController;
 use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
@@ -872,7 +873,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     // Customer Bank
     Route::get('/bank_accounts/view', [PartnerBankAccountController::class, 'view'])->name('bank_accounts.view');
-    Route::post('/bank_accounts/store', [PartnerBankAccountController::class, 'connect'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/store', [PartnerBankAccountController::class, 'store'])->name('bank_accounts.store');
     Route::post('/bank_accounts/update/{id}', [PartnerBankAccountController::class, 'update'])->name('bank_accounts.update');
     Route::delete('/bank_accounts/destroy/{id}', [PartnerBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
 
@@ -1081,6 +1082,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('bank-details/refresh', [PartnerBankDetailsController::class, 'refresh'])->name('bank_details.refresh');
     Route::get('bank-details/success', [PartnerBankDetailsController::class, 'success'])->name('bank_details.success');
     Route::get('/messages/view', [MessagesController::class, 'index'])->name('messages.view');
+
+
+    Route::get('/payout-summaries', [SummaryController::class, 'index'])->name('summary.index');
+    Route::get('/summary/{id}/download', [SummaryController::class, 'download'])->name('summary.download');
 });
 
 // Executors  Routes

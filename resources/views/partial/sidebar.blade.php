@@ -306,11 +306,10 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
                             </svg>
-                            <span>Withdraw </span>
+                            <span>Payout Summary </span>
                         </a>
                         <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.withdraw.view') }}">Withdrawal</a></li>
-                            <li><a href="{{ route('partner.withdraw.history') }}">Withdrawal History</a></li>
+                            <li><a href="{{ route('partner.summary.index') }}">Summary</a></li>
                         </ul>
                     </li>
                     @endrole
@@ -565,7 +564,7 @@
                             <ul class="sidebar-submenu">
                                 <li><a href="{{ route('customer.funeral_wake.view') }}">Manage</a></li>
                             </ul>
-                        </li>                        
+                        </li>
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                                 <svg class="stroke-icon">

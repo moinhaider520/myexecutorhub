@@ -14,6 +14,7 @@
 
                     <div class="card-body">
 
+
                         @if(!$user->stripe_connect_account_id)
                             <div class="alert alert-info">
                                 <strong>Setup Required</strong><br>
