@@ -175,38 +175,38 @@ class StripePaymentController extends Controller
 
             $priceMap = [
                 // LIVE PRICE ID's
-                // 'basic' => [
-                //     'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
-                //     '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
-                //     '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
-                // ],
-                // 'standard' => [
-                //     'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
-                //     '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
-                //     '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
-                // ],
-                // 'premium' => [
-                //     'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
-                //     '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
-                //     '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
-                // ],
-
-                // TEST PRICE ID's
                 'basic' => [
-                    'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
-                    '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
-                    '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
+                    'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
+                    '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
+                    '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
                 ],
                 'standard' => [
-                    'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
-                    '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
-                    '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
+                    'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
+                    '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
+                    '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
                 ],
                 'premium' => [
-                    'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
-                    '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
-                    '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
+                    'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
+                    '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
+                    '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
                 ],
+
+                // TEST PRICE ID's
+                // 'basic' => [
+                //     'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
+                //     '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
+                //     '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
+                // ],
+                // 'standard' => [
+                //     'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
+                //     '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
+                //     '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
+                // ],
+                // 'premium' => [
+                //     'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
+                //     '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
+                //     '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
+                // ],
             ];
 
             // Retrieve prices for all three plans
@@ -648,6 +648,13 @@ class StripePaymentController extends Controller
         $couponCode = $baseCoupon . Str::upper(Str::random(6));
         $planLabel = $session->metadata->plan_label ?? 'Lifetime Plan';
 
+        // Check eligibility for upgrade before mapping to userData
+        $upgradeEndDate = \Carbon\Carbon::create(2026, 12, 25, 23, 59, 59);
+
+        if ($planLabel === 'Lifetime Standard' && now()->lessThanOrEqualTo($upgradeEndDate)) {
+            $planLabel = 'Lifetime Premium';
+        }
+
         $userData = [
             'name' => $session->metadata->user_name,
             'email' => $session->metadata->user_email,
@@ -664,6 +671,7 @@ class StripePaymentController extends Controller
             'stripe_customer_id' => $session->customer,
             'stripe_subscription_id' => null,
         ];
+
 
         if (!empty($session->metadata->user_country) && Schema::hasColumn('users', 'country')) {
             $userData['country'] = $session->metadata->user_country;
@@ -924,7 +932,7 @@ class StripePaymentController extends Controller
             ));
         }
 
-        // $user->notify(new WelcomeEmail($user));
+        $user->notify(new WelcomeEmail($user));
 
         return redirect()->route('login')->with('success', 'Subscription created successfully! Please log in to continue.');
     }
@@ -1002,7 +1010,7 @@ class StripePaymentController extends Controller
         $session = Session::create([
             'payment_method_types' => ['card'],
             'mode' => 'payment',
-            'allow_promotion_codes' => true, // No additional coupons for couple partners
+            'allow_promotion_codes' => false, // No additional coupons for couple partners
             'customer_email' => $registration['partner_email'],
             'customer_creation' => 'always',
             'line_items' => [
@@ -1075,7 +1083,13 @@ class StripePaymentController extends Controller
 
         $planLabel = $session->metadata->plan_label ?? 'Lifetime Plan';
 
-        // Create partner user (same structure as regular user)
+        // Upgrade rule: Until 25 Dec 2026, rename Lifetime Standard → Lifetime Premium
+        $upgradeEndDate = \Carbon\Carbon::create(2026, 12, 25, 23, 59, 59);
+
+        if ($planLabel === 'Lifetime Standard' && now()->lessThanOrEqualTo($upgradeEndDate)) {
+            $planLabel = 'Lifetime Premium';
+        }
+
         $userData = [
             'name' => $session->metadata->user_name,
             'email' => $session->metadata->user_email,
@@ -1092,6 +1106,7 @@ class StripePaymentController extends Controller
             'stripe_customer_id' => $session->customer,
             'stripe_subscription_id' => null,
         ];
+
 
         if (!empty($session->metadata->user_country) && Schema::hasColumn('users', 'country')) {
             $userData['country'] = $session->metadata->user_country;
@@ -1178,7 +1193,7 @@ class StripePaymentController extends Controller
             "Welcome to Executor Hub"
         ));
 
-        // $partnerUser->notify(new WelcomeEmail($partnerUser));
+        $partnerUser->notify(new WelcomeEmail($partnerUser));
 
         // Notify primary user that their partner has registered
         $primaryUserMessage = "
