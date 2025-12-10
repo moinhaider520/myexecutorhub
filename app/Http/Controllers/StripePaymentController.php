@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\CustomEmail;
+use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Stripe;
@@ -173,20 +174,38 @@ class StripePaymentController extends Controller
             };
 
             $priceMap = [
+                // LIVE PRICE ID's
+                // 'basic' => [
+                //     'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
+                //     '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
+                //     '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                // ],
+                // 'standard' => [
+                //     'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
+                //     '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
+                //     '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                // ],
+                // 'premium' => [
+                //     'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
+                //     '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
+                //     '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                // ],
+
+                // TEST PRICE ID's
                 'basic' => [
-                    'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
-                    '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
-                    '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                    'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
+                    '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
+                    '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
                 ],
                 'standard' => [
-                    'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
-                    '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
-                    '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                    'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
+                    '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
+                    '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
                 ],
                 'premium' => [
-                    'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
-                    '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
-                    '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                    'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
+                    '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
+                    '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
                 ],
             ];
 
@@ -289,6 +308,10 @@ class StripePaymentController extends Controller
             'other_hear_about_us' => 'nullable|string|max:255|required_if:hear_about_us,Other',
         ];
 
+        $add_couple_partner = $request->addCouplePartner;
+        $couple_partner_name = $request->partner_name;
+        $couple_partner_email = $request->partner_email;
+
         // Password is required for new users, optional for upgrades
         if (!$isUpgrade) {
             $validationRules['password'] = 'required|string|min:8';
@@ -345,21 +368,57 @@ class StripePaymentController extends Controller
             };
 
             $priceMap = [
+                // LIVE PRICE ID's
                 'basic' => [
                     'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
                     '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
                     '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                    'discounted_under_50' => 'price_1Scsk7A22YOnjf5ZI24Oztp7',
+                    'discounted_50_65' => 'price_1ScskdA22YOnjf5ZvMHp2ZAu',
+                    'discounted_65_plus' => 'price_1ScslFA22YOnjf5ZdnbIJrCY',
                 ],
                 'standard' => [
                     'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
                     '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
                     '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                    'discounted_under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    'discounted_50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
+                    'discounted_65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
                 ],
                 'premium' => [
                     'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
                     '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
                     '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                    'discounted_under_50' => 'price_1ScsnFA22YOnjf5ZuAulfykt',
+                    'discounted_50_65' => 'price_1ScsndA22YOnjf5Z54CQ3DF9',
+                    'discounted_65_plus' => 'price_1Scso1A22YOnjf5ZNszrbiNK',
                 ],
+
+                // TEST PRICE ID's
+                // 'basic' => [
+                //     'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
+                //     '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
+                //     '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
+                //     'discounted_under_50' => 'price_1ScmWDPEGGZ0nEjmXkfgron4',
+                //     'discounted_50_65' => 'price_1ScmWDPEGGZ0nEjm8JKYQsM6',
+                //     'discounted_65_plus' => 'price_1ScmWDPEGGZ0nEjmaKJ2Buqb',
+                // ],
+                // 'standard' => [
+                //     'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
+                //     '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
+                //     '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
+                //     'discounted_under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
+                //     'discounted_50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
+                //     'discounted_65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
+                // ],
+                // 'premium' => [
+                //     'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
+                //     '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
+                //     '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
+                //     'discounted_under_50' => 'price_1ScoB1PEGGZ0nEjmGIKdEN2Z',
+                //     'discounted_50_65' => 'price_1ScoBJPEGGZ0nEjmiCsGtBAN',
+                //     'discounted_65_plus' => 'price_1ScoBZPEGGZ0nEjmxPEf9JB7',
+                // ],
             ];
 
             $priceId = $priceMap[$validated['plan_tier']][$ageGroup] ?? null;
@@ -385,6 +444,23 @@ class StripePaymentController extends Controller
                 : $currentUser->password;
         } else {
             $hashedPassword = bcrypt($validated['password']);
+        }
+
+        // Validate partner email is different from user email
+        if ($add_couple_partner === 'Yes' && $couple_partner_email === $validated['email']) {
+            return back()
+                ->withInput()
+                ->withErrors(['partner_email' => 'Partner email must be different from your email.'], 'lifetime');
+        }
+
+        // Check if partner email already exists
+        if ($add_couple_partner === 'Yes') {
+            $existingPartner = User::where('email', $couple_partner_email)->first();
+            if ($existingPartner) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['partner_email' => 'A user with this email already exists.'], 'lifetime');
+            }
         }
 
         $session = Session::create([
@@ -415,6 +491,9 @@ class StripePaymentController extends Controller
                 'coupon_code' => $validated['coupon_code'] ?? '',
                 'hear_about_us' => $validated['hear_about_us'] ?? '',
                 'other_hear_about_us' => $validated['other_hear_about_us'] ?? '',
+                'add_partner' => $add_couple_partner ?? 'No',
+                'partner_name' => $couple_partner_name ?? '',
+                'partner_email' => $couple_partner_email ?? '',
             ],
             'success_url' => route('stripe.lifetime.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('home') . '#pricing-1',
@@ -551,6 +630,8 @@ class StripePaymentController extends Controller
                 'Lifetime Subscription Activated'
             ));
 
+
+
             return redirect()->route('customer.dashboard')->with('success', 'Successfully upgraded to Lifetime Subscription!');
         }
 
@@ -660,9 +741,465 @@ class StripePaymentController extends Controller
             'You Have Been Invited to Executor Hub.'
         ));
 
-        $user->notify(new WelcomeEmail($user));
+
+        if ($session->metadata->add_partner === 'Yes' && !empty($session->metadata->partner_email)) {
+            // Generate a secure token for partner registration
+            $partnerToken = Str::random(64);
+
+            // Get the discounted price ID based on main user's plan and age
+            $mainUserPlanTier = $session->metadata->plan_tier;
+
+            // Calculate age from main user's data or use partner's if available
+            $mainUserAge = 30; // default
+            if (!empty($session->metadata->date_of_birth)) {
+                $mainUserAge = Carbon::parse($session->metadata->date_of_birth)->age;
+            }
+
+            $ageGroup = match (true) {
+                $mainUserAge < 50 => 'under_50',
+                $mainUserAge <= 65 => '50_65',
+                default => '65_plus',
+            };
+
+            // Only basic plan has discounted prices
+            $discountedPriceId = null;
+
+            $priceMap = [
+                // LIVE PRICE ID's
+                'basic' => [
+                    'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
+                    '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
+                    '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                    'discounted_under_50' => 'price_1Scsk7A22YOnjf5ZI24Oztp7',
+                    'discounted_50_65' => 'price_1ScskdA22YOnjf5ZvMHp2ZAu',
+                    'discounted_65_plus' => 'price_1ScslFA22YOnjf5ZdnbIJrCY',
+                ],
+                'standard' => [
+                    'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
+                    '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
+                    '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                    'discounted_under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    'discounted_50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
+                    'discounted_65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
+                ],
+                'premium' => [
+                    'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
+                    '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
+                    '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                    'discounted_under_50' => 'price_1ScsnFA22YOnjf5ZuAulfykt',
+                    'discounted_50_65' => 'price_1ScsndA22YOnjf5Z54CQ3DF9',
+                    'discounted_65_plus' => 'price_1Scso1A22YOnjf5ZNszrbiNK',
+                ],
+
+                // TEST PRICE ID's
+                // 'basic' => [
+                //     'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
+                //     '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
+                //     '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
+                //     'discounted_under_50' => 'price_1ScmWDPEGGZ0nEjmXkfgron4',
+                //     'discounted_50_65' => 'price_1ScmWDPEGGZ0nEjm8JKYQsM6',
+                //     'discounted_65_plus' => 'price_1ScmWDPEGGZ0nEjmaKJ2Buqb',
+                // ],
+                // 'standard' => [
+                //     'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
+                //     '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
+                //     '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
+                //     'discounted_under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
+                //     'discounted_50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
+                //     'discounted_65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
+                // ],
+                // 'premium' => [
+                //     'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
+                //     '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
+                //     '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
+                //     'discounted_under_50' => 'price_1ScoB1PEGGZ0nEjmGIKdEN2Z',
+                //     'discounted_50_65' => 'price_1ScoBJPEGGZ0nEjmiCsGtBAN',
+                //     'discounted_65_plus' => 'price_1ScoBZPEGGZ0nEjmxPEf9JB7',
+                // ],
+            ];
+            if ($mainUserPlanTier === 'basic') {
+
+                // LIVE PRICE ID
+                $discountedPriceMap = [
+                    'under_50' => 'price_1Scsk7A22YOnjf5ZI24Oztp7',
+                    '50_65' => 'price_1ScskdA22YOnjf5ZvMHp2ZAu',
+                    '65_plus' => 'price_1ScslFA22YOnjf5ZdnbIJrCY',
+                ];
+
+                // TEST PRICE ID
+                // $discountedPriceMap = [
+                //     'under_50' => 'price_1ScmWDPEGGZ0nEjmXkfgron4',
+                //     '50_65' => 'price_1ScmWDPEGGZ0nEjm8JKYQsM6',
+                //     '65_plus' => 'price_1ScmWDPEGGZ0nEjmaKJ2Buqb',
+                // ];
+                $discountedPriceId = $discountedPriceMap[$ageGroup] ?? null;
+            } else if ($mainUserPlanTier === 'standard') {
+                // LIVE PRICE ID
+                $discountedPriceMap = [
+                    'under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    '50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
+                    '65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
+                ];
+
+                // TEST PRICE ID
+                // $discountedPriceMap = [
+                //     'under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
+                //     '50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
+                //     '65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
+                // ];
+                $discountedPriceId = $discountedPriceMap[$ageGroup] ?? null;
+            } else {
+                // LIVE PRICE ID
+                $discountedPriceMap = [
+                    'under_50' => 'price_1ScsnFA22YOnjf5ZuAulfykt',
+                    '50_65' => 'price_1ScsndA22YOnjf5Z54CQ3DF9',
+                    '65_plus' => 'price_1Scso1A22YOnjf5ZNszrbiNK',
+                ];
+
+                // TEST PRICE ID
+                // $discountedPriceMap = [
+                //     'under_50' => 'price_1ScoB1PEGGZ0nEjmGIKdEN2Z',
+                //     '50_65' => 'price_1ScoBJPEGGZ0nEjmiCsGtBAN',
+                //     '65_plus' => 'price_1ScoBZPEGGZ0nEjmxPEf9JB7',
+                // ];
+                $discountedPriceId = $discountedPriceMap[$ageGroup] ?? null;
+            }
+
+            // Store partner registration data in cache (expires in 7 days)
+            Cache::put(
+                'couple_partner_' . $partnerToken,
+                [
+                    'primary_user_id' => $user->id,
+                    'partner_name' => $session->metadata->partner_name,
+                    'partner_email' => $session->metadata->partner_email,
+                    'plan_tier' => $mainUserPlanTier,
+                    'discounted_price_id' => $discountedPriceId,
+                    'primary_user_name' => $user->name,
+                    'partner_coupon_code' => $session->metadata->coupon_code,
+                ],
+                now()->addDays(7)
+            );
+
+            // Generate registration URL
+            $registrationUrl = route('couple.partner.register', ['token' => $partnerToken]);
+
+            // Send email to partner
+            $partnerName = $session->metadata->partner_name;
+            $partnerEmail = $session->metadata->partner_email;
+            $userName = $session->metadata->user_name;
+
+            $partnerMessage = "
+        <h2>Hello $partnerName,</h2>
+        <p><strong>$userName</strong> has invited you to join Executor Hub as their couple partner!</p>
+        <p>As a couple partner, you'll get access to Executor Hub at a special discounted rate.</p>
+        <p><strong>Your Benefits:</strong></p>
+        <ul>
+            <li>Discounted lifetime access to Executor Hub</li>
+            <li>All premium features included</li>
+            <li>Secure document management and planning tools</li>
+        </ul>
+        <p>👉 Click below to complete your registration (this link expires in 7 days):</p>
+        <p><a href='$registrationUrl' style='background-color: #4CAF50; color: white; padding: 14px 20px; text-decoration: none; display: inline-block; border-radius: 4px;'>Complete Your Registration</a></p>
+        <p>Or copy this link: $registrationUrl</p>
+        <p>Need help? Our support team is always here — just reply to this email.</p>
+        <br/><br/>
+        <p>Regards,<br>The Executor Hub Team</p>
+        <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+        
+        <br /><br />
+        <p><b>Executor Hub Team</b></p>
+        <p><b>Executor Hub Ltd</b></p>
+        <p><b>Empowering Executors, Ensuring Legacies</b></p>
+        <p><b>Email: hello@executorhub.co.uk</b></p>
+        <p><b>Website: https://executorhub.co.uk</b></p>
+        <p><b>ICO Registration: ZB932381</b></p>
+    ";
+
+            Mail::to($partnerEmail)->send(new CustomEmail(
+                [
+                    'subject' => "You've Been Invited to Join Executor Hub as a Couple Partner",
+                    'message' => $partnerMessage,
+                ],
+                'Couple Partner Invitation - Executor Hub'
+            ));
+        }
+
+        // $user->notify(new WelcomeEmail($user));
 
         return redirect()->route('login')->with('success', 'Subscription created successfully! Please log in to continue.');
+    }
+
+
+    public function showCouplePartnerRegistration(Request $request, string $token)
+    {
+        // Get registration data from cache
+        $registration = Cache::get('couple_partner_' . $token);
+
+        if (!$registration) {
+            return redirect()->route('home')->with('error', 'Invalid or expired registration link.');
+        }
+
+        // Check if partner email already exists
+        if (User::where('email', $registration['partner_email'])->exists()) {
+            return redirect()->route('login')->with('error', 'An account with this email already exists.');
+        }
+
+        // Get primary user details
+        $primaryUser = User::find($registration['primary_user_id']);
+
+        if (!$primaryUser) {
+            return redirect()->route('home')->with('error', 'Primary user not found.');
+        }
+
+        return view('lifetime.couple-partner-register', [
+            'token' => $token,
+            'registration' => $registration,
+            'primaryUser' => $primaryUser,
+        ]);
+    }
+
+    public function couplePartnerCheckout(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+
+        $validated = $request->validate([
+            'token' => 'required|string',
+            'password' => 'nullable|string|min:8|confirmed',
+            'address' => 'nullable|string|max:500',
+            'city' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:20',
+            'country' => 'nullable|string|max:255',
+            'date_of_birth' => 'required|date|before:today',
+            'hear_about_us' => 'nullable|string|max:255',
+        ]);
+
+
+        // Get registration data from cache
+        $registration = Cache::get('couple_partner_' . $validated['token']);
+
+        if (!$registration) {
+            return back()->withErrors(['error' => 'Invalid or expired registration link.']);
+        }
+
+        // Check if partner email already exists
+        if (User::where('email', $registration['partner_email'])->exists()) {
+            return redirect()->route('login')->with('error', 'An account with this email already exists.');
+        }
+
+        $priceId = $registration['discounted_price_id'];
+
+        if (!$priceId) {
+            return back()->withErrors(['error' => 'Discounted pricing not available for this plan tier.']);
+        }
+
+        $planLabel = match ($registration['plan_tier']) {
+            'basic' => 'Lifetime Basic',
+            'standard' => 'Lifetime Standard',
+            'premium' => 'Lifetime Premium',
+        };
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'mode' => 'payment',
+            'allow_promotion_codes' => true, // No additional coupons for couple partners
+            'customer_email' => $registration['partner_email'],
+            'customer_creation' => 'always',
+            'line_items' => [
+                [
+                    'price' => $priceId,
+                    'quantity' => 1,
+                ],
+            ],
+            'metadata' => [
+                'checkout_type' => 'couple_partner',
+                'registration_token' => $validated['token'],
+                'primary_user_id' => $registration['primary_user_id'],
+                'plan_tier' => $registration['plan_tier'],
+                'partner_coupon_code' => $registration['partner_coupon_code'],
+                'plan_label' => $planLabel,
+                'user_name' => $registration['partner_name'],
+                'user_email' => $registration['partner_email'],
+                'user_password' => bcrypt($validated['password']),
+                'user_address' => $validated['address'],
+                'user_city' => $validated['city'],
+                'user_postal_code' => $validated['postal_code'],
+                'user_country' => $validated['country'],
+                'date_of_birth' => $validated['date_of_birth'],
+                'hear_about_us' => $validated['hear_about_us'] ?? '',
+                'other_hear_about_us' => $validated['other_hear_about_us'] ?? '',
+            ],
+            'success_url' => route('couple.partner.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('couple.partner.register', ['token' => $validated['token']]),
+        ]);
+
+        return redirect()->away($session->url);
+    }
+
+    public function couplePartnerSuccess(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $sessionId = $request->query('session_id');
+
+        if (!$sessionId) {
+            return redirect()->route('home')->with('error', 'Invalid session.');
+        }
+
+        $session = Session::retrieve($sessionId);
+
+        if (
+            !$session ||
+            !$session->customer ||
+            ($session->metadata->checkout_type ?? null) !== 'couple_partner' ||
+            $session->payment_status !== 'paid'
+        ) {
+            return redirect()->route('home')->with('error', 'Invalid session.');
+        }
+
+        // Check if user already exists
+        if (User::where('email', $session->metadata->user_email)->exists()) {
+            return redirect()->route('login')->with('error', 'An account with this email already exists.');
+        }
+
+        // Remove registration data from cache (mark as used)
+        Cache::forget('couple_partner_' . $session->metadata->registration_token);
+
+        // Generate coupon code
+        $rawName = $session->metadata->user_name ?? 'USER';
+        $baseCoupon = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $rawName), 0, 6));
+        if (empty($baseCoupon)) {
+            $baseCoupon = 'USER';
+        }
+        $couponCode = $baseCoupon . Str::upper(Str::random(6));
+
+        $planLabel = $session->metadata->plan_label ?? 'Lifetime Plan';
+
+        // Create partner user (same structure as regular user)
+        $userData = [
+            'name' => $session->metadata->user_name,
+            'email' => $session->metadata->user_email,
+            'password' => $session->metadata->user_password,
+            'user_role' => 'customer',
+            'coupon_code' => $couponCode,
+            'hear_about_us' => $session->metadata->hear_about_us ?: null,
+            'other_hear_about_us' => $session->metadata->other_hear_about_us ?: null,
+            'address' => $session->metadata->user_address ?: null,
+            'city' => $session->metadata->user_city ?: null,
+            'postal_code' => $session->metadata->user_postal_code ?: null,
+            'subscribed_package' => $planLabel,
+            'trial_ends_at' => now()->addYears(10),
+            'stripe_customer_id' => $session->customer,
+            'stripe_subscription_id' => null,
+        ];
+
+        if (!empty($session->metadata->user_country) && Schema::hasColumn('users', 'country')) {
+            $userData['country'] = $session->metadata->user_country;
+        }
+
+        if (!empty($session->metadata->date_of_birth) && Schema::hasColumn('users', 'date_of_birth')) {
+            $userData['date_of_birth'] = $session->metadata->date_of_birth;
+        }
+
+        $partnerUser = User::create($userData)->assignRole('customer');
+
+        // Handle commissions (goes to admin since it's a discounted couple partner)
+        $planAmount = ($session->amount_total ?? 0) / 100;
+
+        if (!empty($session->metadata->partner_coupon_code)) {
+            $couponOwner = User::where('coupon_code', $session->metadata->partner_coupon_code)->first();
+
+            if ($couponOwner) {
+                $relationship = PartnerRelationship::where('sub_partner_id', $couponOwner->id)->first();
+
+                if ($relationship) {
+                    $ownerCommission = $planAmount * 0.30;
+                    $parentCommission = $planAmount * 0.20;
+                    $adminCommission = $planAmount * 0.50;
+
+                    $couponOwner->increment('commission_amount', $ownerCommission);
+                    $relationship->parent->increment('commission_amount', $parentCommission);
+                    User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                } else {
+                    $affiliateCount = CouponUsage::where('partner_id', $couponOwner->id)->count();
+
+                    $commissionAmount = $affiliateCount <= 50
+                        ? $planAmount * 0.20
+                        : $planAmount * 0.30;
+
+                    $couponOwner->increment('commission_amount', $commissionAmount);
+                    $adminCommission = $planAmount - $commissionAmount;
+                    User::role('admin')->first()?->increment('commission_amount', $adminCommission);
+                }
+
+                CouponUsage::create([
+                    'partner_id' => $couponOwner->id,
+                    'user_id' => $partnerUser->id,
+                ]);
+            }
+        } elseif ($planAmount > 0) {
+            User::role('admin')->first()?->increment('commission_amount', $planAmount);
+        }
+
+        // Send welcome email to partner
+        $name = $session->metadata->user_name;
+        $email = $session->metadata->user_email;
+        $primaryUser = User::find($session->metadata->primary_user_id);
+
+        $message = "
+        <h2>Hello $name,</h2>
+        <p>Welcome to Executor Hub! Your account has been successfully created.</p>
+        <p>You're now registered as a couple partner with <strong>{$primaryUser->name}</strong> and have lifetime access to all features.</p>
+        <p>Your secure space to organise, protect, and share your important documents begins now.</p>
+        <p>👉 Click below to access your personal dashboard and start exploring:</p>
+        <p><a href='https://executorhub.co.uk/customer/dashboard'>[Go to My Dashboard]</a></p>
+        <p>Need help? Our support team is always here — just reply to this email.</p>
+        <br/><br/>
+        <p>Regards,<br>The Executor Hub Team</p>
+        <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+        
+        <br /><br />
+        <p><b>Executor Hub Team</b></p>
+        <p><b>Executor Hub Ltd</b></p>
+        <p><b>Empowering Executors, Ensuring Legacies</b></p>
+        <p><b>Email: hello@executorhub.co.uk</b></p>
+        <p><b>Website: https://executorhub.co.uk</b></p>
+        <p><b>ICO Registration: ZB932381</b></p>
+        <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+        <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+        <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
+    ";
+
+        Mail::to($email)->send(new CustomEmail(
+            [
+                'subject' => 'Welcome to Executor Hub — lets tick off your first step today',
+                'message' => $message,
+            ],
+            "Welcome to Executor Hub"
+        ));
+
+        // $partnerUser->notify(new WelcomeEmail($partnerUser));
+
+        // Notify primary user that their partner has registered
+        $primaryUserMessage = "
+        <h2>Hello {$primaryUser->name},</h2>
+        <p>Great news! Your couple partner <strong>$name</strong> has successfully completed their registration.</p>
+        <p>They now have their own Executor Hub account with lifetime access.</p>
+        <p>👉 <a href='https://executorhub.co.uk/customer/dashboard'>Access Your Dashboard</a></p>
+        <br/><br/>
+        <p>Regards,<br>The Executor Hub Team</p>
+        <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+    ";
+
+        Mail::to($primaryUser->email)->send(new CustomEmail(
+            [
+                'subject' => 'Your Couple Partner Has Joined Executor Hub',
+                'message' => $primaryUserMessage,
+            ],
+            'Couple Partner Registration Complete'
+        ));
+
+        return redirect()->route('login')->with('success', 'Your account has been created successfully! Please log in to continue.');
     }
 
     public function success(Request $request): RedirectResponse
@@ -726,7 +1263,7 @@ class StripePaymentController extends Controller
                     // Sub-partner case (partner created by another partner)
                     $ownerCommission = $planAmount * 0.30;   // 30% → coupon owner
                     $parentCommission = $planAmount * 0.20;  // 20% → parent partner
-                    $adminCommission  = $planAmount * 0.50;  // 50% → admin
+                    $adminCommission = $planAmount * 0.50;  // 50% → admin
 
                     // Credit commissions
                     $couponOwner->increment('commission_amount', $ownerCommission);
@@ -752,7 +1289,7 @@ class StripePaymentController extends Controller
                 // Log coupon usage
                 CouponUsage::create([
                     'partner_id' => $couponOwner->id,
-                    'user_id'    => $user->id,
+                    'user_id' => $user->id,
                 ]);
             }
         } else {
@@ -926,7 +1463,7 @@ class StripePaymentController extends Controller
                 'price_1SbHY6PEGGZ0nEjmJOsA4h41' => ['name' => 'Premium', 'amount' => 19.99],
             ];
 
-            $planName   = $plans[$priceId]['name']   ?? 'Unknown';
+            $planName = $plans[$priceId]['name'] ?? 'Unknown';
             $planAmount = $plans[$priceId]['amount'] ?? 0;
 
             // --- Commission Calculation ---
@@ -941,9 +1478,9 @@ class StripePaymentController extends Controller
 
                     if ($relationship) {
                         // Sub-partner case
-                        $ownerCommission  = $planAmount * 0.30;  // 30%
+                        $ownerCommission = $planAmount * 0.30;  // 30%
                         $parentCommission = $planAmount * 0.20;  // 20%
-                        $adminCommission  = $planAmount * 0.50;  // 50%
+                        $adminCommission = $planAmount * 0.50;  // 50%
 
                         $couponOwner->increment('commission_amount', $ownerCommission);
                         $relationship->parent->increment('commission_amount', $parentCommission);

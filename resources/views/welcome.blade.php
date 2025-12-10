@@ -1787,9 +1787,14 @@
                     <div class="col-lg-4 col-md-6">
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
-                                <h5 class="card-title s-24 w-700 mb-3">Preventing Executor Mistakes Through Automation</h5>
-                                <p class="card-text color--grey">A family discovered after death that several important documents were missing: the updated will, property valuations, insurance details, and statements for a small investment account. Documents were stored in multiple places causing delays, arguments, and additional legal fees...</p>
-                                <p class="card-text"><small class="text-muted">How Executor Hub avoids confusion, missing paperwork, and costly delays.</small></p>
+                                <h5 class="card-title s-24 w-700 mb-3">Preventing Executor Mistakes Through Automation
+                                </h5>
+                                <p class="card-text color--grey">A family discovered after death that several important
+                                    documents were missing: the updated will, property valuations, insurance details,
+                                    and statements for a small investment account. Documents were stored in multiple
+                                    places causing delays, arguments, and additional legal fees...</p>
+                                <p class="card-text"><small class="text-muted">How Executor Hub avoids confusion,
+                                        missing paperwork, and costly delays.</small></p>
                             </div>
                             <div class="card-footer bg-transparent border-0 pt-0">
                                 <a href="{{ route('case-study.show', 'preventing-executor-mistakes-automation') }}"
@@ -1803,8 +1808,12 @@
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">Cutting Delays From Banks, HMRC & DWP</h5>
-                                <p class="card-text color--grey">Executors for a modest estate spent over three months waiting on responses from banks, pension providers, HMRC, and the DWP. Most delays were caused by sending wrong forms, missing information, and being asked to provide the same documents repeatedly...</p>
-                                <p class="card-text"><small class="text-muted">How Executor Hub eliminates the administrative drag executors face.</small></p>
+                                <p class="card-text color--grey">Executors for a modest estate spent over three months
+                                    waiting on responses from banks, pension providers, HMRC, and the DWP. Most delays
+                                    were caused by sending wrong forms, missing information, and being asked to provide
+                                    the same documents repeatedly...</p>
+                                <p class="card-text"><small class="text-muted">How Executor Hub eliminates the
+                                        administrative drag executors face.</small></p>
                             </div>
                             <div class="card-footer bg-transparent border-0 pt-0">
                                 <a href="{{ route('case-study.show', 'cutting-delays-banks-hmrc-dwp') }}"
@@ -1818,8 +1827,12 @@
                         <div class="card case-study-card h-100 bg--white-100 block-shadow r-12 wow fadeInUp">
                             <div class="card-body">
                                 <h5 class="card-title s-24 w-700 mb-3">Capacity Recording & Golden Rule Compliance</h5>
-                                <p class="card-text color--grey">A will was drafted for an elderly lady with early signs of memory decline. When she died, one child challenged the will, arguing she lacked capacity and didn't understand the changes. There was no record explaining why she made her decisions...</p>
-                                <p class="card-text"><small class="text-muted">How Executor Hub helps avoid legal challenges to capacity and knowledge & approval.</small></p>
+                                <p class="card-text color--grey">A will was drafted for an elderly lady with early signs
+                                    of memory decline. When she died, one child challenged the will, arguing she lacked
+                                    capacity and didn't understand the changes. There was no record explaining why she
+                                    made her decisions...</p>
+                                <p class="card-text"><small class="text-muted">How Executor Hub helps avoid legal
+                                        challenges to capacity and knowledge & approval.</small></p>
                             </div>
                             <div class="card-footer bg-transparent border-0 pt-0">
                                 <a href="{{ route('case-study.show', 'capacity-recording-golden-rule-compliance') }}"
@@ -1834,9 +1847,15 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <h5 class="card-title s-24 w-700 mb-3">The Hospital Will: A Complex Family Situation Made Simple</h5>
-                                        <p class="card-text color--grey">A man in hospital decided to update his will due to a turbulent marriage with allegations of domestic abuse, children from a previous relationship, and complex financial arrangements. After his death, his wife challenged the will and reported the matter to police, creating accusations, family breakdown, and significant legal costs...</p>
-                                        <p class="card-text"><small class="text-muted">How a capacity video and recorded explanation could have prevented a painful dispute.</small></p>
+                                        <h5 class="card-title s-24 w-700 mb-3">The Hospital Will: A Complex Family
+                                            Situation Made Simple</h5>
+                                        <p class="card-text color--grey">A man in hospital decided to update his will
+                                            due to a turbulent marriage with allegations of domestic abuse, children
+                                            from a previous relationship, and complex financial arrangements. After his
+                                            death, his wife challenged the will and reported the matter to police,
+                                            creating accusations, family breakdown, and significant legal costs...</p>
+                                        <p class="card-text"><small class="text-muted">How a capacity video and recorded
+                                                explanation could have prevented a painful dispute.</small></p>
                                     </div>
                                     <div class="col-md-4 d-flex align-items-center">
                                         <div class="text-center w-100">
@@ -2039,7 +2058,8 @@
                                 <div class="wow fadeInUp mb-60">
                                     <!-- Title -->
                                     <h2 class="s-50 w-700 text-center">Enterprise Solutions</h2>
-                                    <p class="text-center">Transforming estate administration for families — at scale.</p>
+                                    <p class="text-center">Transforming estate administration for families — at scale.
+                                    </p>
 
                                     <!-- Text -->
                                     <p class="p-xl">Executor Hub is the modern digital platform that helps families
@@ -2065,50 +2085,56 @@
                                     <p>You lead the client relationship.</p>
                                     <p>We power the digital experience.</p>
                                     <p>💼 Partnership Models Built for Growth</p>
-                                    <p>We offer commercial models designed for scaling to hundreds or thousands of clients:</p>
+                                    <p>We offer commercial models designed for scaling to hundreds or thousands of
+                                        clients:</p>
                                     <p>1️⃣ Revenue-Share Partnership</p>
-                                    <p>Offer Executor Hub as an add-on or bundled service.Earn recurring commission from every subscription or lifetime plan.Perfect for:</p>
-                                    <p>•	Adviser networks</p>
-                                    <p>•	Estate planning teams</p>
-                                    <p>•	Professional services firms</p>
+                                    <p>Offer Executor Hub as an add-on or bundled service.Earn recurring commission from
+                                        every subscription or lifetime plan.Perfect for:</p>
+                                    <p>• Adviser networks</p>
+                                    <p>• Estate planning teams</p>
+                                    <p>• Professional services firms</p>
                                     <p>2️⃣ Bulk Licensing</p>
-                                    <p>Purchase licences at a discounted enterprise rate and distribute under your brand umbrella. Ideal For:</p>
-                                    <p>•	Premium estate planning packages</p>
-                                    <p>•	Funeral plan enhancements</p>
-                                    <p>•	Insurance policies & employee benefit offerings</p>
+                                    <p>Purchase licences at a discounted enterprise rate and distribute under your brand
+                                        umbrella. Ideal For:</p>
+                                    <p>• Premium estate planning packages</p>
+                                    <p>• Funeral plan enhancements</p>
+                                    <p>• Insurance policies & employee benefit offerings</p>
                                     <p>Strong upfront revenue and guaranteed client upgrade value.</p>
                                     <p>3️⃣ White-Label & Co-Branded Solutions</p>
                                     <p>Deliver a digital executor platform as your own product. Fully customisable:</p>
-                                    <p>•	Logo, branding, URL</p>
-                                    <p>•	On-platform messaging</p>
-                                    <p>•	Feature permissions</p>
-                                    <p>•	Service pathways</p>
-                                    <p>•	Client support workflow</p>
+                                    <p>• Logo, branding, URL</p>
+                                    <p>• On-platform messaging</p>
+                                    <p>• Feature permissions</p>
+                                    <p>• Service pathways</p>
+                                    <p>• Client support workflow</p>
                                     <p>The power of Executor Hub — with your identity front and centre.</p>
                                     <p>🧩 Who We Partner With</p>
-                                    <p>•	National law firms & probate providers</p>
-                                    <p>•	Financial advisers & wealth managers</p>
-                                    <p>•	Funeral care & bereavement groups</p>
-                                    <p>•	Later-life care organisations</p>
-                                    <p>•	Insurance companies & membership benefits</p>
-                                    <p>•	Estate technology innovators</p>
+                                    <p>• National law firms & probate providers</p>
+                                    <p>• Financial advisers & wealth managers</p>
+                                    <p>• Funeral care & bereavement groups</p>
+                                    <p>• Later-life care organisations</p>
+                                    <p>• Insurance companies & membership benefits</p>
+                                    <p>• Estate technology innovators</p>
 
-                                    <p>If you support families before or after a loss — Executor Hub strengthens your value.</p>
+                                    <p>If you support families before or after a loss — Executor Hub strengthens your
+                                        value.</p>
                                     <p>📈 Proven Results for Families & Businesses</p>
                                     <p>Executors using Executor Hub report:</p>
-                                    <p>•	50–80 hours saved in admin workload</p>
-                                    <p>•	Up to 80% fewer delays & errors</p>
-                                    <p>•	Reduced stress, increased confidence, improved outcomes</p>
+                                    <p>• 50–80 hours saved in admin workload</p>
+                                    <p>• Up to 80% fewer delays & errors</p>
+                                    <p>• Reduced stress, increased confidence, improved outcomes</p>
                                     <p>Business benefits include:</p>
-                                    <p>•	Higher client retention & referrals</p>
-                                    <p>•	Stronger brand trust & goodwill</p>
-                                    <p>•	Increased revenue per client</p>
-                                    <p>•	Reduced support burden for staff</p>
-                                    <p>•	Compliance-ready processes & full audit trail</p>
-                                    <p>•	Improved professional reputation at a critical moment</p>
-                                    <p>Executors feel supported. Families feel cared for. Your brand earns loyalty that lasts generations.</p>
+                                    <p>• Higher client retention & referrals</p>
+                                    <p>• Stronger brand trust & goodwill</p>
+                                    <p>• Increased revenue per client</p>
+                                    <p>• Reduced support burden for staff</p>
+                                    <p>• Compliance-ready processes & full audit trail</p>
+                                    <p>• Improved professional reputation at a critical moment</p>
+                                    <p>Executors feel supported. Families feel cared for. Your brand earns loyalty that
+                                        lasts generations.</p>
                                     <p>🔐 Security & Compliance You Can Trust</p>
-                                    <p>Executor Hub protects the most sensitive family information with enterprise-level safeguards:</p>
+                                    <p>Executor Hub protects the most sensitive family information with enterprise-level
+                                        safeguards:</p>
                                     <p>✔ Cyber Essentials Certified</p>
                                     <p>✔ UK-based hosting & full GDPR compliance</p>
                                     <p>✔ Encrypted storage for documents & passwords</p>
@@ -2118,9 +2144,11 @@
                                     <p>✔ Incident-response & data governance framework</p>
                                     <p>Your risk is reduced — and your brand is protected.</p>
                                     <p>🤝 Let’s Elevate Support for Families — Together</p>
-                                    <p>Executor Hub is the future of estate administration — and the opportunity to lead that future begins now.</p>
+                                    <p>Executor Hub is the future of estate administration — and the opportunity to lead
+                                        that future begins now.</p>
                                     <p>📩 Submit Your Partnership Enquiry</p>
-                                    <p>→ One of our enterprise consultants will contact you to discuss your goals and arrange a demonstration.</p>
+                                    <p>→ One of our enterprise consultants will contact you to discuss your goals and
+                                        arrange a demonstration.</p>
                                     <p>Executor Hub — empowering executors, and the professionals who support them.</p>
                                 </div>
                             </div>
@@ -2180,8 +2208,11 @@
                             <!-- Title -->
                             <h2 class="s-46 w-700">Help families. Grow your business. Earn more — every month.</h2>
 
-                            <p>Executor Hub lets you support families during one of the hardest moments in life — while giving you a powerful new way to increase your income.</p>
-                            <p>Our partnership program is designed for estate planners, will writers, financial advisers, funeral directors, and professionals who want to deliver more value without more work.</p>
+                            <p>Executor Hub lets you support families during one of the hardest moments in life — while
+                                giving you a powerful new way to increase your income.</p>
+                            <p>Our partnership program is designed for estate planners, will writers, financial
+                                advisers, funeral directors, and professionals who want to deliver more value without
+                                more work.</p>
 
                             <p>🌟 Why Join the Partner Program?</p>
                             <p>✔ Add an innovative digital service to your offering</p>
@@ -2189,199 +2220,208 @@
                             <p>✔ Create immediate cashflow and long-term recurring income</p>
                             <p>✔ No cost to join, no technical experience needed</p>
                             <p>✔ Start earning today</p>
-                            <p>You bring your knowledge. We provide the platform. Together, we transform family support.</p>
+                            <p>You bring your knowledge. We provide the platform. Together, we transform family support.
+                            </p>
 
                             <p><strong>How You Earn — Three Powerful Income Streams</strong></p>
 
-<p>Every time you refer a customer using your unique link, you earn in three ways:</p>
+                            <p>Every time you refer a customer using your unique link, you earn in three ways:</p>
 
-<p><strong>1️⃣ Monthly Subscriptions — 30% Every Month</strong></p>
+                            <p><strong>1️⃣ Monthly Subscriptions — 30% Every Month</strong></p>
 
-<p>Customers paying £11.99/month give you 30% recurring income.</p>
-<p>You earn £3.60/month on average per subscriber.</p>
-<p>Build a base over time and your monthly revenue grows automatically.</p>
-<p>⚠️ Figures are averages. Actual earnings may be lower or higher.</p>
+                            <p>Customers paying £11.99/month give you 30% recurring income.</p>
+                            <p>You earn £3.60/month on average per subscriber.</p>
+                            <p>Build a base over time and your monthly revenue grows automatically.</p>
+                            <p>⚠️ Figures are averages. Actual earnings may be lower or higher.</p>
 
-<p><strong>2️⃣ Lifetime Plans — 30% Upfront</strong></p>
+                            <p><strong>2️⃣ Lifetime Plans — 30% Upfront</strong></p>
 
-<p>Most customers choose a lifetime plan.</p>
-<p>Average lifetime fee: £595 (varies by age).</p>
+                            <p>Most customers choose a lifetime plan.</p>
+                            <p>Average lifetime fee: £595 (varies by age).</p>
 
-<p>You earn 30% upfront:</p>
-<p>• £295 plan → £88.50</p>
-<p>• £595 plan → £178.50</p>
-<p>• £795 plan → £238.50</p>
-<p>• £895 plan → £268.50</p>
+                            <p>You earn 30% upfront:</p>
+                            <p>• £295 plan → £88.50</p>
+                            <p>• £595 plan → £178.50</p>
+                            <p>• £795 plan → £238.50</p>
+                            <p>• £895 plan → £268.50</p>
 
-<p>⚠️ Amounts vary depending on the customer’s age and chosen plan.</p>
+                            <p>⚠️ Amounts vary depending on the customer’s age and chosen plan.</p>
 
-<p><strong>3️⃣ Team Referrals — 20% from Partners You Recruit</strong></p>
+                            <p><strong>3️⃣ Team Referrals — 20% from Partners You Recruit</strong></p>
 
-<p>Introduce a partner and you earn 20% of their sales.</p>
+                            <p>Introduce a partner and you earn 20% of their sales.</p>
 
-<p>You earn from:</p>
-<p>• Your own clients</p>
-<p>• Clients your partners refer</p>
-<p>• Partners you introduce</p>
-<p>• Their clients too</p>
+                            <p>You earn from:</p>
+                            <p>• Your own clients</p>
+                            <p>• Clients your partners refer</p>
+                            <p>• Partners you introduce</p>
+                            <p>• Their clients too</p>
 
-<p>This creates a powerful, growing income stream.</p>
-<p>⚠️ Earnings depend on your partners’ activity.</p>
+                            <p>This creates a powerful, growing income stream.</p>
+                            <p>⚠️ Earnings depend on your partners’ activity.</p>
 
-<p><strong>⭐ Build Your Network → Multiply Your Income</strong></p>
+                            <p><strong>⭐ Build Your Network → Multiply Your Income</strong></p>
 
-<p>You can earn three ways at the same time:</p>
-<p>✔ Ongoing monthly commissions</p>
-<p>✔ Upfront lifetime plan payouts</p>
-<p>✔ Team income from partners you bring in</p>
+                            <p>You can earn three ways at the same time:</p>
+                            <p>✔ Ongoing monthly commissions</p>
+                            <p>✔ Upfront lifetime plan payouts</p>
+                            <p>✔ Team income from partners you bring in</p>
 
-<p>Your earning potential grows as your network grows.</p>
+                            <p>Your earning potential grows as your network grows.</p>
 
-<p><strong>⚠️ Required Disclaimer for Accuracy</strong></p>
+                            <p><strong>⚠️ Required Disclaimer for Accuracy</strong></p>
 
-<p>All examples shown are based on average customer fees and typical partner activity.</p>
-<p>Your actual earnings may be lower or higher depending on customer choices, age bands, and sales volume.</p>
+                            <p>All examples shown are based on average customer fees and typical partner activity.</p>
+                            <p>Your actual earnings may be lower or higher depending on customer choices, age bands, and
+                                sales volume.</p>
 
 
                             <hr>
 
-<h4>What You Can Earn (Realistic Examples)</h4>
+                            <h4>What You Can Earn (Realistic Examples)</h4>
 
-<p>These examples show what’s possible if you talk to a steady flow of clients and follow our simple process.<br>
-They’re based on:</p>
+                            <p>These examples show what’s possible if you talk to a steady flow of clients and follow
+                                our simple process.<br>
+                                They’re based on:</p>
 
-<ul>
-    <li>70% of clients choosing a lifetime plan</li>
-    <li>30% choosing a monthly subscription</li>
-    <li>30% commission on your own clients</li>
-    <li>20% commission on clients of partners you recruit</li>
-</ul>
+                            <ul>
+                                <li>70% of clients choosing a lifetime plan</li>
+                                <li>30% choosing a monthly subscription</li>
+                                <li>30% commission on your own clients</li>
+                                <li>20% commission on clients of partners you recruit</li>
+                            </ul>
 
-<p><em>Actual results will vary – this is not a guarantee of income.</em></p>
+                            <p><em>Actual results will vary – this is not a guarantee of income.</em></p>
 
-<hr>
+                            <hr>
 
-<!-- Example 1 -->
-<h4>Example 1 – Small Start</h4>
+                            <!-- Example 1 -->
+                            <h4>Example 1 – Small Start</h4>
 
-<p><strong>Example 1 – Small Start, No Recruitment</strong><br>
-Help 3–5 clients get set up with Executor Hub.</p>
+                            <p><strong>Example 1 – Small Start, No Recruitment</strong><br>
+                                Help 3–5 clients get set up with Executor Hub.</p>
 
-<ul>
-    <li><strong>Estimated Month 1 income:</strong> £350–£700</li>
-    <li><strong>Ongoing income:</strong> around £4–£7/month</li>
-</ul>
+                            <ul>
+                                <li><strong>Estimated Month 1 income:</strong> £350–£700</li>
+                                <li><strong>Ongoing income:</strong> around £4–£7/month</li>
+                            </ul>
 
-<button type="button" class="show-how btn btn-primary">Show me how</button>
+                            <button type="button" class="show-how btn btn-primary">Show me how</button>
 
-<div class="hidden-breakdown" style="display:none; margin-top:10px;">
-    <h5>How this is worked out</h5>
-    <ul>
-        <li>3–5 clients choose Executor Hub</li>
-        <li>70% choose a lifetime plan → commission £178.50 each</li>
-        <li>30% choose monthly → commission £3.60/month each</li>
-    </ul>
+                            <div class="hidden-breakdown" style="display:none; margin-top:10px;">
+                                <h5>How this is worked out</h5>
+                                <ul>
+                                    <li>3–5 clients choose Executor Hub</li>
+                                    <li>70% choose a lifetime plan → commission £178.50 each</li>
+                                    <li>30% choose monthly → commission £3.60/month each</li>
+                                </ul>
 
-    <h6>Lifetime commissions</h6>
-    <p>2–4 lifetime clients → £357 – £714 in one-off income</p>
+                                <h6>Lifetime commissions</h6>
+                                <p>2–4 lifetime clients → £357 – £714 in one-off income</p>
 
-    <h6>Monthly commissions</h6>
-    <p>1–2 monthly clients → £3.60 – £7.20/month</p>
+                                <h6>Monthly commissions</h6>
+                                <p>1–2 monthly clients → £3.60 – £7.20/month</p>
 
-    <p>You don’t recruit anyone yet in this example – it’s just you and your clients.</p>
+                                <p>You don’t recruit anyone yet in this example – it’s just you and your clients.</p>
 
-    <p><small>These figures are illustrations only. Your income depends on how many clients you speak to and how you promote the service. Earnings are not guaranteed.</small></p>
-</div>
+                                <p><small>These figures are illustrations only. Your income depends on how many clients
+                                        you speak to and how you promote the service. Earnings are not
+                                        guaranteed.</small></p>
+                            </div>
 
-<hr>
+                            <hr>
 
-<!-- Example 2 -->
-<h4>Example 2 – Strong Start</h4>
+                            <!-- Example 2 -->
+                            <h4>Example 2 – Strong Start</h4>
 
-<p><strong>Example 2 – Strong Start, 1 Partner Recruited</strong><br>
-Help 10–15 clients yourself and introduce 1 partner who also starts selling.</p>
+                            <p><strong>Example 2 – Strong Start, 1 Partner Recruited</strong><br>
+                                Help 10–15 clients yourself and introduce 1 partner who also starts selling.</p>
 
-<ul>
-    <li><strong>Estimated Month 1 income:</strong> £1,600–£2,400</li>
-    <li><strong>Ongoing income:</strong> around £13–£23/month</li>
-</ul>
+                            <ul>
+                                <li><strong>Estimated Month 1 income:</strong> £1,600–£2,400</li>
+                                <li><strong>Ongoing income:</strong> around £13–£23/month</li>
+                            </ul>
 
-<button type="button" class="show-how btn btn-primary">Show me how</button>
+                            <button type="button" class="show-how btn btn-primary">Show me how</button>
 
-<div class="hidden-breakdown" style="display:none; margin-top:10px;">
-    <h5>Your own clients</h5>
-    <ul>
-        <li>10–15 clients choose Executor Hub</li>
-        <li>70% choose lifetime = 7–11 lifetime plans</li>
-        <li>30% choose monthly = 3–5 monthly plans</li>
-    </ul>
+                            <div class="hidden-breakdown" style="display:none; margin-top:10px;">
+                                <h5>Your own clients</h5>
+                                <ul>
+                                    <li>10–15 clients choose Executor Hub</li>
+                                    <li>70% choose lifetime = 7–11 lifetime plans</li>
+                                    <li>30% choose monthly = 3–5 monthly plans</li>
+                                </ul>
 
-    <h6>Your direct commissions (30%)</h6>
-    <ul>
-        <li>Lifetimes: £1,249.50 – £1,963.50</li>
-        <li>Monthlies: £10.80 – £18.00/month</li>
-    </ul>
+                                <h6>Your direct commissions (30%)</h6>
+                                <ul>
+                                    <li>Lifetimes: £1,249.50 – £1,963.50</li>
+                                    <li>Monthlies: £10.80 – £18.00/month</li>
+                                </ul>
 
-    <h5>Your partner’s clients (recruitment income, 20%)</h5>
-    <ul>
-        <li>Partner signs up 5 clients</li>
-        <li>3–4 lifetime plans → £357 – £476</li>
-        <li>1–2 monthly plans → £2.40 – £4.80/month</li>
-    </ul>
+                                <h5>Your partner’s clients (recruitment income, 20%)</h5>
+                                <ul>
+                                    <li>Partner signs up 5 clients</li>
+                                    <li>3–4 lifetime plans → £357 – £476</li>
+                                    <li>1–2 monthly plans → £2.40 – £4.80/month</li>
+                                </ul>
 
-    <p><strong>Total Month 1:</strong> about £1,606 – £2,439<br>
-    <strong>Total ongoing monthly:</strong> about £13.20 – £22.80/month</p>
+                                <p><strong>Total Month 1:</strong> about £1,606 – £2,439<br>
+                                    <strong>Total ongoing monthly:</strong> about £13.20 – £22.80/month
+                                </p>
 
-    <p><small>These figures are illustrations only. Your income depends on your activity and your partner’s activity. Earnings are not guaranteed.</small></p>
-</div>
+                                <p><small>These figures are illustrations only. Your income depends on your activity and
+                                        your partner’s activity. Earnings are not guaranteed.</small></p>
+                            </div>
 
-<hr>
+                            <hr>
 
-<!-- Example 3 -->
-<h4>Example 3 – Growing Team</h4>
+                            <!-- Example 3 -->
+                            <h4>Example 3 – Growing Team</h4>
 
-<p><strong>Example 3 – Growing Team, 4 Active Partners</strong><br>
-You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
+                            <p><strong>Example 3 – Growing Team, 4 Active Partners</strong><br>
+                                You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
 
-<ul>
-    <li><strong>Estimated Month 1 income:</strong> £3,600–£4,200</li>
-    <li><strong>Ongoing income:</strong> around £29–£36/month</li>
-</ul>
+                            <ul>
+                                <li><strong>Estimated Month 1 income:</strong> £3,600–£4,200</li>
+                                <li><strong>Ongoing income:</strong> around £29–£36/month</li>
+                            </ul>
 
-<button type="button" class="show-how btn btn-primary">Show me how</button>
+                            <button type="button" class="show-how btn btn-primary">Show me how</button>
 
-<div class="hidden-breakdown" style="display:none; margin-top:10px;">
-    <h5>Your own clients</h5>
-    <ul>
-        <li>15–20 clients</li>
-        <li>70% lifetime → 11–14 lifetime plans</li>
-        <li>30% monthly → 4–6 monthly plans</li>
-    </ul>
+                            <div class="hidden-breakdown" style="display:none; margin-top:10px;">
+                                <h5>Your own clients</h5>
+                                <ul>
+                                    <li>15–20 clients</li>
+                                    <li>70% lifetime → 11–14 lifetime plans</li>
+                                    <li>30% monthly → 4–6 monthly plans</li>
+                                </ul>
 
-    <h6>Direct commissions (30%)</h6>
-    <ul>
-        <li>Lifetimes: £1,963 – £2,499</li>
-        <li>Monthlies: £14.40 – £21.60/month</li>
-    </ul>
+                                <h6>Direct commissions (30%)</h6>
+                                <ul>
+                                    <li>Lifetimes: £1,963 – £2,499</li>
+                                    <li>Monthlies: £14.40 – £21.60/month</li>
+                                </ul>
 
-    <h5>Your partner team</h5>
-    <ul>
-        <li>4 partners × 5 clients = 20 clients</li>
-        <li>70% lifetime = 14 lifetime plans</li>
-        <li>30% monthly = 6 monthly plans</li>
-    </ul>
+                                <h5>Your partner team</h5>
+                                <ul>
+                                    <li>4 partners × 5 clients = 20 clients</li>
+                                    <li>70% lifetime = 14 lifetime plans</li>
+                                    <li>30% monthly = 6 monthly plans</li>
+                                </ul>
 
-    <h6>Recruitment commissions (20%)</h6>
-    <ul>
-        <li>Lifetimes: 14 × £119 = £1,666</li>
-        <li>Monthlies: 6 × £2.40 = £14.40/month</li>
-    </ul>
+                                <h6>Recruitment commissions (20%)</h6>
+                                <ul>
+                                    <li>Lifetimes: 14 × £119 = £1,666</li>
+                                    <li>Monthlies: 6 × £2.40 = £14.40/month</li>
+                                </ul>
 
-    <p><strong>Total Month 1:</strong> about £3,629 – £4,165<br>
-    <strong>Total ongoing monthly:</strong> about £28.80 – £36/month</p>
+                                <p><strong>Total Month 1:</strong> about £3,629 – £4,165<br>
+                                    <strong>Total ongoing monthly:</strong> about £28.80 – £36/month
+                                </p>
 
-    <p><small>These figures are illustrations only. Your income depends on client activity and partner performance. Earnings are not guaranteed.</small></p>
-</div>
+                                <p><small>These figures are illustrations only. Your income depends on client activity
+                                        and partner performance. Earnings are not guaranteed.</small></p>
+                            </div>
 
                             <hr>
 
@@ -2389,7 +2429,7 @@ You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
 
                             <p>Sell 2 lifetime plans + recruit 2 partners this week:</p>
                             <p>💷 Approx £1,000–£1,500 in upfront income<br>
-                            🔥 Plus ongoing subscription revenue long-term</p>
+                                🔥 Plus ongoing subscription revenue long-term</p>
 
                             <p>A few messages, a couple of conversations — real earnings.</p>
 
@@ -2428,26 +2468,27 @@ You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
                             <ul>
                                 <li>✔ 50–80 hours on admin (Law Society & industry averages)</li>
                                 <li>✔ Months chasing documents and information (HMCTS probate timelines)</li>
-                                <li>✔ Thousands lost due to delays, missing documents or interest charges (STEP & probate provider data)</li>
+                                <li>✔ Thousands lost due to delays, missing documents or interest charges (STEP &
+                                    probate provider data)</li>
                             </ul>
                             <p>(Sources: Law Society, HMCTS probate statistics, STEP, Co-op Legal Services.)</p>
 
                             <p>You become the professional who made the hardest time easier.</p>
 
                             <p>That means more:<br>
-                            ✔ 5-star reviews<br>
-                            ✔ referrals<br>
-                            ✔ lifetime value<br>
-                            ✔ trust</p>
+                                ✔ 5-star reviews<br>
+                                ✔ referrals<br>
+                                ✔ lifetime value<br>
+                                ✔ trust</p>
 
                             <hr>
 
                             <h4>⭐ Simple. Lucrative. Impactful.</h4>
 
                             <p>You decide:<br>
-                            • How much you help<br>
-                            • How quickly you grow<br>
-                            • How much you earn</p>
+                                • How much you help<br>
+                                • How quickly you grow<br>
+                                • How much you earn</p>
 
                             <p>We'll help you every step of the way.</p>
 
@@ -2456,13 +2497,14 @@ You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
                             <h4>Ready to join the fastest-growing estate support network?</h4>
 
                             <p>📩 <strong>Become a Partner Today</strong><br>
-                            — it takes less than 30 seconds.</p>
+                                — it takes less than 30 seconds.</p>
 
                             <p>Start helping more families.<br>
-                            Start building residual income.<br>
-                            Start winning more business.</p>
+                                Start building residual income.<br>
+                                Start winning more business.</p>
 
-                            <p><strong>Executor Hub — empowering executors, and the professionals who support them.</strong></p>
+                            <p><strong>Executor Hub — empowering executors, and the professionals who support
+                                    them.</strong></p>
                         </div>
                     </div>
                     <!-- END TEXT BLOCK -->
@@ -3283,22 +3325,22 @@ You help 15–20 clients and recruit 4 partners, each helping 5 clients.</p>
     </script>
 
     <script>
-document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll("button.show-how").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            const breakdown = btn.nextElementSibling;
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll("button.show-how").forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    const breakdown = btn.nextElementSibling;
 
-            if (breakdown.style.display === "none" || breakdown.style.display === "") {
-                breakdown.style.display = "block";
-                btn.textContent = "Hide details";
-            } else {
-                breakdown.style.display = "none";
-                btn.textContent = "Show me how";
-            }
+                    if (breakdown.style.display === "none" || breakdown.style.display === "") {
+                        breakdown.style.display = "block";
+                        btn.textContent = "Hide details";
+                    } else {
+                        breakdown.style.display = "none";
+                        btn.textContent = "Show me how";
+                    }
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
 
 </body>
 

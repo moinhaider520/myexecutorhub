@@ -203,6 +203,14 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe/lifetime/step2', 'lifetimeStep2')->name('stripe.lifetime.step2');
     Route::post('stripe/lifetime', 'lifetimeCheckout')->name('stripe.lifetime');
     Route::get('stripe/lifetime/success', 'lifetimeSuccess')->name('stripe.lifetime.success');
+
+    Route::get('/couple-partner/register/{token}', [StripePaymentController::class, 'showCouplePartnerRegistration'])
+        ->name('couple.partner.register');
+    Route::post('/couple-partner/checkout', [StripePaymentController::class, 'couplePartnerCheckout'])
+        ->name('couple.partner.checkout');
+    Route::get('/couple-partner/success', [StripePaymentController::class, 'couplePartnerSuccess'])
+        ->name('couple.partner.success');
+        
     Route::post('stripe/resubscribe', 'resubscribe')->name('stripe.resubscribe');
     Route::get('stripe/success', 'success')->name('stripe.success');
     Route::get('stripe/resubscribesuccess', 'resubscribesuccess')->name('stripe.resubscribesuccess');
