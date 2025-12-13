@@ -825,6 +825,7 @@ class StripePaymentController extends Controller
                 //     'discounted_65_plus' => 'price_1ScoBZPEGGZ0nEjmxPEf9JB7',
                 // ],
             ];
+
             if ($mainUserPlanTier === 'basic') {
 
                 // LIVE PRICE ID

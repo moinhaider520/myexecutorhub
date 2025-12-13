@@ -59,6 +59,7 @@
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('admin.customers.create') }}">Provide Free Access</a></li>
                             <li><a href="{{ route('admin.customers.index') }}">View All</a></li>
+                            <li><a href="{{ route('admin.customers.invite_for_discount') }}">Invite For 30% Discount</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
@@ -284,6 +285,20 @@
                         </div>
                     </li>
 
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
+                            </svg>
+                            <span>Commission Calculator </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('partner.commission_calculator.index') }}">Commission Calculator</a></li>
+                        </ul>
+                    </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">

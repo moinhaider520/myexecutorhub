@@ -60,6 +60,7 @@ use App\Http\Controllers\Partner\UsefulContactsController as PartnerUsefulContac
 use App\Http\Controllers\Partner\GeneratePartnerController as PartnerGeneratePartnerController;
 use App\Http\Controllers\Partner\CustomerController as PartnerCustomerController;
 use App\Http\Controllers\Partner\BankDetailsController as PartnerBankDetailsController;
+use App\Http\Controllers\Partner\ComissionCalculatorController;
 
 // Role Customer Controller
 use App\Http\Controllers\Customer\DashboardController as CustomerDashboardController;
@@ -210,7 +211,7 @@ Route::controller(StripePaymentController::class)->group(function () {
         ->name('couple.partner.checkout');
     Route::get('/couple-partner/success', [StripePaymentController::class, 'couplePartnerSuccess'])
         ->name('couple.partner.success');
-        
+
     Route::post('stripe/resubscribe', 'resubscribe')->name('stripe.resubscribe');
     Route::get('stripe/success', 'success')->name('stripe.success');
     Route::get('stripe/resubscribesuccess', 'resubscribesuccess')->name('stripe.resubscribesuccess');
@@ -307,6 +308,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Customers
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+    Route::get('/customers/invite_for_discount', [CustomerController::class, 'invite_for_discount'])->name('customers.invite_for_discount');
+    Route::post('/customers/send_discount_invite', [CustomerController::class, 'send_discount_invite'])->name('customers.send_discount_invite');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
@@ -1094,6 +1097,9 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
     Route::get('/payout-summaries', [SummaryController::class, 'index'])->name('summary.index');
     Route::get('/summary/{id}/download', [SummaryController::class, 'download'])->name('summary.download');
+
+    // COMMISSION CALCULATOR
+    Route::get('/commission_calculator/index', [ComissionCalculatorController::class, 'index'])->name('commission_calculator.index');
 });
 
 // Executors  Routes
