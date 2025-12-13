@@ -22,6 +22,13 @@
                                         <select name="recipient_type" id="recipient_type" class="form-select" required>
                                             <option value="" disabled selected>Select recipient type</option>
                                             <option value="customers">Customers</option>
+                                            <option value="customers_free_trial">Customers (Free Trial)</option>
+                                            <option value="customers_lifetime_basic">Customers (Lifetime Basic)</option>
+                                            <option value="customers_lifetime_standard">Customers (Lifetime Standard)</option>
+                                            <option value="customers_lifetime_premium">Customers (Lifetime Premium)</option>
+                                            <option value="customers_monthly_basic">Customers (Monthly Basic)</option>
+                                            <option value="customers_monthly_standard">Customers (Monthly Standard)</option>
+                                            <option value="customers_monthly_premium">Customers (Monthly Premium)</option>
                                             <option value="partners">Partners</option>
                                             <option value="customers_and_partners">Customers and Partners</option>
                                         </select>

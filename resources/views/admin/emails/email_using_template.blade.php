@@ -27,6 +27,17 @@
                                                 <option value="" disabled selected>Select recipient type</option>
                                                 <option value="partners">Partners</option>
                                                 <option value="customers">Customers</option>
+                                                <option value="customers_free_trial">Customers (Free Trial)</option>
+                                                <option value="customers_lifetime_basic">Customers (Lifetime Basic)</option>
+                                                <option value="customers_lifetime_standard">Customers (Lifetime Standard)
+                                                </option>
+                                                <option value="customers_lifetime_premium">Customers (Lifetime Premium)
+                                                </option>
+                                                <option value="customers_monthly_basic">Customers (Monthly Basic)</option>
+                                                <option value="customers_monthly_standard">Customers (Monthly Standard)
+                                                </option>
+                                                <option value="customers_monthly_premium">Customers (Monthly Premium)
+                                                </option>
                                                 <option value="select_specific_user">Select Specific User</option>
                                             </select>
                                             @error('recipient_type')
@@ -141,139 +152,139 @@
             "Day 1": {
                 subject: "The most important step: add your executor today",
                 body: `<p>Executors often spend dozens of hours searching for documents (Exizent 2023, Legal Services Board). Executor Hub cuts this down to a fraction of the time.</p>
-                              <p>✅ Today’s step: Add your executor.</p>
-                              <p>This unlocks their personal step-by-step guide — the heart of Executor Hub.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Nominate your executor now]</a>
-                              <p>🔒 Executors will only ever see the guidance you approve — your sensitive data stays private until you allow it to be shared.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>✅ Today’s step: Add your executor.</p>
+                                  <p>This unlocks their personal step-by-step guide — the heart of Executor Hub.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Nominate your executor now]</a>
+                                  <p>🔒 Executors will only ever see the guidance you approve — your sensitive data stays private until you allow it to be shared.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 2": {
                 subject: "Save your executor hours — add one bank account securely",
                 body: `<p>Executors can spend weeks just tracking down bank details. Let’s prevent that today.</p>
-                              <p>✅ Add your first bank account in Executor Hub.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Add a bank account now]</a>
-                              <p>🔒 Executor Hub uses bank-grade security. Details stored here cannot be used to access or move money — they’re only for your records and to guide your executor when the time comes.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>✅ Add your first bank account in Executor Hub.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Add a bank account now]</a>
+                                  <p>🔒 Executor Hub uses bank-grade security. Details stored here cannot be used to access or move money — they’re only for your records and to guide your executor when the time comes.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 3": {
                 subject: "Imagine your family hearing your voice ❤️",
                 body: `<p>Executor Hub isn’t just about paperwork. It’s about love, memories, and guidance.</p>
-                              <p>✅ Today’s step: Record your first video or message.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Record your first message]</a>
-                              <p>🔒 All recordings are encrypted and stored securely, only visible to the loved ones you choose.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>✅ Today’s step: Record your first video or message.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Record your first message]</a>
+                                  <p>🔒 All recordings are encrypted and stored securely, only visible to the loved ones you choose.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 5": {
                 subject: "Guidance for guardians — your voice in their future",
                 body: `<p>Executor Hub lets you leave clear guidance for guardians — advice, routines, values.</p>
-                              <p>✅ Today’s step: Add your first note for guardians.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Leave guardian guidance now]</a>
-                              <p>🔒 Stored securely and only shared with those you authorise.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>✅ Today’s step: Add your first note for guardians.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Leave guardian guidance now]</a>
+                                  <p>🔒 Stored securely and only shared with those you authorise.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 6": {
                 subject: "You’re halfway there — families like Sarah’s save months",
                 body: `<p>Your vault is already taking shape 🎉.</p>
-                              <p>Families without Executor Hub often spend months searching for paperwork (Exizent 2023). With everything in one secure vault, it’s reduced to days.</p>
-                              <p>✅ Check your dashboard and complete one more item today.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [See your progress]</a>
-                              <p>🔒 All your data is protected with AES-256 bank-grade encryption.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>Families without Executor Hub often spend months searching for paperwork (Exizent 2023). With everything in one secure vault, it’s reduced to days.</p>
+                                  <p>✅ Check your dashboard and complete one more item today.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [See your progress]</a>
+                                  <p>🔒 All your data is protected with AES-256 bank-grade encryption.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 7": {
                 subject: "1 week in — keep peace of mind for less than £3/week",
                 body: `<p>You’ve completed a week 🎉. Already, you’ve:</p>
-                              <p>✔ Uploaded documents</p>
-                              <p>✔ Nominated an executor</p>
-                              <p>✔ Added assets</p>
-                              <p>For less than £3 a week, you’ll keep:</p>
-                              <p>- Your secure digital vault</p>
-                              <p>- Executor’s step-by-step guide</p>
-                              <p>- Legacy messages & videos</p>
-                              <p>- Guardian guidance & wishes</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Continue after your trial — get 2 months free on annual plan]</a>
-                              <p>🔒 Executors only ever see data you approve — and your financial details can never be used to move money.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>✔ Uploaded documents</p>
+                                  <p>✔ Nominated an executor</p>
+                                  <p>✔ Added assets</p>
+                                  <p>For less than £3 a week, you’ll keep:</p>
+                                  <p>- Your secure digital vault</p>
+                                  <p>- Executor’s step-by-step guide</p>
+                                  <p>- Legacy messages & videos</p>
+                                  <p>- Guardian guidance & wishes</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Continue after your trial — get 2 months free on annual plan]</a>
+                                  <p>🔒 Executors only ever see data you approve — and your financial details can never be used to move money.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 8": {
                 subject: "Review your property details — keep them up to date",
                 body: `<p>Quick check-in on your property details.</p>
-                              <p>✅ Today’s step: Review your property entry and add any missing info (title number, mortgage, insurer).</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Review property now]</a>
-                              <p>🔒 Details are stored securely and cannot be accessed by anyone unless you authorise it.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>✅ Today’s step: Review your property entry and add any missing info (title number, mortgage, insurer).</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Review property now]</a>
+                                  <p>🔒 Details are stored securely and cannot be accessed by anyone unless you authorise it.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 9": {
                 subject: "Your annual capacity proof is due — record in 30 seconds",
                 body: `<p>🔒 All recordings are encrypted, time-stamped, and stored securely to protect you against future challenges.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 10": {
                 subject: "Don’t lose what you’ve built",
                 body: `<p>Your executor’s guide is active. Your family’s vault is filling. Your legacy messages are stored.</p>
-                              <p>In just 4 days, your trial ends. Without a plan, you’ll lose access to it all.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Continue for just £5.99/month]</a>
-                              <p>🔒 All the progress you’ve made is stored under bank-grade security. Keep it safe by continuing your plan.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>In just 4 days, your trial ends. Without a plan, you’ll lose access to it all.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Continue for just £5.99/month]</a>
+                                  <p>🔒 All the progress you’ve made is stored under bank-grade security. Keep it safe by continuing your plan.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 11": {
                 subject: "Your trial ends in 3 days — keep your vault safe",
                 body: `<p>Your free trial ends soon. Here’s what you’ll keep:</p>
-                              <p>- Your secure vault</p>
-                              <p>- Executor’s step-by-step guide</p>
-                              <p>- Your videos & messages</p>
-                              <p>- Guardian guidance & wishes</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Secure your vault now for £5.99/month]</a>
-                              <p>🎁 Add your partner for just £2.99/month.</p>
-                              <p>🔒 All data stays encrypted and private — your executor will only ever see what you approve.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>- Your secure vault</p>
+                                  <p>- Executor’s step-by-step guide</p>
+                                  <p>- Your videos & messages</p>
+                                  <p>- Guardian guidance & wishes</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Secure your vault now for £5.99/month]</a>
+                                  <p>🎁 Add your partner for just £2.99/month.</p>
+                                  <p>🔒 All data stays encrypted and private — your executor will only ever see what you approve.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 12": {
                 subject: "Almost there — complete your onboarding guide",
                 body: `<p>You’re nearly there 👏. Here’s what’s left to finish your setup:</p>
-                              <ul>
-                                <li>• Add a digital asset (social media, streaming, crypto)</li>
-                                <li>• Add your property details (or confirm you don’t own property)</li>
-                                <li>• Record a message/video for your loved ones</li>
-                                <li>• Add one bank account</li>
-                                <li>• Upload one document (will/insurance/bank statement)</li>
-                                <li>• Add your executor (unlocks their step-by-step guide)</li>
-                              </ul>
-                              <a href='https://executorhub.co.uk/'>👉 [Open your dashboard to complete the final steps]</a>
-                              <p>🔒 Everything you add is protected with bank-grade encryption and only visible to people you authorise.</p>
-                              <p>— Executor Hub</p>`
+                                  <ul>
+                                    <li>• Add a digital asset (social media, streaming, crypto)</li>
+                                    <li>• Add your property details (or confirm you don’t own property)</li>
+                                    <li>• Record a message/video for your loved ones</li>
+                                    <li>• Add one bank account</li>
+                                    <li>• Upload one document (will/insurance/bank statement)</li>
+                                    <li>• Add your executor (unlocks their step-by-step guide)</li>
+                                  </ul>
+                                  <a href='https://executorhub.co.uk/'>👉 [Open your dashboard to complete the final steps]</a>
+                                  <p>🔒 Everything you add is protected with bank-grade encryption and only visible to people you authorise.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 13": {
                 subject: "Last chance: don’t lose your vault tomorrow",
                 body: `<p>This is your final reminder — tomorrow your trial ends.</p>
-                              <p>Don’t lose access to the vault, guides, and priceless messages you’ve built.</p>
-                              <a href='https://executorhub.co.uk/'>👉 [Continue your plan today]</a>
-                              <p>🔒 Keep everything you’ve secured safe, encrypted, and available when it matters.</p>
-                              <p>— Executor Hub</p>`
+                                  <p>Don’t lose access to the vault, guides, and priceless messages you’ve built.</p>
+                                  <a href='https://executorhub.co.uk/'>👉 [Continue your plan today]</a>
+                                  <p>🔒 Keep everything you’ve secured safe, encrypted, and available when it matters.</p>
+                                  <p>— Executor Hub</p>`
             },
 
             "Day 14": {
                 subject: "Keep everything you’ve built — for less than 2 coffees a month",
                 body: `<p>Your free trial ends today. Unless you continue, you’ll lose access to your vault, executor’s guide, and legacy features.</p>
-                              <a href='https://executorhub.co.uk/stripe'>👉 [Keep my Executor Hub active for £5.99/month]</a>
-                              <p>or</p>
-                              <a href='https://executorhub.co.uk/stripe'>Or [Switch to annual — 2 months free]</a>
-                              <p>Not ready? Pause your plan for 3 months and keep your vault safe.</p>
-                              <p>🔒 Your data will always remain protected with bank-grade security — but only active plans keep your vault available to executors.</p>
-                              <p>This is the simplest, most powerful gift you can leave your loved ones.</p>
-                              <p>— Executor Hub</p>
-                `
+                                  <a href='https://executorhub.co.uk/stripe'>👉 [Keep my Executor Hub active for £5.99/month]</a>
+                                  <p>or</p>
+                                  <a href='https://executorhub.co.uk/stripe'>Or [Switch to annual — 2 months free]</a>
+                                  <p>Not ready? Pause your plan for 3 months and keep your vault safe.</p>
+                                  <p>🔒 Your data will always remain protected with bank-grade security — but only active plans keep your vault available to executors.</p>
+                                  <p>This is the simplest, most powerful gift you can leave your loved ones.</p>
+                                  <p>— Executor Hub</p>
+                    `
             }
         };
 
@@ -336,7 +347,13 @@
                 specificUserDiv.style.display = 'none';
             }
 
-            const data = val === 'partners' ? partnerTemplates : val === 'customers' ? customerTemplates : null;
+            const data =
+                val === 'partners'
+                    ? partnerTemplates
+                    : val.startsWith('customers_') || val === 'customers'
+                        ? customerTemplates
+                        : null;
+
 
             if (data) {
                 Object.keys(data).forEach(day => {
@@ -360,9 +377,10 @@
             templateSelect.innerHTML = '<option value="">-- Custom Message --</option>';
 
             let templatesToUse = {};
+
             if (userRole === 'partner') {
                 templatesToUse = partnerTemplates;
-            } else if (userRole === 'customer') {
+            } else if (userRole === 'customer' || userRole.startsWith('customers_')) {
                 templatesToUse = customerTemplates;
             }
 
@@ -384,18 +402,23 @@
 
             if (recipientType === 'partners') {
                 data = partnerTemplates;
-            } else if (recipientType === 'customers') {
+
+            } else if (recipientType === 'customers' || recipientType.startsWith('customers_')) {
                 data = customerTemplates;
+
             } else if (recipientType === 'select_specific_user') {
                 const selectedUserOption = specificUserSelect.options[specificUserSelect.selectedIndex];
-                const userRole = selectedUserOption ? selectedUserOption.getAttribute('data-role') : null;
+                const userRole = selectedUserOption
+                    ? selectedUserOption.getAttribute('data-role')
+                    : null;
 
                 if (userRole === 'partner') {
                     data = partnerTemplates;
-                } else if (userRole === 'customer') {
+                } else if (userRole === 'customer' || userRole.startsWith('customers_')) {
                     data = customerTemplates;
                 }
             }
+
 
             if (selected && data[selected]) {
                 document.getElementById('title').value = data[selected].subject;

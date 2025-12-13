@@ -36,6 +36,34 @@ class EmailController extends Controller
 
         if ($request->recipient_type === 'customers') {
             $users = User::role('customer')->get();
+        } elseif ($request->recipient_type === 'customers_free_trial') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'free_trial')
+                ->get();
+        } elseif ($request->recipient_type === 'customers_lifetime_basic') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'Lifetime Basic')
+                ->get();
+        } elseif ($request->recipient_type === 'customers_lifetime_standard') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'Lifetime Standard')
+                ->get();
+        } elseif ($request->recipient_type === 'customers_lifetime_premium') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'Lifetime Premium')
+                ->get();
+        } elseif ($request->recipient_type === 'customers_monthly_basic') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'Basic')
+                ->get();
+        } elseif ($request->recipient_type === 'customers_monthly_standard') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'Standard')
+                ->get();
+        } elseif ($request->recipient_type === 'customers_monthly_premium') {
+            $users = User::role('customer')
+                ->where('subscribed_package', 'Premium')
+                ->get();
         } elseif ($request->recipient_type === 'partners') {
             $users = User::role('partner')->get();
         } elseif ($request->recipient_type === 'customers_and_partners') {
@@ -77,34 +105,34 @@ class EmailController extends Controller
     }
 
     public function store(Request $request)
-{
-    $validationRules = [
-        'recipient_type' => 'required|string',
-        'title' => 'required|string',
-        'message' => 'required|string',
-        'action' => 'required|string',
-    ];
+    {
+        $validationRules = [
+            'recipient_type' => 'required|string',
+            'title' => 'required|string',
+            'message' => 'required|string',
+            'action' => 'required|string',
+        ];
 
-    if ($request->action === 'schedule') {
-        $validationRules['scheduled_at'] = 'required|date|after:now';
-    }
+        if ($request->action === 'schedule') {
+            $validationRules['scheduled_at'] = 'required|date|after:now';
+        }
 
-    if ($request->recipient_type === 'select_specific_user') {
-        $validationRules['specific_user_id'] = 'required|exists:users,id';
-    }
+        if ($request->recipient_type === 'select_specific_user') {
+            $validationRules['specific_user_id'] = 'required|exists:users,id';
+        }
 
-    $request->validate($validationRules);
+        $request->validate($validationRules);
 
-    $recipients = $this->getRecipients(
-        $request->recipient_type,
-        $request->specific_user_id
-    );
+        $recipients = $this->getRecipients(
+            $request->recipient_type,
+            $request->specific_user_id
+        );
 
-    if ($recipients->isEmpty()) {
-        return back()->with('error', 'No recipients found for the selected type.');
-    }
+        if ($recipients->isEmpty()) {
+            return back()->with('error', 'No recipients found for the selected type.');
+        }
 
-    $signature = '
+        $signature = '
         <br><br>
         <p><b>Executor Hub Team</b></p>
         <p><b>Executor Hub Ltd</b></p>
@@ -120,50 +148,76 @@ class EmailController extends Controller
         </a>
     ';
 
-    $messageWithSignature = $request->message . $signature;
+        $messageWithSignature = $request->message . $signature;
 
-    if ($request->action === 'send') {
-        foreach ($recipients as $recipient) {
-            Mail::to($recipient->email)->send(new DynamicEmail(
-                $request->title,
-                $messageWithSignature,
-                $recipient->name ?? 'User'
-            ));
+        if ($request->action === 'send') {
+            foreach ($recipients as $recipient) {
+                Mail::to($recipient->email)->send(new DynamicEmail(
+                    $request->title,
+                    $messageWithSignature,
+                    $recipient->name ?? 'User'
+                ));
+            }
+
+            return back()->with('success', 'Emails sent successfully!');
         }
 
-        return back()->with('success', 'Emails sent successfully!');
-    }
-
-    if ($request->action === 'schedule') {
-        $localScheduledTime = Carbon::parse($request->scheduled_at);
-        $scheduledTimeUtc = $localScheduledTime->copy()->setTimezone('UTC');
-        foreach ($recipients as $recipient) {
-            EmailSchedule::create([
-                'recipient_email' => $recipient->email,
-                'subject' => $request->title,
-                'body' => $messageWithSignature,
-                'recipient_type' => $request->recipient_type,
-                'status' => 'pending',
-                'scheduled_for' => $scheduledTimeUtc,
-            ]);
+        if ($request->action === 'schedule') {
+            $localScheduledTime = Carbon::parse($request->scheduled_at);
+            $scheduledTimeUtc = $localScheduledTime->copy()->setTimezone('UTC');
+            foreach ($recipients as $recipient) {
+                EmailSchedule::create([
+                    'recipient_email' => $recipient->email,
+                    'subject' => $request->title,
+                    'body' => $messageWithSignature,
+                    'recipient_type' => $request->recipient_type,
+                    'status' => 'pending',
+                    'scheduled_for' => $scheduledTimeUtc,
+                ]);
+            }
+            return back()->with('success', 'Emails scheduled successfully for ' . $localScheduledTime->format('Y-m-d H:i') . '!');
         }
-        return back()->with('success', 'Emails scheduled successfully for ' . $localScheduledTime->format('Y-m-d H:i') . '!');
     }
-}
 
     private function getRecipients($type, $specificUserId = null)
-    {
-        if ($type === 'partners') {
-            return User::role('partner')->get();
-        } elseif ($type === 'customers') {
-            return User::role('customer')->get();
-        } elseif ($type === 'select_specific_user' && $specificUserId) {
-            $user = User::find($specificUserId);
-            return $user ? collect([$user]) : collect();
-        }
-
-        return collect();
+{
+    // Partners
+    if ($type === 'partners') {
+        return User::role('partner')->get();
     }
+
+    // All customers
+    if ($type === 'customers') {
+        return User::role('customer')->get();
+    }
+
+    // Customer package mapping
+    $packageMap = [
+        'customers_free_trial'          => 'free_trial',
+        'customers_lifetime_basic'      => 'Lifetime Basic',
+        'customers_lifetime_standard'   => 'Lifetime Standard',
+        'customers_lifetime_premium'    => 'Lifetime Premium',
+        'customers_monthly_basic'       => 'Basic',
+        'customers_monthly_standard'    => 'Standard',
+        'customers_monthly_premium'     => 'Premium',
+    ];
+
+    // Customers by package
+    if (array_key_exists($type, $packageMap)) {
+        return User::role('customer')
+            ->where('subscribed_package', $packageMap[$type])
+            ->get();
+    }
+
+    // Specific user
+    if ($type === 'select_specific_user' && $specificUserId) {
+        $user = User::find($specificUserId);
+        return $user ? collect([$user]) : collect();
+    }
+
+    return collect();
+}
+
 
     public function users_list()
     {
