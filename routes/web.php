@@ -13,6 +13,7 @@ use App\Http\Controllers\WillController as WillControllerMobile;
 use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\EmailController as AdminEmailController;
+use App\Http\Controllers\Admin\CommissionCalculatorController as AdminCommissionCalculatorController;
 
 // Role Partner Controller
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
@@ -300,6 +301,8 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+        // COMMISSION CALCULATOR
+    Route::get('/commission_calculator/index', [AdminCommissionCalculatorController::class, 'index'])->name('commission_calculator.index');
     // Admin Profile
     Route::get('/edit-profile', [SettingController::class, 'editProfile'])->name('edit_profile');
     Route::post('/update-profile', [SettingController::class, 'updateProfile'])->name('update_profile');
