@@ -609,6 +609,7 @@
                                 <li aria-haspopup="true">
                                     <a href="#" class="h-link">For Professionals</a>
                                     <ul class="sub-menu">
+                                        <li><a href="{{route('partner-registration.index')}}">Partner Sign Up</a></li>
                                         <li><a href="#lnk-3">Partner Program</a></li>
                                         <li><a href="#commission-calculator">Commission Calculator</a></li>
                                         <li><a href="#contacts-2">Enterprise solutions </a></li>

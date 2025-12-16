@@ -996,7 +996,26 @@ class StripePaymentController extends Controller
             return redirect()->route('login')->with('error', 'An account with this email already exists.');
         }
 
-        $priceId = $registration['discounted_price_id'];
+        $dob = $request->date_of_birth;
+
+        $discountedPriceMap = [
+            'under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
+            '50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
+            '65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
+        ];
+
+        // Calculate age
+        $age = Carbon::parse($dob)->age;
+
+        // Assign price ID based on age
+        if ($age < 50) {
+            $priceId = $discountedPriceMap['under_50'];
+        } elseif ($age >= 50 && $age <= 65) {
+            $priceId = $discountedPriceMap['50_65'];
+        } else {
+            $priceId = $discountedPriceMap['65_plus'];
+        }
+        // $priceId = $registration['discounted_price_id'];
 
         if (!$priceId) {
             return back()->withErrors(['error' => 'Discounted pricing not available for this plan tier.']);
