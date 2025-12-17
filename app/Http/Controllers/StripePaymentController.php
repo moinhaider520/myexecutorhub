@@ -998,11 +998,18 @@ class StripePaymentController extends Controller
 
         $dob = $request->date_of_birth;
 
+        // LIVE
         $discountedPriceMap = [
-            'under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
-            '50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
-            '65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
-        ];
+                    'under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    '50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
+                    '65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
+                ];
+        // TEST
+        // $discountedPriceMap = [
+        //     'under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
+        //     '50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
+        //     '65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
+        // ];
 
         // Calculate age
         $age = Carbon::parse($dob)->age;

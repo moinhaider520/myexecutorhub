@@ -419,7 +419,7 @@
         <!-- Header -->
         <div class="header">
             <h1>Complete Your Registration</h1>
-            <p>Join John Smith on Executor Hub</p>
+            <p>Join {{ $primaryUser->name }} on Executor Hub</p>
         </div>
 
         <!-- Info Card -->
@@ -433,7 +433,7 @@
                 </div>
                 <div class="info-text">
                     <h3>Special Couple Partner Discount</h3>
-                    <p>You've been invited by <strong>John Smith</strong> to join Executor Hub at a special discounted
+                    <p>You've been invited by <strong>{{ $primaryUser->name }}</strong> to join Executor Hub at a special discounted
                         rate.</p>
                     <ul>
                         <li>Lifetime access to all features</li>
