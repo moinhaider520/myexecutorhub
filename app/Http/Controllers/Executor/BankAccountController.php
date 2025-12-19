@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BankType;
@@ -12,13 +13,10 @@ class BankAccountController extends Controller
 {
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        
-        // Retrieve bank types and bank accounts created by the authenticated user
-        $bankTypes = BankType::where('created_by', $user->created_by)->get();
-        $bankAccounts = BankAccount::where('created_by', $user->created_by)->get();
-        
+        $contextUser = ContextHelper::user();
+        $bankTypes = BankType::where('created_by', $contextUser->id)->get();
+        $bankAccounts = BankAccount::where('created_by', $contextUser->id)->get();
+
         return view('executor.assets.bank_accounts', compact('bankAccounts', 'bankTypes'));
     }
 }

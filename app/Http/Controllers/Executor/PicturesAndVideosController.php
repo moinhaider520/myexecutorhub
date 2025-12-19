@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Executor;
+
+use App\Helpers\ContextHelper;
 use Illuminate\Support\Facades\Auth;
 use App\Models\PicturesAndVideos;
 use App\Http\Controllers\Controller;
@@ -10,11 +12,11 @@ use App\Traits\ImageUpload;
 
 class PicturesAndVideosController extends Controller
 {
-        use ImageUpload; 
+        use ImageUpload;
     public function view()
     {
-        $user = Auth::user();
-        $pictures_and_videos = PicturesAndVideos::where('created_by', $user->created_by)->get();
+        $contextUser = ContextHelper::user();
+        $pictures_and_videos = PicturesAndVideos::where('created_by', $contextUser->id)->get();
         return view('executor.pictures_and_videos.pictures_and_videos', compact('pictures_and_videos'));
     }
 }

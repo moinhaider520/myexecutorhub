@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Guidance;
@@ -13,10 +14,10 @@ class GuidanceController extends Controller
     {
         // Get the currently authenticated user
         $user = Auth::user();
-        
+        $contextUser = ContextHelper::user();
         // Retrieve the guidance created by the authenticated user
-        $guidance = Guidance::where('created_by', $user->created_by)->get();
-        
+        $guidance = Guidance::where('created_by', $contextUser->id)->get();
+
         return view('executor.guidance.guidance', compact('guidance'));
     }
 }

@@ -111,4 +111,25 @@ class User extends Authenticatable
     {
         return $this->hasMany(PartnerWeeklySummary::class, 'created_by');
     }
+
+    public function executors()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'customer_executor',
+            'customer_id',
+            'executor_id'
+        );
+    }
+
+    // Executor → Customers
+    public function customers()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'customer_executor',
+            'executor_id',
+            'customer_id'
+        );
+    }
 }

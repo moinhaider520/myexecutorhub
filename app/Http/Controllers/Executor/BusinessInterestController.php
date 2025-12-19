@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BusinessTypes;
@@ -12,13 +13,10 @@ class BusinessInterestController extends Controller
 {
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        
-        // Retrieve business types and business interests created by the authenticated user
-        $businessTypes = BusinessTypes::where('created_by', $user->created_by)->get();
-        $businessInterests = BusinessInterest::where('created_by', $user->created_by)->get();
-        
+        $contextUser = ContextHelper::user();
+        $businessTypes = BusinessTypes::where('created_by', $contextUser->id)->get();
+        $businessInterests = BusinessInterest::where('created_by', $contextUser->id)->get();
+
         return view('executor.assets.business_interest', compact('businessInterests', 'businessTypes'));
     }
 }

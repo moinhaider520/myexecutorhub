@@ -10,3 +10,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('emails:send-scheduled')->everyMinute();
 Schedule::command('payouts:weekly')->daily();
+Schedule::command('summary:weekly')->daily();

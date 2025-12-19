@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VoiceNotes;
@@ -16,11 +17,8 @@ class VoiceNotesController extends Controller
      */
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-
-        // Retrieve voice notes created by the user
-        $voiceNotes = VoiceNotes::where('created_by', $user->created_by)->get();
+        $contextUser = ContextHelper::user();
+        $voiceNotes = VoiceNotes::where('created_by', $contextUser->id)->get();
         // Return the view with the voice notes data
         return view('executor.notes.voice_notes', compact('voiceNotes'));
     }

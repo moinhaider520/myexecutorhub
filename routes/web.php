@@ -185,6 +185,7 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\PartnerRegistationController;
 use App\Http\Controllers\KnowledgebaseController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\Executor\ImpersonationController;
 use App\Http\Controllers\Partner\SummaryController;
 use App\Models\User;
 
@@ -301,7 +302,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        // COMMISSION CALCULATOR
+    // COMMISSION CALCULATOR
     Route::get('/commission_calculator/index', [AdminCommissionCalculatorController::class, 'index'])->name('commission_calculator.index');
     // Admin Profile
     Route::get('/edit-profile', [SettingController::class, 'editProfile'])->name('edit_profile');
@@ -1162,6 +1163,11 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     // WILL GENERATOR
     Route::get('will_generator', [ExecutorWillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create_pdf/{will_user_id}', [ExecutorWillGeneratorController::class, 'create_pdf'])->name('will_generator.create_pdf');
+    Route::post('/impersonate', [ImpersonationController::class, 'start'])->name('impersonate');
+    Route::get('/stop-impersonation', function () {
+        session()->forget('acting_customer_id');
+        return redirect()->route('executor.dashboard');
+    })->name('stop-impersonation');
 });
 
 // Others Routes

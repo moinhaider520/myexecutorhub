@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PropertyType;
@@ -12,13 +13,10 @@ class PropertyController extends Controller
 {
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        
-        // Retrieve property types and properties created by the authenticated user
-        $propertyTypes = PropertyType::where('created_by', $user->created_by)->get();
-        $properties = Property::where('created_by', $user->created_by)->get();
-        
+        $contextUser = ContextHelper::user();
+        $propertyTypes = PropertyType::where('created_by', $contextUser->id)->get();
+        $properties = Property::where('created_by', $contextUser->id)->get();
+
         return view('executor.assets.properties', compact('properties', 'propertyTypes'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OrgansDonation;
@@ -11,12 +12,9 @@ class OrgansDonationController extends Controller
 {
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        
-        // Retrieve organ donations created by the authenticated user
-        $organ_donations = OrgansDonation::where('created_by', $user->created_by)->get();
-        
+        $contextUser = ContextHelper::user();
+        $organ_donations = OrgansDonation::where('created_by', $contextUser->id)->get();
+
         return view('executor.donations.organs_donation', compact('organ_donations'));
     }
 }

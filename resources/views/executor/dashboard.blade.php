@@ -13,13 +13,28 @@
     <div class="page-body">
         <div class="container">
             <div class="row">
-                <div class="col-md-11"></div>
+                <div class="col-md-11 d-flex">
+
+                    <button class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#impersonationModal">
+                        Switch Customer
+                    </button>
+                    @if (session()->has('acting_customer_id'))
+                        <div class="alert alert-warning  justify-content-between align-items-center ms-2">
+                            Acting on behalf of <strong>{{ $actingCustomer->name }}</strong>
+                            <a href="{{ route('executor.stop-impersonation') }}" class="btn btn-sm btn-danger">
+                                Stop
+                            </a>
+                        </div>
+                    @endif
+                </div>
                 <div class="col-md-1">
                     <iframe
                         src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
                         style="border:none;height:132px;width:132px;"></iframe>
                 </div>
+
             </div>
+
             <div class="row">
                 <div class="col">
                     <div class="card">
@@ -37,29 +52,34 @@
                 <div class="card">
                     <h2 class="p-2">Onboarding Guide</h2>
                     <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
-                    <h3 class="p-2">Access The Gazette Website - <a href="https://www.thegazette.co.uk/wills-and-probate/place-a-deceased-estates-notice"
-                    target="_blank">Gazette Website</a></h3>
+                    <h3 class="p-2">Access The Gazette Website - <a
+                            href="https://www.thegazette.co.uk/wills-and-probate/place-a-deceased-estates-notice"
+                            target="_blank">Gazette Website</a></h3>
                     <h3 class="p-2">Access The NWR Website - <a href="https://www.nationalwillregister.co.uk/"
-                    target="_blank">NWR Website</a></h3>
-                    <h3 class="p-2">Access The Tell Us Once Website - <a href="https://www.gov.uk/after-a-death/organisations-you-need-to-contact-and-tell-us-once"
-                    target="_blank">Tell Us Once Website</a></h3>
+                            target="_blank">NWR Website</a></h3>
+                    <h3 class="p-2">Access The Tell Us Once Website - <a
+                            href="https://www.gov.uk/after-a-death/organisations-you-need-to-contact-and-tell-us-once"
+                            target="_blank">Tell Us Once Website</a></h3>
                     <h3 class="p-2">Access The Estate Search Website - <a href="https://www.estatesearch.co.uk/"
-                    target="_blank">Estate Search Website</a></h3>
-                    <h3 class="p-2">Access The Probate Registry Website - <a href="https://www.gov.uk/applying-for-probate/apply-for-probate"
-                    target="_blank">Probate Registry Website</a></h3>
+                            target="_blank">Estate Search Website</a></h3>
+                    <h3 class="p-2">Access The Probate Registry Website - <a
+                            href="https://www.gov.uk/applying-for-probate/apply-for-probate" target="_blank">Probate
+                            Registry Website</a></h3>
                     <h3 class="p-2">Access The DVLA Website - <a href="https://www.gov.uk/tell-dvla-about-bereavement"
-                    target="_blank">DVLA Website</a></h3>
-                    <h3 class="p-2">Access The Royal Mail Website - <a href="https://help.royalmail.com/personal/s/article/Redirecting-mail-on-behalf-of-someone-else"
-                    target="_blank">Royal Mail Website</a></h3>
-                    <h3 class="p-2">Access The Land Registry Website - <a href="https://www.gov.uk/update-property-records-someone-dies"
-                    target="_blank">Land Registry Website</a></h3>
+                            target="_blank">DVLA Website</a></h3>
+                    <h3 class="p-2">Access The Royal Mail Website - <a
+                            href="https://help.royalmail.com/personal/s/article/Redirecting-mail-on-behalf-of-someone-else"
+                            target="_blank">Royal Mail Website</a></h3>
+                    <h3 class="p-2">Access The Land Registry Website - <a
+                            href="https://www.gov.uk/update-property-records-someone-dies" target="_blank">Land Registry
+                            Website</a></h3>
                 </div>
             </div>
         </div>
         <!-- Container-fluid starts-->
         <div class="container-fluid default-dashboard">
             <div class="row widget-grid">
-                <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">               
+                <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
                     <div class="row">
                         <div class="col-xl-6 col-sm-6">
                             <div class="card">
@@ -134,7 +154,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            @if($documentLocations->isEmpty())
+                            @if ($documentLocations->isEmpty())
                                 <p class="text-muted">No locations added yet.</p>
                             @else
                                 <div class="table-responsive theme-scrollbar">
@@ -148,7 +168,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach($documentLocations as $index => $location)
+                                            @foreach ($documentLocations as $index => $location)
                                                 <tr>
                                                     <td>{{ $index + 1 }}</td>
                                                     <td>{{ $location->location }}</td>
@@ -171,7 +191,8 @@
                     <div class="card h-100">
                         <div class="card-header pb-0">
                             <h4>Standard Executor To-Do List</h4>
-                            <p class="mb-0 text-muted">Designed for straightforward estates with a will, minimal assets, and
+                            <p class="mb-0 text-muted">Designed for straightforward estates with a will, minimal assets,
+                                and
                                 no inheritance tax.</p>
                             <div class="mt-2">
                                 <span class="badge badge-success">{{ $standardCompletedItems }}/{{ $standardTotalItems }}
@@ -180,11 +201,13 @@
                         </div>
                         <div class="card-body">
                             <div class="accordion" id="standardTodoAccordion">
-                                @foreach($standardTodoStages as $stage)
+                                @foreach ($standardTodoStages as $stage)
                                     <div class="accordion-item mb-3">
                                         <h2 class="accordion-header" id="standardHeading{{ $stage->id }}">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#standardCollapse{{ $stage->id }}" aria-expanded="false"
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#standardCollapse{{ $stage->id }}"
+                                                aria-expanded="false"
                                                 aria-controls="standardCollapse{{ $stage->id }}">
                                                 <div class="d-flex justify-content-between align-items-center w-100 me-3">
                                                     <div>
@@ -195,7 +218,10 @@
                                                     <div class="text-end">
                                                         @php
                                                             $stageCompleted = $stage->todoItems->sum(function ($item) {
-                                                                return $item->currentUserProgress && $item->currentUserProgress->status === 'completed' ? 1 : 0;
+                                                                return $item->currentUserProgress &&
+                                                                    $item->currentUserProgress->status === 'completed'
+                                                                    ? 1
+                                                                    : 0;
                                                             });
                                                             $stageTotal = $stage->todoItems->count();
                                                         @endphp
@@ -209,18 +235,22 @@
                                             aria-labelledby="standardHeading{{ $stage->id }}"
                                             data-bs-parent="#standardTodoAccordion">
                                             <div class="accordion-body">
-                                                @foreach($stage->todoItems as $todoItem)
+                                                @foreach ($stage->todoItems as $todoItem)
                                                     @php
-                                                        $currentStatus = $todoItem->currentUserProgress ? $todoItem->currentUserProgress->status : 'not_completed';
+                                                        $currentStatus = $todoItem->currentUserProgress
+                                                            ? $todoItem->currentUserProgress->status
+                                                            : 'not_completed';
                                                     @endphp
                                                     <div class="todo-item mb-3 p-3 border rounded">
                                                         <div class="row align-items-center">
                                                             <div class="col-md-8">
                                                                 <div class="d-flex align-items-center">
-                                                                    @if($currentStatus === 'completed')
-                                                                        <i class="fa fa-check-circle text-success me-2"></i>
+                                                                    @if ($currentStatus === 'completed')
+                                                                        <i
+                                                                            class="fa fa-check-circle text-success me-2"></i>
                                                                     @elseif($currentStatus === 'not_required')
-                                                                        <i class="fa fa-times-circle text-warning me-2"></i>
+                                                                        <i
+                                                                            class="fa fa-times-circle text-warning me-2"></i>
                                                                     @else
                                                                         <i class="fa fa-circle text-muted me-2"></i>
                                                                     @endif
@@ -229,7 +259,7 @@
                                                                             class="mb-1 {{ $currentStatus === 'completed' ? 'text-decoration-line-through text-muted' : '' }}">
                                                                             {{ $todoItem->title }}
                                                                         </h6>
-                                                                        @if($todoItem->description)
+                                                                        @if ($todoItem->description)
                                                                             <small
                                                                                 class="text-muted">{{ $todoItem->description }}</small>
                                                                         @endif
@@ -240,25 +270,28 @@
                                                                 <select class="form-select todo-status-select"
                                                                     data-todo-id="{{ $todoItem->id }}"
                                                                     data-current-status="{{ $currentStatus }}">
-                                                                    <option value="not_completed" {{ $currentStatus === 'not_completed' ? 'selected' : '' }}>
+                                                                    <option value="not_completed"
+                                                                        {{ $currentStatus === 'not_completed' ? 'selected' : '' }}>
                                                                         Not Completed
                                                                     </option>
-                                                                    <option value="completed" {{ $currentStatus === 'completed' ? 'selected' : '' }}>
+                                                                    <option value="completed"
+                                                                        {{ $currentStatus === 'completed' ? 'selected' : '' }}>
                                                                         Completed
                                                                     </option>
-                                                                    <option value="not_required" {{ $currentStatus === 'not_required' ? 'selected' : '' }}>
+                                                                    <option value="not_required"
+                                                                        {{ $currentStatus === 'not_required' ? 'selected' : '' }}>
                                                                         Not Required
                                                                     </option>
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        @if($todoItem->currentUserProgress && $todoItem->currentUserProgress->notes)
+                                                        @if ($todoItem->currentUserProgress && $todoItem->currentUserProgress->notes)
                                                             <div class="mt-2">
                                                                 <small class="text-muted"><strong>Notes:</strong>
                                                                     {{ $todoItem->currentUserProgress->notes }}</small>
                                                             </div>
                                                         @endif
-                                                        @if($todoItem->currentUserProgress && $todoItem->currentUserProgress->completed_at)
+                                                        @if ($todoItem->currentUserProgress && $todoItem->currentUserProgress->completed_at)
                                                             <div class="mt-1">
                                                                 <small class="text-muted"><strong>Completed:</strong>
                                                                     {{ $todoItem->currentUserProgress->completed_at->format('d/m/Y H:i') }}</small>
@@ -289,11 +322,13 @@
                         </div>
                         <div class="card-body">
                             <div class="accordion" id="advancedTodoAccordion">
-                                @foreach($advancedTodoStages as $stage)
+                                @foreach ($advancedTodoStages as $stage)
                                     <div class="accordion-item mb-3">
                                         <h2 class="accordion-header" id="advancedHeading{{ $stage->id }}">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#advancedCollapse{{ $stage->id }}" aria-expanded="false"
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#advancedCollapse{{ $stage->id }}"
+                                                aria-expanded="false"
                                                 aria-controls="advancedCollapse{{ $stage->id }}">
                                                 <div class="d-flex justify-content-between align-items-center w-100 me-3">
                                                     <div>
@@ -304,7 +339,10 @@
                                                     <div class="text-end">
                                                         @php
                                                             $stageCompleted = $stage->todoItems->sum(function ($item) {
-                                                                return $item->currentUserProgress && $item->currentUserProgress->status === 'completed' ? 1 : 0;
+                                                                return $item->currentUserProgress &&
+                                                                    $item->currentUserProgress->status === 'completed'
+                                                                    ? 1
+                                                                    : 0;
                                                             });
                                                             $stageTotal = $stage->todoItems->count();
                                                         @endphp
@@ -318,18 +356,22 @@
                                             aria-labelledby="advancedHeading{{ $stage->id }}"
                                             data-bs-parent="#advancedTodoAccordion">
                                             <div class="accordion-body">
-                                                @foreach($stage->todoItems as $todoItem)
+                                                @foreach ($stage->todoItems as $todoItem)
                                                     @php
-                                                        $currentStatus = $todoItem->currentUserProgress ? $todoItem->currentUserProgress->status : 'not_completed';
+                                                        $currentStatus = $todoItem->currentUserProgress
+                                                            ? $todoItem->currentUserProgress->status
+                                                            : 'not_completed';
                                                     @endphp
                                                     <div class="todo-item mb-3 p-3 border rounded">
                                                         <div class="row align-items-center">
                                                             <div class="col-md-8">
                                                                 <div class="d-flex align-items-center">
-                                                                    @if($currentStatus === 'completed')
-                                                                        <i class="fa fa-check-circle text-success me-2"></i>
+                                                                    @if ($currentStatus === 'completed')
+                                                                        <i
+                                                                            class="fa fa-check-circle text-success me-2"></i>
                                                                     @elseif($currentStatus === 'not_required')
-                                                                        <i class="fa fa-times-circle text-warning me-2"></i>
+                                                                        <i
+                                                                            class="fa fa-times-circle text-warning me-2"></i>
                                                                     @else
                                                                         <i class="fa fa-circle text-muted me-2"></i>
                                                                     @endif
@@ -338,7 +380,7 @@
                                                                             class="mb-1 {{ $currentStatus === 'completed' ? 'text-decoration-line-through text-muted' : '' }}">
                                                                             {{ $todoItem->title }}
                                                                         </h6>
-                                                                        @if($todoItem->description)
+                                                                        @if ($todoItem->description)
                                                                             <small
                                                                                 class="text-muted">{{ $todoItem->description }}</small>
                                                                         @endif
@@ -349,25 +391,28 @@
                                                                 <select class="form-select todo-status-select"
                                                                     data-todo-id="{{ $todoItem->id }}"
                                                                     data-current-status="{{ $currentStatus }}">
-                                                                    <option value="not_completed" {{ $currentStatus === 'not_completed' ? 'selected' : '' }}>
+                                                                    <option value="not_completed"
+                                                                        {{ $currentStatus === 'not_completed' ? 'selected' : '' }}>
                                                                         Not Completed
                                                                     </option>
-                                                                    <option value="completed" {{ $currentStatus === 'completed' ? 'selected' : '' }}>
+                                                                    <option value="completed"
+                                                                        {{ $currentStatus === 'completed' ? 'selected' : '' }}>
                                                                         Completed
                                                                     </option>
-                                                                    <option value="not_required" {{ $currentStatus === 'not_required' ? 'selected' : '' }}>
+                                                                    <option value="not_required"
+                                                                        {{ $currentStatus === 'not_required' ? 'selected' : '' }}>
                                                                         Not Required
                                                                     </option>
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        @if($todoItem->currentUserProgress && $todoItem->currentUserProgress->notes)
+                                                        @if ($todoItem->currentUserProgress && $todoItem->currentUserProgress->notes)
                                                             <div class="mt-2">
                                                                 <small class="text-muted"><strong>Notes:</strong>
                                                                     {{ $todoItem->currentUserProgress->notes }}</small>
                                                             </div>
                                                         @endif
-                                                        @if($todoItem->currentUserProgress && $todoItem->currentUserProgress->completed_at)
+                                                        @if ($todoItem->currentUserProgress && $todoItem->currentUserProgress->completed_at)
                                                             <div class="mt-1">
                                                                 <small class="text-muted"><strong>Completed:</strong>
                                                                     {{ $todoItem->currentUserProgress->completed_at->format('d/m/Y H:i') }}</small>
@@ -386,7 +431,7 @@
             </div>
         </div>
         <!-- Container-fluid Ends-->
-         <!-- GUIDE MODAL -->
+        <!-- GUIDE MODAL -->
         <div class="modal fade" id="guideModal" tabindex="-1" aria-labelledby="guideModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
                 <div class="modal-content">
@@ -400,7 +445,8 @@
                         <div class="step active" data-audio="{{ asset('assets/executor_guide_audios/audio1.mp3') }}">
                             <h4>Welcome & Getting Started</h4>
                             <p>Welcome to Executor Hub</p>
-                            <p>Your guided assistant for managing an estate — every task, deadline & document in one secure place.</p>
+                            <p>Your guided assistant for managing an estate — every task, deadline & document in one secure
+                                place.</p>
                             <p>We’ll take this step-by-step together ❤️</p>
                             <p>Click Next to Get Started</p>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
@@ -523,12 +569,56 @@
         </div>
         <audio id="stepAudio" autoplay hidden></audio>
     </div>
+    <!-- IMPERSONATION MODAL -->
+    <div class="modal fade" id="impersonationModal" tabindex="-1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Act on behalf of</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    @if ($customers->isEmpty())
+                        <p class="text-muted">No customers linked to you.</p>
+                    @else
+                        <ul class="list-group">
+                            @foreach ($customers as $customer)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ $customer->name }}</strong><br>
+                                        <small class="text-muted">{{ $customer->email }}</small>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary act-as-btn" data-id="{{ $customer->id }}">
+                                        Act as
+                                    </button>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
-        $(document).ready(function () {
+        $('.act-as-btn').on('click', function() {
+            let customerId = $(this).data('id');
+
+            $.post("{{ route('executor.impersonate') }}", {
+                _token: "{{ csrf_token() }}",
+                customer_id: customerId
+            }, function() {
+                location.reload();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
             $('#document-locations-table-view-only').DataTable({
                 "ordering": true,
                 "paging": true,
@@ -540,9 +630,9 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Handle todo status change
-            $('.todo-status-select').on('change', function () {
+            $('.todo-status-select').on('change', function() {
                 const todoId = $(this).data('todo-id');
                 const newStatus = $(this).val();
                 const currentStatus = $(this).data('current-status');
@@ -562,7 +652,7 @@
                 }
 
                 $.ajax({
-                    url: '{{ route("executor.dashboard.update-todo") }}',
+                    url: '{{ route('executor.dashboard.update-todo') }}',
                     method: 'POST',
                     data: {
                         _token: '{{ csrf_token() }}',
@@ -570,10 +660,11 @@
                         status: newStatus,
                         notes: notes
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             // Update the current status data attribute
-                            $(`select[data-todo-id="${todoId}"]`).data('current-status', newStatus);
+                            $(`select[data-todo-id="${todoId}"]`).data('current-status',
+                                newStatus);
 
                             // Reload the page to update counters and styling
                             location.reload();
@@ -582,7 +673,7 @@
                             $(`select[data-todo-id="${todoId}"]`).val(currentStatus);
                         }
                     },
-                    error: function () {
+                    error: function() {
                         alert('Error updating status. Please try again.');
                         $(`select[data-todo-id="${todoId}"]`).val(currentStatus);
                     }
@@ -668,7 +759,7 @@
             guideModal.hide();
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             // Show modal only on first visit
             if (!localStorage.getItem('hasVisited')) {
                 guideModal.show();
@@ -676,7 +767,6 @@
                 localStorage.setItem('hasVisited', 'true');
             }
         });
-
     </script>
 
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Document;
@@ -14,11 +15,11 @@ class DocumentsController extends Controller
     {
         // Get the currently authenticated user
         $user = Auth::user();
-        
+        $contextUser = ContextHelper::user();
         // Retrieve document types and documents created by the authenticated user
-        $documentTypes = DocumentTypes::where('created_by', $user->created_by)->get();
-        $documents = Document::where('created_by', $user->created_by)->get();
-        
+        $documentTypes = DocumentTypes::where('created_by', $contextUser->id)->get();
+        $documents = Document::where('created_by', $contextUser->id)->get();
+
         return view('executor.documents.documents', compact('documents', 'documentTypes'));
     }
 }

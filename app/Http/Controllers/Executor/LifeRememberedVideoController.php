@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\LifeRememberedVideo;
@@ -15,9 +16,8 @@ class LifeRememberedVideoController extends Controller
      */
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        $lifeRememberedVideos = LifeRememberedVideo::where('created_by', $user->created_by)->get();
+        $contextUser = ContextHelper::user();
+        $lifeRememberedVideos = LifeRememberedVideo::where('created_by', $contextUser->id)->get();
         return view('executor.life_remembered.life_remembered_videos', compact('lifeRememberedVideos'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use App\Models\BankAccount;
 use App\Models\DebtAndLiability;
@@ -31,22 +32,28 @@ class DashboardController extends Controller
     {
         // Get the currently authenticated user
         $user = Auth::user();
+        $customers=$user->customers;
+        $actingCustomer = session('acting_customer_id')
+        ? User::find(session('acting_customer_id'))
+        : null;
 
+        // IMPORTANT: use acting customer for data
+        $contextUser = $actingCustomer ?? $user;
         // Fetch totals specific to the authenticated user
-        $totalExecutors = User::role('executor')->where('created_by', $user->created_by)->count();
-        $totalDocuments = Document::where('created_by', $user->created_by)->count();
+        $totalExecutors = $contextUser->executors->count();
+        $totalDocuments = Document::where('created_by', $contextUser->id)->count();
 
-        $bankbalance = BankAccount::where('created_by', $user->created_by)->sum('balance');
-        $totalBusinessInterest = BusinessInterest::where('created_by', $user->created_by)->sum('share_value');
-        $totalDigitalAssets = DigitalAsset::where('created_by', $user->created_by)->sum('value');
-        $totalForeignAssets = ForeignAssets::where('created_by', $user->created_by)->sum('asset_value');
-        $totalInvestmentAccounts = InvestmentAccount::where('created_by', $user->created_by)->sum('balance');
-        $totalPersonalChattel = PersonalChattel::where('created_by', $user->created_by)->sum('value');
-        $totalProperty = Property::where('created_by', $user->created_by)->sum('value');
+        $bankbalance = BankAccount::where('created_by', $contextUser->id)->sum('balance');
+        $totalBusinessInterest = BusinessInterest::where('created_by', $contextUser->id)->sum('share_value');
+        $totalDigitalAssets = DigitalAsset::where('created_by', $contextUser->id)->sum('value');
+        $totalForeignAssets = ForeignAssets::where('created_by', $contextUser->id)->sum('asset_value');
+        $totalInvestmentAccounts = InvestmentAccount::where('created_by', $contextUser->id)->sum('balance');
+        $totalPersonalChattel = PersonalChattel::where('created_by', $contextUser->id)->sum('value');
+        $totalProperty = Property::where('created_by', $contextUser->id)->sum('value');
 
         $totalBankBalance = $bankbalance + $totalBusinessInterest + $totalDigitalAssets + $totalForeignAssets + $totalInvestmentAccounts + $totalPersonalChattel + $totalProperty;
-        $totalDebt = DebtAndLiability::where('created_by', $user->created_by)->sum('amount_outstanding');
-        $documentLocations = DocumentLocation::where('created_by', $user->created_by)->get();
+        $totalDebt = DebtAndLiability::where('created_by', $contextUser->id)->sum('amount_outstanding');
+        $documentLocations = DocumentLocation::where('created_by', $contextUser->id)->get();
 
 
         // Fetch executor todo stages with items (both standard and advanced)
@@ -65,7 +72,7 @@ class DashboardController extends Controller
             foreach ($stage->todoItems as $todoItem) {
                 $todoItem->currentUserProgress = ExecutorTodoProgress::where('todo_item_id', $todoItem->id)
                     ->where('user_id', $user->id)
-                    ->where('created_by', $user->created_by)
+                    ->where('created_by', $contextUser->id)
                     ->first();
             }
         }
@@ -74,8 +81,8 @@ class DashboardController extends Controller
         foreach ($advancedTodoStages as $stage) {
             foreach ($stage->todoItems as $todoItem) {
                 $todoItem->currentUserProgress = ExecutorTodoProgress::where('todo_item_id', $todoItem->id)
-                    ->where('user_id', $user->id)
-                    ->where('created_by', $user->created_by)
+                    ->where('user_id', $contextUser->id)
+                    ->where('created_by', $contextUser->id)
                     ->first();
             }
         }
@@ -117,7 +124,9 @@ class DashboardController extends Controller
             'advancedTotalItems',
             'advancedCompletedItems',
             'advancedCompletionPercentage',
-            'documentLocations'
+            'documentLocations',
+            'customers',
+            'actingCustomer',
         ));
     }
 
@@ -133,12 +142,13 @@ class DashboardController extends Controller
         ]);
 
         $user = Auth::user();
+        $contextUser = ContextHelper::user();
 
         ExecutorTodoProgress::updateOrCreate(
             [
                 'todo_item_id' => $request->todo_item_id,
-                'user_id' => $user->id,
-                'created_by' => $user->created_by,
+                'user_id' => $contextUser->id,
+                'created_by' => $contextUser->id,
             ],
             [
                 'status' => $request->status,

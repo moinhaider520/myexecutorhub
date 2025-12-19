@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,9 +12,8 @@ class LPAController extends Controller
 {
     public function index()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        $lpas = LPAVideos::where('customer_id',  $user->created_by)->get();
+        $contextUser = ContextHelper::user();
+        $lpas = LPAVideos::where('customer_id',  $contextUser->id)->get();
         return view('executor.lpa.index', compact('lpas'));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -13,14 +14,14 @@ class AdvisorsController extends Controller
     {
         $roles = ['Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers'];
 
-        $user = Auth::user();
+        $contextUser = ContextHelper::user();
         $advisors = User::with('roles')
-            ->where('created_by', $user->created_by)
+            ->where('created_by', $contextUser->id)
             ->whereHas('roles', function ($query) use ($roles) {
                 $query->whereIn('name', $roles);
             })
             ->get();
-            
+
         return view('executor.advisors.advisors', compact('advisors'));
     }
 }

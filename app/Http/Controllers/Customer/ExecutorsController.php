@@ -17,7 +17,7 @@ class ExecutorsController extends Controller
 {
     public function view()
     {
-        $executors = User::role('executor')->where('created_by', Auth::id())->get();
+        $executors = Auth::user()->executors;
         return view('customer.executors.executors', compact('executors'));
     }
 
@@ -26,53 +26,37 @@ class ExecutorsController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email',
             'relationship' => 'required|string',
             'how_acting' => 'required|string',
             'status' => 'required|string',
-            'password' => 'required|confirmed',
+            'password' => 'nullable|confirmed',
         ]);
 
-        $couponCode = 'COUPON-' . strtoupper(uniqid());
+        DB::beginTransaction();
 
         try {
-            DB::beginTransaction();
+            // 1️⃣ Find executor by email
+            $executor = User::where('email', $request->email)->first();
 
-            // Create the executor
-            $executor = User::create([
-                'title' => $request->title,
-                'name' => $request->name,
-                'lastname' => $request->lastname,
-                'how_acting' => $request->how_acting,
-                'phone_number' => $request->phone_number,
-                'email' => $request->email,
-                'relationship' => $request->relationship,
-                'status' => $request->status,
-                'password' => Hash::make($request->password),
-                'created_by' => Auth::id(),
-                'coupon_code' => $couponCode, // Store the generated coupon code
-                'trial_ends_at' => Auth::user()->trial_ends_at,
-                'subscribed_package' => Auth::user()->subscribed_package,
-            ]);
+            // 2️⃣ If executor does not exist → create
+            if (!$executor) {
+                $executor = User::create([
+                    'title' => $request->title,
+                    'name' => $request->name,
+                    'lastname' => $request->lastname,
+                    'how_acting' => $request->how_acting,
+                    'phone_number' => $request->phone_number,
+                    'email' => $request->email,
+                    'relationship' => $request->relationship,
+                    'status' => $request->status,
+                    'password' => Hash::make($request->password ?? str()->random(10)),
+                ]);
 
-            // Assign the executor role
-            $executor->assignRole('executor');
+                $executor->assignRole('executor');
 
-            // Check if onboarding_progress exists for the user
-            $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
-                ['executor_added' => true] 
-            );
-
-            // If the record exists but executor_added is false, update it
-            if (!$progress->executor_added) {
-                $progress->executor_added = true;
-                $progress->save();
-            }
-
-            DB::commit();
-$authname = Auth::user()->name;
-            $message = "
+                $authname = Auth::user()->name;
+                $message = "
             <h2>Hello {$request->name},</h2>
             <p>You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.</p>
             <p>Please use the following password and your email to login to the portal.</p>
@@ -81,16 +65,26 @@ $authname = Auth::user()->name;
             <p>Regards,<br>Executor Hub Team</p>
         ";
 
-            Mail::to($request->email)->send(new CustomEmail(
-                [
-                    'subject' => 'You Have Been Invited to Executor Hub.',
-                    'message' => $message,
-                ],
-                'You Have Been Invited to Executor Hub.'
-            ));
-            return response()->json(['success' => true, 'message' => 'Executor added successfully.']);
+                Mail::to($request->email)->send(new CustomEmail(
+                    [
+                        'subject' => 'You Have Been Invited to Executor Hub.',
+                        'message' => $message,
+                    ],
+                    'You Have Been Invited to Executor Hub.'
+                ));
+            }
+
+            // 3️⃣ Link executor to customer (pivot)
+            Auth::user()->executors()->syncWithoutDetaching([$executor->id]);
+
+            DB::commit();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Executor linked successfully.',
+            ]);
         } catch (\Exception $e) {
-            DB::rollback();
+            DB::rollBack();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
@@ -135,10 +129,7 @@ $authname = Auth::user()->name;
     {
         try {
             DB::beginTransaction();
-
-            $executor = User::findOrFail($id);
-            $executor->delete();
-
+            Auth::user()->executors()->detach($id);
             DB::commit();
             return redirect()->route('customer.executors.view')->with('success', 'Executor deleted successfully.');
         } catch (\Exception $e) {

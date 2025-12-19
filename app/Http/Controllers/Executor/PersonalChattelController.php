@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ChattelType;
@@ -12,13 +13,10 @@ class PersonalChattelController extends Controller
 {
     public function view()
     {
-        // Get the currently authenticated user
-        $user = Auth::user();
-        
-        // Retrieve chattel types and personal chattels created by the authenticated user
-        $chattelTypes = ChattelType::where('created_by', $user->created_by)->get();
-        $personalChattels = PersonalChattel::where('created_by', $user->created_by)->get();
-        
+        $contextUser = ContextHelper::user();
+        $chattelTypes = ChattelType::where('created_by', $contextUser->id)->get();
+        $personalChattels = PersonalChattel::where('created_by', $contextUser->id)->get();
+
         return view('executor.assets.personal_chattels', compact('personalChattels', 'chattelTypes'));
     }
 }

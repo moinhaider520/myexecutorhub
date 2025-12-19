@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use App\Models\WillUserInfo;
 use Auth;
@@ -11,8 +12,8 @@ class WillGeneratorController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $user_about_infos = WillUserInfo::where('user_id', $user->created_by)->get();
+        $contextUser = ContextHelper::user();
+        $user_about_infos = WillUserInfo::where('user_id', $contextUser->id)->get();
         return view('executor.will_generator.index', compact('user_about_infos'));
     }
 
