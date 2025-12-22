@@ -363,6 +363,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
+    Route::post('/impersonate', [ImpersonationController::class, 'start'])->name('impersonate');
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
 
     // New routes for document reminders
@@ -1163,11 +1164,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     // WILL GENERATOR
     Route::get('will_generator', [ExecutorWillGeneratorController::class, 'index'])->name('will_generator.index');
     Route::get('will_generator/create_pdf/{will_user_id}', [ExecutorWillGeneratorController::class, 'create_pdf'])->name('will_generator.create_pdf');
-    Route::post('/impersonate', [ImpersonationController::class, 'start'])->name('impersonate');
-    Route::get('/stop-impersonation', function () {
-        session()->forget('acting_customer_id');
-        return redirect()->route('executor.dashboard');
-    })->name('stop-impersonation');
+
 });
 
 // Others Routes

@@ -20,39 +20,57 @@ class TwoFactorController extends Controller
     {
         $request->validate(['two_factor_code' => 'required|numeric']);
 
-        // Retrieve the user by email stored in the session
         $user = User::where('email', session('two_factor_email'))->first();
 
         if (!$user || $user->two_factor_code !== $request->two_factor_code) {
-            return redirect()->route('two-factor.index')->withErrors(['two_factor_code' => 'Invalid code.']);
+            return redirect()->route('two-factor.index')
+                ->withErrors(['two_factor_code' => 'Invalid code.']);
         }
 
-        // Ensure two_factor_expires_at is a Carbon instance before comparing
-        $expiresAt = Carbon::parse($user->two_factor_expires_at);
-
-        if ($expiresAt->lessThan(now())) {
-            return redirect()->route('two-factor.index')->withErrors(['two_factor_code' => 'The code has expired.']);
+        if (Carbon::parse($user->two_factor_expires_at)->lessThan(now())) {
+            return redirect()->route('two-factor.index')
+                ->withErrors(['two_factor_code' => 'The code has expired.']);
         }
 
         $user->update([
+            'two_factor_code' => null,
+            'two_factor_expires_at' => null,
             'last_login' => now(),
         ]);
 
-        // Log the user in
-        Auth::login($user);
+        Auth::loginUsingId($user->id);
+        $request->session()->regenerate();
+
+        if ($user->hasRole('executor') && !session()->has('impersonator_id')) {
+
+            $customer = $user->customers()
+                ->orderBy('customer_executor.id')
+                ->first();
+
+            session(['impersonator_id' => $user->id]);
+
+            Auth::logout();
+            Auth::loginUsingId($customer->id);
+            $request->session()->regenerate();
+
+            return redirect()->route('customer.dashboard');
+        }
 
         if ($user->hasRole('admin')) {
             return redirect()->route('admin.dashboard');
-        } elseif ($user->hasRole('executor')) {
-            return redirect()->route('executor.dashboard');
-        } elseif ($user->hasRole('customer')) {
-            return redirect()->route('customer.dashboard');
-        } elseif ($user->hasRole('partner')) {
-            return redirect()->route('partner.dashboard');
-        } else {
-            return redirect()->route('dashboard');
         }
+
+        if ($user->hasRole('customer')) {
+            return redirect()->route('customer.dashboard');
+        }
+
+        if ($user->hasRole('partner')) {
+            return redirect()->route('partner.dashboard');
+        }
+
+        return redirect()->route('dashboard');
     }
+
 
     public function resend(Request $request)
     {

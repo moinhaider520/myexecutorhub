@@ -13,7 +13,14 @@
     <div class="page-body">
         <div class="container">
             <div class="row">
-                <div class="col-md-11"></div>
+                <div class="col-md-11">
+
+                    @if (session()->has('impersonator_id'))
+                    <button class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#impersonationModal">
+                        Switch Customer
+                    </button>
+                    @endif
+                </div>
                 <div class="col-md-1">
                     <iframe
                         src="https://registry.blockmarktech.com/certificates/31675de8-268a-44e6-a850-d1defde5b758/widget/?tooltip_position=above&theme=transparent"
@@ -458,12 +465,59 @@
         </div>
         <audio id="stepAudio" autoplay hidden></audio>
     </div>
+    @if (session()->has('impersonator_id'))
+      <!-- IMPERSONATION MODAL -->
+    <div class="modal fade" id="impersonationModal" tabindex="-1">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Act on behalf of</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
 
+                <div class="modal-body">
+                    @if ($customers->isEmpty())
+                        <p class="text-muted">No customers linked to you.</p>
+                    @else
+                        <ul class="list-group">
+                            @foreach ($customers as $customer)
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>{{ $customer->name }}</strong><br>
+                                        <small class="text-muted">{{ $customer->email }}</small>
+                                    </div>
+                                    <button class="btn btn-sm btn-primary act-as-btn" data-id="{{ $customer->id }}">
+                                        Act as
+                                    </button>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
     <!-- Scripts for Document Reminders -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    @if (session()->has('impersonator_id'))
+
+     <script>
+        $('.act-as-btn').on('click', function() {
+            let customerId = $(this).data('id');
+
+            $.post("{{ route('customer.impersonate') }}", {
+                _token: "{{ csrf_token() }}",
+                customer_id: customerId
+            }, function() {
+                location.reload();
+            });
+        });
+    </script>
+    @endif
     <script>
         $(document).ready(function () {
             // Enable table sorting

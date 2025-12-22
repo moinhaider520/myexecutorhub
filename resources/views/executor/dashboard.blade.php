@@ -18,14 +18,7 @@
                     <button class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#impersonationModal">
                         Switch Customer
                     </button>
-                    @if (session()->has('acting_customer_id'))
-                        <div class="alert alert-warning  justify-content-between align-items-center ms-2">
-                            Acting on behalf of <strong>{{ $actingCustomer->name }}</strong>
-                            <a href="{{ route('executor.stop-impersonation') }}" class="btn btn-sm btn-danger">
-                                Stop
-                            </a>
-                        </div>
-                    @endif
+
                 </div>
                 <div class="col-md-1">
                     <iframe

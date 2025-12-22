@@ -124,11 +124,18 @@ class DashboardController extends Controller
         $documentReminders = DocumentReminder::where('user_id', $user->id)
             ->pluck('frequency', 'document_type')
             ->toArray();
+        $customers = collect();
+
+    if (session()->has('impersonator_id')) {
+        $executor = User::find(session('impersonator_id'));
+        $customers = $executor->customers;
+    }
 
         return view('customer.dashboard', compact(
             'totalExecutors',
             'totalDocuments',
             'totalBankBalance',
+            'customers',
             'totalDebt',
             'guide',
             'allDocumentTypes',
