@@ -35,39 +35,42 @@ class EmailController extends Controller
         $users = collect();
 
         if ($request->recipient_type === 'customers') {
-            $users = User::role('customer')->get();
+            $users = User::role('customer')->where('email_notifications', 1)->get();
         } elseif ($request->recipient_type === 'customers_free_trial') {
             $users = User::role('customer')
                 ->where('subscribed_package', 'free_trial')
                 ->get();
         } elseif ($request->recipient_type === 'customers_lifetime_basic') {
             $users = User::role('customer')
-                ->where('subscribed_package', 'Lifetime Basic')
+                ->where('subscribed_package', 'Lifetime Basic')->where('email_notifications', 1)
                 ->get();
         } elseif ($request->recipient_type === 'customers_lifetime_standard') {
             $users = User::role('customer')
-                ->where('subscribed_package', 'Lifetime Standard')
+                ->where('subscribed_package', 'Lifetime Standard')->where('email_notifications', 1)
                 ->get();
         } elseif ($request->recipient_type === 'customers_lifetime_premium') {
             $users = User::role('customer')
-                ->where('subscribed_package', 'Lifetime Premium')
+                ->where('subscribed_package', 'Lifetime Premium')->where('email_notifications', 1)
                 ->get();
         } elseif ($request->recipient_type === 'customers_monthly_basic') {
             $users = User::role('customer')
-                ->where('subscribed_package', 'Basic')
+                ->where('subscribed_package', 'Basic')->where('email_notifications', 1)
                 ->get();
         } elseif ($request->recipient_type === 'customers_monthly_standard') {
             $users = User::role('customer')
-                ->where('subscribed_package', 'Standard')
+                ->where('subscribed_package', 'Standard')->where('email_notifications', 1)
                 ->get();
         } elseif ($request->recipient_type === 'customers_monthly_premium') {
             $users = User::role('customer')
-                ->where('subscribed_package', 'Premium')
+                ->where('subscribed_package', 'Premium')->where('email_notifications', 1)
                 ->get();
         } elseif ($request->recipient_type === 'partners') {
-            $users = User::role('partner')->get();
+            $users = User::role('partner')
+                ->where('email_notifications', 1)
+                ->get();
+
         } elseif ($request->recipient_type === 'customers_and_partners') {
-            $users = User::role(['customer', 'partner'])->get();
+            $users = User::role(['customer', 'partner'])->where('email_notifications', 1)->get();
         }
 
         $signature = '
@@ -180,56 +183,61 @@ class EmailController extends Controller
     }
 
     private function getRecipients($type, $specificUserId = null)
+    {
+        // Partners
+        if ($type === 'partners') {
+            return User::role('partner')->where('email_notifications', 1)->get();
+        }
+
+        // All customers
+        if ($type === 'customers') {
+            return User::role('customer')->where('email_notifications', 1)->get();
+        }
+
+        // Customer package mapping
+        $packageMap = [
+            'customers_free_trial' => 'free_trial',
+            'customers_lifetime_basic' => 'Lifetime Basic',
+            'customers_lifetime_standard' => 'Lifetime Standard',
+            'customers_lifetime_premium' => 'Lifetime Premium',
+            'customers_monthly_basic' => 'Basic',
+            'customers_monthly_standard' => 'Standard',
+            'customers_monthly_premium' => 'Premium',
+        ];
+
+        // Customers by package
+        if (array_key_exists($type, $packageMap)) {
+            return User::role('customer')
+                ->where('subscribed_package', $packageMap[$type])
+                ->get();
+        }
+
+        // Specific user
+        if ($type === 'select_specific_user' && $specificUserId) {
+            $user = User::find($specificUserId);
+            return $user ? collect([$user]) : collect();
+        }
+
+        return collect();
+    }
+
+
+   public function users_list()
 {
-    // Partners
-    if ($type === 'partners') {
-        return User::role('partner')->get();
-    }
-
-    // All customers
-    if ($type === 'customers') {
-        return User::role('customer')->get();
-    }
-
-    // Customer package mapping
-    $packageMap = [
-        'customers_free_trial'          => 'free_trial',
-        'customers_lifetime_basic'      => 'Lifetime Basic',
-        'customers_lifetime_standard'   => 'Lifetime Standard',
-        'customers_lifetime_premium'    => 'Lifetime Premium',
-        'customers_monthly_basic'       => 'Basic',
-        'customers_monthly_standard'    => 'Standard',
-        'customers_monthly_premium'     => 'Premium',
-    ];
-
-    // Customers by package
-    if (array_key_exists($type, $packageMap)) {
-        return User::role('customer')
-            ->where('subscribed_package', $packageMap[$type])
+    try {
+        $users = User::where('email_notifications', 1)
+            ->whereHas('roles', function ($q) {
+                $q->where('name', 'customer')
+                  ->orWhere('name', 'partner');
+            })
+            ->with('roles')
             ->get();
-    }
 
-    // Specific user
-    if ($type === 'select_specific_user' && $specificUserId) {
-        $user = User::find($specificUserId);
-        return $user ? collect([$user]) : collect();
-    }
+        return response()->json(['users' => $users], 200);
 
-    return collect();
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 404);
+    }
 }
 
-
-    public function users_list()
-    {
-        try {
-            $users = User::whereHas('roles', function ($q) {
-                $q->where('name', 'customer')
-                    ->orWhere('name', 'partner');
-            })->with('roles')->get();
-            return response()->json(['users' => $users], 200);
-
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 404);
-        }
-    }
 }
