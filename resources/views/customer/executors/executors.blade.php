@@ -134,16 +134,7 @@
             </select>
             <div class="text-danger" id="error-status"></div>
           </div>
-          <div class="form-group mb-3">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" required>
-            <div class="text-danger" id="error-password"></div>
-          </div>
-          <div class="form-group mb-3">
-            <label for="password_confirmation">Confirm Password</label>
-            <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" placeholder="Confirm Password" required>
-            <div class="text-danger" id="error-password_confirmation"></div>
-          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>
@@ -217,16 +208,7 @@
             </select>
             <div class="text-danger" id="edit-error-status"></div>
           </div>
-          <div class="form-group mb-3">
-            <label for="edit_password">Password</label>
-            <input type="password" class="form-control" name="password" id="edit_password" placeholder="Enter Password">
-            <div class="text-danger" id="edit-error-password"></div>
-          </div>
-          <div class="form-group mb-3">
-            <label for="edit_password_confirmation">Confirm Password</label>
-            <input type="password" class="form-control" name="password_confirmation" id="edit_password_confirmation" placeholder="Confirm Password">
-            <div class="text-danger" id="edit-error-password_confirmation"></div>
-          </div>
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save changes</button>

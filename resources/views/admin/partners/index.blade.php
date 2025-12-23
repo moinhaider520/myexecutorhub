@@ -55,6 +55,15 @@
                                                                     <button type="submit"
                                                                         class="btn btn-danger btn-sm">Delete</button>
                                                                 </form>
+                                                                <form
+                                                                    action="{{ route('admin.partners.generate-commission-report', $partner->id) }}"
+                                                                    method="POST" style="display:inline;">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-success btn-sm">
+                                                                        Generate Commission Report
+                                                                    </button>
+                                                                </form>
+
                                                             </td>
                                                         </tr>
                                                     @endforeach

@@ -14,7 +14,7 @@ use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\EmailController as AdminEmailController;
 use App\Http\Controllers\Admin\CommissionCalculatorController as AdminCommissionCalculatorController;
-
+use App\Http\Controllers\Admin\PartnerReportController;
 // Role Partner Controller
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
 use App\Http\Controllers\Partner\SettingController as PartnerSettingController;
@@ -332,6 +332,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/partners/{id}/view_bank_accounts', [PartnerController::class, 'view_bank_accounts'])->name('partners.view_bank_accounts');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');
+    Route::post('/partners/{partner}/generate-commission-report',[PartnerReportController::class, 'generateForPartner'])->name('partners.generate-commission-report');
 
     // Admin Withdrawal Management
     Route::get('/withdraw', [AdminWithdrawalController::class, 'index'])->name('withdraw.index');

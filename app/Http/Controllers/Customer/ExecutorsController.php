@@ -30,7 +30,6 @@ class ExecutorsController extends Controller
             'relationship' => 'required|string',
             'how_acting' => 'required|string',
             'status' => 'required|string',
-            'password' => 'nullable|confirmed',
         ]);
 
         DB::beginTransaction();
@@ -38,9 +37,10 @@ class ExecutorsController extends Controller
         try {
             // 1️⃣ Find executor by email
             $executor = User::where('email', $request->email)->first();
-
+            $password=str()->random(10);
             // 2️⃣ If executor does not exist → create
             if (!$executor) {
+
                 $executor = User::create([
                     'title' => $request->title,
                     'name' => $request->name,
@@ -50,7 +50,7 @@ class ExecutorsController extends Controller
                     'email' => $request->email,
                     'relationship' => $request->relationship,
                     'status' => $request->status,
-                    'password' => Hash::make($request->password ?? str()->random(10)),
+                    'password' => Hash::make($password),
                 ]);
 
                 $executor->assignRole('executor');
@@ -60,7 +60,7 @@ class ExecutorsController extends Controller
             <h2>Hello {$request->name},</h2>
             <p>You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.</p>
             <p>Please use the following password and your email to login to the portal.</p>
-            <p>Password:{$request->password}</p>
+            <p>Password:{$password}</p>
             <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
             <p>Regards,<br>Executor Hub Team</p>
         ";
@@ -98,7 +98,6 @@ class ExecutorsController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $id,
             'relationship' => 'required|string',
             'status' => 'required|string',
-            'password' => 'nullable|string|min:8|confirmed'
         ]);
 
         try {
