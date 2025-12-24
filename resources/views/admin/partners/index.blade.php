@@ -63,6 +63,8 @@
                                                                         Generate Commission Report
                                                                     </button>
                                                                 </form>
+                                                                <a href="{{ route('admin.partners.view_reports', $partner->id) }}"
+                                                                    class="btn btn-primary btn-sm">View Reports</a>
 
                                                             </td>
                                                         </tr>

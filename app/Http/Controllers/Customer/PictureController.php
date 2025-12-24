@@ -13,7 +13,7 @@ use App\Traits\ImageUpload;
 class PictureController extends Controller
 {
     use ImageUpload;
-    
+
     public function view()
     {
         $pictures = Picture::where('created_by', Auth::id())->get();
@@ -25,18 +25,25 @@ class PictureController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:jpg,jpeg,png,gif|max:51200',
+            'file' => 'required|array|min:1',
+            'file.*' => 'required|file|mimes:jpg,jpeg,png,gif|max:51200',
         ]);
 
         try {
             DB::beginTransaction();
 
-            $path = $this->imageUpload($request->file('file'), 'pictures');
+            // Upload all files and store paths in an array
+            $filePaths = [];
+            foreach ($request->file('file') as $file) {
+                $path = $this->imageUpload($file, 'pictures');
+                $filePaths[] = $path;
+            }
 
+            // Store paths as JSON in the database
             Picture::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'file_path' => $path,
+                'file_path' => json_encode($filePaths), // Store as JSON array
                 'created_by' => Auth::id()
             ]);
 
@@ -53,7 +60,7 @@ class PictureController extends Controller
             }
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Picture added successfully.']);
+            return response()->json(['success' => true, 'message' => 'Pictures added successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -65,32 +72,50 @@ class PictureController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:51200',
+            'file' => 'nullable|array',
+            'file.*' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:51200',
         ]);
 
         try {
             DB::beginTransaction();
 
             $picture = Picture::findOrFail($id);
-            
+
             $picture->name = $request->name;
             $picture->description = $request->description;
 
             if ($request->hasFile('file')) {
-                // Delete the file from the public/assets/upload directory
-                $filePath = public_path('assets/upload/' . basename($picture->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
+                // Delete old files from the public/assets/upload directory
+                $oldPaths = json_decode($picture->file_path, true);
+                if (is_array($oldPaths)) {
+                    foreach ($oldPaths as $oldPath) {
+                        $filePath = public_path('assets/upload/' . basename($oldPath));
+                        if (file_exists($filePath)) {
+                            unlink($filePath);
+                        }
+                    }
+                } else {
+                    // Handle single file path (backward compatibility)
+                    $filePath = public_path('assets/upload/' . basename($picture->file_path));
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
                 }
 
-                $path = $this->imageUpload($request->file('file'), 'pictures');
-                $picture->file_path = $path;
+                // Upload new files
+                $filePaths = [];
+                foreach ($request->file('file') as $file) {
+                    $path = $this->imageUpload($file, 'pictures');
+                    $filePaths[] = $path;
+                }
+
+                $picture->file_path = json_encode($filePaths);
             }
 
             $picture->save();
 
             DB::commit();
-            return response()->json(['success' => true, 'message' => 'Picture updated successfully.']);
+            return response()->json(['success' => true, 'message' => 'Pictures updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -102,7 +127,7 @@ class PictureController extends Controller
         try {
             DB::beginTransaction();
             $picture = Picture::findOrFail($id);
-            
+
             // Delete the file from the public/assets/upload directory
             $filePath = public_path('assets/upload/' . basename($picture->file_path));
             if (file_exists($filePath)) {
@@ -111,7 +136,7 @@ class PictureController extends Controller
 
             // Delete the picture record
             $picture->delete();
-            
+
             DB::commit();
             return redirect()->route('customer.pictures.view')->with('success', 'Picture deleted successfully.');
         } catch (\Exception $e) {

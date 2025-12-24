@@ -332,7 +332,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/partners/{id}/view_bank_accounts', [PartnerController::class, 'view_bank_accounts'])->name('partners.view_bank_accounts');
     Route::put('/partners/{id}', [PartnerController::class, 'update'])->name('partners.update');
     Route::delete('/partners/{id}', [PartnerController::class, 'destroy'])->name('partners.destroy');
-    Route::post('/partners/{partner}/generate-commission-report',[PartnerReportController::class, 'generateForPartner'])->name('partners.generate-commission-report');
+    Route::post('/partners/{partner}/generate-commission-report', [PartnerReportController::class, 'generateForPartner'])->name('partners.generate-commission-report');
+    Route::get('/partners/{id}/view_reports', [PartnerReportController::class, 'view_reports'])->name('partners.view_reports');
+    Route::get('/partners/summary/{id}/download', [PartnerReportController::class, 'download'])->name('summary.download');
 
     // Admin Withdrawal Management
     Route::get('/withdraw', [AdminWithdrawalController::class, 'index'])->name('withdraw.index');
