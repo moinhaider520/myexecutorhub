@@ -24,6 +24,7 @@
                                                             <th>Name</th>
                                                             <th>Email</th>
                                                             <th>Signup Date</th>
+                                                            <th>Package</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -33,6 +34,7 @@
                                                                 <td>{{ $referral->user->name ?? '-' }}</td>
                                                                 <td>{{ $referral->user->email ?? '-' }}</td>
                                                                 <td>{{ $referral->created_at->format('d M Y') }}</td>
+                                                                <td>{{ $referral->user->subscribed_package ?? '-' }}</td>
                                                             </tr>
                                                         @endforeach
                                                     </tbody>

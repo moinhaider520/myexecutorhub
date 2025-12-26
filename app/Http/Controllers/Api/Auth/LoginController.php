@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\NominatedUsers;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -28,27 +29,27 @@ class LoginController extends Controller
                         return response()->json(['status' => false, 'message' => 'Please subscribe to continue.'], JsonResponse::HTTP_FORBIDDEN);
                     }
 
-                    if($request->email == "moin.haider.520@gmail.com" || $request->email == "nosherwanadil04@gmail.com"){
-                                $token = $user->createToken($request->email)->plainTextToken;
-                                $role = $user->roles->first()->name;
+                    if ($request->email == "moin.haider.520@gmail.com" || $request->email == "nosherwanadil04@gmail.com") {
+                        $token = $user->createToken($request->email)->plainTextToken;
+                        $role = $user->roles->first()->name;
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Two-factor authentication verified.',
-            'user' => $user,
-            'role' => $role,
-            'token' => $token,
-        ], JsonResponse::HTTP_OK);
-                    }else{
-                    // Generate and send the 2FA code
-                    $this->sendTwoFactorCode($user);
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Two-factor authentication verified.',
+                            'user' => $user,
+                            'role' => $role,
+                            'token' => $token,
+                        ], JsonResponse::HTTP_OK);
+                    } else {
+                        // Generate and send the 2FA code
+                        $this->sendTwoFactorCode($user);
 
-                    return response()->json([
-                        'status' => true,
-                        'message' => 'Two-factor authentication code sent to your email.',
-                        'requires_2fa' => true,
-                        'email' => $user->email,
-                    ], JsonResponse::HTTP_OK);
+                        return response()->json([
+                            'status' => true,
+                            'message' => 'Two-factor authentication code sent to your email.',
+                            'requires_2fa' => true,
+                            'email' => $user->email,
+                        ], JsonResponse::HTTP_OK);
                     }
                 } else {
                     return response()->json(['status' => false, 'message' => 'Invalid credentials.'], JsonResponse::HTTP_UNAUTHORIZED);
@@ -98,11 +99,17 @@ class LoginController extends Controller
         $token = $user->createToken($request->email)->plainTextToken;
         $role = $user->roles->first()->name;
 
+        $impersonator_id = null;
+        if ($role === "executor") {
+            $impersonator_id = NominatedUsers::where('executor_id', $user->id)->first();
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Two-factor authentication verified.',
             'user' => $user,
             'role' => $role,
+            'impersonator_id' => $impersonator_id,
             'token' => $token,
         ], JsonResponse::HTTP_OK);
     }

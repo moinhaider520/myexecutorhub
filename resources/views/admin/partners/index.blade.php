@@ -39,34 +39,55 @@
                                                             <td>{{ $partner->phone_number ?? 'N/A' }}</td>
                                                             <td>{{ $partner->hear_about_us ?? 'N/A' }}</td>
                                                             <td>
-                                                                <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
-                                                                    class="btn btn-primary btn-sm">View Customers</a>
-                                                                <a href="{{ route('admin.partners.view_partners', $partner->id) }}"
-                                                                    class="btn btn-primary btn-sm">View Partners</a>
-                                                                <a href="{{ route('admin.partners.view_bank_accounts', $partner->id) }}"
-                                                                    class="btn btn-primary btn-sm">View Bank Accounts</a>
-                                                                <a href="{{ route('admin.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"
-                                                                    class="btn btn-primary btn-sm">Edit</a>
-                                                                <form
-                                                                    action="{{ route('admin.partners.destroy', $partner->id) }}"
-                                                                    method="POST" style="display:inline;">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button type="submit"
-                                                                        class="btn btn-danger btn-sm">Delete</button>
-                                                                </form>
-                                                                <form
-                                                                    action="{{ route('admin.partners.generate-commission-report', $partner->id) }}"
-                                                                    method="POST" style="display:inline;">
-                                                                    @csrf
-                                                                    <button type="submit" class="btn btn-success btn-sm">
-                                                                        Generate Commission Report
-                                                                    </button>
-                                                                </form>
-                                                                <a href="{{ route('admin.partners.view_reports', $partner->id) }}"
-                                                                    class="btn btn-primary btn-sm">View Reports</a>
+    <div class="btn-group-vertical" role="group" style="width: 100%;">
+        <!-- View Actions -->
+        <div class="mb-2">
+            <a href="{{ route('admin.partners.view_refferals', $partner->id) }}"
+                class="btn btn-primary btn-sm me-1 mb-1">
+                View Customers
+            </a>
+            <a href="{{ route('admin.partners.view_partners', $partner->id) }}"
+                class="btn btn-primary btn-sm me-1 mb-1">
+                View Partners
+            </a>
+            <a href="{{ route('admin.partners.view_bank_accounts', $partner->id) }}"
+                class="btn btn-primary btn-sm mb-1">
+         View Bank Accounts
+            </a>
+        </div>
 
-                                                            </td>
+        <!-- Management Actions -->
+        <div class="mb-2">
+            <a href="{{ route('admin.partners.edit', \App\Helpers\EncryptionHelper::encryptId($partner->id)) }}"
+                class="btn btn-warning btn-sm me-1 mb-1">
+                Edit
+            </a>
+            <form action="{{ route('admin.partners.destroy', $partner->id) }}"
+                method="POST" style="display:inline;" 
+                onsubmit="return confirm('Are you sure you want to delete this partner?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger btn-sm mb-1">
+                    Delete
+                </button>
+            </form>
+        </div>
+
+        <!-- Report Actions -->
+        <div>
+            <form action="{{ route('admin.partners.generate-commission-report', $partner->id) }}"
+                method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn btn-success btn-sm me-1 mb-1">
+                     Generate Report
+                </button>
+            </form>
+            <a href="{{ route('admin.partners.view_reports', $partner->id) }}" class="btn btn-info btn-sm mb-1">
+                View Reports
+            </a>
+        </div>
+    </div>
+</td>
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

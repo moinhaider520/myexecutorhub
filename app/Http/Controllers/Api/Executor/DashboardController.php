@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Executor;
 
 use App\Http\Controllers\Controller;
+use App\Models\NominatedUsers;
 use App\Models\User;
 use App\Models\Document;
 use App\Models\BankAccount;
@@ -37,20 +38,9 @@ class DashboardController extends Controller
             // Use the 'created_by' field to get the related data
             $createdById = $user->created_by;
 
-            // Fetch totals specific to the user's 'created_by' ID
-            $totalExecutors = User::role('executor')->where('created_by', $createdById)->count();
-            $totalDocuments = Document::where('created_by', $createdById)->count();
-            $bankbalance = BankAccount::where('created_by', $user->created_by)->sum('balance');
-            $totalBusinessInterest = BusinessInterest::where('created_by', $user->created_by)->sum('share_value');
-            $totalDigitalAssets = DigitalAsset::where('created_by', $user->created_by)->sum('value');
-            $totalForeignAssets = ForeignAssets::where('created_by', $user->created_by)->sum('asset_value');
-            $totalInvestmentAccounts = InvestmentAccount::where('created_by', $user->created_by)->sum('balance');
-            $totalPersonalChattel = PersonalChattel::where('created_by', $user->created_by)->sum('value');
-            $totalProperty = Property::where('created_by', $user->created_by)->sum('value');
-
-            $totalBankBalance = $bankbalance + $totalBusinessInterest + $totalDigitalAssets + $totalForeignAssets + $totalInvestmentAccounts + $totalPersonalChattel + $totalProperty;
-            $totalDebt = DebtAndLiability::where('created_by', $createdById)->sum('amount_outstanding');
-            $documentLocations = DocumentLocation::where('created_by', $user->created_by)->get();
+            $impersonators = NominatedUsers::where('executor_id', $user->id)
+            ->with('customer')
+                ->get();
 
             // Fetch executor todo stages with items (both standard and advanced)
             $standardTodoStages = ExecutorTodoStage::with(['todoItems'])
@@ -111,11 +101,6 @@ class DashboardController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => [
-                    'total_executors' => $totalExecutors,
-                    'total_documents' => $totalDocuments,
-                    'total_bank_balance' => $totalBankBalance,
-                    'total_debt' => $totalDebt,
-                    'document_locations' => $documentLocations,
                     'standard_todo_stages' => $standardTodoStages,
                     'advanced_todo_stages' => $advancedTodoStages,
                     'standard_total_items' => $standardTotalItems,
@@ -124,6 +109,47 @@ class DashboardController extends Controller
                     'advanced_total_items' => $advancedTotalItems,
                     'advanced_completed_items' => $advancedCompletedItems,
                     'advanced_completion_percentage' => $advancedCompletionPercentage,
+                    'impersonators' => $impersonators
+                ]
+            ], 200);
+
+        } catch (\Exception $e) {
+            // Handle errors and return a response
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve dashboard data',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function dashboard_data($id)
+    {
+        try {
+            $totalExecutors = User::role('executor')->where('created_by', $id)->count();
+            $totalDocuments = Document::where('created_by', $id)->count();
+            $bankbalance = BankAccount::where('created_by', $id)->sum('balance');
+            $totalBusinessInterest = BusinessInterest::where('created_by', $id)->sum('share_value');
+            $totalDigitalAssets = DigitalAsset::where('created_by', $id)->sum('value');
+            $totalForeignAssets = ForeignAssets::where('created_by', $id)->sum('asset_value');
+            $totalInvestmentAccounts = InvestmentAccount::where('created_by', $id)->sum('balance');
+            $totalPersonalChattel = PersonalChattel::where('created_by', $id)->sum('value');
+            $totalProperty = Property::where('created_by', $id)->sum('value');
+
+            $totalBankBalance = $bankbalance + $totalBusinessInterest + $totalDigitalAssets + $totalForeignAssets + $totalInvestmentAccounts + $totalPersonalChattel + $totalProperty;
+            $totalDebt = DebtAndLiability::where('created_by', $id)->sum('amount_outstanding');
+            $documentLocations = DocumentLocation::where('created_by', $id)->get();
+
+
+            // Return the data as a JSON response
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'total_executors' => $totalExecutors,
+                    'total_documents' => $totalDocuments,
+                    'total_bank_balance' => $totalBankBalance,
+                    'total_debt' => $totalDebt,
+                    'document_locations' => $documentLocations,
                 ]
             ], 200);
 

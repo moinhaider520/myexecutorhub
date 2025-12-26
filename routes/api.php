@@ -806,6 +806,7 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/profile/change/password', [ExecutorProfileController::class, 'update_password'])->name('profile.update.password');
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
     Route::post('/dashboard/update-todo', [ExecutorDashboardController::class, 'updateTodoStatus'])->name('dashboard.update-todo');
+    Route::get('/dashboard_data/{id}', [ExecutorDashboardController::class, 'dashboard_data'])->name('dashboard.dashboard_data');
 
     // Customer Withdraw
     Route::get('/withdraw', [ExecutorWithdrawalController::class, 'view'])->name('withdraw.view');
