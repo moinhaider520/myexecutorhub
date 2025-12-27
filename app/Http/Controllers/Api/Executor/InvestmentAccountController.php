@@ -15,15 +15,15 @@ class InvestmentAccountController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve investment types and investment accounts created by the authenticated user's creator
-            $investmentTypes = InvestmentTypes::where('created_by', $user->created_by)->get();
-            $investmentAccounts = InvestmentAccount::where('created_by', $user->created_by)->get();
+            $investmentTypes = InvestmentTypes::where('created_by', $id)->get();
+            $investmentAccounts = InvestmentAccount::where('created_by', $id)->get();
 
             // Return the investment accounts and types as a JSON response
             return response()->json([

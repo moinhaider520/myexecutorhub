@@ -12,12 +12,12 @@ class LifeRememberedVideoController extends Controller
     /**
      * Return a JSON list of Life Remembered videos for the executor.
      */
-    public function view(): JsonResponse
+    public function view($id): JsonResponse
     {
         $user = Auth::user();
 
         // Fetch videos created by the original creator of the executor user
-        $videos = LifeRememberedVideo::where('created_by', $user->created_by)->get();
+        $videos = LifeRememberedVideo::where('created_by', $id)->get();
 
         return response()->json([
             'success' => true,

@@ -15,11 +15,11 @@ class OrgansDonationController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function view(): JsonResponse
+    public function view($id): JsonResponse
     {
         try {
             // Retrieve organ donations created by the authenticated executor
-            $organDonations = OrgansDonation::where('created_by', Auth::user()->created_by)->get();
+            $organDonations = OrgansDonation::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

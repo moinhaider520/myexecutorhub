@@ -92,6 +92,7 @@ use App\Http\Controllers\Api\Customer\PictureController as CustomerPictureContro
 use App\Http\Controllers\Api\Customer\VideoController as CustomerVideoController;
 use App\Http\Controllers\Api\Customer\OtherTypeofAssetController as CustomerOtherTypeofAssetController;
 use App\Http\Controllers\Api\Customer\WillGeneratorController;
+use App\Http\Controllers\Api\Customer\MemorandumWishController as CustomerMemorandumWishController;
 // Executor
 use App\Http\Controllers\Api\Executor\ProfileController as ExecutorProfileController;
 use App\Http\Controllers\Api\Executor\DashboardController as ExecutorDashboardController;
@@ -128,6 +129,7 @@ use App\Http\Controllers\Api\Executor\PictureController as ExecutorPictureContro
 use App\Http\Controllers\Api\Executor\VideoController as ExecutorVideoController;
 use App\Http\Controllers\Api\Executor\OtherTypeofAssetController as ExecutorOtherTypeofAssetController;
 use App\Http\Controllers\Api\Executor\WillGeneratorController as ExecutorWillGeneratorController;
+use App\Http\Controllers\Api\Executor\MemorandumWishController as ExecutorMemorandumWishController;
 
 // General Controllers
 use App\Http\Controllers\Api\ProfileController;
@@ -541,6 +543,8 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
     Route::post('/funeral_plans/update/{id}', [CustomerFuneralPlanController::class, 'update'])->name('funeral_plans.update');
     Route::delete('/funeral_plans/destroy/{id}', [CustomerFuneralPlanController::class, 'destroy'])->name('funeral_plans.destroy');
 
+    // MEMORENDEUM OF WISHES
+    Route::get('/memorandum_of_wishes/view', [CustomerMemorandumWishController::class, 'view'])->name('memorandum_of_wishes.view');
     // PICTURES & VIDEOS CONTROLLER
     Route::get('/pictures_and_videos/view', [CustomerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
     Route::post('/pictures_and_videos/store', [CustomerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
@@ -813,39 +817,39 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/withdraw/process', [ExecutorWithdrawalController::class, 'process'])->name('withdraw.process');
     Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
 
-    Route::get('/guidance', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
-    Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
-    Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
-    Route::get('/pictures/view', [ExecutorPictureController::class, 'view'])->name('pictures.view');
-    Route::get('/videos/view', [ExecutorVideoController::class, 'view'])->name('videos.view');
+    Route::get('/guidance/{id}', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
+    Route::get('/documents/view/{id}', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+    Route::get('/pictures_and_videos/view/{id}', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::get('/pictures/view/{id}', [ExecutorPictureController::class, 'view'])->name('pictures.view');
+    Route::get('/videos/view/{id}', [ExecutorVideoController::class, 'view'])->name('videos.view');
 
     // Reviews
     Route::post('reviews', [ExecutorReviewController::class, 'store'])->name('reviews.store');
     Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [ExecutorReviewController::class, 'destroy'])->name('reviews.destroy');
 
-    Route::get('/wishes', [ExecutorWishesController::class, 'view'])->name('wishes.view');
-    Route::get('/life-remembered', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
-    Route::get('/life_remembered_videos/view', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
-    Route::get('/voice-notes', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
-    Route::get('/organs-donations', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
-    Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
-    Route::get('/bank_accounts', [ExecutorBankAccountController::class, 'index'])->name('bank_accounts.index');
-    Route::get('/investment_accounts', [ExecutorInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
-    Route::get('/properties', [ExecutorPropertyController::class, 'index'])->name('properties.view');
-    Route::get('/personal_chattels', [ExecutorPersonalChattelController::class, 'index'])->name('personal_chattels.view');
-    Route::get('/business_interests', [ExecutorBusinessInterestController::class, 'index'])->name('business_interests.view');
-    Route::get('/insurance_policies', [ExecutorInsurancePolicyController::class, 'index'])->name('insurance_policies.view');
-    Route::get('/debt_and_liabilities', [ExecutorDebtAndLiabilityController::class, 'index'])->name('debt_and_liabilities.view');
-    Route::get('/digital_assets', [ExecutorDigitalAssetController::class, 'index'])->name('digital_assets.view');
-    Route::get('/intellectual_properties', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
-    Route::get('/other_assets', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
-    Route::get('/other_type_of_assets/view', [ExecutorOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
-    Route::get('/pension/view', [ExecutorPensionController::class, 'view'])->name('pensions.view');
-    Route::get('/funeral_plans/view', [ExecutorFuneralPlanController::class, 'view'])->name('funeral_plans.view');
-    Route::get('/foreign_assets/view', [ExecutorForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    Route::get('/wishes/{id}', [ExecutorWishesController::class, 'view'])->name('wishes.view');
+    Route::get('/life-remembered/{id}', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::get('/life_remembered_videos/view/{id}', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::get('/voice-notes/{id}', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::get('/organs-donations/{id}', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
+    Route::get('/funeral_wake/view/{id}', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::get('/bank_accounts/{id}', [ExecutorBankAccountController::class, 'index'])->name('bank_accounts.index');
+    Route::get('/investment_accounts/{id}', [ExecutorInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
+    Route::get('/properties/{id}', [ExecutorPropertyController::class, 'index'])->name('properties.view');
+    Route::get('/personal_chattels/{id}', [ExecutorPersonalChattelController::class, 'index'])->name('personal_chattels.view');
+    Route::get('/business_interests/{id}', [ExecutorBusinessInterestController::class, 'index'])->name('business_interests.view');
+    Route::get('/insurance_policies/{id}', [ExecutorInsurancePolicyController::class, 'index'])->name('insurance_policies.view');
+    Route::get('/debt_and_liabilities/{id}', [ExecutorDebtAndLiabilityController::class, 'index'])->name('debt_and_liabilities.view');
+    Route::get('/digital_assets/{id}', [ExecutorDigitalAssetController::class, 'index'])->name('digital_assets.view');
+    Route::get('/intellectual_properties/{id}', [ExecutorIntellectualPropertyController::class, 'index'])->name('intellectual_properties.view');
+    Route::get('/other_assets/{id}', [ExecutorOtherAssetController::class, 'index'])->name('other_assets.view');
+    Route::get('/other_type_of_assets/view/{id}', [ExecutorOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
+    Route::get('/pension/view/{id}', [ExecutorPensionController::class, 'view'])->name('pensions.view');
+    Route::get('/funeral_plans/view/{id}', [ExecutorFuneralPlanController::class, 'view'])->name('funeral_plans.view');
+    Route::get('/foreign_assets/view/{id}', [ExecutorForeignAssetsController::class, 'view'])->name('foreign_assets.view');
     Route::get('/tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
-
+    Route::get('/memorandum_of_wishes/view/{id}', [ExecutorMemorandumWishController::class, 'view'])->name('memorandum_of_wishes.view');
     Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']);
     Route::get('/messages/{userId}', [ExecutorMessageController::class, 'getMessages']);
     Route::get('/users', [ExecutorMessageController::class, 'getUsers']);
@@ -856,11 +860,11 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/openai/chat', [ExecutorOpenAIController::class, 'chat'])->name('openai.chat');
 
     // LPAVIDEOS
-    Route::get('/lpa', [ExecutorLPAController::class, 'view'])->name('lpa.view');
+    Route::get('/lpa/{id}', [ExecutorLPAController::class, 'view'])->name('lpa.view');
 
     // WILLS
-    Route::get('/wills', [ExecutorWillController::class, 'view'])->name('wills.view');
+    Route::get('/wills/{id}', [ExecutorWillController::class, 'view'])->name('wills.view');
 
     // WILL GENERATOR
-    Route::get('/will_generator/partner_about_you', [ExecutorWillGeneratorController::class, 'partner_about_you'])->name('wills.partner_about_you');
+    Route::get('/will_generator/partner_about_you/{id}', [ExecutorWillGeneratorController::class, 'partner_about_you'])->name('wills.partner_about_you');
 });

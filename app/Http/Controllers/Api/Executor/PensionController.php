@@ -12,11 +12,11 @@ class PensionController extends Controller
     /**
      * Get the list of pensions for the authenticated user.
      */
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $pensions = Pension::where('created_by', $user->created_by)->get();
+            $pensions = Pension::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

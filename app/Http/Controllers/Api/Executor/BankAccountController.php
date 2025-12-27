@@ -15,15 +15,15 @@ class BankAccountController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve bank types and bank accounts created by the authenticated user's creator
-            $bankTypes = BankType::where('created_by', $user->created_by)->get();
-            $bankAccounts = BankAccount::where('created_by', $user->created_by)->get();
+            $bankTypes = BankType::where('created_by', $id)->get();
+            $bankAccounts = BankAccount::where('created_by', $id)->get();
 
             // Return the bank accounts and types as a JSON response
             return response()->json([

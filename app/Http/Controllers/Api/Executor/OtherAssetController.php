@@ -15,15 +15,15 @@ class OtherAssetController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve other asset types and other assets created by the authenticated user's creator
-            $otherAssetTypes = OtherAssetsTypes::where('created_by', $user->created_by)->get();
-            $otherAssets = OtherAsset::where('created_by', $user->created_by)->get();
+            $otherAssetTypes = OtherAssetsTypes::where('created_by', $id)->get();
+            $otherAssets = OtherAsset::where('created_by', $id)->get();
 
             // Return the other assets data as a JSON response
             return response()->json([

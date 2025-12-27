@@ -15,15 +15,15 @@ class PropertyController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve property types and properties created by the authenticated user's creator
-            $propertyTypes = PropertyType::where('created_by', $user->created_by)->get();
-            $properties = Property::where('created_by', $user->created_by)->get();
+            $propertyTypes = PropertyType::where('created_by', $id)->get();
+            $properties = Property::where('created_by', $id)->get();
 
             // Return the properties and property types as a JSON response
             return response()->json([

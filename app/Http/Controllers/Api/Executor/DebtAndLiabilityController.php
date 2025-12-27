@@ -15,15 +15,15 @@ class DebtAndLiabilityController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve debt and liability types and records created by the authenticated user's creator
-            $debtAndLiabilitiesTypes = DebtAndLiabilitiesTypes::where('created_by', $user->created_by)->get();
-            $debtsLiabilities = DebtAndLiability::where('created_by', $user->created_by)->get();
+            $debtAndLiabilitiesTypes = DebtAndLiabilitiesTypes::where('created_by', $id)->get();
+            $debtsLiabilities = DebtAndLiability::where('created_by', $id)->get();
 
             // Return the debts and liabilities data as a JSON response
             return response()->json([

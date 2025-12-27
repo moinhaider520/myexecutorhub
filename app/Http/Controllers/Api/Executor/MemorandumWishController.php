@@ -15,14 +15,14 @@ class MemorandumWishController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function view(): JsonResponse
+    public function view($id): JsonResponse
     {
         try {
             // Get the currently authenticated executor
             $user = Auth::user();
 
             $wishes = MemorandumWish::with('media')
-                ->where('created_by', $user->created_by)
+                ->where('created_by', $id)
                 ->get();
 
             if ($wishes->isEmpty()) {

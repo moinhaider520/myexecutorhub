@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class WillController extends Controller
 {
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $wills = WillVideos::where('customer_id', $user->created_by)->get();
+            $wills = WillVideos::where('customer_id', $id)->get();
 
             return response()->json(['success' => true, 'wills' => $wills], 200);
         } catch (\Exception $e) {

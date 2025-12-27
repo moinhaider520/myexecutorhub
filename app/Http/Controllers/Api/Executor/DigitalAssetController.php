@@ -15,15 +15,15 @@ class DigitalAssetController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve digital asset types and digital assets created by the authenticated user's creator
-            $digitalAssetsTypes = DigitalAssetsTypes::where('created_by', $user->created_by)->get();
-            $digitalAssets = DigitalAsset::where('created_by', $user->created_by)->get();
+            $digitalAssetsTypes = DigitalAssetsTypes::where('created_by', $id)->get();
+            $digitalAssets = DigitalAsset::where('created_by', $id)->get();
 
             // Return the digital assets data as a JSON response
             return response()->json([

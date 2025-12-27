@@ -11,11 +11,11 @@ class PictureController extends Controller
     /**
      * Get the list of pictures for the authenticated user.
      */
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $pictures = Picture::where('created_by', $user->created_by)->get();
+            $pictures = Picture::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

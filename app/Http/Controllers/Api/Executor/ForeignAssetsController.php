@@ -12,11 +12,11 @@ class ForeignAssetsController extends Controller
     /**
      * Get the list of foreign assets for the authenticated user.
      */
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $foreignAssets = ForeignAssets::where('created_by', $user->created_by)->get();
+            $foreignAssets = ForeignAssets::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

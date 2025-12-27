@@ -15,15 +15,15 @@ class DocumentsController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function view()
+    public function view($id)
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve document types and documents created by the authenticated user's creator
-            $documentTypes = DocumentTypes::where('created_by', $user->created_by)->get();
-            $documents = Document::where('created_by', $user->created_by)->get();
+            $documentTypes = DocumentTypes::where('created_by', $id)->get();
+            $documents = Document::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

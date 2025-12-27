@@ -15,15 +15,15 @@ class IntellectualPropertyController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve intellectual property types and intellectual properties created by the authenticated user's creator
-            $intellectualPropertyTypes = IntellectualPropertiesTypes::where('created_by', $user->created_by)->get();
-            $intellectualProperties = IntellectualProperty::where('created_by', $user->created_by)->get();
+            $intellectualPropertyTypes = IntellectualPropertiesTypes::where('created_by', $id)->get();
+            $intellectualProperties = IntellectualProperty::where('created_by', $id)->get();
 
             // Return the intellectual properties data as a JSON response
             return response()->json([

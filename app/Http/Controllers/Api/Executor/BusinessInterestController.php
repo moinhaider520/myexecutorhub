@@ -15,15 +15,15 @@ class BusinessInterestController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve business types and business interests created by the authenticated user's creator
-            $businessTypes = BusinessTypes::where('created_by', $user->created_by)->get();
-            $businessInterests = BusinessInterest::where('created_by', $user->created_by)->get();
+            $businessTypes = BusinessTypes::where('created_by', $id)->get();
+            $businessInterests = BusinessInterest::where('created_by', $id)->get();
 
             // Return the business interests and business types as a JSON response
             return response()->json([

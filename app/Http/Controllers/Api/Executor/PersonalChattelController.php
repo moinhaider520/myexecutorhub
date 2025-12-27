@@ -15,15 +15,15 @@ class PersonalChattelController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve chattel types and personal chattels created by the authenticated user's creator
-            $chattelTypes = ChattelType::where('created_by', $user->created_by)->get();
-            $personalChattels = PersonalChattel::where('created_by', $user->created_by)->get();
+            $chattelTypes = ChattelType::where('created_by', $id)->get();
+            $personalChattels = PersonalChattel::where('created_by', $id)->get();
 
             // Return the personal chattels and chattel types as a JSON response
             return response()->json([

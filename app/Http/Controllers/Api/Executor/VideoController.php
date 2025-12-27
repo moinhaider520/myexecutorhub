@@ -11,11 +11,11 @@ class VideoController extends Controller
     /**
      * Get the list of videos for the authenticated user.
      */
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $videos = Video::where('created_by', $user->created_by)->get();
+            $videos = Video::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

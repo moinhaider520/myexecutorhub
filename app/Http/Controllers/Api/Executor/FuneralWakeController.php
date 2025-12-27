@@ -14,11 +14,11 @@ class FuneralWakeController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function view(): JsonResponse
+    public function view($id): JsonResponse
     {
         try {
             $user = Auth::user();
-            $funeralwakes = FuneralWake::where('created_by', $user->created_by)->get();
+            $funeralwakes = FuneralWake::where('created_by', $id)->get();
             
             return response()->json([
                 'success' => true, 

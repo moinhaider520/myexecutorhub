@@ -15,15 +15,15 @@ class InsurancePolicyController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function index(): JsonResponse
+    public function index($id): JsonResponse
     {
         try {
             // Get the currently authenticated user
             $user = Auth::user();
 
             // Retrieve insurance types and policies created by the authenticated user's creator
-            $insuranceTypes = InsuranceTypes::where('created_by', $user->created_by)->get();
-            $insurancePolicies = InsurancePolicy::where('created_by', $user->created_by)->get();
+            $insuranceTypes = InsuranceTypes::where('created_by', $id)->get();
+            $insurancePolicies = InsurancePolicy::where('created_by', $id)->get();
 
             // Return the insurance policies and types as a JSON response
             return response()->json([

@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 class WillGeneratorController extends Controller
 {
-    public function partner_about_you()
+    public function partner_about_you($id)
     {
         try {
             $user = Auth::user();
-            $will_user_infos = WillUserInfo::where('user_id', $user->created_by)->get();
+            $will_user_infos = WillUserInfo::where('user_id', $id)->get();
             if ($will_user_infos) {
                 return response()->json(['status' => true, 'data' => $will_user_infos]);
             } else {

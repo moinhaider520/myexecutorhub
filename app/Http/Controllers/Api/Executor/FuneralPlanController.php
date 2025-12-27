@@ -12,11 +12,11 @@ class FuneralPlanController extends Controller
     /**
      * Get the list of funeral plans for the authenticated user.
      */
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $funeralPlans = FuneralPlan::where('created_by', $user->created_by)->get();
+            $funeralPlans = FuneralPlan::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

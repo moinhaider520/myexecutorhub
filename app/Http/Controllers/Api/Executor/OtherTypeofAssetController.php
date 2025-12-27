@@ -13,18 +13,18 @@ class OtherTypeOfAssetController extends Controller
     /**
      * Get the list of other type of assets and their types for the authenticated user.
      */
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
 
             // Fetch custom drop-down types for 'other_type_of_assets' category
-            $otherAssetTypes = CustomDropDown::where('created_by', $user->created_by)
+            $otherAssetTypes = CustomDropDown::where('created_by', $id)
                 ->where('category', 'other_type_of_assets')
                 ->get();
 
             // Fetch the other type of assets created by the authenticated user
-            $otherAssets = OtherTypeOfAsset::where('created_by', $user->created_by)->get();
+            $otherAssets = OtherTypeOfAsset::where('created_by', $id)->get();
 
             return response()->json([
                 'success' => true,

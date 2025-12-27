@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 
 class LPAController extends Controller
 {
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $lpas = LPAVideos::where('customer_id', $user->created_by)->get();
+            $lpas = LPAVideos::where('customer_id', $id)->get();
 
             return response()->json(['success' => true, 'lpas' => $lpas], 200);
         } catch (\Exception $e) {

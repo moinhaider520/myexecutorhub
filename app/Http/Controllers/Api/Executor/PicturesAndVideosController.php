@@ -9,11 +9,11 @@ use App\Models\PicturesAndVideos;
 
 class PicturesAndVideosController extends Controller
 {
-    public function view()
+    public function view($id)
     {
         try {
             $user = Auth::user();
-            $pictures_and_videos = PicturesAndVideos::where('created_by', $user->created_by)->get();
+            $pictures_and_videos = PicturesAndVideos::where('created_by', $id)->get();
             return response()->json(['success' => true, 'data' => $pictures_and_videos], 200);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
