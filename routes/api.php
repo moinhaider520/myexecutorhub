@@ -819,6 +819,13 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('/withdraw/history', [ExecutorWithdrawalController::class, 'history'])->name('withdraw.history');
 
     Route::get('/guidance/{id}', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/store', [ExecutorGuidanceController::class, 'store'])->name('guidance.store');
+    Route::get('/guidance/{id}/media', [ExecutorGuidanceController::class, 'getMedia']);
+    Route::delete('/guidance/media/{id}', [ExecutorGuidanceController::class, 'deleteMedia']);
+    Route::post('/guidance/update', [ExecutorGuidanceController::class, 'update'])->name('guidance.update');
+    Route::post('/guidance/update/{id}', [ExecutorGuidanceController::class, 'update'])->name('guidance.update');
+    Route::delete('/guidance/destroy/{id}', [ExecutorGuidanceController::class, 'destroy'])->name('guidance.destroy');
+
     Route::get('/documents/view/{id}', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
     Route::get('/documents/view/{document_type}/{id}', [ExecutorDocumentsController::class, 'ViewByDocType'])->name('documents.viewByDocType');
     Route::post('/documents/store', [ExecutorDocumentsController::class, 'store'])->name('documents.store');
@@ -834,7 +841,14 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::get('reviews/{id}', [ExecutorReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [ExecutorReviewController::class, 'destroy'])->name('reviews.destroy');
 
-    Route::get('/wishes/{id}', [ExecutorWishesController::class, 'view'])->name('wishes.view');
+    Route::get('/wishes/view/{id}', [ExecutorWishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/store', [ExecutorWishesController::class, 'store'])->name('wishes.store');
+    Route::get('/wishes/{id}/media', [ExecutorWishesController::class, 'getMedia']);
+    Route::delete('/wishes/media/{id}', [ExecutorWishesController::class, 'deleteMedia']);
+    Route::post('/wishes/update', [ExecutorWishesController::class, 'update'])->name('wishes.update');
+    Route::post('/wishes/update/{id}', [ExecutorWishesController::class, 'update'])->name('wishes.update');
+    Route::delete('/wishes/destroy/{id}', [ExecutorWishesController::class, 'destroy'])->name('wishes.destroy');
+
     Route::get('/life-remembered/{id}', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
     Route::get('/life_remembered_videos/view/{id}', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
     Route::get('/voice-notes/{id}', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');

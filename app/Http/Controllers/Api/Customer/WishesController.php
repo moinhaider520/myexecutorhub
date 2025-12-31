@@ -25,13 +25,6 @@ class WishesController extends Controller
                 ->where('created_by', Auth::id())
                 ->get();
 
-            if ($wishes->isEmpty()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Wish not found'
-                ], 404);
-            }
-
             return response()->json([
                 'success' => true,
                 'data' => $wishes
