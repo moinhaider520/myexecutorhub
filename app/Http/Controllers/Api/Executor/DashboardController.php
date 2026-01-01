@@ -68,7 +68,7 @@ class DashboardController extends Controller
                 foreach ($stage->todoItems as $todoItem) {
                     $todoItem->currentUserProgress = ExecutorTodoProgress::where('todo_item_id', $todoItem->id)
                         ->where('user_id', $user->id)
-                        ->where('created_by', $user->created_by)
+                        ->where('created_by', $user->id)
                         ->first();
                 }
             }
@@ -173,7 +173,7 @@ class DashboardController extends Controller
     {
         try {
             $request->validate([
-                'todo_item_id' => 'required|exists:executor_todo_items,id',
+                'todo_item_id' => 'required',
                 'status' => 'required|in:not_completed,completed,not_required',
                 'notes' => 'nullable|string'
             ]);
@@ -184,7 +184,7 @@ class DashboardController extends Controller
                 [
                     'todo_item_id' => $request->todo_item_id,
                     'user_id' => $user->id,
-                    'created_by' => $user->created_by,
+                    'created_by' => $request->created_by,
                 ],
                 [
                     'status' => $request->status,

@@ -13,9 +13,10 @@ class MessageController extends Controller
 {
     public function getUsers()
     {
-        $roles = ['executor', 'Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers'];
+        $executors = Auth::user()->executors;
+        $roles = ['Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers'];
         $user = Auth::user();
-        
+
         if ($user->hasRole('customer') || $user->hasRole('partner')) {
             $users = User::with('roles')
                 ->where('created_by', $user->id)
@@ -30,16 +31,19 @@ class MessageController extends Controller
             $users = User::all();
         }
 
+        // Merge executors into users collection
+        $users = $users->merge($executors);
+
         return response()->json(['users' => $users], 200);
     }
 
     public function getMessages($userId)
     {
         $authUserId = Auth::id();
-        $messages = Message::where(function($query) use ($authUserId, $userId) {
+        $messages = Message::where(function ($query) use ($authUserId, $userId) {
             $query->where('user_id', $authUserId)
                 ->where('receiver_id', $userId);
-        })->orWhere(function($query) use ($authUserId, $userId) {
+        })->orWhere(function ($query) use ($authUserId, $userId) {
             $query->where('user_id', $userId)
                 ->where('receiver_id', $authUserId);
         })->orderBy('id', 'asc')->get();
@@ -62,7 +66,7 @@ class MessageController extends Controller
         $message = new Message;
         $message->message = $request->message;
         $message->user_id = Auth::id();
-        $message->receiver_id = $request->receiver_id;   
+        $message->receiver_id = $request->receiver_id;
 
         $message->save();
 

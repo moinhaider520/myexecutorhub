@@ -37,7 +37,7 @@ class ExecutorsController extends Controller
         try {
             // 1️⃣ Find executor by email
             $executor = User::where('email', $request->email)->first();
-            $password=str()->random(10);
+            $password = str()->random(10);
             // 2️⃣ If executor does not exist → create
             if (!$executor) {
 

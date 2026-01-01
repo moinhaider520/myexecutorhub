@@ -37,17 +37,20 @@ class PictureController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'required|file|mimes:jpg,jpeg,png,gif|max:51200',
         ]);
 
         DB::beginTransaction();
         try {
-            $path = $this->imageUpload($request->file('file'), 'pictures');
+            $filePaths = [];
+            foreach ($request->file('file') as $file) {
+                $path = $this->imageUpload($file, 'pictures');
+                $filePaths[] = $path;
+            }
 
             Picture::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'file_path' => $path,
+                'file_path' => json_encode($filePaths),
                 'created_by' => Auth::id()
             ]);
 
@@ -74,33 +77,31 @@ class PictureController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'file' => 'nullable|file|mimes:jpg,jpeg,png,gif|max:51200',
         ]);
 
         DB::beginTransaction();
         try {
             $picture = Picture::findOrFail($id);
 
-            // Optional: Check if this picture belongs to the current user
-            if ($picture->created_by !== Auth::id()) {
-                return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
-            }
-
             $picture->name = $request->name;
             $picture->description = $request->description;
 
-            if ($request->hasFile('file')) {
-                $filePath = public_path('assets/upload/' . basename($picture->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
+            // Existing files (JSON → array)
+            $existingFiles = $picture->file_path
+                ? json_decode($picture->file_path, true)
+                : [];
 
-                $path = $this->imageUpload($request->file('file'), 'pictures');
-                $picture->file_path = $path;
+            // Upload new files (append mode)
+            if ($request->hasFile('file')) {
+                foreach ($request->file('file') as $file) {
+                    $path = $this->imageUpload($file, 'pictures');
+                    $existingFiles[] = $path;
+                }
             }
 
+            // Save back as JSON
+            $picture->file_path = json_encode($existingFiles);
             $picture->save();
-
             DB::commit();
             return response()->json(['success' => true, 'message' => 'Picture updated successfully.']);
         } catch (\Exception $e) {

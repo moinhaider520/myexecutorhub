@@ -33,7 +33,7 @@ class DashboardController extends Controller
         try {
             $user = Auth::user();
 
-            $totalExecutors = User::role('executor')->where('created_by', $user->id)->count();
+            $totalExecutors = Auth::user()->executors->count();
             $totalDocuments = Document::where('created_by', $user->id)->count();
             $bankbalance = BankAccount::where('created_by', $user->id)->sum('balance');
             $totalBusinessInterest = BusinessInterest::where('created_by', $user->id)->sum('share_value');

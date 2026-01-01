@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CustomEmail;
 use App\Models\User;
 use App\Models\OnboardingProgress;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Mail;
 use Throwable;
 
 class ExecutorsController extends Controller
@@ -22,7 +24,7 @@ class ExecutorsController extends Controller
     public function view()
     {
         try {
-            $executors = User::role('executor')->where('created_by', Auth::id())->get();
+            $executors = Auth::user()->executors;
             return response()->json(['success' => true, 'executors' => $executors], 200);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
@@ -48,30 +50,52 @@ class ExecutorsController extends Controller
                 'relationship' => 'required|string|max:255',
                 'how_acting' => 'required|string|max:255',
                 'status' => 'required|string|max:50',
-                'password' => 'required|confirmed|min:6',
             ]);
 
             $couponCode = 'COUPON-' . strtoupper(uniqid());
 
             DB::beginTransaction();
 
-            $executor = User::create([
-                'title' => $request->title,
-                'name' => $validated['name'],
-                'lastname' => $validated['lastname'],
-                'how_acting' => $validated['how_acting'],
-                'phone_number' => $request->phone_number,
-                'email' => $validated['email'],
-                'relationship' => $validated['relationship'],
-                'status' => $validated['status'],
-                'password' => Hash::make($validated['password']),
-                'created_by' => Auth::id(),
-                'coupon_code' => $couponCode,
-                'trial_ends_at' => Auth::user()->trial_ends_at ?? null,
-                'subscribed_package' => Auth::user()->subscribed_package ?? null,
-            ]);
+            // 1️⃣ Find executor by email
+            $executor = User::where('email', $request->email)->first();
+            $password = str()->random(10);
+            if (!$executor) {
 
-            $executor->assignRole('executor');
+                $executor = User::create([
+                    'title' => $request->title,
+                    'name' => $request->name,
+                    'lastname' => $request->lastname,
+                    'how_acting' => $request->how_acting,
+                    'phone_number' => $request->phone_number,
+                    'email' => $request->email,
+                    'relationship' => $request->relationship,
+                    'status' => $request->status,
+                    'password' => Hash::make($password),
+                ]);
+
+                $executor->assignRole('executor');
+
+                $authname = Auth::user()->name;
+                $message = "
+            <h2>Hello {$request->name},</h2>
+            <p>You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.</p>
+            <p>Please use the following password and your email to login to the portal.</p>
+            <p>Password:{$password}</p>
+            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+                Mail::to($request->email)->send(new CustomEmail(
+                    [
+                        'subject' => 'You Have Been Invited to Executor Hub.',
+                        'message' => $message,
+                    ],
+                    'You Have Been Invited to Executor Hub.'
+                ));
+            }
+
+            // 3️⃣ Link executor to customer (pivot)
+            Auth::user()->executors()->syncWithoutDetaching([$executor->id]);
 
             // Onboarding progress
             $progress = OnboardingProgress::firstOrCreate(
@@ -122,10 +146,8 @@ class ExecutorsController extends Controller
             'name' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
             'how_acting' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $id,
             'relationship' => 'required|string',
             'status' => 'required|string',
-            'password' => 'nullable|string|min:8|confirmed'
         ]);
 
         try {
@@ -138,10 +160,8 @@ class ExecutorsController extends Controller
                 'lastname' => $request->lastname,
                 'how_acting' => $request->how_acting,
                 'phone_number' => $request->phone_number,
-                'email' => $request->email,
                 'relationship' => $request->relationship,
                 'status' => $request->status,
-                'password' => $request->filled('password') ? Hash::make($request->password) : $executor->password,
             ]);
 
             DB::commit();

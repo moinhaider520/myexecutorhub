@@ -546,6 +546,10 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     // MEMORENDEUM OF WISHES
     Route::get('/memorandum_of_wishes/view', [CustomerMemorandumWishController::class, 'view'])->name('memorandum_of_wishes.view');
+    Route::post('/memorandum_of_wishes/store', [CustomerMemorandumWishController::class, 'store'])->name('memorandum_of_wishes.store');
+    Route::post('/memorandum_of_wishes/update/{id}', [CustomerMemorandumWishController::class, 'update'])->name('memorandum_of_wishes.update');
+    Route::delete('/memorandum_of_wishes/destroy/{id}', [CustomerMemorandumWishController::class, 'destroy'])->name('memorandum_of_wishes.destroy');
+
     // PICTURES & VIDEOS CONTROLLER
     Route::get('/pictures_and_videos/view', [CustomerPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
     Route::post('/pictures_and_videos/store', [CustomerPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
@@ -707,7 +711,7 @@ Route::middleware(['auth:sanctum', 'role:customer'])->prefix('customer')->group(
 
     Route::get('/organs-donations', [CustomerOrgansDonationController::class, 'view'])->name('organs_donations.view');
     Route::post('/organs-donations', [CustomerOrgansDonationController::class, 'store'])->name('organs_donations.store');
-    Route::put('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'update'])->name('organs_donations.update');
+    Route::post('/organs-donations/update/{id}', [CustomerOrgansDonationController::class, 'update'])->name('organs_donations.update');
     Route::delete('/organs-donations/{id}', [CustomerOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
 
     // Task
@@ -831,8 +835,16 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::post('/documents/store', [ExecutorDocumentsController::class, 'store'])->name('documents.store');
     Route::post('/documents/update/{id}', [ExecutorDocumentsController::class, 'update'])->name('documents.update');
     Route::get('/pictures_and_videos/view/{id}', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+
     Route::get('/pictures/view/{id}', [ExecutorPictureController::class, 'view'])->name('pictures.view');
+    Route::post('/pictures/store', [ExecutorPictureController::class, 'store'])->name('pictures.store');
+    Route::post('/pictures/update/{id}', [ExecutorPictureController::class, 'update'])->name('pictures.update');
+    Route::delete('/pictures/destroy/{id}', [ExecutorPictureController::class, 'destroy'])->name('pictures.destroy');
+
     Route::get('/videos/view/{id}', [ExecutorVideoController::class, 'view'])->name('videos.view');
+    Route::post('/videos/store', [ExecutorVideoController::class, 'store'])->name('videos.store');
+    Route::post('/videos/update/{id}', [ExecutorVideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/destroy/{id}', [ExecutorVideoController::class, 'destroy'])->name('videos.destroy');
 
     Route::get('/advisors/view/{id}', [ExecutorAdvisorsController::class, 'view'])->name('advisors.view');
     Route::get('/executors/view/{id}', [ExecutorExecutorsController::class, 'view'])->name('executors.view');
@@ -850,10 +862,34 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::delete('/wishes/destroy/{id}', [ExecutorWishesController::class, 'destroy'])->name('wishes.destroy');
 
     Route::get('/life-remembered/{id}', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/store', [ExecutorLifeRememberedController::class, 'store'])->name('life_remembered.store');
+    Route::get('/life_remembered/{id}/media', [ExecutorLifeRememberedController::class, 'getMedia']);
+    Route::delete('/life_remembered/media/{id}', [ExecutorLifeRememberedController::class, 'deleteMedia']);
+    Route::post('/life_remembered/update', [ExecutorLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::post('/life_remembered/update/{id}', [ExecutorLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::delete('/life_remembered/destroy/{id}', [ExecutorLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
+
     Route::get('/life_remembered_videos/view/{id}', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::post('/life_remembered_videos/store', [ExecutorLifeRememberedVideoController::class, 'store'])->name('life_remembered_videos.store');
+    Route::get('/life_remembered_videos/{id}/media', [ExecutorLifeRememberedVideoController::class, 'getMedia']);
+    Route::delete('/life_remembered_videos/media/{id}', [ExecutorLifeRememberedVideoController::class, 'deleteMedia']);
+    Route::post('/life_remembered_videos/update/{id}', [ExecutorLifeRememberedVideoController::class, 'update'])->name('life_remembered_videos.update');
+    Route::delete('/life_remembered_videos/destroy/{id}', [ExecutorLifeRememberedVideoController::class, 'destroy'])->name('life_remembered_videos.destroy');
+
     Route::get('/voice-notes/{id}', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::post('/voice-notes', [ExecutorVoiceNotesController::class, 'store'])->name('voice_notes.store');
+    Route::delete('/voice-notes/{id}', [ExecutorVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
+
     Route::get('/organs-donations/{id}', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donations.view');
+    Route::post('/organs-donations', [ExecutorOrgansDonationController::class, 'store'])->name('organs_donations.store');
+    Route::post('/organs-donations/update/{id}', [ExecutorOrgansDonationController::class, 'update'])->name('organs_donations.update');
+    Route::delete('/organs-donations/{id}', [ExecutorOrgansDonationController::class, 'destroy'])->name('organs_donations.destroy');
+
     Route::get('/funeral_wake/view/{id}', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
+    Route::post('/funeral_wake/store', [ExecutorFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [ExecutorFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [ExecutorFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+
 
     Route::get('/bank_accounts/{id}', [ExecutorBankAccountController::class, 'index'])->name('bank_accounts.index');
     Route::post('/bank_accounts/store', [ExecutorBankAccountController::class, 'store'])->name('bank_accounts.store');
@@ -936,7 +972,12 @@ Route::middleware(['auth:sanctum', 'role:executor'])->prefix('executor')->group(
     Route::delete('/foreign_assets/destroy/{id}', [ExecutorForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
 
     Route::get('/tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
+
     Route::get('/memorandum_of_wishes/view/{id}', [ExecutorMemorandumWishController::class, 'view'])->name('memorandum_of_wishes.view');
+    Route::post('/memorandum_of_wishes/store', [ExecutorMemorandumWishController::class, 'store'])->name('memorandum_of_wishes.store');
+    Route::post('/memorandum_of_wishes/update/{id}', [ExecutorMemorandumWishController::class, 'update'])->name('memorandum_of_wishes.update');
+    Route::delete('/memorandum_of_wishes/destroy/{id}', [ExecutorMemorandumWishController::class, 'destroy'])->name('memorandum_of_wishes.destroy');
+
     Route::post('/messages/send', [ExecutorMessageController::class, 'sendMessage']);
     Route::get('/messages/{userId}', [ExecutorMessageController::class, 'getMessages']);
     Route::get('/users', [ExecutorMessageController::class, 'getUsers']);

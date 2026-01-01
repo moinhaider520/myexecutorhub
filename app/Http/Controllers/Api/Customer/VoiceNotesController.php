@@ -40,43 +40,43 @@ class VoiceNotesController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request): JsonResponse
-{
-    // Validate the incoming request
-    $request->validate([
-        'start_date' => 'required|date',
-        'audio_blob' => 'required', // Validate the file type
-    ]);
+    {
+        // Validate the incoming request
+        $request->validate([
+            'start_date' => 'required|date',
+            'audio_blob' => 'required', // Validate the file type
+        ]);
 
-    try {
-        // Get the uploaded file from the request
-        $audioFile = $request->file('audio_blob');
+        try {
+            // Get the uploaded file from the request
+            $audioFile = $request->file('audio_blob');
 
-        // Generate a unique file name with the correct extension
-        $uniqueFileName = uniqid() . '.' . $audioFile->getClientOriginalExtension();
+            // Generate a unique file name with the correct extension
+            $uniqueFileName = uniqid() . '.' . $audioFile->getClientOriginalExtension();
 
-        // Move the file to the assets/upload directory
-        $audioFile->move(public_path('storage/voice_notes'), $uniqueFileName);
+            // Move the file to the assets/upload directory
+            $audioFile->move(public_path('storage/voice_notes'), $uniqueFileName);
 
-        // Create a new voice note record in the database
-        $voiceNote = new VoiceNotes();
-        $voiceNote->start_date = $request->start_date;
-        $voiceNote->end_date = $request->start_date; // Assuming end_date is the same as start_date
-        $voiceNote->voice_note = 'voice_notes/' . $uniqueFileName; // Store the relative path in the database
-        $voiceNote->created_by = Auth::id();
-        $voiceNote->save();
+            // Create a new voice note record in the database
+            $voiceNote = new VoiceNotes();
+            $voiceNote->start_date = $request->start_date;
+            $voiceNote->end_date = $request->start_date; // Assuming end_date is the same as start_date
+            $voiceNote->voice_note = 'voice_notes/' . $uniqueFileName; // Store the relative path in the database
+            $voiceNote->created_by = Auth::id();
+            $voiceNote->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Voice note added successfully.',
-            'data' => $voiceNote
-        ], 201);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => $e->getMessage()
-        ], 500);
+            return response()->json([
+                'success' => true,
+                'message' => 'Voice note added successfully.',
+                'data' => $voiceNote
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
-}
 
     /**
      * Delete a voice note.
