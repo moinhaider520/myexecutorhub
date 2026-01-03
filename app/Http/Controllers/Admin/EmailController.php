@@ -18,6 +18,17 @@ class EmailController extends Controller
         return view('admin.emails.index', compact('emails'));
     }
 
+    public function email_summary()
+    {
+        $emails = EmailSchedule::select('subject', 'body', 'scheduled_for','recipient_type')
+            ->groupBy('subject', 'body', 'scheduled_for', 'recipient_type')
+            ->orderByRaw('MAX(created_at) DESC')
+            ->get();
+
+        return view('admin.emails.email_summary', compact('emails'));
+    }
+
+
 
     public function create()
     {
@@ -222,22 +233,22 @@ class EmailController extends Controller
     }
 
 
-   public function users_list()
-{
-    try {
-        $users = User::where('email_notifications', 1)
-            ->whereHas('roles', function ($q) {
-                $q->where('name', 'customer')
-                  ->orWhere('name', 'partner');
-            })
-            ->with('roles')
-            ->get();
+    public function users_list()
+    {
+        try {
+            $users = User::where('email_notifications', 1)
+                ->whereHas('roles', function ($q) {
+                    $q->where('name', 'customer')
+                        ->orWhere('name', 'partner');
+                })
+                ->with('roles')
+                ->get();
 
-        return response()->json(['users' => $users], 200);
+            return response()->json(['users' => $users], 200);
 
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 404);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 404);
+        }
     }
-}
 
 }

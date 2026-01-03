@@ -399,7 +399,7 @@
                                             </div>
                                             <div class="info-note">
                                                 <strong>Note:</strong> Override earnings are calculated from your recruited
-                                                partners' sales. You earn 20% of each sale made by partners you recruit.
+                                                partners' sales. When a recruited partner makes a sale: the recruited partner earns 30%, you (the main partner) earn 20% as override, and Executor Hub earns 50%.
                                             </div>
                                         </div>
                                     </div>
@@ -438,7 +438,7 @@
                                     <div class="owner-info-note">
                                         <strong>Breakdown:</strong><br>
                                         • Executor Hub earns 70% from partner's direct sales (Partner gets 30%)<br>
-                                        • Executor Hub earns 80% from recruited partners' sales (20% goes to recruiting partner as override)
+                                        • Executor Hub earns 50% from recruited partners' sales (Recruited partner gets 30%, Main partner gets 20% as override)
                                     </div>
                                 </div>
                             </div>
@@ -460,9 +460,10 @@
         const CHRISTMAS_DISCOUNT = 0.10;
         const COUPLE_DISCOUNT = 0.30;
         const PARTNER_COMMISSION = 0.30;
-        const OVERRIDE_COMMISSION = 0.20;
+        const OVERRIDE_COMMISSION = 0.20; // Main partner gets 20% override from recruited partners' sales
+        const RECRUITED_PARTNER_COMMISSION = 0.30; // Recruited partner gets 30% from their own sales
         const OWNER_DIRECT_RATE = 0.70; // Owner gets 70% from partner's direct sales
-        const OWNER_TEAM_RATE = 0.80; // Owner gets 80% from team sales (after 20% override)
+        const OWNER_TEAM_RATE = 0.50; // Owner gets 50% from team sales (recruited partner gets 30%, main partner gets 20% override)
 
         let christmasEnabled = false;
         let vatEnabled = false;
@@ -581,7 +582,7 @@
             // Owner gets 70% from partner's direct sales
             const ownerDirectEarnings = (commissionBase * OWNER_DIRECT_RATE) * salesPerMonth;
             
-            // Owner gets 80% from team sales (partner already got 20% as override)
+            // Owner gets 50% from team sales (recruited partner gets 30%, main partner gets 20% as override)
             const ownerTeamEarnings = (commissionBase * OWNER_TEAM_RATE) * totalTeamSales;
             
             const ownerMonthlyTotal = ownerDirectEarnings + ownerTeamEarnings;

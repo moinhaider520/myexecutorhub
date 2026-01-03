@@ -191,8 +191,8 @@
                             <li><a href="{{ route('admin.emails.email_using_template') }}">Send Email Using Template</a>
                             </li>
                             <li><a href="{{ route('admin.emails.index') }}">View Schedules</a></li>
+                            <li><a href="{{ route('admin.emails.email_summary') }}">Emails Summary</a></li>                            
                         </ul>
-
                     </li>
                     @endrole
 
