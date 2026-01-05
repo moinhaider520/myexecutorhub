@@ -41,19 +41,17 @@ class TwoFactorController extends Controller
         Auth::loginUsingId($user->id);
         $request->session()->regenerate();
 
-        if ($user->hasRole('executor') && !session()->has('impersonator_id')) {
-
-            $customer = $user->customers()
-                ->orderBy('customer_executor.id')
-                ->first();
-
-            session(['impersonator_id' => $user->id]);
-
-            Auth::logout();
-            Auth::loginUsingId($customer->id);
-            $request->session()->regenerate();
-
-            return redirect()->route('customer.dashboard');
+        if ($user->hasRole('executor')) {
+            $user->load('customers');
+            $firstCustomer = $user->customers->first();
+            if ($firstCustomer) {
+                session([
+                    'acting_customer_id' => $firstCustomer->id,
+                ]);
+            } else {
+                session()->forget('acting_customer_id');
+            }
+            return redirect()->route('executor.dashboard');
         }
 
         if ($user->hasRole('admin')) {

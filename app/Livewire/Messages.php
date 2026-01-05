@@ -49,7 +49,12 @@ class Messages extends Component
                         ->orWhere('email', 'like', '%' . $this->search . '%');
                 })
                 ->get();
+            $executorUsers=Auth::user()->executors()->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%');
+            })->get();
             $users = $users->merge($adminUsers);
+            $users = $users->merge($executorUsers);
         } elseif ($user->hasRole('partner')) {
 
             $users =  User::role('admin')
@@ -59,7 +64,7 @@ class Messages extends Component
                 })
                 ->get();
         } else if ($user->hasAnyRole($roles)) {
-            $users = User::where('id', $user->created_by)->get();
+            $users = Auth::user()->customers;
         } else {
             $users = User::whereHas('roles', function ($query) {
                 $query->whereIn('name', ['customer', 'partner']);

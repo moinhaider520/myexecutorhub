@@ -367,7 +367,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 });
 
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
-    Route::post('/impersonate', [ImpersonationController::class, 'start'])->name('impersonate');
+
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
 
     // New routes for document reminders
@@ -1113,6 +1113,7 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
 
 // Executors  Routes
 Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor.')->group(function () {
+    Route::post('/impersonate', [ImpersonationController::class, 'start'])->name('impersonate');
     Route::get('/useful_contacts/view', [UsefulContactsController::class, 'index'])->name('useful_contacts.index');
     // Dashboard
     Route::get('/dashboard', [ExecutorDashboardController::class, 'index'])->name('dashboard');
@@ -1134,36 +1135,214 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     // WILLS
     Route::get('wills', [ExecutorWillController::class, 'index'])->name('wills.index');
 
-    // Executors View Routes
+
+
+    // Executor Life Remembered
     Route::get('/life_remembered/view', [ExecutorLifeRememberedController::class, 'view'])->name('life_remembered.view');
+    Route::post('/life_remembered/store', [ExecutorLifeRememberedController::class, 'store'])->name('life_remembered.store');
+    Route::get('/life_remembered/{id}/media', [ExecutorLifeRememberedController::class, 'getMedia']);
+    Route::delete('/life_remembered/media/{id}', [ExecutorLifeRememberedController::class, 'deleteMedia']);
+    Route::post('/life_remembered/update', [ExecutorLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::post('/life_remembered/update/{id}', [ExecutorLifeRememberedController::class, 'update'])->name('life_remembered.update');
+    Route::delete('/life_remembered/destroy/{id}', [ExecutorLifeRememberedController::class, 'destroy'])->name('life_remembered.destroy');
+
+    // Executor Life Remembered Videos
     Route::get('/life_remembered_videos/view', [ExecutorLifeRememberedVideoController::class, 'view'])->name('life_remembered_videos.view');
+    Route::post('/life_remembered_videos/store', [ExecutorLifeRememberedVideoController::class, 'store'])->name('life_remembered_videos.store');
+    Route::get('/life_remembered_videos/{id}/media', [ExecutorLifeRememberedVideoController::class, 'getMedia']);
+    Route::delete('/life_remembered_videos/media/{id}', [ExecutorLifeRememberedVideoController::class, 'deleteMedia']);
+    Route::post('/life_remembered_videos/update/{id}', [ExecutorLifeRememberedVideoController::class, 'update'])->name('life_remembered_videos.update');
+    Route::delete('/life_remembered_videos/destroy/{id}', [ExecutorLifeRememberedVideoController::class, 'destroy'])->name('life_remembered_videos.destroy');
+
+    // Executor Wishes
     Route::get('/wishes/view', [ExecutorWishesController::class, 'view'])->name('wishes.view');
+    Route::post('/wishes/store', [ExecutorWishesController::class, 'store'])->name('wishes.store');
+    Route::get('/wishes/{id}/media', [ExecutorWishesController::class, 'getMedia']);
+    Route::delete('/wishes/media/{id}', [ExecutorWishesController::class, 'deleteMedia']);
+    Route::post('/wishes/update', [ExecutorWishesController::class, 'update'])->name('wishes.update');
+    Route::post('/wishes/update/{id}', [ExecutorWishesController::class, 'update'])->name('wishes.update');
+    Route::delete('/wishes/destroy/{id}', [ExecutorWishesController::class, 'destroy'])->name('wishes.destroy');
+
+
     Route::get('/memorandum_wishes/view', [ExecutorMemorandumWishController::class, 'view'])->name('memorandum_wishes.view');
+    Route::post('/memorandum_wishes/store', [ExecutorMemorandumWishController::class, 'store'])->name('memorandum_wishes.store');
+    Route::get('/memorandum_wishes/{id}/media', [ExecutorMemorandumWishController::class, 'getMedia']);
+    Route::delete('/memorandum_wishes/media/{id}', [ExecutorMemorandumWishController::class, 'deleteMedia']);
+    Route::post('/memorandum_wishes/update', [ExecutorMemorandumWishController::class, 'update'])->name('memorandum_wishes.update');
+    Route::post('/memorandum_wishes/update/{id}', [ExecutorMemorandumWishController::class, 'update'])->name('memorandum_wishes.update');
+    Route::delete('/memorandum_wishes/destroy/{id}', [ExecutorMemorandumWishController::class, 'destroy'])->name('memorandum_wishes.destroy');
+
     Route::get('/guidance/view', [ExecutorGuidanceController::class, 'view'])->name('guidance.view');
+    Route::post('/guidance/store', [ExecutorGuidanceController::class, 'store'])->name('guidance.store');
+    Route::get('/guidance/{id}/media', [ExecutorGuidanceController::class, 'getMedia']);
+    Route::delete('/guidance/media/{id}', [ExecutorGuidanceController::class, 'deleteMedia']);
+    Route::post('/guidance/update', [ExecutorGuidanceController::class, 'update'])->name('guidance.update');
+    Route::post('/guidance/update/{id}', [ExecutorGuidanceController::class, 'update'])->name('guidance.update');
+    Route::delete('/guidance/destroy/{id}', [ExecutorGuidanceController::class, 'destroy'])->name('guidance.destroy');
+
+
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+    // Custom Documents Type
+    Route::post('/documents/save_custom_type', [ExecutorDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
+    Route::post('/documents/store', [ExecutorDocumentsController::class, 'store'])->name('documents.store');
+    Route::post('/documents/update/{id}', [ExecutorDocumentsController::class, 'update'])->name('documents.update');
+    Route::delete('/documents/destroy/{id}', [ExecutorDocumentsController::class, 'destroy'])->name('documents.destroy');
+
+    // PICTURES & VIDEOS CONTROLLER
     Route::get('/pictures_and_videos/view', [ExecutorPicturesAndVideosController::class, 'view'])->name('pictures_and_videos.view');
+    Route::post('/pictures_and_videos/store', [ExecutorPicturesAndVideosController::class, 'store'])->name('pictures_and_videos.store');
+    Route::post('/pictures_and_videos/update/{id}', [ExecutorPicturesAndVideosController::class, 'update'])->name('pictures_and_videos.update');
+    Route::delete('/pictures_and_videos/destroy/{id}', [ExecutorPicturesAndVideosController::class, 'destroy'])->name('pictures_and_videos.destroy');
+
+    // PICTURES CONTROLLER
     Route::get('/pictures/view', [ExecutorPictureController::class, 'view'])->name('pictures.view');
+    Route::post('/pictures/store', [ExecutorPictureController::class, 'store'])->name('pictures.store');
+    Route::post('/pictures/update/{id}', [ExecutorPictureController::class, 'update'])->name('pictures.update');
+    Route::delete('/pictures/destroy/{id}', [ExecutorPictureController::class, 'destroy'])->name('pictures.destroy');
+
+    // VIDEOS CONTROLLER
     Route::get('/videos/view', [ExecutorVideoController::class, 'view'])->name('videos.view');
+    Route::post('/videos/store', [ExecutorVideoController::class, 'store'])->name('videos.store');
+    Route::post('/videos/update/{id}', [ExecutorVideoController::class, 'update'])->name('videos.update');
+    Route::delete('/videos/destroy/{id}', [ExecutorVideoController::class, 'destroy'])->name('videos.destroy');
+
+
     Route::get('/advisors/view', [ExecutorAdvisorsController::class, 'view'])->name('advisors.view');
     Route::get('/executors/view', [ExecutorExecutorsController::class, 'view'])->name('executors.view');
+
+    // Executor Bank Accounts
     Route::get('/bank_accounts/view', [ExecutorBankAccountController::class, 'view'])->name('bank_accounts.view');
+    Route::post('/bank_accounts/save_custom_type', [ExecutorBankAccountController::class, 'saveCustomType'])->name('bank_accounts.save_custom_type');
+    Route::post('/bank_accounts/store', [ExecutorBankAccountController::class, 'store'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/update/{id}', [ExecutorBankAccountController::class, 'update'])->name('bank_accounts.update');
+    Route::delete('/bank_accounts/destroy/{id}', [ExecutorBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
+
     Route::get('/investment_accounts/view', [ExecutorInvestmentAccountController::class, 'index'])->name('investment_accounts.view');
+    Route::post('/investment_accounts/save_custom_type', [ExecutorInvestmentAccountController::class, 'saveCustomType'])->name('investment_accounts.save_custom_type');
+    // Executor Savings
+    Route::post('/investment_accounts/store', [ExecutorInvestmentAccountController::class, 'store'])->name('investment_accounts.store');
+    Route::post('/investment_accounts/update/{id}', [ExecutorInvestmentAccountController::class, 'update'])->name('investment_accounts.update');
+    Route::delete('/investment_accounts/destroy/{id}', [ExecutorInvestmentAccountController::class, 'destroy'])->name('investment_accounts.destroy');
+
+     // Custom Property Type
+    Route::post('/properties/save_custom_type', [ExecutorPropertyController::class, 'saveCustomType'])->name('properties.save_custom_type');
+    // Executor Property (ies) Owned
     Route::get('/properties/view', [ExecutorPropertyController::class, 'view'])->name('properties.view');
+    Route::post('/properties/store', [ExecutorPropertyController::class, 'store'])->name('properties.store');
+    Route::put('/properties/update/{id}', [ExecutorPropertyController::class, 'update'])->name('properties.update');
+    Route::delete('/properties/{id}', [ExecutorPropertyController::class, 'destroy'])->name('properties.destroy');
+
+
+
+    Route::post('/personal_chattels/save_custom_type', [ExecutorPersonalChattelController::class, 'saveCustomType'])->name('personal_chattels.save_custom_type');
+
+    // Executor Chattels
     Route::get('/personal_chattels/view', [ExecutorPersonalChattelController::class, 'view'])->name('personal_chattels.view');
+    Route::post('/personal_chattels/store', [ExecutorPersonalChattelController::class, 'store'])->name('personal_chattels.store');
+    Route::post('/personal_chattels/update/{id}', [ExecutorPersonalChattelController::class, 'update'])->name('personal_chattels.update');
+    Route::delete('/personal_chattels/destroy/{id}', [ExecutorPersonalChattelController::class, 'destroy'])->name('personal_chattels.destroy');
+
     Route::get('/business_interests/view', [ExecutorBusinessInterestController::class, 'view'])->name('business_interests.view');
+    Route::post('/business_interests/save_custom_type', [ExecutorBusinessInterestController::class, 'saveCustomType'])->name('business_interests.save_custom_type');
+   Route::post('/business_interests/store', [ExecutorBusinessInterestController::class, 'store'])->name('business_interests.store');
+    Route::post('/business_interests/update/{id}', [ExecutorBusinessInterestController::class, 'update'])->name('business_interests.update');
+    Route::delete('/business_interests/destroy/{id}', [ExecutorBusinessInterestController::class, 'destroy'])->name('business_interests.destroy');
+
+    // Custom Insurance Type
+    Route::post('/insurance_policies/save_custom_type', [ExecutorInsurancePolicyController::class, 'saveCustomType'])->name('insurance_policies.save_custom_type');
+    // Executor Insurance Policies
     Route::get('/insurance_policies/view', [ExecutorInsurancePolicyController::class, 'view'])->name('insurance_policies.view');
+    Route::post('/insurance_policies/store', [ExecutorInsurancePolicyController::class, 'store'])->name('insurance_policies.store');
+    Route::post('/insurance_policies/update/{id}', [ExecutorInsurancePolicyController::class, 'update'])->name('insurance_policies.update');
+    Route::delete('/insurance_policies/destroy/{id}', [ExecutorInsurancePolicyController::class, 'destroy'])->name('insurance_policies.destroy');
+
+    // Custom Debt Type
+    Route::post('/debt_and_liabilities/save_custom_type', [ExecutorDebtAndLiabilityController::class, 'saveCustomType'])->name('debt_and_liabilities.save_custom_type');
+    // Executor Debt & Liability
     Route::get('/debt_and_liabilities/view', [ExecutorDebtAndLiabilityController::class, 'view'])->name('debt_and_liabilities.view');
-    Route::get('/digital_assets/view', [ExecutorDigitalAssetController::class, 'view'])->name('digital_assets.view');
+    Route::post('/debt_and_liabilities/store', [ExecutorDebtAndLiabilityController::class, 'store'])->name('debt_and_liabilities.store');
+    Route::post('/debt_and_liabilities/update/{id}', [ExecutorDebtAndLiabilityController::class, 'update'])->name('debt_and_liabilities.update');
+    Route::delete('/debt_and_liabilities/destroy/{id}', [ExecutorDebtAndLiabilityController::class, 'destroy'])->name('debt_and_liabilities.destroy');
+
+
+    // Custom Intellectual Property Types
+    Route::post('/intellectual_properties/save_custom_type', [ExecutorIntellectualPropertyController::class, 'saveCustomType'])->name('intellectual_properties.save_custom_type');
+    // Executor Intellectual Property
     Route::get('/intellectual_properties/view', [ExecutorIntellectualPropertyController::class, 'view'])->name('intellectual_properties.view');
+    Route::post('/intellectual_properties/store', [ExecutorIntellectualPropertyController::class, 'store'])->name('intellectual_properties.store');
+    Route::post('/intellectual_properties/update/{id}', [ExecutorIntellectualPropertyController::class, 'update'])->name('intellectual_properties.update');
+    Route::delete('/intellectual_properties/destroy/{id}', [ExecutorIntellectualPropertyController::class, 'destroy'])->name('intellectual_properties.destroy');
+
+    // Custom Other Asset Type
+    Route::post('/other_assets/save_custom_type', [ExecutorOtherAssetController::class, 'saveCustomType'])->name('other_assets.save_custom_type');
+    // Executor Other Assets
     Route::get('/other_assets/view', [ExecutorOtherAssetController::class, 'view'])->name('other_assets.view');
+    Route::post('/other_assets/store', [ExecutorOtherAssetController::class, 'store'])->name('other_assets.store');
+    Route::post('/other_assets/update/{id}', [ExecutorOtherAssetController::class, 'update'])->name('other_assets.update');
+    Route::delete('/other_assets/destroy/{id}', [ExecutorOtherAssetController::class, 'destroy'])->name('other_assets.destroy');
+
+    // Custom Other Type of Asset Type
+    Route::post('/other_type_of_assets/save_custom_type', [ExecutorOtherTypeOfAssetController::class, 'saveCustomType'])->name('other_type_of_assets.save_custom_type');
+    // Executor Other Type of Assets
     Route::get('/other_type_of_assets/view', [ExecutorOtherTypeOfAssetController::class, 'view'])->name('other_type_of_assets.view');
-    Route::get('/pension/view', [ExecutorPensionController::class, 'view'])->name('pensions.view');
-    Route::get('/funeral_plans/view', [ExecutorFuneralPlanController::class, 'view'])->name('funeral_plans.view');
+    Route::post('/other_type_of_assets/store', [ExecutorOtherTypeOfAssetController::class, 'store'])->name('other_type_of_assets.store');
+    Route::post('/other_type_of_assets/update/{id}', [ExecutorOtherTypeOfAssetController::class, 'update'])->name('other_type_of_assets.update');
+    Route::delete('/other_type_of_assets/destroy/{id}', [ExecutorOtherTypeOfAssetController::class, 'destroy'])->name('other_type_of_assets.destroy');
+
+    // Custom Foreign Asset Type
+    Route::post('/foreign_assets/save_custom_type', [ExecutorForeignAssetsController::class, 'saveCustomType'])->name('foreign_assets.save_custom_type');
+    // Executor Foreign Assets
     Route::get('/foreign_assets/view', [ExecutorForeignAssetsController::class, 'view'])->name('foreign_assets.view');
+    Route::post('/foreign_assets/store', [ExecutorForeignAssetsController::class, 'store'])->name('foreign_assets.store');
+    Route::post('/foreign_assets/update/{id}', [ExecutorForeignAssetsController::class, 'update'])->name('foreign_assets.update');
+    Route::delete('/foreign_assets/destroy/{id}', [ExecutorForeignAssetsController::class, 'destroy'])->name('foreign_assets.destroy');
+
+    // Executor pensions
+    Route::get('/pension/view', [ExecutorPensionController::class, 'view'])->name('pensions.view');
+    Route::post('/pension/store', [ExecutorPensionController::class, 'store'])->name('pensions.store');
+    Route::post('/pension/update/{id}', [ExecutorPensionController::class, 'update'])->name('pensions.update');
+    Route::delete('/pension/destroy/{id}', [ExecutorPensionController::class, 'destroy'])->name('pensions.destroy');
+
+    // Organs Donation
     Route::get('/organs_donation/view', [ExecutorOrgansDonationController::class, 'view'])->name('organs_donation.view');
+    Route::post('/organs_donation/store', [ExecutorOrgansDonationController::class, 'store'])->name('organs_donation.store');
+    Route::post('/organs_donation/update/{id}', [ExecutorOrgansDonationController::class, 'update'])->name('organs_donation.update');
+    Route::delete('/organs_donation/destroy/{id}', [ExecutorOrgansDonationController::class, 'destroy'])->name('organs_donation.destroy');
+
+    // Voice Notes
     Route::get('/voice_notes/view', [ExecutorVoiceNotesController::class, 'view'])->name('voice_notes.view');
+    Route::post('/voice_notes/store', [ExecutorVoiceNotesController::class, 'store'])->name('voice_notes.store');
+    Route::delete('/voice_notes/destroy/{id}', [ExecutorVoiceNotesController::class, 'destroy'])->name('voice_notes.destroy');
+
+    // TASKS
+    Route::get('/tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
+    Route::post('/tasks', [ExecutorTaskController::class, 'store'])->name('tasks.store');
+    Route::put('/tasks/{id}', [ExecutorTaskController::class, 'update'])->name('tasks.update');
+    Route::delete('/tasks/{id}', [ExecutorTaskController::class, 'destroy'])->name('tasks.destroy');
+
+
+    Route::post('/digital_assets/save_custom_type', [ExecutorDigitalAssetController::class, 'saveCustomType'])->name('digital_assets.save_custom_type');
+    // Executor Digital Assets
+    Route::get('/digital_assets/view', [ExecutorDigitalAssetController::class, 'view'])->name('digital_assets.view');
+    Route::post('/digital_assets/store', [ExecutorDigitalAssetController::class, 'store'])->name('digital_assets.store');
+    Route::post('/digital_assets/update/{id}', [ExecutorDigitalAssetController::class, 'update'])->name('digital_assets.update');
+    Route::delete('/digital_assets/destroy/{id}', [ExecutorDigitalAssetController::class, 'destroy'])->name('digital_assets.destroy');
+
+
     Route::get('/funeral_wake/view', [ExecutorFuneralWakeController::class, 'view'])->name('funeral_wake.view');
-    Route::get('tasks', [ExecutorTaskController::class, 'index'])->name('tasks.index');
+    Route::post('/funeral_wake/store', [ExecutorFuneralWakeController::class, 'store'])->name('funeral_wake.store');
+    Route::post('/funeral_wake/update/{id}', [ExecutorFuneralWakeController::class, 'update'])->name('funeral_wake.update');
+    Route::delete('/funeral_wake/destroy/{id}', [ExecutorFuneralWakeController::class, 'destroy'])->name('funeral_wake.destroy');
+
+    Route::post('/funeral_plans/save_custom_type', [ExecutorFuneralPlanController::class, 'saveCustomType'])->name('funeral_plans.save_custom_type');
+    // Executor Funeral Plans
+    Route::get('/funeral_plans/view', [ExecutorFuneralPlanController::class, 'view'])->name('funeral_plans.view');
+    Route::post('/funeral_plans/store', [ExecutorFuneralPlanController::class, 'store'])->name('funeral_plans.store');
+    Route::post('/funeral_plans/update/{id}', [ExecutorFuneralPlanController::class, 'update'])->name('funeral_plans.update');
+    Route::delete('/funeral_plans/destroy/{id}', [ExecutorFuneralPlanController::class, 'destroy'])->name('funeral_plans.destroy');
+
+
+
     Route::get('/messages/view', [ExecutorMessagesController::class, 'index'])->name('messages.view');
     // WILL GENERATOR
     Route::get('will_generator', [ExecutorWillGeneratorController::class, 'index'])->name('will_generator.index');

@@ -3,46 +3,60 @@
 @section('content')
 
 <div class="page-body">
-  <!-- Container-fluid starts-->
   <div class="container-fluid default-dashboard">
     <div class="row widget-grid">
-      <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h4>Tasks</h4>
-              </div>
-              <div class="card-body">
-                <div class="calendar-default" id="calendar-container">
-                  <div id="calendar"></div>
-                </div>
-              </div>
-            </div>
+      <div class="col-xl-12 box-col-12">
+        <div class="card">
+          <div class="card-header">
+            <h4>Tasks</h4>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#TaskModal">
+              Add Task
+            </button>
+          </div>
+          <div class="card-body">
+            <div id="calendar"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Container-fluid Ends-->
 </div>
 
-<!-- Modal for showing task details -->
-<div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<!-- Add/Edit Task Modal -->
+<div class="modal fade" id="TaskModal" tabindex="-1" role="dialog" aria-labelledby="TaskModalLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="taskModalLabel">Task Details</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p><strong>Title: </strong><span id="taskTitle"></span></p>
-        <p><strong>Description: </strong><span id="taskDescription"></span></p>
-        <p><strong>Date: </strong><span id="taskDate"></span></p>
-        <p><strong>Time: </strong><span id="taskTime"></span></p>
-      </div>
+      <form id="TaskForm">
+        @csrf
+        <input type="hidden" id="task_id" name="id">
+        <div class="modal-header">
+          <h5 class="modal-title" id="TaskModalLabel">Add Task</h5>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Date</label>
+            <input type="date" class="form-control" id="task_date" name="date" required>
+          </div>
+          <div class="form-group">
+            <label>Time</label>
+            <input type="time" class="form-control" id="task_time" name="time">
+          </div>
+          <div class="form-group">
+            <label>Task Title</label>
+            <input type="text" class="form-control" id="task_title" name="title" required>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control" id="task_description" name="description"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Task</button>
+          <button type="button" id="deleteButton" class="btn btn-danger" style="display:none;"
+            onclick="deleteTask()">Delete Task</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
@@ -51,52 +65,113 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('calendar');
+    var tasks = @json($tasks);
 
-  // Function to format 24-hour time to 12-hour format with AM/PM
+  // Helper function to convert 24-hour time to 12-hour format with AM/PM
   const formatTimeTo12Hour = (time24) => {
-    if (!time24) return '';
-    const [hour, minute] = time24.split(':');
-    let h = parseInt(hour);
-    let ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12;
-    h = h ? h : 12;
-    return `${h}:${minute} ${ampm}`;
-  };
+      if (!time24) return '';
+      const [hour, minute] = time24.split(':');
+      let h = parseInt(hour);
+      let ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12;
+      h = h ? h : 12;
+      return `${h}:${minute} ${ampm}`;
+    };
 
-  var events = @json($Tasks).map(note => ({
-    title: note.time ? `${formatTimeTo12Hour(note.time)} - ${note.title}` : note.title, // 
-    start: note.date,
-    extendedProps: {
-      id: note.id,
-      description: note.description,
-      date: note.date,
-      time: note.time, 
-    }
-  }));
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      events: tasks.map(task => ({
+        id: task.id,
+        title: task.time ? `${formatTimeTo12Hour(task.time)} - ${task.title}` : task.title,
+        start: task.date,
+        start: task.time ? `${task.date}T${task.time}` : task.date,
+        extendedProps: {
+          description: task.description,
+          time: task.time
+        }
+      })),
+      eventClick: function(info) {
+        $('#task_id').val(info.event.id);
+        $('#task_date').val(info.event.start.toISOString().substring(0, 10));
 
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth',
-    events: events,
-    eventClick: function(info) {
-      info.jsEvent.preventDefault(); 
-      var task = info.event.extendedProps;     
-      $('#taskTitle').text(info.event.title);  
-      $('#taskDescription').text(task.description);  
-      $('#taskDate').text(task.date);  
-      $('#taskTime').text(task.time ? formatTimeTo12Hour(task.time) : ''); 
+        // Handle time if available
+        if (info.event.extendedProps.time) {
+          $('#task_time').val(info.event.extendedProps.time);
+        } else {
+          $('#task_time').val('');
+        }
 
-      // Show the modal
-      $('#taskModal').modal('show');
+        $('#task_title').val(info.event.title);
+        $('#task_description').val(info.event.extendedProps.description);
+        $('#TaskModalLabel').text('Edit Task');
+        $('#deleteButton').show(); // Show the delete button for editing
+        $('#TaskModal').modal('show');
+      }
+    });
+
+    calendar.render();
+
+    // Reset form when modal is opened for adding new task
+    $('[data-toggle="modal"][data-target="#TaskModal"]').on('click', function() {
+      $('#TaskForm')[0].reset();
+      $('#task_id').val('');
+      $('#TaskModalLabel').text('Add Task');
+      $('#deleteButton').hide();
+    });
+
+    // Add/Edit Task
+    $('#TaskForm').on('submit', function(e) {
+      e.preventDefault();
+      let taskId = $('#task_id').val();
+      let method = taskId ? 'PUT' : 'POST';
+      let url = taskId ? `/executor/tasks/${taskId}` : "{{ route('executor.tasks.store') }}";
+
+      $.ajax({
+        url: url,
+        method: method,
+        data: $(this).serialize(),
+        success: function(response) {
+          $('#TaskModal').modal('hide');
+          alert(response.message);
+          location.reload();
+        },
+        error: function(xhr) {
+          alert('Error: ' + xhr.responseJSON.message);
+        }
+      });
+    });
+
+    // Delete Task
+    window.deleteTask = function() {
+      let taskId = $('#task_id').val();
+      if (confirm("Are you sure you want to delete this task?")) {
+        $.ajax({
+          url: `/executor/tasks/${taskId}`,
+          method: 'DELETE',
+          data: {
+            _token: "{{ csrf_token() }}"
+          },
+          success: function(response) {
+            $('#TaskModal').modal('hide');
+            alert(response.message);
+            location.reload();
+          },
+          error: function(xhr) {
+            alert('Error: ' + xhr.responseJSON.message);
+          }
+        });
+      }
     }
   });
+</script>
 
-  calendar.render();
-});
-
+<script>
+  $(document).on('click', '.close-modal', function() {
+    $('#TaskModal').modal('hide');
+  });
 </script>
 
 @endsection

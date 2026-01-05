@@ -191,7 +191,7 @@
                             <li><a href="{{ route('admin.emails.email_using_template') }}">Send Email Using Template</a>
                             </li>
                             <li><a href="{{ route('admin.emails.index') }}">View Schedules</a></li>
-                            <li><a href="{{ route('admin.emails.email_summary') }}">Emails Summary</a></li>                            
+                            <li><a href="{{ route('admin.emails.email_summary') }}">Emails Summary</a></li>
                         </ul>
                     </li>
                     @endrole
@@ -740,7 +740,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
                             </svg>
-                            <span>Useful Contatcs</span>
+                            <span>Useful Contacts</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('customer.useful_contacts.index') }}">View</a></li>
@@ -1074,7 +1074,7 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
                             </svg>
-                            <span>Useful Contatcs</span>
+                            <span>Useful Contacts</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.useful_contacts.index') }}">View</a></li>
