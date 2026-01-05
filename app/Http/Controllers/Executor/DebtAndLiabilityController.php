@@ -26,7 +26,7 @@ class DebtAndLiabilityController extends Controller
 
         return view('executor.assets.debt_and_liabilities', compact('debtsLiabilities', 'debtAndLiabilitiesTypes'));
     }
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'debt_type' => 'required|string|max:255',

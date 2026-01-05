@@ -27,7 +27,7 @@ class GuidanceController extends Controller
         return view('executor.guidance.guidance', compact('guidance'));
     }
 
-     public function getMedia($id)
+    public function getMedia($id)
     {
         return GuidanceMedia::where('guidance_id', $id)->get();
     }

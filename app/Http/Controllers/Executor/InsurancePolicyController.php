@@ -25,7 +25,7 @@ class InsurancePolicyController extends Controller
         return view('executor.assets.insurance_policies', compact('insurancePolicies', 'insuranceTypes'));
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'insurance_type' => 'required|string|max:255',
@@ -101,7 +101,6 @@ class InsurancePolicyController extends Controller
             $insurancePolicy->delete();
             DB::commit();
             return redirect()->route('customer.insurance_policies.view')->with('success', 'Insurance policy deleted successfully.');
-
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
 use App\Models\CustomDropDown;
+
 class FuneralPlanController extends Controller
 {
     use ImageUpload;

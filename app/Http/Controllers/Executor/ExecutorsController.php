@@ -12,7 +12,7 @@ class ExecutorsController extends Controller
 {
     public function view()
     {
-       $contextUser = ContextHelper::user();
+        $contextUser = ContextHelper::user();
         $executors = $contextUser->executors;
 
         return view('executor.executors.executors', compact('executors'));

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 
 class MemorandumWishController extends Controller
 {
-     use ImageUpload;
+    use ImageUpload;
     public function view()
     {
         $authUser = auth()->user();

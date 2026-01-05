@@ -603,13 +603,20 @@
             let customerId = $(this).data('id');
 
             $.post("{{ route('executor.impersonate') }}", {
-                _token: "{{ csrf_token() }}",
-                customer_id: customerId
-            }, function() {
-                location.reload();
-            });
+                    _token: "{{ csrf_token() }}",
+                    customer_id: customerId
+                })
+                .done(function(res) {
+                    if (res.success && res.redirect) {
+                        window.location.href = res.redirect;
+                    }
+                })
+                .fail(function() {
+                    alert('Unable to switch customer.');
+                });
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#document-locations-table-view-only').DataTable({

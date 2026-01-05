@@ -24,7 +24,7 @@ class OrgansDonationController extends Controller
         return view('executor.donations.organs_donation', compact('organ_donations'));
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'donation' => 'required',
@@ -81,7 +81,6 @@ class OrgansDonationController extends Controller
             $digitalAsset->delete();
             DB::commit();
             return redirect()->route('executor.organ_donations.view')->with('success', 'Organ Donation deleted successfully.');
-
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());

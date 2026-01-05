@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
 use App\Models\LifeRememberedVideoMedia;
 use Illuminate\Http\Request;
+
 class LifeRememberedVideoController extends Controller
 {
     use ImageUpload;
@@ -29,7 +30,7 @@ class LifeRememberedVideoController extends Controller
         return view('executor.life_remembered.life_remembered_videos', compact('lifeRememberedVideos'));
     }
 
-     public function getMedia($id)
+    public function getMedia($id)
     {
         return LifeRememberedVideoMedia::where('life_remembered_video_id', $id)->get();
     }

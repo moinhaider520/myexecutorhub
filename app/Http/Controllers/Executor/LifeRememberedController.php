@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Traits\ImageUpload;
 use Illuminate\Http\Request;
+
 class LifeRememberedController extends Controller
 {
     use ImageUpload;
@@ -25,7 +26,7 @@ class LifeRememberedController extends Controller
     }
 
 
-     public function getMedia($id)
+    public function getMedia($id)
     {
         return LifeRememberedMedia::where('life_remembered_id', $id)->get();
     }

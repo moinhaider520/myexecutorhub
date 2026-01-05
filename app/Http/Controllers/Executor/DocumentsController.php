@@ -30,7 +30,7 @@ class DocumentsController extends Controller
         return view('executor.documents.documents', compact('documents', 'documentTypes', 'usedDocumentTypes'));
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'document_type' => 'required|string|max:255',
@@ -115,76 +115,76 @@ class DocumentsController extends Controller
 
 
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'document_type' => 'required|string|max:255',
-        'description' => 'required',
-        'files' => 'nullable',
-        'files.*' => 'file|max:20480', // up to 20MB per file
-        'reminder_date' => 'nullable|date',
-    ]);
+    {
+        $request->validate([
+            'document_type' => 'required|string|max:255',
+            'description' => 'required',
+            'files' => 'nullable',
+            'files.*' => 'file|max:20480', // up to 20MB per file
+            'reminder_date' => 'nullable|date',
+        ]);
 
-    try {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        $document = Document::findOrFail($id);
+            $document = Document::findOrFail($id);
 
-        $document->document_type = $request->document_type;
-        $document->description = $request->description;
-        $document->reminder_type = $request->edit_reminder_type;
-        $document->created_by = Auth::id();
-        $document->reminder_date = $request->reminder_date;
+            $document->document_type = $request->document_type;
+            $document->description = $request->description;
+            $document->reminder_type = $request->edit_reminder_type;
+            $document->created_by = Auth::id();
+            $document->reminder_date = $request->reminder_date;
 
-        $storedFiles = [];
-        $text = null;
+            $storedFiles = [];
+            $text = null;
 
-        // If new files are uploaded, replace old ones
-        if ($request->hasFile('files')) {
-            // Delete previous uploaded files (if exist)
-            if (!empty($document->file_path)) {
-                $oldFiles = json_decode($document->file_path, true);
-                if (is_array($oldFiles)) {
-                    foreach ($oldFiles as $oldFile) {
-                        $filePath = public_path('assets/upload/' . $oldFile);
-                        if (file_exists($filePath)) {
-                            unlink($filePath);
+            // If new files are uploaded, replace old ones
+            if ($request->hasFile('files')) {
+                // Delete previous uploaded files (if exist)
+                if (!empty($document->file_path)) {
+                    $oldFiles = json_decode($document->file_path, true);
+                    if (is_array($oldFiles)) {
+                        foreach ($oldFiles as $oldFile) {
+                            $filePath = public_path('assets/upload/' . $oldFile);
+                            if (file_exists($filePath)) {
+                                unlink($filePath);
+                            }
                         }
                     }
                 }
-            }
 
-            // Upload and store new files
-            foreach ($request->file('files') as $file) {
-                $path = $this->imageUpload($file, 'documents');
-                $storedFiles[] = $path;
+                // Upload and store new files
+                foreach ($request->file('files') as $file) {
+                    $path = $this->imageUpload($file, 'documents');
+                    $storedFiles[] = $path;
 
-                // Optional: extract text from PDFs
-                $extension = strtolower($file->getClientOriginalExtension());
-                if ($extension === 'pdf') {
-                    try {
-                        $parser = new \Smalot\PdfParser\Parser();
-                        $pdf = $parser->parseFile(public_path('assets/upload/' . $path));
-                        $text .= "\n" . $pdf->getText();
-                    } catch (\Exception $e) {
-                        // skip text extraction errors silently
+                    // Optional: extract text from PDFs
+                    $extension = strtolower($file->getClientOriginalExtension());
+                    if ($extension === 'pdf') {
+                        try {
+                            $parser = new \Smalot\PdfParser\Parser();
+                            $pdf = $parser->parseFile(public_path('assets/upload/' . $path));
+                            $text .= "\n" . $pdf->getText();
+                        } catch (\Exception $e) {
+                            // skip text extraction errors silently
+                        }
                     }
                 }
+
+                $document->file_path = json_encode($storedFiles);
+                $document->textpdf = mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null;
             }
 
-            $document->file_path = json_encode($storedFiles);
-            $document->textpdf = mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null;
+            $document->save();
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
-
-        $document->save();
-
-        DB::commit();
-
-        return response()->json(['success' => true, 'message' => 'Document updated successfully.']);
-    } catch (\Exception $e) {
-        DB::rollback();
-        return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
     }
-}
 
 
     public function destroy($id)

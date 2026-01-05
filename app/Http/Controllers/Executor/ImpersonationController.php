@@ -12,7 +12,7 @@ class ImpersonationController extends Controller
     public function start(Request $request)
     {
         $request->validate([
-            'customer_id' => 'required|exists:users,id'
+            'customer_id' => 'required|exists:users,id',
         ]);
 
         $executorId = session('impersonator_id');
@@ -25,10 +25,13 @@ class ImpersonationController extends Controller
             403
         );
 
-        Auth::logout();
-        Auth::loginUsingId($request->customer_id);
-        $request->session()->regenerate();
+        session([
+            'acting_customer_id' => $request->customer_id,
+        ]);
 
-        return response()->json(['success' => true]);
+        return response()->json([
+            'success' => true,
+            'redirect' => route('executor.dashboard'),
+        ]);
     }
 }

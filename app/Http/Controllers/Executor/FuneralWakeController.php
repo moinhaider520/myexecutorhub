@@ -8,6 +8,7 @@ use App\Models\FuneralWake;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+
 class FuneralWakeController extends Controller
 {
     public function view()
@@ -22,7 +23,7 @@ class FuneralWakeController extends Controller
         return view('executor.funeral_wake.funeral_wake', compact('funeralwakes'));
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',

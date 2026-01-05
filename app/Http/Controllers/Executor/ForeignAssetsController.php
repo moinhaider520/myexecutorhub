@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\CustomDropDown;
 use Illuminate\Http\Request;
+
 class ForeignAssetsController extends Controller
 {
     public function view()
@@ -25,7 +26,7 @@ class ForeignAssetsController extends Controller
         return view('executor.foreign_assets.view', compact('foreignAssets', 'assetTypes'));
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'foreign_asset' => 'required|string|max:255',
