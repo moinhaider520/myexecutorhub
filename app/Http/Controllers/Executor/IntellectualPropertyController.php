@@ -38,7 +38,7 @@ class IntellectualPropertyController extends Controller
             IntellectualProperty::create([
                 'property_type' => $request->property_type,
                 'description' => $request->description,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -95,7 +95,7 @@ class IntellectualPropertyController extends Controller
 
         IntellectualPropertiesTypes::create([
             'name' => $request->custom_intellectual_property_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

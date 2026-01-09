@@ -55,7 +55,7 @@ class LifeRememberedController extends Controller
             // Create the lifeRemembered entry first
             $lifeRemembered = LifeRemembered::create([
                 'description' => $request->description,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             // Loop through and upload each file

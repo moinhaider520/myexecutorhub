@@ -45,12 +45,12 @@ class PropertyController extends Controller
                 'owner_names' => $request->owner_names,
                 'how_owned' => $request->how_owned,
                 'value' => $request->value,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             // Check if onboarding_progress exists for the user
             $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
+                ['user_id' => ContextHelper::user()->id],
                 ['property_added' => true]
             );
 
@@ -122,7 +122,7 @@ class PropertyController extends Controller
 
         PropertyType::create([
             'name' => $request->custom_property_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

@@ -40,6 +40,7 @@ class BankAccountController extends Controller
         ]);
 
         try {
+            $contextUser = ContextHelper::user();
             DB::beginTransaction();
 
             BankAccount::create([
@@ -49,12 +50,12 @@ class BankAccountController extends Controller
                 'account_name' => $request->account_name,
                 'account_number' => $request->account_number,
                 'balance' => $request->balance,
-                'created_by' => Auth::id()
+                'created_by' => $contextUser->id,
             ]);
 
             // Check if onboarding_progress exists for the user
             $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
+                ['user_id' => $contextUser->id],
                 ['bank_account_added' => true]
             );
 
@@ -95,7 +96,7 @@ class BankAccountController extends Controller
             $bankAccount->account_name = $request->account_name;
             $bankAccount->account_number = $request->account_number;
             $bankAccount->balance = $request->balance;
-            $bankAccount->created_by = Auth::id();
+            $bankAccount->created_by = ContextHelper::user()->id;
 
             $bankAccount->save();
 
@@ -131,7 +132,7 @@ class BankAccountController extends Controller
 
         BankType::create([
             'name' => $request->custom_bank_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

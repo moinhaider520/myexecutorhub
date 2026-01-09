@@ -41,7 +41,7 @@ class VideoController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             DB::commit();

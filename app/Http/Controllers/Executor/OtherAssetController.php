@@ -38,7 +38,7 @@ class OtherAssetController extends Controller
             OtherAsset::create([
                 'asset_type' => $request->asset_type,
                 'description' => $request->description,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -95,7 +95,7 @@ class OtherAssetController extends Controller
 
         OtherAssetsTypes::create([
             'name' => $request->custom_asset_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

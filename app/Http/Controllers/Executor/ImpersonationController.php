@@ -15,16 +15,11 @@ class ImpersonationController extends Controller
             'customer_id' => 'required|exists:users,id',
         ]);
 
-        $executorId = session('impersonator_id');
-        abort_unless($executorId, 403);
-
-        $executor = User::findOrFail($executorId);
-
+        $executor = auth()->user();
         abort_unless(
             $executor->customers()->where('users.id', $request->customer_id)->exists(),
             403
         );
-
         session([
             'acting_customer_id' => $request->customer_id,
         ]);

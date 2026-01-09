@@ -37,7 +37,7 @@ class OrgansDonationController extends Controller
                 'donation' => $request->donation,
                 'organs_to_donate' => $request->organs_to_donate,
                 'organs_to_not_donate' => $request->organs_to_not_donate,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             DB::commit();

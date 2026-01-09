@@ -41,7 +41,7 @@ class OtherTypeOfAssetController extends Controller
             OtherTypeOfAsset::create([
                 'asset_type' => $request->asset_type,
                 'description' => $request->description,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -98,7 +98,7 @@ class OtherTypeOfAssetController extends Controller
 
         CustomDropDown::create([
             'name' => $request->custom_asset_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
             'category' => 'other_type_of_assets',
         ]);
 

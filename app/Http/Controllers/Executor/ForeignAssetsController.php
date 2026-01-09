@@ -45,7 +45,7 @@ class ForeignAssetsController extends Controller
                 'asset_location' => $request->asset_location,
                 'asset_value' => $request->asset_value,
                 'contact_details' => $request->contact_details,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -108,7 +108,7 @@ class ForeignAssetsController extends Controller
 
         CustomDropDown::create([
             'name' => $request->custom_asset_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
             'category' => 'foreign_assets',
         ]);
 

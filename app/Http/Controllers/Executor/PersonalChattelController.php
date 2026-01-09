@@ -53,7 +53,7 @@ class PersonalChattelController extends Controller
                 'description' => $request->description,
                 'photos' => json_encode($photoPaths),
                 'value' => $request->value,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -142,7 +142,7 @@ class PersonalChattelController extends Controller
 
         ChattelType::create([
             'name' => $request->custom_chattel_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

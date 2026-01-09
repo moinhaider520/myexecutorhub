@@ -59,7 +59,7 @@ class LifeRememberedVideoController extends Controller
             // Create the lifeRememberedVideo entry first
             $lifeRememberedVideo = LifeRememberedVideo::create([
                 'description' => $request->description,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             // Loop through and upload each file

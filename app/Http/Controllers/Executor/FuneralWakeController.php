@@ -36,7 +36,7 @@ class FuneralWakeController extends Controller
             $funeral_wake = FuneralWake::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             DB::commit();

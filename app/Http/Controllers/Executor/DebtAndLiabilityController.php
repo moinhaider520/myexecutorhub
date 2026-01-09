@@ -45,7 +45,7 @@ class DebtAndLiabilityController extends Controller
                 'loan_provider' => $request->loan_provider,
                 'contact_details' => $request->contact_details,
                 'amount_outstanding' => $request->amount_outstanding,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -108,7 +108,7 @@ class DebtAndLiabilityController extends Controller
 
         DebtAndLiabilitiesTypes::create([
             'name' => $request->custom_debt_and_liabilities_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

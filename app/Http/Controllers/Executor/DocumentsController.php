@@ -68,7 +68,7 @@ class DocumentsController extends Controller
                 'document_type' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => json_encode($storedFiles),
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
                 'reminder_date' => $request->reminder_date,
                 'reminder_type' => $request->reminder_type,
                 'textpdf' => mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null,
@@ -76,7 +76,7 @@ class DocumentsController extends Controller
 
             // Update onboarding progress
             $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
+                ['user_id' => ContextHelper::user()->id],
                 ['document_uploaded' => true]
             );
 
@@ -132,7 +132,7 @@ class DocumentsController extends Controller
             $document->document_type = $request->document_type;
             $document->description = $request->description;
             $document->reminder_type = $request->edit_reminder_type;
-            $document->created_by = Auth::id();
+            $document->created_by = ContextHelper::user()->id;
             $document->reminder_date = $request->reminder_date;
 
             $storedFiles = [];
@@ -216,7 +216,7 @@ class DocumentsController extends Controller
 
         DocumentTypes::create([
             'name' => $request->custom_document_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

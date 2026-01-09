@@ -60,7 +60,7 @@ class WishesController extends Controller
             // Create the wish entry first
             $wish = Wish::create([
                 'description' => $request->description,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             // Loop through and upload each file

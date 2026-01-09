@@ -48,7 +48,7 @@ class InsurancePolicyController extends Controller
                 'contact_details' => $request->contact_details,
                 'beneficiaries' => $request->beneficiaries,
                 'policy_end_date' => $request->policy_end_date,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -115,7 +115,7 @@ class InsurancePolicyController extends Controller
 
         InsuranceTypes::create([
             'name' => $request->custom_insurance_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

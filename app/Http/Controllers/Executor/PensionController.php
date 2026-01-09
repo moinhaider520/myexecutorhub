@@ -36,7 +36,7 @@ class PensionController extends Controller
                 'pensions' => $request->pensions,
                 'pension_provider' => $request->pension_provider,
                 'pension_reference_number' => $request->pension_reference_number,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
             DB::commit();
             return response()->json(['message' => 'Pension added successfully']);

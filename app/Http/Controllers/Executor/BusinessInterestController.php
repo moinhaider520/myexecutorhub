@@ -52,7 +52,7 @@ class BusinessInterestController extends Controller
                 'contact' => $request->contact,
                 'plan_for_shares' => $request->plan_for_shares,
                 'company_number' => $request->company_number,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -121,7 +121,7 @@ class BusinessInterestController extends Controller
 
         BusinessTypes::create([
             'name' => $request->custom_business_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

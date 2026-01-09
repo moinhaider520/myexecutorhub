@@ -40,7 +40,7 @@ class TaskController extends Controller
                 'description' => $request->description,
                 'date' => $request->date,
                 'time' => $request->time,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -57,7 +57,7 @@ class TaskController extends Controller
         DB::beginTransaction();
 
         try {
-            $task = Task::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+            $task = Task::where('id', $id)->where('created_by', ContextHelper::user()->id)->firstOrFail();
 
             $request->validate([
                 'title' => 'required|string|max:255',
@@ -87,7 +87,7 @@ class TaskController extends Controller
         DB::beginTransaction();
 
         try {
-            $task = Task::where('id', $id)->where('created_by', Auth::id())->firstOrFail();
+            $task = Task::where('id', $id)->where('created_by', ContextHelper::user()->id)->firstOrFail();
             $task->delete();
 
             DB::commit();

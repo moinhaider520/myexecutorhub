@@ -56,7 +56,7 @@ class GuidanceController extends Controller
             // Create the guidance entry first
             $guidance = Guidance::create([
                 'description' => $request->description,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             // Loop through and upload each file

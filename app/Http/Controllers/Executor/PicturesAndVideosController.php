@@ -43,12 +43,12 @@ class PicturesAndVideosController extends Controller
                 'name' => $request->document_type,
                 'description' => $request->description,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             // Check if onboarding_progress exists for the user
             $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
+                ['user_id' => ContextHelper::user()->id],
                 ['picture_uploaded' => true]
             );
 
@@ -83,7 +83,7 @@ class PicturesAndVideosController extends Controller
 
             $document->name = $request->document_type;
             $document->description = $request->description;
-            $document->created_by = Auth::id();
+            $document->created_by = ContextHelper::user()->id;
 
             if ($request->hasFile('file')) {
                 // Delete the file from the public/assets/upload directory

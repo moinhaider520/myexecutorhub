@@ -48,12 +48,12 @@ class DigitalAssetController extends Controller
                 'password' => $request->password,
                 'email_used' => $request->email_used,
                 'value' => $request->value,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             // Check if onboarding_progress exists for the user
             $progress = OnboardingProgress::firstOrCreate(
-                ['user_id' => Auth::id()],
+                ['user_id' => ContextHelper::user()->id],
                 ['digital_asset_added' => true]
             );
 
@@ -125,7 +125,7 @@ class DigitalAssetController extends Controller
 
         DigitalAssetsTypes::create([
             'name' => $request->custom_digital_assets_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

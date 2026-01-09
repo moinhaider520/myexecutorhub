@@ -41,7 +41,7 @@ class InvestmentAccountController extends Controller
                 'company_name' => $request->company_name,
                 'account_number' => $request->account_number,
                 'balance' => $request->balance,
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             DB::commit();
@@ -102,7 +102,7 @@ class InvestmentAccountController extends Controller
 
         InvestmentTypes::create([
             'name' => $request->custom_investment_type,
-            'created_by' => Auth::id(),
+            'created_by' => ContextHelper::user()->id,
         ]);
 
         return response()->json(['success' => true]);

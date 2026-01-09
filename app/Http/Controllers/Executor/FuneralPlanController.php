@@ -48,7 +48,7 @@ class FuneralPlanController extends Controller
             FuneralPlan::create([
                 'funeral_plan' => $request->funeral_plan,
                 'file_path' => $path,
-                'created_by' => Auth::id()
+                'created_by' => ContextHelper::user()->id
             ]);
 
             DB::commit();
@@ -141,7 +141,7 @@ class FuneralPlanController extends Controller
             CustomDropDown::create([
                 'name' => $request->custom_funeral_plan,
                 'category' => 'funeral_plan',
-                'created_by' => Auth::id(),
+                'created_by' => ContextHelper::user()->id,
             ]);
 
             return response()->json(['success' => true]);
