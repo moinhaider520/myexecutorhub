@@ -1037,7 +1037,7 @@ class StripePaymentController extends Controller
         $session = Session::create([
             'payment_method_types' => ['card'],
             'mode' => 'payment',
-            'allow_promotion_codes' => false, // No additional coupons for couple partners
+            'allow_promotion_codes' => true, // No additional coupons for couple partners
             'customer_email' => $registration['partner_email'],
             'customer_creation' => 'always',
             'line_items' => [

@@ -1818,6 +1818,22 @@
                                         other important details you wish to pass on.</p>
                                 </div>
 
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>9.</span> How many Documents can I upload?</h5>
+                                    <p>You can upload unlimited documents. However, there is a limitation of document
+                                        size. Each document, picture or video should not exceed the maximum size limit
+                                        of 100 MB.</p>
+                                </div>
+
+                                <div class="question mb-35 wow fadeInUp">
+                                    <!-- Question -->
+                                    <h5 class="s-22 w-700"><span>10.</span>Can I use one email for multiple roles on
+                                        Executor Hub?</h5>
+                                    <p>No, Executor Hub allows only one email per role. For example, if you are a
+                                        Customer and want to nominate yourself as an executor. Then you will have to
+                                        choose unique emails for both roles.</p>
+                                </div>
 
 
                             </div>
@@ -1831,7 +1847,7 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>9.</span> What happens to my data if Executor Hub
+                                    <h5 class="s-22 w-700"><span>11.</span> What happens to my data if Executor Hub
                                         ceases operations?</h5>
                                     <p>In the unlikely event that Executor Hub ceases operations, your data remains
                                         secure and accessible to you. We have contingency plans in place to ensure
@@ -1840,7 +1856,7 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>10.</span> How can I get support if I have questions or
+                                    <h5 class="s-22 w-700"><span>12.</span> How can I get support if I have questions or
                                         issues using Executor Hub?</h5>
                                     <p>We provide dedicated customer support to assist you with any questions or issues.
                                         You can reach out to our support team via email or through our helpdesk for
@@ -1849,7 +1865,7 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>11.</span> Can Executor Hub integrate with other estate
+                                    <h5 class="s-22 w-700"><span>13.</span> Can Executor Hub integrate with other estate
                                         planning services or platforms?</h5>
                                     <p>Yes, Executor Hub is designed to complement other estate planning services and
                                         platforms. We offer integration options to streamline your overall estate
@@ -1858,7 +1874,7 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>12.</span> Is there a cost associated with using
+                                    <h5 class="s-22 w-700"><span>14.</span> Is there a cost associated with using
                                         Executor Hub?</h5>
                                     <p>Executor Hub offers different subscription plans tailored to meet your needs. We
                                         provide transparent pricing information on our website, including any additional
@@ -1867,7 +1883,7 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>13.</span> How is my data secure?</h5>
+                                    <h5 class="s-22 w-700"><span>15.</span> How is my data secure?</h5>
                                     <p>Yes, your data security is of utmost importance to us at Executor Hub. We employ
                                         several layers of security measures to protect your information:</p>
                                     <ul>
@@ -1893,19 +1909,27 @@
 
                                 <div class="question mb-35 wow fadeInUp">
                                     <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>14.</span> How many Documents can I upload?</h5>
-                                    <p>You can upload unlimited documents. However, there is a limitation of document
-                                        size. Each document, picture or video should not exceed the maximum size limit
-                                        of 100 MB.</p>
-                                </div>
-
-                                <div class="question mb-35 wow fadeInUp">
-                                    <!-- Question -->
-                                    <h5 class="s-22 w-700"><span>15.</span>Can I use one email for multiple roles on
-                                        Executor Hub?</h5>
-                                    <p>No, Executor Hub allows only one email per role. For example, if you are a
-                                        Customer and want to nominate yourself as an executor. Then you will have to
-                                        choose unique emails for both roles.</p>
+                                    <h5 class="s-22 w-700"><span>16.</span>I already store my documents on a USB or in
+                                        the cloud – how is this different?</h5>
+                                    <p>That’s a great question, and it’s something we hear a lot. Storing documents on a
+                                        USB or in the cloud is useful — but Executor Hub isn’t just storage.</p>
+                                    <p>Executor Hub is designed specifically for what happens after someone dies, when
+                                        loved ones are under stress and often don’t know where to start. It provides:
+                                    </p>
+                                    <ol>
+                                        <li>Step-by-step guidance for executors, in the right order, at the right time
+                                        </li>
+                                        <li>Pre-written, ready-to-use letters to banks, insurers, utilities, HMRC and
+                                            other organisations</li>
+                                        <li>Direct links to all the places an executor typically needs to contact</li>
+                                        <li>Pre-populated forms, using the information already stored</li>
+                                        <li>A single, secure place where everything an executor needs is organised and
+                                            easy to understand</li>
+                                    </ol>
+                                    <p>A USB or cloud folder stores information. Executor Hub helps someone actually use
+                                        that information correctly, when it matters most.</p>
+                                    <p>Many families tell us the biggest benefit isn’t the documents themselves — it’s
+                                        the clarity, structure, and reduced stress for the people left behind.</p>
                                 </div>
 
                             </div>

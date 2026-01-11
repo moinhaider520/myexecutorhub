@@ -16,9 +16,9 @@
                 <div class="col-md-11">
 
                     @if (session()->has('impersonator_id'))
-                    <button class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#impersonationModal">
-                        Switch Customer
-                    </button>
+                        <button class="btn btn-outline-primary " data-bs-toggle="modal" data-bs-target="#impersonationModal">
+                            Switch Customer
+                        </button>
                     @endif
                 </div>
                 <div class="col-md-1">
@@ -68,6 +68,11 @@
                             Download the App on App Store -
                             <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
                                     class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
+                        </h3>
+                        <h3 class="text-center pt-2 pb-2">
+                            View Guide Videos on Youtube -
+                            <span> <a href="https://www.youtube.com/@ExecutorHubUK" target="_blank" class="text-center"
+                                    style="font-size: 18px;">Click Here to View Channel!</a></span>
                         </h3>
                     </div>
                 </div>
@@ -365,6 +370,11 @@
                                 <span> <a href="https://apps.apple.com/us/app/executor-hub/id6737507623" target="_blank"
                                         class="text-center" style="font-size: 18px;">Click Here to Download!</a></span>
                             </h3>
+                            <h3 class="text-center pt-2 pb-2">
+                            View Guide Videos on Youtube -
+                            <span> <a href="https://www.youtube.com/@ExecutorHubUK" target="_blank" class="text-center"
+                                    style="font-size: 18px;">Click Here to View Channel!</a></span>
+                        </h3>
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -466,37 +476,37 @@
         <audio id="stepAudio" autoplay hidden></audio>
     </div>
     @if (session()->has('impersonator_id'))
-      <!-- IMPERSONATION MODAL -->
-    <div class="modal fade" id="impersonationModal" tabindex="-1">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Act on behalf of</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+        <!-- IMPERSONATION MODAL -->
+        <div class="modal fade" id="impersonationModal" tabindex="-1">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Act on behalf of</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
 
-                <div class="modal-body">
-                    @if ($customers->isEmpty())
-                        <p class="text-muted">No customers linked to you.</p>
-                    @else
-                        <ul class="list-group">
-                            @foreach ($customers as $customer)
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <strong>{{ $customer->name }}</strong><br>
-                                        <small class="text-muted">{{ $customer->email }}</small>
-                                    </div>
-                                    <button class="btn btn-sm btn-primary act-as-btn" data-id="{{ $customer->id }}">
-                                        Act as
-                                    </button>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                    <div class="modal-body">
+                        @if ($customers->isEmpty())
+                            <p class="text-muted">No customers linked to you.</p>
+                        @else
+                            <ul class="list-group">
+                                @foreach ($customers as $customer)
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <strong>{{ $customer->name }}</strong><br>
+                                            <small class="text-muted">{{ $customer->email }}</small>
+                                        </div>
+                                        <button class="btn btn-sm btn-primary act-as-btn" data-id="{{ $customer->id }}">
+                                            Act as
+                                        </button>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     @endif
     <!-- Scripts for Document Reminders -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -505,18 +515,18 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     @if (session()->has('impersonator_id'))
 
-     <script>
-        $('.act-as-btn').on('click', function() {
-            let customerId = $(this).data('id');
+        <script>
+            $('.act-as-btn').on('click', function () {
+                let customerId = $(this).data('id');
 
-            $.post("{{ route('customer.impersonate') }}", {
-                _token: "{{ csrf_token() }}",
-                customer_id: customerId
-            }, function() {
-                location.reload();
+                $.post("{{ route('customer.impersonate') }}", {
+                    _token: "{{ csrf_token() }}",
+                    customer_id: customerId
+                }, function () {
+                    location.reload();
+                });
             });
-        });
-    </script>
+        </script>
     @endif
     <script>
         $(document).ready(function () {

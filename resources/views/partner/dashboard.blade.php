@@ -14,6 +14,17 @@
         <!-- Onboarding Video -->
         <div class="container">
             <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <h3 class="text-center pt-2 pb-2">
+                            View Guide Videos on Youtube -
+                            <span> <a href="https://www.youtube.com/@ExecutorHubUK" target="_blank" class="text-center"
+                                    style="font-size: 18px;">Click Here to View Channel!</a></span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-11"></div>
                 <div class="col-md-1">
                     <iframe
