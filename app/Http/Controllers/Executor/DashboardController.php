@@ -71,7 +71,7 @@ class DashboardController extends Controller
         foreach ($standardTodoStages as $stage) {
             foreach ($stage->todoItems as $todoItem) {
                 $todoItem->currentUserProgress = ExecutorTodoProgress::where('todo_item_id', $todoItem->id)
-                    ->where('user_id', $user->id)
+                    ->where('user_id', $contextUser->id)
                     ->where('created_by', $contextUser->id)
                     ->first();
             }
