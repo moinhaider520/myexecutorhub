@@ -1571,4 +1571,252 @@ class StripePaymentController extends Controller
 
         return redirect()->route('customer.dashboard')->with('success', 'Subscription created successfully!');
     }
+
+    /**
+     * Show admin invite registration form
+     */
+    public function showAdminInviteRegistration(Request $request, string $token)
+    {
+        // Get invite data from cache
+        $invite = Cache::get('admin_invite_' . $token);
+
+        if (!$invite) {
+            return redirect()->route('home')->with('error', 'Invalid or expired invitation link.');
+        }
+
+        // Check if user email already exists
+        if (User::where('email', $invite['email'])->exists()) {
+            return redirect()->route('login')->with('error', 'An account with this email already exists.');
+        }
+
+        return view('admin-invite.register', [
+            'token' => $token,
+            'invite' => $invite,
+        ]);
+    }
+
+    /**
+     * Handle admin invite checkout - create Stripe session
+     */
+    public function adminInviteCheckout(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $validated = $request->validate([
+            'token' => 'required|string',
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'date_of_birth' => 'required|date|before:today',
+            'password' => 'required|string|min:8|confirmed',
+            'street_address' => 'required|string|max:500',
+            'city' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'country' => 'required|string|in:United Kingdom,United States,Canada,Australia,Ireland,Other',
+            'hear_about_us' => 'nullable|string|max:255',
+        ]);
+
+        // Get invite data from cache
+        $invite = Cache::get('admin_invite_' . $validated['token']);
+
+        if (!$invite) {
+            return back()->withErrors(['error' => 'Invalid or expired invitation link.'])->withInput();
+        }
+
+        // Verify email matches
+        if ($validated['email'] !== $invite['email']) {
+            return back()->withErrors(['email' => 'Email address must match the invitation.'])->withInput();
+        }
+
+        // Check if user already exists
+        if (User::where('email', $validated['email'])->exists()) {
+            return redirect()->route('login')->with('error', 'An account with this email already exists.');
+        }
+
+        // Get price ID from invite data
+        $priceId = $invite['price_id'] ?? null;
+        
+        if (!$priceId) {
+            return back()->withErrors(['error' => 'Price ID is required. Please contact support.'])->withInput();
+        }
+
+        // Hash password
+        $hashedPassword = bcrypt($validated['password']);
+
+        // Create Stripe Checkout Session for recurring subscription (12 months)
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'mode' => 'subscription',
+            'allow_promotion_codes' => false,
+            'customer_email' => $validated['email'],
+            'line_items' => [
+                [
+                    'price' => $priceId,
+                    'quantity' => 1,
+                ],
+            ],
+            'subscription_data' => [
+                'metadata' => [
+                    'checkout_type' => 'admin_invite',
+                    'registration_token' => $validated['token'],
+                ],
+            ],
+            'metadata' => [
+                'checkout_type' => 'admin_invite',
+                'registration_token' => $validated['token'],
+                'user_name' => $validated['full_name'],
+                'user_email' => $validated['email'],
+                'user_password' => $hashedPassword,
+                'user_address' => $validated['street_address'],
+                'user_city' => $validated['city'],
+                'user_postal_code' => $validated['postal_code'],
+                'user_country' => $validated['country'],
+                'date_of_birth' => $validated['date_of_birth'],
+                'hear_about_us' => $validated['hear_about_us'] ?? '',
+            ],
+            'success_url' => route('admin.invite.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('admin.invite.register', ['token' => $validated['token']]),
+        ]);
+
+        return redirect()->away($session->url);
+    }
+
+    /**
+     * Handle successful admin invite checkout
+     */
+    public function adminInviteSuccess(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $sessionId = $request->query('session_id');
+
+        if (!$sessionId) {
+            return redirect()->route('home')->with('error', 'Invalid session.');
+        }
+
+        $session = Session::retrieve($sessionId);
+
+        if (
+            !$session ||
+            !$session->customer ||
+            ($session->metadata->checkout_type ?? null) !== 'admin_invite'
+        ) {
+            return redirect()->route('home')->with('error', 'Invalid session.');
+        }
+
+        // Check if user already exists
+        if (User::where('email', $session->metadata->user_email)->exists()) {
+            return redirect()->route('login')->with('error', 'An account with this email already exists.');
+        }
+
+        // Remove invite data from cache (mark as used)
+        Cache::forget('admin_invite_' . $session->metadata->registration_token);
+
+        // Get Stripe subscription (12-month subscription)
+        // For subscription mode, retrieve the subscription from the session
+        $subscriptionId = $session->subscription ?? null;
+        
+        if (!$subscriptionId) {
+            // Fallback: retrieve subscription by customer
+            $subscriptions = Subscription::all(['customer' => $session->customer, 'limit' => 1]);
+            $subscription = $subscriptions->data[0] ?? null;
+        } else {
+            $subscription = Subscription::retrieve($subscriptionId);
+        }
+
+        if (!$subscription || $subscription->status !== 'active' && $subscription->status !== 'trialing') {
+            return redirect()->route('home')->with('error', 'Subscription not found or not active.');
+        }
+
+        // Set subscription to cancel after 12 months (not at end of current period)
+        // Calculate timestamp for 12 months from now
+        $cancelAtTimestamp = now()->addMonths(12)->timestamp;
+        
+        try {
+            // Update subscription to cancel at specific timestamp (12 months from now)
+            Subscription::update($subscription->id, [
+                'cancel_at' => $cancelAtTimestamp,
+            ]);
+        } catch (\Exception $e) {
+            // Log error but continue with user creation
+            \Log::error('Failed to set subscription cancel_at: ' . $e->getMessage());
+        }
+
+        // Get subscription details
+        $subscriptionId = $subscription->id;
+        $priceId = $subscription->items->data[0]->price->id ?? null;
+        
+        // Determine plan label from price ID (map your price IDs to plan names)
+        $planLabel = 'Lifetime Standard'; // Default
+        // $planMapping = [
+        //     'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 'Basic',
+        //     'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 'Standard',
+        //     'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 'Premium',
+        // ];
+        // if ($priceId && isset($planMapping[$priceId])) {
+        //     $planLabel = $planMapping[$priceId];
+        // }
+
+        // Use subscription's current_period_end for 12-month billing cycle
+        // This ensures the subscription end date matches Stripe's billing period
+        $subscriptionEndDate = $subscription->current_period_end 
+            ? Carbon::createFromTimestamp($subscription->current_period_end)
+            : now()->addMonths(12);
+
+        // Generate coupon code
+        $rawName = $session->metadata->user_name ?? 'USER';
+        $baseCoupon = strtoupper(substr(preg_replace('/[^A-Za-z0-9]/', '', $rawName), 0, 6));
+        if (empty($baseCoupon)) {
+            $baseCoupon = 'USER';
+        }
+        $couponCode = $baseCoupon . Str::upper(Str::random(6));
+
+        // Prepare user data
+        $userData = [
+            'name' => $session->metadata->user_name,
+            'email' => $session->metadata->user_email,
+            'password' => $session->metadata->user_password,
+            'user_role' => 'customer',
+            'coupon_code' => $couponCode,
+            'hear_about_us' => $session->metadata->hear_about_us ?: null,
+            'address' => $session->metadata->user_address ?: null,
+            'city' => $session->metadata->user_city ?: null,
+            'postal_code' => $session->metadata->user_postal_code ?: null,
+            'subscribed_package' => $planLabel,
+            'trial_ends_at' => $subscriptionEndDate, // 12 months from now
+            'stripe_customer_id' => $session->customer,
+            'stripe_subscription_id' => $subscriptionId, // Store subscription ID
+        ];
+
+        // Add country if column exists
+        if (!empty($session->metadata->user_country) && Schema::hasColumn('users', 'country')) {
+            $userData['country'] = $session->metadata->user_country;
+        }
+
+        // Add date of birth if column exists
+        if (!empty($session->metadata->date_of_birth) && Schema::hasColumn('users', 'date_of_birth')) {
+            $userData['date_of_birth'] = $session->metadata->date_of_birth;
+        }
+
+        // Create user
+        $user = User::create($userData)->assignRole('customer');
+
+        // Calculate plan amount from subscription
+        $planAmount = 0;
+        if ($subscription->items->data[0]->price->unit_amount) {
+            $planAmount = ($subscription->items->data[0]->price->unit_amount ?? 0) / 100;
+        }
+
+        // All commission goes to admin for admin-invited users
+        if ($planAmount > 0) {
+            User::role('admin')->first()?->increment('commission_amount', $planAmount);
+        }
+
+        // Send welcome email
+        $user->notify(new WelcomeEmail($user));
+
+        // Log in the user automatically
+        Auth::login($user);
+
+        return redirect()->route('customer.dashboard')->with('success', 'Account created successfully! Your 12-month subscription is now active. Welcome to Executor Hub.');
+    }
 }

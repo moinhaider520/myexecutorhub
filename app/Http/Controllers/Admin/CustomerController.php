@@ -6,6 +6,7 @@ use App\Notifications\WelcomeEmail;
 use Cache;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
@@ -37,6 +38,83 @@ class CustomerController extends Controller
     {
         $customers = User::role('customer')->get();
         return view('admin.customers.invite_for_discount',compact('customers'));
+    }
+
+    public function send_invite()
+    {
+        return view('admin.customers.send_invite');
+    }
+
+    public function send_invite_post(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'price_id' => 'required|string|max:255',
+        ]);
+
+        // Generate a secure token for registration
+        $inviteToken = Str::random(64);
+
+        // Store invite data in cache (expires in 30 days)
+        Cache::put(
+            'admin_invite_' . $inviteToken,
+            [
+                'name' => $request->name,
+                'email' => $request->email,
+                'price_id' => $request->price_id,
+                'invited_by' => Auth::id(),
+                'invited_at' => now(),
+            ],
+            now()->addDays(30)
+        );
+
+        // Generate registration URL
+        $registrationUrl = route('admin.invite.register', ['token' => $inviteToken]);
+
+        // Send email to invited user
+        $userName = $request->name;
+        $userEmail = $request->email;
+
+        $inviteMessage = "
+        <h2>Hello $userName,</h2>
+        <p>You've been invited to join <strong>Executor Hub</strong>!</p>
+        <p>Executor Hub is your secure space to organize, protect, and share your important documents and estate planning information.</p>
+        <p><strong>What's Next:</strong></p>
+        <ul>
+            <li>Complete your registration using the link below</li>
+            <li>Choose your subscription plan</li>
+            <li>Start organizing your estate planning documents</li>
+        </ul>
+        <p>👉 Click below to complete your registration (this link expires in 30 days):</p>
+        <p><a href='$registrationUrl' style='background-color: #4CAF50; color: white; padding: 14px 20px; text-decoration: none; display: inline-block; border-radius: 4px;'>Complete Your Registration</a></p>
+        <p>Or copy this link: $registrationUrl</p>
+        <p>Need help? Our support team is always here — just reply to this email.</p>
+        <br/><br/>
+        <p>Regards,<br>The Executor Hub Team</p>
+        <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
+        
+        <br /><br />
+        <p><b>Executor Hub Team</b></p>
+        <p><b>Executor Hub Ltd</b></p>
+        <p><b>Empowering Executors, Ensuring Legacies</b></p>
+        <p><b>Email: hello@executorhub.co.uk</b></p>
+        <p><b>Website: https://executorhub.co.uk</b></p>
+        <p><b>ICO Registration: ZB932381</b></p>
+        <p><b>This email and any attachments are confidential and intended solely for the recipient.</b></p>
+        <p><b>If you are not the intended recipient, please delete it and notify the sender.</b></p>
+        <p><b>Executor Hub Ltd accepts no liability for any errors or omissions in this message.</b></p>
+    ";
+
+        Mail::to($userEmail)->send(new CustomEmail(
+            [
+                'subject' => "You've Been Invited to Join Executor Hub",
+                'message' => $inviteMessage,
+            ],
+            'Invitation to Join Executor Hub'
+        ));
+
+        return redirect()->back()->with('success', 'Invitation sent successfully!');
     }
 
     public function send_discount_invite(Request $request): RedirectResponse

@@ -214,6 +214,14 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('/couple-partner/success', [StripePaymentController::class, 'couplePartnerSuccess'])
         ->name('couple.partner.success');
 
+    // Admin Invite Registration Routes
+    Route::get('/admin-invite/register/{token}', [StripePaymentController::class, 'showAdminInviteRegistration'])
+        ->name('admin.invite.register');
+    Route::post('/admin-invite/checkout', [StripePaymentController::class, 'adminInviteCheckout'])
+        ->name('admin.invite.checkout');
+    Route::get('/admin-invite/success', [StripePaymentController::class, 'adminInviteSuccess'])
+        ->name('admin.invite.success');
+
     Route::post('stripe/resubscribe', 'resubscribe')->name('stripe.resubscribe');
     Route::get('stripe/success', 'success')->name('stripe.success');
     Route::get('stripe/resubscribesuccess', 'resubscribesuccess')->name('stripe.resubscribesuccess');
@@ -314,6 +322,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
     Route::get('/customers/invite_for_discount', [CustomerController::class, 'invite_for_discount'])->name('customers.invite_for_discount');
     Route::post('/customers/send_discount_invite', [CustomerController::class, 'send_discount_invite'])->name('customers.send_discount_invite');
+    Route::get('/customers/send_invite', [CustomerController::class, 'send_invite'])->name('customers.send_invite');
+    Route::post('/customers/send_invite', [CustomerController::class, 'send_invite_post'])->name('customers.send_invite.post');
     Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers/store', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');

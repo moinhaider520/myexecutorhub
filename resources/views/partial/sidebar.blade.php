@@ -60,6 +60,7 @@
                             <li><a href="{{ route('admin.customers.create') }}">Provide Free Access</a></li>
                             <li><a href="{{ route('admin.customers.index') }}">View All</a></li>
                             <li><a href="{{ route('admin.customers.invite_for_discount') }}">Invite For 30% Discount</a></li>
+                            <li><a href="{{ route('admin.customers.send_invite') }}">Send Monthly Lifetime Invite </a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
