@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\Models\CouponUsage;
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -54,13 +56,26 @@ class WelcomeEmail extends Notification
     }
 
     // Function to notify admin about new customer registration
-    protected function notifyAdminForNewCustomer()
-    {
-        Mail::raw("A new user has signed up for {$this->user->subscribed_package} of Executor Hub.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}", function ($message) {
-            $message->to('hello@executorhub.co.uk')
-                ->subject('New User Registered');
-        });
+   protected function notifyAdminForNewCustomer()
+{
+    // Find who referred this user (if anyone)
+    $referrer = null;
+    $couponUsage = CouponUsage::with('user')
+        ->where('user_id', $this->user->id) // The user who used the coupon
+        ->first();
+    
+    if ($couponUsage && $couponUsage->partner_id) {
+        // Get the partner (referrer) details
+        $referrer = User::find($couponUsage->partner_id);
     }
+    
+    $referredBy = $referrer ? "{$referrer->name} ({$referrer->email})" : "None";
+    
+    Mail::raw("A new user has signed up for {$this->user->subscribed_package} of Executor Hub.\n\nName: {$this->user->name}\nEmail: {$this->user->email}\nRegistration Date: {$this->user->created_at->format('F j, Y')}\nHeard From: {$this->user->hear_about_us}\nReferred By: {$referredBy}", function ($message) {
+        $message->to('hello@executorhub.co.uk')
+            ->subject('New User Registered');
+    });
+}
 
     // Function to notify admin when a user joins after free trial and purchased a package
     protected function notifyAdminForNewlyPurchasedPackageCustomer()

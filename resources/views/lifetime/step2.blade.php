@@ -411,6 +411,7 @@
                                                 'Search Engine',
                                                 'News or Media',
                                                 'My adviser recommended me',
+                                                'Executor Hub',
                                                 'Other',
                                             ];
                                             $selectedHearAbout = old('hear_about_us');

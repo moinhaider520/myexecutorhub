@@ -651,9 +651,9 @@ class StripePaymentController extends Controller
         // Check eligibility for upgrade before mapping to userData
         $upgradeEndDate = \Carbon\Carbon::create(2026, 12, 25, 23, 59, 59);
 
-        if ($planLabel === 'Lifetime Standard' && now()->lessThanOrEqualTo($upgradeEndDate)) {
-            $planLabel = 'Lifetime Premium';
-        }
+        // if ($planLabel === 'Lifetime Standard' && now()->lessThanOrEqualTo($upgradeEndDate)) {
+        //     $planLabel = 'Lifetime Premium';
+        // }
 
         $userData = [
             'name' => $session->metadata->user_name,
@@ -1113,9 +1113,9 @@ class StripePaymentController extends Controller
         // Upgrade rule: Until 25 Dec 2026, rename Lifetime Standard → Lifetime Premium
         $upgradeEndDate = \Carbon\Carbon::create(2026, 12, 25, 23, 59, 59);
 
-        if ($planLabel === 'Lifetime Standard' && now()->lessThanOrEqualTo($upgradeEndDate)) {
-            $planLabel = 'Lifetime Premium';
-        }
+        // if ($planLabel === 'Lifetime Standard' && now()->lessThanOrEqualTo($upgradeEndDate)) {
+        //     $planLabel = 'Lifetime Premium';
+        // }
 
         $userData = [
             'name' => $session->metadata->user_name,
