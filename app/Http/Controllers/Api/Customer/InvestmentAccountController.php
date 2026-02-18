@@ -39,12 +39,6 @@ class InvestmentAccountController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'investment_type' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
-            'account_number' => 'required|string|unique:investment_accounts,account_number',
-            'balance' => 'required|numeric',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -74,12 +68,6 @@ class InvestmentAccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'investment_type' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
-            'account_number' => 'required|string',
-            'balance' => 'required|numeric',
-        ]);
 
         try {
             DB::beginTransaction();

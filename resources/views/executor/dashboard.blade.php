@@ -433,6 +433,119 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row mt-4">
+                <!-- Standard To-Do List -->
+                <div class="col-lg-12 col-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header pb-0">
+                            <h4>Support Beyond the Paperwork</h4>
+                            <p class="mb-0 text-muted">Practical guidance, emotional support, and trusted help when things feel overwhelming</p>
+                                                        <p class="mb-0 text-muted">Because dealing with loss is about more than forms and admin.</p>
+                        </div>
+                        <div class="card-body">
+                                <p>Losing someone close can feel overwhelming—emotionally, mentally, and physically. Executor Hub is here to help you manage the practical side of things, but it's just as important to look after yourself. This section brings together trusted support, guidance, and professional help for when things feel heavy, confusing, or simply too much.</p>
+    
+    <p>Everyone experiences grief differently. There is no "right" way to feel—and no timeline you're expected to follow. If you're struggling, talking to someone can really help.</p>
+    
+    
+    <h3>🌿 Talk to Someone Now</h3>
+    <p>For moments when support is needed immediately.</p>
+    
+    <h4>Samaritans</h4>
+    <p>📞 116 123 (UK & ROI–24/7)<br>
+    🌐 <a href="https://www.samaritans.org">samaritans.org</a></p>
+    <p>Confidential emotional support, day or night.</p>
+    
+    <h4>NHS 111</h4>
+    <p>📞 111</p>
+    <p>For urgent mental health advice if you're unsure where to turn.</p>
+    
+    <h3>🤍 Bereavement-Specific Support</h3>
+    <p>Focused help from people who understand loss.</p>
+    
+    <h4>Cruse Bereavement Support</h4>
+    <p>🌐 <a href="https://www.cruse.org.uk">cruse.org.uk</a><br>
+    📞 0808 808 1677</p>
+    <p>Specialist bereavement counselling & support services.</p>
+    
+    <h4>Sue Ryder</h4>
+    <p>🌐 <a href="https://www.sueryder.org">sueryder.org</a></p>
+    <p>Grief support, counselling, & community resources.</p>
+    
+    <h3>🌱 Mental Health & Wellbeing</h3>
+    <p>Support for ongoing emotional wellbeing.</p>
+    
+    <h4>Mind</h4>
+    <p>🌐 <a href="https://www.mind.org.uk">mind.org.uk</a><br>
+    📞 0300 123 3393</p>
+    <p>Advice, information, & local mental health support.</p>
+    
+    <h4>NHS Talking Therapies (IAPT)</h4>
+    <p>🌐 <a href="https://www.nhs.uk/talking-therapies">nhs.uk/talking-therapies</a></p>
+    <p>Free, confidential therapy services via GP self-referral.</p>
+    
+    <h3>Self-care guidance</h3>
+    <p>Grief can affect sleep, appetite, focus, and energy. Small things can help:</p>
+    <ul>
+        <li>Try to rest when you can</li>
+        <li>Eat little and often</li>
+        <li>Accept help when it's offered</li>
+        <li>Take breaks from admin when needed</li>
+    </ul>
+    <p>Executor Hub will still be here when you're ready.</p>
+    
+    <h3>Optional future upgrade</h3>
+    <p>You don't need this now, but it's a powerful roadmap:</p>
+    
+    <h4>🔒 Trusted Partner Support (Coming Soon)</h4>
+    <p>In future, Executor Hub may offer access to trusted counselling and wellbeing partners, with optional referrals and support pathways.</p>
+    
+    <h2>Legal & compliance positioning</h2>
+    <p>This protects you.</p>
+    
+    <h3>Footer disclaimer</h3>
+    <p>Executor Hub provides access to information and signposts to third-party support services. We do not provide medical, mental health, or counselling services.</p>
+    <p>If you are in immediate danger or feel at risk, please contact emergency services.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <!-- Standard To-Do List -->
+                <div class="col-lg-12 col-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header pb-0">
+                            <h4>Notify banks & building societies</h4>
+                            <p class="mb-0 text-muted">Use the Death Notification Service (DNS) to notify multiple banks and building societies at once. It’s free and widely used across the UK</p>
+                        </div>
+                        <div class="card-body">
+
+    <p>Open Death Notification Service<a href="https://www.deathnotificationservice.co.uk/">Death Notification Service</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <!-- Standard To-Do List -->
+                <div class="col-lg-12 col-12 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header pb-0">
+                            <h4>Banks & building societies</h4>
+                            <p class="mb-0 text-muted">Many UK banks and building societies can be notified at once using the Death Notification Service (DNS).</p>
+                            <p>DNS is a free, independent service that passes the notification on to participating organisations.</p>
+                            <p>Executor Hub will help you prepare the information you need and track what you’ve done — but the notification itself is submitted directly on the DNS website.</p>
+                            <p></p>
+                        </div>
+                        <div class="card-body">
+
+    <p>👉 Go to Death Notification Service<a href="https://www.deathnotificationservice.co.uk/">Death Notification Service</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- Container-fluid Ends-->
         <!-- GUIDE MODAL -->

@@ -48,10 +48,7 @@ class AdvisorsController extends Controller
             $request->validate([
                 'adviser_type' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
-                'practice_name' => 'required|string|max:255',
-                'practice_address' => 'required|string|max:255',
                 'email_address' => 'required|email|max:255|unique:users,email',
-                'phone_number' => 'required|unique:users,contact_number',
             ]);
         } catch (ValidationException $e) {
             // ✅ Return validation errors as JSON (422)
@@ -112,10 +109,7 @@ class AdvisorsController extends Controller
             $request->validate([
                 'adviser_type' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
-                'practice_name' => 'required|string|max:255',
-                'practice_address' => 'required|string|max:255',
                 'email_address' => 'required|email|max:255|unique:users,email,' . $id,
-                'phone_number' => 'required|unique:users,contact_number,' . $id,
             ]);
         } catch (ValidationException $e) {
             return response()->json([

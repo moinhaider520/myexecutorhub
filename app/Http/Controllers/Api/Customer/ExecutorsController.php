@@ -43,12 +43,7 @@ class ExecutorsController extends Controller
         try {
             // ✅ Step 1: Validate request input
             $validated = $request->validate([
-                'title' => 'nullable|string|max:255',
-                'name' => 'required|string|max:255',
-                'lastname' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email',
-                'relationship' => 'required|string|max:255',
-                'how_acting' => 'required|string|max:255',
                 'status' => 'required|string|max:50',
             ]);
 
@@ -142,13 +137,6 @@ class ExecutorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'how_acting' => 'required|string|max:255',
-            'relationship' => 'required|string',
-            'status' => 'required|string',
-        ]);
 
         try {
             DB::beginTransaction();

@@ -38,10 +38,6 @@ class BankAccountController extends Controller
     {
         $request->validate([
             'account_type' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'sort_code' => 'required|string|max:255',
-            'account_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
             'balance' => 'required|numeric',
         ]);
 
@@ -89,10 +85,6 @@ class BankAccountController extends Controller
     {
         $request->validate([
             'account_type' => 'required|string|max:255',
-            'bank_name' => 'required|string|max:255',
-            'sort_code' => 'required|string|max:255',
-            'account_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
             'balance' => 'required|numeric',
         ]);
 

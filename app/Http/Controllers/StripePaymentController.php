@@ -1000,10 +1000,10 @@ class StripePaymentController extends Controller
 
         // LIVE
         $discountedPriceMap = [
-                    'under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
-                    '50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
-                    '65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
-                ];
+            'under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+            '50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
+            '65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
+        ];
         // TEST
         // $discountedPriceMap = [
         //     'under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
@@ -1285,11 +1285,18 @@ class StripePaymentController extends Controller
         $planAmount = 0;
         if ($subscription) {
             $priceId = $subscription->items->data[0]->price->id;
+            // LIVE
             $plans = [
-                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 5.99,
-                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 11.99,
-                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 19.99,
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
             ];
+            // TEST
+            // $plans = [
+            //     'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 5.99,
+            //     'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 11.99,
+            //     'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 19.99,
+            // ];
             $planAmount = $plans[$priceId] ?? 0;
         }
 
@@ -1346,11 +1353,18 @@ class StripePaymentController extends Controller
             $priceId = $subscription->items->data[0]->price->id;
 
             // Map Stripe Price ID to plan names
+            // LIVE
             $plans = [
-                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 'Basic',
-                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 'Standard',
-                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 'Premium',
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => 5.99,
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => 11.99,
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => 19.99,
             ];
+            //    TEST
+            // $plans = [
+            //     'price_1SbHDHPEGGZ0nEjmonVkxxQL' => 'Basic',
+            //     'price_1SbHWsPEGGZ0nEjmTAg6neQY' => 'Standard',
+            //     'price_1SbHY6PEGGZ0nEjmJOsA4h41' => 'Premium',
+            // ];
 
             $planName = $plans[$priceId] ?? 'Unknown';
 
@@ -1499,11 +1513,19 @@ class StripePaymentController extends Controller
             $priceId = $subscription->items->data[0]->price->id;
 
             // Map Stripe Price ID to plan names + amounts
+            // LIVE
             $plans = [
-                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => ['name' => 'Basic', 'amount' => 5.99],
-                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => ['name' => 'Standard', 'amount' => 11.99],
-                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => ['name' => 'Premium', 'amount' => 19.99],
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => ['name' => 'Basic', 'amount' => 5.99],
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => ['name' => 'Standard', 'amount' => 11.99],
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => ['name' => 'Premium', 'amount' => 19.99],
             ];
+
+            // TEST
+            // $plans = [
+            //     'price_1SbHDHPEGGZ0nEjmonVkxxQL' => ['name' => 'Basic', 'amount' => 5.99],
+            //     'price_1SbHWsPEGGZ0nEjmTAg6neQY' => ['name' => 'Standard', 'amount' => 11.99],
+            //     'price_1SbHY6PEGGZ0nEjmJOsA4h41' => ['name' => 'Premium', 'amount' => 19.99],
+            // ];
 
             $planName = $plans[$priceId]['name'] ?? 'Unknown';
             $planAmount = $plans[$priceId]['amount'] ?? 0;
@@ -1634,7 +1656,7 @@ class StripePaymentController extends Controller
 
         // Get price ID from invite data
         $priceId = $invite['price_id'] ?? null;
-        
+
         if (!$priceId) {
             return back()->withErrors(['error' => 'Price ID is required. Please contact support.'])->withInput();
         }
@@ -1714,7 +1736,7 @@ class StripePaymentController extends Controller
         // Get Stripe subscription (12-month subscription)
         // For subscription mode, retrieve the subscription from the session
         $subscriptionId = $session->subscription ?? null;
-        
+
         if (!$subscriptionId) {
             // Fallback: retrieve subscription by customer
             $subscriptions = Subscription::all(['customer' => $session->customer, 'limit' => 1]);
@@ -1730,7 +1752,7 @@ class StripePaymentController extends Controller
         // Set subscription to cancel after 12 months (not at end of current period)
         // Calculate timestamp for 12 months from now
         $cancelAtTimestamp = now()->addMonths(12)->timestamp;
-        
+
         try {
             // Update subscription to cancel at specific timestamp (12 months from now)
             Subscription::update($subscription->id, [
@@ -1744,7 +1766,7 @@ class StripePaymentController extends Controller
         // Get subscription details
         $subscriptionId = $subscription->id;
         $priceId = $subscription->items->data[0]->price->id ?? null;
-        
+
         // Determine plan label from price ID (map your price IDs to plan names)
         $planLabel = 'Lifetime Standard'; // Default
         // $planMapping = [
@@ -1758,7 +1780,7 @@ class StripePaymentController extends Controller
 
         // Use subscription's current_period_end for 12-month billing cycle
         // This ensures the subscription end date matches Stripe's billing period
-        $subscriptionEndDate = $subscription->current_period_end 
+        $subscriptionEndDate = $subscription->current_period_end
             ? Carbon::createFromTimestamp($subscription->current_period_end)
             : now()->addMonths(12);
 

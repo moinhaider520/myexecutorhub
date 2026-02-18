@@ -24,6 +24,16 @@
                     </div>
                 </div>
             </div>
+            <h4 class="text-center mb-4">Generate a Steady Income Stream With Executor Hub</h4>
+            <!-- IMAGE BLOCK -->
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
+                        <!-- Play Icon -->
+                        <iframe src="{{ asset('assets/frontend/partner_video.mp4') }}" style="width:100%;height:400px;"></iframe>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-11"></div>
                 <div class="col-md-1">
@@ -60,18 +70,26 @@
                         </div>
                         <div class="card-body">
 
-                            <p>As a partner, Executor Hub gives you more than just a helpful tool for your clients — it gives you a new recurring income stream and a reason for clients to stay connected to you long after their documents are signed.</p>
+                            <p>As a partner, Executor Hub gives you more than just a helpful tool for your clients — it
+                                gives you a new recurring income stream and a reason for clients to stay connected to you
+                                long after their documents are signed.</p>
                             <p>By introducing your clients to Executor Hub, you can:</p>
-                            <p>💰 Earn recurring income for every customer who subscribes using your unique affiliate link.</p>
-                            <p>🤝 Add ongoing value to your service by helping clients organise their affairs, guide their executors, and protect loved ones.</p>
-                            <p>🧭 Stay at the centre of the conversation when families need guidance, updates, or future estate planning.</p>
-                            <p>🧩 Differentiate your service from other will writers and advisers — by offering a digital solution that’s practical, personal, and secure.</p>
-                            <p>💬 Build long-term trust — your recommendation helps families at one of the most difficult times of their lives.</p>
-                            <p>It’s simple: share your affiliate link, help your clients leave peace of mind behind, and build a lasting income for your business.</p>
+                            <p>💰 Earn recurring income for every customer who subscribes using your unique affiliate link.
+                            </p>
+                            <p>🤝 Add ongoing value to your service by helping clients organise their affairs, guide their
+                                executors, and protect loved ones.</p>
+                            <p>🧭 Stay at the centre of the conversation when families need guidance, updates, or future
+                                estate planning.</p>
+                            <p>🧩 Differentiate your service from other will writers and advisers — by offering a digital
+                                solution that’s practical, personal, and secure.</p>
+                            <p>💬 Build long-term trust — your recommendation helps families at one of the most difficult
+                                times of their lives.</p>
+                            <p>It’s simple: share your affiliate link, help your clients leave peace of mind behind, and
+                                build a lasting income for your business.</p>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
             <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="col text-center">
@@ -269,7 +287,8 @@
                         <div class="step active" data-audio="{{ asset('assets/partner_guide_audios/audio1.mp3') }}">
                             <h4>STEP 1 — Welcome 🎉</h4>
                             <p>Welcome to Executor Hub for Partners.</p>
-                            <p>You’re joining a platform that helps families stay organised and prepared, while giving you a powerful opportunity to build recurring and passive income.</p>
+                            <p>You’re joining a platform that helps families stay organised and prepared, while giving you a
+                                powerful opportunity to build recurring and passive income.</p>
                             <p>This onboarding takes just a few minutes.</p>
                             <p>By the end, you will be able to:</p>
                             <p>1. Sign your first customers</p>
@@ -298,7 +317,8 @@
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio3.mp3') }}">
                             <h4>STEP 3 — Download the Partner App 📱 (Highly Recommended)</h4>
-                            <p>To make everything faster and easier, we strongly recommend downloading the Executor Hub Partner App.</p>
+                            <p>To make everything faster and easier, we strongly recommend downloading the Executor Hub
+                                Partner App.</p>
                             <p>The app lets you:</p>
                             <ol>
                                 <li>Copy your partner link instantly</li>
@@ -309,19 +329,22 @@
                                 <li>Work from your phone at any time</li>
                             </ol>
                             <p>You’ll use the app daily.</p>
-                            <a href="https://apps.apple.com/us/app/executor-hub-partners/id6753773146" target="_blank">Download Partner App</a>
-                            <br/>
+                            <a href="https://apps.apple.com/us/app/executor-hub-partners/id6753773146"
+                                target="_blank">Download Partner App</a>
+                            <br />
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
                         <div class="step" data-audio="{{ asset('assets/partner_guide_audios/audio4.mp3') }}">
                             <h4>STEP 4 — Your Partner Link & How Earnings Are Tracked</h4>
-                            <p>Your partner link and coupon code (shown clearly on your dashboard) are how Executor Hub tracks every referral you make — both customers and partners.</p>
+                            <p>Your partner link and coupon code (shown clearly on your dashboard) are how Executor Hub
+                                tracks every referral you make — both customers and partners.</p>
                             <p>Anyone who signs up using your link or your coupon code is instantly assigned to you.</p>
                             <p><b>Do This Now</b></p>
                             <ol>
                                 <li>✔ Click Copy Affiliate Link</li>
-                                <li>✔ No need to save it — your link and code are always visible and can be copied anytime</li>
+                                <li>✔ No need to save it — your link and code are always visible and can be copied anytime
+                                </li>
                             </ol>
                             <p>You’ll use this link in Step 6.</p>
                             <p>Your link and coupon code are the foundation of all your earnings.</p>
@@ -350,7 +373,7 @@
                             <p>This only needs to be done once.</p>
                             <p>Commission payments require this step.</p>
                             <a href="{{ route('partner.bank_account.index') }}">Add My Bank Details</a>
-                            <br/>
+                            <br />
                             <button type="button" class="btn btn-outline-secondary repeatBtn mt-2">Repeat</button>
                         </div>
 
@@ -412,13 +435,15 @@
                             <p>You don’t need to do anything — it’s all done for you.</p>
 
                             <p><b>Optional Personal Follow-Up</b></p>
-                            <p>If you know the customer well or feel it’s appropriate, you may want to reach out personally before the free trial ends.</p>
+                            <p>If you know the customer well or feel it’s appropriate, you may want to reach out personally
+                                before the free trial ends.</p>
                             <p>If you choose to follow up:</p>
                             <p>👉 Use the scripts in the Knowledgebase</p>
                             <p>(Phone, WhatsApp, SMS, re-engagement emails)</p>
 
                             <p><b>If You Don’t Want to Follow Up</b></p>
-                            <p>No problem — Executor Hub continues automatically sending reminders to maximise conversions.</p>
+                            <p>No problem — Executor Hub continues automatically sending reminders to maximise conversions.
+                            </p>
                             <p><b>Goal for This Week</b></p>
                             <p>⭐ Check your Customers page</p>
                             <p>⭐ Reach out if appropriate</p>
@@ -505,7 +530,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" onclick="generateAndCopyLink()">Copy Affiliate
                             Link</button>
-                        <button type="button" class="btn btn-secondary" onclick="generateAndCopyLinkFreeTrial()">Copy Affiliate
+                        <button type="button" class="btn btn-secondary" onclick="generateAndCopyLinkFreeTrial()">Copy
+                            Affiliate
                             Link (Free Trial)</button>
                     </div>
                 </div>
@@ -793,5 +819,6 @@
             }
         });
     </script>
+    
 
 @endsection

@@ -38,13 +38,6 @@ class PersonalChattelController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'chattel_type' => 'required|string|max:255',
-            'description' => 'required|string',
-            'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'value' => 'required|numeric',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -81,13 +74,6 @@ class PersonalChattelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'chattel_type' => 'required|string|max:255',
-            'description' => 'required|string',
-            'photos' => 'nullable|array',
-            'photos.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'value' => 'required|numeric',
-        ]);
 
         try {
             DB::beginTransaction();

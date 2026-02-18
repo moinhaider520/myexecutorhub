@@ -40,16 +40,6 @@ class BusinessInterestController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'business_type' => 'required|string|max:255',
-            'business_name' => 'required|string|max:255',
-            'shares' => 'required|numeric|min:0',
-            'business_value' => 'required|numeric|min:0',
-            'share_value' => 'required|numeric|min:0',
-            'contact' => 'required|string|max:255',
-            'plan_for_shares' => 'required|string|max:255',
-            'company_number' => 'required|string|max:255',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -83,16 +73,6 @@ class BusinessInterestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'business_type' => 'required|string|max:255',
-            'business_name' => 'required|string|max:255',
-            'shares' => 'required|numeric|min:0',
-            'business_value' => 'required|numeric|min:0',
-            'share_value' => 'required|numeric|min:0',
-            'contact' => 'required|string|max:255',
-            'plan_for_shares' => 'required|string|max:255',
-            'company_number' => 'required|string|max:255',
-        ]);
 
         try {
             DB::beginTransaction();

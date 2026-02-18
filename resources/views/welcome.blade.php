@@ -279,7 +279,36 @@
             background: #218838;
         }
     </style>
+
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+
+        fbq('init', '25622962537384047');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=25622962537384047&ev=PageView&noscript=1" />
+    </noscript>
 </head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8G2VWX5FBP"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-8G2VWX5FBP');
+    </script>
 <script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
 <style>
     h1 {
@@ -2413,6 +2442,28 @@
                                 <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
                                     <!-- Play Icon -->
                                     <a class="video-popup1" href="{{ asset('assets/frontend/partner.mp4') }}">
+                                        <div class="video-btn video-btn-xl bg--theme">
+                                            <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                    <!-- Preview Image -->
+                                    <img class="img-fluid" src="{{asset('assets/frontend/main-card-2.png')}}"
+                                        alt="content-image" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <h4 class="text-center mb-4" style="margin-top:200px;">Generate a Steady Income Stream With Executor Hub</h4>
+                        <!-- IMAGE BLOCK -->
+                        <div class="row justify-content-center">
+                            <div class="col">
+                                <div class="bc-5-img bc-5-tablet img-block-hidden video-preview wow fadeInUp">
+                                    <!-- Play Icon -->
+                                    <a class="video-popup1" href="{{ asset('assets/frontend/partner_video.mp4') }}">
                                         <div class="video-btn video-btn-xl bg--theme">
                                             <div class="video-block-wrapper"><span class="flaticon-play-button"></span>
                                             </div>

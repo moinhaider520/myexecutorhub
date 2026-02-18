@@ -29,13 +29,6 @@ class ForeignAssetsController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'foreign_asset' => 'required|string|max:255',
-            'asset_type' => 'required|string|max:255',
-            'asset_location' => 'required|string|max:255',
-            'asset_value' => 'required|string|max:255',
-            'contact_details' => 'required|string',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -60,13 +53,6 @@ class ForeignAssetsController extends Controller
     // PUT /api/customer/foreign-assets/{id}
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'foreign_asset' => 'required|string|max:255',
-            'asset_type' => 'required|string|max:255',
-            'asset_location' => 'required|string|max:255',
-            'asset_value' => 'required|string|max:255',
-            'contact_details' => 'required|string',
-        ]);
 
         try {
             DB::beginTransaction();

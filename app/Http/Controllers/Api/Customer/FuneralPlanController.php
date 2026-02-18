@@ -41,11 +41,6 @@ class FuneralPlanController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'funeral_plan' => 'required|string|max:255',
-            'file' => 'nullable|file|mimes:pdf,doc,docx,jpg,png',
-        ]);
-
         try {
             DB::beginTransaction();
 

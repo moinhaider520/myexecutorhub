@@ -35,15 +35,6 @@ class InsurancePolicyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'insurance_type' => 'required|string|max:255',
-            'provider_name' => 'required|string|max:255',
-            'policy_number' => 'required|string|max:255',
-            'sum_insured' => 'required|numeric|min:0',
-            'contact_details' => 'required|string|max:255',
-            'beneficiaries' => 'required|string|max:255',
-            'policy_end_date' => 'required|date',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -76,15 +67,6 @@ class InsurancePolicyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'insurance_type' => 'required|string|max:255',
-            'provider_name' => 'required|string|max:255',
-            'policy_number' => 'required|string|max:255',
-            'sum_insured' => 'required|numeric|min:0',
-            'contact_details' => 'required|string|max:255',
-            'beneficiaries' => 'required|string|max:255',
-            'policy_end_date' => 'required|date',
-        ]);
 
         try {
             DB::beginTransaction();

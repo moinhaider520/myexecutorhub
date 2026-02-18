@@ -40,13 +40,6 @@ class DebtAndLiabilityController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'debt_type' => 'required|string|max:255',
-            'reference_number' => 'required|string|max:255',
-            'loan_provider' => 'required|string|max:255',
-            'contact_details' => 'required|string|max:255',
-            'amount_outstanding' => 'required|numeric|min:0',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -77,13 +70,6 @@ class DebtAndLiabilityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'debt_type' => 'required|string|max:255',
-            'reference_number' => 'required|string|max:255',
-            'loan_provider' => 'required|string|max:255',
-            'contact_details' => 'required|string|max:255',
-            'amount_outstanding' => 'required|numeric|min:0',
-        ]);
 
         try {
             DB::beginTransaction();

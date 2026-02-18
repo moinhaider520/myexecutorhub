@@ -21,11 +21,6 @@ class PensionController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'pensions' => 'required|string|max:255',
-            'pension_provider' => 'required|string|max:255',
-            'pension_reference_number' => 'required|string|max:255',
-        ]);
 
         DB::beginTransaction();
         try {
@@ -53,11 +48,6 @@ class PensionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'pensions' => 'required|string|max:255',
-            'pension_provider' => 'required|string|max:255',
-            'pension_reference_number' => 'required|string|max:255',
-        ]);
 
         DB::beginTransaction();
         try {

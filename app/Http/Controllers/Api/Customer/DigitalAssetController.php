@@ -37,23 +37,6 @@ class DigitalAssetController extends Controller
      */
        public function store(Request $request)
     {
-        try {
-            // ✅ Validate inputs
-            $request->validate([
-                'asset_type' => 'required|string|max:255',
-                'asset_name' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'password' => 'required|string|max:255',
-                'email_used' => 'required|string|email|max:255',
-                'value' => 'required|numeric|min:0',
-            ]);
-        } catch (ValidationException $e) {
-            // ✅ Return validation errors as JSON
-            return response()->json([
-                'success' => false,
-                'errors' => $e->errors(),
-            ], 422);
-        }
 
         try {
             DB::beginTransaction();
@@ -102,21 +85,6 @@ class DigitalAssetController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            $request->validate([
-                'asset_type' => 'required|string|max:255',
-                'asset_name' => 'required|string|max:255',
-                'username' => 'required|string|max:255',
-                'password' => 'required|string|max:255',
-                'email_used' => 'required|string|email|max:255',
-                'value' => 'required|numeric|min:0',
-            ]);
-        } catch (ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'errors' => $e->errors(),
-            ], 422);
-        }
 
         try {
             DB::beginTransaction();

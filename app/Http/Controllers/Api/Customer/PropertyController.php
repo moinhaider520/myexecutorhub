@@ -36,13 +36,6 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'property_type' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'owner_names' => 'required|string|max:255',
-            'how_owned' => 'required|string|max:255',
-            'value' => 'required|numeric',
-        ]);
 
         try {
             DB::beginTransaction();
@@ -85,13 +78,6 @@ class PropertyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'property_type' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'owner_names' => 'required|string|max:255',
-            'how_owned' => 'required|string|max:255',
-            'value' => 'required|numeric',
-        ]);
 
         try {
             DB::beginTransaction();
