@@ -193,7 +193,8 @@ Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-facto
 
 Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
 Route::post('two-factor/resend', [TwoFactorController::class, 'resend'])->name('two-factor.resend');
-
+//send OTP via SMS (Twilio)
+Route::post('two-factor/sms', [TwoFactorController::class, 'sendSms'])->name('two-factor.sms');
 
 Route::get('partner-registration', [PartnerRegistationController::class, 'index'])->name('partner-registration.index');
 Route::post('partner-registration', [PartnerRegistationController::class, 'store'])->name('partner-registration.store');

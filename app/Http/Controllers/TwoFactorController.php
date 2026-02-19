@@ -6,8 +6,10 @@ use App\Mail\TwoFactorCode;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Carbon\Carbon;
 use Mail;
+use Twilio\Rest\Client;
 
 class TwoFactorController extends Controller
 {
@@ -69,10 +71,8 @@ class TwoFactorController extends Controller
         return redirect()->route('dashboard');
     }
 
-
     public function resend(Request $request)
     {
-        // fetch the email we stored earlier in session
         $email = session('two_factor_email');
 
         if (!$email) {
@@ -85,7 +85,6 @@ class TwoFactorController extends Controller
             return redirect()->route('login')->with('status', 'User not found.');
         }
 
-        // regenerate code and send again
         $user->update([
             'two_factor_code' => mt_rand(100000, 999999),
             'two_factor_expires_at' => now()->addMinutes(10),
@@ -94,5 +93,71 @@ class TwoFactorController extends Controller
         Mail::to($user->email)->send(new TwoFactorCode($user));
 
         return back()->with('status', 'A new verification code has been sent to your email.');
+    }
+
+    public function sendSms(Request $request)
+    {
+        $email = session('two_factor_email');
+
+        if (!$email) {
+            return redirect()->route('login')
+                ->with('status', 'Session expired, please log in again.');
+        }
+
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            return redirect()->route('login')
+                ->with('status', 'User not found.');
+        }
+
+        $to = $user->contact_number;
+
+        if (empty($to)) {
+            return back()->withErrors([
+                'sms' => 'No contact number is associated with your account.',
+            ]);
+        }
+
+        // Normalize phone (remove spaces)
+        $to = preg_replace('/\s+/', '', $to);
+
+        // Optional: ensure it starts with +
+        if (!str_starts_with($to, '+')) {
+            return back()->withErrors([
+                'sms' => 'Phone number must be in international format (e.g. +447XXXXXXXXX).',
+            ]);
+        }
+
+        // Generate fresh OTP for SMS
+        $user->update([
+            'two_factor_code' => mt_rand(100000, 999999),
+            'two_factor_expires_at' => now()->addMinutes(10),
+        ]);
+
+        $sid = Config::get('services.twilio.sid');
+        $token = Config::get('services.twilio.token');
+        $from = Config::get('services.twilio.from');
+
+        if (!$sid || !$token || !$from) {
+            return back()->withErrors([
+                'sms' => 'Twilio is not configured. Please contact support.',
+            ]);
+        }
+
+        try {
+            $client = new Client($sid, $token);
+
+            $client->messages->create($to, [
+                'from' => $from,
+                'body' => "Your verification code is: {$user->two_factor_code}",
+            ]);
+
+            return back()->with('status', 'Verification code sent to your phone.');
+        } catch (\Throwable $e) {
+            return back()->withErrors([
+                'sms' => 'Failed to send SMS. Please try again.',
+            ]);
+        }
     }
 }
