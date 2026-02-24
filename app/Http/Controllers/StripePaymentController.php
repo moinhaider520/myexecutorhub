@@ -89,6 +89,9 @@ class StripePaymentController extends Controller
                     'quantity' => 1,
                 ]
             ],
+            'automatic_tax' => [
+                'enabled' => true,
+            ],
             'metadata' => [
                 'user_name' => $request->name,
                 'user_email' => $request->email,
@@ -474,6 +477,9 @@ class StripePaymentController extends Controller
                     'price' => $priceId,
                     'quantity' => 1,
                 ],
+            ],
+            'automatic_tax' => [
+                'enabled' => true,
             ],
             'metadata' => [
                 'checkout_type' => 'lifetime',
@@ -1046,6 +1052,9 @@ class StripePaymentController extends Controller
                     'quantity' => 1,
                 ],
             ],
+            'automatic_tax' => [
+                'enabled' => true,
+            ],
             'metadata' => [
                 'checkout_type' => 'couple_partner',
                 'registration_token' => $validated['token'],
@@ -1477,6 +1486,9 @@ class StripePaymentController extends Controller
                     'quantity' => 1,
                 ]
             ],
+            'automatic_tax' => [
+                'enabled' => true,
+            ],
             'success_url' => route('stripe.resubscribesuccess') . '?session_id={CHECKOUT_SESSION_ID}',
         ]);
 
@@ -1676,6 +1688,9 @@ class StripePaymentController extends Controller
                     'quantity' => 1,
                 ],
             ],
+            'automatic_tax' => [
+                'enabled' => true,
+            ],
             'subscription_data' => [
                 'metadata' => [
                     'checkout_type' => 'admin_invite',
@@ -1834,7 +1849,13 @@ class StripePaymentController extends Controller
         }
 
         // Send welcome email
-        $user->notify(new WelcomeEmail($user));
+        // $user->notify(new WelcomeEmail($user));
+
+
+        Mail::raw("A new user has signed up for Premium Package of Executor Hub.\n\nName: {$session->metadata->user_name}\nEmail: {$session->metadata->user_email}\nRegistration Date: {$user->created_at->format('F j, Y')}\n\nReferred By: Executor Hub (Free Invite From Admin)", function ($message) {
+            $message->to('hello@executorhub.co.uk')
+                ->subject('New User Registered');
+        });
 
         // Log in the user automatically
         Auth::login($user);
