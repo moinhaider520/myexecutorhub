@@ -44,7 +44,7 @@
                     <li class="profile-nav onhover-dropdown px-0 py-0">
                         <div class="d-flex profile-media align-items-center">
                             <img class="img-30"
-                                src="{{ Auth::user()->profile_image ? asset('assets/upload/' . Auth::user()->profile_image) : asset('assets/images/dashboard/profile.png') }}"
+                                src="{{ Auth::user()->profile_image_url }}"
                                 alt="">
                             <div class="flex-grow-1">
                                 <span>

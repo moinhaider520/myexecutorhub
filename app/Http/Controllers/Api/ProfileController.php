@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     public function user_details($id)
     {
@@ -54,21 +54,29 @@ class ProfileController extends Controller
     public function picture_update(Request $request, $id)
     {
         try {
+            $request->validate([
+                'photo' => 'required|image|mimes:jpeg,png|max:2048',
+            ]);
+
             $user = User::find($id);
     
             if (!$user) {
                 return response()->json(['status' => false, 'message' => 'User not found'], 404);
             }
     
-            if ($request->hasFile('photo')) {
-                $file_name = $this->imageUpload($request->photo);
-            }
-    
             DB::beginTransaction();
-    
-            $user->update([
-                'profile_image' => $file_name ?? $user->profile_image,
-            ]);
+
+            if ($request->hasFile('photo')) {
+                if ($user->profile_image_public_id) {
+                    $this->deleteFromCloud($user->profile_image_public_id);
+                }
+
+                $imagePath = $this->uploadToCloud($request->file('photo'), 'executorhub/profile_images');
+                $user->update([
+                    'profile_image' => $imagePath['url'],
+                    'profile_image_public_id' => $imagePath['public_id'],
+                ]);
+            }
     
             DB::commit();
             return response()->json(['status' => true, 'User Picture' => $user->profile_image], 200);

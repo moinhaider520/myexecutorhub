@@ -132,4 +132,17 @@ class User extends Authenticatable
             'customer_id'
         );
     }
+
+    public function getProfileImageUrlAttribute()
+    {
+        if (!$this->profile_image) {
+            return asset('assets/images/dashboard/profile.png');
+        }
+
+        if (str_starts_with($this->profile_image, 'http')) {
+            return $this->profile_image;
+        }
+
+        return asset('assets/upload/' . $this->profile_image);
+    }
 }

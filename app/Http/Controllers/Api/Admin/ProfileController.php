@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
     public function user_details()
     {
         return response()->json(['success' => true, 'data' => Auth::user()], 200);
@@ -41,18 +41,28 @@ class ProfileController extends Controller
     public function picture_update(Request $request)
     {
         try {
-            if ($request->hasFile('photo')) {
-                $file_name = $this->imageUpload($request->photo);
-            }
+            $request->validate([
+                'photo' => 'required|image|mimes:jpeg,png|max:2048',
+            ]);
+
+            $user = Auth::user();
 
             DB::beginTransaction();
 
-            $profile_picture = Auth::user()->update([
-                'profile_image' => $file_name ?? Auth::user()->profile_image,
-            ]);
+            if ($request->hasFile('photo')) {
+                if ($user->profile_image_public_id) {
+                    $this->deleteFromCloud($user->profile_image_public_id);
+                }
+
+                $imagePath = $this->uploadToCloud($request->file('photo'), 'executorhub/profile_images');
+                $user->update([
+                    'profile_image' => $imagePath['url'],
+                    'profile_image_public_id' => $imagePath['public_id'],
+                ]);
+            }
 
             DB::commit();
-            return response()->json(['status' => true, 'User Picture' => Auth::user()->profile_image]);
+            return response()->json(['status' => true, 'User Picture' => $user->profile_image]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['status' => false, 'message' => $e->getMessage()]);

@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     /**
      * Show the form for editing the Partner profile.
@@ -77,8 +78,11 @@ class SettingController extends Controller
             $user = Auth::user();
 
             if ($request->hasFile('profile_image')) {
-                $imagePath = $this->imageUpload($request->file('profile_image'));
-                $user->update(['profile_image' => $imagePath]);
+                if ($user->profile_image_public_id) {
+                    $this->deleteFromCloud($user->profile_image_public_id);
+                }
+                $imagePath = $this->uploadToCloud($request->file('profile_image'), 'executorhub/profile_images');
+                $user->update(['profile_image' => $imagePath['url'], 'profile_image_public_id' => $imagePath['public_id']]);
             }
 
             DB::commit();

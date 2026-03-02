@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.1",
-        "cloudinary-labs/cloudinary-laravel": "^2.2",
+        "cloudinary-labs/cloudinary-laravel": "^2.3",
         "ctwillie/expo-server-sdk-php": "^2.1",
         "dompdf/dompdf": "^3.1",
         "laravel/framework": "^11.9",
