@@ -9,10 +9,10 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 class PersonalChattelController extends Controller
 {
-     use ImageUpload;
+     use CloudinaryUpload;
     /**
      * Display the personal chattels and chattel types for the authenticated executor.
      *
@@ -68,7 +68,11 @@ class PersonalChattelController extends Controller
             $photoPaths = [];
             if ($request->hasFile('photos')) {
                 foreach ($request->file('photos') as $photo) {
-                    $photoPaths[] = $this->imageUpload($photo, 'personal_chattels');
+                    $imagePath = $this->uploadToCloud($photo, 'executorhub/personal_chattels');
+                    $photoPaths[] = [
+                        'url' => $imagePath['url'],
+                        'public_id' => $imagePath['public_id'],
+                    ];
                 }
             }
 
@@ -112,16 +116,15 @@ class PersonalChattelController extends Controller
             $photoPaths = json_decode($personalChattel->photos, true) ?? [];
 
             if ($request->hasFile('photos')) {
-                // Delete old photos
-                foreach ($photoPaths as $path) {
-                    $filePath = public_path('assets/upload/' . basename($path));
-                    if (file_exists($filePath)) {
-                        unlink($filePath);
-                    }
-                }
+                $this->deleteStoredPhotos($photoPaths);
 
+                $photoPaths = [];
                 foreach ($request->file('photos') as $photo) {
-                    $photoPaths[] = $this->imageUpload($photo, 'personal_chattels');
+                    $imagePath = $this->uploadToCloud($photo, 'executorhub/personal_chattels');
+                    $photoPaths[] = [
+                        'url' => $imagePath['url'],
+                        'public_id' => $imagePath['public_id'],
+                    ];
                 }
             }
 
@@ -154,13 +157,7 @@ class PersonalChattelController extends Controller
             $personalChattel = PersonalChattel::findOrFail($id);
             $photoPaths = json_decode($personalChattel->photos, true) ?? [];
 
-            // Delete photos from the public/assets/upload directory
-            foreach ($photoPaths as $path) {
-                $filePath = public_path('assets/upload/' . basename($path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
-            }
+            $this->deleteStoredPhotos($photoPaths);
 
             // Delete the personal chattel record
             $personalChattel->delete();
@@ -194,6 +191,26 @@ class PersonalChattelController extends Controller
             return response()->json(['success' => true, 'message' => 'Custom chattel type added successfully.'], 201);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function deleteStoredPhotos(array $photoPaths): void
+    {
+        foreach ($photoPaths as $photo) {
+            if (is_array($photo) && !empty($photo['public_id'])) {
+                $this->deleteFromCloud($photo['public_id']);
+                continue;
+            }
+
+            $path = is_array($photo) ? ($photo['url'] ?? null) : $photo;
+            if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+                continue;
+            }
+
+            $filePath = public_path('assets/upload/' . basename($path));
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
     }
 }

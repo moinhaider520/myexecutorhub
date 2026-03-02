@@ -36,13 +36,46 @@
                       </thead>
                       <tbody>
                         @foreach($pictures as $picture)
+                          @php
+                            $storedFiles = $picture->file_path;
+                            if (!is_array($storedFiles)) {
+                              $decoded = json_decode($storedFiles, true);
+                              $storedFiles = is_array($decoded) ? $decoded : (!empty($storedFiles) ? [$storedFiles] : []);
+                            }
+
+                            $firstUrl = null;
+                            foreach ($storedFiles as $item) {
+                              if (is_array($item)) {
+                                $url = $item['url'] ?? null;
+                              } else {
+                                $url = filter_var($item, FILTER_VALIDATE_URL) ? $item : asset('assets/upload/' . basename($item));
+                              }
+
+                              if (!empty($url)) {
+                                $firstUrl = $url;
+                                break;
+                              }
+                            }
+
+                            $downloadUrl = $firstUrl;
+                            if (!empty($firstUrl) && strpos($firstUrl, 'res.cloudinary.com') !== false && strpos($firstUrl, '/upload/') !== false) {
+                              $downloadName = preg_replace('/[^A-Za-z0-9_-]/', '_', $picture->name);
+                              $downloadUrl = preg_replace('/\/upload\//', '/upload/fl_attachment:' . $downloadName . '/', $firstUrl, 1);
+                            }
+                          @endphp
                           <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $picture->name }}</td>
                             <td>{{ $picture->description }}</td>
-                            <td><img src="{{ asset('assets/upload/' . basename($picture->file_path)) }}" alt="{{ $picture->name }}" style="max-width: 100px; max-height: 100px;"></td>
                             <td>
-                              <a href="{{ asset('assets/upload/' . basename($picture->file_path)) }}" target="_blank">Download</a>
+                              @if($firstUrl)
+                                <img src="{{ $firstUrl }}" alt="{{ $picture->name }}" style="max-width: 100px; max-height: 100px;">
+                              @endif
+                            </td>
+                            <td>
+                              @if($downloadUrl)
+                                <a href="{{ $downloadUrl }}" target="_blank">Download</a>
+                              @endif
                             </td>
                             <td>
                               <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"

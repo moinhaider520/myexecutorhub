@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Api\Executor;
 use App\Http\Controllers\Controller;
 use App\Models\OnboardingProgress;
 use App\Models\Picture;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PictureController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
     /**
      * Get the list of pictures for the authenticated user.
      */
@@ -46,8 +46,11 @@ class PictureController extends Controller
         try {
             $filePaths = [];
             foreach ($request->file('file') as $file) {
-                $path = $this->imageUpload($file, 'pictures');
-                $filePaths[] = $path;
+                $imagePath = $this->uploadToCloud($file, 'executorhub/pictures');
+                $filePaths[] = [
+                    'url' => $imagePath['url'],
+                    'public_id' => $imagePath['public_id'],
+                ];
             }
 
             Picture::create([
@@ -93,15 +96,16 @@ class PictureController extends Controller
             $picture->description = $request->description;
 
             // Existing files (JSON → array)
-            $existingFiles = $picture->file_path
-                ? json_decode($picture->file_path, true)
-                : [];
+            $existingFiles = $this->decodeStoredFiles($picture->getRawOriginal('file_path'));
 
             // Upload new files (append mode)
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    $path = $this->imageUpload($file, 'pictures');
-                    $existingFiles[] = $path;
+                    $imagePath = $this->uploadToCloud($file, 'executorhub/pictures');
+                    $existingFiles[] = [
+                        'url' => $imagePath['url'],
+                        'public_id' => $imagePath['public_id'],
+                    ];
                 }
             }
 
@@ -134,10 +138,8 @@ class PictureController extends Controller
         try {
             $picture = Picture::findOrFail($id);
 
-            $filePath = public_path('assets/upload/' . basename($picture->file_path));
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $oldPaths = $this->decodeStoredFiles($picture->getRawOriginal('file_path'));
+            $this->deleteStoredFiles($oldPaths);
 
             $picture->delete();
 
@@ -146,6 +148,40 @@ class PictureController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function decodeStoredFiles($storedFiles): array
+    {
+        if (is_array($storedFiles)) {
+            return $storedFiles;
+        }
+
+        if (empty($storedFiles)) {
+            return [];
+        }
+
+        $decoded = json_decode($storedFiles, true);
+        return is_array($decoded) ? $decoded : [$storedFiles];
+    }
+
+    private function deleteStoredFiles(array $storedFiles): void
+    {
+        foreach ($storedFiles as $file) {
+            if (is_array($file) && !empty($file['public_id'])) {
+                $this->deleteFromCloud($file['public_id']);
+                continue;
+            }
+
+            $path = is_array($file) ? ($file['url'] ?? null) : $file;
+            if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+                continue;
+            }
+
+            $filePath = public_path('assets/upload/' . basename($path));
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
     }
 }

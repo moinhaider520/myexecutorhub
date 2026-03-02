@@ -51,11 +51,32 @@
                         <tbody>
                           @foreach($pictures as $picture)
                             @php
-                              // Decode the file_path JSON to get array of paths
-                              $filePaths = json_decode($picture->file_path, true);
-                              // Handle backward compatibility for single file path
-                              if (!is_array($filePaths)) {
-                                $filePaths = [$picture->file_path];
+                              $storedFiles = $picture->file_path;
+                              if (!is_array($storedFiles)) {
+                                $decoded = json_decode($storedFiles, true);
+                                $storedFiles = is_array($decoded) ? $decoded : (!empty($storedFiles) ? [$storedFiles] : []);
+                              }
+
+                              $fileEntries = [];
+                              foreach ($storedFiles as $idx => $item) {
+                                if (is_array($item)) {
+                                  $url = $item['url'] ?? null;
+                                } else {
+                                  $url = filter_var($item, FILTER_VALIDATE_URL) ? $item : asset('assets/upload/' . basename($item));
+                                }
+
+                                if (!empty($url)) {
+                                  $downloadUrl = $url;
+                                  if (strpos($url, 'res.cloudinary.com') !== false && strpos($url, '/upload/') !== false) {
+                                    $downloadName = preg_replace('/[^A-Za-z0-9_-]/', '_', $picture->name) . '_' . ($idx + 1);
+                                    $downloadUrl = preg_replace('/\/upload\//', '/upload/fl_attachment:' . $downloadName . '/', $url, 1);
+                                  }
+
+                                  $fileEntries[] = [
+                                    'preview_url' => $url,
+                                    'download_url' => $downloadUrl,
+                                  ];
+                                }
                               }
                             @endphp
                             <tr>
@@ -64,12 +85,12 @@
                               <td>{{ $picture->description }}</td>
                               <td>
                                 <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-                                  @foreach($filePaths as $index => $path)
+                                  @foreach($fileEntries as $index => $fileEntry)
                                     <div style="position: relative;">
-                                      <img src="{{ asset('assets/upload/' . basename($path)) }}"
+                                      <img src="{{ $fileEntry['preview_url'] }}"
                                         alt="{{ $picture->name }} - {{ $index + 1 }}"
                                         style="max-width: 80px; max-height: 80px; object-fit: cover; border: 1px solid #ddd; border-radius: 4px; cursor: pointer;"
-                                        onclick="openImageModal('{{ asset('assets/upload/' . basename($path)) }}', '{{ $picture->name }} - {{ $index + 1 }}')">
+                                        onclick="openImageModal('{{ $fileEntry['preview_url'] }}', '{{ $picture->name }} - {{ $index + 1 }}')">
                                       <span
                                         style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.6); color: white; padding: 2px 5px; border-radius: 3px; font-size: 10px;">
                                         {{ $index + 1 }}
@@ -77,13 +98,13 @@
                                     </div>
                                   @endforeach
                                 </div>
-                                @if(count($filePaths) > 1)
-                                  <small class="text-muted">{{ count($filePaths) }} images</small>
+                                @if(count($fileEntries) > 1)
+                                  <small class="text-muted">{{ count($fileEntries) }} images</small>
                                 @endif
                               </td>
                               <td>
-                                @if(count($filePaths) === 1)
-                                  <a href="{{ asset('assets/upload/' . basename($filePaths[0])) }}"
+                                @if(count($fileEntries) === 1)
+                                  <a href="{{ $fileEntries[0]['download_url'] }}"
                                     class="btn btn-sm btn-info" download="{{ $picture->name }}">
                                     <i class="fa fa-download"></i> Download
                                   </a>
@@ -92,18 +113,18 @@
                                     <button class="btn btn-sm btn-info dropdown-toggle" type="button"
                                       id="downloadDropdown{{ $picture->id }}" data-toggle="dropdown" aria-haspopup="true"
                                       aria-expanded="false">
-                                      <i class="fa fa-download"></i> Download ({{ count($filePaths) }})
+                                      <i class="fa fa-download"></i> Download ({{ count($fileEntries) }})
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="downloadDropdown{{ $picture->id }}">
-                                      @foreach($filePaths as $index => $path)
-                                        <a class="dropdown-item" href="{{ asset('assets/upload/' . basename($path)) }}"
+                                      @foreach($fileEntries as $index => $fileEntry)
+                                        <a class="dropdown-item" href="{{ $fileEntry['download_url'] }}"
                                           download="{{ $picture->name }}_{{ $index + 1 }}">
                                           Image {{ $index + 1 }}
                                         </a>
                                       @endforeach
                                       <div class="dropdown-divider"></div>
                                       <a class="dropdown-item" href="#"
-                                        onclick="downloadAllImages({{ $picture->id }}, {{ json_encode($filePaths) }}, '{{ $picture->name }}'); return false;">
+                                        onclick="downloadAllImages({{ $picture->id }}, {{ json_encode(array_column($fileEntries, 'download_url')) }}, '{{ $picture->name }}'); return false;">
                                         <strong>Download All</strong>
                                       </a>
                                     </div>
@@ -424,18 +445,21 @@
       $('#imagePreviewModal').modal('show');
     }
 
-    // Function to download all images
-    function downloadAllImages(pictureId, filePaths, pictureName) {
-      filePaths.forEach(function (path, index) {
+    // Trigger each file download in its own hidden iframe to avoid same-tab navigation.
+    function downloadAllImages(pictureId, fileUrls, pictureName) {
+      fileUrls.forEach(function (url, index) {
         setTimeout(function () {
-          var link = document.createElement('a');
-          link.href = '{{ asset('assets/upload') }}/' + path.split('/').pop();
-          link.download = pictureName + '_' + (index + 1);
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        }, index * 200); // Stagger downloads by 200ms
+          var iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = url + (url.indexOf('?') === -1 ? '?' : '&') + 'dl=' + Date.now() + '_' + index;
+          document.body.appendChild(iframe);
+
+          setTimeout(function () {
+            document.body.removeChild(iframe);
+          }, 5000);
+        }, index * 400);
       });
     }
   </script>
 @endsection
+

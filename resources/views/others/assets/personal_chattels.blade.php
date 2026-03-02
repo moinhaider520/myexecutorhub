@@ -34,14 +34,22 @@
                           <td>{{ $chattel->description }}</td>
                           <td>
                             @php
-                            $photos = json_decode($chattel->photos);
+                            $photos = json_decode($chattel->photos, true) ?? [];
                             @endphp
 
                             @if (!empty($photos))
                             @foreach($photos as $photo)
-                            @if (!empty($photo))
-                            <a href="{{ asset('assets/upload/' . $photo) }}" target="_blank">
-                              <img src="{{ asset('assets/upload/' . $photo) }}" width="50" height="50" alt="Chattel Photo">
+                            @php
+                            $photoUrl = null;
+                            if (is_array($photo)) {
+                              $photoUrl = $photo['url'] ?? null;
+                            } else {
+                              $photoUrl = filter_var($photo, FILTER_VALIDATE_URL) ? $photo : asset('assets/upload/' . $photo);
+                            }
+                            @endphp
+                            @if (!empty($photoUrl))
+                            <a href="{{ $photoUrl }}" target="_blank">
+                              <img src="{{ $photoUrl }}" width="50" height="50" alt="Chattel Photo">
                             </a>
                             @endif
                             @endforeach
