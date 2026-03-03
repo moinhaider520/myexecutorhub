@@ -18,6 +18,6 @@ class LifeRememberedVideoController extends Controller
         // Get the currently authenticated user
         $user = Auth::user();
         $lifeRememberedVideos = LifeRememberedVideo::where('created_by', $user->created_by)->get();
-        return view('executor.life_remembered.life_remembered_videos', compact('lifeRememberedVideos'));
+        return view('others.life_remembered.life_remembered_videos', compact('lifeRememberedVideos'));
     }
 }

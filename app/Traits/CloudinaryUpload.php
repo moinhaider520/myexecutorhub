@@ -44,8 +44,20 @@ trait CloudinaryUpload
 
     public function deleteFromCloud($publicId)
     {
-        if ($publicId) {
-            Cloudinary::destroy($publicId);
+        if (!$publicId) {
+            return true;
         }
+
+        foreach (['image', 'video', 'raw'] as $resourceType) {
+            $result = Cloudinary::destroy($publicId, [
+                'resource_type' => $resourceType,
+            ]);
+
+            if (($result['result'] ?? null) === 'ok') {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -38,14 +38,20 @@
                         <td>
                           @if ($video->media->isNotEmpty())
                           @foreach($video->media as $media)
-                          @if (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['mp4', 'mov', 'avi', 'mkv', 'webm', 'flv', 'wmv']))
+                          @php
+                            $fileUrl = filter_var($media->file_path, FILTER_VALIDATE_URL)
+                              ? $media->file_path
+                              : asset('assets/upload/' . basename($media->file_path));
+                            $mediaExt = strtolower(pathinfo(parse_url($fileUrl, PHP_URL_PATH) ?? '', PATHINFO_EXTENSION));
+                          @endphp
+                          @if (in_array($mediaExt, ['mp4', 'mov', 'avi', 'mkv', 'webm', 'flv', 'wmv']))
                           <!-- For video -->
                           <video controls style="width: 200px; height: 150px;" class="mb-2">
-                            <source src="{{ asset('assets/upload/' . basename($media->file_path)) }}" type="{{ $media->file_type }}">
+                            <source src="{{ $fileUrl }}" type="{{ $media->file_type }}">
                             Your browser does not support the video tag.
                           </video>
                           <br>
-                          <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
+                          <a href="{{ $fileUrl }}" target="_blank">
                             <button class="btn btn-info btn-sm">Open Full Video</button>
                           </a>
                           @else
@@ -232,12 +238,14 @@
         }
 
         media.forEach(file => {
-          const ext = file.file_path.split('.').pop().toLowerCase();
+          const fileUrl = /^https?:\/\//.test(file.file_path) ? file.file_path : `/assets/upload/${file.file_path}`;
+          const cleanUrl = fileUrl.split('?')[0];
+          const ext = cleanUrl.split('.').pop().toLowerCase();
           let content = '';
 
           if (['mp4', 'mov', 'avi', 'mkv', 'webm', 'flv', 'wmv'].includes(ext)) {
             content = `<video controls style="max-height: 150px; width: 100%;" class="mb-2">
-                        <source src="/assets/upload/${file.file_path}" type="${file.file_type}">
+                        <source src="${fileUrl}" type="${file.file_type}">
                         Your browser does not support the video tag.
                       </video>`;
           } else {

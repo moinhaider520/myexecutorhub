@@ -7,11 +7,11 @@ use App\Models\Video;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 
 class VideoController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     /**
      * Get the list of videos uploaded by the authenticated user.
@@ -44,12 +44,13 @@ class VideoController extends Controller
         try {
             DB::beginTransaction();
 
-            $path = $this->imageUpload($request->file('file'), 'videos');
+            $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/videos');
 
             $video = Video::create([
                 'name' => $request->name,
                 'description' => $request->description,
-                'file_path' => $path,
+                'file_path' => $upload['url'],
+                'file_public_id' => $upload['public_id'],
                 'created_by' => Auth::id()
             ]);
 
@@ -81,14 +82,11 @@ class VideoController extends Controller
             $video->description = $request->description;
 
             if ($request->hasFile('file')) {
-                // Delete the old file from the public/assets/upload directory if exists
-                $filePath = public_path('assets/upload/' . basename($video->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
+                $this->deleteStoredFile($video->file_path, $video->file_public_id);
 
-                $path = $this->imageUpload($request->file('file'), 'videos');
-                $video->file_path = $path;
+                $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/videos');
+                $video->file_path = $upload['url'];
+                $video->file_public_id = $upload['public_id'];
             }
 
             $video->save();
@@ -110,12 +108,7 @@ class VideoController extends Controller
             DB::beginTransaction();
 
             $video = Video::findOrFail($id);
-
-            // Delete the file from the public/assets/upload directory if exists
-            $filePath = public_path('assets/upload/' . basename($video->file_path));
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $this->deleteStoredFile($video->file_path, $video->file_public_id);
 
             // Delete the video record
             $video->delete();
@@ -125,6 +118,23 @@ class VideoController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }

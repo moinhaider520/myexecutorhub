@@ -72,7 +72,8 @@
       eventClick: function(info) {
         info.jsEvent.preventDefault();
         var event = info.event.extendedProps;
-        document.getElementById('modal-audio-play').src = '/storage/' + event.filePath;
+        const filePath = event.filePath || '';
+        document.getElementById('modal-audio-play').src = /^https?:\/\//.test(filePath) ? filePath : ('/storage/' + filePath);
         $('#playVoiceNoteModal').modal('show');
       }
     });

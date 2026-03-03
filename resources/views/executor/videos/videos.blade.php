@@ -35,18 +35,23 @@
                     </thead>
                     <tbody>
                       @foreach($videos as $video)
+                      @php
+                        $fileUrl = filter_var($video->file_path, FILTER_VALIDATE_URL)
+                          ? $video->file_path
+                          : asset('assets/upload/' . basename($video->file_path));
+                      @endphp
                       <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $video->name }}</td>
                         <td>{{ $video->description }}</td>
                         <td>
                           <video width="150" height="100" controls>
-                            <source src="{{ asset('assets/upload/' . basename($video->file_path)) }}" type="video/mp4">
+                            <source src="{{ $fileUrl }}" type="video/mp4">
                             Your browser does not support the video tag.
                           </video>
                         </td>
                         <td>
-                          <a href="{{ asset('assets/upload/' . basename($video->file_path)) }}" target="_blank">Download</a>
+                          <a href="{{ $fileUrl }}" target="_blank">Download</a>
                         </td>
                         <td>
                           <button type="button" class="btn btn-warning btn-sm edit-video-button"

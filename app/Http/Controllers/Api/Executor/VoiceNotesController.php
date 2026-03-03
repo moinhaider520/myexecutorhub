@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Api\Executor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\VoiceNotes;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Storage;
 
 class VoiceNotesController extends Controller
 {
+    use CloudinaryUpload;
+
     /**
      * Display the voice notes for the authenticated executor.
      *
@@ -48,24 +50,37 @@ class VoiceNotesController extends Controller
         // Validate the incoming request
         $request->validate([
             'start_date' => 'required|date',
-            'audio_blob' => 'required', // Validate the file type
+            'audio_blob' => 'required',
         ]);
 
         try {
-            // Get the uploaded file from the request
-            $audioFile = $request->file('audio_blob');
+            if ($request->hasFile('audio_blob')) {
+                $upload = $this->uploadFileToCloud($request->file('audio_blob'), 'executorhub/voice_notes');
+            } else {
+                $audioBlob = (string) $request->input('audio_blob');
+                $audioBlob = preg_replace('/^data:audio\/[^;]+;base64,/', '', $audioBlob);
+                $audioBlob = str_replace(' ', '+', $audioBlob);
+                $audioData = base64_decode($audioBlob);
 
-            // Generate a unique file name with the correct extension
-            $uniqueFileName = uniqid() . '.' . $audioFile->getClientOriginalExtension();
+                if ($audioData === false) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Invalid audio data.'
+                    ], 422);
+                }
 
-            // Move the file to the assets/upload directory
-            $audioFile->move(public_path('storage/voice_notes'), $uniqueFileName);
+                $tempPath = tempnam(sys_get_temp_dir(), 'voice_note_');
+                file_put_contents($tempPath, $audioData);
+                $upload = $this->uploadFileToCloud(new \SplFileInfo($tempPath), 'executorhub/voice_notes');
+                @unlink($tempPath);
+            }
 
             // Create a new voice note record in the database
             $voiceNote = new VoiceNotes();
             $voiceNote->start_date = $request->start_date;
             $voiceNote->end_date = $request->start_date; // Assuming end_date is the same as start_date
-            $voiceNote->voice_note = 'voice_notes/' . $uniqueFileName; // Store the relative path in the database
+            $voiceNote->voice_note = $upload['url'];
+            $voiceNote->voice_note_public_id = $upload['public_id'];
             $voiceNote->created_by = $request->created_by;
             $voiceNote->save();
 
@@ -92,9 +107,7 @@ class VoiceNotesController extends Controller
     {
         try {
             $voiceNote = VoiceNotes::findOrFail($id);
-
-            // Delete the file from storage
-            Storage::disk('public')->delete($voiceNote->voice_note);
+            $this->deleteStoredFile($voiceNote->voice_note, $voiceNote->voice_note_public_id);
 
             // Delete the record from the database
             $voiceNote->delete();
@@ -108,6 +121,23 @@ class VoiceNotesController extends Controller
                 'success' => false,
                 'message' => $e->getMessage()
             ], 500);
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('storage/' . ltrim($path, '/'));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }
