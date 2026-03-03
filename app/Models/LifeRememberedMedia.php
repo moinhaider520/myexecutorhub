@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class LifeRememberedMedia extends Model
 {
-    protected $fillable = ['life_remembered_id', 'file_path', 'file_type'];
+    protected $fillable = ['life_remembered_id', 'file_path', 'file_public_id', 'file_type'];
 
     public function wish()
     {

@@ -8,14 +8,14 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\DocumentTypes;
 use App\Models\OnboardingProgress;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class DocumentsController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     public function view()
     {
@@ -47,15 +47,18 @@ class DocumentsController extends Controller
             $text = null;
 
             foreach ($request->file('files') as $file) {
-                $path = $this->imageUpload($file, 'documents');
-                $storedFiles[] = $path;
+                $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
+                $storedFiles[] = [
+                    'url' => $upload['url'],
+                    'public_id' => $upload['public_id'],
+                ];
 
                 // Optional text extraction for PDFs
                 $extension = strtolower($file->getClientOriginalExtension());
                 if ($extension === 'pdf') {
                     try {
                         $parser = new \Smalot\PdfParser\Parser();
-                        $pdf = $parser->parseFile(public_path('assets/upload/' . $path));
+                        $pdf = $parser->parseFile($file->getRealPath());
                         $text .= "\n" . $pdf->getText();
                     } catch (\Exception $e) {
                         // skip text extraction errors silently
@@ -141,29 +144,23 @@ class DocumentsController extends Controller
             // If new files are uploaded, replace old ones
             if ($request->hasFile('files')) {
                 // Delete previous uploaded files (if exist)
-                if (!empty($document->file_path)) {
-                    $oldFiles = json_decode($document->file_path, true);
-                    if (is_array($oldFiles)) {
-                        foreach ($oldFiles as $oldFile) {
-                            $filePath = public_path('assets/upload/' . $oldFile);
-                            if (file_exists($filePath)) {
-                                unlink($filePath);
-                            }
-                        }
-                    }
-                }
+                $oldFiles = $this->decodeStoredFiles($document->getRawOriginal('file_path'));
+                $this->deleteStoredFiles($oldFiles);
 
                 // Upload and store new files
                 foreach ($request->file('files') as $file) {
-                    $path = $this->imageUpload($file, 'documents');
-                    $storedFiles[] = $path;
+                    $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
+                    $storedFiles[] = [
+                        'url' => $upload['url'],
+                        'public_id' => $upload['public_id'],
+                    ];
 
                     // Optional: extract text from PDFs
                     $extension = strtolower($file->getClientOriginalExtension());
                     if ($extension === 'pdf') {
                         try {
                             $parser = new \Smalot\PdfParser\Parser();
-                            $pdf = $parser->parseFile(public_path('assets/upload/' . $path));
+                            $pdf = $parser->parseFile($file->getRealPath());
                             $text .= "\n" . $pdf->getText();
                         } catch (\Exception $e) {
                             // skip text extraction errors silently
@@ -192,16 +189,13 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
             $document = Document::findOrFail($id);
-            // Delete the file from the public/assets/upload directory
-            $filePath = public_path('assets/upload/' . basename($document->file_path));
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $oldFiles = $this->decodeStoredFiles($document->getRawOriginal('file_path'));
+            $this->deleteStoredFiles($oldFiles);
 
             // Delete the document record
             $document->delete();
             DB::commit();
-            return redirect()->route('customer.documents.view')->with('success', 'Document deleted successfully.');
+            return redirect()->route('executor.documents.view')->with('success', 'Document deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
@@ -220,5 +214,39 @@ class DocumentsController extends Controller
         ]);
 
         return response()->json(['success' => true]);
+    }
+
+    private function decodeStoredFiles($storedFiles): array
+    {
+        if (is_array($storedFiles)) {
+            return $storedFiles;
+        }
+
+        if (empty($storedFiles)) {
+            return [];
+        }
+
+        $decoded = json_decode($storedFiles, true);
+        return is_array($decoded) ? $decoded : [$storedFiles];
+    }
+
+    private function deleteStoredFiles(array $storedFiles): void
+    {
+        foreach ($storedFiles as $file) {
+            if (is_array($file) && !empty($file['public_id'])) {
+                $this->deleteFromCloud($file['public_id']);
+                continue;
+            }
+
+            $path = is_array($file) ? ($file['url'] ?? null) : $file;
+            if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+                continue;
+            }
+
+            $filePath = public_path('assets/upload/' . basename($path));
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
+        }
     }
 }

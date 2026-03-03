@@ -9,11 +9,11 @@ use App\Http\Controllers\Controller;
 use App\Models\OnboardingProgress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 
 class PicturesAndVideosController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
     public function view()
     {
         $authUser = auth()->user();
@@ -37,12 +37,13 @@ class PicturesAndVideosController extends Controller
         try {
             DB::beginTransaction();
 
-            $path = $this->imageUpload($request->file('file'), 'documents');
+            $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/pictures_and_videos');
 
             PicturesAndVideos::create([
                 'name' => $request->document_type,
                 'description' => $request->description,
-                'file_path' => $path,
+                'file_path' => $upload['url'],
+                'file_public_id' => $upload['public_id'],
                 'created_by' => ContextHelper::user()->id
             ]);
 
@@ -86,14 +87,10 @@ class PicturesAndVideosController extends Controller
             $document->created_by = ContextHelper::user()->id;
 
             if ($request->hasFile('file')) {
-                // Delete the file from the public/assets/upload directory
-                $filePath = public_path('assets/upload/' . basename($document->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
-
-                $path = $this->imageUpload($request->file('file'), 'documents');
-                $document->file_path = $path;
+                $this->deleteStoredFile($document->file_path, $document->file_public_id);
+                $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/pictures_and_videos');
+                $document->file_path = $upload['url'];
+                $document->file_public_id = $upload['public_id'];
             }
 
             $document->save();
@@ -111,11 +108,7 @@ class PicturesAndVideosController extends Controller
         try {
             DB::beginTransaction();
             $document = PicturesAndVideos::findOrFail($id);
-            // Delete the file from the public/assets/upload directory
-            $filePath = public_path('assets/upload/' . basename($document->file_path));
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $this->deleteStoredFile($document->file_path, $document->file_public_id);
 
             // Delete the document record
             $document->delete();
@@ -124,6 +117,23 @@ class PicturesAndVideosController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }

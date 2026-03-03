@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\DocumentTypes;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\CloudinaryUpload;
 
 class DocumentsController extends Controller
 {
+    use CloudinaryUpload;
     /**
      * Display a list of documents and document types for the authenticated user.
      *
@@ -83,8 +85,11 @@ class DocumentsController extends Controller
             $files = [];
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    $path = $this->imageUpload($file, 'documents');
-                    $files[] = $path;
+                    $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
+                    $files[] = [
+                        'url' => $upload['url'],
+                        'public_id' => $upload['public_id'],
+                    ];
                 }
             } else {
                 return response()->json(['success' => false, 'message' => 'No files uploaded'], 400);
@@ -141,13 +146,16 @@ class DocumentsController extends Controller
             $document->reminder_type = $request->reminder_type;
             $document->created_by = $request->created_by;
 
-            $existingFiles = json_decode($document->file_path ?? '[]', true);
+            $existingFiles = $this->decodeStoredFiles($document->getRawOriginal('file_path'));
 
             // If new files are uploaded, append to the array
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    $path = $this->imageUpload($file, 'documents');
-                    $existingFiles[] = $path;
+                    $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
+                    $existingFiles[] = [
+                        'url' => $upload['url'],
+                        'public_id' => $upload['public_id'],
+                    ];
                 }
             }
 
@@ -161,5 +169,19 @@ class DocumentsController extends Controller
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    private function decodeStoredFiles($storedFiles): array
+    {
+        if (is_array($storedFiles)) {
+            return $storedFiles;
+        }
+
+        if (empty($storedFiles)) {
+            return [];
+        }
+
+        $decoded = json_decode($storedFiles, true);
+        return is_array($decoded) ? $decoded : [$storedFiles];
     }
 }

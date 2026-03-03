@@ -39,13 +39,23 @@
       <td>{{ $document->description }}</td>
       <td>
         @php
-          $files = json_decode($document->file_path, true) ?? [];
+          $files = json_decode($document->file_path, true);
+          if (!is_array($files)) {
+            $files = !empty($document->file_path) ? [$document->file_path] : [];
+          }
         @endphp
         @if(count($files) > 0)
           @foreach($files as $file)
-            <a href="{{ asset('assets/upload/' . $file) }}" target="_blank">
+            @php
+              $fileUrl = is_array($file)
+                ? ($file['url'] ?? null)
+                : (filter_var($file, FILTER_VALIDATE_URL) ? $file : asset('assets/upload/' . $file));
+            @endphp
+            @if($fileUrl)
+            <a href="{{ $fileUrl }}" target="_blank">
               View File
             </a><br>
+            @endif
           @endforeach
         @else
           <span class="text-muted">No files available</span>

@@ -38,15 +38,21 @@
           <td>
           @if ($document->media->isNotEmpty())
         @foreach($document->media as $media)
-      @if (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+      @php
+        $fileUrl = filter_var($media->file_path, FILTER_VALIDATE_URL)
+          ? $media->file_path
+          : asset('assets/upload/' . basename($media->file_path));
+        $mediaExt = strtolower(pathinfo(parse_url($fileUrl, PHP_URL_PATH) ?? '', PATHINFO_EXTENSION));
+      @endphp
+      @if (in_array($mediaExt, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
       <!-- For image -->
-      <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
-      <img src="{{ asset('assets/upload/' . basename($media->file_path)) }}" alt="Media"
+      <a href="{{ $fileUrl }}" target="_blank">
+      <img src="{{ $fileUrl }}" alt="Media"
       style="width: 100px;">
       </a>
-    @elseif (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['mp4', 'mov', 'avi', 'mkv']))
+    @elseif (in_array($mediaExt, ['mp4', 'mov', 'avi', 'mkv', 'webm']))
       <!-- For video -->
-      <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
+      <a href="{{ $fileUrl }}" target="_blank">
       <button class="btn btn-primary btn-sm">View Video</button>
       </a>
     @else
@@ -242,13 +248,15 @@
       }
 
       media.forEach(file => {
-        const ext = file.file_path.split('.').pop().toLowerCase();
+        const fileUrl = /^https?:\/\//.test(file.file_path) ? file.file_path : `/assets/upload/${file.file_path}`;
+        const cleanUrl = fileUrl.split('?')[0];
+        const ext = cleanUrl.split('.').pop().toLowerCase();
         let content = '';
 
-        if (['jpg', 'jpeg', 'png', 'gif'].includes(ext)) {
-        content = `<img src="/assets/upload/${file.file_path}" class="img-fluid mb-2" style="max-height: 100px;">`;
+        if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext)) {
+        content = `<img src="${fileUrl}" class="img-fluid mb-2" style="max-height: 100px;">`;
         } else {
-        content = `<video controls style="max-height: 100px;" class="mb-2"><source src="/assets/upload/${file.file_path}" type="video/${ext}"></video>`;
+        content = `<video controls style="max-height: 100px;" class="mb-2"><source src="${fileUrl}" type="video/${ext}"></video>`;
         }
 
         const preview = `

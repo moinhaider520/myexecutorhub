@@ -31,7 +31,12 @@
                           <td>{{ $plan->funeral_plan }}</td>
                           <td>
                             @if($plan->file_path)
-                            <a href="{{ asset('assets/upload/' . basename($plan->file_path)) }}" target="_blank">Download</a>
+                            @php
+                              $fileUrl = filter_var($plan->file_path, FILTER_VALIDATE_URL)
+                                  ? $plan->file_path
+                                  : asset('assets/upload/' . basename($plan->file_path));
+                            @endphp
+                            <a href="{{ $fileUrl }}" target="_blank">Download</a>
                             @else
                             No file attached
                             @endif

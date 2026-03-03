@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Partner;
 use App\Http\Controllers\Controller;
 use App\Models\Guidance;
 use App\Models\GuidanceMedia;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 
 class GuidanceController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     /**
      * Display the guidance content for the authenticated customer.
@@ -79,11 +79,7 @@ class GuidanceController extends Controller
     {
         try {
             $media = GuidanceMedia::findOrFail($id);
-
-            $filePath = public_path('assets/upload/' . $media->file_path);
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $this->deleteStoredFile($media->file_path, $media->file_public_id);
 
             $media->delete();
 
@@ -120,11 +116,12 @@ class GuidanceController extends Controller
             // Loop through and upload each file
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $uploadedFile) {
-                    $path = $this->imageUpload($uploadedFile, 'documents');
+                    $upload = $this->uploadFileToCloud($uploadedFile, 'executorhub/guidance_media');
 
                     // If you have a media table, you can save it like:
                     $guidance->media()->create([
-                        'file_path' => $path,
+                        'file_path' => $upload['url'],
+                        'file_public_id' => $upload['public_id'],
                         'file_type' => $uploadedFile->getClientMimeType()
                     ]);
                 }
@@ -163,13 +160,14 @@ class GuidanceController extends Controller
             // Handle file upload (if any)
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $uploadedFile) {
-                    $filename = time() . '_' . uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-                    $uploadedFile->move(public_path('assets/upload'), $filename);
+                    $upload = $this->uploadFileToCloud($uploadedFile, 'executorhub/guidance_media');
 
                     // Save file reference
                     GuidanceMedia::create([
                         'guidance_id' => $guidance->id,
-                        'file_path' => $filename,
+                        'file_path' => $upload['url'],
+                        'file_public_id' => $upload['public_id'],
+                        'file_type' => $uploadedFile->getClientMimeType(),
                     ]);
                 }
             }
@@ -206,6 +204,23 @@ class GuidanceController extends Controller
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 500);
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }

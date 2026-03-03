@@ -8,11 +8,11 @@ use App\Models\LifeRememberedMedia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 
 class LifeRememberedController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
     /**
      * Display the life remembered view.
      *
@@ -32,10 +32,7 @@ class LifeRememberedController extends Controller
     public function deleteMedia($id)
     {
         $media = LifeRememberedMedia::findOrFail($id);
-        $filePath = public_path('assets/upload/' . $media->file_path);
-        if (file_exists($filePath)) {
-            unlink($filePath);
-        }
+        $this->deleteStoredFile($media->file_path, $media->file_public_id);
         $media->delete();
 
         return response()->json(['success' => true]);
@@ -59,11 +56,12 @@ class LifeRememberedController extends Controller
             // Loop through and upload each file
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $uploadedFile) {
-                    $path = $this->imageUpload($uploadedFile, 'documents');
+                    $upload = $this->uploadFileToCloud($uploadedFile, 'executorhub/life_remembered_media');
 
                     // If you have a media table, you can save it like:
                     $lifeRemembered->media()->create([
-                        'file_path' => $path,
+                        'file_path' => $upload['url'],
+                        'file_public_id' => $upload['public_id'],
                         'file_type' => $uploadedFile->getClientMimeType()
                     ]);
                 }
@@ -100,13 +98,14 @@ class LifeRememberedController extends Controller
             // Handle file upload (if any)
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $uploadedFile) {
-                    $filename = time() . '_' . uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-                    $uploadedFile->move(public_path('assets/upload'), $filename);
+                    $upload = $this->uploadFileToCloud($uploadedFile, 'executorhub/life_remembered_media');
 
                     // Save file reference
                     LifeRememberedMedia::create([
                         'life_remembered_id' => $lifeRemembered->id,
-                        'file_path' => $filename,
+                        'file_path' => $upload['url'],
+                        'file_public_id' => $upload['public_id'],
+                        'file_type' => $uploadedFile->getClientMimeType(),
                     ]);
                 }
             }
@@ -131,6 +130,23 @@ class LifeRememberedController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }

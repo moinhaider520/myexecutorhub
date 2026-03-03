@@ -10,14 +10,14 @@ use App\Mail\DocumentMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use App\Models\DocumentTypes;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 
 class DocumentsController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     /**
      * Display a list of documents for the authenticated customer.
@@ -86,8 +86,11 @@ class DocumentsController extends Controller
             $files = [];
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    $path = $this->imageUpload($file, 'documents');
-                    $files[] = $path;
+                    $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
+                    $files[] = [
+                        'url' => $upload['url'],
+                        'public_id' => $upload['public_id'],
+                    ];
                 }
             } else {
                 return response()->json(['success' => false, 'message' => 'No files uploaded'], 400);
@@ -144,13 +147,16 @@ class DocumentsController extends Controller
             $document->reminder_type = $request->reminder_type;
             $document->created_by = Auth::id();
 
-            $existingFiles = json_decode($document->file_path ?? '[]', true);
+            $existingFiles = $this->decodeStoredFiles($document->getRawOriginal('file_path'));
 
             // If new files are uploaded, append to the array
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    $path = $this->imageUpload($file, 'documents');
-                    $existingFiles[] = $path;
+                    $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
+                    $existingFiles[] = [
+                        'url' => $upload['url'],
+                        'public_id' => $upload['public_id'],
+                    ];
                 }
             }
 
@@ -179,10 +185,8 @@ class DocumentsController extends Controller
             DB::beginTransaction();
 
             $document = Document::findOrFail($id);
-            $filePath = public_path('assets/upload/' . basename($document->file_path));
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $oldFiles = $this->decodeStoredFiles($document->getRawOriginal('file_path'));
+            $this->deleteStoredFiles($oldFiles);
 
             $document->delete();
             DB::commit();
@@ -215,6 +219,40 @@ class DocumentsController extends Controller
             return response()->json(['success' => true, 'message' => 'Custom document type added successfully.'], 201);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function decodeStoredFiles($storedFiles): array
+    {
+        if (is_array($storedFiles)) {
+            return $storedFiles;
+        }
+
+        if (empty($storedFiles)) {
+            return [];
+        }
+
+        $decoded = json_decode($storedFiles, true);
+        return is_array($decoded) ? $decoded : [$storedFiles];
+    }
+
+    private function deleteStoredFiles(array $storedFiles): void
+    {
+        foreach ($storedFiles as $file) {
+            if (is_array($file) && !empty($file['public_id'])) {
+                $this->deleteFromCloud($file['public_id']);
+                continue;
+            }
+
+            $path = is_array($file) ? ($file['url'] ?? null) : $file;
+            if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+                continue;
+            }
+
+            $filePath = public_path('assets/upload/' . basename($path));
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
     }
 }

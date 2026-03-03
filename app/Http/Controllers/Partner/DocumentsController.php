@@ -10,14 +10,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use App\Models\DocumentTypes;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 use Illuminate\Support\Facades\Http;
 class DocumentsController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     public function view()
     {
@@ -41,12 +41,13 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
 
-            $path = $this->imageUpload($request->file('file'), 'documents');
+            $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/documents');
             $extractedText = $this->extract($request);
             $document = Document::create([
                 'document_type' => $request->document_type,
                 'description' => $request->description,
-                'file_path' => $path,
+                'file_path' => $upload['url'],
+                'file_public_id' => $upload['public_id'],
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
                 'reminder_type' => $request->reminder_type,
@@ -130,14 +131,10 @@ class DocumentsController extends Controller
             $document->created_by = Auth::id();
 
             if ($request->hasFile('file')) {
-                // Delete the file from the public/assets/upload directory
-                $filePath = public_path('assets/upload/' . basename($document->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
-
-                $path = $this->imageUpload($request->file('file'), 'documents');
-                $document->file_path = $path;
+                $this->deleteStoredFile($document->file_path, $document->file_public_id);
+                $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/documents');
+                $document->file_path = $upload['url'];
+                $document->file_public_id = $upload['public_id'];
             }
 
             $document->reminder_date = $request->reminder_date;
@@ -156,11 +153,7 @@ class DocumentsController extends Controller
         try {
             DB::beginTransaction();
             $document = Document::findOrFail($id);
-            // Delete the file from the public/assets/upload directory
-            $filePath = public_path('assets/upload/' . basename($document->file_path));
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
+            $this->deleteStoredFile($document->file_path, $document->file_public_id);
 
             // Delete the document record
             $document->delete();
@@ -184,5 +177,22 @@ class DocumentsController extends Controller
         ]);
 
         return response()->json(['success' => true]);
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
     }
 }

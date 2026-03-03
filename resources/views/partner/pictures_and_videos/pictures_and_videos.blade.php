@@ -35,11 +35,16 @@
                       </thead>
                       <tbody>
                         @foreach($pictures_and_videos as $document)
+              @php
+                $fileUrl = filter_var($document->file_path, FILTER_VALIDATE_URL)
+                    ? $document->file_path
+                    : asset('assets/upload/' . basename($document->file_path));
+              @endphp
               <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $document->name }}</td>
                 <td>{{ $document->description }}</td>
-                <td><a href="{{ asset('assets/upload/' . basename($document->file_path)) }}"
+                <td><a href="{{ $fileUrl }}"
                   target="_blank">Download</a></td>
                 <td>
                 <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal"

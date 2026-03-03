@@ -26,6 +26,22 @@ trait CloudinaryUpload
         ];
     }
 
+    public function uploadFileToCloud($file, $folder = 'executorhub')
+    {
+        $result = Cloudinary::upload(
+            $file->getRealPath(),
+            [
+                'folder' => $folder,
+                'resource_type' => 'auto',
+            ]
+        );
+
+        return [
+            'url' => $result->getSecurePath(),
+            'public_id' => $result->getPublicId(),
+        ];
+    }
+
     public function deleteFromCloud($publicId)
     {
         if ($publicId) {

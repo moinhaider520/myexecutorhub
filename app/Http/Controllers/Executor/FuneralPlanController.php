@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\FuneralPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use App\Models\CustomDropDown;
 
 class FuneralPlanController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     public function view()
     {
@@ -41,13 +41,17 @@ class FuneralPlanController extends Controller
             DB::beginTransaction();
 
             $path = null;
+            $publicId = null;
             if ($request->hasFile('file')) {
-                $path = $this->imageUpload($request->file('file'), 'funeral_plans');
+                $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/funeral_plans');
+                $path = $upload['url'];
+                $publicId = $upload['public_id'];
             }
 
             FuneralPlan::create([
                 'funeral_plan' => $request->funeral_plan,
                 'file_path' => $path,
+                'file_public_id' => $publicId,
                 'created_by' => ContextHelper::user()->id
             ]);
 
@@ -77,16 +81,10 @@ class FuneralPlanController extends Controller
             $funeralPlan->funeral_plan = $request->funeral_plan;
 
             if ($request->hasFile('file')) {
-                // Delete the file from the public/assets/upload directory if it exists
-                if ($funeralPlan->file_path) {
-                    $filePath = public_path('assets/upload/' . basename($funeralPlan->file_path));
-                    if (file_exists($filePath)) {
-                        unlink($filePath);
-                    }
-                }
-
-                $path = $this->imageUpload($request->file('file'), 'funeral_plans');
-                $funeralPlan->file_path = $path;
+                $this->deleteStoredFile($funeralPlan->file_path, $funeralPlan->file_public_id);
+                $upload = $this->uploadFileToCloud($request->file('file'), 'executorhub/funeral_plans');
+                $funeralPlan->file_path = $upload['url'];
+                $funeralPlan->file_public_id = $upload['public_id'];
             }
 
             $funeralPlan->save();
@@ -109,13 +107,7 @@ class FuneralPlanController extends Controller
 
             $funeralPlan = FuneralPlan::findOrFail($id);
 
-            // Delete the file from the public/assets/upload directory if it exists
-            if ($funeralPlan->file_path) {
-                $filePath = public_path('assets/upload/' . basename($funeralPlan->file_path));
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
-            }
+            $this->deleteStoredFile($funeralPlan->file_path, $funeralPlan->file_public_id);
 
             // Delete the funeral plan record
             $funeralPlan->delete();
@@ -147,6 +139,23 @@ class FuneralPlanController extends Controller
             return response()->json(['success' => true]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }

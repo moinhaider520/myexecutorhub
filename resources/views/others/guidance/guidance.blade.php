@@ -31,14 +31,20 @@
                               <td>
                                 @if ($document->media->isNotEmpty())
                                   @foreach($document->media as $media)
-                                    @if (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                                    @php
+                                      $fileUrl = filter_var($media->file_path, FILTER_VALIDATE_URL)
+                                        ? $media->file_path
+                                        : asset('assets/upload/' . basename($media->file_path));
+                                      $mediaExt = strtolower(pathinfo(parse_url($fileUrl, PHP_URL_PATH) ?? '', PATHINFO_EXTENSION));
+                                    @endphp
+                                    @if (in_array($mediaExt, ['jpg', 'jpeg', 'png', 'gif', 'webp']))
                                       <!-- For image -->
-                                      <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
-                                        <img src="{{ asset('assets/upload/' . basename($media->file_path)) }}" alt="Media" style="width: 100px;">
+                                      <a href="{{ $fileUrl }}" target="_blank">
+                                        <img src="{{ $fileUrl }}" alt="Media" style="width: 100px;">
                                       </a>
-                                    @elseif (in_array(pathinfo($media->file_path, PATHINFO_EXTENSION), ['mp4', 'mov', 'avi', 'mkv']))
+                                    @elseif (in_array($mediaExt, ['mp4', 'mov', 'avi', 'mkv', 'webm']))
                                       <!-- For video -->
-                                      <a href="{{ asset('assets/upload/' . basename($media->file_path)) }}" target="_blank">
+                                      <a href="{{ $fileUrl }}" target="_blank">
                                         <button class="btn btn-primary btn-sm">View Video</button>
                                       </a>
                                     @else
