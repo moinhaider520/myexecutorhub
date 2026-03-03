@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Wish;
 use App\Models\WishMedia;
-use App\Traits\ImageUpload;
+use App\Traits\CloudinaryUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +13,7 @@ use Illuminate\Http\JsonResponse;
 
 class WishesController extends Controller
 {
-    use ImageUpload;
+    use CloudinaryUpload;
 
     /**
      * Display the wish content for the authenticated customer.
@@ -59,12 +59,7 @@ class WishesController extends Controller
     {
         try {
             $media = WishMedia::findOrFail($id);
-            $filePath = public_path('assets/upload/' . $media->file_path);
-
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-
+            $this->deleteStoredFile($media->file_path, $media->file_public_id);
             $media->delete();
 
             return response()->json(['success' => true, 'message' => 'Media deleted successfully.']);
@@ -94,11 +89,12 @@ class WishesController extends Controller
             // Loop through and upload each file
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $uploadedFile) {
-                    $path = $this->imageUpload($uploadedFile, 'documents');
+                    $upload = $this->uploadFileToCloud($uploadedFile, 'executorhub/wishes_media');
 
                     // If you have a media table, you can save it like:
                     $wish->media()->create([
-                        'file_path' => $path,
+                        'file_path' => $upload['url'],
+                        'file_public_id' => $upload['public_id'],
                         'file_type' => $uploadedFile->getClientMimeType()
                     ]);
                 }
@@ -133,14 +129,14 @@ class WishesController extends Controller
             // Handle file upload (if any)
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $uploadedFile) {
-                    $filename = time() . '_' . uniqid() . '.' . $uploadedFile->getClientOriginalExtension();
-                    $uploadedFile->move(public_path('assets/upload'), $filename);
+                    $upload = $this->uploadFileToCloud($uploadedFile, 'executorhub/wishes_media');
 
                     // Save file reference
                     WishMedia::create([
                         'wish_id' => $wish->id,
-                        'file_path' => $filename,
-
+                        'file_path' => $upload['url'],
+                        'file_public_id' => $upload['public_id'],
+                        'file_type' => $uploadedFile->getClientMimeType(),
                     ]);
                 }
             }
@@ -162,6 +158,9 @@ class WishesController extends Controller
         try {
             DB::beginTransaction();
             $document = Wish::findOrFail($id);
+            foreach ($document->media as $media) {
+                $this->deleteStoredFile($media->file_path, $media->file_public_id);
+            }
             $document->delete();
 
             DB::commit();
@@ -169,6 +168,23 @@ class WishesController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    private function deleteStoredFile(?string $path, ?string $publicId): void
+    {
+        if (!empty($publicId)) {
+            $this->deleteFromCloud($publicId);
+            return;
+        }
+
+        if (empty($path) || filter_var($path, FILTER_VALIDATE_URL)) {
+            return;
+        }
+
+        $filePath = public_path('assets/upload/' . basename($path));
+        if (file_exists($filePath)) {
+            unlink($filePath);
         }
     }
 }

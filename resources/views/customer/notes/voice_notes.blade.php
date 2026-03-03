@@ -159,7 +159,8 @@
       eventClick: function(info) {
         info.jsEvent.preventDefault();
         var event = info.event.extendedProps;
-        document.getElementById('modal-audio-play').src = '/storage/' + event.filePath;
+        const fileUrl = /^https?:\/\//.test(event.filePath) ? event.filePath : ('/storage/' + event.filePath);
+        document.getElementById('modal-audio-play').src = fileUrl;
         document.getElementById('delete-voice-note-form').action = `{{ route('customer.voice_notes.destroy', '') }}/${event.id}`;
         $('#playVoiceNoteModal').modal('show');
       }

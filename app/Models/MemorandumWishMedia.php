@@ -9,7 +9,7 @@ class MemorandumWishMedia extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['memorandum_wish_id', 'file_path', 'file_type'];
+    protected $fillable = ['memorandum_wish_id', 'file_path', 'file_public_id', 'file_type'];
 
     public function memorandumWish()
     {
