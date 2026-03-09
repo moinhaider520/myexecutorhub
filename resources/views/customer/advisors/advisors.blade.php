@@ -106,6 +106,9 @@
             <label for="practice_address">Practice Address</label>
             <input type="text" class="form-control" name="practice_address" id="practice_address" placeholder="Enter Practice Address" required>
             <span class="text-danger" id="practice_address_error"></span>
+            <div class="alert alert-info mt-2 d-none" id="uk_practice_address_nudge">
+              UK address detected. If you need international distribution support, consider Currencies Direct.
+            </div>
           </div>
           <div class="form-group mb-2">
             <label for="email_address">Email Address</label>
@@ -166,6 +169,9 @@
             <label for="editPracticeAddress">Practice Address</label>
             <input type="text" class="form-control" name="practice_address" id="editPracticeAddress" placeholder="Enter Practice Address" required>
             <span class="text-danger" id="edit_practice_address_error"></span>
+            <div class="alert alert-info mt-2 d-none" id="edit_uk_practice_address_nudge">
+              UK address detected. If you need international distribution support, consider Currencies Direct.
+            </div>
           </div>
           <div class="form-group mb-2">
             <label for="editEmailAddress">Email Address</label>
@@ -194,6 +200,33 @@
 
 <script>
   $(document).ready(function() {
+    const ukPostcodeRegex = /\b(?:GIR\s?0AA|(?:(?:[A-PR-UWYZ][0-9][0-9]?|[A-PR-UWYZ][A-HK-Y][0-9][0-9]?|[A-PR-UWYZ][0-9][A-HJKSTUW]|[A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])\s?[0-9][ABD-HJLNP-UW-Z]{2}))\b/i;
+    const ukCountryRegex = /\b(UNITED\s+KINGDOM|UK|GREAT\s+BRITAIN|ENGLAND|SCOTLAND|WALES|NORTHERN\s+IRELAND)\b/i;
+
+    function isLikelyUkAddress(rawValue) {
+      const value = (rawValue || '').trim();
+      if (value.length < 8) return false;
+      return ukPostcodeRegex.test(value) || ukCountryRegex.test(value);
+    }
+
+    function bindUkAddressNudge(inputSelector, nudgeSelector) {
+      let timer = null;
+      const $input = $(inputSelector);
+      const $nudge = $(nudgeSelector);
+      const evaluate = () => {
+        const isUk = isLikelyUkAddress($input.val());
+        $nudge.toggleClass('d-none', !isUk);
+      };
+      $input.on('input blur', function() {
+        clearTimeout(timer);
+        timer = setTimeout(evaluate, 180);
+      });
+      evaluate();
+    }
+
+    bindUkAddressNudge('#practice_address', '#uk_practice_address_nudge');
+    bindUkAddressNudge('#editPracticeAddress', '#edit_uk_practice_address_nudge');
+
     // Clear previous error messages for add form
     function clearAddAdvisorErrors() {
       $('#adviser_type_error').text('');
@@ -257,6 +290,7 @@
       $('#editName').val(name);
       $('#editPracticeName').val(practice_name);
       $('#editPracticeAddress').val(practice_address);
+      $('#editPracticeAddress').trigger('input');
       $('#editEmailAddress').val(email);
       $('#editPhoneNumber').val(contact_number);
       clearEditAdvisorErrors(); // Clear previous error messages

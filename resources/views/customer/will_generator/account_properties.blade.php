@@ -287,6 +287,9 @@ input[type="radio"] {
                         <label for="add_property_address">Address</label>
                         <input type="text" class="form-control" name="property_address" id="add_property_address" placeholder="e.g. 27 Downham Road, London, N1 5AA">
                         <div class="text-danger" id="error-add_property_address"></div>
+                        <div class="alert alert-info mt-2 d-none" id="add_uk_property_address_nudge">
+                            UK address detected. If you need international distribution support, consider Currencies Direct.
+                        </div>
                     </div>
                     <div class="form-group mb-3">
                         <label>Does this property have a mortgage?</label>
@@ -393,6 +396,9 @@ input[type="radio"] {
                                 <label for="edit_property_address">Address</label>
                                 <input type="text" class="form-control" name="property_address" id="edit_property_address" placeholder="e.g. 27 Downham Road, London, N1 5AA">
                                 <div class="text-danger" id="error-edit_property_address"></div>
+                                <div class="alert alert-info mt-2 d-none" id="edit_uk_property_address_nudge">
+                                    UK address detected. If you need international distribution support, consider Currencies Direct.
+                                </div>
                             </div>
                             <div class="form-group mb-3">
                                 <label>Does this property have a mortgage?</label>
@@ -439,6 +445,33 @@ input[type="radio"] {
 
     <script>
     $(document).ready(function() {
+        const ukPostcodeRegex = /\b(?:GIR\s?0AA|(?:(?:[A-PR-UWYZ][0-9][0-9]?|[A-PR-UWYZ][A-HK-Y][0-9][0-9]?|[A-PR-UWYZ][0-9][A-HJKSTUW]|[A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])\s?[0-9][ABD-HJLNP-UW-Z]{2}))\b/i;
+        const ukCountryRegex = /\b(UNITED\s+KINGDOM|UK|GREAT\s+BRITAIN|ENGLAND|SCOTLAND|WALES|NORTHERN\s+IRELAND)\b/i;
+
+        function isLikelyUkAddress(rawValue) {
+            const value = (rawValue || '').trim();
+            if (value.length < 8) return false;
+            return ukPostcodeRegex.test(value) || ukCountryRegex.test(value);
+        }
+
+        function bindUkAddressNudge(inputSelector, nudgeSelector) {
+            let timer = null;
+            const $input = $(inputSelector);
+            const $nudge = $(nudgeSelector);
+            const evaluate = () => {
+                const isUk = isLikelyUkAddress($input.val());
+                $nudge.toggleClass('d-none', !isUk);
+            };
+            $input.on('input blur', function() {
+                clearTimeout(timer);
+                timer = setTimeout(evaluate, 180);
+            });
+            evaluate();
+        }
+
+        bindUkAddressNudge('#add_property_address', '#add_uk_property_address_nudge');
+        bindUkAddressNudge('#edit_property_address', '#edit_uk_property_address_nudge');
+
         // CSRF Token Setup (already good)
         var csrfToken = $('meta[name="csrf-token"]').attr('content');
         $.ajaxSetup({
@@ -543,6 +576,7 @@ input[type="radio"] {
             toggleFields(addAssetTypeSelect, 'add', addAssetValueFieldContainer);
             // Clear any previous input values within the form
             $('#addWillAssetForm')[0].reset();
+            $('#add_property_address').trigger('input');
             // Clear previous error messages
             clearAddErrors();
         });
@@ -663,6 +697,7 @@ input[type="radio"] {
                     break;
                 case 'Property':
                     $('#edit_property_address').val(value); // 'name' could be the address
+                    $('#edit_property_address').trigger('input');
                     // Set radio buttons for property
                     if (hasMortgage !== undefined) {
                         $(`input[name="edit_has_mortgage"][value="${hasMortgage}"]`).prop('checked', true);

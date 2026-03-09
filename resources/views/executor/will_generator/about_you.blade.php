@@ -56,7 +56,7 @@
               <form id="msform" class="needs-validation" novalidate action="{{route('customer.will_generator.store_about_you')}}" method="POST">
                 @csrf
                 @include('customer.will_generator.partials.about_you_partials.step1')
-                @include('customer.will_generator.partials.about_you_partials.step2')
+                @include('executor.will_generator.partials.about_you_partials.step2')
 
               </form>
               <div class="wizard-footer d-flex gap-2 justify-content-end mt-2 m-4">
@@ -136,8 +136,35 @@
     }
   }
 
+  const ukPostcodeRegex = /\b(?:GIR\s?0AA|(?:(?:[A-PR-UWYZ][0-9][0-9]?|[A-PR-UWYZ][A-HK-Y][0-9][0-9]?|[A-PR-UWYZ][0-9][A-HJKSTUW]|[A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])\s?[0-9][ABD-HJLNP-UW-Z]{2}))\b/i;
+  const ukCountryRegex = /\b(UNITED\s+KINGDOM|UK|GREAT\s+BRITAIN|ENGLAND|SCOTLAND|WALES|NORTHERN\s+IRELAND)\b/i;
+
+  function isLikelyUkAddress(rawValue) {
+    const value = (rawValue || '').trim();
+    if (value.length < 8) return false;
+    return ukPostcodeRegex.test(value) || ukCountryRegex.test(value);
+  }
+
+  function updateExecutorAboutYouUkNudge() {
+    const addressLine1 = document.getElementById('executor_address_line_1')?.value || '';
+    const city = document.getElementById('executor_city')?.value || '';
+    const postCode = document.getElementById('executor_post_code')?.value || '';
+    const combined = `${addressLine1} ${city} ${postCode}`.trim();
+    const nudge = document.getElementById('executor_about_you_uk_nudge');
+    if (!nudge) return;
+    nudge.classList.toggle('d-none', !isLikelyUkAddress(combined));
+  }
+
+  ['executor_address_line_1', 'executor_city', 'executor_post_code'].forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', updateExecutorAboutYouUkNudge);
+    el.addEventListener('blur', updateExecutorAboutYouUkNudge);
+  });
+
   // Initialize first step
   showStep(currentStep);
+  updateExecutorAboutYouUkNudge();
 </script>
 
 

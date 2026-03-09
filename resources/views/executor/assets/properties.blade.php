@@ -115,6 +115,9 @@
         <input type="text" class="form-control" name="address" id="propertyAddress"
           placeholder="Enter Property Address" required>
         <span class="text-danger" id="address_error"></span>
+        <div class="alert alert-info mt-2 d-none" id="uk_address_nudge">
+          UK address detected. If you need international distribution support, consider Currencies Direct.
+        </div>
         </div>
         <div class="form-group mb-2">
         <label for="ownerName">Owner Name(s)</label>
@@ -188,6 +191,9 @@
         <input type="text" class="form-control" name="address" id="editPropertyAddress"
           placeholder="Enter Property Address" required>
         <span class="text-danger" id="edit_address_error"></span>
+        <div class="alert alert-info mt-2 d-none" id="edit_uk_address_nudge">
+          UK address detected. If you need international distribution support, consider Currencies Direct.
+        </div>
         </div>
         <div class="form-group mb-2">
         <label for="editOwnerName">Owner Name(s)</label>
@@ -226,6 +232,33 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function () {
+    const ukPostcodeRegex = /\b(?:GIR\s?0AA|(?:(?:[A-PR-UWYZ][0-9][0-9]?|[A-PR-UWYZ][A-HK-Y][0-9][0-9]?|[A-PR-UWYZ][0-9][A-HJKSTUW]|[A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY])\s?[0-9][ABD-HJLNP-UW-Z]{2}))\b/i;
+    const ukCountryRegex = /\b(UNITED\s+KINGDOM|UK|GREAT\s+BRITAIN|ENGLAND|SCOTLAND|WALES|NORTHERN\s+IRELAND)\b/i;
+
+    function isLikelyUkAddress(rawValue) {
+      const value = (rawValue || '').trim();
+      if (value.length < 8) return false;
+      return ukPostcodeRegex.test(value) || ukCountryRegex.test(value);
+    }
+
+    function bindUkAddressNudge(inputSelector, nudgeSelector) {
+      let timer = null;
+      const $input = $(inputSelector);
+      const $nudge = $(nudgeSelector);
+      const evaluate = () => {
+      const isUk = isLikelyUkAddress($input.val());
+      $nudge.toggleClass('d-none', !isUk);
+      };
+      $input.on('input blur', function () {
+      clearTimeout(timer);
+      timer = setTimeout(evaluate, 180);
+      });
+      evaluate();
+    }
+
+    bindUkAddressNudge('#propertyAddress', '#uk_address_nudge');
+    bindUkAddressNudge('#editPropertyAddress', '#edit_uk_address_nudge');
+
     $('#saveProperty').on('click', function () {
       $.ajax({
       type: 'POST',
@@ -250,6 +283,7 @@
       $('#editPropertyId').val(id);
       $('#editPropertyType').val($(this).data('property_type'));
       $('#editPropertyAddress').val($(this).data('address'));
+      $('#editPropertyAddress').trigger('input');
       $('#editOwnerName').val($(this).data('owner_names'));
       $('#editHowOwned').val($(this).data('how_owned'));
       $('#editValuation').val($(this).data('value'));

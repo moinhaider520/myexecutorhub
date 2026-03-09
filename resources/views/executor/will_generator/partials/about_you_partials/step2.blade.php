@@ -4,7 +4,7 @@
     </div>
     <div class="col-md-12">
         <label class="form-label">Address line 1</label>
-        <input class="form-control" name="address_line_1" type="text" value="{{@$user_info->address_line_1}}" required>
+        <input class="form-control" id="executor_address_line_1" name="address_line_1" type="text" value="{{@$user_info->address_line_1}}" required>
     </div>
     <div class="col-md-12">
         <label class="form-label">Address line 2 (optional)</label>
@@ -12,11 +12,16 @@
     </div>
     <div class="col-md-6">
         <label class="form-label">City</label>
-        <input class="form-control" name="city" type="text" value="{{@$user_info->city}}" required>
+        <input class="form-control" id="executor_city" name="city" type="text" value="{{@$user_info->city}}" required>
     </div>
     <div class="col-md-6">
         <label class="form-label">Postcode</label>
-        <input class="form-control" name="post_code" type="text" value="{{@$user_info->post_code}}" required>
+        <input class="form-control" id="executor_post_code" name="post_code" type="text" value="{{@$user_info->post_code}}" required>
+    </div>
+    <div class="col-md-12">
+        <div class="alert alert-info mt-2 d-none" id="executor_about_you_uk_nudge">
+            UK address detected. If you need international distribution support, consider Currencies Direct.
+        </div>
     </div>
     <div class="col-md-12">
         <h3>Your Phone Number</h3>
