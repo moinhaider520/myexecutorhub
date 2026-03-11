@@ -46,5 +46,15 @@ return [
         'from' => env('TWILIO_FROM'),
     ],
 
+    'cpanel' => [
+        'base_url' => env('CPANEL_BASE_URL'),
+        'username' => env('CPANEL_USERNAME'),
+        'api_token' => env('CPANEL_API_TOKEN'),
+        'account_username' => env('CPANEL_ACCOUNT_USERNAME'),
+        'domain' => env('CPANEL_MAIL_DOMAIN', 'executorhub.co.uk'),
+        'webmail_url' => env('CPANEL_WEBMAIL_URL'),
+        'mailbox_quota_mb' => env('CPANEL_MAILBOX_QUOTA_MB', 1024),
+    ],
+
 
 ];

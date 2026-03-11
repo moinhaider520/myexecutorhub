@@ -106,6 +106,16 @@ class User extends Authenticatable
         return $this->hasMany(Payout::class, 'user_id');
     }
 
+    public function customerPartnerAccount()
+    {
+        return $this->hasOne(CustomerPartnerAccount::class, 'customer_user_id');
+    }
+
+    public function linkedCustomerAccount()
+    {
+        return $this->hasOne(CustomerPartnerAccount::class, 'partner_user_id');
+    }
+
 
     public function weeklySummaries()
     {

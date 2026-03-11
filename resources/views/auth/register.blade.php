@@ -46,6 +46,24 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
+                                    <label class="col-form-label">Do you want to sign up as partner?</label>
+                                    <select id="sign_up_as_partner"
+                                        class="form-control @error('sign_up_as_partner') is-invalid @enderror"
+                                        name="sign_up_as_partner" required>
+                                        <option value="no" {{ old('sign_up_as_partner', 'no') === 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="yes" {{ old('sign_up_as_partner') === 'yes' ? 'selected' : '' }}>Yes</option>
+                                    </select>
+                                    <small class="text-muted d-block mt-1" id="partnerSignupHint">
+                                        Choosing yes will create a separate linked partner login using
+                                        <span id="partnerMailboxPreview">name@executorhub.co.uk</span>.
+                                    </small>
+                                    @error('sign_up_as_partner')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="form-group">
                                     <label class="col-form-label">Create Password</label>
                                     <div class="form-input position-relative">
                                         <input id="password" class="form-control @error('password') is-invalid @enderror"
@@ -165,16 +183,33 @@
     </script>
 
     <script>
-    // Get URL parameters
-    const urlParams = new URLSearchParams(window.location.search);
+        const urlParams = new URLSearchParams(window.location.search);
+        const couponCode = urlParams.get('coupon_code');
+        const emailInput = document.getElementById('email');
+        const signUpAsPartnerInput = document.getElementById('sign_up_as_partner');
+        const partnerHint = document.getElementById('partnerSignupHint');
+        const partnerMailboxPreview = document.getElementById('partnerMailboxPreview');
+        const partnerDomain = @json(config('services.cpanel.domain', 'executorhub.co.uk'));
 
-    // Get coupon_code value (if available)
-    const couponCode = urlParams.get('coupon_code');
+        if (couponCode) {
+            document.getElementById('coupon_code').value = couponCode;
+        }
 
-    // Populate the input field if value exists
-    if (couponCode) {
-        document.getElementById('coupon_code').value = couponCode;
-    }
-</script>
+        function updatePartnerPreview() {
+            const emailValue = emailInput.value || '';
+            const localPart = emailValue.split('@')[0] || 'name';
+            const sanitized = localPart
+                .toLowerCase()
+                .replace(/[^a-z0-9._-]/g, '')
+                .replace(/^[._-]+|[._-]+$/g, '') || 'partner';
+
+            partnerMailboxPreview.textContent = `${sanitized}@${partnerDomain}`;
+            partnerHint.style.display = signUpAsPartnerInput.value === 'yes' ? 'block' : 'none';
+        }
+
+        emailInput.addEventListener('input', updatePartnerPreview);
+        signUpAsPartnerInput.addEventListener('change', updatePartnerPreview);
+        updatePartnerPreview();
+    </script>
 
 @endsection
