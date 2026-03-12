@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProvisionPartnerMailbox;
 use App\Mail\CustomEmail;
+use App\Models\CustomerPartnerAccount;
 use Cache;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -23,6 +25,9 @@ use Carbon\Carbon;
 use Stripe\Subscription;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class StripePaymentController extends Controller
 {
@@ -692,6 +697,8 @@ class StripePaymentController extends Controller
                 'Lifetime Subscription Activated'
             ));
 
+            $this->createLinkedPartnerAccountForCustomer($user);
+
 
 
             return redirect()->route('customer.dashboard')->with('success', 'Successfully upgraded to Lifetime Subscription!');
@@ -813,6 +820,8 @@ class StripePaymentController extends Controller
             ],
             'You Have Been Invited to Executor Hub.'
         ));
+
+        $this->createLinkedPartnerAccountForCustomer($user);
 
 
         if ($session->metadata->add_partner === 'Yes' && !empty($session->metadata->partner_email)) {
@@ -1984,6 +1993,77 @@ class StripePaymentController extends Controller
         Auth::login($user);
 
         return redirect()->route('customer.dashboard')->with('success', 'Account created successfully! Your 12-month subscription is now active. Welcome to Executor Hub.');
+    }
+
+    protected function createLinkedPartnerAccountForCustomer(User $customer): void
+    {
+        if ($customer->customerPartnerAccount) {
+            return;
+        }
+
+        $created = DB::transaction(function () use ($customer) {
+            $mailboxEmail = $this->generateUniquePartnerMailboxEmail($customer->email);
+            $temporaryPassword = Str::random(20);
+            $couponCode = 'PARTNER-' . strtoupper(Str::random(10));
+
+            $partnerUser = User::create([
+                'name' => $customer->name,
+                'email' => $mailboxEmail,
+                'password' => Hash::make($temporaryPassword),
+                'trial_ends_at' => now()->addYears(10),
+                'subscribed_package' => 'Partner Access',
+                'user_role' => 'partner',
+                'status' => 'N',
+                'access_type' => 'Customer Mailbox Partner',
+                'coupon_code' => $couponCode,
+                'hear_about_us' => $customer->hear_about_us,
+                'other_hear_about_us' => $customer->other_hear_about_us,
+                'email_notifications' => $customer->email_notifications,
+                'created_by' => $customer->id,
+            ]);
+
+            $partnerUser->assignRole('partner');
+
+            $link = CustomerPartnerAccount::create([
+                'customer_user_id' => $customer->id,
+                'partner_user_id' => $partnerUser->id,
+                'mailbox_email' => $mailboxEmail,
+                'requested_local_part' => Str::before($mailboxEmail, '@'),
+                'provision_status' => 'pending',
+                'provider' => 'cpanel',
+            ]);
+
+            return [
+                'link' => $link,
+                'temporary_password' => $temporaryPassword,
+            ];
+        });
+
+        ProvisionPartnerMailbox::dispatch(
+            $created['link']->id,
+            Crypt::encryptString($created['temporary_password'])
+        );
+    }
+
+    protected function generateUniquePartnerMailboxEmail(string $sourceEmail): string
+    {
+        $domain = (string) config('services.cpanel.domain', 'executorhub.co.uk');
+        $base = Str::of(Str::before($sourceEmail, '@'))
+            ->lower()
+            ->replaceMatches('/[^a-z0-9._-]/', '')
+            ->trim('.-_')
+            ->value();
+
+        $base = $base !== '' ? $base : 'partner';
+        $candidate = "{$base}@{$domain}";
+        $counter = 1;
+
+        while (User::where('email', $candidate)->exists()) {
+            $candidate = "{$base}.{$counter}@{$domain}";
+            $counter++;
+        }
+
+        return $candidate;
     }
 
     protected function resolveLifetimePriceId(string $planTier, int $age, bool $discounted = false): ?string
