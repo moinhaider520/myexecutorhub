@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Http;
 
 class RegisterController extends Controller
 {
@@ -44,12 +45,31 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'sign_up_as_partner' => ['required', 'in:yes,no'],
-        ]);
+            'privacy_policy' => ['accepted'],
+        ];
+
+        if (!app()->environment('local')) {
+            $rules['g-recaptcha-response'] = [
+                'required',
+                function ($attribute, $value, $fail) {
+                    $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+                        'secret' => config('services.recaptcha.secret_key'),
+                        'response' => $value,
+                    ]);
+
+                    if (!$response->json('success')) {
+                        $fail('Captcha validation failed.');
+                    }
+                },
+            ];
+        }
+
+        return Validator::make($data, $rules);
     }
 
     /**
@@ -147,8 +167,8 @@ class RegisterController extends Controller
             'name' => $customer->name,
             'email' => $mailboxEmail,
             'password' => Hash::make($temporaryPassword),
-            'trial_ends_at' => now()->addDays(14),
-            'subscribed_package' => 'partner_mailbox_trial',
+            'trial_ends_at' => now()->addYears(10),
+            'subscribed_package' => 'Partner Access',
             'user_role' => 'partner',
             'status' => 'N',
             'access_type' => 'Customer Mailbox Partner',

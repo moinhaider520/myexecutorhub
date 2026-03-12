@@ -27,13 +27,17 @@ class PartnerRegistationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'profession' => 'required|string|max:255',
             'hear_about_us' => 'required|string|max:255',
-            'g-recaptcha-response' => [
+            'privacy_policy' => 'accepted',
+        ];
+
+        if (!app()->environment('local')) {
+            $rules['g-recaptcha-response'] = [
                 'required',
                 function ($attribute, $value, $fail) {
                     $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
@@ -45,8 +49,10 @@ class PartnerRegistationController extends Controller
                         $fail('Captcha validation failed.');
                     }
                 }
-            ],
-        ]);
+            ];
+        }
+
+        $request->validate($rules);
 
         if ($request->coupon_code) {
             // Check coupon validity and role in one query
@@ -77,7 +83,7 @@ class PartnerRegistationController extends Controller
                 'access_type' => $accessType,
                 'coupon_code' => $newCouponCode,
                 'trial_ends_at' => now()->addYears(10),
-                'subscribed_package' => 'Premium',
+                'subscribed_package' => 'Partner Access',
                 'user_role' => 'partner',
                 'profession' => $request->profession,
                 'hear_about_us' => $request->hear_about_us,

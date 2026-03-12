@@ -138,17 +138,28 @@
                                         <label class="form-check-label" for="privacy_policy">
                                             Do you agree with our terms and privacy policy?
                                         </label>
+                                        @error('privacy_policy')
+                                            <span class="text-danger d-block">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                                @if (!app()->environment('local'))
+                                    <div class="form-group">
+                                        <div class="g-recaptcha" data-sitekey="{{ config('services.recaptcha.site_key') }}">
+                                        </div>
+                                        @error('g-recaptcha-response')
+                                            <span class="text-danger d-block">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-                                    @error('g-recaptcha-response')
-                                        <span class="text-danger d-block">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                                @else
+                                    <div class="alert alert-info" role="alert">
+                                        reCAPTCHA is disabled on localhost.
+                                    </div>
+                                @endif
 
                                 <div class="form-group mb-0">
                                     <div class="text-end mt-3">
@@ -167,7 +178,9 @@
             </div>
         </div>
     </div>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @if (!app()->environment('local'))
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endif
 
     <script>
         document.getElementById('hear_about_us').addEventListener('change', function () {

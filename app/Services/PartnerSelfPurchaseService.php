@@ -15,7 +15,10 @@ use Illuminate\Support\Str;
 
 class PartnerSelfPurchaseService
 {
-    public function createLinkedCustomerAccountForPartner(User $partner, string $planLabel = 'Lifetime Standard'): array
+    public function createLinkedCustomerAccountForPartner(
+        User $partner,
+        string $planLabel = 'Partner Linked Customer Access'
+    ): array
     {
         $created = DB::transaction(function () use ($partner, $planLabel) {
             $mailboxEmail = $this->generateUniqueCustomerMailboxEmail($partner->email);

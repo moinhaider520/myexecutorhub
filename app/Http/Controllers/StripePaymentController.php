@@ -1527,11 +1527,11 @@ class StripePaymentController extends Controller
         }
 
         $service = app(PartnerSelfPurchaseService::class);
-        $created = $service->createLinkedCustomerAccountForPartner($partner, 'Lifetime Standard');
+        $created = $service->createLinkedCustomerAccountForPartner($partner, 'Partner Linked Customer Access');
         $created['customer_user']->update([
             'stripe_customer_id' => $session->customer,
             'stripe_subscription_id' => null,
-            'subscribed_package' => 'Lifetime Standard',
+            'subscribed_package' => 'Partner Linked Customer Access',
             'trial_ends_at' => now()->addYears(10),
         ]);
 

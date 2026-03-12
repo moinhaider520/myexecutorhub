@@ -15,22 +15,32 @@
                             <p>After purchase, we will create a separate linked customer account and mailbox such as <strong>{{ preg_replace('/@.*/', '', $partner->email) }}@executorhub.co.uk</strong>. That mailbox will be used for both webmail and the customer dashboard.</p>
                             <p>If you onboard 10 new paying customers on <strong>lifetime standard</strong> or <strong>lifetime premium</strong> within 6 months of buying your own package, we will add <strong>£99</strong> back to your commission balance.</p>
 
-                            @if($linkedCustomerAccount && $linkedCustomerAccount->provision_status === 'active')
-                                <div class="alert alert-success">
-                                    Your linked customer mailbox is active: <strong>{{ $linkedCustomerAccount->mailbox_email }}</strong>
-                                </div>
+                            @if($linkedCustomerAccount)
+                                @if($linkedCustomerAccount->provision_status === 'active')
+                                    <div class="alert alert-success">
+                                        Your linked customer mailbox is active: <strong>{{ $linkedCustomerAccount->mailbox_email }}</strong>
+                                    </div>
+                                @elseif($linkedCustomerAccount->provision_status === 'pending')
+                                    <div class="alert alert-info">
+                                        Your linked customer account is being provisioned. Please wait for the mailbox confirmation email.
+                                    </div>
+                                @else
+                                    <div class="alert alert-warning">
+                                        Your linked customer account record already exists, but mailbox provisioning failed. Please contact support before attempting another purchase.
+                                    </div>
+                                @endif
+                            @else
+                                <form method="POST" action="{{ route('partner.customer_access.checkout') }}" class="row g-3">
+                                    @csrf
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="date_of_birth">Date of birth</label>
+                                        <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Proceed to Secure Checkout</button>
+                                    </div>
+                                </form>
                             @endif
-
-                            <form method="POST" action="{{ route('partner.customer_access.checkout') }}" class="row g-3">
-                                @csrf
-                                <div class="col-md-6">
-                                    <label class="form-label" for="date_of_birth">Date of birth</label>
-                                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Proceed to Secure Checkout</button>
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
