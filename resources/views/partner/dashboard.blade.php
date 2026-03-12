@@ -46,6 +46,35 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
+                            <h4>Customer Access Offer</h4>
+                        </div>
+                        <div class="card-body">
+                            @if($linkedCustomerAccount && $linkedCustomerAccount->provision_status === 'active')
+                                <p class="mb-2">Your linked customer login is active: <strong>{{ $linkedCustomerAccount->mailbox_email }}</strong></p>
+                            @else
+                                <p class="mb-2">Buy your own standard lifetime customer access for £99 + VAT and receive a linked <code>@executorhub.co.uk</code> customer dashboard + webmail account.</p>
+                            @endif
+
+                            @if($customerAccessCampaign)
+                                <p class="mb-3">
+                                    Campaign progress:
+                                    <strong>{{ $customerAccessCampaign->qualifying_referrals_count }}/{{ $customerAccessCampaign->qualifying_referrals_required }}</strong>
+                                    qualifying lifetime standard/premium customers by
+                                    <strong>{{ $customerAccessCampaign->qualification_deadline?->format('d M Y') }}</strong>.
+                                </p>
+                            @endif
+
+                            <a href="{{ route('partner.customer_access.index') }}" class="btn btn-primary">
+                                {{ $linkedCustomerAccount ? 'View Customer Access' : 'Buy Customer Access' }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
                             <h4>Executor Hub – what is it?</h4>
                         </div>
                         <div class="card-body">

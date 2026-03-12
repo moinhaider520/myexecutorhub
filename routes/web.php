@@ -187,6 +187,7 @@ use App\Http\Controllers\KnowledgebaseController;
 use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\Executor\ImpersonationController;
 use App\Http\Controllers\Partner\SummaryController;
+use App\Http\Controllers\Partner\CustomerAccessController;
 use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
@@ -207,6 +208,7 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe/lifetime/step2', 'lifetimeStep2')->name('stripe.lifetime.step2');
     Route::post('stripe/lifetime', 'lifetimeCheckout')->name('stripe.lifetime');
     Route::get('stripe/lifetime/success', 'lifetimeSuccess')->name('stripe.lifetime.success');
+    Route::get('stripe/partner-customer-access/success', 'partnerCustomerAccessSuccess')->name('stripe.partner_customer_access.success');
 
     Route::get('/couple-partner/register/{token}', [StripePaymentController::class, 'showCouplePartnerRegistration'])
         ->name('couple.partner.register');
@@ -1035,6 +1037,8 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     // Membership
     Route::get('/membership/membership', [PartnerMembershipController::class, 'index'])->name('membership.view');
     Route::get('/membership/checkout', [PartnerMembershipController::class, 'checkout_page'])->name('checkout.view');
+    Route::get('/customer-access', [CustomerAccessController::class, 'index'])->name('customer_access.index');
+    Route::post('/customer-access/checkout', [StripePaymentController::class, 'partnerCustomerAccessCheckout'])->name('customer_access.checkout');
 
     // WILL GENERATOR
     Route::get('will_generator', [PartnerWillGeneratorController::class, 'index'])->name('will_generator.index');

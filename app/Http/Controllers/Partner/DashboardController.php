@@ -13,6 +13,7 @@ use App\Models\DebtAndLiability;
 use App\Models\DocumentReminder;
 use App\Models\DocumentTypes;
 use App\Models\DocumentLocation;
+use App\Models\PartnerSelfPurchaseCampaign;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -153,6 +154,11 @@ class DashboardController extends Controller
                 ->where('parent_partner_id', auth()->id());
         })->get();
 
+        $customerAccessCampaign = PartnerSelfPurchaseCampaign::where('partner_user_id', $user->id)
+            ->latest('purchased_at')
+            ->first();
+        $linkedCustomerAccount = $user->linkedPartnerCustomerAccount;
+
         return view('partner.dashboard', compact(
             'totalExecutors',
             'totalDocuments',
@@ -168,7 +174,9 @@ class DashboardController extends Controller
             'customers_invited',
             'subscribed_customers_invited',
             'free_trial_customers_invited',
-            'partners'
+            'partners',
+            'customerAccessCampaign',
+            'linkedCustomerAccount'
         ));
     }
 

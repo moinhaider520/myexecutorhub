@@ -16,6 +16,7 @@ use Stripe\Exception\CardException;
 use App\Models\User;
 use App\Models\PartnerRelationship;
 use App\Models\CouponUsage;
+use App\Services\PartnerSelfPurchaseService;
 use Illuminate\Support\Str;
 use App\Notifications\WelcomeEmail;
 use Carbon\Carbon;
@@ -284,6 +285,58 @@ class StripePaymentController extends Controller
         }
     }
 
+    public function partnerCustomerAccessCheckout(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $partner = Auth::user();
+        $validated = $request->validate([
+            'date_of_birth' => 'required|date|before:today',
+        ]);
+
+        if ($partner->linkedPartnerCustomerAccount) {
+            return redirect()->route('partner.customer_access.index')
+                ->with('error', 'A linked customer access account already exists for this partner.');
+        }
+
+        $age = Carbon::parse($validated['date_of_birth'])->age;
+        $priceId = $this->resolveLifetimePriceId('standard', $age, true);
+
+        if (!$priceId) {
+            return redirect()->route('partner.customer_access.index')
+                ->with('error', 'Unable to determine the standard lifetime checkout price.');
+        }
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'mode' => 'payment',
+            'customer_email' => $partner->email,
+            'customer_creation' => 'always',
+            'line_items' => [
+                [
+                    'price' => $priceId,
+                    'quantity' => 1,
+                ],
+            ],
+            'automatic_tax' => [
+                'enabled' => true,
+            ],
+            'metadata' => [
+                'checkout_type' => 'partner_customer_access',
+                'partner_user_id' => (string) $partner->id,
+                'partner_email' => $partner->email,
+                'partner_name' => $partner->name,
+                'date_of_birth' => $validated['date_of_birth'],
+                'plan_tier' => 'standard',
+                'plan_label' => 'Lifetime Standard',
+            ],
+            'success_url' => route('stripe.partner_customer_access.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('partner.customer_access.index'),
+        ]);
+
+        return redirect()->away($session->url);
+    }
+
     /**
      * Handle lifetime plan checkout (one-time payment).
      */
@@ -384,7 +437,7 @@ class StripePaymentController extends Controller
                     'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
                     '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
                     '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
-                    'discounted_under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    'discounted_under_50' => 'price_1R6CaeA22YOnjf5Z0sW3CZ9F',
                     'discounted_50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
                     'discounted_65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
                 ],
@@ -613,6 +666,9 @@ class StripePaymentController extends Controller
                 User::role('admin')->first()?->increment('commission_amount', $planAmount);
             }
 
+            app(PartnerSelfPurchaseService::class)
+                ->recordQualifyingLifetimeReferral($user, (string) ($session->metadata->plan_tier ?? ''));
+
             // Send upgrade confirmation email
             $name = $user->name;
             $email = $user->email;
@@ -722,6 +778,9 @@ class StripePaymentController extends Controller
             User::role('admin')->first()?->increment('commission_amount', $planAmount);
         }
 
+        app(PartnerSelfPurchaseService::class)
+            ->recordQualifyingLifetimeReferral($user, (string) ($session->metadata->plan_tier ?? ''));
+
         $name = $session->metadata->user_name;
         $email = $session->metadata->user_email;
         $message = "
@@ -792,7 +851,7 @@ class StripePaymentController extends Controller
                     'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
                     '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
                     '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
-                    'discounted_under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    'discounted_under_50' => 'price_1R6CaeA22YOnjf5Z0sW3CZ9F',
                     'discounted_50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
                     'discounted_65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
                 ],
@@ -851,7 +910,7 @@ class StripePaymentController extends Controller
             } else if ($mainUserPlanTier === 'standard') {
                 // LIVE PRICE ID
                 $discountedPriceMap = [
-                    'under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                    'under_50' => 'price_1R6CaeA22YOnjf5Z0sW3CZ9F',
                     '50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
                     '65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
                 ];
@@ -920,7 +979,7 @@ class StripePaymentController extends Controller
         <br/><br/>
         <p>Regards,<br>The Executor Hub Team</p>
         <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
-        
+
         <br /><br />
         <p><b>Executor Hub Team</b></p>
         <p><b>Executor Hub Ltd</b></p>
@@ -1006,7 +1065,7 @@ class StripePaymentController extends Controller
 
         // LIVE
         $discountedPriceMap = [
-            'under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+            'under_50' => 'price_1R6CaeA22YOnjf5Z0sW3CZ9F',
             '50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
             '65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
         ];
@@ -1208,7 +1267,7 @@ class StripePaymentController extends Controller
         <br/><br/>
         <p>Regards,<br>The Executor Hub Team</p>
         <p>© Executor Hub Ltd | <a href='https://executorhub.co.uk/privacy_policy'>[Privacy Policy]</a></p>
-        
+
         <br /><br />
         <p><b>Executor Hub Team</b></p>
         <p><b>Executor Hub Ltd</b></p>
@@ -1429,6 +1488,70 @@ class StripePaymentController extends Controller
         }
 
         return redirect()->route('dashboard')->with('success', 'Subscription created successfully!');
+    }
+
+    public function partnerCustomerAccessSuccess(Request $request): RedirectResponse
+    {
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+        $sessionId = $request->query('session_id');
+
+        if (!$sessionId) {
+            return redirect()->route('partner.customer_access.index')->with('error', 'Invalid session.');
+        }
+
+        $session = Session::retrieve($sessionId, ['expand' => ['line_items.data.price']]);
+
+        if (
+            !$session ||
+            !$session->customer ||
+            ($session->metadata->checkout_type ?? null) !== 'partner_customer_access' ||
+            $session->payment_status !== 'paid'
+        ) {
+            return redirect()->route('partner.customer_access.index')->with('error', 'Invalid session.');
+        }
+
+        $partner = User::find($session->metadata->partner_user_id);
+
+        if (!$partner || !$partner->hasRole('partner')) {
+            return redirect()->route('login')->with('error', 'Partner account not found.');
+        }
+
+        if ($partner->linkedPartnerCustomerAccount) {
+            if (!Auth::check()) {
+                Auth::login($partner);
+            }
+
+            return redirect()->route('partner.customer_access.index')
+                ->with('success', 'Your linked customer account has already been created.');
+        }
+
+        $service = app(PartnerSelfPurchaseService::class);
+        $created = $service->createLinkedCustomerAccountForPartner($partner, 'Lifetime Standard');
+        $created['customer_user']->update([
+            'stripe_customer_id' => $session->customer,
+            'stripe_subscription_id' => null,
+            'subscribed_package' => 'Lifetime Standard',
+            'trial_ends_at' => now()->addYears(10),
+        ]);
+
+        $purchaseAmount = ($session->amount_subtotal ?? $session->amount_total ?? 0) / 100;
+        $vatAmount = data_get($session, 'total_details.amount_tax', 0) / 100;
+
+        $service->startCampaign(
+            $partner,
+            $created['customer_user'],
+            (float) $purchaseAmount,
+            (float) $vatAmount,
+            99.00
+        );
+
+        if (!Auth::check()) {
+            Auth::login($partner);
+        }
+
+        return redirect()->route('partner.customer_access.index')
+            ->with('success', 'Customer access purchased successfully. Your linked customer mailbox credentials will be emailed to ' . $partner->email . '.');
     }
 
     public function cancelSubscription(Request $request)
@@ -1861,5 +1984,45 @@ class StripePaymentController extends Controller
         Auth::login($user);
 
         return redirect()->route('customer.dashboard')->with('success', 'Account created successfully! Your 12-month subscription is now active. Welcome to Executor Hub.');
+    }
+
+    protected function resolveLifetimePriceId(string $planTier, int $age, bool $discounted = false): ?string
+    {
+        $ageGroup = match (true) {
+            $age < 50 => 'under_50',
+            $age <= 65 => '50_65',
+            default => '65_plus',
+        };
+
+        $priceMap = [
+            'basic' => [
+                'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
+                '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
+                '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
+                'discounted_under_50' => 'price_1Scsk7A22YOnjf5ZI24Oztp7',
+                'discounted_50_65' => 'price_1ScskdA22YOnjf5ZvMHp2ZAu',
+                'discounted_65_plus' => 'price_1ScslFA22YOnjf5ZdnbIJrCY',
+            ],
+            'standard' => [
+                'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
+                '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
+                '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
+                'discounted_under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                'discounted_50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
+                'discounted_65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
+            ],
+            'premium' => [
+                'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
+                '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
+                '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
+                'discounted_under_50' => 'price_1ScsnFA22YOnjf5ZuAulfykt',
+                'discounted_50_65' => 'price_1ScsndA22YOnjf5Z54CQ3DF9',
+                'discounted_65_plus' => 'price_1Scso1A22YOnjf5ZNszrbiNK',
+            ],
+        ];
+
+        $key = $discounted ? "discounted_{$ageGroup}" : $ageGroup;
+
+        return $priceMap[$planTier][$key] ?? null;
     }
 }

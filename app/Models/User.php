@@ -116,6 +116,21 @@ class User extends Authenticatable
         return $this->hasOne(CustomerPartnerAccount::class, 'partner_user_id');
     }
 
+    public function linkedPartnerCustomerAccount()
+    {
+        return $this->hasOne(PartnerCustomerAccount::class, 'partner_user_id');
+    }
+
+    public function partnerOwnedCustomerAccount()
+    {
+        return $this->hasOne(PartnerCustomerAccount::class, 'customer_user_id');
+    }
+
+    public function partnerSelfPurchaseCampaigns()
+    {
+        return $this->hasMany(PartnerSelfPurchaseCampaign::class, 'partner_user_id');
+    }
+
 
     public function weeklySummaries()
     {
