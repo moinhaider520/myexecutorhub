@@ -21,6 +21,7 @@ use App\Models\IntellectualProperty;
 use App\Models\InvestmentAccount;
 use App\Models\PersonalChattel;
 use App\Models\Property;
+use App\Services\ActivitySummaryService;
 
 
 class DashboardController extends Controller
@@ -30,7 +31,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(ActivitySummaryService $activitySummaryService)
     {
         // Get the currently authenticated user
         $user = Auth::user();
@@ -131,6 +132,9 @@ class DashboardController extends Controller
         $customers = $executor->customers;
     }
 
+        $activitySummary = $activitySummaryService->buildForCustomer($user->id);
+        $recentActivity = $activitySummaryService->recentForCustomer($user->id);
+
         return view('customer.dashboard', compact(
             'totalExecutors',
             'totalDocuments',
@@ -142,7 +146,9 @@ class DashboardController extends Controller
             'uploadedDocumentTypes',
             'documentReminders',
             'documentLocations',
-            'user'
+            'user',
+            'activitySummary',
+            'recentActivity'
         ));
     }
 

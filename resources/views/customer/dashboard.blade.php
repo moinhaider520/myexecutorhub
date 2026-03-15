@@ -176,6 +176,14 @@
                     </div>
                 </div>
             </div>
+
+            @include('partials.activity_summary_table', [
+                'activitySummary' => $activitySummary,
+                'recentActivity' => $recentActivity,
+                'tableId' => 'customer-activity-summary-table',
+                'recentTableId' => 'customer-recent-activity-table',
+                'activitySummaryHeading' => 'Overview of recorded actions across your customer modules',
+            ])
         </div>
 
         <div class="container">
@@ -541,6 +549,20 @@
                 "ordering": true,
                 "paging": true,
                 "searching": true
+            });
+
+            $('#customer-activity-summary-table').DataTable({
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "order": [[6, "desc"]]
+            });
+
+            $('#customer-recent-activity-table').DataTable({
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "order": [[0, "desc"]]
             });
 
 

@@ -147,6 +147,16 @@
                 </div>
             </div>
 
+            @include('partials.activity_summary_table', [
+                'activitySummary' => $activitySummary,
+                'recentActivity' => $recentActivity,
+                'tableId' => 'executor-activity-summary-table',
+                'recentTableId' => 'executor-recent-activity-table',
+                'activitySummaryHeading' => $actingCustomer
+                    ? 'Recorded actions for ' . $actingCustomer->name
+                    : 'Recorded actions for your currently selected customer context',
+            ])
+
             <!-- Location of My Documents Table -->
             <div class="row mt-4">
                 <div class="col-12">
@@ -743,6 +753,20 @@
 
     <script>
         $(document).ready(function() {
+            $('#executor-activity-summary-table').DataTable({
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "order": [[6, "desc"]]
+            });
+
+            $('#executor-recent-activity-table').DataTable({
+                "ordering": true,
+                "paging": true,
+                "searching": true,
+                "order": [[0, "desc"]]
+            });
+
             $('#document-locations-table-view-only').DataTable({
                 "ordering": true,
                 "paging": true,

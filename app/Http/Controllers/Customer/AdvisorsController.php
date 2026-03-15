@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Helpers\EncryptionHelper;
-use Illuminate\Validation\Rule;
+use App\Services\ActivityLogger;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mail;
 
 class AdvisorsController extends Controller
@@ -24,10 +23,11 @@ class AdvisorsController extends Controller
                 $query->whereIn('name', $roles);
             })
             ->get();
+
         return view('customer.advisors.advisors', compact('advisors'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ActivityLogger $activityLogger)
     {
         $request->validate([
             'adviser_type' => 'required|string|max:255',
@@ -51,7 +51,7 @@ class AdvisorsController extends Controller
                 'contact_number' => $request->phone_number,
                 'password' => bcrypt('1234'),
                 'created_by' => Auth::id(),
-                'coupon_code' => $couponCode, // Store the generated coupon code
+                'coupon_code' => $couponCode,
                 'trial_ends_at' => Auth::user()->trial_ends_at,
                 'subscribed_package' => Auth::user()->subscribed_package,
             ]);
@@ -60,12 +60,25 @@ class AdvisorsController extends Controller
                 $advisor->assignRole($request->adviser_type);
             }
 
+            $activityLogger->logManualActivity(
+                customerId: Auth::id(),
+                module: 'Advisors',
+                action: 'created',
+                subjectType: 'Advisor',
+                subjectId: $advisor->id,
+                description: 'Advisor added (' . $advisor->name . ')',
+                meta: [
+                    'role' => $request->adviser_type,
+                    'email' => $advisor->email,
+                ]
+            );
+
             DB::commit();
 
             $authname = Auth::user()->name;
             $message = "
             <h2>Hello {$request->name},</h2>
-            <p>You’ve been invited to use <strong>Executor Hub</strong> as an Adviser by {$authname}.</p>
+            <p>Youâ€™ve been invited to use <strong>Executor Hub</strong> as an Adviser by {$authname}.</p>
             <p>Please use the following password and your email to login to the portal.</p>
             <p>Password: 1234</p>
             <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
@@ -79,14 +92,16 @@ class AdvisorsController extends Controller
                 ],
                 'You Have Been Invited to Executor Hub.'
             ));
+
             return response()->json(['success' => true, 'message' => 'Advisor added successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, ActivityLogger $activityLogger)
     {
         $request->validate([
             'adviser_type' => 'required|string|max:255',
@@ -110,29 +125,58 @@ class AdvisorsController extends Controller
                 'password' => bcrypt('1234'),
             ]);
 
-            // Reassign role
             $advisor->syncRoles([$request->adviser_type]);
 
+            $activityLogger->logManualActivity(
+                customerId: Auth::id(),
+                module: 'Advisors',
+                action: 'updated',
+                subjectType: 'Advisor',
+                subjectId: $advisor->id,
+                description: 'Advisor updated (' . $advisor->name . ')',
+                meta: [
+                    'role' => $request->adviser_type,
+                    'email' => $advisor->email,
+                ]
+            );
+
             DB::commit();
+
             return response()->json(['success' => true, 'message' => 'Advisor updated successfully.']);
         } catch (\Exception $e) {
             DB::rollback();
+
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, ActivityLogger $activityLogger)
     {
         try {
             DB::beginTransaction();
 
             $advisor = User::findOrFail($id);
+
+            $activityLogger->logManualActivity(
+                customerId: Auth::id(),
+                module: 'Advisors',
+                action: 'deleted',
+                subjectType: 'Advisor',
+                subjectId: $advisor->id,
+                description: 'Advisor deleted (' . $advisor->name . ')',
+                meta: [
+                    'email' => $advisor->email,
+                ]
+            );
+
             $advisor->delete();
 
             DB::commit();
+
             return redirect()->route('customer.advisors.view')->with('success', 'Advisor deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
+
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

@@ -20,6 +20,7 @@ use App\Models\IntellectualProperty;
 use App\Models\InvestmentAccount;
 use App\Models\PersonalChattel;
 use App\Models\Property;
+use App\Services\ActivitySummaryService;
 
 class DashboardController extends Controller
 {
@@ -28,7 +29,7 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(ActivitySummaryService $activitySummaryService)
     {
         // Get the currently authenticated user
         $user = Auth::user();
@@ -110,6 +111,8 @@ class DashboardController extends Controller
 
         $standardCompletionPercentage = $standardTotalItems > 0 ? round(($standardCompletedItems / $standardTotalItems) * 100) : 0;
         $advancedCompletionPercentage = $advancedTotalItems > 0 ? round(($advancedCompletedItems / $advancedTotalItems) * 100) : 0;
+        $activitySummary = $activitySummaryService->buildForCustomer($contextUser->id);
+        $recentActivity = $activitySummaryService->recentForCustomer($contextUser->id);
 
         return view('executor.dashboard', compact(
             'totalExecutors',
@@ -127,6 +130,8 @@ class DashboardController extends Controller
             'documentLocations',
             'customers',
             'actingCustomer',
+            'activitySummary',
+            'recentActivity',
         ));
     }
 
