@@ -382,6 +382,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
 
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
+    Route::post('/partner-access/activate', [StripePaymentController::class, 'customerPartnerAccessActivate'])->name('partner_access.activate');
 
     // New routes for document reminders
     Route::post('/dashboard/update-reminder', [CustomerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');

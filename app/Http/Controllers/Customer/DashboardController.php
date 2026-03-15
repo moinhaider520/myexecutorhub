@@ -134,6 +134,8 @@ class DashboardController extends Controller
 
         $activitySummary = $activitySummaryService->buildForCustomer($user->id);
         $recentActivity = $activitySummaryService->recentForCustomer($user->id);
+        $hasLifetimeSubscription = in_array($user->subscribed_package, ['Lifetime Basic', 'Lifetime Standard', 'Lifetime Premium'], true);
+        $linkedPartnerAccess = $user->customerPartnerAccount;
 
         return view('customer.dashboard', compact(
             'totalExecutors',
@@ -148,7 +150,9 @@ class DashboardController extends Controller
             'documentLocations',
             'user',
             'activitySummary',
-            'recentActivity'
+            'recentActivity',
+            'hasLifetimeSubscription',
+            'linkedPartnerAccess'
         ));
     }
 

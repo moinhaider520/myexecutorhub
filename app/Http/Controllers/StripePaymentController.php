@@ -182,46 +182,10 @@ class StripePaymentController extends Controller
                 default => '65_plus',
             };
 
-            $priceMap = [
-                // LIVE PRICE ID's
-                'basic' => [
-                    'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
-                    '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
-                    '65_plus' => 'price_1SPhDnA22YOnjf5ZHoRBUzNS',
-                ],
-                'standard' => [
-                    'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
-                    '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
-                    '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
-                ],
-                'premium' => [
-                    'under_50' => 'price_1SPhMsA22YOnjf5ZPqml85O2',
-                    '50_65' => 'price_1SPhMsA22YOnjf5ZLWPUYxOH',
-                    '65_plus' => 'price_1SPhOVA22YOnjf5Zkia12fek',
-                ],
-
-                // TEST PRICE ID's
-                // 'basic' => [
-                //     'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
-                //     '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
-                //     '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
-                // ],
-                // 'standard' => [
-                //     'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
-                //     '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
-                //     '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
-                // ],
-                // 'premium' => [
-                //     'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
-                //     '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
-                //     '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
-                // ],
-            ];
-
             // Retrieve prices for all three plans
             $plans = [];
             foreach (['basic', 'standard', 'premium'] as $planTier) {
-                $priceId = $priceMap[$planTier][$ageGroup] ?? null;
+                $priceId = $this->resolveLifetimePriceId($planTier, $age);
 
                 if (!$priceId) {
                     \Log::error('Lifetime Step2: Unable to determine price ID', [
@@ -260,7 +224,9 @@ class StripePaymentController extends Controller
             }
 
             if (empty($plans)) {
-                return redirect()->route('home')
+                $redirectRoute = $isUpgrade ? route('customer.membership.view') : route('home');
+
+                return redirect()->to($redirectRoute)
                     ->with('error', 'Unable to retrieve pricing information. Please try again later.')
                     ->withInput();
             }
@@ -340,6 +306,30 @@ class StripePaymentController extends Controller
         ]);
 
         return redirect()->away($session->url);
+    }
+
+    public function customerPartnerAccessActivate(Request $request): RedirectResponse
+    {
+        $customer = Auth::user();
+
+        if (!$customer || !$customer->hasRole('customer')) {
+            return redirect()->route('customer.dashboard')->with('error', 'Only customers can activate partner access.');
+        }
+
+        if (!in_array($customer->subscribed_package, ['Lifetime Basic', 'Lifetime Standard', 'Lifetime Premium'], true)) {
+            return redirect()->route('customer.dashboard')->with('error', 'Partner access is only available for lifetime customer subscriptions.');
+        }
+
+        if ($customer->customerPartnerAccount) {
+            return redirect()->route('customer.dashboard')->with('error', 'A linked partner access account already exists for this customer.');
+        }
+
+        $this->createLinkedPartnerAccountForCustomer($customer);
+
+        return redirect()->route('customer.dashboard')->with(
+            'success',
+            'Your partner access request has been submitted. You will receive the partner mailbox details by email once provisioning completes.'
+        );
     }
 
     /**
@@ -697,10 +687,6 @@ class StripePaymentController extends Controller
                 'Lifetime Subscription Activated'
             ));
 
-            $this->createLinkedPartnerAccountForCustomer($user);
-
-
-
             return redirect()->route('customer.dashboard')->with('success', 'Successfully upgraded to Lifetime Subscription!');
         }
 
@@ -820,9 +806,6 @@ class StripePaymentController extends Controller
             ],
             'You Have Been Invited to Executor Hub.'
         ));
-
-        $this->createLinkedPartnerAccountForCustomer($user);
-
 
         if ($session->metadata->add_partner === 'Yes' && !empty($session->metadata->partner_email)) {
             // Generate a secure token for partner registration
@@ -2074,7 +2057,45 @@ class StripePaymentController extends Controller
             default => '65_plus',
         };
 
-        $priceMap = [
+        $priceMap = $this->lifetimePriceMap();
+
+        $key = $discounted ? "discounted_{$ageGroup}" : $ageGroup;
+
+        return $priceMap[$planTier][$key] ?? null;
+    }
+
+    protected function lifetimePriceMap(): array
+    {
+        if ($this->isStripeTestMode()) {
+            return [
+                'basic' => [
+                    'under_50' => 'price_1ScmWDPEGGZ0nEjmWbaqsjLU',
+                    '50_65' => 'price_1ScmWDPEGGZ0nEjmfxvxzXgR',
+                    '65_plus' => 'price_1ScmWDPEGGZ0nEjmdUGlofPt',
+                    'discounted_under_50' => 'price_1ScmWDPEGGZ0nEjmXkfgron4',
+                    'discounted_50_65' => 'price_1ScmWDPEGGZ0nEjm8JKYQsM6',
+                    'discounted_65_plus' => 'price_1ScmWDPEGGZ0nEjmaKJ2Buqb',
+                ],
+                'standard' => [
+                    'under_50' => 'price_1Sco5hPEGGZ0nEjmMTAR8pYM',
+                    '50_65' => 'price_1Sco75PEGGZ0nEjmauW8fA45',
+                    '65_plus' => 'price_1Sco75PEGGZ0nEjmDZbhYSmx',
+                    'discounted_under_50' => 'price_1Sco75PEGGZ0nEjmDzR8dIxh',
+                    'discounted_50_65' => 'price_1Sco75PEGGZ0nEjm6FTqqLNq',
+                    'discounted_65_plus' => 'price_1Sco75PEGGZ0nEjmrPDcEevc',
+                ],
+                'premium' => [
+                    'under_50' => 'price_1ScoARPEGGZ0nEjmygKuf9lR',
+                    '50_65' => 'price_1ScoAgPEGGZ0nEjmVjowzkWD',
+                    '65_plus' => 'price_1ScoAnPEGGZ0nEjmPjkQBHNt',
+                    'discounted_under_50' => 'price_1ScoB1PEGGZ0nEjmGIKdEN2Z',
+                    'discounted_50_65' => 'price_1ScoBJPEGGZ0nEjmiCsGtBAN',
+                    'discounted_65_plus' => 'price_1ScoBZPEGGZ0nEjmxPEf9JB7',
+                ],
+            ];
+        }
+
+        return [
             'basic' => [
                 'under_50' => 'price_1SPhDnA22YOnjf5ZpqgtWDzq',
                 '50_65' => 'price_1SPhDnA22YOnjf5ZEvkurnSi',
@@ -2087,7 +2108,7 @@ class StripePaymentController extends Controller
                 'under_50' => 'price_1SPhIoA22YOnjf5ZGwF2PSHC',
                 '50_65' => 'price_1SPhIoA22YOnjf5ZYmoMp7mq',
                 '65_plus' => 'price_1SPhIoA22YOnjf5ZzT5DsohH',
-                'discounted_under_50' => 'price_1ScsloA22YOnjf5ZSKQModCL',
+                'discounted_under_50' => 'price_1R6CaeA22YOnjf5Z0sW3CZ9F',
                 'discounted_50_65' => 'price_1ScsmGA22YOnjf5ZIhjJCPrD',
                 'discounted_65_plus' => 'price_1ScsmjA22YOnjf5ZX8EIGdQ1',
             ],
@@ -2100,9 +2121,10 @@ class StripePaymentController extends Controller
                 'discounted_65_plus' => 'price_1Scso1A22YOnjf5ZNszrbiNK',
             ],
         ];
+    }
 
-        $key = $discounted ? "discounted_{$ageGroup}" : $ageGroup;
-
-        return $priceMap[$planTier][$key] ?? null;
+    protected function isStripeTestMode(): bool
+    {
+        return Str::startsWith((string) env('STRIPE_SECRET'), 'sk_test_');
     }
 }

@@ -27,13 +27,24 @@
           @php
             $willUserInfo = \App\Models\WillUserInfo::where('user_id', Auth::user()->id)->first();
             $dateOfBirth = $willUserInfo->date_of_birth ?? old('date_of_birth');
+            $currentUser = Auth::user();
+            $lifetimePackages = ['Lifetime Basic', 'Lifetime Standard', 'Lifetime Premium'];
+            $hasLifetimePackage = in_array($currentUser->subscribed_package, $lifetimePackages, true);
           @endphp
 
-          @if(Auth::user()->subscribed_package == "free_trial" || Auth::user()->stripe_subscription_id == null)
+          @if($hasLifetimePackage)
         <div class="row mb-3">
         <div class="col-md-12">
-        <p>You are currently on {{ str_replace('_', ' ', Auth::user()->subscribed_package) }} plan and it will expire on
-          {{ Auth::user()->trial_ends_at }}. Make sure to Upgrade your plan to continue using Executor Hub.
+        <p>You are currently on <strong>{{ $currentUser->subscribed_package }}</strong>.</p>
+        <p>This is a lifetime package, so there is no recurring Stripe subscription to renew.</p>
+        <p class="text-muted"><small>Your lifetime access remains active without monthly billing.</small></p>
+        </div>
+        </div>
+      @elseif($currentUser->subscribed_package == "free_trial" || $currentUser->stripe_subscription_id == null)
+        <div class="row mb-3">
+        <div class="col-md-12">
+        <p>You are currently on {{ str_replace('_', ' ', $currentUser->subscribed_package) }} plan and it will expire on
+          {{ $currentUser->trial_ends_at }}. Make sure to Upgrade your plan to continue using Executor Hub.
         </p>
         </div>
         </div>
@@ -157,8 +168,8 @@
       @else
       <div class="row mb-3">
       <div class="col-md-12">
-      <p>You are Currently on {{ Auth::user()->subscribed_package }} and it will automatically renew on
-        {{ Auth::user()->trial_ends_at }}.
+      <p>You are Currently on {{ $currentUser->subscribed_package }} and it will automatically renew on
+        {{ $currentUser->trial_ends_at }}.
       </p>
       <p>You can cancel your monthly subscription or switch to a lifetime subscription below.</p>
       <p class="text-muted"><small>Please Note that when you cancel your subscription you can still use Executor Hub until the expiry date of the purchased plan.</small></p>

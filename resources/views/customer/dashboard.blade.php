@@ -110,6 +110,45 @@
                 </div>
             </div>
         </div>
+
+        @if($hasLifetimeSubscription)
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Partner Access</h4>
+                                <span>Activate your linked partner mailbox and partner dashboard access when you are ready.</span>
+                            </div>
+                            <div class="card-body">
+                                <p>Your lifetime customer subscription includes access to a linked partner account. This creates a separate <code>@executorhub.co.uk</code> mailbox and partner login for your account.</p>
+
+                                @if($linkedPartnerAccess)
+                                    @if($linkedPartnerAccess->provision_status === 'active')
+                                        <div class="alert alert-success">
+                                            Your linked partner mailbox is active: <strong>{{ $linkedPartnerAccess->mailbox_email }}</strong>
+                                        </div>
+                                    @elseif($linkedPartnerAccess->provision_status === 'pending')
+                                        <div class="alert alert-info">
+                                            Your partner access is being provisioned. The mailbox details will be sent to <strong>{{ $user->email }}</strong> once ready.
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning">
+                                            A partner access record already exists, but mailbox provisioning failed. Please contact support for assistance.
+                                        </div>
+                                    @endif
+                                @else
+                                    <form method="POST" action="{{ route('customer.partner_access.activate') }}">
+                                        @csrf
+                                        <button type="submit" class="btn btn-primary">Access Partner Role</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         <!-- Container-fluid starts-->
         <div class="container-fluid default-dashboard">
             <div class="row widget-grid">
