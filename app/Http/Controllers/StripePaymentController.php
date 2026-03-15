@@ -142,7 +142,7 @@ class StripePaymentController extends Controller
         } catch (ValidationException $e) {
             // On validation failure, redirect back with errors
             if (Auth::check()) {
-                return redirect()->route('membership.view')
+                return redirect()->route('customer.membership.view')
                     ->withErrors($e->errors(), 'lifetime')
                     ->withInput($request->all());
             } else {
