@@ -82,6 +82,7 @@
       <div class="modal-body">
         <form id="addExecutorForm">
           @csrf
+          <input type="hidden" name="confirm_existing_executor" id="confirm_existing_executor" value="0">
           <div class="form-group mb-3">
             <label for="title">Title</label>
             <input type="text" class="form-control" name="title" id="title" placeholder="Enter Title" required>
@@ -238,6 +239,12 @@
       $('#error-how_acting').text('');
     }
 
+    $('#addExecutorModal').on('show.bs.modal', function() {
+      $('#addExecutorForm')[0].reset();
+      $('#confirm_existing_executor').val('0');
+      clearAddErrors();
+    });
+
     function clearEditErrors() {
       $('#error-title').text('');
       $('#edit-error-name').text('');
@@ -256,10 +263,12 @@
       e.preventDefault();
       clearAddErrors(); // Clear previous error messages
 
+      const form = $(this);
+
       $.ajax({
         url: "{{ route('customer.executors.store') }}",
         method: 'POST',
-        data: $(this).serialize(),
+        data: form.serialize(),
         success: function(response) {
           if (response.success) {
             location.reload();
@@ -268,7 +277,36 @@
           }
         },
         error: function(response) {
-          var errors = response.responseJSON.errors;
+          const responseJson = response.responseJSON || {};
+
+          if (response.status === 409 && responseJson.requires_confirmation) {
+            Swal.fire({
+              title: 'Existing Executor Found',
+              text: responseJson.message,
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'OK',
+              cancelButtonText: 'Cancel'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                $('#confirm_existing_executor').val('1');
+                form.trigger('submit');
+              }
+            });
+
+            return;
+          }
+
+          if (responseJson.message && !responseJson.errors) {
+            Swal.fire({
+              title: 'Unable to save executor',
+              text: responseJson.message,
+              icon: 'error'
+            });
+            return;
+          }
+
+          var errors = responseJson.errors || {};
           $('#error-title').text(errors.title);
           $('#error-name').text(errors.name);
           $('#error-lastname').text(errors.lastname);

@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Api\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
-use App\Models\User;
 use App\Models\OnboardingProgress;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Mail;
 use Throwable;
@@ -37,25 +37,53 @@ class ExecutorsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-
     public function store(Request $request)
     {
         try {
-            // ✅ Step 1: Validate request input
-            $validated = $request->validate([
-                'email' => 'required|email|unique:users,email',
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'email' => 'required|email',
+                'relationship' => 'required|string',
+                'how_acting' => 'required|string',
                 'status' => 'required|string|max:50',
             ]);
 
-            $couponCode = 'COUPON-' . strtoupper(uniqid());
-
             DB::beginTransaction();
 
-            // 1️⃣ Find executor by email
             $executor = User::where('email', $request->email)->first();
             $password = str()->random(10);
-            if (!$executor) {
+            $isExistingExecutor = (bool) $executor;
 
+            if ($executor) {
+                $alreadyLinked = Auth::user()->executors()->where('users.id', $executor->id)->exists();
+
+                if ($alreadyLinked) {
+                    DB::rollBack();
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Validation failed.',
+                        'errors' => [
+                            'email' => ['This executor is already linked to your account.'],
+                        ],
+                    ], 422);
+                }
+
+                if (!$request->boolean('confirm_existing_executor')) {
+                    DB::rollBack();
+
+                    return response()->json([
+                        'success' => false,
+                        'requires_confirmation' => true,
+                        'message' => 'An executor with this email already exists. Do you want to link the same executor to your account?',
+                    ], 409);
+                }
+
+                $executor->update([
+                    'password' => Hash::make($password),
+                ]);
+            } else {
                 $executor = User::create([
                     'title' => $request->title,
                     'name' => $request->name,
@@ -69,30 +97,12 @@ class ExecutorsController extends Controller
                 ]);
 
                 $executor->assignRole('executor');
-
-                $authname = Auth::user()->name;
-                $message = "
-            <h2>Hello {$request->name},</h2>
-            <p>You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.</p>
-            <p>Please use the following password and your email to login to the portal.</p>
-            <p>Password:{$password}</p>
-            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
-            <p>Regards,<br>Executor Hub Team</p>
-        ";
-
-                Mail::to($request->email)->send(new CustomEmail(
-                    [
-                        'subject' => 'You Have Been Invited to Executor Hub.',
-                        'message' => $message,
-                    ],
-                    'You Have Been Invited to Executor Hub.'
-                ));
             }
 
-            // 3️⃣ Link executor to customer (pivot)
             Auth::user()->executors()->syncWithoutDetaching([$executor->id]);
 
-            // Onboarding progress
+            $this->sendExecutorAccessEmail($executor, $password, $isExistingExecutor);
+
             $progress = OnboardingProgress::firstOrCreate(
                 ['user_id' => Auth::id()],
                 ['executor_added' => true]
@@ -107,17 +117,16 @@ class ExecutorsController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Executor added successfully.',
+                'message' => $isExistingExecutor
+                    ? 'Existing executor linked successfully.'
+                    : 'Executor added successfully.',
             ], 200);
-
         } catch (ValidationException $e) {
-            // ✅ Return validation errors in JSON
             return response()->json([
                 'success' => false,
                 'message' => 'Validation failed.',
                 'errors' => $e->errors(),
             ], 422);
-
         } catch (Throwable $e) {
             DB::rollBack();
             return response()->json([
@@ -137,7 +146,6 @@ class ExecutorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         try {
             DB::beginTransaction();
 
@@ -180,5 +188,30 @@ class ExecutorsController extends Controller
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);
         }
+    }
+
+    private function sendExecutorAccessEmail(User $executor, string $password, bool $isExistingExecutor): void
+    {
+        $authname = Auth::user()->name;
+        $intro = $isExistingExecutor
+            ? "{$authname} has linked you as an executor on <strong>Executor Hub</strong>."
+            : "You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.";
+        $message = "
+            <h2>Hello {$executor->name},</h2>
+            <p>{$intro}</p>
+            <p>Please use the following credentials to log in to the portal.</p>
+            <p>Email: {$executor->email}</p>
+            <p>Password: {$password}</p>
+            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+        Mail::to($executor->email)->send(new CustomEmail(
+            [
+                'subject' => 'You Have Been Invited to Executor Hub.',
+                'message' => $message,
+            ],
+            'You Have Been Invited to Executor Hub.'
+        ));
     }
 }
