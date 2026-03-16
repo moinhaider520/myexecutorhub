@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends(isset($is_upgrade) && $is_upgrade ? 'layouts.master' : 'layouts.app')
 
 @section('content')
     @php
@@ -39,6 +39,12 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.14);
             filter: blur(8px);
+            pointer-events: none;
+        }
+
+        .lifetime-hero .row {
+            position: relative;
+            z-index: 1;
         }
 
         .lifetime-badge {
@@ -65,6 +71,82 @@
             background: #fff;
         }
 
+        .lifetime-plan-card .card-body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 !important;
+        }
+
+        .lifetime-plan-top {
+            padding: 24px 24px 18px;
+            border-bottom: 1px solid #e8eef6;
+        }
+
+        .lifetime-plan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .lifetime-plan-meta {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 0 0 auto;
+        }
+
+        .lifetime-plan-tier {
+            flex-shrink: 0;
+            line-height: 1;
+            font-size: 18px;
+            color: #344054;
+        }
+
+        .lifetime-plan-price {
+            font-size: 28px;
+            line-height: 1.1;
+            font-weight: 700;
+            color: #243b5a;
+            margin-bottom: 8px;
+        }
+
+        .lifetime-plan-subtitle {
+            color: #667085;
+            margin-bottom: 0;
+        }
+
+        .lifetime-plan-content {
+            padding: 22px 24px 24px;
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+        }
+
+        .lifetime-plan-description {
+            color: #475467;
+            margin-bottom: 18px;
+            min-height: 58px;
+        }
+
+        .lifetime-plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+        }
+
+        .lifetime-plan-features li {
+            padding: 7px 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: #344054;
+        }
+
+        .lifetime-plan-features li:last-child {
+            border-bottom: 0;
+        }
+
         .lifetime-plan-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
@@ -82,17 +164,21 @@
             border-top: 4px solid #0d6efd;
         }
 
-        .lifetime-plan-card.is-featured::after {
-            content: "Most Popular";
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            background: #f59e0b;
-            color: #111827;
-            padding: 6px 10px;
+        .lifetime-featured-badge {
+            background: #eef2ff;
+            color: #4f46e5;
+            padding: 5px 10px;
             border-radius: 999px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
+            line-height: 1;
+        }
+
+        .select-plan-button {
+            margin-top: auto !important;
+            border-radius: 10px;
+            min-height: 46px;
+            font-weight: 600;
         }
 
         .lifetime-form-card {
@@ -156,53 +242,60 @@
                                 data-price-id="{{ $plan['price_id'] }}"
                             >
                                 <div class="card-body p-4">
-                                    <div class="d-flex justify-content-between align-items-start mb-4">
-                                        <div>
-                                            <h4 class="mb-1">{{ $plan['label'] }}</h4>
-                                            <p class="text-muted mb-0">One-time payment</p>
+                                    <div class="lifetime-plan-top">
+                                        <div class="lifetime-plan-header">
+                                            <div class="lifetime-plan-title">
+                                                <h4 class="mb-1">{{ $plan['label'] }}</h4>
+                                                <p class="text-muted mb-0">One-time payment</p>
+                                            </div>
+                                            <div class="lifetime-plan-meta">
+                                                @if($plan['tier'] === 'standard')
+                                                    <span class="lifetime-featured-badge">Most Popular</span>
+                                                @endif
+                                                <div class="lifetime-plan-tier">
+                                                    @if($plan['tier'] === 'basic')
+                                                        <span>Base</span>
+                                                    @elseif($plan['tier'] === 'standard')
+                                                        <span>Plus</span>
+                                                    @else
+                                                        <span>Max</span>
+                                                    @endif
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="fs-3">
-                                            @if($plan['tier'] === 'basic')
-                                                <span>Base</span>
-                                            @elseif($plan['tier'] === 'standard')
-                                                <span>Plus</span>
-                                            @else
-                                                <span>Max</span>
-                                            @endif
-                                        </div>
+
+                                        <div class="lifetime-plan-price">{{ $plan['currency'] }} {{ number_format($plan['amount'], 2) }}</div>
+                                        <p class="lifetime-plan-subtitle">No recurring fees</p>
                                     </div>
 
-                                    <div class="mb-4">
-                                        <div class="h2 mb-1">{{ $plan['currency'] }} {{ number_format($plan['amount'], 2) }}</div>
-                                        <div class="text-muted">No recurring fees</div>
+                                    <div class="lifetime-plan-content">
+                                        @if($plan['tier'] === 'basic')
+                                            <p class="lifetime-plan-description">Essential storage for key documents, assets, and liabilities.</p>
+                                            <ul class="lifetime-plan-features">
+                                                <li>Core customer dashboard access</li>
+                                                <li>Executor assignment</li>
+                                                <li>Assets and liabilities record</li>
+                                            </ul>
+                                        @elseif($plan['tier'] === 'standard')
+                                            <p class="lifetime-plan-description">The strongest all-round package for most customers.</p>
+                                            <ul class="lifetime-plan-features">
+                                                <li>Everything in Basic</li>
+                                                <li>Adviser collaboration and reminders</li>
+                                                <li>Optional couple partner invite</li>
+                                            </ul>
+                                        @else
+                                            <p class="lifetime-plan-description">Full feature access for wishes, legacy, and personal planning.</p>
+                                            <ul class="lifetime-plan-features">
+                                                <li>Everything in Standard</li>
+                                                <li>Wishes, messages, and legacy tools</li>
+                                                <li>Highest level of coverage</li>
+                                            </ul>
+                                        @endif
+
+                                        <button type="button" class="btn btn-outline-primary w-100 mt-4 select-plan-button">
+                                            Select {{ ucfirst($plan['tier']) }}
+                                        </button>
                                     </div>
-
-                                    @if($plan['tier'] === 'basic')
-                                        <p class="mb-3">Essential storage for key documents, assets, and liabilities.</p>
-                                        <ul class="mb-0 ps-3">
-                                            <li>Core customer dashboard access</li>
-                                            <li>Executor assignment</li>
-                                            <li>Assets and liabilities record</li>
-                                        </ul>
-                                    @elseif($plan['tier'] === 'standard')
-                                        <p class="mb-3">The strongest all-round package for most customers.</p>
-                                        <ul class="mb-0 ps-3">
-                                            <li>Everything in Basic</li>
-                                            <li>Adviser collaboration and reminders</li>
-                                            <li>Optional couple partner invite</li>
-                                        </ul>
-                                    @else
-                                        <p class="mb-3">Full feature access for wishes, legacy, and personal planning.</p>
-                                        <ul class="mb-0 ps-3">
-                                            <li>Everything in Standard</li>
-                                            <li>Wishes, messages, and legacy tools</li>
-                                            <li>Highest level of coverage</li>
-                                        </ul>
-                                    @endif
-
-                                    <button type="button" class="btn btn-outline-primary w-100 mt-4 select-plan-button">
-                                        Select {{ ucfirst($plan['tier']) }}
-                                    </button>
                                 </div>
                             </div>
                         </div>

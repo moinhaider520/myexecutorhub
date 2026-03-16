@@ -112,6 +112,58 @@
             border-bottom-right-radius: 8px;
         }
 
+        .lifetime-subscription-form {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 48px 56px !important;
+        }
+
+        .lifetime-subscription-form .text-center {
+            max-width: 760px;
+            margin: 0 auto 32px;
+        }
+
+        .lifetime-step1-form {
+            margin-top: 12px;
+        }
+
+        .lifetime-step1-form .form-label {
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .lifetime-step1-form .form-text {
+            display: block;
+            margin-top: 10px;
+            font-size: 15px;
+        }
+
+        .lifetime-dob-input {
+            min-height: 64px;
+            padding: 14px 18px;
+            font-size: 17px;
+            border-radius: 12px;
+        }
+
+        .lifetime-step-submit {
+            min-width: 220px;
+            min-height: 50px;
+            padding: 12px 32px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        @media (max-width: 991.98px) {
+            .lifetime-subscription-form {
+                padding: 32px 24px !important;
+            }
+
+            .lifetime-step-submit {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+
         /* Exit Popup Styles */
         .exit-popup {
             display: none;
@@ -1553,12 +1605,12 @@
                                 <h3 class="s-32 w-700 mb-3">Lifetime Subscription</h3>
                                 <p class="s-18 color--theme mb-2">💰 Can work out up to 80% cheaper than paying monthly
                                     long-term.</p>
-                                <p class="s-16 color--grey">Get lifetime access to all features with a one-time payment.
+                                <p class="s-16 color--grey">Get lifetime access with a single payment.
                                     No recurring fees, no hassle.</p>
                             </div>
 
                             @if ($errors->lifetime->any())
-                                <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-danger mt-4" role="alert">
                                     <ul class="mb-0 ps-3">
                                         @foreach ($errors->lifetime->all() as $error)
                                             <li>{{ $error }}</li>
@@ -1568,13 +1620,13 @@
                             @endif
 
                             <form id="lifetimeStep1Form" method="POST" action="{{ route('stripe.lifetime.step1') }}"
-                                class="row g-3" style="padding:10px;">
+                                class="row g-3 lifetime-step1-form">
                                 @csrf
 
                                 <div class="col-12">
                                     <label for="lifetimeDob" class="form-label">Date of Birth <span
                                             class="text-danger">*</span></label>
-                                    <input type="date" class="form-control" id="lifetimeDob" name="date_of_birth"
+                                    <input type="date" class="form-control lifetime-dob-input" id="lifetimeDob" name="date_of_birth"
                                         value="{{ old('date_of_birth') }}" required>
                                     @error('date_of_birth', 'lifetime')
                                         <div class="text-danger small mt-1">{{ $message }}</div>
@@ -1584,7 +1636,7 @@
                                 </div>
 
                                 <div class="col-12 text-center mt-3">
-                                    <button type="submit" class="btn btn--theme btn-lg r-04">
+                                    <button type="submit" class="btn btn--theme btn-lg r-04 lifetime-step-submit">
                                         Proceed
                                     </button>
                                 </div>
@@ -3726,6 +3778,7 @@
             const monthlyPricing = document.getElementById('monthlyPricing');
             const lifetimePricing = document.getElementById('lifetimePricing');
             const pricingTypeDescription = document.getElementById('pricingTypeDescription');
+            const hasLifetimeErrors = {{ $errors->lifetime->any() ? 'true' : 'false' }};
 
             pricingTypeButtons.forEach(button => {
                 button.addEventListener('click', function () {
@@ -3754,6 +3807,19 @@
                     document.getElementById('pricing-1').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
             });
+
+            if (hasLifetimeErrors && monthlyPricing && lifetimePricing && pricingTypeDescription) {
+                monthlyPricing.style.display = 'none';
+                lifetimePricing.style.display = 'block';
+                pricingTypeDescription.textContent = 'Can work out up to 80% cheaper than paying monthly long-term.';
+
+                pricingTypeButtons.forEach(btn => {
+                    const isLifetime = btn.getAttribute('data-type') === 'lifetime';
+                    btn.classList.toggle('active', isLifetime);
+                    btn.classList.toggle('btn-primary', isLifetime);
+                    btn.classList.toggle('btn-outline-primary', !isLifetime);
+                });
+            }
         });
 
         // Handle lifetime subscription step 1 form submission

@@ -49,9 +49,12 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'sign_up_as_partner' => ['required', 'in:yes,no'],
             'privacy_policy' => ['accepted'],
         ];
+
+        if (array_key_exists('sign_up_as_partner', $data)) {
+            $rules['sign_up_as_partner'] = ['in:yes,no'];
+        }
 
         if (!app()->environment('local')) {
             $rules['g-recaptcha-response'] = [
