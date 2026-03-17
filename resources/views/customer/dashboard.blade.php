@@ -149,6 +149,22 @@
                 </div>
             </div>
         @endif
+                <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Connect Bank Account</h4>
+                            <span>Securely connect your bank through Moneyhub and automatically import account balances.</span>
+                        </div>
+                        <div class="card-body d-flex flex-wrap gap-2 align-items-center">
+                            <a href="{{ route('customer.bank_accounts.moneyhub.connect') }}" class="btn btn-primary">Connect Bank Account</a>
+                            <a href="{{ route('customer.bank_accounts.view') }}" class="btn btn-outline-primary">View Bank Accounts</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Container-fluid starts-->
         <div class="container-fluid default-dashboard">
             <div class="row widget-grid">
@@ -806,3 +822,4 @@
     </script>
 
 @endsection
+

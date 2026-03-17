@@ -56,5 +56,15 @@ return [
         'mailbox_quota_mb' => env('CPANEL_MAILBOX_QUOTA_MB', 1024),
     ],
 
+    'moneyhub' => [
+        'client_id' => env('MONEYHUB_CLIENT_ID'),
+        'redirect_uri' => env('MONEYHUB_REDIRECT_URI', 'https://executorhub.co.uk/customer/bank_accounts/moneyhub/callback'),
+        'identity_base_url' => env('MONEYHUB_IDENTITY_BASE_URL', 'https://identity.moneyhub.co.uk'),
+        'api_base_url' => env('MONEYHUB_API_BASE_URL', 'https://api.moneyhub.co.uk/v3.0'),
+        'private_key_path' => env('MONEYHUB_PRIVATE_KEY_PATH', storage_path('app/moneyhub/private_key.pem')),
+        'jwks_kid' => env('MONEYHUB_JWKS_KID'),
+    ],
 
 ];
+
+

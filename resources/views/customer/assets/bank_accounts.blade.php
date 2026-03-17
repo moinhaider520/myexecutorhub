@@ -7,7 +7,18 @@
     <div class="row widget-grid">
       <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
       <div class="row">
-        <div class="col-md-12 d-flex justify-content-end p-2">
+      @if (session('success'))
+        <div class="col-md-12">
+          <div class="alert alert-success">{{ session('success') }}</div>
+        </div>
+      @endif
+      @if (session('error'))
+        <div class="col-md-12">
+          <div class="alert alert-danger">{{ session('error') }}</div>
+        </div>
+      @endif
+      <div class="col-md-12 d-flex justify-content-end p-2 gap-2">
+        <a href="{{ route('customer.bank_accounts.moneyhub.connect') }}" class="btn btn-outline-primary">Connect Bank Account</a>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
           Add Bank Account
         </button>
@@ -364,3 +375,4 @@
     });
   </script>
 @endsection
+

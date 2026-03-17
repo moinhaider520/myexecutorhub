@@ -516,6 +516,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     // Customer Bank
     Route::get('/bank_accounts/view', [BankAccountController::class, 'view'])->name('bank_accounts.view');
+    Route::get('/bank_accounts/moneyhub/connect', [BankAccountController::class, 'connectMoneyhub'])->name('bank_accounts.moneyhub.connect');
+    Route::get('/bank_accounts/moneyhub/callback', [BankAccountController::class, 'moneyhubCallback'])->name('bank_accounts.moneyhub.callback');
+    Route::post('/bank_accounts/moneyhub/callback', [BankAccountController::class, 'handleMoneyhubCallback'])->name('bank_accounts.moneyhub.handle-callback');
     Route::post('/bank_accounts/store', [BankAccountController::class, 'store'])->name('bank_accounts.store');
     Route::post('/bank_accounts/update/{id}', [BankAccountController::class, 'update'])->name('bank_accounts.update');
     Route::delete('/bank_accounts/destroy/{id}', [BankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
@@ -1485,3 +1488,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reviews/{id}', [OthersReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [OthersReviewController::class, 'destroy'])->name('reviews.destroy');
 });
+
