@@ -10,6 +10,7 @@ use App\Services\MoneyhubService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class BankAccountController extends Controller
@@ -29,6 +30,11 @@ class BankAccountController extends Controller
 
             return redirect()->away($url);
         } catch (Throwable $throwable) {
+            Log::error('Moneyhub connection start failed.', [
+                'user_id' => Auth::id(),
+                'message' => $throwable->getMessage(),
+            ]);
+
             return redirect()
                 ->route('customer.bank_accounts.view')
                 ->with('error', $throwable->getMessage());
@@ -42,8 +48,22 @@ class BankAccountController extends Controller
 
     public function handleMoneyhubCallback(Request $request, MoneyhubService $moneyhubService)
     {
+        Log::info('Moneyhub callback controller hit.', [
+            'user_id' => Auth::id(),
+            'has_error' => $request->filled('error'),
+            'has_code' => $request->filled('code'),
+            'has_state' => $request->filled('state'),
+            'has_id_token' => $request->filled('id_token'),
+        ]);
+
         if ($request->filled('error')) {
             $description = $request->input('error_description') ?: $request->input('error');
+
+            Log::warning('Moneyhub callback returned provider error.', [
+                'user_id' => Auth::id(),
+                'error' => $request->input('error'),
+                'error_description' => $request->input('error_description'),
+            ]);
 
             return redirect()
                 ->route('customer.bank_accounts.view')
@@ -88,6 +108,12 @@ class BankAccountController extends Controller
                 ->route('customer.bank_accounts.view')
                 ->with('success', $message);
         } catch (Throwable $throwable) {
+            Log::error('Moneyhub callback handling failed.', [
+                'user_id' => Auth::id(),
+                'message' => $throwable->getMessage(),
+                'trace' => $throwable->getTraceAsString(),
+            ]);
+
             return redirect()
                 ->route('customer.bank_accounts.view')
                 ->with('error', $throwable->getMessage());

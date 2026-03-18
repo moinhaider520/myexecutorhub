@@ -107,6 +107,7 @@
         <select class="form-control" name="account_type" id="accountType" required>
           <option value="" selected disabled>--Select Account Type--</option>
           <option value="Current Account">Current Account</option>
+          <option value="Personal">Personal</option>
           <option value="Savings Account">Savings Account</option>
           <option value="Fixed-Term Deposits">Fixed-Term Deposits</option>
           @foreach($bankTypes as $type)
@@ -180,6 +181,7 @@
         <select class="form-control" name="account_type" id="editAccountType" required>
           <option value="" selected disabled>--Select Account Type--</option>
           <option value="Current Account">Current Account</option>
+          <option value="Personal">Personal</option>
           <option value="Savings Account">Savings Account</option>
           <option value="Fixed-Term Deposits">Fixed-Term Deposits</option>
           @foreach($bankTypes as $type)
@@ -270,7 +272,11 @@
       var balance = $(this).data('balance');
 
       $('#editBankAccountId').val(id);
-      $('#editAccountType').val(account_type);
+      const normalizedAccountType = String(account_type || '').toLowerCase();
+      const matchedAccountType = $('#editAccountType option').filter(function () {
+        return String($(this).val()).toLowerCase() === normalizedAccountType;
+      }).first().val();
+      $('#editAccountType').val(matchedAccountType || account_type);
       $('#editBankName').val(bank_name);
       $('#editSortCode').val(sort_code);
       $('#editAccountName').val(account_name);
@@ -375,4 +381,6 @@
     });
   </script>
 @endsection
+
+
 

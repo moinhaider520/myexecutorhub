@@ -11,6 +11,7 @@ use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use RuntimeException;
 
@@ -55,6 +56,12 @@ class MoneyhubService
                 'app_user_id' => $user->id,
                 'moneyhub_user_id' => $moneyhubUserId,
             ],
+        ]);
+
+        Log::info('Moneyhub connection started.', [
+            'user_id' => $user->id,
+            'moneyhub_user_id' => $moneyhubUserId,
+            'redirect_uri' => $this->redirectUri,
         ]);
 
         $response = Http::asForm()
@@ -102,6 +109,14 @@ class MoneyhubService
 
         $authSession = session('moneyhub_auth');
 
+        Log::info('Moneyhub callback received.', [
+            'user_id' => $user->id,
+            'state_present' => $state !== '',
+            'code_present' => $code !== '',
+            'id_token_present' => !empty($idToken),
+            'session_present' => !empty($authSession),
+        ]);
+
         if (!$authSession || (int) ($authSession['app_user_id'] ?? 0) !== (int) $user->id) {
             throw new RuntimeException('Your Moneyhub session has expired. Please try connecting the bank again.');
         }
@@ -130,6 +145,14 @@ class MoneyhubService
         $moneyhubUserId = (string) ($authSession['moneyhub_user_id'] ?? $user->moneyhub_user_id);
         $accounts = $this->fetchAccounts($moneyhubUserId);
         $stats = $this->syncAccounts($user, $accounts, $connectionId);
+
+        Log::info('Moneyhub callback completed.', [
+            'user_id' => $user->id,
+            'moneyhub_user_id' => $moneyhubUserId,
+            'connection_id' => $connectionId,
+            'accounts_received' => count($accounts),
+            'stats' => $stats,
+        ]);
 
         session()->forget('moneyhub_auth');
 
@@ -216,14 +239,34 @@ class MoneyhubService
         $accounts = $accountsResponse->json();
 
         if (isset($accounts['accounts']) && is_array($accounts['accounts'])) {
+            Log::info('Moneyhub accounts fetched.', [
+                'moneyhub_user_id' => $moneyhubUserId,
+                'result_count' => count($accounts['accounts']),
+                'response_shape' => 'accounts',
+            ]);
+
             return $accounts['accounts'];
         }
 
         if (isset($accounts['data']) && is_array($accounts['data'])) {
+            Log::info('Moneyhub accounts fetched.', [
+                'moneyhub_user_id' => $moneyhubUserId,
+                'result_count' => count($accounts['data']),
+                'response_shape' => 'data',
+            ]);
+
             return $accounts['data'];
         }
 
-        return is_array($accounts) ? array_values(array_filter($accounts, 'is_array')) : [];
+        $result = is_array($accounts) ? array_values(array_filter($accounts, 'is_array')) : [];
+
+        Log::info('Moneyhub accounts fetched.', [
+            'moneyhub_user_id' => $moneyhubUserId,
+            'result_count' => count($result),
+            'response_shape' => 'root',
+        ]);
+
+        return $result;
     }
 
     protected function syncAccounts(User $user, array $accounts, ?string $connectionId): array
@@ -237,6 +280,10 @@ class MoneyhubService
         DB::transaction(function () use ($accounts, $connectionId, $user, &$stats) {
             foreach ($accounts as $account) {
                 if (!is_array($account)) {
+                    Log::warning('Moneyhub sync skipped non-array account payload.', [
+                        'user_id' => $user->id,
+                        'account_payload_type' => gettype($account),
+                    ]);
                     continue;
                 }
 
@@ -247,11 +294,26 @@ class MoneyhubService
                 );
 
                 if (!$accountId) {
+                    Log::warning('Moneyhub sync skipped account without identifier.', [
+                        'user_id' => $user->id,
+                        'account_keys' => array_keys($account),
+                    ]);
                     continue;
                 }
 
                 $classification = $this->classifyAccount($account);
                 $payload = json_encode($account, JSON_UNESCAPED_SLASHES);
+
+                Log::info('Moneyhub syncing account.', [
+                    'user_id' => $user->id,
+                    'moneyhub_account_id' => $accountId,
+                    'classification' => $classification,
+                    'provider' => $this->providerName($account),
+                    'account_name' => $this->stringValue(
+                        $account['accountName'] ?? null,
+                        $account['name'] ?? null,
+                    ),
+                ]);
 
                 if ($classification === 'liability') {
                     DebtAndLiability::updateOrCreate(
@@ -353,14 +415,14 @@ class MoneyhubService
 
     protected function classifyAccount(array $account): string
     {
-        $haystack = strtolower(implode(' ', array_filter([
+        $haystack = strtolower($this->stringValue(
             $account['accountType'] ?? null,
             $account['type'] ?? null,
             $account['accountSubType'] ?? null,
             $account['category'] ?? null,
             $account['name'] ?? null,
             $account['accountName'] ?? null,
-        ])));
+        ));
 
         if (Str::contains($haystack, ['loan', 'credit', 'mortgage', 'debt', 'liability', 'card'])) {
             return 'liability';
@@ -400,6 +462,19 @@ class MoneyhubService
 
         if (is_array($value)) {
             $value = $value['amount'] ?? $value['current'] ?? $value['available'] ?? null;
+        }
+
+        if (is_array($value)) {
+            if (isset($value['majorUnits']) || isset($value['minorUnits'])) {
+                $majorUnits = (int) ($value['majorUnits'] ?? 0);
+                $minorUnits = (int) ($value['minorUnits'] ?? 0);
+
+                return round($majorUnits + ($minorUnits / 100), 2);
+            }
+
+            if (isset($value['value']) && is_numeric($value['value'])) {
+                return round(((float) $value['value']) / 100, 2);
+            }
         }
 
         $value = $this->stringValue(
@@ -521,6 +596,12 @@ class MoneyhubService
                 ?? $response->json('message')
                 ?? $response->body();
 
+            Log::error('Moneyhub HTTP request failed.', [
+                'message' => $message,
+                'status' => $response->status(),
+                'detail' => trim((string) $detail),
+            ]);
+
             throw new RuntimeException($message . ' ' . trim((string) $detail), previous: $exception);
         }
     }
@@ -532,6 +613,16 @@ class MoneyhubService
                 continue;
             }
 
+            if (is_array($value)) {
+                $value = implode(' ', $this->flattenToStrings($value));
+            } elseif (is_object($value)) {
+                if (method_exists($value, '__toString')) {
+                    $value = (string) $value;
+                } else {
+                    $value = implode(' ', $this->flattenToStrings((array) $value));
+                }
+            }
+
             $value = trim((string) $value);
 
             if ($value !== '') {
@@ -540,6 +631,32 @@ class MoneyhubService
         }
 
         return '';
+    }
+
+    protected function flattenToStrings(array $values): array
+    {
+        $result = [];
+
+        array_walk_recursive($values, function ($value) use (&$result) {
+            if ($value === null) {
+                return;
+            }
+
+            if (is_bool($value)) {
+                $result[] = $value ? 'true' : 'false';
+                return;
+            }
+
+            if (is_scalar($value)) {
+                $string = trim((string) $value);
+
+                if ($string !== '') {
+                    $result[] = $string;
+                }
+            }
+        });
+
+        return $result;
     }
 
     protected function base64UrlEncode(string $value): string
@@ -558,7 +675,3 @@ class MoneyhubService
         return base64_decode(strtr($value, '-_', '+/')) ?: '';
     }
 }
-
-
-
-
