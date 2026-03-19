@@ -41,6 +41,10 @@ class KnowledgebaseController extends Controller
     {
         return view('knowledgebase.quick_start_guide');
     }
+    public function first_sale_blueprint()
+    {
+        return view('knowledgebase.first_sale_blueprint');
+    }
     public function best_practices()
     {
         return view('knowledgebase.best_practices');

@@ -9,8 +9,59 @@
         .step.active {
             display: block;
         }
+
+        .why-it-matters {
+            border-left: 4px solid #2b7a78;
+            background: #f7fbfb;
+        }
+
+        .partner-metric-card,
+        .partner-checklist-card,
+        .partner-blueprint-card {
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+        }
+
+        .partner-checklist-card ul,
+        .partner-blueprint-card ol {
+            margin-bottom: 0;
+            padding-left: 1.2rem;
+        }
+
+        .partner-checklist-card li,
+        .partner-blueprint-card li {
+            margin-bottom: 0.75rem;
+        }
+
+        .partner-score {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 0;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .partner-score:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .partner-score:first-child {
+            padding-top: 0;
+        }
+
+        .partner-score strong {
+            color: #183153;
+            font-size: 1.1rem;
+        }
     </style>
     <div class="page-body">
+        @php
+            $onboardingStepsComplete = collect($guide ?? [])->where('completed', true)->count();
+            $onboardingFullyComplete = ($guide ?? []) && $onboardingStepsComplete === count($guide);
+        @endphp
         <!-- Onboarding Video -->
         <div class="container">
             <div class="row">
@@ -21,6 +72,17 @@
                             <span> <a href="https://www.youtube.com/@ExecutorHubUK" target="_blank" class="text-center"
                                     style="font-size: 18px;">Click Here to View Channel!</a></span>
                         </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h2 class="mb-3">Welcome to the Executor Hub Partner Programme</h2>
+                            <p class="mb-2">Executor Hub helps families organise their affairs and guides executors step-by-step when the time comes.</p>
+                            <p class="mb-0">As a partner, you can introduce this to clients, add meaningful value to your service, and build recurring income without changing your existing workflow.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,7 +137,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Executor Hub – what is it?</h4>
+                            <h4>What Executor Hub Is</h4>
                         </div>
                         <div class="card-body">
 
@@ -95,7 +157,7 @@
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Partner Benefits – Why Recommend Executor Hub?</h4>
+                            <h4>Partner Benefits - Why Recommend Executor Hub?</h4>
                         </div>
                         <div class="card-body">
 
@@ -120,6 +182,20 @@
                 </div>
             </div>
             <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card why-it-matters">
+                        <div class="card-header">
+                            <h4>Why This Matters</h4>
+                        </div>
+                        <div class="card-body">
+                            <p>When someone dies, families often spend months trying to locate documents, passwords, accounts, and instructions while also dealing with grief.</p>
+                            <p>Executor Hub removes that confusion by keeping key information in one secure place and giving executors clear guidance on what to do next.</p>
+                            <p class="mb-0">By introducing Executor Hub to your clients, you are not just generating income. You are helping protect families from stress, delay, and uncertainty at one of the hardest times in life.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
                 <div class="col-md-6">
                     <div class="col text-center">
                         <h5>Your Coupon Code:</h5>
@@ -131,9 +207,90 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col text-center">
-                        <h5>Onboarding Guide:</h5>
-                        <p class="lead">View the Onboarding Guide by clicking the button below.</p>
-                        <button class="btn btn-primary mt-3" id="viewGuideBtn" style="">View Guide</button>
+                        <h5>Activation Complete:</h5>
+                        <p class="lead">Review the final activation page and follow the next steps to start selling confidently.</p>
+                        <a href="{{ route('partner.knowledgebase.quick_start_guide') }}" class="btn btn-primary mt-3">Open Activation Guide</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="card partner-metric-card h-100">
+                        <div class="card-header">
+                            <h4>Partner Activity</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="partner-score">
+                                <span>Clients referred</span>
+                                <strong>{{ $customers_invited }}</strong>
+                            </div>
+                            <div class="partner-score">
+                                <span>Monthly income</span>
+                                <strong>£{{ number_format(auth()->user()->commission_amount, 2) }}</strong>
+                            </div>
+                            <div class="partner-score">
+                                <span>Partners introduced</span>
+                                <strong>{{ $subpartners }}</strong>
+                            </div>
+                            <div class="partner-score">
+                                <span>Next milestone</span>
+                                <strong>{{ max(10 - $customers_invited, 0) }} to 10 clients</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <div class="card partner-checklist-card h-100">
+                        <div class="card-header">
+                            <h4>Partner Success Checklist</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted mb-3">{{ $onboardingStepsComplete }}/{{ count($guide ?? []) }} onboarding actions completed</p>
+                            <ul>
+                                <li>{!! $onboardingFullyComplete ? '&#9745;' : '&#9744;' !!} Complete onboarding</li>
+                                <li>{!! $customers_invited >= 5 ? '&#9745;' : '&#9744;' !!} Make first 5 sales</li>
+                                <li>{!! $subpartners >= 1 ? '&#9745;' : '&#9744;' !!} Recruit first partner</li>
+                                <li>{!! auth()->user()->commission_amount >= 1000 ? '&#9745;' : '&#9744;' !!} Reach £1,000 commission</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card partner-checklist-card h-100">
+                        <div class="card-header">
+                            <h4>Partner Milestones</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>{!! $customers_invited > 0 ? '&#9745;' : '&#9744;' !!} First Sale</li>
+                                <li>{!! $customers_invited >= 5 ? '&#9745;' : '&#9744;' !!} 5 Clients Referred</li>
+                                <li>{!! $subpartners >= 1 ? '&#9745;' : '&#9744;' !!} Recruit 1 Partner</li>
+                                <li>{!! $subpartners >= 3 ? '&#9745;' : '&#9744;' !!} Recruit 3 Partners</li>
+                                <li>{!! $subpartners >= 10 ? '&#9745;' : '&#9744;' !!} Recruit 10 Partners</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card partner-blueprint-card">
+                        <div class="card-header d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                            <div>
+                                <h4 class="mb-1">First Sale Blueprint</h4>
+                                <p class="mb-0">A simple plan you can follow today without changing your workflow.</p>
+                            </div>
+                            <a href="{{ route('partner.knowledgebase.first_sale_blueprint') }}" class="btn btn-primary">Open Blueprint</a>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-3">Partners who complete these steps usually create momentum fast because every action is tied to a clear outreach task.</p>
+                            <ol>
+                                <li>Copy your referral link.</li>
+                                <li>Send the WhatsApp message to 5 clients.</li>
+                                <li>Send the email template to 10 clients.</li>
+                                <li>Mention Executor Hub at your next meeting.</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>

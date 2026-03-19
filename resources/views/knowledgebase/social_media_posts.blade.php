@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Intro</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Social Media Posts</h2>
                         <p>Social media is one of the fastest ways to introduce Executor Hub to a wide audience.
                             We’ve created ready-to-use posts for Facebook, Instagram, and Twitter/X that you can copy,
                             personalise, and publish.</p>
@@ -55,6 +56,11 @@
                         <h2 class="mb-4">Post#5: Urgency (Call to Action)</h2>
                         <p>Don’t put this off. Executor Hub takes less than 15 minutes to set up your account, and it can save your family months of stress in the future.</p>
                         <p>Try it free for 14 days now: [referral link]</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Reconnect with older clients',
+                            'nextUrl' => route('partner.knowledgebase.client_reactivation'),
+                            'nextLabel' => 'Client Reactivation',
+                        ])
                     </div>
                 </div>
             </div>

@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Intro</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">WhatsApp Messages</h2>
                         <p>Some clients respond faster to a quick WhatsApp or text message than to an email or phone call.
                             We’ve prepared short, ready-to-send messages you can use to introduce Executor Hub in a
                             friendly, conversational way.</p>
@@ -39,6 +40,11 @@
                         <!-- TEMPLATE 5 -->
                         <h2 class="mb-4">Message#5: Urgency & Action</h2>
                         <p>Hi [First Name], Executor Hub takes just 10 mins to set up your account but can save your family months of stress. Don’t put this off — here’s your free trial link: [referral link]</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Turn messages into email follow-up',
+                            'nextUrl' => route('partner.knowledgebase.email_templates'),
+                            'nextLabel' => 'Email Templates',
+                        ])
                     </div>
                 </div>
             </div>

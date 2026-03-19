@@ -2,13 +2,14 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Partner Quick-Start Guide</h2>
-                        <p>How to Start Earning in Under 15 Minutes</p>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Activation Complete</h2>
+                        <p>Your next moves to start earning in under 15 minutes</p>
                         <p>Executor Hub is designed to be quick and simple for partners to get started. Follow these steps
                             to begin referring clients and earning commission right away.</p>
 
@@ -57,6 +58,11 @@
                         <p>2. Client signs up (14-day free trial) →</p>
                         <p>3. Client continues with a paid subscription →</p>
                         <p>4. You earn 30% recurring commission (paid monthly).</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Move into selling tools',
+                            'nextUrl' => route('partner.knowledgebase.suggested_scripts'),
+                            'nextLabel' => 'Sales Scripts',
+                        ])
                     </div>
                 </div>
             </div>

@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Intro</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Call Openers</h2>
                         <p>Sometimes you only have a few seconds to capture a client’s attention — on the phone, in a voicemail, or at the start of a meeting. These short openers are designed to spark interest in Executor Hub quickly, before following up with a fuller explanation or sending the free trial link.</p>
                         <p>Use them naturally, then pause to let the client respond.</p>
 
@@ -36,6 +37,11 @@
                         <h2 class="mb-4">Opener#5: Urgency & Action (Loss Aversion)</h2>
                         <p>“Don’t put this off”</p>
                         <p>Executor Hub only takes about 10 minutes to start the set up, but it can save your family months of stress later — that’s why I suggest setting it up now.</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Follow up with a fast message',
+                            'nextUrl' => route('partner.knowledgebase.whatsapp_texts'),
+                            'nextLabel' => 'WhatsApp Messages',
+                        ])
                     </div>
                 </div>
             </div>

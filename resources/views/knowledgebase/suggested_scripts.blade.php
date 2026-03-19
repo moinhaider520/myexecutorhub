@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Intro</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Sales Scripts</h2>
                         <p>Introducing Executor Hub to clients is simple when you have the right words. Below are five suggested scripts you can use in meetings, on the phone, or as part of client reviews. Each script takes a slightly different approach — from positioning Executor Hub as part of professional best practice, to highlighting the emotional benefits for families.</p>
                         <p>Tips for best results:</p>
                         <ol>
@@ -16,6 +17,34 @@
                             <li>Keep it conversational — these are guides, not word-for-word scripts.</li>
                             <li>End with a clear call-to-action: offering to send the client the free trial link right away.</li>
                         </ol>
+
+                        <h2 class="mb-4">Which Script Should You Use?</h2>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="border rounded-4 p-4 h-100">
+                                    <h4 class="mb-3">Client scenario: New client</h4>
+                                    <p class="mb-0">Use Script #1. It positions Executor Hub as part of your normal trusted recommendation process.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="border rounded-4 p-4 h-100">
+                                    <h4 class="mb-3">Client scenario: Older client</h4>
+                                    <p class="mb-0">Use Script #2 or your reactivation template. Lead with the pain of missing paperwork and the value of an upgrade.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="border rounded-4 p-4 h-100">
+                                    <h4 class="mb-3">Client scenario: Busy client</h4>
+                                    <p class="mb-0">Use Script #5. Keep it brief, practical, and action-focused so they can move quickly.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="border rounded-4 p-4 h-100">
+                                    <h4 class="mb-3">Client scenario: In a meeting</h4>
+                                    <p class="mb-0">Use Script #3 or #4 depending on whether the client responds better to family outcomes or market momentum.</p>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- TEMPLATE 1 -->
                         <h2 class="mb-4">Script#1: Trusted Adviser (Authority & Credibility)</h2>
@@ -51,6 +80,11 @@
                         <p>A lot of people mean to organise this, but life gets busy and it gets left until later.</p>
                         <p>The truth is, Executor Hub takes less than 15 minutes to start the set up — and it could save your family months of stress in the future.</p>
                         <p>Since it’s free to try for 14 days, I’d suggest setting it up now while it’s fresh in your mind. Shall I send you the link?</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Sharpen your opening line',
+                            'nextUrl' => route('partner.knowledgebase.short_call_openers'),
+                            'nextLabel' => 'Call Openers',
+                        ])
                     </div>
                 </div>
             </div>

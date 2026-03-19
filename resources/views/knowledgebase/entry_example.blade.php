@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Knowledgebase Entry Example</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Logos</h2>
                         <p>Title: Executor Hub Logo Files</p>
                         <p>Body Copy:</p>
                         <p>We’ve provided official Executor Hub logos for you to use in your emails, newsletters,
@@ -34,6 +35,11 @@
                         <p>👉 Please use the logo exactly as provided — do not stretch, change colours, or crop it.</p>
                         <p>💡 Bonus Tip: If you also create a small “Powered by Executor Hub” badge, partners can drop it at
                             the bottom of their own materials — subtle but powerful brand awareness.</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Return to your partner home',
+                            'nextUrl' => route('partner.dashboard'),
+                            'nextLabel' => 'Welcome',
+                        ])
                     </div>
                 </div>
             </div>

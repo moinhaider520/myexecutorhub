@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Client Reactivation Templates</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Client Reactivation</h2>
                         <p>Many of your clients already have wills, trusts, or LPAs in place — sometimes completed months or
                             years ago. Executor Hub is the perfect way to re-engage these clients and add extra value,
                             because it’s a service that likely wasn’t available when their documents were done.</p>
@@ -59,6 +60,11 @@
                         <p>“Would it be okay if I check in next week to see if you’ve had a chance to set it up?”</p>
                         <p>•	Even if only a small % sign up, this adds up quickly because it’s recurring income and strengthens your relationship with existing clients.</p>
 
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Download branded assets',
+                            'nextUrl' => route('partner.knowledgebase.entry_example'),
+                            'nextLabel' => 'Logos',
+                        ])
                     </div>
                 </div>
             </div>

@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Best Practices & FAQs</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">How To Introduce It</h2>
                         <p>Getting the timing right makes a big difference to how clients respond. Executor Hub should feel like a natural part of estate planning, not an afterthought. Below are best practices and answers to common questions to help you maximise results.</p>
 
 
@@ -55,6 +56,11 @@
                         <p>•	Remember: even small percentages add up. For every 100 clients introduced, 5–15 subscriptions = recurring monthly income, compounding as your client base grows.</p>
                         <p>With this approach, you can confidently introduce Executor Hub at any stage — whether it’s a new client, a client completing their documents now, or an older client coming back for a review.</p>
 
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Finish the onboarding flow',
+                            'nextUrl' => route('partner.knowledgebase.quick_start_guide'),
+                            'nextLabel' => 'Activation Complete',
+                        ])
                     </div>
                 </div>
             </div>

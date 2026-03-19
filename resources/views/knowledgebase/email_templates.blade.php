@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Intro</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Email Templates</h2>
                         <p>We’ve created a set of 5 ready-to-use client emails that you can copy, personalise, and send
                             directly to your clients. Each email uses a different approach — from trusted recommendation to
                             urgency — so you can reach clients with the message that resonates best with them.</p>
@@ -126,6 +127,11 @@
                         <p>You can try it free for 14 days, and you can update it as often as you need to.  </p>
                         <p>👉 [Complete your free trial signup here] (Insert referral link)  </p>
                         <p>Please don’t put this off – this is a small step now that makes a huge difference for your family later.</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Keep building your outreach assets',
+                            'nextUrl' => route('partner.knowledgebase.social_media_posts'),
+                            'nextLabel' => 'Social Media Posts',
+                        ])
                     </div>
                 </div>
             </div>

@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card p-2">
-                        <h2 class="mb-4">Intro</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="mb-4">Direct Messages</h2>
                         <p>Reaching clients or prospects through direct messages (DMs) on LinkedIn, Facebook, or Instagram can be highly effective — especially when it feels personal, helpful, and non-salesy.</p>
                         <p>We’ve provided 5 short DM templates you can copy, personalise, and send. Each uses a different approach — trusted recommendation, solving a problem, emotional angle, social proof, and urgency.</p>
                         <p>Tips for best results:</p>
@@ -37,6 +38,11 @@
                         <!-- TEMPLATE 5 -->
                         <h2 class="mb-4">Direct Message#5: Urgency & Action</h2>
                         <p>Hi [First Name], Executor Hub takes less than 15 minutes to set up, but it can save your family months of stress later. Since there’s a free 14-day trial, I’d suggest setting it up now while it’s fresh in your mind. Here’s the link: [referral link]</p>
+                        @include('knowledgebase.partials.next_step', [
+                            'nextHeading' => 'Post publicly as well',
+                            'nextUrl' => route('partner.knowledgebase.social_media_posts'),
+                            'nextLabel' => 'Social Media Posts',
+                        ])
                     </div>
                 </div>
             </div>

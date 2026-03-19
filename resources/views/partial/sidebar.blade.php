@@ -198,71 +198,278 @@
                     @endrole
 
                     @role('partner')
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
-                            </svg>
-                            <span>Customers </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.customers.index') }}">View All</a></li>
-                            <li><a href="{{ route('partner.customers.invite_customers') }}">Invite Customer</a></li>
-                        </ul>
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6>Start Here</h6>
+                        </div>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <a class="sidebar-link" href="{{ route('partner.dashboard') }}">
                             <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>
                             <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-home') }}"></use>
                             </svg>
-                            <span>Partners </span>
+                            <span>Welcome</span>
                         </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.partners.create') }}">Create Partner</a></li>
-                            <li><a href="{{ route('partner.partners.index') }}">View All</a></li>
-                        </ul>
                     </li>
-
-
                     <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-knowledgebase') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-knowledgebase') }}"></use>
+                            </svg>
+                            <span>What Executor Hub Is</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.commission_calculator.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-charts') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-charts') }}"></use>
+                            </svg>
+                            <span>How You Earn</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.best_practices') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
+                            </svg>
+                            <span>How To Introduce It</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.first_sale_blueprint') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-task') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-task') }}"></use>
+                            </svg>
+                            <span>First Sale Blueprint</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.quick_start_guide') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-to-do') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-to-do') }}"></use>
+                            </svg>
+                            <span>Activation Complete</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6>Sell Executor Hub</h6>
+                        </div>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.suggested_scripts') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Sales Scripts</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.short_call_openers') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
+                            </svg>
+                            <span>Call Openers</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.whatsapp_texts') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-chat') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-chat') }}"></use>
+                            </svg>
+                            <span>WhatsApp Messages</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.email_templates') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
                             </svg>
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-email') }}"></use>
                             </svg>
-                            <span>Knowledgebase</span>
+                            <span>Email Templates</span>
                         </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.knowledgebase.quick_start_guide') }}">Quick Start Guide</a>
-                            </li>
-                            <li><a href="{{ route('partner.knowledgebase.index') }}">Learning Videos</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.email_templates') }}">Email Templates</a>
-                            </li>
-                            <li><a href="{{ route('partner.knowledgebase.suggested_scripts') }}">Suggested Scripts</a>
-                            </li>
-                            <li><a href="{{ route('partner.knowledgebase.short_call_openers') }}">Short Call
-                                    Openers</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.whatsapp_texts') }}">Whatsapp/Texts</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.social_media_direct_messages') }}">SM Direct
-                                    Messages(DM)</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.social_media_posts') }}">Social Media
-                                    Posts</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.best_practices') }}">FAQ's & Best
-                                    Practices</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.client_reactivation') }}">Client Reactivation
-                                    Templates</a></li>
-                            <li><a href="{{ route('partner.knowledgebase.entry_example') }}">Logos</a></li>
-
-
-                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.social_media_posts') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-social') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-social') }}"></use>
+                            </svg>
+                            <span>Social Media Posts</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.client_reactivation') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-calendar') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-calender') }}"></use>
+                            </svg>
+                            <span>Client Reactivation</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.best_practices') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-bookmark') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-bookmark') }}"></use>
+                            </svg>
+                            <span>Best Practices</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6>Tools</h6>
+                        </div>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.dashboard') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-sample-page') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-sample-page') }}"></use>
+                            </svg>
+                            <span>Referral Link</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.commission_calculator.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-charts') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-charts') }}"></use>
+                            </svg>
+                            <span>Commission Calculator</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.dashboard') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Earnings Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.customers.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-contact') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-contact') }}"></use>
+                            </svg>
+                            <span>Customers</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.partners.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Partners</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.summary.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Payouts</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-main-title">
+                        <div>
+                            <h6>Resources</h6>
+                        </div>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.entry_example') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                            </svg>
+                            <span>Logos</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.social_media_posts') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-gallery') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-gallery') }}"></use>
+                            </svg>
+                            <span>Marketing Assets</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.index') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-learning') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-learning') }}"></use>
+                            </svg>
+                            <span>Videos</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.best_practices') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-faq') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-faq') }}"></use>
+                            </svg>
+                            <span>FAQs</span>
+                        </a>
                     </li>
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -294,12 +501,6 @@
                         </ul>
                     </li>
 
-                    <li class="sidebar-main-title">
-                        <div>
-                            <h6>Account & Membership</h6>
-                        </div>
-                    </li>
-
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -308,38 +509,12 @@
                             <svg class="fill-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
                             </svg>
-                            <span>Commission Calculator </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.commission_calculator.index') }}">Commission Calculator</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
-                            </svg>
-                            <span>Bank Account </span>
+                            <span>Account & Membership</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('partner.bank_account.index') }}">Bank Account</a></li>
-                        </ul>
-                    </li>
-                    <li class="sidebar-list">
-                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                            <svg class="stroke-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-editors') }}"></use>
-                            </svg>
-                            <svg class="fill-icon">
-                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-editors') }}"></use>
-                            </svg>
-                            <span>Payout Summary </span>
-                        </a>
-                        <ul class="sidebar-submenu">
-                            <li><a href="{{ route('partner.summary.index') }}">Summary</a></li>
+                            <li><a href="{{ route('partner.notifications.index') }}">Notifications</a></li>
+                            <li><a href="{{ route('partner.messages.view') }}">Inbox</a></li>
                         </ul>
                     </li>
                     @endrole

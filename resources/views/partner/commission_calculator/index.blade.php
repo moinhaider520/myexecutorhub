@@ -235,7 +235,8 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title mb-0">Commission Calculator</h4>
+                                <h4 class="card-title mb-0">How You Earn</h4>
+                                <p class="mb-0 mt-2 text-muted">Partner earnings simulator</p>
                             </div>
                             <div class="card-body">
                                 <form id="calculatorForm">

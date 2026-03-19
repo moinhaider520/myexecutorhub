@@ -2,12 +2,13 @@
 
 @section('content')
 
-    <div class="page-body">
+    <div class="page-body knowledgebase-shell">
+        @include('knowledgebase.partials.styles')
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Video Title: Partner Welcome</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="p-2">What Executor Hub Is: Partner Welcome</h2>
                         <video id="earningVideo" style="width:100%;height:390px;" controls>
                             <source src="{{ asset('assets/knowledgebase/video1.mp4') }}" type="video/mp4">
                             Your browser does not support the video tag.
@@ -15,8 +16,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Video Title: Earn With Us</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="p-2">How You Earn: Partner Programme Overview</h2>
                         <video id="earningVideo" style="width:100%;height:390px;" controls>
                             <source src="{{ asset('assets/earning_video.mp4') }}" type="video/mp4">
                             Your browser does not support the video tag.
@@ -24,8 +25,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Title: How to Introduce Executor Hub to Clients</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="p-2">How To Introduce It: Client Conversations</h2>
                         @if(auth()->user()->profession == "General")
                             <video id="earningVideo" style="width:100%;height:390px;" controls>
                                 <source src="{{ asset('assets/knowledgebase/video2.mp4') }}" type="video/mp4">
@@ -107,8 +108,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Video Title: Client Explainer</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="p-2">What Clients Need To Understand</h2>
                         <video id="earningVideo" style="width:100%;height:390px;" controls>
                             <source src="{{ asset('assets/knowledgebase/video3.mp4') }}" type="video/mp4">
                             Your browser does not support the video tag.
@@ -116,13 +117,20 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <div class="card">
-                        <h2 class="p-2">Video Title: Partner Success & Commission</h2>
+                    <div class="card knowledgebase-card">
+                        <h2 class="p-2">Activation Complete: Partner Success & Commission</h2>
                         <video id="earningVideo" style="width:100%;height:390px;" controls>
                             <source src="{{ asset('assets/knowledgebase/video4.mp4') }}" type="video/mp4">
                             Your browser does not support the video tag.
                         </video>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    @include('knowledgebase.partials.next_step', [
+                        'nextHeading' => 'Continue to earnings',
+                        'nextUrl' => route('partner.commission_calculator.index'),
+                        'nextLabel' => 'How You Earn',
+                    ])
                 </div>
             </div>
         </div>
