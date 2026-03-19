@@ -227,6 +227,90 @@
             font-size: 14px;
             color: #856404;
         }
+
+        .simulator-shell {
+            display: grid;
+            gap: 25px;
+        }
+
+        .scenario-grid,
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .scenario-card,
+        .insight-card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+        }
+
+        .scenario-card h3,
+        .insight-card h3 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #243b53;
+        }
+
+        .scenario-card p,
+        .insight-card p {
+            margin-bottom: 0;
+            color: #52606d;
+            font-size: 13px;
+        }
+
+        .scenario-card strong,
+        .insight-card strong {
+            display: block;
+            margin-top: 12px;
+            color: #183153;
+            font-size: 28px;
+        }
+
+        .graph-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(15, 23, 42, 0.08);
+        }
+
+        .graph-bars {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 14px;
+            align-items: end;
+            min-height: 240px;
+            margin-top: 18px;
+        }
+
+        .graph-bar {
+            display: flex;
+            flex-direction: column;
+            justify-content: end;
+            gap: 10px;
+            min-height: 240px;
+        }
+
+        .graph-fill {
+            min-height: 32px;
+            border-radius: 14px 14px 6px 6px;
+            background: linear-gradient(180deg, #3caea3 0%, #2b7a78 100%);
+        }
+
+        .graph-value {
+            font-weight: 700;
+            color: #183153;
+            text-align: center;
+        }
+
+        .graph-label {
+            text-align: center;
+            color: #52606d;
+            font-weight: 600;
+        }
     </style>
     <div class="page-body">
         <div class="container-fluid">
@@ -239,6 +323,7 @@
                                 <p class="mb-0 mt-2 text-muted">Partner earnings simulator</p>
                             </div>
                             <div class="card-body">
+                                <div class="simulator-shell">
                                 <form id="calculatorForm">
                                     <!-- SECTION 1: Client Selection -->
                                     <div class="section">
@@ -397,6 +482,80 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="section">
+                                    <h2><span class="section-number">6</span> Income Paths At A Glance</h2>
+                                    <div class="scenario-grid">
+                                        <div class="scenario-card">
+                                            <h3>Sell One Today</h3>
+                                            <p>Direct commission from one customer on your selected plan.</p>
+                                            <strong id="scenarioOneSale">£0.00</strong>
+                                        </div>
+                                        <div class="scenario-card">
+                                            <h3>Sell Five This Month</h3>
+                                            <p>A simple monthly benchmark for a steady outreach rhythm.</p>
+                                            <strong id="scenarioFiveSales">£0.00</strong>
+                                        </div>
+                                        <div class="scenario-card">
+                                            <h3>Current Team Scenario</h3>
+                                            <p>Your selected partner count and sales assumptions combined.</p>
+                                            <strong id="scenarioCurrentTeam">£0.00</strong>
+                                        </div>
+                                        <div class="scenario-card">
+                                            <h3>Large Network Scenario</h3>
+                                            <p>A 10-partner team with 5 monthly sales each to show scale.</p>
+                                            <strong id="scenarioLargeNetwork">£0.00</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h2><span class="section-number">7</span> Lifetime Value Snapshot</h2>
+                                    <div class="insight-grid">
+                                        <div class="insight-card">
+                                            <h3>One Customer Over 12 Months</h3>
+                                            <p>Projected direct commission from one retained customer over a year.</p>
+                                            <strong id="lifetimeSingleCustomer">£0.00</strong>
+                                        </div>
+                                        <div class="insight-card">
+                                            <h3>Three Partners Over 12 Months</h3>
+                                            <p>Projected override income from 3 partners each making 5 sales per month.</p>
+                                            <strong id="lifetimeThreePartners">£0.00</strong>
+                                        </div>
+                                        <div class="insight-card">
+                                            <h3>Your Current Plan Over 12 Months</h3>
+                                            <p>Your current monthly inputs annualised into a full-year view.</p>
+                                            <strong id="lifetimeCurrentPlan">£0.00</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section">
+                                    <h2><span class="section-number">8</span> Growth Projection</h2>
+                                    <p class="mb-0 text-muted">A visual projection of cumulative income if your current monthly plan stays consistent.</p>
+                                    <div class="graph-card">
+                                        <div class="graph-bars">
+                                            <div class="graph-bar">
+                                                <div class="graph-fill" id="growthBar1"></div>
+                                                <div class="graph-value" id="growthValue1">£0.00</div>
+                                                <div class="graph-label">Month 1</div>
+                                            </div>
+                                            <div class="graph-bar">
+                                                <div class="graph-fill" id="growthBar3"></div>
+                                                <div class="graph-value" id="growthValue3">£0.00</div>
+                                                <div class="graph-label">Month 3</div>
+                                            </div>
+                                            <div class="graph-bar">
+                                                <div class="graph-fill" id="growthBar6"></div>
+                                                <div class="graph-value" id="growthValue6">£0.00</div>
+                                                <div class="graph-label">Month 6</div>
+                                            </div>
+                                            <div class="graph-bar">
+                                                <div class="graph-fill" id="growthBar12"></div>
+                                                <div class="graph-value" id="growthValue12">£0.00</div>
+                                                <div class="graph-label">Month 12</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -420,6 +579,10 @@
 
         let christmasEnabled = false;
         let vatEnabled = false;
+
+        function formatCurrency(value) {
+            return `£${value.toFixed(2)}`;
+        }
 
         // Toggle handlers
         document.getElementById('christmasToggle').addEventListener('click', function () {
@@ -498,10 +661,10 @@
             }
 
             // Update Section 2: Customer Pricing
-            document.getElementById('pricePaid').textContent = `£${totalPrice.toFixed(2)}`;
-            document.getElementById('valueReceived').textContent = `£${valueReceived.toFixed(2)}`;
-            document.getElementById('savings').textContent = `£${savings.toFixed(2)}`;
-            document.getElementById('vatAmount').textContent = `£${vatAmount.toFixed(2)}`;
+            document.getElementById('pricePaid').textContent = formatCurrency(totalPrice);
+            document.getElementById('valueReceived').textContent = formatCurrency(valueReceived);
+            document.getElementById('savings').textContent = formatCurrency(savings);
+            document.getElementById('vatAmount').textContent = formatCurrency(vatAmount);
 
             // Calculate Section 3: Partner Earnings (commission on price before VAT)
             const commissionBase = priceBeforeVAT;
@@ -509,9 +672,9 @@
             const monthlyEarnings = commissionPerSale * salesPerMonth;
             const annualEarnings = monthlyEarnings * 12;
 
-            document.getElementById('commissionPerSale').textContent = `£${commissionPerSale.toFixed(2)}`;
-            document.getElementById('monthlyEarnings').textContent = `£${monthlyEarnings.toFixed(2)}`;
-            document.getElementById('annualEarnings').textContent = `£${annualEarnings.toFixed(2)}`;
+            document.getElementById('commissionPerSale').textContent = formatCurrency(commissionPerSale);
+            document.getElementById('monthlyEarnings').textContent = formatCurrency(monthlyEarnings);
+            document.getElementById('annualEarnings').textContent = formatCurrency(annualEarnings);
 
             // Calculate Section 4: Override Earnings
             const overridePerSale = commissionBase * OVERRIDE_COMMISSION;
@@ -519,16 +682,54 @@
             const monthlyOverride = overridePerSale * totalTeamSales;
             const annualOverride = monthlyOverride * 12;
 
-            document.getElementById('overridePerSale').textContent = `£${overridePerSale.toFixed(2)}`;
-            document.getElementById('monthlyOverride').textContent = `£${monthlyOverride.toFixed(2)}`;
-            document.getElementById('annualOverride').textContent = `£${annualOverride.toFixed(2)}`;
+            document.getElementById('overridePerSale').textContent = formatCurrency(overridePerSale);
+            document.getElementById('monthlyOverride').textContent = formatCurrency(monthlyOverride);
+            document.getElementById('annualOverride').textContent = formatCurrency(annualOverride);
 
             // Calculate Section 5: Total Income
             const monthlyTotal = monthlyEarnings + monthlyOverride;
             const annualTotal = annualEarnings + annualOverride;
 
-            document.getElementById('monthlyTotal').textContent = `£${monthlyTotal.toFixed(2)}`;
-            document.getElementById('annualTotal').textContent = `£${annualTotal.toFixed(2)}`;
+            document.getElementById('monthlyTotal').textContent = formatCurrency(monthlyTotal);
+            document.getElementById('annualTotal').textContent = formatCurrency(annualTotal);
+
+            const fiveSalesScenario = commissionPerSale * 5;
+            const currentTeamScenario = monthlyTotal;
+            const largeNetworkScenario = commissionPerSale * 5 + (overridePerSale * 10 * 5);
+
+            document.getElementById('scenarioOneSale').textContent = formatCurrency(commissionPerSale);
+            document.getElementById('scenarioFiveSales').textContent = formatCurrency(fiveSalesScenario);
+            document.getElementById('scenarioCurrentTeam').textContent = formatCurrency(currentTeamScenario);
+            document.getElementById('scenarioLargeNetwork').textContent = formatCurrency(largeNetworkScenario);
+
+            const singleCustomerLifetime = commissionPerSale * 12;
+            const threePartnerLifetime = overridePerSale * 3 * 5 * 12;
+
+            document.getElementById('lifetimeSingleCustomer').textContent = formatCurrency(singleCustomerLifetime);
+            document.getElementById('lifetimeThreePartners').textContent = formatCurrency(threePartnerLifetime);
+            document.getElementById('lifetimeCurrentPlan').textContent = formatCurrency(annualTotal);
+
+            const growthPoints = {
+                1: monthlyTotal,
+                3: monthlyTotal * 3,
+                6: monthlyTotal * 6,
+                12: monthlyTotal * 12
+            };
+            const maxGrowth = Math.max(...Object.values(growthPoints), 1);
+
+            Object.entries(growthPoints).forEach(([month, value]) => {
+                const bar = document.getElementById(`growthBar${month}`);
+                const label = document.getElementById(`growthValue${month}`);
+                const height = Math.max((value / maxGrowth) * 180, value > 0 ? 32 : 12);
+
+                if (bar) {
+                    bar.style.height = `${height}px`;
+                }
+
+                if (label) {
+                    label.textContent = formatCurrency(value);
+                }
+            });
         }
 
         // Initial calculation

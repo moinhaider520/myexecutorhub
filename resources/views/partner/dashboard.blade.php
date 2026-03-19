@@ -82,11 +82,73 @@
             margin-top: 1.25rem;
             padding-top: 1rem;
         }
+
+        .partner-progress-card,
+        .leaderboard-card {
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+        }
+
+        .progress-track {
+            height: 10px;
+            border-radius: 999px;
+            background: #e9eef5;
+            overflow: hidden;
+            margin: 1rem 0 0.75rem;
+        }
+
+        .progress-track span {
+            display: block;
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #2b7a78 0%, #3caea3 100%);
+        }
+
+        .leaderboard-list {
+            display: grid;
+            gap: 0.85rem;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1rem;
+            border: 1px solid #edf2f7;
+            border-radius: 16px;
+            background: #fff;
+        }
+
+        .leaderboard-rank {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 999px;
+            background: #183153;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 0.75rem;
+        }
+
+        .leaderboard-name {
+            display: flex;
+            align-items: center;
+            color: #183153;
+            font-weight: 600;
+        }
     </style>
     <div class="page-body">
         @php
             $onboardingStepsComplete = collect($guide ?? [])->where('completed', true)->count();
             $onboardingFullyComplete = ($guide ?? []) && $onboardingStepsComplete === count($guide);
+            $activationTotalSteps = \App\Support\PartnerActivationJourney::STEP_FIRST_SALE_BLUEPRINT;
+            $activationProgressPercent = (int) round((min($activationCurrentStep, $activationTotalSteps) / $activationTotalSteps) * 100);
+            $recruitThreeProgress = min($subpartners, 3);
+            $recruitThreePercent = (int) round(($recruitThreeProgress / 3) * 100);
         @endphp
         <!-- Onboarding Video -->
         <div class="container">
@@ -233,9 +295,17 @@
                 </div>
                 <div class="col-md-6">
                     <div class="col text-center">
-                        <h5>Activation Complete:</h5>
-                        <p class="lead">Review the final activation page and follow the next steps to start selling confidently.</p>
-                        <a href="{{ route('partner.knowledgebase.quick_start_guide') }}" class="btn btn-primary mt-3">Open Activation Guide</a>
+                        <h5>{{ $activationCurrentStep >= $activationTotalSteps ? 'Activation Complete' : 'Activation Journey' }}:</h5>
+                        <p class="lead">
+                            @if($activationCurrentStep >= $activationTotalSteps)
+                                Review the final activation page and follow the next steps to start selling confidently.
+                            @else
+                                Step {{ $activationCurrentStep + 1 }} of {{ $activationTotalSteps }} is ready. Complete the guided pages in order to unlock the final activation page.
+                            @endif
+                        </p>
+                        <a href="{{ $activationCurrentStep >= $activationTotalSteps ? route('partner.knowledgebase.quick_start_guide') : $activationNextRoute }}" class="btn btn-primary mt-3">
+                            {{ $activationCurrentStep >= $activationTotalSteps ? 'Open Activation Guide' : 'Continue Activation Journey' }}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -300,6 +370,57 @@
                                 <li>{!! $subpartners >= 3 ? '&#9745;' : '&#9744;' !!} Recruit 3 Partners</li>
                                 <li>{!! $subpartners >= 10 ? '&#9745;' : '&#9744;' !!} Recruit 10 Partners</li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="card partner-progress-card h-100">
+                        <div class="card-header">
+                            <h4>Recruit 3 Partners Challenge</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2">Bring in three partners to unlock a stronger override income stream and build early momentum.</p>
+                            <div class="progress-track">
+                                <span style="width: {{ $recruitThreePercent }}%;"></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                                <strong>{{ $recruitThreeProgress }}/3 partners recruited</strong>
+                                <span class="text-muted">{{ max(3 - $recruitThreeProgress, 0) }} to go</span>
+                            </div>
+                            <ul class="mb-3">
+                                <li>{!! $subpartners >= 1 ? '&#9745;' : '&#9744;' !!} Recruit your first partner</li>
+                                <li>{!! $subpartners >= 2 ? '&#9745;' : '&#9744;' !!} Follow up with your second introduction</li>
+                                <li>{!! $subpartners >= 3 ? '&#9745;' : '&#9744;' !!} Reach the 3-partner challenge goal</li>
+                            </ul>
+                            <a href="{{ route('partner.knowledgebase.recruit_partners') }}" class="btn btn-primary">Open Recruit Partners Plan</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card leaderboard-card h-100">
+                        <div class="card-header">
+                            <h4>Top Partners This Month</h4>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-3">A simple leaderboard based on referred customers recorded this month.</p>
+                            <div class="leaderboard-list">
+                                @forelse($leaderboardPartners as $index => $leaderboardPartner)
+                                    <div class="leaderboard-item">
+                                        <div class="leaderboard-name">
+                                            <span class="leaderboard-rank">{{ $index + 1 }}</span>
+                                            <div>
+                                                <div>{{ $leaderboardPartner->name }}{{ $leaderboardPartner->id === auth()->id() ? ' (You)' : '' }}</div>
+                                                <small class="text-muted">{{ $leaderboardPartner->company_name ?: 'Executor Hub Partner' }}</small>
+                                            </div>
+                                        </div>
+                                        <strong>{{ $leaderboardPartner->monthly_referrals_count }} referrals</strong>
+                                    </div>
+                                @empty
+                                    <p class="mb-0 text-muted">No partner referrals have been recorded this month yet.</p>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
                 </div>

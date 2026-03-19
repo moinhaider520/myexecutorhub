@@ -24,6 +24,8 @@ use App\Models\IntellectualProperty;
 use App\Models\InvestmentAccount;
 use App\Models\PersonalChattel;
 use App\Models\Property;
+use App\Support\PartnerActivationJourney;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -154,10 +156,23 @@ class DashboardController extends Controller
                 ->where('parent_partner_id', auth()->id());
         })->get();
 
+        $leaderboardPartners = User::role('partner')
+            ->withCount([
+                'referredUsers as monthly_referrals_count' => function ($query) {
+                    $query->whereBetween('created_at', [Carbon::now()->startOfMonth(), Carbon::now()->endOfMonth()]);
+                }
+            ])
+            ->orderByDesc('monthly_referrals_count')
+            ->orderBy('name')
+            ->take(3)
+            ->get();
+
         $customerAccessCampaign = PartnerSelfPurchaseCampaign::where('partner_user_id', $user->id)
             ->latest('purchased_at')
             ->first();
         $linkedCustomerAccount = $user->linkedPartnerCustomerAccount;
+        $activationNextRoute = route(PartnerActivationJourney::nextRouteName($user));
+        $activationCurrentStep = PartnerActivationJourney::currentStep($user);
 
         return view('partner.dashboard', compact(
             'totalExecutors',
@@ -176,7 +191,10 @@ class DashboardController extends Controller
             'free_trial_customers_invited',
             'partners',
             'customerAccessCampaign',
-            'linkedCustomerAccount'
+            'linkedCustomerAccount',
+            'leaderboardPartners',
+            'activationNextRoute',
+            'activationCurrentStep'
         ));
     }
 
