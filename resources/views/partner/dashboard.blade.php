@@ -56,6 +56,32 @@
             color: #183153;
             font-size: 1.1rem;
         }
+
+        .daily-income-card .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .daily-income-card label {
+            display: block;
+            margin-bottom: 0.45rem;
+            font-weight: 600;
+            color: #243b53;
+        }
+
+        .daily-income-card input {
+            width: 100%;
+            border: 1px solid #d9e2ec;
+            border-radius: 14px;
+            padding: 0.8rem 0.95rem;
+        }
+
+        .daily-income-output {
+            border-top: 1px solid #edf2f7;
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+        }
     </style>
     <div class="page-body">
         @php
@@ -234,7 +260,13 @@
                             </div>
                             <div class="partner-score">
                                 <span>Next milestone</span>
-                                <strong>{{ max(10 - $customers_invited, 0) }} to 10 clients</strong>
+                                <strong>
+                                    @if($customers_invited >= 10)
+                                        10-client milestone reached
+                                    @else
+                                        {{ 10 - $customers_invited }} more to reach 10 clients
+                                    @endif
+                                </strong>
                             </div>
                         </div>
                     </div>
@@ -290,6 +322,46 @@
                                 <li>Send the email template to 10 clients.</li>
                                 <li>Mention Executor Hub at your next meeting.</li>
                             </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card daily-income-card">
+                        <div class="card-header">
+                            <h4>Daily Income Calculator</h4>
+                            <p class="mb-0">Use a simple estimate to see what today&apos;s sales activity could look like. These figures are projections, not live sales totals.</p>
+                        </div>
+                        <div class="card-body">
+                            <div class="calculator-grid">
+                                <div>
+                                    <label for="dailySaleValue">Average Sale Value</label>
+                                    <input type="number" id="dailySaleValue" value="695" min="0" step="0.01">
+                                </div>
+                                <div>
+                                    <label for="dailyCommissionRate">Commission %</label>
+                                    <input type="number" id="dailyCommissionRate" value="30" min="0" max="100" step="0.01">
+                                </div>
+                                <div>
+                                    <label for="dailyPartnerOverride">Partner Override %</label>
+                                    <input type="number" id="dailyPartnerOverride" value="10" min="0" max="100" step="0.01">
+                                </div>
+                            </div>
+                            <div class="daily-income-output">
+                                <div class="partner-score">
+                                    <span>Estimated income if you sell 1 Executor Hub today</span>
+                                    <strong id="dailyIncomeOne">£0.00</strong>
+                                </div>
+                                <div class="partner-score">
+                                    <span>Estimated income if you sell 5 this week</span>
+                                    <strong id="dailyIncomeFive">£0.00</strong>
+                                </div>
+                                <div class="partner-score">
+                                    <span>Estimated override income from 3 partners</span>
+                                    <strong id="dailyIncomePartners">£0.00</strong>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -734,6 +806,31 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script>
+        function updateDailyIncomeCalculator() {
+            const saleValue = parseFloat(document.getElementById('dailySaleValue')?.value) || 0;
+            const commissionRate = (parseFloat(document.getElementById('dailyCommissionRate')?.value) || 0) / 100;
+            const partnerOverride = (parseFloat(document.getElementById('dailyPartnerOverride')?.value) || 0) / 100;
+
+            const oneSale = saleValue * commissionRate;
+            const fiveSales = oneSale * 5;
+            const recruitThreePartners = saleValue * 5 * 3 * partnerOverride;
+
+            const formatCurrency = (value) => `£${value.toFixed(2)}`;
+
+            document.getElementById('dailyIncomeOne').textContent = formatCurrency(oneSale);
+            document.getElementById('dailyIncomeFive').textContent = formatCurrency(fiveSales);
+            document.getElementById('dailyIncomePartners').textContent = formatCurrency(recruitThreePartners);
+        }
+
+        ['dailySaleValue', 'dailyCommissionRate', 'dailyPartnerOverride'].forEach((id) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('input', updateDailyIncomeCalculator);
+            }
+        });
+
+        updateDailyIncomeCalculator();
+
         $(document).ready(function () {
             // Enable table sorting
             $('#document-reminders-table').DataTable({

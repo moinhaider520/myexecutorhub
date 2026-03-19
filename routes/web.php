@@ -750,7 +750,10 @@ Route::middleware(['auth', 'role:partner'])->prefix('partner')->name('partner.')
     Route::get('/knowledgebase/social_media_direct_messages', [KnowledgebaseController::class, 'social_media_direct_messages'])->name('knowledgebase.social_media_direct_messages');
     Route::get('/knowledgebase/social_media_posts', [KnowledgebaseController::class, 'social_media_posts'])->name('knowledgebase.social_media_posts');
     Route::get('/knowledgebase/quick_start_guide', [KnowledgebaseController::class, 'quick_start_guide'])->name('knowledgebase.quick_start_guide');
+    Route::get('/knowledgebase/why_clients_buy_it', [KnowledgebaseController::class, 'why_clients_buy_it'])->name('knowledgebase.why_clients_buy_it');
     Route::get('/knowledgebase/first_sale_blueprint', [KnowledgebaseController::class, 'first_sale_blueprint'])->name('knowledgebase.first_sale_blueprint');
+    Route::get('/knowledgebase/recruit_partners', [KnowledgebaseController::class, 'recruit_partners'])->name('knowledgebase.recruit_partners');
+    Route::get('/knowledgebase/growth_plan', [KnowledgebaseController::class, 'growth_plan'])->name('knowledgebase.growth_plan');
     Route::get('/knowledgebase/best_practices', [KnowledgebaseController::class, 'best_practices'])->name('knowledgebase.best_practices');
     Route::get('/knowledgebase/client_reactivation', [KnowledgebaseController::class, 'client_reactivation'])->name('knowledgebase.client_reactivation');
     Route::get('/knowledgebase/entry_example', [KnowledgebaseController::class, 'entry_example'])->name('knowledgebase.entry_example');

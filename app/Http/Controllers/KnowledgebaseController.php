@@ -41,9 +41,21 @@ class KnowledgebaseController extends Controller
     {
         return view('knowledgebase.quick_start_guide');
     }
+    public function why_clients_buy_it()
+    {
+        return view('knowledgebase.why_clients_buy_it');
+    }
     public function first_sale_blueprint()
     {
         return view('knowledgebase.first_sale_blueprint');
+    }
+    public function recruit_partners()
+    {
+        return view('knowledgebase.recruit_partners');
+    }
+    public function growth_plan()
+    {
+        return view('knowledgebase.growth_plan');
     }
     public function best_practices()
     {

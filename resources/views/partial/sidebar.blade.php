@@ -226,6 +226,17 @@
                         </a>
                     </li>
                     <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.why_clients_buy_it') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-faq') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-faq') }}"></use>
+                            </svg>
+                            <span>Why Clients Buy It</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
                         <a class="sidebar-link" href="{{ route('partner.commission_calculator.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-charts') }}"></use>
@@ -368,6 +379,17 @@
                         </a>
                     </li>
                     <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.recruit_partners') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-user') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-user') }}"></use>
+                            </svg>
+                            <span>Recruit Partners</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
                         <a class="sidebar-link" href="{{ route('partner.commission_calculator.index') }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-charts') }}"></use>
@@ -376,6 +398,17 @@
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#fill-charts') }}"></use>
                             </svg>
                             <span>Commission Calculator</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link" href="{{ route('partner.knowledgebase.growth_plan') }}">
+                            <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-board') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-board') }}"></use>
+                            </svg>
+                            <span>Partner Growth Plan</span>
                         </a>
                     </li>
                     <li class="sidebar-list">
