@@ -1,6 +1,9 @@
 @extends('layouts.master')
 
 @section('content')
+@php
+  $vatRate = 0.20;
+@endphp
 <style>
   .ck-editor__editable_inline {
     min-height: 300px;
@@ -49,8 +52,22 @@
 
                       <div class="mb-3">
                         <div class="form-group">
-                          <label for="amount">Amount (in GBP)</label>
+                          <label for="amount">Amount (ex VAT)</label>
                           <input class="form-control" type="number" id="amount" name="amount" value="00.00" required readonly>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <div class="form-group">
+                          <label for="vat_amount">VAT ({{ (int) ($vatRate * 100) }}%)</label>
+                          <input class="form-control" type="number" id="vat_amount" name="vat_amount" value="00.00" required readonly>
+                        </div>
+                      </div>
+
+                      <div class="mb-3">
+                        <div class="form-group">
+                          <label for="total_amount">Total (inc VAT)</label>
+                          <input class="form-control" type="number" id="total_amount" name="total_amount" value="00.00" required readonly>
                         </div>
                       </div>
                       <div class="mb-3">
@@ -143,6 +160,9 @@
   function updateAmount() {
     var planSelect = document.querySelector('select[name="plan"]');
     var amountInput = document.querySelector('input[name="amount"]');
+    var vatAmountInput = document.getElementById('vat_amount');
+    var totalAmountInput = document.getElementById('total_amount');
+    var VAT_RATE = {{ $vatRate }};
 
     if (planSelect.value == "0") {
       amountInput.value = "8.00";
@@ -151,6 +171,12 @@
     } else {
       amountInput.value = "40.00";
     }
+
+    var exVat = parseFloat(amountInput.value || "0");
+    var vat = exVat * VAT_RATE;
+    var total = exVat + vat;
+    if (vatAmountInput) vatAmountInput.value = vat.toFixed(2);
+    if (totalAmountInput) totalAmountInput.value = total.toFixed(2);
   }
 </script>
 @endsection

@@ -435,6 +435,7 @@
                     <h3>Special Couple Partner Discount</h3>
                     <p>You've been invited by <strong>{{ $primaryUser->name }}</strong> to join Executor Hub at a special discounted
                         rate.</p>
+                    <p style="color:#718096;font-size:14px;margin-top:8px;">UK VAT (if applicable) will be calculated by Stripe at checkout based on your billing address/tax status.</p>
                     <ul>
                         <li>Lifetime access to all features</li>
                         <li>Secure document management</li>

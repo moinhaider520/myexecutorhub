@@ -1400,6 +1400,10 @@
         <!-- END TEXT CONTENT -->
 
 
+        @php
+            $vatRate = 0.20; // UK VAT (display only). Stripe calculates actual tax at checkout.
+        @endphp
+
         <section id="pricing-1" style="margin-top:50px;" class="gr--whitesmoke pb-40 inner-page-hero pricing-section">
             <div class="container">
                 <!-- SECTION TITLE -->
@@ -1453,8 +1457,9 @@
                                     <h5 class="s-24 w-700">Basic</h5>
                                     <div class="price">
                                         <sup class="color--black">£</sup>
-                                        <span class="color--black">5.99</span>
+                                        <span class="color--black">{{ number_format(5.99 * (1 + $vatRate), 2) }}</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
+                                        <div class="s-14 color--grey mt-2">Includes UK VAT ({{ (int) ($vatRate * 100) }}%) for UK customers • £5.99 ex VAT</div>
                                         <p class="s-18 w-600 color--theme mt-3 mb-3">Essential digital vault</p>
                                     </div>
 
@@ -1502,8 +1507,9 @@
                                             Popular</span></h5>
                                     <div class="price">
                                         <sup class="color--black">£</sup>
-                                        <span class="color--black">11.99</span>
+                                        <span class="color--black">{{ number_format(11.99 * (1 + $vatRate), 2) }}</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
+                                        <div class="s-14 color--grey mt-2">Includes UK VAT ({{ (int) ($vatRate * 100) }}%) for UK customers • £11.99 ex VAT</div>
                                         <p class="s-18 w-600 color--theme mt-3 mb-3">Guided estate organisation +
                                             adviser access</p>
                                     </div>
@@ -1550,8 +1556,9 @@
                                     <h5 class="s-24 w-700">Premium</h5>
                                     <div class="price">
                                         <sup class="color--black">£</sup>
-                                        <span class="color--black">19.99</span>
+                                        <span class="color--black">{{ number_format(19.99 * (1 + $vatRate), 2) }}</span>
                                         <sup class="validity color--grey">&nbsp;/mo</sup>
+                                        <div class="s-14 color--grey mt-2">Includes UK VAT ({{ (int) ($vatRate * 100) }}%) for UK customers • £19.99 ex VAT</div>
                                         <p class="s-18 w-600 color--theme mt-3 mb-3">Complete legacy planning & executor
                                             support</p>
                                     </div>

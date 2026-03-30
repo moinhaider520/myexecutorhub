@@ -48,6 +48,13 @@
 
 <body>
 
+    @php
+        $vatRate = 0.20;
+        $basicMonthly = 5.99;
+        $standardMonthly = 11.99;
+        $premiumMonthly = 19.99;
+    @endphp
+
     <div class="container">
         <div class="row">
             <div class="col-md-8 offset-md-2">
@@ -136,10 +143,14 @@
                                     <strong>Membership:</strong>
                                     <select class="form-control" id="plan" name="plan" required>
                                         <option selected="" disabled>Choose...</option>
-                                        <option value="basic">Basic - £5.99/month</option>
-                                        <option value="standard">Standard - £11.99/month</option>
-                                        <option value="premium">Premium - £19.99/month</option>
+                                        <option value="basic">Basic - £{{ number_format($basicMonthly * (1 + $vatRate), 2) }}/month inc VAT (£{{ number_format($basicMonthly, 2) }} ex VAT)</option>
+                                        <option value="standard">Standard - £{{ number_format($standardMonthly * (1 + $vatRate), 2) }}/month inc VAT (£{{ number_format($standardMonthly, 2) }} ex VAT)</option>
+                                        <option value="premium">Premium - £{{ number_format($premiumMonthly * (1 + $vatRate), 2) }}/month inc VAT (£{{ number_format($premiumMonthly, 2) }} ex VAT)</option>
                                     </select>
+                                    <small class="text-muted d-block mt-1">
+                                        Prices shown include UK VAT ({{ (int) ($vatRate * 100) }}%) for UK customers (e.g. £5.99 → £{{ number_format($basicMonthly * (1 + $vatRate), 2) }} total).
+                                        Stripe calculates the final tax at checkout based on your billing address/tax status.
+                                    </small>
                                 </div>
                             </div>
 

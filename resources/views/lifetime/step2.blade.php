@@ -14,6 +14,7 @@
             'Other',
         ];
         $backUrl = isset($is_upgrade) && $is_upgrade ? route('customer.membership.view') : route('home') . '#pricing-1';
+        $vatRate = 0.20; // display-only; Stripe calculates actual tax at checkout
     @endphp
 
     <style>
@@ -264,8 +265,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="lifetime-plan-price">{{ $plan['currency'] }} {{ number_format($plan['amount'], 2) }}</div>
-                                        <p class="lifetime-plan-subtitle">No recurring fees</p>
+                                        <div class="lifetime-plan-price">{{ $plan['currency'] }} {{ number_format($plan['amount'] * (1 + $vatRate), 2) }}</div>
+                                        <p class="lifetime-plan-subtitle mb-1">Includes UK VAT ({{ (int) ($vatRate * 100) }}%) for UK customers</p>
+                                        <p class="text-muted small mb-0">Ex VAT: {{ $plan['currency'] }} {{ number_format($plan['amount'], 2) }}</p>
                                     </div>
 
                                     <div class="lifetime-plan-content">

@@ -30,6 +30,7 @@
             $currentUser = Auth::user();
             $lifetimePackages = ['Lifetime Basic', 'Lifetime Standard', 'Lifetime Premium'];
             $hasLifetimePackage = in_array($currentUser->subscribed_package, $lifetimePackages, true);
+            $vatRate = 0.20;
           @endphp
 
           @if($hasLifetimePackage)
@@ -60,7 +61,8 @@
         <div class="card text-center pricing-simple">
           <div class="card-body" style="height:400px;">
           <h4>Basic</h4>
-          <h5>£5.99</h5>
+          <h5>£{{ number_format(5.99 * (1 + $vatRate), 2) }} <small class="text-muted">(inc VAT)</small></h5>
+          <div class="text-muted small">£5.99 ex VAT</div>
           <h6 class="mb-0">Per Month</h6>
           <ul>
           <li>Assign Executors</li>
@@ -80,7 +82,8 @@
         <div class="card text-center pricing-simple">
           <div class="card-body" style="height:400px;">
           <h4>Standard</h4>
-          <h5>£11.99</h5>
+          <h5>£{{ number_format(11.99 * (1 + $vatRate), 2) }} <small class="text-muted">(inc VAT)</small></h5>
+          <div class="text-muted small">£11.99 ex VAT</div>
           <h6 class="mb-0">Per Month</h6>
           <ul>
           <li>Assign Executors</li>
@@ -103,7 +106,8 @@
         <div class="card text-center pricing-simple">
           <div class="card-body" style="height: 400px;">
           <h4>Premium </h4>
-          <h5>£19.99</h5>
+          <h5>£{{ number_format(19.99 * (1 + $vatRate), 2) }} <small class="text-muted">(inc VAT)</small></h5>
+          <div class="text-muted small">£19.99 ex VAT</div>
           <h6 class="mb-0">Per Month</h6>
           <ul>
           <li>Assign Executors</li>

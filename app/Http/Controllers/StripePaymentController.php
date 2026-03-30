@@ -89,6 +89,10 @@ class StripePaymentController extends Controller
             'payment_method_types' => ['card'],
             'mode' => 'subscription',
             'customer_email' => $request->email,
+            'billing_address_collection' => 'required',
+            'tax_id_collection' => [
+                'enabled' => true,
+            ],
             'line_items' => [
                 [
                     'price' => $request->plan, // Stripe Price ID
@@ -283,6 +287,10 @@ class StripePaymentController extends Controller
             'mode' => 'payment',
             'customer_email' => $partner->email,
             'customer_creation' => 'always',
+            'billing_address_collection' => 'required',
+            'tax_id_collection' => [
+                'enabled' => true,
+            ],
             'line_items' => [
                 [
                     'price' => $priceId,
@@ -520,6 +528,10 @@ class StripePaymentController extends Controller
             'allow_promotion_codes' => true,
             'customer_email' => $validated['email'],
             'customer_creation' => 'always',
+            'billing_address_collection' => 'required',
+            'tax_id_collection' => [
+                'enabled' => true,
+            ],
             'line_items' => [
                 [
                     'price' => $priceId,
@@ -1097,6 +1109,10 @@ class StripePaymentController extends Controller
             'allow_promotion_codes' => true, // No additional coupons for couple partners
             'customer_email' => $registration['partner_email'],
             'customer_creation' => 'always',
+            'billing_address_collection' => 'required',
+            'tax_id_collection' => [
+                'enabled' => true,
+            ],
             'line_items' => [
                 [
                     'price' => $priceId,
@@ -1595,6 +1611,10 @@ class StripePaymentController extends Controller
             'payment_method_types' => ['card'],
             'mode' => 'subscription',
             'customer_email' => $user->email,
+            'billing_address_collection' => 'required',
+            'tax_id_collection' => [
+                'enabled' => true,
+            ],
             'line_items' => [
                 [
                     'price' => $request->plan, // Stripe Price ID
@@ -1797,6 +1817,10 @@ class StripePaymentController extends Controller
             'mode' => 'subscription',
             'allow_promotion_codes' => false,
             'customer_email' => $validated['email'],
+            'billing_address_collection' => 'required',
+            'tax_id_collection' => [
+                'enabled' => true,
+            ],
             'line_items' => [
                 [
                     'price' => $priceId,
