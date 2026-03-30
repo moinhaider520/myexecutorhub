@@ -275,7 +275,7 @@ class StripePaymentController extends Controller
         }
 
         $age = Carbon::parse($validated['date_of_birth'])->age;
-        $priceId = $this->resolveLifetimePriceId('standard', $age, true);
+        $priceId = "price_1TGlK4A22YOnjf5ZXArVv89n";
 
         if (!$priceId) {
             return redirect()->route('partner.customer_access.index')
