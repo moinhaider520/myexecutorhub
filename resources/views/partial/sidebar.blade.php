@@ -1,8 +1,12 @@
+@php
+    $activeRole = Auth::user()->activeDashboardRole();
+    $dashboardRoute = Auth::user()->dashboardRouteName($activeRole);
+@endphp
+
 <div class="sidebar-wrapper" data-layout="stroke-svg">
     <div>
         <div class="logo-wrapper">
-            <a
-                href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}">
+            <a href="{{ route($dashboardRoute) }}">
                 <img class="img-fluid" src="{{ asset('assets/frontend/images/logo-white.png') }}" alt=""
                     style="width:100px;">
             </a>
@@ -17,8 +21,7 @@
             </div>
         </div>
         <div class="logo-icon-wrapper">
-            <a
-                href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}">
+            <a href="{{ route($dashboardRoute) }}">
                 <img class="img-fluid" src="{{ asset('assets/images/favicon.ico') }}" style="width:20px;" alt="">
             </a>
         </div>
@@ -34,8 +37,7 @@
                         </div>
                     </li>
                     <li class="sidebar-list">
-                        <a class="sidebar-link"
-                            href="{{ route(auth()->user()->hasRole('admin') ? 'admin.dashboard' : (auth()->user()->hasRole('customer') ? 'customer.dashboard' : (auth()->user()->hasRole('partner') ? 'partner.dashboard' : (auth()->user()->hasRole('executor') ? 'executor.dashboard' : 'dashboard')))) }}">
+                        <a class="sidebar-link" href="{{ route($dashboardRoute) }}">
                             <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-home') }}"></use>
                             </svg>
@@ -45,7 +47,7 @@
                             <span class="">Dashboard </span>
                         </a>
                     </li>
-                    @role('admin')
+                    @if($activeRole === 'admin')
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -195,9 +197,9 @@
                             <li><a href="{{ route('admin.emails.email_summary') }}">Emails Summary</a></li>
                         </ul>
                     </li>
-                    @endrole
+                    @endif
 
-                    @role('partner')
+                    @if($activeRole === 'partner')
                     <li class="sidebar-main-title">
                         <div>
                             <h6>Start Here</h6>
@@ -550,7 +552,7 @@
                             <li><a href="{{ route('partner.messages.view') }}">Inbox</a></li>
                         </ul>
                     </li>
-                    @endrole
+                    @endif
 
                     @php
                         $package = Auth::user()->subscribed_package;
@@ -561,7 +563,7 @@
                         $membershipLabel = in_array($package, $lifetimePackages, true) ? 'Lifetime Membership' : 'Membership';
                         $membershipSubLabel = in_array($package, $lifetimePackages, true) ? 'Lifetime Benefits' : 'Pricing Plans';
                     @endphp
-                    @role('customer')
+                    @if($activeRole === 'customer')
                     @if (in_array($package, $basicPackages, true))
                         <li class="sidebar-list">
                             <a class="sidebar-link sidebar-title" href="javascript:void(0)">
@@ -975,9 +977,9 @@
                             <li><a href="{{ route('customer.membership.view') }}">{{ $membershipSubLabel }}</a></li>
                         </ul>
                     </li>
-                    @endrole
+                    @endif
 
-                    @role('executor')
+                    @if($activeRole === 'executor')
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
@@ -1289,7 +1291,7 @@
                             <li><a href="{{ route('executor.useful_contacts.index') }}">View</a></li>
                         </ul>
                     </li>
-                    @endrole
+                    @endif
 
                     @if (Auth::user()->hasAnyRole(['Solicitors', 'Accountants', 'Stock Brokers', 'Will Writers', 'Financial Advisers']))
                         <li class="sidebar-list">

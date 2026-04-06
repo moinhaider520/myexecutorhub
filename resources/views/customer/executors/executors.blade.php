@@ -39,6 +39,7 @@
                       </thead>
                       <tbody>
                         @foreach($executors as $executor)
+                        @php($executorAccess = $executor->access_type ?? $executor->status)
                         <tr>
                           <td>{{ $loop->iteration }}</td>
                           <td>{{ $executor->title }}</td>
@@ -48,9 +49,9 @@
                           <td>{{ $executor->email }}</td>
                           <td>{{ $executor->phone_number }}</td>
                           <td>{{ $executor->relationship }}</td>
-                          <td>{{ $executor->status == 'N' ? 'Upon Death' : 'Immediate Access' }}</td>
+                          <td>{{ $executorAccess == 'N' ? 'Upon Death' : 'Immediate Access' }}</td>
                           <td style="display:flex;">
-                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-how_acting="{{ $executor->how_acting }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executor->status }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
+                            <button type="button" class="btn btn-warning btn-sm edit-button" data-toggle="modal" data-target="#editExecutorModal" data-id="{{ $executor->id }}" data-name="{{ $executor->name }}" data-lastname="{{ $executor->lastname }}" data-how_acting="{{ $executor->how_acting }}" data-email="{{ $executor->email }}" data-relationship="{{ $executor->relationship }}" data-status="{{ $executorAccess }}" data-title="{{ $executor->title }}" data-phone_number="{{ $executor->phone_number }}">Edit</button>
                             <form action="{{ route('customer.executors.destroy', $executor->id) }}" method="POST" style="display:inline;">
                               @csrf
                               @method('DELETE')

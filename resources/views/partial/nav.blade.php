@@ -1,3 +1,8 @@
+@php
+    $activeRole = Auth::user()->activeDashboardRole();
+    $settingsRoute = Auth::user()->settingsRouteName($activeRole);
+@endphp
+
 <div class="page-header row">
     <div class="header-logo-wrapper col-auto">
         <div class="logo-wrapper">
@@ -51,32 +56,37 @@
                                     <h5>{{ucwords(str_replace('_', ' ', Auth::user()->name))}}</h5>
                                 </span>
                                 <p class="mb-0 font-outfit">
-                                    <span>{{ ucwords(str_replace('_', ' ', Auth::user()->getRoleNames()[0])) }} </span>
+                                    <span>{{ Auth::user()->roleDisplayName($activeRole) }} </span>
                                     <i class="fa fa-angle-down"></i>
                                 </p>
                             </div>
                         </div>
                         <ul class="profile-dropdown onhover-show-div-hidden">
                             <li>
-                                @role('admin')
-                                <a href="{{ route('admin.edit_profile') }}">
+                                @if($settingsRoute)
+                                <a href="{{ route($settingsRoute) }}">
                                     <i data-feather="settings"></i>
                                     <span>Settings</span>
                                 </a>
-                                @endrole
-                                @role('customer')
-                                <a href="{{ route('customer.edit_profile') }}">
-                                    <i data-feather="settings"></i>
-                                    <span>Settings</span>
-                                </a>
-                                @endrole
-                                @role('partner')
-                                <a href="{{ route('partner.edit_profile') }}">
-                                    <i data-feather="settings"></i>
-                                    <span>Settings</span>
-                                </a>
-                                @endrole
+                                @endif
                             </li>
+                            @if (Auth::user()->canSwitchDashboardRoles())
+                            <li>
+                                <span class="px-3 pt-2 pb-1 d-block text-muted">Switch Role</span>
+                            </li>
+                            @foreach (Auth::user()->availableDashboardRoles() as $role)
+                                @continue($role === $activeRole)
+                                <li>
+                                    <form action="{{ route('role.switch', $role) }}" method="POST" class="mb-0">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item border-0 bg-transparent text-start w-100">
+                                            <i data-feather="repeat"></i>
+                                            <span>{{ Auth::user()->roleDisplayName($role) }}</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            @endforeach
+                            @endif
 
                             <li>
                                 <a onclick="document.getElementById('logout_form').submit();">

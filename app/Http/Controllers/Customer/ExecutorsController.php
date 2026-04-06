@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Mail;
 
 class ExecutorsController extends Controller
@@ -36,10 +37,19 @@ class ExecutorsController extends Controller
 
         try {
             $executor = User::where('email', $request->email)->first();
-            $password = str()->random(10);
+            $password = str()->random(24);
             $isExistingExecutor = (bool) $executor;
 
             if ($executor) {
+                if ($executor->hasAnyRole(['admin', 'partner'])) {
+                    DB::rollBack();
+
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'This email already belongs to an account that cannot be linked as an executor.',
+                    ], 422);
+                }
+
                 $alreadyLinked = Auth::user()->executors()->where('users.id', $executor->id)->exists();
 
                 if ($alreadyLinked) {
@@ -64,9 +74,13 @@ class ExecutorsController extends Controller
                     ], 409);
                 }
 
-                $executor->update([
-                    'password' => Hash::make($password),
-                ]);
+                if (!$executor->hasRole('executor')) {
+                    $executor->assignRole('executor');
+                }
+
+                if ($executor->needsExecutorActivation() && !$executor->executor_invite_token) {
+                    $executor->markExecutorInviteIssued();
+                }
             } else {
                 $executor = User::create([
                     'title' => $request->title,
@@ -76,16 +90,20 @@ class ExecutorsController extends Controller
                     'phone_number' => $request->phone_number,
                     'email' => $request->email,
                     'relationship' => $request->relationship,
-                    'status' => $request->status,
+                    'status' => 'A',
+                    'access_type' => $request->status,
                     'password' => Hash::make($password),
+                    'user_role' => 'executor',
+                    'preferred_role' => 'executor',
                 ]);
 
                 $executor->assignRole('executor');
+                $executor->markExecutorInviteIssued(Str::random(64));
             }
 
             Auth::user()->executors()->syncWithoutDetaching([$executor->id]);
 
-            $this->sendExecutorAccessEmail($executor, $password, $isExistingExecutor);
+            $this->sendExecutorAccessEmail($executor, $isExistingExecutor);
 
             $activityLogger->logManualActivity(
                 customerId: Auth::id(),
@@ -137,7 +155,7 @@ class ExecutorsController extends Controller
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,
-                'status' => $request->status,
+                'access_type' => $request->status,
                 'password' => $request->filled('password') ? Hash::make($request->password) : $executor->password,
             ]);
 
@@ -193,19 +211,32 @@ class ExecutorsController extends Controller
         }
     }
 
-    private function sendExecutorAccessEmail(User $executor, string $password, bool $isExistingExecutor): void
+    private function sendExecutorAccessEmail(User $executor, bool $isExistingExecutor): void
     {
         $authname = Auth::user()->name;
         $intro = $isExistingExecutor
             ? "{$authname} has linked you as an executor on <strong>Executor Hub</strong>."
-            : "You’ve been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.";
+            : "You've been invited to use <strong>Executor Hub</strong> as an Executor by {$authname}.";
+
         $message = "
             <h2>Hello {$executor->name},</h2>
             <p>{$intro}</p>
-            <p>Please use the following credentials to log in to the portal.</p>
-            <p>Email: {$executor->email}</p>
-            <p>Password: {$password}</p>
-            <p><a href='https://executorhub.co.uk/'>Click here to log in</a></p>
+        ";
+
+        if ($executor->needsExecutorActivation() && $executor->executor_invite_token) {
+            $activationLink = route('executor.activate.show', $executor->executor_invite_token);
+            $message .= "
+                <p>Click below to activate your executor account and choose your own password.</p>
+                <p><a href='{$activationLink}'>Activate Account</a></p>
+            ";
+        } else {
+            $message .= "
+                <p>You can sign in using your existing Executor Hub account.</p>
+                <p><a href='" . route('login') . "'>Click here to log in</a></p>
+            ";
+        }
+
+        $message .= "
             <p>Regards,<br>Executor Hub Team</p>
         ";
 

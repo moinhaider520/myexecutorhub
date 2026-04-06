@@ -43,7 +43,12 @@ class TwoFactorController extends Controller
         Auth::loginUsingId($user->id);
         $request->session()->regenerate();
 
-        if ($user->hasRole('executor')) {
+        $activeRole = $user->activeDashboardRole();
+        if ($activeRole) {
+            $request->session()->put('active_role', $activeRole);
+        }
+
+        if ($activeRole === 'executor') {
             $user->load('customers');
             $firstCustomer = $user->customers->first();
             if ($firstCustomer) {
@@ -56,15 +61,17 @@ class TwoFactorController extends Controller
             return redirect()->route('executor.dashboard');
         }
 
-        if ($user->hasRole('admin')) {
+        session()->forget('acting_customer_id');
+
+        if ($activeRole === 'admin') {
             return redirect()->route('admin.dashboard');
         }
 
-        if ($user->hasRole('customer')) {
+        if ($activeRole === 'customer') {
             return redirect()->route('customer.dashboard');
         }
 
-        if ($user->hasRole('partner')) {
+        if ($activeRole === 'partner') {
             return redirect()->route('partner.dashboard');
         }
 

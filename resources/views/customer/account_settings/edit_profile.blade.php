@@ -131,6 +131,37 @@
                             <button class="btn btn-primary" type="submit">Update Password</button>
                         </div>
                     </form>
+                    @if ($user->canSwitchDashboardRoles())
+                        <form action="{{ route('role.preference.update') }}" method="POST" class="card" id="role-preference">
+                            @csrf
+                            <div class="card-header">
+                                <h4 class="card-title mb-0">Role Preference</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label class="form-label">Preferred Login Role</label>
+                                            <select class="form-control" name="preferred_role" required>
+                                                @foreach ($user->availableDashboardRoles() as $role)
+                                                    <option value="{{ $role }}"
+                                                        {{ ($user->preferred_role ?? $user->activeDashboardRole()) === $role ? 'selected' : '' }}>
+                                                        {{ $user->roleDisplayName($role) }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <p class="text-muted mb-0">
+                                            If your account has multiple roles, we will open this dashboard first after login.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-end">
+                                <button class="btn btn-primary" type="submit">Save Preferred Role</button>
+                            </div>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>

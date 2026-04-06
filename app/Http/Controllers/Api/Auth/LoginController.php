@@ -31,13 +31,14 @@ class LoginController extends Controller
 
                     if ($request->email == "moin.haider.520@gmail.com" || $request->email == "nosherwanadil04@gmail.com") {
                         $token = $user->createToken($request->email)->plainTextToken;
-                        $role = $user->roles->first()->name;
+                        $role = $user->activeDashboardRole();
 
                         return response()->json([
                             'status' => true,
                             'message' => 'Two-factor authentication verified.',
                             'user' => $user,
                             'role' => $role,
+                            'available_roles' => $user->availableDashboardRoles(),
                             'token' => $token,
                         ], JsonResponse::HTTP_OK);
                     } else {
@@ -97,7 +98,7 @@ class LoginController extends Controller
         ]);
 
         $token = $user->createToken($request->email)->plainTextToken;
-        $role = $user->roles->first()->name;
+        $role = $user->activeDashboardRole();
 
         $impersonator_id = null;
         if ($role === "executor") {
@@ -109,6 +110,7 @@ class LoginController extends Controller
             'message' => 'Two-factor authentication verified.',
             'user' => $user,
             'role' => $role,
+            'available_roles' => $user->availableDashboardRoles(),
             'impersonator_id' => $impersonator_id,
             'token' => $token,
         ], JsonResponse::HTTP_OK);

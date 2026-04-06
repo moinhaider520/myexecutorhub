@@ -13,6 +13,13 @@ class User extends Authenticatable
 {
     use HasFactory, HasApiTokens, Notifiable, HasRoles;
 
+    public const DASHBOARD_ROLE_PRIORITY = [
+        'admin',
+        'partner',
+        'customer',
+        'executor',
+    ];
+
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +49,112 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'executor_invited_at' => 'datetime',
+            'executor_activated_at' => 'datetime',
         ];
+    }
+
+    public function availableDashboardRoles(): array
+    {
+        $roleNames = $this->getRoleNames()->all();
+
+        return array_values(array_filter(
+            self::DASHBOARD_ROLE_PRIORITY,
+            fn (string $role): bool => in_array($role, $roleNames, true)
+        ));
+    }
+
+    public function canSwitchDashboardRoles(): bool
+    {
+        return count($this->availableDashboardRoles()) > 1;
+    }
+
+    public function activeDashboardRole(): ?string
+    {
+        $availableRoles = $this->availableDashboardRoles();
+
+        if ($availableRoles === []) {
+            return null;
+        }
+
+        $sessionRole = session('active_role');
+        if (is_string($sessionRole) && in_array($sessionRole, $availableRoles, true)) {
+            return $sessionRole;
+        }
+
+        if (
+            is_string($this->preferred_role) &&
+            in_array($this->preferred_role, $availableRoles, true)
+        ) {
+            return $this->preferred_role;
+        }
+
+        return $availableRoles[0];
+    }
+
+    public function dashboardRouteName(?string $role = null): string
+    {
+        return match ($role ?? $this->activeDashboardRole()) {
+            'admin' => 'admin.dashboard',
+            'partner' => 'partner.dashboard',
+            'customer' => 'customer.dashboard',
+            'executor' => 'executor.dashboard',
+            default => 'dashboard',
+        };
+    }
+
+    public function settingsRouteName(?string $role = null): ?string
+    {
+        return match ($role ?? $this->activeDashboardRole()) {
+            'admin' => 'admin.edit_profile',
+            'partner' => 'partner.edit_profile',
+            'customer' => 'customer.edit_profile',
+            'executor' => $this->hasRole('customer') ? 'customer.edit_profile' : null,
+            default => null,
+        };
+    }
+
+    public function roleDisplayName(?string $role = null): string
+    {
+        return ucwords(str_replace('_', ' ', $role ?? $this->activeDashboardRole() ?? 'user'));
+    }
+
+    public function isExecutorOnlyAccount(): bool
+    {
+        return $this->hasRole('executor')
+            && !$this->hasRole('customer')
+            && !$this->hasRole('partner')
+            && !$this->hasRole('admin');
+    }
+
+    public function canUpgradeToCustomer(): bool
+    {
+        return $this->isExecutorOnlyAccount();
+    }
+
+    public function needsExecutorActivation(): bool
+    {
+        return $this->isExecutorOnlyAccount() && $this->executor_activated_at === null;
+    }
+
+    public function markExecutorInviteIssued(?string $token = null): string
+    {
+        $token ??= (string) str()->random(64);
+
+        $this->forceFill([
+            'executor_invite_token' => $token,
+            'executor_invited_at' => now(),
+        ])->save();
+
+        return $token;
+    }
+
+    public function markExecutorActivated(): void
+    {
+        $this->forceFill([
+            'executor_activated_at' => now(),
+            'executor_invite_token' => null,
+        ])->save();
     }
 
     public function tasks()

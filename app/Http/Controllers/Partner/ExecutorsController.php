@@ -43,7 +43,8 @@ class ExecutorsController extends Controller
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,
-                'status' => $request->status,
+                'status' => 'A',
+                'access_type' => $request->status,
                 'password' => Hash::make($request->password),
                 'created_by' => Auth::id(),
                 'coupon_code' => $couponCode, // Store the generated coupon code
@@ -97,7 +98,7 @@ class ExecutorsController extends Controller
                 'phone_number' => $request->phone_number,
                 'email' => $request->email,
                 'relationship' => $request->relationship,
-                'status' => $request->status,
+                'access_type' => $request->status,
                 'password' => $request->filled('password') ? Hash::make($request->password) : $executor->password,
             ]);
 

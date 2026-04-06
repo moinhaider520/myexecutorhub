@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -45,9 +46,26 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $existingUser = isset($data['email'])
+            ? User::where('email', $data['email'])->first()
+            : null;
+
+        $allowCustomerUpgrade = $existingUser
+            && $existingUser->canUpgradeToCustomer()
+            && ($data['sign_up_as_partner'] ?? 'no') !== 'yes';
+
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->when(
+                    $allowCustomerUpgrade,
+                    fn ($rule) => $rule->ignore($existingUser?->id)
+                ),
+            ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'privacy_policy' => ['accepted'],
         ];
@@ -83,8 +101,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $partnerProvisioning = null;
+        $existingUser = User::where('email', $data['email'])->first();
+        $upgradeExistingExecutor = $existingUser
+            && $existingUser->canUpgradeToCustomer()
+            && ($data['sign_up_as_partner'] ?? 'no') !== 'yes';
 
-        $user = DB::transaction(function () use ($data, &$partnerProvisioning) {
+        $user = DB::transaction(function () use ($data, &$partnerProvisioning, $existingUser, $upgradeExistingExecutor) {
             $couponOwner = null;
 
             if (!empty($data['coupon_code'])) {
@@ -99,17 +121,41 @@ class RegisterController extends Controller
                 }
             }
 
-            $user = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'password' => Hash::make($data['password']),
-                'trial_ends_at' => now()->addDays(14),
-                'subscribed_package' => 'free_trial',
-                'user_role' => 'customer',
-                'hear_about_us' => $data['hear_about_us'] ?? null,
-                'other_hear_about_us' => $data['other_hear_about_us'] ?? null,
-                'email_notifications' => $data['email_notifications'] ?? 0,
-            ]);
+            if ($upgradeExistingExecutor) {
+                $existingUser->update([
+                    'name' => $data['name'],
+                    'password' => Hash::make($data['password']),
+                    'trial_ends_at' => now()->addDays(14),
+                    'subscribed_package' => 'free_trial',
+                    'user_role' => 'customer',
+                    'hear_about_us' => $data['hear_about_us'] ?? null,
+                    'other_hear_about_us' => $data['other_hear_about_us'] ?? null,
+                    'email_notifications' => $data['email_notifications'] ?? 0,
+                    'preferred_role' => 'customer',
+                ]);
+
+                if (!$existingUser->hasRole('customer')) {
+                    $existingUser->assignRole('customer');
+                }
+
+                $existingUser->markExecutorActivated();
+                $user = $existingUser->fresh();
+            } else {
+                $user = User::create([
+                    'name' => $data['name'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'trial_ends_at' => now()->addDays(14),
+                    'subscribed_package' => 'free_trial',
+                    'user_role' => 'customer',
+                    'hear_about_us' => $data['hear_about_us'] ?? null,
+                    'other_hear_about_us' => $data['other_hear_about_us'] ?? null,
+                    'email_notifications' => $data['email_notifications'] ?? 0,
+                    'preferred_role' => 'customer',
+                ]);
+
+                $user->assignRole('customer');
+            }
 
             if ($couponOwner) {
                 CouponUsage::create([
@@ -117,8 +163,6 @@ class RegisterController extends Controller
                     'user_id' => $user->id,
                 ]);
             }
-
-            $user->assignRole('customer');
 
             if (($data['sign_up_as_partner'] ?? 'no') === 'yes') {
                 $partnerProvisioning = $this->createLinkedPartnerAccount($user);

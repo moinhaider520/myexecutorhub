@@ -185,9 +185,11 @@ use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\PartnerRegistationController;
 use App\Http\Controllers\KnowledgebaseController;
 use App\Http\Controllers\CaseStudyController;
+use App\Http\Controllers\Auth\ExecutorActivationController;
 use App\Http\Controllers\Executor\ImpersonationController;
 use App\Http\Controllers\Partner\SummaryController;
 use App\Http\Controllers\Partner\CustomerAccessController;
+use App\Http\Controllers\RolePreferenceController;
 use App\Models\User;
 
 Route::get('two-factor', [TwoFactorController::class, 'index'])->name('two-factor.index');
@@ -196,6 +198,8 @@ Route::post('two-factor', [TwoFactorController::class, 'verify'])->name('two-fac
 Route::post('two-factor/resend', [TwoFactorController::class, 'resend'])->name('two-factor.resend');
 //send OTP via SMS (Twilio)
 Route::post('two-factor/sms', [TwoFactorController::class, 'sendSms'])->name('two-factor.sms');
+Route::get('/executor/activate/{token}', [ExecutorActivationController::class, 'show'])->name('executor.activate.show');
+Route::post('/executor/activate/{token}', [ExecutorActivationController::class, 'store'])->name('executor.activate.store');
 
 Route::get('partner-registration', [PartnerRegistationController::class, 'index'])->name('partner-registration.index');
 Route::post('partner-registration', [PartnerRegistationController::class, 'store'])->name('partner-registration.store');
@@ -296,18 +300,27 @@ Auth::routes();
 
 
 Route::get('/dashboard', function () {
-    if (Auth::user()->hasRole('admin')) {
-        return redirect()->route('admin.dashboard');
-    } elseif (Auth::user()->hasRole('executor')) {
-        return redirect()->route('executor.dashboard');
-    } elseif (Auth::user()->hasRole('customer')) {
-        return redirect()->route('customer.dashboard');
-    } elseif (Auth::user()->hasRole('partner')) {
-        return redirect()->route('partner.dashboard');
+    $user = Auth::user();
+    $activeRole = $user->activeDashboardRole();
+
+    if ($activeRole === 'executor') {
+        $user->loadMissing('customers');
+        $firstCustomer = $user->customers->first();
+
+        if ($firstCustomer && !session()->has('acting_customer_id')) {
+            session(['acting_customer_id' => $firstCustomer->id]);
+        }
     } else {
-        return redirect()->route('dashboard');
+        session()->forget('acting_customer_id');
     }
+
+    return redirect()->route($user->dashboardRouteName($activeRole));
 })->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/role/preference', [RolePreferenceController::class, 'updatePreference'])->name('role.preference.update');
+    Route::post('/role/switch/{role}', [RolePreferenceController::class, 'switch'])->name('role.switch');
+});
 
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
