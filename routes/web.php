@@ -105,6 +105,7 @@ use App\Http\Controllers\Customer\WillController;
 use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
 use App\Http\Controllers\Customer\UsefulContactsController;
+use App\Http\Controllers\Customer\ReferralController as CustomerReferralController;
 
 // Role Executor Controller
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
@@ -211,6 +212,7 @@ Route::controller(StripePaymentController::class)->group(function () {
     Route::post('stripe/lifetime/step1', 'lifetimeStep1')->name('stripe.lifetime.step1');
     Route::get('stripe/lifetime/step2', 'lifetimeStep2')->name('stripe.lifetime.step2');
     Route::post('stripe/lifetime', 'lifetimeCheckout')->name('stripe.lifetime');
+    Route::post('stripe/lifetime/wallet', 'walletLifetimeCheckout')->middleware('auth')->name('stripe.lifetime.wallet');
     Route::get('stripe/lifetime/success', 'lifetimeSuccess')->name('stripe.lifetime.success');
     Route::get('stripe/partner-customer-access/success', 'partnerCustomerAccessSuccess')->name('stripe.partner_customer_access.success');
 
@@ -230,6 +232,7 @@ Route::controller(StripePaymentController::class)->group(function () {
         ->name('admin.invite.success');
 
     Route::post('stripe/resubscribe', 'resubscribe')->name('stripe.resubscribe');
+    Route::post('stripe/resubscribe/wallet', 'walletResubscribe')->middleware('auth')->name('stripe.resubscribe.wallet');
     Route::get('stripe/success', 'success')->name('stripe.success');
     Route::get('stripe/resubscribesuccess', 'resubscribesuccess')->name('stripe.resubscribesuccess');
     Route::post('subscription/cancel', 'cancelSubscription')->name('subscription.cancel');
@@ -284,6 +287,8 @@ Route::get('/pricing_policy', function () {
 })->name('pricing_policy');
 
 Route::get('/case-study/{slug}', [CaseStudyController::class, 'show'])->name('case-study.show');
+Route::get('/refer/{code}', [CustomerReferralController::class, 'share'])->name('referrals.share');
+Route::get('/invite/{token}', [CustomerReferralController::class, 'accept'])->name('customer.referrals.accept');
 
 
 
@@ -396,6 +401,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
 
     Route::get('/dashboard', [CustomerDashboardController::class, 'index'])->name('dashboard');
     Route::post('/partner-access/activate', [StripePaymentController::class, 'customerPartnerAccessActivate'])->name('partner_access.activate');
+    Route::get('/referrals', [CustomerReferralController::class, 'index'])->name('referrals.index');
+    Route::post('/referrals/executors', [CustomerReferralController::class, 'sendExecutorInvite'])->name('referrals.executors.store');
+    Route::post('/referrals/advisors', [CustomerReferralController::class, 'sendAdvisorInvite'])->name('referrals.advisors.store');
 
     // New routes for document reminders
     Route::post('/dashboard/update-reminder', [CustomerDashboardController::class, 'updateDocumentReminder'])->name('dashboard.update-reminder');
@@ -1505,4 +1513,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reviews/{id}', [OthersReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [OthersReviewController::class, 'destroy'])->name('reviews.destroy');
 });
+
 

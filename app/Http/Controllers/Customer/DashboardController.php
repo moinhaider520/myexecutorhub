@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\BusinessInterest;
+use App\Models\CustomerWallet;
 use App\Models\DigitalAsset;
 use App\Models\ForeignAssets;
 use App\Models\IntellectualProperty;
@@ -136,6 +137,15 @@ class DashboardController extends Controller
         $recentActivity = $activitySummaryService->recentForCustomer($user->id);
         $hasLifetimeSubscription = in_array($user->subscribed_package, ['Lifetime Basic', 'Lifetime Standard', 'Lifetime Premium'], true);
         $linkedPartnerAccess = $user->customerPartnerAccount;
+        $wallet = CustomerWallet::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'available_balance' => 0,
+                'pending_balance' => 0,
+                'total_earned' => 0,
+                'total_withdrawn' => 0,
+            ]
+        );
 
         return view('customer.dashboard', compact(
             'totalExecutors',
@@ -152,7 +162,8 @@ class DashboardController extends Controller
             'activitySummary',
             'recentActivity',
             'hasLifetimeSubscription',
-            'linkedPartnerAccess'
+            'linkedPartnerAccess',
+            'wallet'
         ));
     }
 

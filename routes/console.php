@@ -11,3 +11,6 @@ Artisan::command('inspire', function () {
 Schedule::command('emails:send-scheduled')->everyMinute();
 Schedule::command('payouts:weekly')->daily();
 Schedule::command('summary:weekly')->daily();
+Schedule::command('referrals:confirm-pending')->daily();
+Schedule::command('referrals:send-reminders')->hourly();
+

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerWallet;
+use App\Models\CustomerWalletTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Withdrawal;
@@ -14,7 +16,17 @@ class WithdrawalController extends Controller
      */
     public function view()
     {
-        return view('customer.withdraw.withdraw');
+        $wallet = CustomerWallet::firstOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'available_balance' => 0,
+                'pending_balance' => 0,
+                'total_earned' => 0,
+                'total_withdrawn' => 0,
+            ]
+        );
+
+        return view('customer.withdraw.withdraw', compact('wallet'));
     }
 
     /**
@@ -23,33 +35,51 @@ class WithdrawalController extends Controller
     public function process(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:5', // Ensure amount is at least 5
+            'amount' => 'required|numeric|min:100',
         ]);
 
         $user = Auth::user();
         $amount = $request->input('amount');
+        $wallet = CustomerWallet::firstOrCreate(
+            ['user_id' => $user->id],
+            [
+                'available_balance' => 0,
+                'pending_balance' => 0,
+                'total_earned' => 0,
+                'total_withdrawn' => 0,
+            ]
+        );
 
-        // Check if the amount has decimals
-        if (floor($amount) != $amount) {
-            return back()->with('error', 'Withdrawal amount must be a whole number.');
+        if ($wallet->available_balance < 100) {
+            return back()->with('error', 'You need at least £100 available in your wallet before withdrawing.');
         }
 
-        // Check if the user has enough commission amount to withdraw
-        if ($user->commission_amount < $amount) {
-            return back()->with('error', 'Insufficient commission amount to make this withdrawal.');
+        if ($wallet->available_balance < $amount) {
+            return back()->with('error', 'Insufficient available wallet balance to make this withdrawal.');
         }
 
-        // Create a withdrawal record
         Withdrawal::create([
             'user_id' => $user->id,
             'amount_requested' => $amount,
-            'status' => 'pending',
+            'status' => 'approved',
         ]);
 
-        // Deduct the requested amount from the user's commission amount
-        $user->decrement('commission_amount', $amount);
+        $wallet->decrement('available_balance', $amount);
+        $wallet->increment('total_withdrawn', $amount);
 
-        return back()->with('success', 'Your withdrawal request has been submitted for processing.');
+        CustomerWalletTransaction::create([
+            'wallet_id' => $wallet->id,
+            'user_id' => $user->id,
+            'type' => 'debit',
+            'category' => 'withdrawal',
+            'amount' => $amount,
+            'status' => 'completed',
+            'meta' => [
+                'processed_at' => now()->toDateTimeString(),
+            ],
+        ]);
+
+        return back()->with('success', 'Your wallet withdrawal was processed successfully.');
     }
 
     public function history()

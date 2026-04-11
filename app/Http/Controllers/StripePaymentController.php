@@ -19,6 +19,10 @@ use App\Models\User;
 use App\Models\PartnerRelationship;
 use App\Models\CouponUsage;
 use App\Services\PartnerSelfPurchaseService;
+use App\Services\CustomerReferralRewardService;
+use App\Services\CustomerReferralDiscountService;
+use App\Services\CustomerWalletPaymentService;
+use App\Models\CustomerWallet;
 use Illuminate\Support\Str;
 use App\Notifications\WelcomeEmail;
 use Carbon\Carbon;
@@ -34,11 +38,12 @@ class StripePaymentController extends Controller
     /**
      * Display the payment page.
      */
-    public function stripe(): View
+    public function stripe(Request $request): View
     {
-        return view('stripe_new');
-    }
+        $referralDiscount = app(CustomerReferralDiscountService::class)->previewDiscount($request);
 
+        return view('stripe_new', compact('referralDiscount'));
+    }
     public function stripe_mobile(): View
     {
         return view('stripe_mobile');
@@ -84,6 +89,36 @@ class StripePaymentController extends Controller
             }
         }
 
+        $referralDiscount = null;
+        if (!$request->filled('coupon_code')) {
+            $referralDiscount = app(CustomerReferralDiscountService::class)->resolveDiscount($request, $request->email);
+        }
+
+        $lineItem = [
+            'price' => $request->plan,
+            'quantity' => 1,
+        ];
+
+        if ($referralDiscount) {
+            $monthlyPlan = $this->resolveStripeCheckoutPlan($request->plan);
+            if ($monthlyPlan) {
+                $discountedAmount = round($monthlyPlan['amount'] * (1 - ($referralDiscount['discount_percent'] / 100)), 2);
+                $lineItem = [
+                    'price_data' => [
+                        'currency' => 'gbp',
+                        'product_data' => [
+                            'name' => $monthlyPlan['name'] . ' Monthly Subscription',
+                        ],
+                        'unit_amount' => (int) round($discountedAmount * 100),
+                        'recurring' => [
+                            'interval' => 'month',
+                        ],
+                    ],
+                    'quantity' => 1,
+                ];
+            }
+        }
+
         // Create Stripe Checkout Session with metadata containing user data
         $session = Session::create([
             'payment_method_types' => ['card'],
@@ -94,10 +129,7 @@ class StripePaymentController extends Controller
                 'enabled' => true,
             ],
             'line_items' => [
-                [
-                    'price' => $request->plan, // Stripe Price ID
-                    'quantity' => 1,
-                ]
+                $lineItem,
             ],
             'automatic_tax' => [
                 'enabled' => true,
@@ -113,6 +145,9 @@ class StripePaymentController extends Controller
                 'reffered_by' => $request->assigned_to ?? '',
                 'hear_about_us' => $request->hear_about_us ?? '',
                 'other_hear_about_us' => $request->other_hear_about_us ?? '',
+                'customer_referral_discount_percent' => $referralDiscount['discount_percent'] ?? 0,
+                'customer_referral_discount_type' => $referralDiscount['type'] ?? '',
+                'customer_referral_invite_token' => $referralDiscount['invite']->token ?? '',
             ],
             'success_url' => route('stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
         ]);
@@ -205,6 +240,11 @@ class StripePaymentController extends Controller
                     $amount = $price->unit_amount / 100; // Convert from cents to currency units
                     $currency = strtoupper($price->currency);
 
+                    $sessionDiscount = app(CustomerReferralDiscountService::class)->previewDiscount($request);
+                    if ($sessionDiscount) {
+                        $amount = round($amount * (1 - ($sessionDiscount['discount_percent'] / 100)), 2);
+                    }
+
                     $planLabel = match ($planTier) {
                         'basic' => 'Lifetime Basic',
                         'standard' => 'Lifetime Standard',
@@ -237,8 +277,19 @@ class StripePaymentController extends Controller
 
             // Get user data if this is an upgrade
             $user = null;
+            $wallet = null;
+            $referralDiscount = app(CustomerReferralDiscountService::class)->previewDiscount($request);
             if ($isUpgrade) {
                 $user = Auth::user();
+                $wallet = CustomerWallet::firstOrCreate(
+                    ['user_id' => $user->id],
+                    [
+                        'available_balance' => 0,
+                        'pending_balance' => 0,
+                        'total_earned' => 0,
+                        'total_withdrawn' => 0,
+                    ]
+                );
             }
 
             return view('lifetime.step2', [
@@ -248,6 +299,8 @@ class StripePaymentController extends Controller
                 'plans' => $plans,
                 'is_upgrade' => $isUpgrade,
                 'user' => $user,
+                'wallet' => $wallet,
+                'referralDiscount' => $referralDiscount,
             ]);
         } catch (\Exception $e) {
             \Log::error('Lifetime Step2: Unexpected error', [
@@ -414,6 +467,11 @@ class StripePaymentController extends Controller
             }
         }
 
+        $referralDiscount = null;
+        if (empty($validated['coupon_code'])) {
+            $referralDiscount = app(CustomerReferralDiscountService::class)->resolveDiscount($request, $validated['email']);
+        }
+
         // Use price_id from form if provided, otherwise calculate it
         $priceId = $validated['price_id'] ?? null;
 
@@ -480,7 +538,8 @@ class StripePaymentController extends Controller
                 // ],
             ];
 
-            $priceId = $priceMap[$validated['plan_tier']][$ageGroup] ?? null;
+            $discountedKey = $referralDiscount ? 'discounted_' . $ageGroup : $ageGroup;
+            $priceId = $priceMap[$validated['plan_tier']][$discountedKey] ?? null;
 
             if (!$priceId) {
                 return back()
@@ -676,6 +735,12 @@ class StripePaymentController extends Controller
             app(PartnerSelfPurchaseService::class)
                 ->recordQualifyingLifetimeReferral($user, (string) ($session->metadata->plan_tier ?? ''));
 
+            app(CustomerReferralRewardService::class)->processSuccessfulPayment(
+                $user,
+                $request,
+                (string) ($session->id ?? $sessionId)
+            );
+
             // Send upgrade confirmation email
             $name = $user->name;
             $email = $user->email;
@@ -785,6 +850,12 @@ class StripePaymentController extends Controller
 
         app(PartnerSelfPurchaseService::class)
             ->recordQualifyingLifetimeReferral($user, (string) ($session->metadata->plan_tier ?? ''));
+
+        app(CustomerReferralRewardService::class)->processSuccessfulPayment(
+            $user,
+            $request,
+            (string) ($session->id ?? $sessionId)
+        );
 
         $name = $session->metadata->user_name;
         $email = $session->metadata->user_email;
@@ -1451,6 +1522,12 @@ class StripePaymentController extends Controller
                 'trial_ends_at' => now()->addMonth(),
             ]);
 
+            app(CustomerReferralRewardService::class)->processSuccessfulPayment(
+                $user,
+                $request,
+                (string) ($subscription->id ?? $session_id)
+            );
+
             // Update all users created by this user
             User::where('created_by', $user->id)
                 ->update([
@@ -1590,6 +1667,101 @@ class StripePaymentController extends Controller
         }
     }
 
+
+    public function walletLifetimeCheckout(Request $request, CustomerWalletPaymentService $walletPaymentService): RedirectResponse
+    {
+        $user = Auth::user();
+
+        $validated = $request->validateWithBag('lifetime', [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'nullable|string|min:8',
+            'city' => 'required|string|max:255',
+            'postal_code' => 'required|string|max:20',
+            'country' => 'required|string|max:255',
+            'date_of_birth' => 'required|date|before:today',
+            'plan_tier' => 'required|in:basic,standard,premium',
+            'coupon_code' => 'nullable|string',
+            'hear_about_us' => 'nullable|string|max:255',
+            'other_hear_about_us' => 'nullable|string|max:255|required_if:hear_about_us,Other',
+        ]);
+
+        if ($validated['email'] !== $user->email) {
+            return back()->withInput()->withErrors(['email' => 'Email must match your account email.'], 'lifetime');
+        }
+
+        if (!empty($validated['coupon_code'])) {
+            return back()->withInput()->withErrors(['coupon_code' => 'Wallet checkout cannot be combined with coupon codes yet.'], 'lifetime');
+        }
+
+        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        $age = Carbon::parse($validated['date_of_birth'])->age;
+        $priceId = $this->resolveLifetimePriceId($validated['plan_tier'], $age);
+
+        if (!$priceId) {
+            return back()->withInput()->withErrors(['plan_tier' => 'Unable to determine the correct plan price.'], 'lifetime');
+        }
+
+        $price = \Stripe\Price::retrieve($priceId);
+        $amount = round((($price->unit_amount ?? 0) / 100) * 1.20, 2);
+        $planLabel = match ($validated['plan_tier']) {
+            'basic' => 'Lifetime Basic',
+            'standard' => 'Lifetime Standard',
+            'premium' => 'Lifetime Premium',
+        };
+
+        try {
+            $walletPaymentService->payLifetimeUpgrade($user, $planLabel, $amount, [
+                'plan_tier' => $validated['plan_tier'],
+                'date_of_birth' => $validated['date_of_birth'],
+            ]);
+
+            $user->update([
+                'hear_about_us' => $validated['hear_about_us'] ?? $user->hear_about_us,
+                'other_hear_about_us' => $validated['other_hear_about_us'] ?? $user->other_hear_about_us,
+                'city' => $validated['city'],
+                'postal_code' => $validated['postal_code'],
+                'country' => $validated['country'],
+                'address' => $request->input('address', $user->address),
+            ]);
+
+            if (!empty($validated['password'])) {
+                $user->update(['password' => bcrypt($validated['password'])]);
+            }
+        } catch (\RuntimeException $exception) {
+            return back()->withInput()->withErrors(['plan_tier' => $exception->getMessage()], 'lifetime');
+        }
+
+        return redirect()->route('customer.dashboard')->with('success', 'Lifetime membership paid from your wallet successfully.');
+    }
+
+    public function walletResubscribe(Request $request, CustomerWalletPaymentService $walletPaymentService): RedirectResponse
+    {
+        $request->validate([
+            'email' => 'required|email|max:255',
+            'plan' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+        if ($request->email !== $user->email) {
+            return back()->with('error', 'Email must match your account email.');
+        }
+
+        $plan = $this->resolveMonthlyWalletPlan($request->plan);
+        if (!$plan) {
+            return back()->with('error', 'Unsupported wallet renewal plan.');
+        }
+
+        try {
+            $walletPaymentService->payMonthlyRenewal($user, $plan['name'], $plan['amount'], [
+                'price_id' => $request->plan,
+            ]);
+        } catch (\RuntimeException $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+
+        return redirect()->route('customer.dashboard')->with('success', 'Monthly membership renewed from your wallet successfully.');
+    }
     public function resubscribe(Request $request): RedirectResponse
     {
 
@@ -2073,6 +2245,40 @@ class StripePaymentController extends Controller
         return $candidate;
     }
 
+
+    protected function resolveStripeCheckoutPlan(string $priceId): ?array
+    {
+        $plans = $this->isStripeTestMode()
+            ? [
+                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => ['name' => 'Basic', 'amount' => 5.99],
+                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => ['name' => 'Standard', 'amount' => 11.99],
+                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => ['name' => 'Premium', 'amount' => 19.99],
+            ]
+            : [
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => ['name' => 'Basic', 'amount' => 5.99],
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => ['name' => 'Standard', 'amount' => 11.99],
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => ['name' => 'Premium', 'amount' => 19.99],
+            ];
+
+        return $plans[$priceId] ?? null;
+    }
+
+    protected function resolveMonthlyWalletPlan(string $priceId): ?array
+    {
+        $plans = $this->isStripeTestMode()
+            ? [
+                'price_1SbHDHPEGGZ0nEjmonVkxxQL' => ['name' => 'Basic', 'amount' => 7.19],
+                'price_1SbHWsPEGGZ0nEjmTAg6neQY' => ['name' => 'Standard', 'amount' => 14.39],
+                'price_1SbHY6PEGGZ0nEjmJOsA4h41' => ['name' => 'Premium', 'amount' => 23.99],
+            ]
+            : [
+                'price_1R6CY5A22YOnjf5ZrChFVLg2' => ['name' => 'Basic', 'amount' => 7.19],
+                'price_1R6CZDA22YOnjf5ZUEFGbQOE' => ['name' => 'Standard', 'amount' => 14.39],
+                'price_1R6CaeA22YOnjf5Z0sW3CZ9F' => ['name' => 'Premium', 'amount' => 23.99],
+            ];
+
+        return $plans[$priceId] ?? null;
+    }
     protected function resolveLifetimePriceId(string $planTier, int $age, bool $discounted = false): ?string
     {
         $ageGroup = match (true) {
@@ -2152,3 +2358,18 @@ class StripePaymentController extends Controller
         return Str::startsWith((string) env('STRIPE_SECRET'), 'sk_test_');
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

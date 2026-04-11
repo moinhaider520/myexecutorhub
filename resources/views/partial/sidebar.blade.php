@@ -633,10 +633,11 @@
                                 </svg>
                                 <span>Executors </span>
                             </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('customer.executors.view') }}">Manage Executors</a></li>
-                            </ul>
-                        </li>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('customer.executors.view') }}">Manage Executors</a></li>
+                            <li><a href="{{ route('customer.referrals.index') }}">Referral Hub</a></li>
+                        </ul>
+                    </li>
                     @endif
 
 @if (in_array($package, $standardPackages, true) || Auth::user()->email === 'rshah93@hotmail.com')

@@ -11,7 +11,7 @@
             <div class="card">
               <div class="card-header">
                 <h4>Withdrawal History</h4>
-                <span>List of all your withdrawal requests.</span>
+                <span>List of wallet withdrawals processed from your available referral balance.</span>
               </div>
               <div class="card-body">
                 <div class="table-responsive theme-scrollbar">

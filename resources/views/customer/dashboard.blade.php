@@ -89,6 +89,48 @@
             </div>
         @endif
 
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-xl-4 col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h4>Invite Your Executors</h4>
+                            <span>Open your referral hub, send invites, and track progress.</span>
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <p class="mb-3">Invite executors and advisers with a tracked referral link and 10% off for 10 days.</p>
+                            <a href="{{ route('customer.referrals.index') }}" class="btn btn-primary">Open Referral Hub</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h4>Available Wallet</h4>
+                            <span>Can be used for purchases, upgrades, renewals, or withdrawal.</span>
+                        </div>
+                        <div class="card-body">
+                            <h2>£{{ number_format($wallet->available_balance, 2) }}</h2>
+                            <p class="mb-2">Minimum withdrawal: £100</p>
+                            <a href="{{ route('customer.withdraw.view') }}" class="btn btn-outline-primary">Withdraw Funds</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h4>Pending Wallet</h4>
+                            <span>Locked rewards waiting for the 14-day confirmation period.</span>
+                        </div>
+                        <div class="card-body">
+                            <h2>£{{ number_format($wallet->pending_balance, 2) }}</h2>
+                            <p class="mb-0">Pending funds cannot be spent or withdrawn yet.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- ONBOARDING SECTION -->
         <div class="container">
             <div class="row">

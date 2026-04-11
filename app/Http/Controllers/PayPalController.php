@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\User;
 use App\Models\CouponUsage;
 use App\Notifications\WelcomeEmail;
+use App\Services\CustomerReferralRewardService;
+use App\Services\CustomerReferralDiscountService;
 use Carbon\Carbon;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
@@ -60,6 +62,11 @@ class PayPalController extends Controller
             }
         }
 
+        $referralDiscount = null;
+        if (!$request->filled('coupon_code')) {
+            $referralDiscount = app(CustomerReferralDiscountService::class)->resolveDiscount($request, $request->email);
+        }
+
         // Store user data in session for PayPal callback
         session([
             'paypal_user_data' => [
@@ -71,6 +78,9 @@ class PayPalController extends Controller
                 'country' => $request->country,
                 'plan' => $request->plan,
                 'coupon_code' => $request->coupon_code ?? '',
+                'customer_referral_discount_percent' => $referralDiscount['discount_percent'] ?? 0,
+                'customer_referral_discount_type' => $referralDiscount['type'] ?? '',
+                'customer_referral_invite_token' => $referralDiscount['invite']->token ?? '',
             ]
         ]);
 
@@ -81,9 +91,9 @@ class PayPalController extends Controller
             $paypalToken = $provider->getAccessToken();
 
             $planIds = [
-                'basic' => $this->createPaypalPlan($provider, 'Basic Plan', 5.99),
-                'standard' => $this->createPaypalPlan($provider, 'Standard Plan', 11.99),
-                'premium' => $this->createPaypalPlan($provider, 'Premium Plan', 19.99),
+                'basic' => $this->createPaypalPlan($provider, 'Basic Plan', $referralDiscount ? 5.39 : 5.99),
+                'standard' => $this->createPaypalPlan($provider, 'Standard Plan', $referralDiscount ? 10.79 : 11.99),
+                'premium' => $this->createPaypalPlan($provider, 'Premium Plan', $referralDiscount ? 17.99 : 19.99),
             ];
 
             $selectedPlanId = $planIds[$request->plan];
@@ -258,6 +268,12 @@ class PayPalController extends Controller
                     'subscribed_package' => $planName,
                     'trial_ends_at' => now()->addMonth(),
                 ]);
+
+                app(CustomerReferralRewardService::class)->processSuccessfulPayment(
+                    $user,
+                    $request,
+                    (string) $subscriptionId
+                );
 
                 // Update all users created by this user
                 User::where('created_by', $user->id)
@@ -441,3 +457,4 @@ class PayPalController extends Controller
         }
     }
 }
+

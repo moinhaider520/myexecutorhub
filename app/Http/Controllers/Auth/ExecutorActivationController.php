@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerReferralInvite;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,11 +37,18 @@ class ExecutorActivationController extends Controller
         DB::transaction(function () use ($request, $user) {
             $user->forceFill([
                 'password' => Hash::make($request->password),
-                'preferred_role' => $user->preferred_role ?: 'executor',
-                'user_role' => $user->user_role ?: 'executor',
+                'preferred_role' => $user->preferred_role ?: ($user->hasRole('executor') ? 'executor' : null),
+                'user_role' => $user->user_role ?: ($user->hasRole('executor') ? 'executor' : null),
             ])->save();
 
             $user->markExecutorActivated();
+
+            CustomerReferralInvite::where('invited_user_id', $user->id)
+                ->whereIn('status', ['sent', 'opened'])
+                ->update([
+                    'status' => 'activated',
+                    'activated_at' => now(),
+                ]);
         });
 
         return redirect()

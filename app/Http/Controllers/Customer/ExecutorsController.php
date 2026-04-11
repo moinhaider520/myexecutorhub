@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Mail\CustomEmail;
+use App\Models\CustomerReferralInvite;
 use App\Models\User;
 use App\Services\ActivityLogger;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -104,6 +106,8 @@ class ExecutorsController extends Controller
             Auth::user()->executors()->syncWithoutDetaching([$executor->id]);
 
             $this->sendExecutorAccessEmail($executor, $isExistingExecutor);
+            $referralInvite = $this->createOrRefreshExecutorReferralInvite(Auth::user(), $executor, $request);
+            $this->sendReferralInviteEmail($referralInvite, $executor);
 
             $activityLogger->logManualActivity(
                 customerId: Auth::id(),
@@ -188,6 +192,7 @@ class ExecutorsController extends Controller
 
             $executor = User::findOrFail($id);
             Auth::user()->executors()->detach($id);
+            $this->cancelOpenExecutorReferralInvites(Auth::user(), $executor);
 
             $activityLogger->logManualActivity(
                 customerId: Auth::id(),
@@ -247,5 +252,105 @@ class ExecutorsController extends Controller
             ],
             'You Have Been Invited to Executor Hub.'
         ));
+    }
+
+    private function createOrRefreshExecutorReferralInvite(User $customer, User $executor, Request $request): CustomerReferralInvite
+    {
+        $referralCode = $this->ensureReferralCode($customer);
+
+        $invite = CustomerReferralInvite::query()
+            ->where('referrer_user_id', $customer->id)
+            ->where('invite_type', 'executor')
+            ->where(function ($query) use ($executor) {
+                $query->where('invited_user_id', $executor->id)
+                    ->orWhere('email', $executor->email);
+            })
+            ->whereIn('status', ['sent', 'opened', 'activated'])
+            ->latest('id')
+            ->first();
+
+        $payload = [
+            'invited_user_id' => $executor->id,
+            'name' => trim($executor->name . ' ' . $executor->lastname),
+            'email' => $executor->email,
+            'referral_code' => $referralCode,
+            'discount_percent' => 10,
+            'status' => 'sent',
+            'expires_at' => now()->addDays(10),
+            'last_sent_at' => now(),
+            'meta' => [
+                'relationship' => $request->relationship,
+                'how_acting' => $request->how_acting,
+                'source' => 'customer_executors_manager',
+            ],
+        ];
+
+        if ($invite) {
+            $invite->update($payload);
+
+            return $invite->fresh();
+        }
+
+        return CustomerReferralInvite::create(array_merge($payload, [
+            'referrer_user_id' => $customer->id,
+            'token' => Str::random(64),
+            'invite_type' => 'executor',
+        ]));
+    }
+
+    private function cancelOpenExecutorReferralInvites(User $customer, User $executor): void
+    {
+        CustomerReferralInvite::query()
+            ->where('referrer_user_id', $customer->id)
+            ->where('invite_type', 'executor')
+            ->where(function ($query) use ($executor) {
+                $query->where('invited_user_id', $executor->id)
+                    ->orWhere('email', $executor->email);
+            })
+            ->whereIn('status', ['sent', 'opened', 'activated'])
+            ->update([
+                'status' => 'cancelled',
+            ]);
+    }
+
+    private function sendReferralInviteEmail(CustomerReferralInvite $invite, User $executor): void
+    {
+        $customer = Auth::user();
+        $acceptUrl = route('customer.referrals.accept', $invite->token);
+        $expiryText = $invite->expires_at instanceof Carbon
+            ? $invite->expires_at->format('j M Y, g:i A')
+            : '';
+
+        $message = "
+            <h2>Hello {$executor->name},</h2>
+            <p><strong>{$customer->name}</strong> has invited you to join Executor Hub as an Executor.</p>
+            <p>You have a referral invitation waiting for you with <strong>10% off</strong> that is valid until <strong>{$expiryText}</strong>.</p>
+            <p><a href='{$acceptUrl}'>Open your invitation</a></p>
+            <p>If you activate your account now, your referral will stay connected to your first eligible purchase.</p>
+            <p>Regards,<br>Executor Hub Team</p>
+        ";
+
+        Mail::to($invite->email)->send(new CustomEmail(
+            [
+                'subject' => "You're Invited to Executor Hub",
+                'message' => $message,
+            ],
+            "You're Invited to Executor Hub"
+        ));
+    }
+
+    private function ensureReferralCode(User $customer): string
+    {
+        if (!empty($customer->coupon_code)) {
+            return $customer->coupon_code;
+        }
+
+        do {
+            $code = 'CUST-' . strtoupper(Str::random(8));
+        } while (User::where('coupon_code', $code)->exists());
+
+        $customer->forceFill(['coupon_code' => $code])->save();
+
+        return $code;
     }
 }

@@ -90,6 +90,14 @@
                             </div>
                         @endif
 
+                        @if (!empty($referralDiscount))
+                            <div class="alert alert-success">
+                                <strong>Referral offer active:</strong> {{ $referralDiscount['description'] }}
+                                <br>
+                                <small>This applies to your first eligible purchase and does not stack with manual coupon codes.</small>
+                            </div>
+                        @endif
+
                         <!-- User Information Form -->
                         <form id="user-info-form">
                             @csrf

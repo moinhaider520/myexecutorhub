@@ -231,6 +231,12 @@
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
 
+                @if (!empty($referralDiscount))
+                    <div class="alert alert-success mb-4">
+                        <strong>Referral offer active:</strong> {{ $referralDiscount['description'] }}
+                    </div>
+                @endif
+
                 <div class="row g-4 mb-4">
                     @foreach($plans as $plan)
                         <div class="col-xl-4">
@@ -316,6 +322,14 @@
                         </div>
                     </div>
                 </div>
+
+                @if(isset($is_upgrade) && $is_upgrade && isset($wallet))
+                    <div class="alert alert-info mb-4">
+                        <strong>Available wallet:</strong> £{{ number_format($wallet->available_balance, 2) }}
+                        <br>
+                        <small id="walletEligibilityHint">Choose a plan to see whether wallet checkout is available.</small>
+                    </div>
+                @endif
 
                 <div id="checkoutForm" class="lifetime-form-card p-4 p-lg-5" style="display:none;">
                     <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-4 gap-3">
@@ -485,6 +499,9 @@
 
                         <div class="col-12 d-flex flex-column flex-sm-row gap-3 justify-content-end pt-2">
                             <a href="{{ $backUrl }}" class="btn btn-outline-secondary px-4">Back</a>
+                            @if(isset($is_upgrade) && $is_upgrade && isset($wallet))
+                                <button type="submit" id="walletCheckoutButton" formaction="{{ route('stripe.lifetime.wallet') }}" formmethod="POST" class="btn btn-outline-primary px-4" disabled>Pay with Wallet</button>
+                            @endif
                             <button type="submit" class="btn btn-primary px-4">Proceed to Secure Checkout</button>
                         </div>
                     </form>
@@ -521,7 +538,8 @@
             document.getElementById('formPriceId').value = priceId;
 
             document.getElementById('selectedPlanLabel').textContent = label;
-            document.getElementById('selectedPlanPrice').textContent = currency + ' ' + amount.toFixed(2);
+            const totalAmount = amount * 1.20;
+            document.getElementById('selectedPlanPrice').textContent = currency + ' ' + totalAmount.toFixed(2);
             document.getElementById('selectedPlanSummary').style.display = 'block';
 
             document.querySelectorAll('.lifetime-plan-card').forEach(card => {
@@ -548,6 +566,21 @@
             }
 
             togglePartnerFields();
+
+            const walletButton = document.getElementById('walletCheckoutButton');
+            const walletHint = document.getElementById('walletEligibilityHint');
+            @if(isset($is_upgrade) && $is_upgrade && isset($wallet))
+                const availableWallet = {{ (float) $wallet->available_balance }};
+                if (walletButton) {
+                    const canUseWallet = availableWallet >= totalAmount;
+                    walletButton.disabled = !canUseWallet;
+                }
+                if (walletHint) {
+                    walletHint.textContent = availableWallet >= totalAmount
+                        ? 'Your wallet covers this lifetime payment.'
+                        : 'Your wallet does not yet cover this lifetime payment.';
+                }
+            @endif
 
             const checkoutForm = document.getElementById('checkoutForm');
             checkoutForm.style.display = 'block';
@@ -623,3 +656,5 @@
         });
     </script>
 @endsection
+
+

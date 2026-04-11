@@ -137,6 +137,11 @@ class User extends Authenticatable
         return $this->isExecutorOnlyAccount() && $this->executor_activated_at === null;
     }
 
+    public function needsInviteActivation(): bool
+    {
+        return $this->executor_invite_token !== null && $this->executor_activated_at === null;
+    }
+
     public function markExecutorInviteIssued(?string $token = null): string
     {
         $token ??= (string) str()->random(64);
@@ -221,6 +226,31 @@ class User extends Authenticatable
     public function customerPartnerAccount()
     {
         return $this->hasOne(CustomerPartnerAccount::class, 'customer_user_id');
+    }
+
+    public function customerWallet()
+    {
+        return $this->hasOne(CustomerWallet::class, 'user_id');
+    }
+
+    public function sentReferralInvites()
+    {
+        return $this->hasMany(CustomerReferralInvite::class, 'referrer_user_id');
+    }
+
+    public function receivedReferralInvites()
+    {
+        return $this->hasMany(CustomerReferralInvite::class, 'invited_user_id');
+    }
+
+    public function customerReferrals()
+    {
+        return $this->hasMany(CustomerReferral::class, 'referrer_user_id');
+    }
+
+    public function earnedReferralRewards()
+    {
+        return $this->hasMany(CustomerReferral::class, 'referred_user_id');
     }
 
     public function linkedCustomerAccount()

@@ -50,6 +50,16 @@
         </div>
         </div>
 
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <div class="alert alert-info mb-0">
+              <strong>Available wallet:</strong> £{{ number_format($wallet->available_balance, 2) }}
+              <br>
+              <small>Wallet payments work when your available balance fully covers the selected membership amount.</small>
+            </div>
+          </div>
+        </div>
+
         <!-- Monthly Subscription Plans -->
         <div class="row mb-4">
           <div class="col-md-12">
@@ -69,13 +79,20 @@
           <li>Record Assets & Liabilities</li>
           </ul>
           </div>
-          <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
-          @csrf
-          <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1SbHDHPEGGZ0nEjmonVkxxQL">
-          <button id='pay-btn' class="btn btn-success mt-3" type="submit"
-          style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
-          </form>
+          <div class="px-3 pb-3">
+            <form method='post' action="{{ route('stripe.resubscribe') }}">
+            @csrf
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+            <input type="hidden" name="plan" value="price_1SbHDHPEGGZ0nEjmonVkxxQL">
+            <button class="btn btn-success mt-3" type="submit" style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe with Stripe</button>
+            </form>
+            <form method='post' action="{{ route('stripe.resubscribe.wallet') }}" class="mt-2">
+            @csrf
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+            <input type="hidden" name="plan" value="price_1SbHDHPEGGZ0nEjmonVkxxQL">
+            <button class="btn btn-outline-primary w-100" type="submit" {{ $wallet->available_balance >= 7.19 ? '' : 'disabled' }}>Pay £7.19 with Wallet</button>
+            </form>
+          </div>
         </div>
         </div>
         <div class="col-lg-4 col-sm-6 box-col-3">
@@ -93,13 +110,20 @@
           <li>Access to Secure Messaging System</li>
           </ul>
           </div>
-          <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
-          @csrf
-          <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1SbHWsPEGGZ0nEjmTAg6neQY">
-          <button id='pay-btn' class="btn btn-success mt-3" type="submit"
-          style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
-          </form>
+          <div class="px-3 pb-3">
+            <form method='post' action="{{ route('stripe.resubscribe') }}">
+            @csrf
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+            <input type="hidden" name="plan" value="price_1SbHWsPEGGZ0nEjmTAg6neQY">
+            <button class="btn btn-success mt-3" type="submit" style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe with Stripe</button>
+            </form>
+            <form method='post' action="{{ route('stripe.resubscribe.wallet') }}" class="mt-2">
+            @csrf
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+            <input type="hidden" name="plan" value="price_1SbHWsPEGGZ0nEjmTAg6neQY">
+            <button class="btn btn-outline-primary w-100" type="submit" {{ $wallet->available_balance >= 14.39 ? '' : 'disabled' }}>Pay £14.39 with Wallet</button>
+            </form>
+          </div>
         </div>
         </div>
         <div class="col-lg-4 col-sm-6 box-col-3">
@@ -121,13 +145,20 @@
           <li>Access to Executor Hub AI</li>
           </ul>
           </div>
-          <form id='checkout-form' method='post' action="{{ route('stripe.resubscribe') }}">
-          @csrf
-          <input type="hidden" name="email" value={{ Auth::user()->email }}>
-          <input type="hidden" name="plan" value="price_1SbHY6PEGGZ0nEjmJOsA4h41">
-          <button id='pay-btn' class="btn btn-success mt-3" type="submit"
-          style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe</button>
-          </form>
+          <div class="px-3 pb-3">
+            <form method='post' action="{{ route('stripe.resubscribe') }}">
+            @csrf
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+            <input type="hidden" name="plan" value="price_1SbHY6PEGGZ0nEjmJOsA4h41">
+            <button class="btn btn-success mt-3" type="submit" style="margin-top: 20px; width: 100%; padding: 7px;">Subscribe with Stripe</button>
+            </form>
+            <form method='post' action="{{ route('stripe.resubscribe.wallet') }}" class="mt-2">
+            @csrf
+            <input type="hidden" name="email" value="{{ Auth::user()->email }}">
+            <input type="hidden" name="plan" value="price_1SbHY6PEGGZ0nEjmJOsA4h41">
+            <button class="btn btn-outline-primary w-100" type="submit" {{ $wallet->available_balance >= 23.99 ? '' : 'disabled' }}>Pay £23.99 with Wallet</button>
+            </form>
+          </div>
         </div>
         </div>
         </div>
@@ -274,3 +305,4 @@
     });
   </script>
 @endsection
+
