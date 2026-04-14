@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\WithdrawalController as AdminWithdrawalController
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\EmailController as AdminEmailController;
 use App\Http\Controllers\Admin\CommissionCalculatorController as AdminCommissionCalculatorController;
+use App\Http\Controllers\Admin\DeathCertificateVerificationController as AdminDeathCertificateVerificationController;
 use App\Http\Controllers\Admin\PartnerReportController;
 // Role Partner Controller
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
@@ -106,6 +107,7 @@ use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
 use App\Http\Controllers\Customer\UsefulContactsController;
 use App\Http\Controllers\Customer\ReferralController as CustomerReferralController;
+use App\Http\Controllers\Customer\DeathCertificateController as CustomerDeathCertificateController;
 
 // Role Executor Controller
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
@@ -145,6 +147,7 @@ use App\Http\Controllers\Executor\TaskController as ExecutorTaskController;
 use App\Http\Controllers\Executor\FuneralWakeController as ExecutorFuneralWakeController;
 use App\Http\Controllers\Executor\WillGeneratorController as ExecutorWillGeneratorController;
 use App\Http\Controllers\Executor\UsefulContactsController as ExecutorUsefulContactsController;
+use App\Http\Controllers\Executor\DeathCertificateController as ExecutorDeathCertificateController;
 
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
@@ -350,6 +353,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('customers.update');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::get('/death-certificates', [AdminDeathCertificateVerificationController::class, 'index'])->name('death_certificates.index');
+    Route::get('/death-certificates/{verification}', [AdminDeathCertificateVerificationController::class, 'show'])->name('death_certificates.show');
+    Route::post('/death-certificates/{verification}/approve', [AdminDeathCertificateVerificationController::class, 'approve'])->name('death_certificates.approve');
+    Route::post('/death-certificates/{verification}/reject', [AdminDeathCertificateVerificationController::class, 'reject'])->name('death_certificates.reject');
+    Route::post('/death-certificates/{verification}/reprocess', [AdminDeathCertificateVerificationController::class, 'reprocess'])->name('death_certificates.reprocess');
 
     // Partner Management
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');
@@ -491,6 +499,9 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Customer Documents
     Route::get('/documents/view', [DocumentsController::class, 'view'])->name('documents.view');
     Route::post('/documents/store', [DocumentsController::class, 'store'])->name('documents.store');
+    Route::get('/death-certificates', [CustomerDeathCertificateController::class, 'index'])->name('death_certificates.index');
+    Route::post('/death-certificates/store', [CustomerDeathCertificateController::class, 'store'])->name('death_certificates.store');
+    Route::delete('/death-certificates/destroy/{verification}', [CustomerDeathCertificateController::class, 'destroy'])->name('death_certificates.destroy');
     Route::post('/documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 
@@ -1226,6 +1237,9 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
 
 
     Route::get('/documents/view', [ExecutorDocumentsController::class, 'view'])->name('documents.view');
+    Route::get('/death-certificates', [ExecutorDeathCertificateController::class, 'index'])->name('death_certificates.index');
+    Route::post('/death-certificates/store', [ExecutorDeathCertificateController::class, 'store'])->name('death_certificates.store');
+    Route::delete('/death-certificates/destroy/{verification}', [ExecutorDeathCertificateController::class, 'destroy'])->name('death_certificates.destroy');
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [ExecutorDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
     Route::post('/documents/store', [ExecutorDocumentsController::class, 'store'])->name('documents.store');
@@ -1513,5 +1527,3 @@ Route::middleware(['auth'])->group(function () {
     Route::get('reviews/{id}', [OthersReviewController::class, 'show'])->name('reviews.show');
     Route::delete('reviews/{id}', [OthersReviewController::class, 'destroy'])->name('reviews.destroy');
 });
-
-

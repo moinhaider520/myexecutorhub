@@ -65,6 +65,12 @@ return [
         'jwks_kid' => env('MONEYHUB_JWKS_KID'),
     ],
 
+    'death_certificate_api' => [
+        'url' => env('DEATH_CERTIFICATE_API_URL', 'http://ehdc-env.eba-b3n6kpkj.eu-north-1.elasticbeanstalk.com/api/v1/death-certificates/analyze'),
+        'key' => env('DEATH_CERTIFICATE_API_KEY'),
+        'timeout' => env('DEATH_CERTIFICATE_API_TIMEOUT', 120),
+    ],
+
 ];
 
 

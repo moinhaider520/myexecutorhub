@@ -9,6 +9,7 @@ use App\Models\Document;
 use App\Models\DocumentTypes;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\CloudinaryUpload;
+use App\Services\DeathCertificateWorkflowService;
 
 class DocumentsController extends Controller
 {
@@ -83,8 +84,17 @@ class DocumentsController extends Controller
             DB::beginTransaction();
 
             $files = [];
+            $verificationUploadMeta = null;
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
+                    if ($verificationUploadMeta === null) {
+                        $verificationUploadMeta = [
+                            'document_sha256' => hash_file('sha256', $file->getRealPath()),
+                            'uploaded_file_name' => $file->getClientOriginalName(),
+                            'uploaded_file_size' => $file->getSize(),
+                        ];
+                    }
+
                     $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
                     $files[] = [
                         'url' => $upload['url'],
@@ -103,6 +113,13 @@ class DocumentsController extends Controller
                 'created_by' => $request->created_by,
                 'reminder_date' => $request->reminder_date,
             ]);
+
+            app(DeathCertificateWorkflowService::class)->createForDocument(
+                document: $document,
+                customerId: (int) $request->created_by,
+                uploadedBy: Auth::id(),
+                uploadMeta: $verificationUploadMeta ?? [],
+            );
 
             DB::commit();
 

@@ -14,4 +14,9 @@ class Document extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function deathCertificateVerification()
+    {
+        return $this->hasOne(DeathCertificateVerification::class);
+    }
 }

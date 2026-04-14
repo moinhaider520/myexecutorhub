@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Document;
 use App\Models\DocumentTypes;
 use App\Models\OnboardingProgress;
+use App\Services\DeathCertificateWorkflowService;
 use App\Traits\CloudinaryUpload;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,8 +46,17 @@ class DocumentsController extends Controller
 
             $storedFiles = [];
             $text = null;
+            $verificationUploadMeta = null;
 
             foreach ($request->file('files') as $file) {
+                if ($verificationUploadMeta === null) {
+                    $verificationUploadMeta = [
+                        'document_sha256' => hash_file('sha256', $file->getRealPath()),
+                        'uploaded_file_name' => $file->getClientOriginalName(),
+                        'uploaded_file_size' => $file->getSize(),
+                    ];
+                }
+
                 $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
                 $storedFiles[] = [
                     'url' => $upload['url'],
@@ -76,6 +86,13 @@ class DocumentsController extends Controller
                 'reminder_type' => $request->reminder_type,
                 'textpdf' => mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null,
             ]);
+
+            app(DeathCertificateWorkflowService::class)->createForDocument(
+                document: $document,
+                customerId: ContextHelper::user()->id,
+                uploadedBy: Auth::id(),
+                uploadMeta: $verificationUploadMeta ?? [],
+            );
 
             // Update onboarding progress
             $progress = OnboardingProgress::firstOrCreate(

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\CloudinaryUpload;
 use App\Models\DocumentTypes;
+use App\Services\DeathCertificateWorkflowService;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 use Smalot\PdfParser\Parser;
@@ -47,8 +48,17 @@ class DocumentsController extends Controller
 
             $storedFiles = [];
             $text = null;
+            $verificationUploadMeta = null;
 
             foreach ($request->file('files') as $file) {
+                if ($verificationUploadMeta === null) {
+                    $verificationUploadMeta = [
+                        'document_sha256' => hash_file('sha256', $file->getRealPath()),
+                        'uploaded_file_name' => $file->getClientOriginalName(),
+                        'uploaded_file_size' => $file->getSize(),
+                    ];
+                }
+
                 $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
                 $storedFiles[] = [
                     'url' => $upload['url'],
@@ -78,6 +88,13 @@ class DocumentsController extends Controller
                 'reminder_type' => $request->reminder_type,
                 'textpdf' => mb_convert_encoding($text, 'UTF-8', 'UTF-8') ?? null,
             ]);
+
+            app(DeathCertificateWorkflowService::class)->createForDocument(
+                document: $document,
+                customerId: Auth::id(),
+                uploadedBy: Auth::id(),
+                uploadMeta: $verificationUploadMeta ?? [],
+            );
 
             // Update onboarding progress
             $progress = OnboardingProgress::firstOrCreate(

@@ -51,6 +51,9 @@ class User extends Authenticatable
             'password' => 'hashed',
             'executor_invited_at' => 'datetime',
             'executor_activated_at' => 'datetime',
+            'date_of_birth' => 'date',
+            'date_of_death' => 'date',
+            'deceased_verified_at' => 'datetime',
         ];
     }
 
@@ -298,6 +301,11 @@ class User extends Authenticatable
             'executor_id',
             'customer_id'
         );
+    }
+
+    public function deathCertificateVerifications()
+    {
+        return $this->hasMany(DeathCertificateVerification::class, 'customer_id');
     }
 
     public function getProfileImageUrlAttribute()
