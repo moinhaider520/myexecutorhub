@@ -7,9 +7,12 @@
     <div class="row widget-grid">
       <div class="col-xl-12 proorder-xl-12 box-col-12 proorder-md-5">
       <div class="row">
-        <div class="col-md-12 d-flex justify-content-end p-2">
+        <div class="col-md-12 d-flex justify-content-end p-2 gap-2">
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addBankAccountModal">
           Add Bank Account
+        </button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#uploadBankStatementModal">
+          Upload Bank Statement
         </button>
         </div>
       </div>
@@ -224,11 +227,54 @@
     </div>
     </div>
   </div>
+  <div class="modal fade" id="uploadBankStatementModal" tabindex="-1" role="dialog"
+    aria-labelledby="uploadBankStatementModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="modal-title" id="uploadBankStatementModalLabel">Upload Bank Statement</h5>
+      </div>
+      <div class="modal-body">
+      <form id="uploadBankStatementForm" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group mb-2">
+        <label for="bankStatementFile">Bank Statement File</label>
+        <input type="file" class="form-control" name="bank_statement" id="bankStatementFile"
+          accept=".pdf,.jpg,.jpeg,.png,image/*,application/pdf" required>
+        <span class="text-danger" id="bank_statement_error"></span>
+        <small class="form-text text-muted">Upload a PDF, JPG, JPEG, or PNG bank statement.</small>
+        </div>
+        <span class="text-primary d-block mb-2" id="bank_statement_status"></span>
+        <span class="text-danger d-block" id="bank_statement_general_error"></span>
+      </form>
+      </div>
+      <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-success" id="submitBankStatement">Upload</button>
+      </div>
+    </div>
+    </div>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function () {
+    function setBankStatementUploadingState(isUploading) {
+      $('#submitBankStatement').prop('disabled', isUploading);
+      $('#bankStatementFile').prop('disabled', isUploading);
+      $('#submitBankStatement').text(isUploading ? 'Uploading...' : 'Upload');
+      $('#bank_statement_status').text(
+      isUploading ? 'Processing the bank statement. This can take a little while if the OCR service is busy.' : ''
+      );
+    }
+
+    function clearUploadStatementErrors() {
+      $('#bank_statement_error').text('');
+      $('#bank_statement_status').text('');
+      $('#bank_statement_general_error').text('');
+    }
+
     $('#saveBankAccount').on('click', function () {
       $.ajax({
       type: 'POST',
@@ -247,6 +293,50 @@
         if (errors.balance) $('#balance_error').text(errors.balance[0]);
       }
       });
+    });
+
+    $('#submitBankStatement').on('click', function () {
+      if ($('#submitBankStatement').prop('disabled')) {
+      return;
+      }
+
+      clearUploadStatementErrors();
+
+      const formData = new FormData($('#uploadBankStatementForm')[0]);
+      setBankStatementUploadingState(true);
+
+      $.ajax({
+      type: 'POST',
+      url: "{{ route('executor.bank_accounts.upload-statement') }}",
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function () {
+        location.reload();
+      },
+      error: function (response) {
+        setBankStatementUploadingState(false);
+
+        const responseJson = response.responseJSON || {};
+        const errors = responseJson.errors || {};
+
+        if (errors.bank_statement) {
+        $('#bank_statement_error').text(errors.bank_statement[0]);
+        }
+
+        if (responseJson.message) {
+        $('#bank_statement_general_error').text(responseJson.message);
+        } else if (!errors.bank_statement) {
+        $('#bank_statement_general_error').text('An error occurred while uploading the bank statement.');
+        }
+      }
+      });
+    });
+
+    $('#uploadBankStatementModal').on('hidden.bs.modal', function () {
+      $('#uploadBankStatementForm')[0].reset();
+      clearUploadStatementErrors();
+      setBankStatementUploadingState(false);
     });
 
     $('.edit-button').on('click', function () {

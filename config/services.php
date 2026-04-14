@@ -71,6 +71,12 @@ return [
         'timeout' => env('DEATH_CERTIFICATE_API_TIMEOUT', 120),
     ],
 
+    'bank_statement_api' => [
+        'url' => env('BANK_STATEMENT_API_URL', 'http://ehbocr-env.eba-izmkmjfg.eu-north-1.elasticbeanstalk.com/api/v1/bank-statement/extract'),
+        'key' => env('BANK_STATEMENT_API_KEY'),
+        'timeout' => env('BANK_STATEMENT_API_TIMEOUT', 120),
+    ],
+
 ];
 
 

@@ -552,6 +552,7 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     Route::get('/bank_accounts/moneyhub/callback', [BankAccountController::class, 'moneyhubCallback'])->name('bank_accounts.moneyhub.callback');
     Route::post('/bank_accounts/moneyhub/callback', [BankAccountController::class, 'handleMoneyhubCallback'])->name('bank_accounts.moneyhub.handle-callback');
     Route::post('/bank_accounts/store', [BankAccountController::class, 'store'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/upload-statement', [BankAccountController::class, 'uploadStatement'])->name('bank_accounts.upload-statement');
     Route::post('/bank_accounts/update/{id}', [BankAccountController::class, 'update'])->name('bank_accounts.update');
     Route::delete('/bank_accounts/destroy/{id}', [BankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
 
@@ -1272,6 +1273,7 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/bank_accounts/view', [ExecutorBankAccountController::class, 'view'])->name('bank_accounts.view');
     Route::post('/bank_accounts/save_custom_type', [ExecutorBankAccountController::class, 'saveCustomType'])->name('bank_accounts.save_custom_type');
     Route::post('/bank_accounts/store', [ExecutorBankAccountController::class, 'store'])->name('bank_accounts.store');
+    Route::post('/bank_accounts/upload-statement', [ExecutorBankAccountController::class, 'uploadStatement'])->name('bank_accounts.upload-statement');
     Route::post('/bank_accounts/update/{id}', [ExecutorBankAccountController::class, 'update'])->name('bank_accounts.update');
     Route::delete('/bank_accounts/destroy/{id}', [ExecutorBankAccountController::class, 'destroy'])->name('bank_accounts.destroy');
 
