@@ -107,7 +107,6 @@ use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
 use App\Http\Controllers\Customer\UsefulContactsController;
 use App\Http\Controllers\Customer\ReferralController as CustomerReferralController;
-use App\Http\Controllers\Customer\DeathCertificateController as CustomerDeathCertificateController;
 
 // Role Executor Controller
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
@@ -499,9 +498,6 @@ Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer
     // Customer Documents
     Route::get('/documents/view', [DocumentsController::class, 'view'])->name('documents.view');
     Route::post('/documents/store', [DocumentsController::class, 'store'])->name('documents.store');
-    Route::get('/death-certificates', [CustomerDeathCertificateController::class, 'index'])->name('death_certificates.index');
-    Route::post('/death-certificates/store', [CustomerDeathCertificateController::class, 'store'])->name('death_certificates.store');
-    Route::delete('/death-certificates/destroy/{verification}', [CustomerDeathCertificateController::class, 'destroy'])->name('death_certificates.destroy');
     Route::post('/documents/update/{id}', [DocumentsController::class, 'update'])->name('documents.update');
     Route::delete('/documents/destroy/{id}', [DocumentsController::class, 'destroy'])->name('documents.destroy');
 

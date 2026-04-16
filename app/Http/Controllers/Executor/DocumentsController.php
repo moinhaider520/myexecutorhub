@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Exceptions\DuplicateDeathCertificateException;
 use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -51,7 +52,6 @@ class DocumentsController extends Controller
             foreach ($request->file('files') as $file) {
                 if ($verificationUploadMeta === null) {
                     $verificationUploadMeta = [
-                        'document_sha256' => hash_file('sha256', $file->getRealPath()),
                         'uploaded_file_name' => $file->getClientOriginalName(),
                         'uploaded_file_size' => $file->getSize(),
                     ];
@@ -126,6 +126,9 @@ class DocumentsController extends Controller
             Mail::to($user->email)->send(new \App\Mail\DocumentMail($data));
 
             return response()->json(['success' => true, 'message' => 'Documents uploaded successfully.']);
+        } catch (DuplicateDeathCertificateException $e) {
+            DB::rollback();
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
         } catch (\Exception $e) {
             DB::rollback();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 500);

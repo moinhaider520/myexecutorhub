@@ -44,6 +44,13 @@ class DeathCertificateVerificationController extends Controller
 
         $workflowService->approve($verification, $overrideData, $validated['notes'] ?? null);
 
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'message' => 'Death certificate approved successfully.',
+                'status' => 'approved_by_admin',
+            ]);
+        }
+
         return redirect()
             ->route('admin.death_certificates.show', $verification)
             ->with('success', 'Death certificate approved successfully.');
@@ -57,6 +64,13 @@ class DeathCertificateVerificationController extends Controller
 
         $workflowService->reject($verification, $validated['notes']);
 
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'message' => 'Death certificate rejected successfully.',
+                'status' => 'rejected_by_admin',
+            ]);
+        }
+
         return redirect()
             ->route('admin.death_certificates.show', $verification)
             ->with('success', 'Death certificate rejected successfully.');
@@ -69,6 +83,13 @@ class DeathCertificateVerificationController extends Controller
         ]);
 
         $workflowService->reprocess($verification, $validated['notes'] ?? null);
+
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'message' => 'Death certificate reprocessed successfully.',
+                'status' => 'pending',
+            ]);
+        }
 
         return redirect()
             ->route('admin.death_certificates.show', $verification)

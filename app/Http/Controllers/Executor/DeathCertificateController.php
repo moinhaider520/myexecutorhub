@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Executor;
 
+use App\Exceptions\DuplicateDeathCertificateException;
 use App\Helpers\ContextHelper;
 use App\Http\Controllers\Controller;
 use App\Models\DeathCertificateVerification;
@@ -47,7 +48,6 @@ class DeathCertificateController extends Controller
             foreach ($request->file('files') as $file) {
                 if ($verificationUploadMeta === null) {
                     $verificationUploadMeta = [
-                        'document_sha256' => hash_file('sha256', $file->getRealPath()),
                         'uploaded_file_name' => $file->getClientOriginalName(),
                         'uploaded_file_size' => $file->getSize(),
                     ];
@@ -89,6 +89,19 @@ class DeathCertificateController extends Controller
             return redirect()
                 ->route('executor.death_certificates.index')
                 ->with('success', 'Death certificate uploaded successfully.');
+        } catch (DuplicateDeathCertificateException $e) {
+            DB::rollBack();
+
+            if ($request->expectsJson() || $request->ajax()) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], 422);
+            }
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
         } catch (\Exception $e) {
             DB::rollBack();
 

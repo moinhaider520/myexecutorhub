@@ -21,6 +21,15 @@ class ProfileController extends Controller
     public function update_profile(Request $request)
     {
         try {
+            $request->validate([
+                'name' => 'nullable|string',
+                'address' => 'nullable|string',
+                'city' => 'nullable|string',
+                'postal_code' => 'nullable|string',
+                'contact_number' => 'nullable|string',
+                'date_of_birth' => 'nullable|date|before:today',
+            ]);
+
             DB::beginTransaction();
 
             $profile_update = Auth::user()->update([
@@ -29,6 +38,7 @@ class ProfileController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'contact_number' => $request->contact_number,
+                'date_of_birth' => $request->date_of_birth,
             ]);
             DB::commit();
             return response()->json(['status' => true, 'Updated Profile Detail' => Auth::user()]);

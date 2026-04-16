@@ -42,6 +42,7 @@ class SettingController extends Controller
             'city' => 'required',
             'postal_code' => 'required',
             'contact_number' => 'required',
+            'date_of_birth' => 'nullable|date|before:today',
         ]);
 
         try {
@@ -55,6 +56,7 @@ class SettingController extends Controller
                 'city' => $request->city,
                 'postal_code' => $request->postal_code,
                 'contact_number' => $request->contact_number,
+                'date_of_birth' => $request->date_of_birth,
             ]);
 
             DB::commit();

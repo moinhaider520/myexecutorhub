@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Executor;
 
+use App\Exceptions\DuplicateDeathCertificateException;
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
@@ -89,7 +90,6 @@ class DocumentsController extends Controller
                 foreach ($request->file('file') as $file) {
                     if ($verificationUploadMeta === null) {
                         $verificationUploadMeta = [
-                            'document_sha256' => hash_file('sha256', $file->getRealPath()),
                             'uploaded_file_name' => $file->getClientOriginalName(),
                             'uploaded_file_size' => $file->getSize(),
                         ];
@@ -124,6 +124,12 @@ class DocumentsController extends Controller
             DB::commit();
 
             return response()->json(['success' => true, 'message' => 'Document added successfully']);
+        } catch (DuplicateDeathCertificateException $e) {
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 422);
         } catch (\Throwable $e) {
             DB::rollBack();
             // Log and return the actual error message to the client for debugging

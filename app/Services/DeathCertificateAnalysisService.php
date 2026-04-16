@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\DuplicateDeathCertificateException;
 use App\Models\DeathCertificateVerification;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -10,6 +11,13 @@ use Throwable;
 
 class DeathCertificateAnalysisService
 {
+    private const DUPLICATE_BLOCKING_STATUSES = [
+        'pending',
+        'manual_review',
+        'auto_verified',
+        'approved_by_admin',
+    ];
+
     public function __construct(
         private readonly ActivityLogger $activityLogger,
         private readonly DeathCertificatePythonApiService $pythonApiService
@@ -60,6 +68,12 @@ class DeathCertificateAnalysisService
             $this->buildFraudChecks($verification)
         );
         $extracted = $this->normalizeExtractedData(Arr::get($response, 'extracted_data', []));
+        $duplicateVerification = $this->findDuplicateVerificationByBdb($verification, Arr::get($extracted, 'bdb'));
+
+        if ($duplicateVerification) {
+            throw new DuplicateDeathCertificateException('Duplicate document. This document already exists.');
+        }
+
         $mismatchReasons = $this->normalizeMismatchReasons(
             Arr::get($response, 'hard_fail_reasons', []),
             $documentChecks,
@@ -88,6 +102,7 @@ class DeathCertificateAnalysisService
             'mismatch_reasons' => $mismatchReasons,
             'confidence_score' => $score,
             'hard_fail_reason' => $hardFailReason,
+            'bdb' => Arr::get($extracted, 'bdb'),
             'verified_at' => $status === 'auto_verified' ? now() : null,
             'verified_by' => $status === 'auto_verified' ? $verification->uploaded_by : null,
         ]);
@@ -134,6 +149,7 @@ class DeathCertificateAnalysisService
     private function normalizeExtractedData(array $fields): array
     {
         return [
+            'bdb' => $this->normalizeString(Arr::get($fields, 'bdb')),
             'full_name' => $this->normalizeName(Arr::get($fields, 'full_name')),
             'previous_name' => $this->normalizeName(Arr::get($fields, 'previous_name', Arr::get($fields, 'previous_or_maiden_name'))),
             'date_of_death' => $this->normalizeDate(Arr::get($fields, 'date_of_death')),
@@ -318,16 +334,17 @@ class DeathCertificateAnalysisService
 
     private function buildFraudChecks(DeathCertificateVerification $verification): array
     {
-        $sameHashQuery = DeathCertificateVerification::query()
+        $sameBdbQuery = DeathCertificateVerification::query()
             ->where('id', '!=', $verification->id)
-            ->whereNotNull('document_sha256')
-            ->where('document_sha256', $verification->document_sha256);
+            ->whereNotNull('bdb')
+            ->where('bdb', $verification->bdb)
+            ->whereIn('verification_status', self::DUPLICATE_BLOCKING_STATUSES);
 
-        $duplicateForCustomer = (clone $sameHashQuery)
+        $duplicateForCustomer = (clone $sameBdbQuery)
             ->where('customer_id', $verification->customer_id)
             ->exists();
 
-        $otherCustomerVerification = (clone $sameHashQuery)
+        $otherCustomerVerification = (clone $sameBdbQuery)
             ->where('customer_id', '!=', $verification->customer_id)
             ->first();
 
@@ -337,6 +354,19 @@ class DeathCertificateAnalysisService
             'duplicate_other_customer_id' => $otherCustomerVerification?->customer_id,
             'duplicate_verification_id' => $otherCustomerVerification?->id,
         ];
+    }
+
+    private function findDuplicateVerificationByBdb(DeathCertificateVerification $verification, ?string $bdb): ?DeathCertificateVerification
+    {
+        if (!$bdb) {
+            return null;
+        }
+
+        return DeathCertificateVerification::query()
+            ->where('id', '!=', $verification->id)
+            ->where('bdb', $bdb)
+            ->whereIn('verification_status', self::DUPLICATE_BLOCKING_STATUSES)
+            ->first();
     }
 
     private function normalizeName(?string $value): ?string

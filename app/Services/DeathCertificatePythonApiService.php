@@ -53,7 +53,6 @@ class DeathCertificatePythonApiService
             'file_url' => $payload['file_url'],
             'file_name' => $payload['file_name'],
             'mime_type' => $payload['mime_type'],
-            'document_sha256' => $payload['document_sha256'],
             'customer_reference' => $payload['customer_reference'],
         ]);
 
@@ -63,7 +62,6 @@ class DeathCertificatePythonApiService
                 'file_url' => $payload['file_url'],
                 'file_name' => $payload['file_name'],
                 'mime_type' => $payload['mime_type'],
-                'document_sha256' => $payload['document_sha256'],
                 'full_name' => $payload['customer_reference']['full_name'] ?? null,
                 'date_of_birth' => $payload['customer_reference']['date_of_birth'] ?? null,
                 'usual_address' => $payload['customer_reference']['usual_address'] ?? null,
@@ -114,7 +112,6 @@ class DeathCertificatePythonApiService
             'file_url' => $firstFile['url'] ?? null,
             'file_name' => $verification->uploaded_file_name,
             'mime_type' => $this->guessMimeType($verification->uploaded_file_name),
-            'document_sha256' => $verification->document_sha256,
             'customer_reference' => [
                 'full_name' => trim(($customer->name ?? '') . ' ' . ($customer->lastname ?? '')) ?: null,
                 'date_of_birth' => $customer->date_of_birth?->format('Y-m-d') ?? null,

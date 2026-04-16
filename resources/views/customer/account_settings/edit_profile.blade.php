@@ -73,6 +73,17 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label class="form-label">Date of Birth</label>
+                                        <input class="form-control" type="date" name="date_of_birth"
+                                            value="{{ old('date_of_birth', optional($user->date_of_birth)->format('Y-m-d')) }}"
+                                            max="{{ now()->subDay()->format('Y-m-d') }}">
+                                        @error('date_of_birth')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-footer text-end">

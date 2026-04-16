@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Traits\CloudinaryUpload;
 use App\Models\DocumentTypes;
-use App\Services\DeathCertificateWorkflowService;
 use ExpoSDK\Expo;
 use ExpoSDK\ExpoMessage;
 
@@ -82,20 +81,19 @@ class DocumentsController extends Controller
                 'reminder_date' => 'nullable|date',
             ]);
 
+            $normalizedDocumentType = strtolower(trim((string) $request->document_type));
+            if (in_array($normalizedDocumentType, ['death certificate', 'death_certificate', 'death-certificate'], true)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Death certificate uploads are only available in the executor workflow.',
+                ], 422);
+            }
+
             DB::beginTransaction();
 
             $files = [];
-            $verificationUploadMeta = null;
             if ($request->hasFile('file')) {
                 foreach ($request->file('file') as $file) {
-                    if ($verificationUploadMeta === null) {
-                        $verificationUploadMeta = [
-                            'document_sha256' => hash_file('sha256', $file->getRealPath()),
-                            'uploaded_file_name' => $file->getClientOriginalName(),
-                            'uploaded_file_size' => $file->getSize(),
-                        ];
-                    }
-
                     $upload = $this->uploadFileToCloud($file, 'executorhub/documents');
                     $files[] = [
                         'url' => $upload['url'],
@@ -114,14 +112,6 @@ class DocumentsController extends Controller
                 'created_by' => Auth::id(),
                 'reminder_date' => $request->reminder_date,
             ]);
-
-            app(DeathCertificateWorkflowService::class)->createForDocument(
-                document: $document,
-                customerId: Auth::id(),
-                uploadedBy: Auth::id(),
-                uploadMeta: $verificationUploadMeta ?? [],
-            );
-
             DB::commit();
 
             return response()->json(['success' => true, 'message' => 'Document added successfully']);

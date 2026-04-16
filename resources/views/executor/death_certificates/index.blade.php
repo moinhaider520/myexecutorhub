@@ -150,7 +150,11 @@
           error: function (xhr) {
             Swal.close();
             if (xhr.status === 422) {
-              var errors = xhr.responseJSON.errors;
+              var errors = xhr.responseJSON.errors || {};
+              if (xhr.responseJSON.message) {
+                Swal.fire('Duplicate Document', xhr.responseJSON.message, 'warning');
+                return;
+              }
               if (errors.files || errors['files.0']) {
                 $('#file_error').text((errors.files && errors.files[0]) || errors['files.0'][0]);
               }

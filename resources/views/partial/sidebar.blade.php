@@ -97,6 +97,20 @@
                     <li class="sidebar-list">
                         <a class="sidebar-link sidebar-title" href="javascript:void(0)">
                             <svg class="stroke-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
+                            </svg>
+                            <svg class="fill-icon">
+                                <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
+                            </svg>
+                            <span>Death Certificate </span>
+                        </a>
+                        <ul class="sidebar-submenu">
+                            <li><a href="{{ route('admin.death_certificates.index') }}">Manage Reviews</a></li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-list">
+                        <a class="sidebar-link sidebar-title" href="javascript:void(0)">
+                            <svg class="stroke-icon">
                                 <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-email') }}"></use>
                             </svg>
                             <svg class="fill-icon">
@@ -841,20 +855,6 @@
                             </a>
                             <ul class="sidebar-submenu">
                                 <li><a href="{{ route('customer.documents.view') }}">Manage Documents</a></li>
-                            </ul>
-                        </li>
-                        <li class="sidebar-list">
-                            <a class="sidebar-link sidebar-title" href="javascript:void(0)">
-                                <svg class="stroke-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#stroke-file') }}"></use>
-                                </svg>
-                                <svg class="fill-icon">
-                                    <use href="{{ asset('assets/svg/icon-sprite.svg#fill-file') }}"></use>
-                                </svg>
-                                <span>Death Certificate </span>
-                            </a>
-                            <ul class="sidebar-submenu">
-                                <li><a href="{{ route('customer.death_certificates.index') }}">Manage Death Certificate</a></li>
                             </ul>
                         </li>
                         <li class="sidebar-list">

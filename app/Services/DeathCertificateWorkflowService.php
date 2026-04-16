@@ -32,7 +32,6 @@ class DeathCertificateWorkflowService
                     'uploaded_by' => $uploadedBy,
                     'processing_status' => 'queued',
                     'verification_status' => 'pending',
-                    'document_sha256' => Arr::get($uploadMeta, 'document_sha256'),
                     'uploaded_file_name' => Arr::get($uploadMeta, 'uploaded_file_name'),
                     'uploaded_file_size' => Arr::get($uploadMeta, 'uploaded_file_size'),
                     'verified_at' => null,
