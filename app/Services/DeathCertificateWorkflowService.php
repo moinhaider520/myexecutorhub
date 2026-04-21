@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 class DeathCertificateWorkflowService
 {
     public function __construct(
-        private readonly ActivityLogger $activityLogger
+        private readonly ActivityLogger $activityLogger,
+        private readonly DeceasedCaseService $deceasedCaseService
     ) {
     }
 
@@ -90,6 +91,12 @@ class DeathCertificateWorkflowService
                 'date_of_birth' => Arr::get($normalizedData, 'date_of_birth') ?? $customer->date_of_birth,
                 'deceased_verified_at' => now(),
             ]);
+
+            $this->deceasedCaseService->createOrRefreshForCustomer(
+                customer: $customer->fresh(),
+                verification: $verification->fresh('customer'),
+                openedBy: Auth::id()
+            );
 
             $this->recordReviewAction($verification, 'approved', $previousStatus, 'approved_by_admin', $notes, [
                 'override_data' => $overrideData,

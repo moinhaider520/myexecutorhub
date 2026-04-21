@@ -147,6 +147,7 @@ use App\Http\Controllers\Executor\FuneralWakeController as ExecutorFuneralWakeCo
 use App\Http\Controllers\Executor\WillGeneratorController as ExecutorWillGeneratorController;
 use App\Http\Controllers\Executor\UsefulContactsController as ExecutorUsefulContactsController;
 use App\Http\Controllers\Executor\DeathCertificateController as ExecutorDeathCertificateController;
+use App\Http\Controllers\Executor\DeceasedCaseController as ExecutorDeceasedCaseController;
 
 // Others Controllers
 use App\Http\Controllers\Others\DashboardController as OthersDashboardController;
@@ -1237,6 +1238,17 @@ Route::middleware(['auth', 'role:executor'])->prefix('executor')->name('executor
     Route::get('/death-certificates', [ExecutorDeathCertificateController::class, 'index'])->name('death_certificates.index');
     Route::post('/death-certificates/store', [ExecutorDeathCertificateController::class, 'store'])->name('death_certificates.store');
     Route::delete('/death-certificates/destroy/{verification}', [ExecutorDeathCertificateController::class, 'destroy'])->name('death_certificates.destroy');
+    Route::get('/deceased-case', [ExecutorDeceasedCaseController::class, 'show'])->name('deceased_cases.show');
+    Route::post('/deceased-case/switch-customer', [ExecutorDeceasedCaseController::class, 'switchCustomer'])->name('deceased_cases.switch_customer');
+    Route::post('/deceased-case/organizations', [ExecutorDeceasedCaseController::class, 'storeOrganization'])->name('deceased_cases.organizations.store');
+    Route::put('/deceased-case/organizations/{organization}', [ExecutorDeceasedCaseController::class, 'updateOrganization'])->name('deceased_cases.organizations.update');
+    Route::delete('/deceased-case/organizations/{organization}', [ExecutorDeceasedCaseController::class, 'destroyOrganization'])->name('deceased_cases.organizations.destroy');
+    Route::post('/deceased-case/organizations/{organization}/preview', [ExecutorDeceasedCaseController::class, 'previewNotification'])->name('deceased_cases.organizations.preview');
+    Route::post('/deceased-case/organizations/{organization}/email', [ExecutorDeceasedCaseController::class, 'sendEmail'])->name('deceased_cases.organizations.email');
+    Route::post('/deceased-case/organizations/{organization}/both', [ExecutorDeceasedCaseController::class, 'sendBoth'])->name('deceased_cases.organizations.both');
+    Route::post('/deceased-case/organizations/{organization}/letter', [ExecutorDeceasedCaseController::class, 'downloadLetter'])->name('deceased_cases.organizations.letter');
+    Route::post('/deceased-case/notifications/{notification}/mark-letter-sent', [ExecutorDeceasedCaseController::class, 'markLetterSent'])->name('deceased_cases.notifications.mark_letter_sent');
+    Route::post('/deceased-case/organizations/{organization}/replies', [ExecutorDeceasedCaseController::class, 'logReply'])->name('deceased_cases.organizations.replies.store');
     // Custom Documents Type
     Route::post('/documents/save_custom_type', [ExecutorDocumentsController::class, 'saveCustomType'])->name('documents.save_custom_type');
     Route::post('/documents/store', [ExecutorDocumentsController::class, 'store'])->name('documents.store');

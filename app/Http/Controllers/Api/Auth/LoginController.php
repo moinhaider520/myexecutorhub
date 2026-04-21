@@ -21,6 +21,10 @@ class LoginController extends Controller
 
             if ($user) {
                 if (Hash::check($request->password, $user->password)) {
+                    if ($user->isDeceasedCustomer()) {
+                        return response()->json(['status' => false, 'message' => 'This customer account is marked as deceased and can no longer be used to sign in.'], JsonResponse::HTTP_FORBIDDEN);
+                    }
+
                     if ($user->status !== 'A') {
                         return response()->json(['status' => false, 'message' => 'Your account has not been activated yet.'], JsonResponse::HTTP_FORBIDDEN);
                     }
@@ -84,6 +88,10 @@ class LoginController extends Controller
 
         if (!$user || $user->two_factor_code !== $request->two_factor_code) {
             return response()->json(['status' => false, 'message' => 'Invalid or expired two-factor code.'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
+
+        if ($user->isDeceasedCustomer()) {
+            return response()->json(['status' => false, 'message' => 'This customer account is marked as deceased and can no longer be used to sign in.'], JsonResponse::HTTP_FORBIDDEN);
         }
 
         $expiresAt = Carbon::parse($user->two_factor_expires_at);

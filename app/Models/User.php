@@ -308,6 +308,16 @@ class User extends Authenticatable
         return $this->hasMany(DeathCertificateVerification::class, 'customer_id');
     }
 
+    public function deceasedCase()
+    {
+        return $this->hasOne(DeceasedCase::class, 'customer_id');
+    }
+
+    public function isDeceasedCustomer(): bool
+    {
+        return $this->hasRole('customer') && $this->death_verification_status === 'verified';
+    }
+
     public function getProfileImageUrlAttribute()
     {
         if (!$this->profile_image) {

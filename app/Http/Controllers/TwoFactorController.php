@@ -29,6 +29,13 @@ class TwoFactorController extends Controller
                 ->withErrors(['two_factor_code' => 'Invalid code.']);
         }
 
+        if ($user->isDeceasedCustomer()) {
+            session()->forget('two_factor_email');
+
+            return redirect()->route('login')
+                ->with('status', 'This customer account is marked as deceased and can no longer be used to sign in.');
+        }
+
         if (Carbon::parse($user->two_factor_expires_at)->lessThan(now())) {
             return redirect()->route('two-factor.index')
                 ->withErrors(['two_factor_code' => 'The code has expired.']);

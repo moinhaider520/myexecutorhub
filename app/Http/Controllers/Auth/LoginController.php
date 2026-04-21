@@ -23,6 +23,11 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
+        if ($user->isDeceasedCustomer()) {
+            Auth::logout();
+            return redirect()->route('login')->with('status', 'This customer account is marked as deceased and can no longer be used to sign in.');
+        }
+
         if ($user->status !== 'A') {
             Auth::logout();
             return redirect()->route('login')->with('status', 'Your account has not been activated yet.');

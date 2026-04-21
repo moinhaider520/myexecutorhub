@@ -20,7 +20,8 @@ class DeathCertificateAnalysisService
 
     public function __construct(
         private readonly ActivityLogger $activityLogger,
-        private readonly DeathCertificatePythonApiService $pythonApiService
+        private readonly DeathCertificatePythonApiService $pythonApiService,
+        private readonly DeceasedCaseService $deceasedCaseService
     ) {
     }
 
@@ -125,6 +126,14 @@ class DeathCertificateAnalysisService
 
         if ($customerUpdate !== []) {
             $customer->update($customerUpdate);
+        }
+
+        if ($status === 'auto_verified') {
+            $this->deceasedCaseService->createOrRefreshForCustomer(
+                customer: $customer->fresh(),
+                verification: $verification->fresh('customer'),
+                openedBy: $verification->uploaded_by
+            );
         }
 
         $this->activityLogger->logManualActivity(

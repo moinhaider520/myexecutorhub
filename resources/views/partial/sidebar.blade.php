@@ -1207,6 +1207,7 @@
                         </a>
                         <ul class="sidebar-submenu">
                             <li><a href="{{ route('executor.death_certificates.index') }}">Manage Death Certificate</a></li>
+                            <li><a href="{{ route('executor.deceased_cases.show') }}">Deceased Case</a></li>
                         </ul>
                     </li>
                     <li class="sidebar-list">
