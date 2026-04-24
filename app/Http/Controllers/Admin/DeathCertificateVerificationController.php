@@ -29,20 +29,9 @@ class DeathCertificateVerificationController extends Controller
     {
         $validated = $request->validate([
             'notes' => 'nullable|string',
-            'full_name' => 'nullable|string|max:255',
-            'date_of_birth' => 'nullable|date',
-            'date_of_death' => 'nullable|date',
-            'usual_address' => 'nullable|string|max:500',
         ]);
 
-        $overrideData = array_filter([
-            'full_name' => $validated['full_name'] ?? null,
-            'date_of_birth' => $validated['date_of_birth'] ?? null,
-            'date_of_death' => $validated['date_of_death'] ?? null,
-            'usual_address' => $validated['usual_address'] ?? null,
-        ]);
-
-        $workflowService->approve($verification, $overrideData, $validated['notes'] ?? null);
+        $workflowService->approve($verification, [], $validated['notes'] ?? null);
 
         if ($request->expectsJson() || $request->ajax()) {
             return response()->json([

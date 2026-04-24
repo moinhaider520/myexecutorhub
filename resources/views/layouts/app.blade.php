@@ -114,6 +114,7 @@
         <main class="">
             @yield('content')
         </main>
+        @include('partial.customer_chatbot')
         <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
         <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('assets/js/icons/feather-icon/feather.min.js') }}"></script>

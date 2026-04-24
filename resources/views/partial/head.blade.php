@@ -75,6 +75,4 @@
 
         gtag('config', 'G-8G2VWX5FBP');
     </script>
-<script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
-
 <body>

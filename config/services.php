@@ -77,6 +77,14 @@ return [
         'timeout' => env('BANK_STATEMENT_API_TIMEOUT', 120),
     ],
 
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+        'base_url' => env('OPENAI_BASE_URL', 'https://api.openai.com/v1'),
+        'timeout' => env('OPENAI_TIMEOUT', 120),
+        'vector_store_id' => env('OPENAI_VECTOR_STORE_ID'),
+        'knowledge_model' => env('OPENAI_KNOWLEDGE_MODEL', 'gpt-4.1-mini'),
+    ],
+
 ];
 
 

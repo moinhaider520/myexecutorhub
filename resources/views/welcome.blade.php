@@ -361,7 +361,6 @@
 
         gtag('config', 'G-8G2VWX5FBP');
     </script>
-<script src="//code.tidio.co/pdlttcw8ou8viyfubcpwldzw3ygd2kke.js" async></script>
 <style>
     h1 {
         text-align: center;
@@ -4010,7 +4009,8 @@
 
         // Initial calculation
         calculate();
-    </script>
+</script>
+@include('partial.customer_chatbot')
 </body>
 
 </html>

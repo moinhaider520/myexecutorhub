@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\NotificationController as AdminNotificationContro
 use App\Http\Controllers\Admin\EmailController as AdminEmailController;
 use App\Http\Controllers\Admin\CommissionCalculatorController as AdminCommissionCalculatorController;
 use App\Http\Controllers\Admin\DeathCertificateVerificationController as AdminDeathCertificateVerificationController;
+use App\Http\Controllers\Admin\KnowledgeSourceController as AdminKnowledgeSourceController;
 use App\Http\Controllers\Admin\PartnerReportController;
 // Role Partner Controller
 use App\Http\Controllers\Partner\DashboardController as PartnerDashboardController;
@@ -107,6 +108,7 @@ use App\Http\Controllers\Customer\TaskController;
 use App\Http\Controllers\Customer\FuneralWakeController;
 use App\Http\Controllers\Customer\UsefulContactsController;
 use App\Http\Controllers\Customer\ReferralController as CustomerReferralController;
+use App\Http\Controllers\Customer\KnowledgeChatController as CustomerKnowledgeChatController;
 
 // Role Executor Controller
 use App\Http\Controllers\Executor\DashboardController as ExecutorDashboardController;
@@ -292,6 +294,7 @@ Route::get('/pricing_policy', function () {
 Route::get('/case-study/{slug}', [CaseStudyController::class, 'show'])->name('case-study.show');
 Route::get('/refer/{code}', [CustomerReferralController::class, 'share'])->name('referrals.share');
 Route::get('/invite/{token}', [CustomerReferralController::class, 'accept'])->name('customer.referrals.accept');
+Route::post('/knowledge-chat/ask', [CustomerKnowledgeChatController::class, 'ask'])->name('knowledge_chat.ask');
 
 
 
@@ -358,6 +361,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/death-certificates/{verification}/approve', [AdminDeathCertificateVerificationController::class, 'approve'])->name('death_certificates.approve');
     Route::post('/death-certificates/{verification}/reject', [AdminDeathCertificateVerificationController::class, 'reject'])->name('death_certificates.reject');
     Route::post('/death-certificates/{verification}/reprocess', [AdminDeathCertificateVerificationController::class, 'reprocess'])->name('death_certificates.reprocess');
+    Route::get('/knowledge-sources', [AdminKnowledgeSourceController::class, 'index'])->name('knowledge_sources.index');
+    Route::get('/knowledge-sources/status-snapshot', [AdminKnowledgeSourceController::class, 'statusSnapshot'])->name('knowledge_sources.status_snapshot');
+    Route::post('/knowledge-sources', [AdminKnowledgeSourceController::class, 'store'])->name('knowledge_sources.store');
+    Route::post('/knowledge-sources/{knowledgeSource}/refresh', [AdminKnowledgeSourceController::class, 'refresh'])->name('knowledge_sources.refresh');
+    Route::post('/knowledge-sources/{knowledgeSource}/reprocess', [AdminKnowledgeSourceController::class, 'reprocess'])->name('knowledge_sources.reprocess');
+    Route::delete('/knowledge-sources/{knowledgeSource}', [AdminKnowledgeSourceController::class, 'destroy'])->name('knowledge_sources.destroy');
 
     // Partner Management
     Route::get('/partners', [PartnerController::class, 'index'])->name('partners.index');

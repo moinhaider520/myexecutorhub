@@ -6,6 +6,11 @@
     $matchChecks = $verification->match_checks ?? [];
     $fraudChecks = $verification->fraud_checks ?? [];
     $mismatchReasons = $verification->mismatch_reasons ?? [];
+    $currentDecision = match ($verification->verification_status) {
+        'approved_by_admin' => 'approve',
+        'rejected_by_admin' => 'reject',
+        default => 'approve',
+    };
 @endphp
 
 @section('content')
@@ -104,6 +109,29 @@
                 min-width: 0;
             }
 
+            .admin-submit-button.is-loading {
+                opacity: 0.85;
+                cursor: wait;
+            }
+
+            .admin-button-spinner {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                margin-right: 8px;
+                border: 2px solid rgba(255, 255, 255, 0.45);
+                border-top-color: #fff;
+                border-radius: 50%;
+                animation: admin-button-spin 0.7s linear infinite;
+                vertical-align: -2px;
+            }
+
+            @keyframes admin-button-spin {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
             .admin-helper-text {
                 margin-top: 8px;
                 color: #6b7280;
@@ -113,6 +141,52 @@
             .admin-workspace .form-control {
                 width: 100%;
                 min-width: 0;
+            }
+
+            .admin-current-status {
+                border: 1px solid #e5edf8;
+                border-radius: 12px;
+                background: #f8fbff;
+                padding: 14px;
+                margin-bottom: 16px;
+            }
+
+            .admin-current-status h6 {
+                margin-bottom: 10px;
+                font-size: 14px;
+            }
+
+            .admin-status-badge {
+                display: inline-flex;
+                align-items: center;
+                border-radius: 999px;
+                padding: 5px 10px;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: capitalize;
+            }
+
+            .admin-status-badge.status-approved {
+                background: #e7f8ee;
+                color: #198754;
+            }
+
+            .admin-status-badge.status-rejected {
+                background: #fdecec;
+                color: #dc3545;
+            }
+
+            .admin-status-badge.status-pending {
+                background: #fff6df;
+                color: #b58105;
+            }
+
+            .admin-current-status p {
+                margin-bottom: 8px;
+            }
+
+            .admin-current-status p:last-child {
+                margin-bottom: 0;
             }
 
             .admin-workspace textarea.form-control {
@@ -223,9 +297,20 @@
                     </div>
                     <div class="card-body">
                         <div class="admin-workspace">
+                            <div class="admin-current-status">
+                                <h6>Current Review</h6>
+                                <p>
+                                    <strong>Status:</strong>
+                                    <span class="admin-status-badge {{ $verification->verification_status === 'approved_by_admin' ? 'status-approved' : ($verification->verification_status === 'rejected_by_admin' ? 'status-rejected' : 'status-pending') }}">
+                                        {{ str_replace('_', ' ', $verification->verification_status) }}
+                                    </span>
+                                </p>
+                                <p><strong>Saved Note:</strong> {{ $verification->admin_notes ?: 'No notes added.' }}</p>
+                            </div>
+
                             <div class="admin-workspace-copy">
                                 <h6>Review And Decide</h6>
-                                <p>Use notes once, adjust extracted values if needed, choose a decision, then submit.</p>
+                                <p>Add notes if needed, choose a decision, then submit.</p>
                             </div>
                             <form id="admin-decision-form"
                                   data-approve-url="{{ route('admin.death_certificates.approve', $verification) }}"
@@ -237,42 +322,20 @@
                                     <textarea id="admin-notes" name="notes" class="form-control" rows="3" placeholder="Add notes for this review decision..."></textarea>
                                 </div>
 
-                                <div class="admin-field-group">
-                                    <h6>Optional Overrides</h6>
-                                    <div class="admin-action-grid">
-                                        <div>
-                                            <label class="form-label">Full Name</label>
-                                            <input type="text" id="admin-full-name" name="full_name" class="form-control" value="{{ $normalized['full_name'] ?? '' }}">
-                                        </div>
-                                        <div>
-                                            <label class="form-label">DOB</label>
-                                            <input type="date" id="admin-date-of-birth" name="date_of_birth" class="form-control" value="{{ $normalized['date_of_birth'] ?? '' }}">
-                                        </div>
-                                        <div>
-                                            <label class="form-label">Date of Death</label>
-                                            <input type="date" id="admin-date-of-death" name="date_of_death" class="form-control" value="{{ $normalized['date_of_death'] ?? '' }}">
-                                        </div>
-                                        <div class="admin-action-grid-full">
-                                            <label class="form-label">Address</label>
-                                            <textarea id="admin-usual-address" name="usual_address" class="form-control" rows="2">{{ $normalized['usual_address'] ?? '' }}</textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="admin-submit-area">
                                     <div class="admin-submit-copy">
                                         <h6>Decision</h6>
-                                        <p>Pick a status and submit once. Reject still requires notes. Approve uses the edited values above.</p>
+                                        <p>Pick a status and submit once. Reject still requires notes.</p>
                                     </div>
                                     <div class="admin-submit-grid">
                                         <div>
                                             <label class="form-label">Change Status</label>
                                             <select id="admin-decision" name="decision" class="form-control">
-                                                <option value="approve">Approve</option>
-                                                <option value="reject">Reject</option>
-                                                <option value="reprocess">Reprocess</option>
+                                                <option value="approve" {{ $currentDecision === 'approve' ? 'selected' : '' }}>Approve</option>
+                                                <option value="reject" {{ $currentDecision === 'reject' ? 'selected' : '' }}>Reject</option>
+                                                <option value="reprocess" {{ $currentDecision === 'reprocess' ? 'selected' : '' }}>Reprocess</option>
                                             </select>
-                                            <div id="admin-decision-help" class="admin-helper-text">Approve will save the current override values.</div>
+                                            <div id="admin-decision-help" class="admin-helper-text">Approve will update the certificate status.</div>
                                         </div>
                                         <div>
                                             <button type="submit" id="admin-decision-submit" class="btn btn-primary admin-submit-button">Save Decision</button>
@@ -312,22 +375,26 @@
         const decisionHelp = document.getElementById('admin-decision-help');
         const submitButton = document.getElementById('admin-decision-submit');
         const csrfToken = form.querySelector('input[name="_token"]').value;
+        const defaultButtonHtml = submitButton.innerHTML;
 
         const decisionMeta = {
             approve: {
                 url: form.dataset.approveUrl,
                 button: 'Approve Certificate',
-                help: 'Approve will save the current override values.',
+                help: 'Approve will update the certificate status.',
+                loading: 'Approving Certificate...',
             },
             reject: {
                 url: form.dataset.rejectUrl,
                 button: 'Reject Certificate',
                 help: 'Reject requires notes so the reason is recorded in the audit trail.',
+                loading: 'Rejecting Certificate...',
             },
             reprocess: {
                 url: form.dataset.reprocessUrl,
                 button: 'Reprocess Certificate',
                 help: 'Reprocess runs the analysis again on the same uploaded file.',
+                loading: 'Reprocessing Certificate...',
             }
         };
 
@@ -355,6 +422,35 @@
             window.alert(text);
         };
 
+        const showLoadingState = function (current) {
+            submitButton.disabled = true;
+            submitButton.classList.add('is-loading');
+            submitButton.innerHTML = '<span class="admin-button-spinner" aria-hidden="true"></span>' + current.loading;
+
+            if (window.Swal) {
+                Swal.fire({
+                    title: current.loading,
+                    text: current.help,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: function () {
+                        Swal.showLoading();
+                    },
+                });
+            }
+        };
+
+        const hideLoadingState = function () {
+            submitButton.disabled = false;
+            submitButton.classList.remove('is-loading');
+            submitButton.innerHTML = defaultButtonHtml;
+            updateDecisionUi();
+
+            if (window.Swal && Swal.isVisible()) {
+                Swal.close();
+            }
+        };
+
         decisionSelect.addEventListener('change', updateDecisionUi);
         updateDecisionUi();
 
@@ -365,12 +461,8 @@
             const formData = new FormData();
             formData.append('_token', csrfToken);
             formData.append('notes', document.getElementById('admin-notes').value);
-            formData.append('full_name', document.getElementById('admin-full-name').value);
-            formData.append('date_of_birth', document.getElementById('admin-date-of-birth').value);
-            formData.append('date_of_death', document.getElementById('admin-date-of-death').value);
-            formData.append('usual_address', document.getElementById('admin-usual-address').value);
 
-            submitButton.disabled = true;
+            showLoadingState(current);
 
             fetch(current.url, {
                 method: 'POST',
@@ -394,14 +486,22 @@
                     return payload;
                 })
                 .then(function (payload) {
+                    if (window.Swal && Swal.isVisible()) {
+                        Swal.close();
+                    }
+
                     showAlert('Success', payload.message || 'Death certificate updated successfully.', 'success');
                     window.location.reload();
                 })
                 .catch(function (error) {
+                    if (window.Swal && Swal.isVisible()) {
+                        Swal.close();
+                    }
+
                     showAlert('Error', error.message || 'Unable to update death certificate status.', 'error');
                 })
                 .finally(function () {
-                    submitButton.disabled = false;
+                    hideLoadingState();
                 });
         });
     });

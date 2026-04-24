@@ -15,4 +15,5 @@
 @include('partial.sidebar')
 @yield('content')
 @include('partial.footer')
+@include('partial.customer_chatbot')
 @include('partial.scripts')
